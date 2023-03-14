@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {InternationalizationComponent} from "./internationalization/internationalization.component";
+import {FastshaComponent} from "./fastshah/fastsha.component";
 
 const routes: Routes = [
   {
@@ -8,6 +9,11 @@ const routes: Routes = [
     component: InternationalizationComponent,
     pathMatch: 'full',
   },
+  {
+    path: 'fashshah',
+    component: FastshaComponent,
+    pathMatch: 'full',
+  }
 ];
 
 @NgModule({
