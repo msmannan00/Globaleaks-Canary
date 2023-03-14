@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {InternationalizationComponent} from "./internationalization/internationalization.component";
 import {FastshaComponent} from "./fastshah/fastsha.component";
+import {ShowdownComponent} from "./showdown/showdown.component";
 
 const routes: Routes = [
   {
@@ -12,6 +13,11 @@ const routes: Routes = [
   {
     path: 'fashshah',
     component: FastshaComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'showdown',
+    component: ShowdownComponent,
     pathMatch: 'full',
   }
 ];

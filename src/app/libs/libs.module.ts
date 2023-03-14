@@ -5,16 +5,19 @@ import {InternationalizationComponent} from "./internationalization/internationa
 import {LibsRoutingModule} from "./libs-routing.module";
 import { FastshaComponent } from './fastshah/fastsha.component';
 import {FormsModule} from "@angular/forms";
+import { ShowdownComponent } from './showdown/showdown.component';
+import {ShowdownModule} from "ngx-showdown";
 
 
 
 @NgModule({
   declarations: [
     InternationalizationComponent,
-    FastshaComponent
+    FastshaComponent,
+    ShowdownComponent
   ],
     imports: [
-        CommonModule, TranslateModule, LibsRoutingModule, FormsModule
+        CommonModule, TranslateModule, LibsRoutingModule, FormsModule, ShowdownModule
     ]
 })
 export class LibsModule { }
