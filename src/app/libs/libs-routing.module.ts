@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { InternationalizationComponent } from './internationalization/internationalization.component';
 import { QrCodeComponent } from './qr-code/qr-code.component';
+import { InternationalizationComponent } from './internationalization/internationalization.component';
+import { FastshaComponent } from './fastshah/fastsha.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,11 @@ const routes: Routes = [
   {
     path: 'qr-code',
     component: QrCodeComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'fashshah',
+    component: FastshaComponent,
     pathMatch: 'full',
   },
 ];
