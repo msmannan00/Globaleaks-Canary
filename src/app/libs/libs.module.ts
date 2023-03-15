@@ -12,6 +12,8 @@ import {FormsModule} from "@angular/forms";
 import { IdleComponent } from './idle/idle.component';
 import {NgIdleModule} from "@ng-idle/core";
 import {NgIdleKeepaliveModule} from "@ng-idle/keepalive";
+import { DropdownMultiselectComponent } from './dropdown-multiselect/dropdown-multiselect.component';
+import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
 
 @NgModule({
   declarations: [
@@ -20,9 +22,10 @@ import {NgIdleKeepaliveModule} from "@ng-idle/keepalive";
     QrCodeComponent,
     ShowdownComponent,
     IdleComponent,
+    DropdownMultiselectComponent,
   ],
     imports: [
-        CommonModule, TranslateModule, LibsRoutingModule, FormsModule, ShowdownModule, QRCodeModule,NgIdleModule, NgIdleKeepaliveModule.forRoot(),
+        CommonModule, TranslateModule, LibsRoutingModule, FormsModule, ShowdownModule, QRCodeModule,NgIdleModule, NgIdleKeepaliveModule.forRoot(),NgMultiSelectDropDownModule.forRoot(),
     ]
 })
 export class LibsModule {}

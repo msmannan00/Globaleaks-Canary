@@ -5,6 +5,7 @@ import {ShowdownComponent} from "./showdown/showdown.component";
 import {InternationalizationComponent} from "./internationalization/internationalization.component";
 import {FastshaComponent} from "./fastshah/fastsha.component";
 import {IdleComponent} from "./idle/idle.component";
+import {DropdownMultiselectComponent} from "./dropdown-multiselect/dropdown-multiselect.component";
 
 const routes: Routes = [
   {
@@ -30,6 +31,11 @@ const routes: Routes = [
   {
     path: 'idle',
     component: IdleComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'multiselect',
+    component: DropdownMultiselectComponent,
     pathMatch: 'full',
   }
 ];
