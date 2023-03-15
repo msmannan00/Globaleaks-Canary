@@ -16,6 +16,9 @@
             "outputPath": "dist/globaleaks-angular-fork",
             "index": "src/index.html",
             "main": "src/main.ts",
+            "allowedCommonJsDependencies": [
+              "qrcode", "showdown", "fast-sha256"
+            ]            ,
             "polyfills": [
               "zone.js"
             ],

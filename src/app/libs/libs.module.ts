@@ -9,16 +9,20 @@ import { FastshaComponent } from './fastshah/fastsha.component';
 import { ShowdownComponent } from './showdown/showdown.component';
 import {ShowdownModule} from "ngx-showdown";
 import {FormsModule} from "@angular/forms";
+import { IdleComponent } from './idle/idle.component';
+import {NgIdleModule} from "@ng-idle/core";
+import {NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 
 @NgModule({
   declarations: [
     InternationalizationComponent,
     FastshaComponent,
     QrCodeComponent,
-    ShowdownComponent
+    ShowdownComponent,
+    IdleComponent,
   ],
     imports: [
-        CommonModule, TranslateModule, LibsRoutingModule, FormsModule, ShowdownModule, QRCodeModule
+        CommonModule, TranslateModule, LibsRoutingModule, FormsModule, ShowdownModule, QRCodeModule,NgIdleModule, NgIdleKeepaliveModule.forRoot(),
     ]
 })
 export class LibsModule {}
