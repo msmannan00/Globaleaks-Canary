@@ -1,1 +1,10 @@
-<qrcode [qrdata]="'random'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+<div class="container">
+  <button type="button" class="btn btn-primary" (click)="onRefresh()">Regenerate</button>
+  <br><br>
+  <span>{{value}}</span>
+  <br>
+  <qrcode [qrdata]="value" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+
+</div>
+
+

@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { QrCodeComponent } from './qr-code/qr-code.component';
-import { InternationalizationComponent } from './internationalization/internationalization.component';
-import { FastshaComponent } from './fastshah/fastsha.component';
+import {ShowdownComponent} from "./showdown/showdown.component";
 import {InternationalizationComponent} from "./internationalization/internationalization.component";
 import {FastshaComponent} from "./fastshah/fastsha.component";
-import {ShowdownComponent} from "./showdown/showdown.component";
 
 const routes: Routes = [
   {
