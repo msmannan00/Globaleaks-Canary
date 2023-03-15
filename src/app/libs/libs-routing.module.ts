@@ -3,6 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { QrCodeComponent } from './qr-code/qr-code.component';
 import { InternationalizationComponent } from './internationalization/internationalization.component';
 import { FastshaComponent } from './fastshah/fastsha.component';
+import {InternationalizationComponent} from "./internationalization/internationalization.component";
+import {FastshaComponent} from "./fastshah/fastsha.component";
+import {ShowdownComponent} from "./showdown/showdown.component";
 
 const routes: Routes = [
   {
@@ -20,6 +23,11 @@ const routes: Routes = [
     component: FastshaComponent,
     pathMatch: 'full',
   },
+  {
+    path: 'showdown',
+    component: ShowdownComponent,
+    pathMatch: 'full',
+  }
 ];
 
 @NgModule({
