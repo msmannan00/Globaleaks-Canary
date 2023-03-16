@@ -1,0 +1,10 @@
+.mertrofont {
+  font-family: Metropolis, serif;
+}
+
+.container{
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 8px;
+}

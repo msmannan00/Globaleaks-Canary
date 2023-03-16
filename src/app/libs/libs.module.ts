@@ -14,6 +14,9 @@ import {NgIdleModule} from "@ng-idle/core";
 import {NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import { DropdownMultiselectComponent } from './dropdown-multiselect/dropdown-multiselect.component';
 import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
+import { MetrofontComponent } from './metrofont/metrofont.component';
+import { AriaComponent } from './aria/aria.component';
+import { NgcsvComponent } from './ngcsv/ngcsv.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
     ShowdownComponent,
     IdleComponent,
     DropdownMultiselectComponent,
+    MetrofontComponent,
+    AriaComponent,
+    NgcsvComponent,
   ],
     imports: [
         CommonModule, TranslateModule, LibsRoutingModule, FormsModule, ShowdownModule, QRCodeModule,NgIdleModule, NgIdleKeepaliveModule.forRoot(),NgMultiSelectDropDownModule.forRoot(),

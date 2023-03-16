@@ -6,6 +6,9 @@ import {InternationalizationComponent} from "./internationalization/internationa
 import {FastshaComponent} from "./fastshah/fastsha.component";
 import {IdleComponent} from "./idle/idle.component";
 import {DropdownMultiselectComponent} from "./dropdown-multiselect/dropdown-multiselect.component";
+import {MetrofontComponent} from "./metrofont/metrofont.component";
+import {AriaComponent} from "./aria/aria.component";
+import {NgcsvComponent} from "./ngcsv/ngcsv.component";
 
 const routes: Routes = [
   {
@@ -36,6 +39,21 @@ const routes: Routes = [
   {
     path: 'multiselect',
     component: DropdownMultiselectComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'metrofont',
+    component: MetrofontComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'aria',
+    component: AriaComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'ngcsv',
+    component: NgcsvComponent,
     pathMatch: 'full',
   }
 ];
