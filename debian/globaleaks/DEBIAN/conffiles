@@ -1,0 +1,3 @@
+/etc/apparmor.d/usr.bin.globaleaks
+/etc/default/globaleaks
+/etc/init.d/globaleaks

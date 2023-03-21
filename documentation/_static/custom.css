@@ -1,0 +1,113 @@
+@font-face {
+  font-family: "Metropolis";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./fonts/metropolis-all-400-normal.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Metropolis";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./fonts/metropolis-all-400-italic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Metropolis";
+  font-style: bold;
+  font-weight: 700;
+  font-display: swap;
+  src: url("./fonts/metropolis-all-700-normal.woff") format("woff");
+}
+
+* {
+  font-family: "Metropolis", Helvetica, Arial, sans-serif;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+legend,
+.rst-content .toctree-wrapper p.caption {
+  color: #1d1f2a;
+}
+
+a,
+a:hover,
+a:active,
+a:visited,
+a:focus,
+.wy-side-nav-search a,
+.wy-side-nav-search a:hover,
+.wy-side-nav-search a:active,
+.wy-side-nav-search a:visited,
+.wy-side-nav-search a:focus,
+.wy-side-nav-search > a,
+.wy-side-nav-search > div.version {
+  color: #204f82;
+}
+
+.wy-side-nav-search {
+  background-color: #fff !important;
+}
+
+.highlight {
+  background-color: #eef5fc;
+}
+
+.rst-content tt.literal,
+.rst-content tt.literal,
+.rst-content code.literal {
+  color: #377abc;
+}
+
+.wy-nav-side {
+  background-color: #103253;
+}
+
+.wy-nav-top {
+  background-color: #377abc;
+}
+
+.wy-menu .caption-text {
+  color: #5794d5;
+}
+
+.wy-menu-vertical a {
+  color: #fff;
+}
+
+vertical li.current > a {
+  color: #1d1f2a;
+}
+
+.wy-nav-content img {
+  border: 1px solid #103253;
+}
+
+.document ul,
+.document li {
+  list-style: disc;
+}
+
+@media screen and (min-width: 767px) {
+  .wy-nav-content {
+    max-width: 100% !important;
+  }
+
+  .wy-table-responsive table td,
+  .wy-table-responsive table th {
+    white-space: normal !important;
+  }
+
+  .wy-table-responsive {
+    overflow: visible !important;
+    max-width: 100%;
+  }
+}

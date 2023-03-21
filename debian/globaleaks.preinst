@@ -1,0 +1,13 @@
+#!/bin/sh
+# This is the pre installation script for globaleaks
+set -e
+
+# Automatically disable swap
+swapoff --all
+sed -e '/swap/ s/^#*/#/' -i /etc/fstab
+
+#DEBHELPER#
+
+if [ "$1" = "upgrade" ]; then
+  service globaleaks stop || true
+fi
