@@ -13,6 +13,7 @@ yarn-error.log
 
 # IDEs and editors
 .idea/
+.pybuild/
 .project
 .classpath
 .c9/
@@ -33,6 +34,10 @@ yarn-error.log
 .sass-cache/
 /connect.lock
 /coverage
+/client/app/assets/lib/css
+/client/app/assets/lib/js
+/.pybuild
+/client/build
 /libpeerconnection.log
 testem.log
 /typings
@@ -40,3 +45,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+.eslintrc.json
+.editorconfig
+.github/FUNDING.yml

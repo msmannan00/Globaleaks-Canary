@@ -8,7 +8,7 @@
       "schematics": {},
       "root": "",
       "sourceRoot": "app",
-      "prefix": "views",
+      "prefix": "src",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -33,17 +33,19 @@
               "app/assets"
             ],
             "styles": [
-              "app/assets/lib/css/bootstrap.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
               "app/css/loader.css",
               "app/css/main.css",
               "app/css/print.css",
               "app/css/ui-select-bootstrap4-fix.css",
-              "app/assets/lib/css/bootstrap.css",
-              "app/assets/lib/css/regular.css",
-              "app/assets/lib/css/solid.css",
-              "node_modules/@fortawesome/fontawesome-free/css/all.css"
+              "node_modules/@fortawesome/fontawesome-free/css/fontawesome.css",
+              "node_modules/@fortawesome/fontawesome-free/css/regular.css",
+              "node_modules/@fortawesome/fontawesome-free/css/solid.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
+              "app/assets/lib/css/solid.css"
             ],
             "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.js"
             ]
           },
           "configurations": {

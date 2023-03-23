@@ -32,12 +32,7 @@ module.exports = function(grunt) {
         files: [
           { dest: "app/assets/license.txt", cwd: ".", src: ["../LICENSE"], expand: false, flatten: true },
 
-          { dest: "app/lib/css/", cwd: ".", src: ["node_modules/@fortawesome/fontawesome-free/css/fontawesome.css"], expand: true, flatten: true },
-          { dest: "app/lib/css/", cwd: ".", src: ["node_modules/@fortawesome/fontawesome-free/css/regular.css"], expand: true, flatten: true },
-          { dest: "app/lib/css/", cwd: ".", src: ["node_modules/@fortawesome/fontawesome-free/css/solid.css"], expand: true, flatten: true },
-          { dest: "app/lib/css/", cwd: ".", src: ["node_modules/bootstrap/dist/css/bootstrap.css"], expand: true, flatten: true },
-
-          { dest: "app/lib/js/", cwd: ".", src: ["node_modules/bootstrap/dist/js/bootstrap.js"], expand: true, flatten: true },
+          { dest: "app/assets/lib/css/", cwd: ".", src: ["node_modules/@fortawesome/fontawesome-free/css/solid.css"], expand: true, flatten: true },
         ]
       },
       build: {
@@ -49,6 +44,7 @@ module.exports = function(grunt) {
           { dest: "build/js", cwd: "tmp/js", src: ["**"], expand: true },
           { dest: "build", cwd: "tmp/assets", src: ["**"], expand: true },
           { dest: "build/index.html", cwd: ".", src: ["tmp/index.html"], expand: false, flatten: true },
+          { dest: "build/assets/loader.js", cwd: ".", src: ["tmp/assets/loader.js"], expand: false, flatten: true },
         ]
       },
       coverage: {
@@ -278,9 +274,12 @@ module.exports = function(grunt) {
         options: {
           replacements: [
             {
-              pattern: "<link rel=\"stylesheet\" href=\"styles.css\">",
-              replacement: "<link rel=\"stylesheet\" href=\"css/styles.css\">\n" +
-                "<script src=\"js/script.js\" defer></script>"
+              pattern: "<link rel=\"stylesheet\" href=\"styles.css\"></head>",
+              replacement: ""
+            },
+            {
+              pattern: "<noscript>",
+              replacement: "<script src=\"loader.js\"></script><noscript>"
             }
           ]
         }
