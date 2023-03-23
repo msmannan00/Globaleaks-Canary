@@ -23,6 +23,7 @@
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "angular-translate-loader-static-files": "^2.19.0",
+    "bootstrap": "^5.2.3",
     "gettext-parser": "^6.0.0",
     "grunt-angular-templates": "^1.2.0",
     "grunt-confirm": "^1.0.8",
