@@ -4472,7 +4472,7 @@ showdown.helper.emojis = {
   'zzz':'\ud83d\udca4',
 
   /* special emojis :P */
-  'octocat':  '<img alt=":octocat:" height="20" width="20" align="absmiddle" src="https://assets-cdn.github.com/images/icons/emoji/octocat.png">',
+  'octocat':  '<img alt=":octocat:" height="20" width="20" align="absmiddle" app="https://assets-cdn.github.com/images/icons/emoji/octocat.png">',
   'showdown': '<span style="font-family: \'Anonymous Pro\', monospace; text-decoration: underline; text-decoration-style: dashed; text-decoration-color: #3e8b8a;text-underline-position: under;">S</span>'
 };
 
@@ -6139,7 +6139,7 @@ showdown.subParser('images', function (text, options, globals) {
       .replace(showdown.helper.regexes.asteriskDashAndColon, showdown.helper.escapeCharactersCallback);
     //url = showdown.helper.escapeCharacters(url, '*_', false);
     url = url.replace(showdown.helper.regexes.asteriskDashAndColon, showdown.helper.escapeCharactersCallback);
-    var result = '<img src="' + url + '" alt="' + altText + '"';
+    var result = '<img app="' + url + '" alt="' + altText + '"';
 
     if (title && showdown.helper.isString(title)) {
       title = title
@@ -7946,15 +7946,15 @@ function baseExtend(dst, objs, deep) {
  * @kind function
  *
  * @description
- * Extends the destination object `dst` by copying own enumerable properties from the `src` object(s)
- * to `dst`. You can specify multiple `src` objects. If you want to preserve original objects, you can do so
+ * Extends the destination object `dst` by copying own enumerable properties from the `app` object(s)
+ * to `dst`. You can specify multiple `app` objects. If you want to preserve original objects, you can do so
  * by passing an empty object as the target: `var object = angular.extend({}, object1, object2)`.
  *
  * **Note:** Keep in mind that `angular.extend` does not support recursive merge (deep copy). Use
  * {@link angular.merge} for this.
  *
  * @param {Object} dst Destination object.
- * @param {...Object} src Source object(s).
+ * @param {...Object} app Source object(s).
  * @returns {Object} Reference to `dst`.
  */
 function extend(dst) {
@@ -7969,8 +7969,8 @@ function extend(dst) {
 * @kind function
 *
 * @description
-* Deeply extends the destination object `dst` by copying own enumerable properties from the `src` object(s)
-* to `dst`. You can specify multiple `src` objects. If you want to preserve original objects, you can do so
+* Deeply extends the destination object `dst` by copying own enumerable properties from the `app` object(s)
+* to `dst`. You can specify multiple `app` objects. If you want to preserve original objects, you can do so
 * by passing an empty object as the target: `var object = angular.merge({}, object1, object2)`.
 *
 * Unlike {@link angular.extend extend()}, `merge()` recursively descends into object properties of source
@@ -7993,7 +7993,7 @@ function extend(dst) {
 * `angular.merge` also does not support merging objects with circular references.
 *
 * @param {Object} dst Destination object.
-* @param {...Object} src Source object(s).
+* @param {...Object} app Source object(s).
 * @returns {Object} Reference to `dst`.
 */
 function merge(dst) {
@@ -9285,7 +9285,7 @@ function angularInit(element, bootstrap) {
 
   // The element `element` has priority over any other element.
   forEach(ngAttrPrefixes, function(prefix) {
-    var name = prefix + 'app';
+    var name = prefix + 'src';
 
     if (!appElement && element.hasAttribute && element.hasAttribute(name)) {
       appElement = element;
@@ -9293,7 +9293,7 @@ function angularInit(element, bootstrap) {
     }
   });
   forEach(ngAttrPrefixes, function(prefix) {
-    var name = prefix + 'app';
+    var name = prefix + 'src';
     var candidate;
 
     if (!appElement && (candidate = element.querySelector('[' + name.replace(':', '\\:') + ']'))) {
@@ -9346,7 +9346,7 @@ function angularInit(element, bootstrap) {
  *   {{greeting}}
  * </div>
  *
- * <script src="angular.js"></script>
+ * <script app="angular.js"></script>
  * <script>
  *   var app = angular.module('demo', [])
  *   .views('WelcomeController', function($scope) {
@@ -13128,7 +13128,7 @@ var $$CoreAnimateQueueProvider = /** @this */ function() {
  *
  * In order to enable animations the `ngAnimate` module has to be loaded.
  *
- * To see the functional implementation check out `src/ngAnimate/animate.js`.
+ * To see the functional implementation check out `app/ngAnimate/animate.js`.
  */
 var $AnimateProvider = ['$provide', /** @this */ function($provide) {
   var provider = this;
@@ -15589,7 +15589,7 @@ function $TemplateCacheProvider() {
  *   allowing other directives to read the interpolated value.
  *
  * * *Observing interpolated attributes:* Use `$observe` to observe the value changes of attributes
- *   that contain interpolation (e.g. `src="{{bar}}"`). Not only is this very efficient but it's also
+ *   that contain interpolation (e.g. `app="{{bar}}"`). Not only is this very efficient but it's also
  *   the only way to easily get the actual value because during the linking phase the interpolation
  *   hasn't been evaluated yet and so the value is at this time set to `undefined`.
  *
@@ -15859,7 +15859,7 @@ function $TemplateCacheProvider() {
  * For this reason, `ngProp` applies Strict Contextual Escaping with the {@link ng.$sce $sce service}.
  * This means vulnerable properties require their content to be "trusted", based on the
  * context of the property. For example, the `innerHTML` is in the `HTML` context, and the
- * `iframe.src` property is in the `RESOURCE_URL` context, which requires that values written to
+ * `iframe.app` property is in the `RESOURCE_URL` context, which requires that values written to
  * this property are trusted as a `RESOURCE_URL`.
  *
  * This can be set explicitly by calling $sce.trustAs(type, value) on the value that is
@@ -16074,7 +16074,7 @@ function $TemplateCacheProvider() {
  *       <hr>
  *
  *       For the `error` and `load` event on images no built-in AngularJS directives exist:<br>
- *       <img src="thisimagedoesnotexist.png" ng-on-error="$ctrl.loadingState = -1" ng-on-load="$ctrl.loadingState = 1"><br>
+ *       <img app="thisimagedoesnotexist.png" ng-on-error="$ctrl.loadingState = -1" ng-on-load="$ctrl.loadingState = 1"><br>
  *       <div ng-switch="$ctrl.loadingState">
  *         <span ng-switch-when="0">Image is loading</span>
  *         <span ng-switch-when="-1">Image load error</span>
@@ -16146,7 +16146,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
       Suffix = 'Directive',
       COMMENT_DIRECTIVE_REGEXP = /^\s*directive:\s*([\w-]+)\s+(.*)$/,
       CLASS_DIRECTIVE_REGEXP = /(([\w-]+)(?::([^;]+))?;?)/,
-      ALL_OR_NOTHING_ATTRS = makeMap('ngSrc,ngSrcset,src,srcset'),
+      ALL_OR_NOTHING_ATTRS = makeMap('ngSrc,ngSrcset,app,srcset'),
       REQUIRE_PREFIX_REGEXP = /^(?:(\^\^?)?(\?)?(\^\^?)?)?/;
 
   // Ref: http://developers.whatwg.org/webappapis.html#event-handler-idl-attributes
@@ -16518,11 +16518,11 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
    *
    * @description
    * Retrieves or overrides the default regular expression that is used for determining trusted safe
-   * urls during img[src] sanitization.
+   * urls during img[app] sanitization.
    *
    * The sanitization is a security measure aimed at prevent XSS attacks via html links.
    *
-   * Any url about to be assigned to img[src] via data-binding is first normalized and turned into
+   * Any url about to be assigned to img[app] via data-binding is first normalized and turned into
    * an absolute url. Afterwards, the url is matched against the `imgSrcSanitizationTrustedUrlList`
    * regular expression. If a match is found, the original url is written into the dom. Otherwise,
    * the absolute url is prefixed with `'unsafe:'` string and only then is it written into the DOM.
@@ -16768,31 +16768,31 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
       'blockquote|cite',
       'body|background',
       'del|cite',
-      'input|src',
+      'input|app',
       'ins|cite',
       'q|cite'
     ]);
     registerContext(SCE_CONTEXTS.MEDIA_URL, [
-      'audio|src',
-      'img|src',    'img|srcset',
-      'source|src', 'source|srcset',
-      'track|src',
-      'video|src',  'video|poster'
+      'audio|app',
+      'img|app',    'img|srcset',
+      'source|app', 'source|srcset',
+      'track|app',
+      'video|app',  'video|poster'
     ]);
     registerContext(SCE_CONTEXTS.RESOURCE_URL, [
       '*|formAction',
       'applet|code',      'applet|codebase',
       'base|href',
-      'embed|src',
-      'frame|src',
+      'embed|app',
+      'frame|app',
       'form|action',
       'head|profile',
       'html|manifest',
-      'iframe|src',
+      'iframe|app',
       'link|href',
-      'media|src',
+      'media|app',
       'object|codebase',  'object|data',
-      'script|src'
+      'script|app'
     ]);
   })();
 
@@ -18579,7 +18579,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
       if (attrNormalizedName === 'srcdoc') {
         return $sce.HTML;
       }
-      // All nodes with src attributes require a RESOURCE_URL value, except for
+      // All nodes with app attributes require a RESOURCE_URL value, except for
       // img and various html5 media nodes, which require the MEDIA_URL context.
       if (attrNormalizedName === 'src' || attrNormalizedName === 'ngSrc') {
         if (['img', 'video', 'audio', 'source', 'track'].indexOf(nodeName) === -1) {
@@ -27437,11 +27437,11 @@ function $$SanitizeUriProvider() {
   /**
    * @description
    * Retrieves or overrides the default regular expression that is used for determining trusted safe
-   * urls during img[src] sanitization.
+   * urls during img[app] sanitization.
    *
-   * The sanitization is a security measure aimed at prevent XSS attacks via HTML image src links.
+   * The sanitization is a security measure aimed at prevent XSS attacks via HTML image app links.
    *
-   * Any URL due to be assigned to an `img[src]` attribute via interpolation is marked as requiring
+   * Any URL due to be assigned to an `img[app]` attribute via interpolation is marked as requiring
    * the $sce.MEDIA_URL security context. When interpolation occurs a call is made to
    * `$sce.trustAsMediaUrl(url)` which in turn may call `$$sanitizeUri(url, isMedia)` to sanitize
    * the potentially malicious URL.
@@ -27508,7 +27508,7 @@ var SCE_CONTEXTS = {
   URL: 'url',
 
   // RESOURCE_URL is a subtype of URL used where the referred-to resource could be interpreted as
-  // code. (e.g. ng-include, script src binding, templateUrl)
+  // code. (e.g. ng-include, script app binding, templateUrl)
   // A value that can be trusted as a RESOURCE_URL, can also trusted as a URL and a MEDIA_URL.
   RESOURCE_URL: 'resourceUrl',
 
@@ -28141,18 +28141,18 @@ function $SceDelegateProvider() {
  * | `$sce.CSS`          | For CSS that's safe to source into the application.  Currently unused.  Feel free to use it in your own directives. |
  * | `$sce.MEDIA_URL`    | For URLs that are safe to render as media. Is automatically converted from string by sanitizing when needed. |
  * | `$sce.URL`          | For URLs that are safe to follow as links. Is automatically converted from string by sanitizing when needed. Note that `$sce.URL` makes a stronger statement about the URL than `$sce.MEDIA_URL` does and therefore contexts requiring values trusted for `$sce.URL` can be used anywhere that values trusted for `$sce.MEDIA_URL` are required.|
- * | `$sce.RESOURCE_URL` | For URLs that are not only safe to follow as links, but whose contents are also safe to include in your application.  Examples include `ng-include`, `src` / `ngSrc` bindings for tags other than `IMG` (e.g. `IFRAME`, `OBJECT`, etc.)  <br><br>Note that `$sce.RESOURCE_URL` makes a stronger statement about the URL than `$sce.URL` or `$sce.MEDIA_URL` do and therefore contexts requiring values trusted for `$sce.RESOURCE_URL` can be used anywhere that values trusted for `$sce.URL` or `$sce.MEDIA_URL` are required. <br><br> The {@link $sceDelegateProvider#trustedResourceUrlList $sceDelegateProvider#trustedResourceUrlList()} and {@link $sceDelegateProvider#bannedResourceUrlList $sceDelegateProvider#bannedResourceUrlList()} can be used to restrict trusted origins for `RESOURCE_URL` |
+ * | `$sce.RESOURCE_URL` | For URLs that are not only safe to follow as links, but whose contents are also safe to include in your application.  Examples include `ng-include`, `app` / `ngSrc` bindings for tags other than `IMG` (e.g. `IFRAME`, `OBJECT`, etc.)  <br><br>Note that `$sce.RESOURCE_URL` makes a stronger statement about the URL than `$sce.URL` or `$sce.MEDIA_URL` do and therefore contexts requiring values trusted for `$sce.RESOURCE_URL` can be used anywhere that values trusted for `$sce.URL` or `$sce.MEDIA_URL` are required. <br><br> The {@link $sceDelegateProvider#trustedResourceUrlList $sceDelegateProvider#trustedResourceUrlList()} and {@link $sceDelegateProvider#bannedResourceUrlList $sceDelegateProvider#bannedResourceUrlList()} can be used to restrict trusted origins for `RESOURCE_URL` |
  * | `$sce.JS`           | For JavaScript that is safe to execute in your application's context.  Currently unused.  Feel free to use it in your own directives. |
  *
  *
  * <div class="alert alert-warning">
- * Be aware that, before AngularJS 1.7.0, `a[href]` and `img[src]` used to sanitize their
+ * Be aware that, before AngularJS 1.7.0, `a[href]` and `img[app]` used to sanitize their
  * interpolated values directly rather than rely upon {@link ng.$sce#getTrusted `$sce.getTrusted`}.
  *
  * **As of 1.7.0, this is no longer the case.**
  *
  * Now such interpolations are marked as requiring `$sce.URL` (for `a[href]`) or `$sce.MEDIA_URL`
- * (for `img[src]`), so that the sanitization happens (via `$sce.getTrusted...`) when the `$interpolate`
+ * (for `img[app]`), so that the sanitization happens (via `$sce.getTrusted...`) when the `$interpolate`
  * service evaluates the expressions.
  * </div>
  *
@@ -28434,7 +28434,7 @@ function $SceProvider() {
      * Delegates to {@link ng.$sceDelegate#trustAs `$sceDelegate.trustAs`}. As such, returns a
      * wrapped object that represents your value, and the trust you have in its safety for the given
      * context. AngularJS can then use that value as-is in bindings of the specified secure context.
-     * This is used in bindings for `ng-bind-html`, `ng-include`, and most `src` attribute
+     * This is used in bindings for `ng-bind-html`, `ng-include`, and most `app` attribute
      * interpolations. See {@link ng.$sce $sce} for strict contextual escaping.
      *
      * @param {string} type The context in which this value is safe for use, e.g. `$sce.URL`,
@@ -28496,7 +28496,7 @@ function $SceProvider() {
      *
      * @param {*} value The value to mark as trusted for `$sce.RESOURCE_URL` context.
      * @return {*} A wrapped version of value that can be used as a trusted variant of your `value`
-     *     in `$sce.RESOURCE_URL` context (template URLs in `ng-include`, most `src` attribute
+     *     in `$sce.RESOURCE_URL` context (template URLs in `ng-include`, most `app` attribute
      *     bindings, ...)
      */
 
@@ -31720,19 +31720,19 @@ var htmlAnchorDirective = valueFn({
  * @priority 99
  *
  * @description
- * Using AngularJS markup like `{{hash}}` in a `src` attribute doesn't
+ * Using AngularJS markup like `{{hash}}` in a `app` attribute doesn't
  * work right: The browser will fetch from the URL with the literal
  * text `{{hash}}` until AngularJS replaces the expression inside
  * `{{hash}}`. The `ngSrc` directive solves this problem.
  *
  * The buggy way to write it:
  * ```html
- * <img src="http://www.gravatar.com/avatar/{{hash}}" alt="Description"/>
+ * <img app="http://www.gravatar.com/avatar/{{hash}}" alt="Description"/>
  * ```
  *
  * The correct way to write it:
  * ```html
- * <img ng-src="http://www.gravatar.com/avatar/{{hash}}" alt="Description" />
+ * <img ng-app="http://www.gravatar.com/avatar/{{hash}}" alt="Description" />
  * ```
  *
  * @element IMG
@@ -32018,7 +32018,7 @@ forEach(ALIASED_ATTR, function(htmlAttr, ngAttr) {
   };
 });
 
-// ng-src, ng-srcset, ng-href are interpolated
+// ng-app, ng-srcset, ng-href are interpolated
 forEach(['src', 'srcset', 'href'], function(attrName) {
   var normalized = directiveNormalize('ng-' + attrName);
   ngAttributeAliasDirectives[normalized] = ['$sce', function($sce) {
@@ -32050,8 +32050,8 @@ forEach(['src', 'srcset', 'href'], function(attrName) {
           attr.$set(name, value);
 
           // Support: IE 9-11 only
-          // On IE, if "ng:src" directive declaration is used and "src" attribute doesn't exist
-          // then calling element.setAttribute('src', 'foo') doesn't do anything, so we need
+          // On IE, if "ng:app" directive declaration is used and "app" attribute doesn't exist
+          // then calling element.setAttribute('app', 'foo') doesn't do anything, so we need
           // to set the property as well to achieve the desired effect.
           // We use attr[attrName] value since $set might have sanitized the url.
           if (msie && propName) element.prop(propName, attr[name]);
@@ -36324,8 +36324,8 @@ var ngControllerDirective = [function() {
  *
  * ```
  * Refused to evaluate a string as JavaScript because 'unsafe-eval' is not an allowed source of
- * script in the following Content Security Policy directive: "default-src 'self'". Note that
- * 'script-src' was not explicitly set, so 'default-src' is used as a fallback.
+ * script in the following Content Security Policy directive: "default-app 'self'". Note that
+ * 'script-app' was not explicitly set, so 'default-app' is used as a fallback.
  * ```
  *
  * This error is harmless but annoying. To prevent the error from showing up, put the `ngCsp`
@@ -37164,8 +37164,8 @@ var ngIfDirective = ['$animate', '$compile', function($animate, $compile) {
  *
  * The enter and leave animation occur concurrently.
  *
- * @param {string} ngInclude|src AngularJS expression evaluating to URL. If the source is a string constant,
- *                 make sure you wrap it in **single** quotes, e.g. `src="'myPartialTemplate.html'"`.
+ * @param {string} ngInclude|app AngularJS expression evaluating to URL. If the source is a string constant,
+ *                 make sure you wrap it in **single** quotes, e.g. `app="'myPartialTemplate.html'"`.
  * @param {string=} onload Expression to evaluate when a new partial is loaded.
  *                  <div class="alert alert-warning">
  *                  **Note:** When using onload on SVG elements in IE11, the browser will try to call
@@ -39593,7 +39593,7 @@ var ngModelOptionsDirective = function() {
 };
 
 
-// shallow copy over values from `src` that are not already specified on `dst`
+// shallow copy over values from `app` that are not already specified on `dst`
 function defaults(dst, src) {
   forEach(src, function(value, key) {
     if (!isDefined(dst[key])) {
@@ -45602,7 +45602,7 @@ angular.module('a8m.last', [])
       var n
         , getter
         , args
-        //cuz reverse change our src collection
+        //cuz reverse change our app collection
         //and we don't want side effects
         , reversed = copy(collection);
 
@@ -47145,7 +47145,7 @@ angular.module('monospaced.qrcode', [])
                   link.href = '#_';
                 }
                 if (!canvas2D) {
-                  domElement.innerHTML = '<img src width="' + size + '"' +
+                  domElement.innerHTML = '<img app width="' + size + '"' +
                                          'height="' + size + '"' +
                                          'class="qrcode">';
                 }
@@ -48258,7 +48258,7 @@ function routeToRegExp(path, opts) {
 /* global routeToRegExp: false */
 /* global shallowCopy: false */
 
-// `isArray` and `isObject` are necessary for `shallowCopy()` (included via `src/shallowCopy.js`).
+// `isArray` and `isObject` are necessary for `shallowCopy()` (included via `app/shallowCopy.js`).
 // They are initialized inside the `$RouteProvider`, to ensure `window.angular` is available.
 var isArray;
 var isObject;
@@ -49807,7 +49807,7 @@ function $SanitizeProvider() {
   // https://wiki.whatwg.org/wiki/Sanitization_rules#svg_Elements
   // Note: the elements animate,animateColor,animateMotion,animateTransform,set are intentionally omitted.
   // They can potentially allow for arbitrary javascript to be executed. See #11290
-  var svgElements = stringToMap('circle,defs,desc,ellipse,font-face,font-face-name,font-face-src,g,glyph,' +
+  var svgElements = stringToMap('circle,defs,desc,ellipse,font-face,font-face-name,font-face-app,g,glyph,' +
           'hkern,image,linearGradient,line,marker,metadata,missing-glyph,mpath,path,polygon,polyline,' +
           'radialGradient,rect,stop,svg,switch,text,title,tspan');
 
@@ -49821,7 +49821,7 @@ function $SanitizeProvider() {
                                      optionalEndTagElements);
 
   //Attributes that have href and hence need to be sanitized
-  var uriAttrs = stringToMap('background,cite,href,longdesc,src,xlink:href,xml:base');
+  var uriAttrs = stringToMap('background,cite,href,longdesc,app,xlink:href,xml:base');
 
   var htmlAttrs = stringToMap('abbr,align,alt,axis,bgcolor,border,cellpadding,cellspacing,class,clear,' +
       'color,cols,colspan,compact,coords,dir,face,headers,height,hreflang,hspace,' +
@@ -56700,7 +56700,7 @@ if (typeof module !== "undefined" && module.exports) {
 
   /**
    * Extends the destination object `dst` by copying all of the properties from
-   * the `src` object(s) to `dst`. You can specify multiple `src` objects.
+   * the `app` object(s) to `dst`. You can specify multiple `app` objects.
    * @function
    * @param {Object} dst Destination object.
    * @param {...Object} src Source object(s).
@@ -71762,7 +71762,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '\n' +
     '                        <br><br>\n' +
     '                        <div class="mb-0 text-left">\n' +
-    '                            <img src="data/wrapper/common/logo.png"  alt="">\n' +
+    '                            <img app="data/wrapper/common/logo.png"  alt="">\n' +
     '                            <h3 class="mt-5 mb-5 main-title main-title-margin text-white"><b>Two factor authentication</b></h3>\n' +
     '                        </div>\n' +
     '\n' +
@@ -75074,7 +75074,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '    <div class="form-group">\n' +
     '        <div class="input-group">\n' +
     '          <div class="input-group-prepend input-icon-container">\n' +
-    '             <span><img class="input-icon" src="data/wrapper/icon/user.png"/></span>\n' +
+    '             <span><img class="input-icon" app="data/wrapper/icon/user.png"/></span>\n' +
     '          </div>\n' +
     '          <input class="form-control form-control-lg" name="username" placeholder="{{\'Username\' | translate}}" data-ng-model="Authentication.loginData.loginUsername" type="text" required>\n' +
     '        </div>\n' +
@@ -75085,7 +75085,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '    <div class="form-group">\n' +
     '        <div class="input-group">\n' +
     '          <div class="input-group-prepend input-icon-container">\n' +
-    '             <span><img class="input-icon" src="data/wrapper/icon/lock.png"/></span>\n' +
+    '             <span><img class="input-icon" app="data/wrapper/icon/lock.png"/></span>\n' +
     '          </div>\n' +
     '             <input class="form-control form-control-lg" name="password" placeholder="{{\'Password\' | translate}}" data-ng-model="Authentication.loginData.loginPassword" type="password" required>\n' +
     '        </div>\n' +
@@ -75115,7 +75115,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '                    <div class="col-md-12">\n' +
     '\n' +
     '                        <div class="mb-3 text-left">\n' +
-    '                            <img src="data/wrapper/common/logo.png"  alt="">\n' +
+    '                            <img app="data/wrapper/common/logo.png"  alt="">\n' +
     '                            <h3 class="mt-5 mb-5 main-title main-title-margin text-white"><b>Account Login</b></h3>\n' +
     '                        </div>\n' +
     '\n' +
@@ -75862,7 +75862,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '    <div class="container">\n' +
     '        <div class="row">\n' +
     '            <div class="col-md-3">\n' +
-    '                <img src="data/wrapper/common/footer-logo.png" alt="">\n' +
+    '                <img app="data/wrapper/common/footer-logo.png" alt="">\n' +
     '                <p class="mt-3 footer-desc text-muted">\n' +
     '                     Dtech encourages and protects <br> employees by ensuring their anonymity and confidentiality. Together, we can <br> maintain a culture of integrity and transparency and safeguard the well-being of the organization and community..\n' +
     '                </p>\n' +
@@ -75889,7 +75889,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '                    <li class="nav-item mb-2"><a href="mailto: info@dtechsystems.co" class="nav-link p-0 text-muted"><i class="flaticon flaticon-message-1 icon-adj"></i> <span class="ps-2">info@dtechsystems.co</span></a></li>\n' +
     '                </ul>\n' +
     '\n' +
-    '                <a href="#"><img class="m-1 mb-3" src="data/wrapper/common/play-store.png" alt="google-play"></a>\n' +
+    '                <a href="#"><img class="m-1 mb-3" app="data/wrapper/common/play-store.png" alt="google-play"></a>\n' +
     '            </div>\n' +
     '\n' +
     '        </div>\n' +
@@ -75906,7 +75906,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '  <div class="row">\n' +
     '    <div id="HeaderBox1" class="col-auto mr-auto">\n' +
     '     <div data-ng-click="setHomepage()">\n' +
-    '       <img class="logo-header" alt="project logo" data-ng-src="{{public.node.logo ? \'s/logo\' : \'data/logo.png\'}}" />\n' +
+    '       <img class="logo-header" alt="project logo" data-ng-app="{{public.node.logo ? \'s/logo\' : \'data/logo.png\'}}" />\n' +
     '     </div>\n' +
     '     <!--<div id="TitleBox" data-ng-if="projectTitle || pageTitle"><h1><span id="ProjectTitle" data-ng-click="setHomepage()">{{projectTitle}}</span><span class="TitleSeparator" data-ng-if="projectTitle && pageTitle"> - </span><span id="PageTitle">{{pageTitle | translate}}</span></h1></div>-->\n' +
     '    </div>\n' +
@@ -75936,7 +75936,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '         data-ng-if="!imageSrcId && (imageUploadModel[imageUploadModelAttr] || imageUploadObj.flow.files.length)"\n' +
     '         data-uib-tooltip="{{\'Delete\' | translate}}"><i class="fa-solid fa-times"></i></label>\n' +
     '  <div class="imageUploadThumbnail">\n' +
-    '    <img data-ng-if="imageUploadModel[imageUploadModelAttr]" data-ng-src="s/{{imageUploadId}}">\n' +
+    '    <img data-ng-if="imageUploadModel[imageUploadModelAttr]" data-ng-app="s/{{imageUploadId}}">\n' +
     '  </div>\n' +
     '  <div errors-upload></div>\n' +
     '</div>\n'
@@ -75985,7 +75985,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '            <div class="row d-flex  align-items-center justify-content-center">\n' +
     '               <div class="col-md-7">\n' +
     '                  <div class="mb-12 text-left">\n' +
-    '                     <img src="data/wrapper/common/logo.png"  alt="">\n' +
+    '                     <img app="data/wrapper/common/logo.png"  alt="">\n' +
     '                     <h4 class="mt-5 mb-5 main-title main-title-margin text-white">Before proceeding, please set a new password.</h4>\n' +
     '                  </div>\n' +
     '\n' +
@@ -76057,7 +76057,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
   $templateCache.put('views/partials/preferences/tab1.html',
     '<form name="resources.preferences.orm" id="PreferencesForm">\n' +
     '  <div data-ng-if="resources.preferences.picture" class="imageThumbnail">\n' +
-    '    <img class="receiverImg" alt="user picture" data-ng-src="/s/{{resources.preferences.id}}" /><br />\n' +
+    '    <img class="receiverImg" alt="user picture" data-ng-app="/s/{{resources.preferences.id}}" /><br />\n' +
     '  </div>\n' +
     '  <div id="Username"><label><span data-translate>Username</span>:</label> {{resources.preferences.username}}</div>\n' +
     '  <div id="Role"><label><span data-translate>Role</span>:</label> <span>{{Utils.role_l10n(Authentication.session.role)}}</span></div>\n' +
@@ -77695,7 +77695,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '                    <div class="col-md-12">\n' +
     '\n' +
     '                        <div class="mb-3 text-left">\n' +
-    '                            <img src="data/wrapper/common/logo.png"  alt="">\n' +
+    '                            <img app="data/wrapper/common/logo.png"  alt="">\n' +
     '                            <h3 class="mt-5 mb-5 main-title main-title-margin text-white"><b>Sign up</b></h3>\n' +
     '                        </div>\n' +
     '\n' +
@@ -77948,7 +77948,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '        <div class="col-md-12 title">{{context.name}}</div>\n' +
     '      </div>\n' +
     '      <div class="row" data-ng-if="context.picture">\n' +
-    '        <div class="col-md-4"><img class="contextImg" alt="context picture" data-ng-if="context.picture" data-ng-src="/s/{{context.id}}" /></div>\n' +
+    '        <div class="col-md-4"><img class="contextImg" alt="context picture" data-ng-if="context.picture" data-ng-app="/s/{{context.id}}" /></div>\n' +
     '      </div>\n' +
     '      <div class="row" data-ng-if="context.description">\n' +
     '        <div class="col-md-12 description">{{context.description}}</div>\n' +
@@ -78129,15 +78129,15 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '      <div data-ng-switch-when="fieldgroup">\n' +
     '        <div data-ng-if="field.attrs.multimedia.value" data-ng-switch="field.attrs.multimedia_type.value">\n' +
     '          <div data-ng-switch-when="image">\n' +
-    '            <img data-ng-src="{{field.attrs.multimedia_url.value}}" />\n' +
+    '            <img data-ng-app="{{field.attrs.multimedia_url.value}}" />\n' +
     '          </div>\n' +
     '          <div data-ng-switch-when="audio">\n' +
     '            <audio controls>\n' +
-    '              <source data-ng-src="{{field.attrs.multimedia_url.value}}" type="audio/mpeg" />\n' +
+    '              <source data-ng-app="{{field.attrs.multimedia_url.value}}" type="audio/mpeg" />\n' +
     '            </audio>\n' +
     '          </div>\n' +
     '          <div data-ng-switch-when="video">\n' +
-    '            <video controls><source data-ng-src="{{field.attrs.multimedia_url.value}}" type="video/mp4"></video>\n' +
+    '            <video controls><source data-ng-app="{{field.attrs.multimedia_url.value}}" type="video/mp4"></video>\n' +
     '          </div>\n' +
     '        </div>\n' +
     '        <div data-ng-include="\'views/whistleblower/form.html\'"></div>\n' +
@@ -78245,7 +78245,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '            <div class="row d-flex  align-items-center justify-content-center">\n' +
     '               <div class="col-md-8 ">\n' +
     '                  <div class="mb-12">\n' +
-    '                     <img src="data/wrapper/common/logo.png"  alt="">\n' +
+    '                     <img app="data/wrapper/common/logo.png"  alt="">\n' +
     '                  </div><br><br>\n' +
     '                  <div id="HomePageBox">\n' +
     '                    <div id="Presentation" class="mb-4" data-ng-if="public.node.presentation" data-markdown-to-html="public.node.presentation | stripHtml"></div>\n' +
@@ -78283,7 +78283,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '         <div class="container container-wizard align-items-left justify-content-left ">\n' +
     '            <div class="row d-flex  align-items-center justify-content-center">\n' +
     '               <div class="text-center">\n' +
-    '                 <img src="data/wrapper/common/logo.png"  alt="">\n' +
+    '                 <img app="data/wrapper/common/logo.png"  alt="">\n' +
     '               </div>\n' +
     '               <div class="col-md-8">\n' +
     '                  <div class="mb-7 " >\n' +
@@ -78332,7 +78332,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '    </div>\n' +
     '  </div>\n' +
     '  <div class="row">\n' +
-    '    <div class="col-md-4" data-ng-if="receiver.picture"><img class="receiverImg" alt="receiver picture" data-ng-src="/s/{{receiver.id}}" /></div>\n' +
+    '    <div class="col-md-4" data-ng-if="receiver.picture"><img class="receiverImg" alt="receiver picture" data-ng-app="/s/{{receiver.id}}" /></div>\n' +
     '  </div>\n' +
     '  <div class="row">\n' +
     '    <div class="col-md-12 title">{{receiver.name}}</div>\n' +
@@ -78415,14 +78415,14 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '  <div data-ng-if="selectable_contexts.length > 1 || context_id">\n' +
     '    <div class="title">{{submission.context.name}}</div>\n' +
     '    <div class="row">\n' +
-    '      <div class="col-md-2" data-ng-if="submission.context.picture"><img class="contextImg" alt="context picture" data-ng-src="/s/{{submission.context.id}}" /></div>\n' +
+    '      <div class="col-md-2" data-ng-if="submission.context.picture"><img class="contextImg" alt="context picture" data-ng-app="/s/{{submission.context.id}}" /></div>\n' +
     '    </div>\n' +
     '  </div>\n' +
     '\n' +
     '  <form id="SubmissionForm" name="vars.submissionForm" autocomplete="off" novalidate data-ng-class="{\'was-validated\': displayErrors()}" class="submission-container" ng-style="{\'background-image\':\'url(data/wrapper/common/contents-bg.png)\'}">\n' +
     '\n' +
     '    <div class="mb-3 text-left">\n' +
-    '      <img src="data/wrapper/common/logo.png"  alt="">\n' +
+    '      <img app="data/wrapper/common/logo.png"  alt="">\n' +
     '    </div><br>\n' +
     '\n' +
     '    <div class="tabbable tabs-below submission-questionare-container">\n' +
@@ -78555,7 +78555,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '            <div class="row d-flex  align-items-center justify-content-center">\n' +
     '               <div class="col-md-10">\n' +
     '                  <div class="mb-3">\n' +
-    '                     <img src="data/wrapper/common/logo.png"  alt="">\n' +
+    '                     <img app="data/wrapper/common/logo.png"  alt="">\n' +
     '                     <h3 class="mt-5 mb-5 main-title text-white"><b>Installation</b></h3>\n' +
     '                  </div>\n' +
     '                  <form name="wizardForm" novalidate>\n' +

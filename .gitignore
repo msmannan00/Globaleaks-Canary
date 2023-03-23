@@ -34,6 +34,8 @@ yarn-error.log
 .sass-cache/
 /connect.lock
 /coverage
+/.pybuild
+/client/build
 /libpeerconnection.log
 testem.log
 /typings
