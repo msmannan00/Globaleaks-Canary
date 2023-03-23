@@ -1,0 +1,4491 @@
+Changes in version 4.10.19.1
+    Fix wizard when performed using a remote connection
+
+Changes in version 4.10.17
+    Revise checks on browser compatibility
+    Fix code related to re-generation of onion services
+
+Changes in version 4.10.16
+    Fix packaging issue preventing release 4.10.15 to work
+
+Changes in version 4.10.15
+    Fix regression on multimedia content visualization due to restricted
+      Content Security Policy (#3307)
+    Modify Tor indicator to track if the whistleblower has always used
+      Tor (#3299)
+    Make it possible to load GIF and JPEG images as logo (#3301)
+    Revise password scoring function to require at least 12 characters
+      and at least 10 different characters (#3311)
+    Added data filters on report list page
+    Implement responsive menu and add icons to menu items
+    Update translations
+    [doc] Revise Application Security section
+    [doc] Update documentation about the content security policy
+
+Changes in version 4.10.14
+    Apply minor UI fixes
+    Bump client dependencies to latest versions
+    Update translations
+
+Changes in version 4.10.13
+    Revise fix fo regression on ACME key generation introduced in 3.10.11 (#3295)
+
+Changes in version 4.10.12
+    Fix regression on generation of Acme Account Key introduced in 4.10.11
+    Update translations
+
+Changes in version 4.10.11
+    Randomize LetsEncrypt renewal solving failing issues on congested times
+    Revise packaging of client libraries
+    Fix jslint errors
+    Fix submission reset feature in relation to the addition
+    of two factor authentication check
+    Remove outdated code invalidating session when visiting the homepage
+    Preserve internal user sessions in the sessionStorage
+    When whistleblower session expires redirect the user on
+    a blank page (#3293)
+    Map locationStorage on sessionStorage (#3277)
+    Fix issue #3277
+    Bump npm dependencies to latest version
+    Update translations
+
+Changes in version 4.10.10
+    Fix corrupted file upload problem for files bigger than 1MB
+    introduced in 4.10.0
+    Update the last update date when the report status is changed
+    Revert fix for issue #3272
+    Revise Debian packaging
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 4.10.9
+    Fix issue #3272
+
+Changes in version 4.10.8
+    Fix password confirmation in relation to unicode escape encoding
+    Extend image file types supported by the application adding gif and jpeg
+    Perform logout when navigating pages that do not require auth (#3221)
+    Fix issue #3225
+    Bump npm dependencies to latest versions
+
+Changes in version 4.10.7
+    Fix regression on users password change introduced in 4.10.0
+
+Changes in version 4.10.6
+    Replace usage of python random module with python secrets module
+    Fix mimetype for javascript files in relation to IANA definititions
+    Bump terser to latest version
+
+Changes in version 4.10.5
+    Fix regression in relation to password resets requiring old passwords
+    Fix regression in relation to old reports introduced in 0750098ef936452904f666bcb5aefc24fcfade84
+    Remove redundant interface for loading PGP keys by copy/paste
+    Bump npm dependencies to latest version
+    Update translations
+    [doc] Add reference to ROS Security Audit 2022
+    [doc] Update documentation images
+
+Changes in version 4.10.4
+    Revise mime types fixing loading of favicon files (#3258)
+    Make it possible to filter receiver tips by date args (updated_after, updated_before)
+
+Changes in version 4.10.3
+    Fix initialization of onion servers
+
+Changes in version 4.10.2
+    Revise mime types fixing loading of favicon files (#3258)
+    Fix client failure when testing email notifications (#3259)
+    Fix duplicated option visualization in advanced settings (#3260)
+    Fix loading of custom scripts from /var/globaleaks/scripts/ directory
+    Bump npm dependencies to latest version
+    Update translations
+
+Changes in version 4.10.1
+    Fix certificate renewal failure introduced in 4.10.1
+
+Changes in version 4.10.0
+    Validate url argument of support handler using regexp matching
+    Remove interface for immediate user activation
+    Avoid to fix file permissions at runtime
+    Implement dedicated handlers for password change
+    Drop privileges as soon that command line arguments are parsed and sockets are binded
+    Remove web possiblity to load javascript customization via web interface
+    Limit accepted mimetypes depending on the handler
+    Add requirement of two factor authenticatioon confirmation to set of operations
+    - Enabling encryption
+    - Disabling 2fa
+    - Toggling system key escrows
+    - Toggling user key escrows
+    - Visualizing account recovery keys
+    - Resetting system reports
+    - Using password reset links
+    Prevent two factor token reuse
+    Do not load file customizations when managing tenants
+    Limit listing files loaded for public access to administrators or privileged recipients
+    Restrict content security policies limiting resources that could be loaded
+    Add directory traversal checks after loading paths from the database
+    Enforce failure when apparmor or iptables support is missing
+    Revise signup form removing redundant data collection
+    Strip html tags before processing markdown
+    Ensure token decorator could not be bypassed
+    Ensure uploded file names do not contain slashes
+    Add warning in case of use of default smtp configuration
+    Modify simplified login to not expose usernames
+    Improve templating avoiding templates injection
+    Bind only on local host when in development mode
+    Make it possible to change network configuration only by root tenants admins
+    Avoid to change page title to "Report" to limit traces on browser history
+    Ensure to not write files bigger than the defined maximum file size
+    Require explicit opt-in to enable developers exception notifications
+    Remove web possiblity to load javascript customization via web interface
+    Change token decorator using path variable instead of uri variable
+    Disable developers exception notifications by default
+    Remove API for client exception reporting
+    Disable APIs for exporting HTTPS certificates' keys
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 4.9.9
+    Reintroduce Tor Exit IP check based on onionoo data
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 4.9.8
+    Revise teardown of onion services
+    Fix margins in RTL layout
+    Update translations
+
+Changes in version 4.9.7
+    Fix compatibility with old versions of txtorcon (#3229)
+    The failure was causing failure on ubuntu bionic for version 4.9.6
+
+Changes in version 4.9.6
+    Improve resiliency of onion services setup and teardown
+    Optimize application state and tenants
+    Set Gzip Encoder compression level to 1 prioritizing speed over compression
+    Remove "-" character from <title> tag when the page title is not set
+    Remove duplicated IDs from submissions form (#3222)
+    Add aria label on "Plus" button for multi-answer questions (#3222)
+    Add aria label on "Close" button of disclaimer modal (#3222)
+    Add h1 tag on page title (#3222)
+    Add for attribute to labels referred to form inputs (#3222)
+    Improve accessibility of receipt interface interconnectin label and input (#3222)
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 4.9.5
+    Fix exception triggered when recipients download their own files (#3220)
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 4.9.4
+    Fix regression on download of files uploaded by recipients introduced in 4.9.1
+    Fix regression on simplified login introduced in 4.9.0
+    Correct Lithuanian language name incorrectly shown as Latvian
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 4.9.3
+    Fix regression on Tenant Auth Switch introduced in 4.9.1
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 4.9.2
+    Fix regression on Export/Download of Files introduced in 4.9.1
+
+Changes in version 4.9.1
+    Complete bugfixing for new package for Ubuntu Jammy 22.04
+    Extend proof of work protection to every not authenticated request != GET, OPTIONS
+    Change default user permissions removing delete priviledge
+    Fix regression on feature #2915
+    Bump npm dependencies to latest versions
+    Update translations
+    [doc] Update Threat Model texts
+    [doc] Update Application Security document in relation to hashcash policy on unauthenticated requests
+
+Changes in version 4.9.0
+    Silence notification of common exceptions
+    Prepare packaging for Ubuntu Jammy (#3185)
+    Fix visibility of reports related to deleted contexts (#3209)
+    Fix export failure for reports with large number of attachments (#3212)
+    Fix compatibility with both SQLAlchemy 1.3 and 1.4
+    Add migration script 62
+    Add archived db version 62 used for tested purposes
+    Implement SQLITE lockdown state (#3206)
+    Simplify configuration of context hidden status
+    Simplify configuration of users enabled status
+    Deliver submissions also to recipients which account have been disabled
+    Remove database support for incomplete features #2523 and #2552
+    Fix regression on notification of certificate renewal failure introduced in 4.8.1
+    Add autoincrement property to Tenant ID attribute (#3197)
+    Change the type of the ID attribute of Audit Log to be an autoincremented integer (#3198)
+    Bump npm dependencies to latest versions
+    Update translations
+    [doc] Update documentation images
+    [doc] Update ER representation of the database
+    [doc] Update documentation in relation to application testing
+    [doc] Add documentation about hardened database configuration
+
+Changes in version 4.8.1
+    Improve performances of https renewal job
+    Revise audit log marking system' report deletion by tenant
+    Ensure that the local copy of the receipt is deleted after logout
+    Deprecate outdated Tor check based on check.torproject.org
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 4.8.0
+    Improve audit log adding entry for reports deleted automatically by the system
+    Improve audit log adding information about software updates (#3194)
+    Improve self password reset feature making caseinsensitive email lookup
+    Cancel deferred processing when client connection is closed
+    Fix visualization of buttons for ordering contexts
+    Fix failure on pgp encryption of wbfiles for recipients
+    Hide no-configurable options from referenced fields templates instances
+    Add missing multichoice input choice on fields creation
+    Update default globaleaks questionnaire
+    Optimize database removing id attribute on fieldattr model
+    Fix issue #3193
+    Bump npm dependencies to latest versions
+    Update translations
+    [doc] Revise features documentation
+    [doc] Update documentation images
+
+Changes in version 4.7.17
+    This version just fixes version numbering
+
+Changes in version 4.7.16
+    Deprecate haveged on systems running kernel >= 5.6 (#3184)
+    Deprecate outdated and unused code related to old version of haveged #1722
+    Make it possible to reset template override setting (#2908)
+    Fix regression on #3116
+    Bump npm dependencies to latest versions
+
+Changes in version 4.7.15
+    Fix exception on interrupted connections (#2706)
+    Bump npm dependencies to lates versions
+
+Changes in version 4.7.14
+    Fix incorrect bump of bootstrap library to version 5
+    Fix exception on logout introducted in 4.7.12
+
+Changes in version 4.7.13
+    Fix wrong release numbering stating 4.7.12 is still 4.7.11
+    Bump npm dependencies to latest versions
+
+Changes in version 4.7.12
+    Filter recurring meaningless exceptions from Twisted from notification
+    Prevent users to revoke their own access to reports (#3182)
+    Optimize Content Security Policy
+    Fix regression on report postpone feature introduced in 4.7.11
+    Fix issue #3180
+    Bump npm dependencies to latest versions
+    Update translations
+    [doc] Update documentation about CSP
+    [doc] Add reference link for AppArmor
+    [doc] Add reference link for iptables
+
+Changes in version 4.7.11
+    Revise revoke access functionality to show real users' names
+    Fix issues #3171, #3175
+    Bump FontAwesome from 5 to 6
+    Bump npm dependencies to latest versions
+    Stop including fonts inside minified css
+    Revise postpone feature in relation to #3166
+    Bump npm dependencies to latest versions
+    Update translations
+    [doc] Update documentation images
+
+Changes in version 4.7.10
+    Fix regression on files uploads introduced in 4.7.8
+
+Changes in version 4.7.9
+    Avoid to serialize templates when exporting questionnaire
+
+Changes in version 4.7.8
+    Make it possible for secondary tenants to not be exposed via Tor (#3155)
+    Reimplement tenant api removing direct acces by tenant number
+    Make it possible to access secondary tenants via /t/subdomain path
+    Restore possibility to provide a message to users that
+    decide to not provide their identity
+    Improve questionnaire template UI marking template questions
+    with "Template" type (#3156)
+    Add exception on permission checks for directory 'lost+found' (#3159)
+    Fix regression on advanced field options configurations (#3154)
+    Enable users to review file uploads before effective upload
+    Fix issues #3157, #3160
+    Bump npm dependencies to latest version
+    Update translations
+
+Changes in version 4.7.7
+    Add report progressive number to audit log (#3145)
+    Implement serverside validation of password strength (#3150)
+    Fix issues #3146 and #3149
+    Bump npm dependencies to latest version
+    Update translations
+
+Changes in version 4.7.6
+    Fix regression #3135
+    Bump npm dependencies to latest version
+    Update translations
+
+Changes in version 4.7.5
+    Make it possible to restart the application
+    without invalidating password reset tokens
+    Make it possible to customize Steps descriptions with markdown
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 4.7.4
+    Fix regression on generation of PGP encrypted emails
+    Update translations
+
+Changes in version 4.7.3
+    Revise apparmor script fixing permissions to generate password reset token
+    Avoid to encrypt email subjects as in releases before 4.6.0
+
+Changes in version 4.7.2
+    Fix regression on report export introduced in 4.7.0 for report
+    including files updloaded by recipients
+    Fix regression on report search introduced in 4.7.0 (#3131)
+
+Changes in version 4.7.1
+    Fix regression #3130 introduced in 4.7.0
+
+Changes in version 4.7.0
+    Revise TLS configuration by specifically disabling TLS1 and TLS1.1 on SMTP connections
+    Decouple encryption keys of submissions from encryption keys of files
+    Optimize database and API for fetching reports summaries #3125
+    Optimize database by setting sqlite temp_store to memory on every new connection (#3125)
+    Optimize database enabling automatic indexing is enabled on sqlite database (#3125)
+    Fix migration of questions generated from templates by running migrations with foreign keys
+    Fix loading of receipt page when context id is provided within the uri
+    Modify grant tip access function to show real users' names (#3127)
+    Bump npm dependencies to latest version
+    Update translations
+    [doc] Update ER representation of the database
+
+Changes in version 4.6.1
+    Fix regression in 4.6.0 preventing to visualize reports labels
+    Update translations
+
+Changes in version 4.6.0
+    Adopt ECC keys of 384bits
+    Modify ECDH configuration to use curve NID_secp384r1
+    Implement securitytxt (#2647)
+    Register first access to files by whistleblowers
+    Register first access to files by recipients
+    Register first access to reports by recipients
+    Optimize database removing unused attributes
+    Add email validation on Signup and Support requests
+    Revise code relate to mandatory-check on file uploads
+    Make it possible to require whistleblowers to upload files
+    before proceeding with the completion of the submission (#3116)
+    Revise code relate to mandatory-check on file uploads
+    Notify recipients when whistleblowers disclose their own identity
+    Notify recipients when whistleblowers fills the secondary questionnaire
+    Always strip the email subject when sending PGP encrypted emails
+    Add Brave to the list of supported browsers (#3121)
+    Correct Github donation link (#3120)
+    Add support for Crimean Turkish translation
+    Update translations
+    [doc] Add Secure File Download measures section
+    [doc] Add Browser History and Forensic Traces section
+    [doc] Add TLS certificate keys section
+    [doc] Revise section about Cache-Control header
+    [doc] Revise application glossary
+    [doc] Add documentation about supported browsers
+    [doc] Update number of supported languages
+
+Changes in version 4.5.8
+    Fix self reset password regression introduced in 4.4.5
+    Set session keepalive period to 5 minutes
+    Do not invalidate password reset tokens till actual password change
+    Update translations
+
+Changes in version 4.5.7
+    Implement Cross-Origin-Embedder Policy
+    Implement Cross-Origin-Resource Policy
+    Fix issues #3117 and #3118
+    Update translations
+
+Changes in version 4.5.6
+    Fix regression on password reset links introduced in 4.4.5
+    Optimize serialization of public API reducing set of exported keys
+    Open link for testing contexts on a new page
+    Fix issue #3113
+
+Changes in version 4.5.5
+    Add URL to support requests emails
+    Fixes issue #3108, #3109, #3110, #3111
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 4.5.4
+    Implement session keep-alive and check on session expiration
+    Fix issues #603, #2842, #3104, #3105, #3106
+    Bump npm dependencies to latest versions
+
+Changes in version 4.5.3
+    Fix regression on Simplified Login when combined with 2FA
+    (regression introduced in 4.5.0)
+
+Changes in version 4.5.2
+    Implement Cross-Origin-Opener-Policy (#3103)
+    Make it possible for administrators to configure the public name of users (#3094)
+    Open TOS attachments and TOS reference link on a new page (#3097)
+    Replace automatic link sanitizer with an explicit target=_blank directive
+    Fix audit log in relation to visualization of images for  users' 2fa status
+    Revise UI of project logo upload functionality removing double click issue
+    Always show hours and minutes on dates of file uploads
+    Fix issues #3093 and #3095, #3098, #3100, #3101, #3102
+
+Changes in version 4.5.1
+    Fix authenticaton on secondary tenants by root tenant users
+    (regression introduced in 4.5.0)
+
+Changes in version 4.5.0
+    Fix internationalization of close button in support modal (#3084)
+    Fix regression on compatibility with Internet Explorer (#3085)
+    Avoid to show logout button on homepage and submission page
+    Show explicit logout link on whistleblower sessions
+    Revise login interface resetting inputs on failure
+    Make it possible to manually configure TOTP secret (#3088)
+    Add "Copy to clipboard" functionality on 2FA qrcode interface
+    Fix possibility to provide identity after submission
+    Always encrypt downloads with PGP when the user key is available (#3087)
+    Fix bug on invalidation of escrow key when enabling key escrow of secondary tenants
+    Always fetch user preferences when the user preferences are accessed
+    Fix issue #3086, #3090
+    Bump npm dependencies to latest versions
+    Improve request support feature by prepopulating the email field
+    Update translations
+
+Changes in version 4.4.5
+    Revise rate limiting decorator limiting only whistleblowers' sessions #3076
+    Simplify handling of recipient public names
+    Fix possibility of adding multiple file questions
+    Make it possible to use drag and drop on admin file configurations
+    Fix issue #3075
+    Bump npm dependencies to latest version
+    Update translations
+
+Changes in version 4.4.4
+    Make it possible for recipient to choose the postpone date #3068
+    Make it possible for recipients to see real user names #3064
+    Make it possible for any recipient to remove files loaded by other recipients
+    Make it possible to filter sites by any property
+    Add audit log for password reset considering it as a login
+    Fix reordering of submission substatuses #3066
+    Remove possibility to postpone expiration of multiple reports at once
+    Simplify API removing proof of work token from authenticated APIs
+    Implement session on any whistleblower action
+    Implement rate limiting on user sessions
+    Deprecate multisite login functionality
+    Limit the maximum payload of any request to 2MB
+    Remove outdated section of signup template
+    Fix issues #2972, #3069
+    Revise exception handling
+    Improve responsiveness of logo and page title on small screens
+    Revise of comments and message buttons
+    Bump npm dependencies to latest version
+    Update translations
+
+Changes in version 4.4.3
+    Add NTP as package dependency on debian buster and ubuntu bionic
+    Simplify interface of questionnaire configuration when only one step
+    is present
+    Revise layout of login and 2fa pages
+    Fix functionality of self password recovery on the page that requires
+    the account recovery key
+    Update translations
+
+Changes in version 4.4.2
+    Apply minor bugfixing
+    Revise native language names
+    Add support for Bashkir language
+    Update translations
+
+Changes in version 4.4.1
+    Add support for Serbian (Montenegro) and Tatar language
+    Fix regression causing failure on file uploads and other mail exceptions (#3035)
+    Update translations
+
+Changes in version 4.4.0
+    Bump database version to 56 to fix specific issue on db version 55
+
+Changes in version 4.3.2
+    Fix regression on visualization on answers to fieldgroups introduced in 4.3.0 (#3053)
+    Update translations
+
+Changes in version 4.3.1
+    Fix issues #2525, #2768, #3051, #3052
+    When key escrow is enabled activate user encryption as soon that users are created
+    Apply minor bugfixing of new interfaces
+    Update translations
+
+Changes in version 4.3.0
+    Make it possible for recipients to add a new recipient to their submissions (#2595)
+    Implement Request Support feature (#3035)
+    Revise data collected when asking whistleblower's identity (#3032)
+    Logs when recipients access whistleblowers's identity
+    Enable custodian functionality when a custodian user exists
+    Prioritizing new encryption model over PGP encryption
+    Deprecate support of HTTPS NPN protocol
+    Revise password reset token setting expiration to 7 days
+    Track access to submissions that are exported
+    Make it possible to customize the text shown over the context selection
+    Reorganize secondary tenant creation to not require wizard completion
+    Improve 2FA account name to show: $hostname ($username) (#3021)
+    Fix issues #3027, #3041
+    Bump npm dependencies to latest version
+    Add support Persian (Afghanistan) language
+    Add support for Armenian language
+    Add support for Belarusian
+    Add support for Checken language
+    Add support for Kazakh language
+    Add support for Kyrgyz language
+    Add support for Pashto language
+    Add support for Serbian (Latin) language
+    Add support for Turkmen language
+    Add support for Tajik language
+    Add support for Uzbek language
+    Update translations
+
+Changes in version 4.2.13
+    Deprecate onion services v2 #2894
+    Add Debian Bullseye (11) packaging #3019
+    Show receipt box only when /#/submission url is visited directly #3026
+    Revise TLS implementation improving security and performance
+    Fix integration of ug@Cyrl language
+    Apply minor bugfixing
+    Update translations
+    Bump client dependencies to lates version
+
+Changes in version 4.2.12
+    Fix regression #3029 on UI mocks visualization added in 4.2.11
+
+Changes in version 4.2.11
+    Implement copy to clipboard function on encryption recovery key
+    Implement copy to clipboard functionality on receipts (#1143)
+    Implement copy to clipboard function on onion address (#1040)
+    Re-implement feature #3026 with proper handling of responsiveness
+    Make it possible to show comments and messages sent before
+    disabling commenting and messaging
+    Implement link to the homepage on logo and project title
+    Fix regression on feature #2521
+    Fix issue #3015
+    Fix export of submissions including both files and comments
+    Fix password reset link functionality when triggered by
+    administrators of secondary sites
+    Disable autocomplete on password change for modern browsers
+    Log ip and user agent of internal users by default for
+    security purposes
+    Update documentation
+    Publish tentative 2021-2023 roadmap
+    Remove incorrect import of D3 library not used anymore
+    Bump npm dependencies to latest version
+    Add Uyghur translations in latin and cyrillic alphabets
+    Add revised Tibetan translation
+    Update translations
+
+Changes in version 4.2.10
+    Implement possibility to export all reports at once (#2824)
+    Refactor Token implementation and separate it from Submission state
+    Assign access_report audit log to secondary tenants
+    Revise colors of the application in relation to style guidelines
+    Change logo version and optimize size
+    Update Tibetan translation (ongoing trranslation updated for revision purposes)
+    Fix native language name for Swahili (Kiswahili)
+    Update translations
+
+Changes in version 4.2.9
+    Fix issue #3007 preventing new setups of globaleaks 4.2.8
+    Fix password reset functionality in relation to pyotp dependency removal
+    Revise min_len and max_len input validations in relation to IE 11
+    Add Tibetan translation (ongoin translation added for revision purposes)
+    Update translations
+
+Changes in version 4.2.8
+    Update translations for revision purposes
+
+Changes in version 4.2.7
+    Fix functionality of import of questionnaires
+    Fix loading of intermediate chain composed by more than one certificate
+    Bump npm dependencies to latest versions
+    Add Kramer translation (ongoing translation added for revision purposes)
+    Add Uyghur translation (ongoing translation added for revision purposes)
+    Update translations
+
+Changes in version 4.2.6
+    Add Bengali translation
+    Add Lao translation
+    Add Malayan translation
+    Improve usability of drop down with >=10 choices
+    Update translations
+    Bump npm dependencies to latest versions
+
+Changes in version 4.2.5
+    Fix bug on file delivery in mixed PGP / non PGP configurations
+    Add Burmese translation
+    Add Chinese (Hong Kong) translation
+    Update translations
+    Bump npm dependencies to latest versions
+
+Changes in version 4.2.4
+    Fix issue #2998 affecting migration 54i, impacting releases 4.2.0-3
+    and causing corruption of files attached by administrators for
+    platform customization.
+    Fix issue #2995
+    Fix bug on notification to recipients of their own messages
+
+Changes in version 4.2.3
+    Improve readability of home page revisiting font-sites and margins
+    Getting sure to filter white spaces when using ip addresses filters
+    Fix issue #2993
+
+Changes in version 4.2.2
+    Ignore browser language and prefer platform default
+    Set Log job timing to 30 seconds
+    Fix lint error affecting Log job shutdown
+    Make update notifications subject to admin notifications enablers
+    Fix issue #2991
+
+Changes in version 4.2.1
+    Fix regression on removal on reset of anomaly counter
+    Revise files handlers for proper management of contexts and users images
+
+Changes in version 4.2.0
+    Improve set of audit log events traking main events related to
+    authentication, password reset, reports access and deletion (#2579)
+    Optimize database removing redundant previous overengineering
+    Prevent that the submission status could be reverted to new
+    Improve resiliency adding limits to the numer of emails and files
+    processed in a single job cycle
+    Improve resiliency on possible failures on mail schedule due to
+    single errors in mail generations
+    Make it possible to disable new submissions without preventing
+    whistleblowers access
+    Revise implementation of Permission-Policy header
+    Fix issues #2970, #2978, #2979, #2981
+    Backport Twisted #9410 from 19.7.0
+    Update npm dependencies to latest versions
+    Add Macedonian translation
+    Update Translations
+
+Changes in version 4.1.17
+    Fix issue #2970
+    Revise access log format to keep it standard
+    Fix auto-epiration of new sites if not activated within 1 day
+    Revise cleaning sched in relation to activation tokens expiration
+    Add message-id header to emails to mitigate spam
+    Make it possible for field templates to be defined by using field templates
+    Downgrade D3 version to preserve compatibility with IE 11
+    Update npm dependencies to latest versions
+
+Changes in version 4.1.16
+    Fix mail notifications on ubuntu focal / python 3.8
+    Bump npm dependencies to latest version
+
+Changes in version 4.1.15
+    Fix issue #2967
+
+Changes in version 4.1.14
+    Fix generation of email notifications for labeled submissions
+
+Changes in version 4.1.13
+    Add Covenant Contributor Code of Conduct
+    Update Tor download link
+    Archive testing code related to CORS embedding (#1270)
+    Fix regression on report's postpone and delete interfaces
+    Fix loading of minified version of CSS and JS
+    Generate onion service only when platform mode is 'default'
+    Fix issue on visualization of answers for conditional steps
+
+Changes in version 4.1.12
+    Compact database during cleaning schedule using sqlite VACCUM command
+    Revise application packaging moving PID file inside /var/globaleaks
+    Fix packaging adding explicit dependency on python3-cryptography
+    Bump npm dependencies to latest version
+
+Changes in version 4.1.11
+    Fix possibility of resetting onion address
+
+Changes in version 4.1.10
+    Make it possible to download https encryption key for backup purposes
+    Implement possibility to download access and debug log via the audit log
+    Fix statistics tracking of logins and submissions
+    Use cssmin and terser instead of using already minified libraries
+    Rework http gzip doing it in streaming to every resource served
+    Avoid caching of admin resources
+    Add Swahili language
+    Update translations
+    Bump npm dependencies to latest version
+
+Changes in version 4.1.9
+    Fix issue #2904
+    Update translations
+
+Changes in version 4.1.8
+    Fix serialization of tip preview for platforms with encryption OFF
+    Move experimentaal docker scripts to dedicated repository:
+    https://github.com/globaleaks/globaleaks-docker-scripts
+    Bump travis testing environment to Focal
+    Bump npm dependencies to latest version
+
+Changes in version 4.1.7
+    Deprecate code related to onion service v2 generation
+    Add list of italian public agencies that use the software to
+    Developers Italia: https://developers.italia.it/it/software/globaleaks-globaleaks-f22648
+    Pre-generate Onion Service key as soon that the database is initiaized
+    Reset Authentication session when navigating public interface
+    Add Amharic translation
+    Fix issue #2945
+    Bump npm dependencies to latest version
+    Update translations
+
+Changes in version 4.1.6
+    Fix regression on migration 52 (#2936)
+    (bug introduced in version 4.1.0)
+
+Changes in version 4.1.5
+    Fix bug on PGP encryption of files resulting on using always the same recipient key for every user
+    (bug introduced in version 4.1.0)
+
+Changes in version 4.1.4
+    Revise header implementation adding css ID ProjectName, TitleSeparator and PageTitle
+    Revise feature for enabling recipients to upload files to whistleblowers
+    Update translations
+
+Changes in version 4.1.3
+    Revise logic of Tor network sandboxing
+    Update translations
+
+Changes in version 4.1.2 - 2020-11-23
+    Revise notifications for custodian replies
+    Fix visualization of recipient selection cards
+
+Changes in version 4.1.1 - 2020-11-22
+    Fix creation of new users for platforms where english is not enabled
+    Fix gl-admin utility in relation to import error
+    Add notifications for custodians replies
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 4.1.0 - 2020-11-18
+    Revise the application UI following the official an new brand guidelines
+    - https://github.com/globaleaks/GlobaLeaks/blob/main/brand/globaleaks-brand-guidelines.pdf
+    Reduce colors of the application removing the usage of Green, preferring to use the Blue
+    color of the brand to communicate the values of the project along security and transparency.
+    Add compound favicon with resolution 16x16 32x32 48x48
+    Adopt Metropolis as application Font as defined by the brand guidelines
+    Optimize the application for better accessibility and responsiveness
+    Improve usability in relation to key escrow mechanism adding user hints about the
+    necessity of saving the key esrow.
+    Add receipt to the tip page to support users to annotate it (#2915)
+    Bump npm dependencies to latest version
+    Revise and improve network sandboxing enabling traffic to used ports
+    Implement restricted indexing policiy by means of X-Robots-Tag: noarchive when
+    indexing is enabled
+    Revise Cache-Control headers and update related security documentation
+    Implement automatic screenshot collection during tests and documentation update
+    Fix issue https://github.com/globaleaks/GlobaLeaks/issues/2911
+    Fix password reset malfunction in relation to users using 2FA
+    Revise email spooling setting interval to 10 seconds and retry to 7 days
+    Replace Feature-Policy Header with the renamed new standard Permission-Policy header
+    Complete documentation of securit features currently implemented
+    -  https://docs.globaleaks.org/en/main/security/index.html
+    Add preliminar documentation for more important user features:
+    -  https://docs.globaleaks.org/en/main/user/index.html
+    Revise project documentation added to Developers Italia via publiccode.yml
+    - https://developers.italia.it/it/software/globaleaks-globaleaks-f22648
+    Make is possible to use markdown when configuring a custom privacy badge
+    Remove possibility to filter ip access for whistleblowers; the feature was never actually
+    implemented and the interface shown was just added by mistake. We consider that
+    Whistleblowers access shall never be prevented and that any restriction on this
+    topic should be considered against the best practice.
+    Pospone notification of Letsencrypt failures after a week of the initial failure
+    Implement scheduler to notify users after 7 days of unread or updated reports
+    Implement automatic update to onion services version 3 and
+    plan OnionServices V2 deprecation in compatibility with Tor timeline (#2894)
+    Update default smtp configuration
+    Implement admin assisted password reset (applicable when escrow keys are enabled)
+    Revise CSS of the application removing redundant or unused classes
+    Bump database schema to version 53
+    Update ER schema of the application:
+    - https://github.com/globaleaks/GlobaLeaks/blob/main/documentation/data/er.pdf
+    Reimplemt periodic file cleaning postponing deletion of files to 1 day since deletion and
+    ensuring that files that are not linked to the database are properly deleted
+    Bump test code coverage from 81% to 84%
+    Remove possibility to include the application by means of an iframe making it possible to
+    load the application via proper CORS requests
+    Add subscriber table and subscribed document table for tracking GDPR and other contracts
+    for demo and professional uses in preparation to furter planned development
+    Replace GL-Language header making use of the standard Accept-Language header
+    Implement HTTP OPTIONS method
+    Add Estonian translation
+    Update translations
+
+Changes in version 4.0.58 - 2020-09-28
+    Fix issue #2899
+    Fix possibility to reset password for platforms that are admin-only
+    Remove HTTP Basic Authentication feature; this feature was
+    been developed in order to be used in pre-production but many users
+    seems to continue to abuse of its presence to create private
+    whistleblowing portals not really accessible to the end users;
+    from this the decision to remove completely the feature from the software.
+
+Changes in version 4.0.57 - 2020-09-27
+    Fix serialization for questions of type date (#2896)
+    Implement serialization for questions of type date range
+
+Changes in version 4.0.56 - 2020-09-25
+    Fix additional question answers functionality
+
+Changes in version 4.0.55 - 2020-09-21
+    Fix issue #2892
+
+Changes in version 4.0.54 - 2020-09-03
+    Fix recipient feature to load files to whistleblowers
+
+Changes in version 4.0.53 - 2020-08-31
+    Fix functionality for re-generating Onion addresses
+
+Changes in version 4.0.52 - 2020-08-30
+    Revise IPv6 support in relation to IP filtering and logging
+
+Changes in version 4.0.51 - 2020-08-09
+    Do not show multitenancy menu if multisite feature is disabled
+    Add support for IPv6
+
+Changes in version 4.0.50 - 2020-08-04
+    Add 1 second delay between mailung attempts
+    Fix issue #2882
+    Fix regression on issue #2720
+    When encryption is not enabled preserve statistic data
+    Fix visualization of admin interface for disabling user notifications
+    Update npm dependencies to latest versions
+    Update translations
+
+Changes in version 4.0.49 - 2020-07-27
+    Fix exception error on recipients selection
+    Fix visualization of icons in questions messaging
+
+Changes in version 4.0.48 - 2020-07-26
+    Fix check on maximum selectable recipients
+
+Changes in version 4.0.47 - 2020-07-25
+    Fix issue #2878
+    Improve markdown avoiding privacy leaks on external links (#2879)
+    Update translations
+
+Changes in version 4.0.47 - 2020-07-21
+    Fix disclaimer modal in relation to addition of Showdown Markdown (#1101)
+
+Changes in version 4.0.46 - 2020-07-21
+    Fix visualization of admin advanced settings on root tenant while in demo mode
+
+Changes in version 4.0.45 - 2020-07-21
+    Fix link for accessing reports in emails sent to recipients
+
+Changes in version 4.0.44 - 2020-07-20
+    Revise fix for HTTPS redirects in relation to letsencrypt and renewal
+
+Changes in version 4.0.43 - 2020-07-10
+    Revise tenatative domain correction introduced in 4.0.42
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 4.0.42 - 2020-07-19
+    Fix HTTPS redirects in relation to letsencrypt and renewal
+    Implementat tentative domain correction in relation to presence
+    or absence of 'www.' domain prefix
+
+Changes in version 4.0.41 - 2020-07-18
+    Do not send certificate expiry notice to users with disabled notifications
+    Revise style of feature that enable to block submissions based on answers
+    Update npm dependencies to latest version
+    Improve lets'encrypt cert renewal for multisite platforms adding 60s delay
+    Add latvian translation
+    Update translations
+
+Changes in version 4.0.40 - 2020-07-08
+    Fix regression in logo upload introduced in 4.0.39
+
+Changes in version 4.0.39 - 2020-07-08
+    Fix import of questionnaires in relation to step triggers
+    Add unit tests for import of complex questionnaires
+    Fix visualization of steps triggers in relation to score enabler
+    Fix preferences interface for disabling email notifications
+    Add Onion-Location header only over HTTPS
+    Reimplement API token in compatibility with encryption functionality
+    Move REST API to /api/* path
+    Apply minor UI fixes
+    Update npm dependencies to latests version
+    Update translations
+
+Changes in version 4.0.38 - 2020-06-28
+    Fix regression on encrypted file uploads paths introduced in 4.0.33
+    Fix visualization of file uploads by recipients
+    Fix audit log filter in relation to multitenancy
+    Change comments serialization API serializing ids in place of author names
+    Add Showdown markdown to homepage texts, footer,
+    and questions description ToS questionstext (#1101, #2206)
+    Update npm dependencies to latest version
+    Update translations
+
+Changes in version 4.0.37 - 2020-06-22
+    Fix selected recipients count function
+    Fix regexp based form validation
+    Update translations
+
+Changes in version 4.0.36 - 2020-06-18
+    Retest and fix admin heatmap broken since initial release 4
+    Fix file upload buttons with 2-click defect
+
+Changes in version 4.0.35 - 2020-06-17
+    Apply minor style fixes
+    Fix packaging version bump
+    Update translations
+
+Changes in version 4.0.33 - 2020-06-10
+    Improve UI in relation to #2862
+    Always re-generate salt when changing password
+    Revise TLS configuration preferring security over
+    Update npm dependencies to latest version
+    Prioritize PGP encryption for files when available
+    Enable to download the audit log resources as CSV
+    Update translations
+
+Changes in version 4.0.32 - 2020-06-08
+    Fix alphabetic display of receipients
+
+Changes in version 4.0.31 - 2020-06-07
+    Apply minor UI fixes
+    Update translations
+
+Changes in version 4.0.30 - 2020-06-06
+    Apply minor UI fixes
+
+Changes in version 4.0.29 - 2020-06-05
+    Fix sidebar of recipients showing site settings link
+    Revise implementation of Location headers redirecting to the homepage
+
+Changes in version 4.0.28 - 2020-06-05
+    Bump to angular version 1.8.0
+    Uniform UI to new brand guidelines
+    Update translations
+
+Changes in version 4.0.27 - 2020-06-04
+    Fix immediate generation of onion services for secondary tenants
+    Send exception notifications only to administrators of the root tenant
+    Remove redundant borders to whistleblowers' login interface
+    Disable user email notifications if they are disabled at user level
+    Fix password reset feature broken in 4.0.26
+    Fix custom order visualization of recipients
+    Uniform context and recipient selection interfaces
+
+Changes in version 4.0.26 - 2020-06-02
+    Uniform all random secrets to 256bit length
+    Change default password change interval from 90 days to 1 year
+    Fix exception email notifications in relation to multitenancy
+    Fix issue #2861
+    Update npm dependencies to latest version
+    Update translations
+
+Changes in version 4.0.25 - 2020-05-29
+    Fix issues: #2857, #2859
+    Update translations
+
+Changes in version 4.0.24 - 2020-05-25
+    Fix interfaces for enabling languages
+    Apply minor UI fixes in relation to mobile responsiveness
+
+Changes in version 4.0.23 - 2020-05-24
+    Postpone integration of basic auth bypass for multitenancy management
+
+Changes in version 4.0.22 - 2020-05-24
+    Apply minor UI fixes in relation to mobile responsiveness
+
+Changes in version 4.0.21 - 2020-05-23
+    Fix issues: #2043, #2852
+    Apply mix UI refinements
+    Update npm dependencies to lates versions
+    Update translations
+
+Changes in version 4.0.20 - 2020-05-16
+    Fix minor UI defects
+    Update translations
+
+Changes in version 4.0.19 - 2020-05-15
+    Fix issues: #2784, #2825, #2431, #2833, #2835, #2837, #2841, #2843
+    Implement Onion-Location Header (#2847)
+    Update translations
+
+Changes in version 4.0.18 - 2020-04-28
+    Add support for latest Ubuntu LTS (20.04: Focal)
+    Update translations
+
+Changes in version 4.0.17 - 2020-04-24
+    Fix issues: #2822, #2829
+    Update translations
+
+Changes in version 4.0.16 - 2020-04-23
+    Fix issue #2826
+    Bump npm dependencies to latest version
+    Update translations:
+
+Changes in version 4.0.15 - 2020-04-16
+    Apply minor bugfixing
+
+Changes in version 4.0.14 - 2020-04-14
+    Fix issue #2818
+
+Changes in version 4.0.13 - 2020-04-13
+    Add recipient name to reports' messages UI (#2815)
+    Update translations
+
+Changes in version 4.0.12 - 2020-04-10
+    Fix issue #2814
+    Update translations
+
+Changes in version 4.0.10 - 2020-04-08
+    Fix issues: #2800, #2810, #2812
+    Fix counters on reports lists showing always counters of last report
+    Update translations
+
+Changes in version 4.0.9 - 2020-04-07
+    Revise fix on connection check admin and recipient roles
+    Fix issue #2800
+    Add updated documentation abouth threat model and encryption
+    Update translation
+
+Changes in version 4.0.8 - 2020-04-02
+    Add updated documentation abouth threat model and encryption
+    Update translation
+
+Changes in version 4.0.7 - 2020-04-02
+    Fix opening of 2FA and encryption recovery key modals
+    Fix connection check admin and recipient roles
+
+Changes in version 4.0.6 - 2020-04-01
+    Apply minor UI bugfixing
+    Update translations
+
+Changes in version 4.0.5 - 2020-03-25
+    Apply minor UI bugfixing
+    Update translations
+
+Changes in version 4.0.4 - 2020-03-18
+    Add mock frunctions: replace, add-before, add-after
+    Improve resiliency of notification job
+    Fix issues: #2790, #2791
+
+Changes in version 4.0.3 - 2020-03-12
+    Remove migration of two-factor-authentication secret from old setup
+    due to many incompatibilities preventing correct authentication.
+    Always serve the root tenant suring setup to enable reverse proxy configs.
+    Revise privacy aspects of robots indicization.
+    Update translations
+
+Changes in version 4.0.2 - 2020-03-09
+    Revise fixes included in 4.0.1 in relation to authentication failures
+
+Changes in version 4.0.1 - 2020-03-09
+    Apply minor bugfixing
+
+Changes in version 4.0.0 - 2020-03-05
+    Enable encryption and key escrow mechanism by default for new setups
+    Make it possible to enable encryption and key escrow mechanism on
+    existing setups
+    Please refer to the official release announcement for important
+    information about the update:
+    - https://www.globaleaks.org/docs/en/globaleaks4-release-notes.pdf
+
+Changes in version 3.11.70 - 2020-02-24
+    Fix custodian functionalities in relation to custom identity template
+
+Changes in version 3.11.69 - 2020-02-11
+    Fix qrcode visualization in forced two factor authentication mode
+    Fix listing of identity access requests
+    Show context selection interface only when multiple contexts are available
+    Update version of chrome used during testing
+    Fix migration of whistleblower identity customizations
+
+Changes in version 3.11.68 - 2020-01-28
+    Fix regression preventing to configure admin users
+
+Changes in version 3.11.67 - 2020-01-23
+    Improve packaging removing unused dependencies
+    Revise old migration scripts fixing defect in migration of db 36
+
+Changes in version 3.11.65 - 2020-01-23
+    Fix package version
+
+Changes in version 3.11.64 - 2020-01-23
+    Fix regression in questionnaires update introduced in 3.11.63
+    Enforce file download on Terms of Service attachments (#2763)
+    Fix defect in submission token implementaton preventing expiration
+
+Changes in version 3.11.63 - 2020-01-20
+    Fix check on user-context association on the same tenant
+    Bump npm dependencies to latest versions
+    Fix minor lint errors
+    Make it possible to reset the platform hostname
+    Hide score UI when the feature is disabled
+    Remove ricochet configuration visibility in content settings
+    When creating a new context set the tip time to live to 90 days
+
+Changes in version 3.11.62 - 2020-01-12
+    Apply user suggestions for feature #2643
+
+Changes in version 3.11.61 - 2020-01-12
+    Apply minor UI fix
+
+Changes in version 3.11.60 - 2020-01-12
+    Show the logo of the context that is selected (#2643)
+    Re-add whistleblower login form on submission page
+    Deprecated ol txtorcon mock
+    Apply minor UI fx
+    Bump npm dependencies to latest version
+
+Changes in version 3.11.59 - 2020-01-04
+    Fix defect in application responsiveness
+    Bump npm dependencies to latest versions
+
+Changes in version 3.11.58 - 2020-01-02
+    Fix defect in exceptions logging
+
+Changes in version 3.11.57 - 2019-12-30
+    Fix issue #2756
+    Remove apparmor rule for dash previously required by gnupg
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 3.11.56 - 2019-12-25
+    Fix issue #2755
+
+Changes in version 3.11.55 - 2019-12-19
+    Fix issue #2754
+    Update translations
+
+Changes in version 3.11.54 - 2019-12-14
+    Apply minor UI improvements
+    Update translations
+
+Changes in version 3.11.53 - 2019-12-12
+    Fix defect regression on customization provisioning introducted in 3.11.53
+
+Changes in version 3.11.52 - 2019-12-12
+    Apply minor UI improvements
+
+Changes in version 3.11.51 - 2019-12-12
+    Apply minor UI improvements
+    Update translations
+
+Changes in version 3.11.50 - 2019-12-11
+    Fix client build regression introduced in 3.11.49
+
+Changes in version 3.11.49 - 2019-12-11
+    Replace qrious with angular-qrcode
+
+Changes in version 3.11.48 - 2019-12-10
+    Removing python3-distro dependency requiring unusual large
+    set of apparmor rules for the functionality offered
+
+Changes in version 3.11.47 - 2019-12-10
+    Update applying rules fixing issue #2747
+    Update translations
+
+Changes in version 3.11.46 - 2019-12-08
+    Revise installation script in relation to installation privacy
+    Deprecate compatibility with python2
+    Update translations
+
+Changes in version 3.11.45 - 2019-12-04
+    Fixes issue #2737 and #2738
+
+Changes in version 3.11.44 - 2019-12-03
+    Apply minor UI fixes
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 3.11.43 - 2019-12-01
+    Add error logging on impossibility to validate a TLS Certificate (#2732)
+    Improve font selection in relation to feature #2530
+    Fix serialization of encrypted tips in relation to tip preview
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 3.11.42 - 2019-11-26
+    Implement certificate chain verification for outgoinv HTTPS and SMTPS (#2732)
+    Apply minor bugfixing
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 3.11.41 - 2019-11-20
+    Apply minor bugfixing
+
+Changes in version 3.11.40 - 2019-11-20
+    Apply minor bugfixing
+    Update translations
+
+Changes in version 3.11.39 - 2019-11-17
+    Apply minor bugfixing
+    Update translations
+
+Changes in version 3.11.38 - 2019-11-01
+    Fix regression #2720
+    Update translations
+
+Changes in version 3.11.37 - 2019-10-31
+    Apply minor fixes
+    Update translations
+
+Changes in version 3.11.36 - 2019-10-31
+    Bump npm dependencies to latest versions
+    Implement feature #2521
+    Export tip status inside the submission export (#2526)
+    Revise CSS in relation to UI responsivenes
+    Update translations
+
+Changes in version 3.11.35 - 2019-10-28
+    Revise UI of context selection
+
+Changes in version 3.11.34 - 2019-10-28
+    Revise authentication decorator ensuring session.tid/request.id correspondance
+    Improve UI in relation to responsivenes
+    Update translations
+
+Changes in version 3.11.33 - 2019-10-27
+    Fix issue #2717
+
+Changes in version 3.11.32 - 2019-10-27
+    Improve UI of language selector
+    Update translations
+
+Changes in version 3.11.31 - 2019-10-26
+    Improve UI of maximum recipients feature (#2530)
+    Improve client minification
+    Update translations
+
+Changes in version 3.11.30 - 2019-10-21
+    Optimize accesibility of the application (rank 92% of LightHouse)
+    Optimize performance of first load (rank 65% of LightHouse)
+    Optimize SEO of the appplication (rank 100% of LightHouse)
+    Revise CSS using rem in place of em to ease customizations
+    Update translations
+
+Changes in version 3.11.29 - 2019-10-16
+    Apply minor style fixes
+
+Changes in version 3.11.28 - 2019-10-16
+    Add virtualhost to access.log (#2703)
+    Improve loading implementing resource preload
+    Optimize code of password complexity meter removing zxcvbn library
+    Improve style of NoScrypt message
+    Improve Search Engine Optimizatin
+    Fix disclaimer implementation reducing forensic traces
+    Improve HTTP interface implementing HEAD method
+    Improve multisite login UI adding the domain name
+    Fix implementation of password reset link
+    Fix configuration for instance of question templates
+    Update translations
+    Bump npm dependencies to latest version
+
+Changes in version 3.11.27 - 2019-10-10
+    Fix typo preventing authentication on old migrated platforms
+
+Changes in version 3.11.26 - 2019-10-09
+    Apply minor bugfixing
+    Update translations
+
+Changes in version 3.11.25 - 2019-10-08
+    Implement pagination for Comments and Messaging (#531)
+    Apply text revisions thanks to the community support
+    Revise UI of Custodian functionalities
+    Update translations
+
+Changes in version 3.11.24 - 2019-10-07
+    Postpone application of EAT patch included in previous release
+
+Changes in version 3.11.23 - 2019-10-07
+    Simplify User model removing incomplete multi tenant support
+    Update ER representation of the database schema
+    Improve privacy of whistleblower identity by showing the widget collapsed
+    by default (#2497)
+    On the EAT project archive questionnaire answer considering every answer
+    subject to stats
+    Apply minor bugfixing
+    Update translations
+
+Changes in version 3.11.22 - 2019-10-04
+    Combine password reset with 2fa
+    Enable password reset in default configuration
+    Apply minor bugfixing
+
+Changes in version 3.11.21 - 2019-10-02
+    Update translations
+
+Changes in version 3.11.20 - 2019-10-01
+    Make TLS intermediate certificate optional (fix)
+
+Changes in version 3.11.19 - 2019-09-30
+    Fix regression #2683
+
+Changes in version 3.11.18 - 2019-09-27
+    Fix demo mode in relation to creation of admin account
+    Apply minor style bugfixing
+
+Changes in version 3.11.17 - 2019-09-27
+    Improve UX for enforced password change
+    Implement possibility to enforce two factor authentication (#2681)
+    Ensure that on enforced password are not reused (#2614)
+
+Changes in version 3.11.16 - 2019-09-26
+    Add support drag and drop of files (#2063)
+    Make TLS intermediate certificate optional
+    Bump npm dependencies to latest stables versions
+
+Changes in version 3.11.15 - 2019-09-24
+    Fix javascript packaging path
+
+Changes in version 3.11.14 - 2019-09-23
+    Apply revisions to apparmor profile
+
+Changes in version 3.11.13 - 2019-09-23
+    Apply revision to apparmor profile
+    Fix export of tip comments
+    Apply mix fixes in relation to RTL layout
+
+Changes in version 3.11.12 - 2019-09-23
+    Fix CSS processing in relation to RTL and pre-existent configs (#2677)
+
+Changes in version 3.11.11 - 2019-09-22
+    Disable Twisted logging in H2Connection and HTTPChannel class
+
+Changes in version 3.11.10 - 2019-09-22
+    Set Debian Buster as main supported platform
+
+Changes in version 3.11.9 - 2019-09-22
+    Add packaging for Debian Buster (#2676)
+
+Changes in version 3.11.8 - 2019-09-21
+    Fix reversed check on HSTS preload header injection introduced in 3.11.4
+
+Changes in version 3.11.7 - 2019-09-20
+    Apply minor bugfixing
+    Update translations
+
+Changes in version 3.11.6 - 2019-09-19
+    Fix packaging issue of 3.11.5 in relation to bootstrap inclusion
+
+Changes in version 3.11.5 - 2019-09-19
+    Bump npm dependencies to latest stables versions
+    Make it possible for the whistleblower to remove a file before
+    upload completion (#2521)
+    Add demo badge to inform users to not use the platform for
+    real submissions
+    Avoid user of browser navigation reducing browser evidences (#2668)
+    Update translations
+
+Changes in version 3.11.4 - 2019-09-16
+    Fix defect in field triggers
+    WBPA: Enable HTTPS preload
+
+Changes in version 3.11.3 - 2019-09-16
+    Fix regression #2675
+
+Changes in version 3.11.2 - 2019-09-16
+    Fix regression #2673
+    Update translations
+
+Changes in version 3.11.1 - 2019-09-10
+    Fix serialization of question templates
+    Apply minor UI fixes
+
+Changes in version 3.11.0 - 2019-09-09
+    Implement HTTP/2
+    Revise HTTPS implementation enabling only TLS1.3 andTLS1.2 with ECDH key exchange
+    Revise Lets'Encrypt implementation requesting ECC certificates with curve prime256v1
+    Prioritize CHACHA20 on clients that don't have AES-NI (e.g., Android devices)
+    Optimize TLS implementation enabling session resumption
+    Implement TOTP 2FA based on RFC 6238
+    Implement HTTP Feature-Policy Header (#2667)
+    Implement encryption of file uploads metadata (#2665)
+    Implement recovery procedure for encryption feature (#2649)
+    Bump Bootstrap to version 4
+    Update translations
+
+Changes in version 3.10.7 - 2019-08-19
+    Revise application packaging in relation to CSP rules
+    Fix progress bar UI of file uploads
+
+Changes in version 3.10.7 - 2019-08-16
+    Improve retrocompatibility of Content Security Policy for browsers not supporting CSP3
+
+Changes in version 3.10.6 - 2019-08-16
+    Implement Content Security Policy as by #1998
+    Add Strict Transport Security header removed since HTTPS refactoring
+    Fix issue on HTTPS redirects causing LetsEncrypt renewal to fail
+    Add migration fix for very old setups in relation to commit 238c0dc (#2661)
+
+Changes in version 3.10.5 - 2019-08-13
+    Revert regression causing migrations scripts to proceed even on failure
+    Apply minor bugfixing
+
+Changes in version 3.10.4 - 2019-08-09
+    Apply minor bugfixing
+
+Changes in version 3.10.3 - 2019-08-01
+    Apply minor bugfixing
+
+Changes in version 3.10.2 - 2019-08-01
+    Apply minor UI fixes
+
+Changes in version 3.10.1 - 2019-07-31
+    Fix regression on mail notification added in 3.10.0
+
+Changes in version 3.10.0 - 2019-07-31
+    Automatically delete platforms not activated within 24 hours (#2639)
+    Implement database support and encryption primitives for Recovery Keys (#2649)
+    Improve UI of Whistleblower Login (#1693)
+    Implement database support for immutable submissions (#2581)
+    Bump npm dependencies to latest stables versions
+    Update translations
+
+Changes in version 3.9.15 - 2019-07-24
+    Fix failure on authentication added in 3.9.14
+
+Changes in version 3.9.14 - 2019-07-23
+    Update translations
+
+Changes in version 3.9.13 - 2019-07-19
+    Disable Copy-Cut-Paste on signup user email confirmation (#2637)
+    On signup ask the user email twice (#2637)
+    Fix login issue on old migrated platforms
+    Fix the gl-admin reset pass in relation to mixed Argon/Scrypt situations
+
+Changes in version 3.9.12 - 2019-07-11
+    Fix issues #2625, #2626, #2630
+    Improve UI in relation to issue #2627
+    Fix regression #2629
+    Make it possible to reset HTTPS configuration without disabling HTTPS
+    Make it possible for users to reset their password also when simplified login is enabled
+    When a platform is created with a mode different from default, delete the admin user
+    Bump npm dependencies to latest stables versions
+    Update translations
+
+Changes in version 3.9.11 - 2019-07-05
+    Revise fix for issue #2612
+
+Changes in version 3.9.10 - 2019-07-05
+    Fix issue #2612
+
+Changes in version 3.9.9 - 2019-07-03
+    Fix issues: #2591, #2611, #2613
+    Update translations
+
+Changes in version 3.9.8 - 2019-07-02
+    Fix compatibility with IE11
+    Fix visualization of whistleblower identity answers
+    Rewrite letsencrypt renewal routines decoupling them from certificate issuance
+    Fix issues #2608, 2610
+    Update Translations
+    Bump npm dependencies to latest stables versions
+
+Changes in version 3.9.7 - 2019-06-19
+   Apply minor bugfixing
+   Bump npm dependencies to latest stable versions
+   Update translations
+
+Changes in version 3.9.6 - 2019-06-13
+   Fix issue #2584
+   Fix issue #2588
+   Open ToS URLs in a new tab with no-referrer policy
+   Apply minor bugfixing
+
+Changes in version 3.9.5 - 2019-06-10
+   Change requirement for Tor Onion Services V3 to Tor 0.3.3.9
+
+Changes in version 3.9.4 - 2019-06-10
+   Apply minor bugfixing
+
+Changes in version 3.9.3 - 2019-06-10
+   Upgrade Tor Onion Services to version 3 (#2582)
+   Disable HEAD requests
+   Disable connection persistance
+   Reorganize access log to be in Apache Combined Format
+   Redact the identity answers from tip export when the visibility
+   should be subject to custodian authorization
+   Apply minor bugfixing
+
+Changes in version 3.9.2 - 2019-06-05
+   Apply minor bugfixing
+   Update translations
+
+Changes in version 3.9.1 - 2019-06-05
+   Apply minor bugfixing
+
+Changes in version 3.9.0 - 2019-06-05
+   Implement URL redirects (#2575)
+   Collect statistics about mobile/desktop users (#2207)
+   Optimize language selector for Mobile users (#2574, #1780)
+   Implement Ricochet panel (#2513)
+   Prepare database for Audit Log (#2579)
+   Improve resiliency of HTTPS component
+   Fix reload of renewed Let'sEncrypt certificates
+   Improve securization of HTTPS configuration
+   Apply minor bugfixing
+   Update translations
+
+Changes in version 3.8.6 - 2019-05-21
+   Apply minor bugfixing
+   Updates translations
+
+Changes in version 3.8.5 - 2019-05-16
+   Apply minor bugfixing
+
+Changes in version 3.8.4 - 2019-05-14
+    Fix configuration of recipients triggers on selectbox options
+    Apply minor bugfixing
+
+Changes in version 3.8.3 - 2019-05-10
+    Apply minor bugfixing
+
+Changes in version 3.8.2 - 2019-05-09
+    Add basic profile for EAT project (#2568)
+    Apply minor bugfixing
+
+Changes in version 3.8.1 - 2019-05-08
+    Apply minor bugfixing
+
+Changes in version 3.8.0 - 2019-05-07
+    Make it possible to configure the node timezone (#2525)
+    Implement questions of type DATERANGE (#2561)
+    Make it possible to block the submission after the selection of an answer (#2565)
+    Make it possible to show a message after the selection of an answer (#2564)
+    Make it possible to configure an 'hint' for the options of type checkbox and selectbox (#2524)
+    Fix authentication issues on python2 and Ubuntu Xenial
+
+Changes in version 3.7.4 - 2019-05-03
+    Apply minor bugfixing
+
+Changes in version 3.7.3 - 2019-05-03
+    Fix authentication issue introduced in 3.7.2 (#2563)
+
+Changes in version 3.7.2 - 2019-05-01
+    Apply minor bugfixing
+    Add malagasy language (currently copy of French translation)
+    Update translations
+
+Changes in version 3.7.1 - 2019-04-23
+    Apply minor bugfixing
+
+Changes in version 3.7.0 - 2019-04-23
+    Implement features: #2534, #2535, #2536, #2537
+    Prepare database support for #2523 and #2552
+    Preinitialize the logo of secondary tenants when the mode is 'default'
+    Revise texts related to the receipt
+    Hide MultiSite enabler from secondary tenants
+    Make it possible to use the root site for administrative purposes only (#2559)
+    Update ER representation of the database schema
+    Make it possible to configure a field trigger as "Sufficient"
+    Fix score reorganizing the total_score formula and moving ranking on the client
+    Update translations
+
+Changes in version 3.6.46 - 2019-04-17
+    Fix visualization of submissions received before version 3.6.41
+
+Changes in version 3.6.45 - 2019-04-16
+    Apply minor bugfixing
+
+    Addressed issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2545
+    - https://github.com/globaleaks/GlobaLeaks/issues/2548
+    - https://github.com/globaleaks/GlobaLeaks/issues/2549
+    - https://github.com/globaleaks/GlobaLeaks/issues/2551
+    - https://github.com/globaleaks/GlobaLeaks/issues/2554
+
+Changes in version 3.6.44 - 2019-04-07
+    Make it possible to reset submissions (#2447)
+    Revise error codes of /bin/globaleaks
+    Add project description to publiccode.yml
+
+Changes in version 3.6.43 - 2019-04-04
+    Apply minor bugfixing
+
+Changes in version 3.6.42 - 2019-04-02
+    Update translations
+    Apply minor bugfixing
+
+Changes in version 3.6.41 - 2019-04-01
+    Bump npm dependencies to latest stables versions
+    Add Slovak translation
+    Update translations
+    In the install script correct the detection about installed globaleaks
+    Revise tip page hiding steps and questions that are not triggered
+    Make it possible to run the application as root needed in many containers
+    Add users' username to admin users overview
+    Fix setup of development environment in relation to client updates
+    Restrict submissions and files visibility to recipients only
+    Always re-open the disclaimer modal when opening the submission page
+    Revise visibility of the mandatory-field warning
+    Re-evaluate recipients at every question-answer update
+    Fixes and improvements to publiccode.yml
+    Update publiccode.yml
+
+Changes in version 3.6.40 - 2019-03-07
+    Fix minor issue in visualization of the latest db version
+    Make it possible to configure score points of type multiplier (#2531)
+
+Changes in version 3.6.39 - 2019-03-06
+    Fix wb identity field in relation to refactor #2504
+
+Changes in version 3.6.38 - 2019-03-05
+    Fix navigation of submission steps for conditional steps
+
+Changes in version 3.6.37 - 2019-03-04
+    Optimize Comfort Loader
+    Fix status visualization in recipient tip interface
+
+Changes in version 3.6.36 - 2019-03-04
+    Fix client lint errors
+
+Changes in version 3.6.35 - 2019-03-04
+    Fix minor regression added in 3.6.32
+
+Changes in version 3.6.34 - 2019-03-04
+    Fix validation of mandatory fields for last step (#2504)
+
+Changes in version 3.6.33 - 2019-03-03
+    Apply minor fix to 3.6.32 postponing patch to next db update
+
+Changes in version 3.6.32 - 2019-03-03
+    Reduce configuraton inheritance to the whistleblowing.it project
+    Implement basic print for submissions
+
+Changes in version 3.6.31 - 2019-02-28
+    Revise fix for issue #2506
+
+Changes in version 3.6.30 - 2019-02-26
+    Remove debugging output
+
+Changes in version 3.6.29 - 2019-02-25
+    Reimplement fixes included in 3.6.26
+
+Changes in version 3.6.28 - 2019-02-24
+    Apply minor bugfixing
+
+Changes in version 3.6.27 - 2019-02-24
+    Apply minor bugfixing
+
+Changes in version 3.6.26 - 2019-02-24
+    Implement migration for change of name in submission state: open->opened
+
+Changes in version 3.6.25 - 2019-02-24
+    Revise fix for issue #2506
+    Update translations
+
+Changes in version 3.6.24 - 2019-02-21
+    Revise fix for issue #2506
+
+Changes in version 3.6.23 - 2019-02-21
+    Revise fix for issue #2506
+
+Changes in version 3.6.22 - 2019-02-20
+    Revise fix for issue #2506
+
+Changes in version 3.6.21 - 2019-02-19
+    Revise fix for issue #2506
+
+Changes in version 3.6.20 - 2019-02-19
+    Revise fix for issue #2506
+    Address issue #2515
+    Bump npm dependencies to latest stable versions
+    Update translations
+
+Changes in version 3.6.19 - 2019-02-19
+    Revise fix for issue #2506
+
+Changes in version 3.6.18 - 2019-02-17
+    Revise fix for issue #2506
+
+Changes in version 3.6.17 - 2019-02-15
+    Fix issue #2506
+
+Changes in version 3.6.16 - 2019-02-14
+    Fix clean deb install over an existing migrated /var/globaleaks
+
+Changes in version 3.6.15 - 2019-02-11
+    Fix issue #2514
+
+Changes in version 3.6.14 - 2019-02-08
+    Fix visualization of questionnaire answers of type multichoice
+    (fix necessary for the correct visualization of old submissions)
+    Fix minor lint errors
+
+Changes in version 3.6.13 - 2019-02-08
+    Fix issue #2512
+    Fix possibility for the whistleblower to select its own recipients
+
+Changes in version 3.6.12 - 2019-02-07
+    Fix deactivation of conditional steps
+    Fix gl-admin fixing the possibility to set boolean values
+    During migrations drop Statistics for nodes using db version < 38
+    Remove unused configuration 'unselectable' of recipients
+    Fix usage of variable recipient_configuration
+    Hide inverted triggers configuration that are still not fully implemented
+    Hide steps errors when the steps navigation interface is hidden
+    By default show selectbox options in configuration-order
+    Correct danish language native name (#2508)
+    Fix whitelisted ip addresses configuration for recipients (#2507)
+    Make it possible to read and backup the encryption key from the user preferences
+    Extend GCE to make it possible to export and import an existing encryption key
+    Bump npm dependencies to latest stable versions
+    Add Galician translation
+    Update translations
+
+Changes in version 3.6.11 - 2019-01-31
+    Fix possibility for administrators to issue user password reset
+    Fix bug in the disabling of HTTP basic authentication
+    Differentiate user sessions by tenant id
+    Fix texts as for suggestion #2503
+    Update translations
+
+Changes in version 3.6.10 - 2019-01-29
+    Fix migration 45 in relation to duplicated whistleblowerfile names
+
+Changes in version 3.6.9 - 2019-01-29
+    Fix migration 46 in relation to duplicated whistleblowerfile names
+
+Changes in version 3.6.8 - 2019-01-28
+    Fix issue #2498
+
+Changes in version 3.6.7 - 2019-01-24
+    Fix regression on 2FA
+
+Changes in version 3.6.6 - 2019-01-24
+    Fix issues on authentication when 2FA is disabled
+    Reduce period of Cleaning and Certificate Check to be daily
+    Downgrade angular to 1.7.5 to solve #2495
+
+Changes in version 3.6.5 - 2019-01-19
+    Fix validation of required questions of type checkbox
+    Bypass HTTPS restart when a new tenant is created
+
+Changes in version 3.6.4 - 2019-01-18
+    Fix typ0 preventing visualization of questionnair navigation interface with steps names
+
+changes in version 3.6.3 - 2019-01-17
+    Fix issue causing reset of internationalized texts on update
+
+Changes in version 3.6.2 - 2019-01-16
+    Revert transaction changes included in 3.6.0 that seems to cause instability
+
+Changes in version 3.6.1 - 2019-01-15
+    Fix initialization of Tor Hidden Service
+    Fix clientside logic of the multitenant auth switch
+
+Changes in version 3.6.0 - 2019-01-13
+    Add IP filtering check to TokenAuthHandler (#1211)
+    Address issue #2469 removing private IP information from the public API
+    Implement notifications of custodian events (#1464)
+    Implement Location question by using a Graphical Map Selector and TopoJSON (#1407)
+    Make it possible to configure explicitly context as Enabled, Disabled, Hidden
+    Make it possible to configure enabled context with 0 static recipients assigned
+    Make it possible to dyniamically change recipients based on questionnaire answers (#2477)
+    Extend Terms of Service field to make it possible to configure an attachment (#2478)
+    Implement email based two factor authentication) (#2481)
+    Create database support for tracking backups
+    Refactor automatic on update backups to use the database
+    Prepare routines for automatic jobs; functionality currently disabled that will be finalized
+    with the possibility of automatically saving backups on a remote scp server (#528)
+    Fix ORM integration in relation to concurrency and transactions where some submissions id were
+    found to be dupliated.
+    Refactor Config variables in order to track the date of their change
+    Implement Docker scripts (experimental)
+    Update npm dependencies to latest versions
+    Update translations
+
+Changes in version 3.5.8 - 2018-11-29
+    Fix visualization of logo preview
+
+Changes in version 3.5.7 - 2018-11-29
+    Add missing template home.html
+
+Changes in version 3.5.6 - 2018-11-28
+    Fix file upload in relation to files bigger than 1MB
+    Fix configuration of boolan attributes of fields (#2463)
+
+Changes in version 3.5.5 - 2018-11-21
+    Fix whistleblower authentication on systems with pynacl < 1.2
+    Enforce usage of pynacl >= 1.2 on Bionic and Stretch
+
+Changes in version 3.5.4 - 2018-11-19:
+    Fix migration 45 in relation to existing whistleblower access
+
+Changes in version 3.5.3 - 2018-11-19:
+    Fix file delivery job in relation to encryption for multiple users.
+    Fix SNI in relation to py2/py3 compatibility on hostnames
+    Update translations
+
+Changes in version 3.5.2 - 2018-11-15:
+    Apply minor bugfixing
+
+Changes in version 3.5.1 - 2018-11-14:
+    Apply minor bugfixing
+
+Changes in version 3.5.0 - 2018-11-14
+    Add implementation of Additinal Questionnaire feature (#1404)
+    Implement access.log in Apache Combined Log Format (#2420)
+    Stop globaleaks process during preinst script (#2443)
+    Add crypto engine implementation (still not enabled)
+    Prepare database for the enabling of encryption
+    Update npm dependencies to latest versions
+    Update translations
+
+    Addressed issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2334
+    - https://github.com/globaleaks/GlobaLeaks/issues/2426
+    - https://github.com/globaleaks/GlobaLeaks/issues/2450
+
+Changes in version 3.4.1 - 2018-10-04
+    Revise configuration applied on whistleblowing.it
+    Fix defect on initialization of onion services present in 3.4.0
+    Disable caching for admin.tenants handler
+
+Changes in version 3.4.0 - 2018-09-30
+    Revise foreign keys used in database schema
+
+Changes in version 3.3.16 - 2018-09-29
+    Revise configurations applied in whistleblowing.it mode
+
+Changes in version 3.3.15 - 2018-09-28
+    Revise X-Frame-Options policy
+
+Changes in version 3.3.14 - 2018-09-27
+    Improve usability of wistleblowing.it signup form
+    Update translations
+
+Changes in version 3.3.13 - 2018-09-21
+    Start using Tor packages included in debian distributions
+    Reduce application footprint removing OpenPGP.js library from the client
+    Improve resiliency in relation to management of open file descriptors
+    Adopt Codacy coverage as code coverage tracking service in place of Coveralls
+    Rewrite ZipStream utilities enabling to read from open file descriptors
+    Update translations
+
+Changes in version 3.3.12 - 2018-09-10
+    Implement explicit deny x-frame-options to prevent iframe inclusion
+    Update npm dependencies to latest versions
+    Update translations
+
+Changes in version 3.3.11 - 2018-08-25
+    Update npm dependencies to latest versions
+    Update translations
+
+Changes in version 3.3.10 - 2018-08-24
+    Fix serialization of fields of very old submissions missing field.template_id
+    Fix serialization of public resource
+    Make it possible to specify the mode for new created tenants
+
+Changes in version 3.3.9 - 2018-08-23
+    Add CSS selectors to simplify customization of Tip and Tip list pages
+    Apply set of UI simplifications folling whistleblowing.it review
+    Update translations
+
+Changes in version 3.3.8 - 2018-08-22
+    Fix serialization of /public resource in secondary tenants
+
+Changes in version 3.3.7 - 2018-08-22
+    Implement redirects for urls without the hashtag (#2160)
+    Reload Tor hidden services in case of failures on the Tor control port
+    Update translations
+
+Changes in version 3.3.6 - 2018-08-18
+    Revise configuration presets for whistleblowing.it mode
+    Update translations
+
+Changes in version 3.3.5 - 2018-08-16
+    Fix path for preferences template in forced_password_change page
+    Fix python-acme dependency version (0.25.1)
+
+Changes in version 3.3.4 - 2018-08-15
+    Add sidebar to users' preferences pages
+    Add dashboard for users and custodians (currently empty)
+    Revise platform settings that a recipient/custodian can edit
+    Revise configuration presets for whistleblowing.it mode
+    Fix submission status deletion (#2389)
+    Fix diplay of expiration date of HTTPS certificates
+    Fix display of fingerprint of PGP keys
+
+Changes in version 3.3.3 - 2018-08-10
+    Add missing templates for refactored user homepage
+
+Changes in version 3.3.2 - 2018-08-09
+    Add a landing homepage for both recipient and custodian users
+    Fix possibility of changing logo by recipient / custodian
+    Update npm dependencies to latest versions
+    Update translations
+
+Changes in version 3.3.1 - 2018-08-07
+    Apply py2/py3 compatibility fixes
+
+Changes in version 3.3.0 - 2018-08-06
+    Fix SSRF issue on HTTPS Proxy
+    Disable Error Stacktrace on production enviroment
+    Add Indonesian translation thanks to @LocalizationLab volunteers
+    Update translations
+
+Changes in version 3.2.6 - 2018-07-31
+    Fix initialization of tenants at user signup
+    Fix initialization of user passwords
+
+Changes in version 3.2.5 - 2018-07-30
+    Fix HTTPs certificates renewal
+
+Changes in version 3.2.4 - 2018-07-29
+    Fix reinitialization of missing tenant variables
+    Make it possible to configure the default questionnaire
+    Implement the first set of configurations for whistleblowing.it
+    Fix duplication of questionnaires in relation to field triggers
+    Fix serializations of users in relation to multitenancy
+
+Changes in version 3.2.3 - 2018-07-21
+    Apply minor bugfixing
+
+    Addresses issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2328
+
+Changes in version 3.2.2 - 2018-07-19
+    Implement signup form for whistleblowing.it project
+    Update protractor testin library to 3.4.0
+    Apply minor bugfixing
+    Update translations
+
+Changes in version 3.2.1 - 2018-07-16
+    Apply minor bugfixing
+
+Changes in version 3.2.0 - 2018-07-16
+    Implement password reset feature (#113)
+    Implement possibility for Users to change General Settings (#2273)
+    Implement Submission states feature (#1416)
+    Implement multitenant login interface (#2357)
+    Implement simplified multisite login interface (#2360)
+
+    Addressed issues:
+    - https://gitgub.com/globaleaks/GlobaLeaks/issues/2266
+    - https://github.com/globaleaks/GlobaLeaks/issues/2287
+    - https://github.com/globaleaks/GlobaLeaks/issues/2313
+    - https://github.com/globaleaks/GlobaLeaks/issues/2314
+    - https://github.com/globaleaks/GlobaLeaks/issues/2317
+    - https://github.com/globaleaks/GlobaLeaks/issues/2325
+    - https://github.com/globaleaks/GlobaLeaks/issues/2345
+
+Changes in version 3.1.10 - 2018-07-08
+    Bump python-acme to version 0.25.1
+    The updated is required to make HTTPS certificate renewal to work
+    due to a breaking change in the LE protocol.
+
+    Addressed issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2324
+    - https://github.com/globaleaks/GlobaLeaks/issues/2349
+    - https://github.com/globaleaks/GlobaLeaks/issues/2351
+
+Changes in version 3.1.9 - 2018-06-14
+    Apply minor bugfixing
+
+Changes in version 3.1.8 - 2018-06-11
+    Fix issue in migration of default questiont templates
+
+Changes in version 3.1.7 - 2018-06-05
+    Fix issues on multiple field triggers and change of their state
+
+    Addresses issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2307
+
+Changes in version 3.1.6 - 2018-06-5
+    Fix py2/py3 compatibility issues
+
+Changes in version 3.1.5 - 2018-06-05
+    Fix py2/py3 issues in letsencrypt utilities
+    Fix init script in relation to NETWORK_SANDBOXING startup
+    Fix apparmor script for the multiple versions of python supported
+
+    Addresses issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2306
+
+Changes in version 3.1.4 - 2018-06-01
+    Fix init script in relation to NETWORK_SANDBOXING startup
+
+Changes in version 3.1.3 - 2018-05-31
+    Fix regression in processing of file uploads
+
+Changes in version 3.1.2 - 2018-05-30
+    Fix issue on navigation of submissions steps
+
+Changes in version 3.1.1 - 2018-05-30
+    Add constraint on python-acme (>= 0.22)
+
+Changes in version 3.1.0 - 2018-05-29
+    Complete compatibility with Py3 while maintaining support for Py2
+    Complete packaging for Ubuntu Bionic
+    Drop support to pip based distributions: trusty, wheezy, jessie
+    Upgrade Letsencrypt to use APIv2
+    Implement database additions to support next round of features
+    Implement optional IP filtering for authenticated users (1211)
+    Implement possibility for users to change their visualized name (2271)
+    Implement possibility for users to change their email address (2272)
+    Make it possible to configure the same footer for all the tenants (2274)
+    Add Danish translation thanks to voluqnteers support!
+    Update translations
+    Update npm dependencies to latest versions
+
+    Addresses issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2269
+
+Changes in version 3.0.29 - 2018-05-07
+    Apply code revisions for compatibility with both py2 and py3
+
+Changes in version 3.0.28 - 2018-05-04
+    Fix bug related to overlapping usernames (#2266)
+
+Changes in version 3.0.27 - 2018-04-24
+    Fix counters for files,messages,comments shown in the tip list
+    Implement minimal self-contained SOCKS5 capability (#2243)
+    Update npm dependencies to latest versions
+
+Changes in version 3.0.26 - 2018-04-19
+    Fix minor regression in exception notification
+
+Changes in version 3.0.25 - 2018-04-18
+    Fix migration of default fields attributes in relation to wb_identity
+    Update translations
+    Update npm dependencies to latest versions
+
+    Addresses issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2259
+
+Changes in version 3.0.24 - 2018-04-12
+    o Fix regression on privacy badge visible also over Tor
+
+Changes in version 3.0.23 - 2018-04-11
+    o Fix static file handler in relation to broken cache
+    o Fix packaging in relation to disclaimer.html template
+
+Changes in version 3.0.22 - 2018-04-09
+    o Fix packaging in relation to D3 library inclusion
+
+Changes in version 3.0.21 - 2018-04-09
+    o Fix regression preventing the application to start
+
+Changes in version 3.0.20 - 2018-04-09
+    o Implement first round of fixes for supporting Win32
+    o Implement admin notifications for users signup
+    o Complete migrations necessary for implementing deferred foreign keys
+    o Update translations
+    o Bump npm dependencies to latest stables versions
+
+    Addresses issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2050
+    - https://github.com/globaleaks/GlobaLeaks/issues/2248
+    - https://github.com/globaleaks/GlobaLeaks/issues/2196
+
+Changes in version 3.0.19 - 2018-04-04
+    o Update translations
+    o Bump npm dependencies to latest stables versions
+
+    Addresses issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2238
+    - https://github.com/globaleaks/GlobaLeaks/issues/2240
+    - https://github.com/globaleaks/GlobaLeaks/issues/2249
+
+Changes in version 3.0.18 - 2018-03-28
+    o Fix errors on validation of PGP key
+    o Update translations
+    o Bump npm dependencies to latest stables versions
+
+    Addresses issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2230
+    - https://github.com/globaleaks/GlobaLeaks/issues/2231
+    - https://github.com/globaleaks/GlobaLeaks/issues/2233
+
+Changes in version 3.0.17 - 2018-03-22
+    o Fix update of whistleblower identity question
+
+Changes in version 3.0.16 - 2018-03-22
+    o Apply minor UI bugfixing
+    o Prevent multitenancy regression that allow admin
+      configuration of reused usernames
+    o Update translations
+
+    Addresses issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2217
+
+Changes in version 3.0.15 - 2018-03-21
+    o Apply minor bugfixing
+
+Changes in version 3.0.14 - 2018-03-21
+    o Fix regression in file uploads bigger than 1MB (#2226)
+    o Improve UI of mandatory fields
+    o Apply minor bugfixing
+    o Update translations
+
+    Addresses issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2226
+
+Changes in version 3.0.13 - 2018-03-18
+    o Apply minor bugfixing
+
+    Addresses issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2218
+
+Changes in version 3.0.12 - 2018-03-15
+    o Apply minor bugfixing
+
+    Addresses issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2216
+
+Changes in version 3.0.11 - 2018-03-12
+    o Fix migration 39 in relation to contexts and users images
+
+Changes in version 3.0.10 - 2018-03-12
+    o Apply minor bugfixing
+
+Changes in version 3.0.9 - 2018-03-12
+    o Apply minor bugfixing
+
+    Addresses issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2202
+    - https://github.com/globaleaks/GlobaLeaks/issues/2208
+
+Changes in version 3.0.8 - 2018-03-06
+    o Apply minor bugfixing
+
+    Addresses issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2148
+
+Changes in version 3.0.7 - 2018-03-06
+    o Apply minor bugfixing
+    o Update translations
+
+    Addresses issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2190
+    - https://github.com/globaleaks/GlobaLeaks/issues/2156
+    - https://github.com/globaleaks/GlobaLeaks/issues/2192
+
+Changes in version 3.0.6 - 2018-03-01
+    o Apply minor bugfixing
+
+    Addresses issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2183
+    - https://github.com/globaleaks/GlobaLeaks/issues/2186
+
+Changes in version 3.0.5 - 2018-02-28
+    o Apply minor bugfixing
+
+Changes in version 3.0.4 - 2018-02-27
+    o Apply minor bugfixing
+
+    Addresses issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2184
+
+Changes in version 3.0.3 - 2018-02-27
+    o Apply minor bugfixing
+
+    Addresses issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2176
+    - https://github.com/globaleaks/GlobaLeaks/issues/2180
+    - https://github.com/globaleaks/GlobaLeaks/issues/2182
+
+Changes in version 3.0.2 - 2018-02-25
+    o Fix bug on empty notifications of PGP expiration
+
+Changes in version 3.0.1 - 2018-02-23
+    o Implelement Debian Stretch 8.10 packaging (#2071)
+    o Add Finnish translation
+    o Update translations
+
+    Addresses issues:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2067
+    - https://github.com/globaleaks/GlobaLeaks/issues/2068
+    - https://github.com/globaleaks/GlobaLeaks/issues/2069
+    - https://github.com/globaleaks/GlobaLeaks/issues/2070
+
+Changes in version 3.0.0 - 2018-02-22
+    o Implement multitenancy support enabling to create multiple globaleaks
+      sites on a single server process
+    o Apply database structure refactoring and optimization
+    o Adopts SQLAlchemy ORM in place of STORM
+    o Add preliminar support for PostgreSQL, MySQL, SQL Server 2016
+    o Automatic Backup of entire data directory before each upgrade
+    o Reimplement migrations using SQLAlchemy to deprecate storm usage
+    o Improve implementation of file upload reducing
+      exposure for DoS attacks
+    o Revise UI/UX for better usability and internationalization
+    o Implement GZIP as an offline process at build time
+    o Implementation of advanced Whistleblower Identity Management
+      compliant with Italian Anticorruption Authority Specs ANAC)
+    o Implementation of Custodian for Whistleblower Identities
+      compliant with Italian Anticorruption Authority Specs ANAC
+    o Add support for Valencian language
+    o Imlement basic signup capability for demo purposes
+    o Update translations
+
+Changes in version 2.72.31 - 2018-01-15
+    o Fix interface for providing the whistleblower identity after
+      an initial fully anonymous submission
+
+Changes in version 2.72.30 - 2018-01-15
+    o Enable to configure the whistleblower identity as mandatory field
+
+Changes in version 2.72.29 - 2018-01-12
+    o Fix API for deletion of models images
+
+Changes in version 2.72.28 - 2018-01-10
+    o Apply UI fix to questions addition
+
+Changes in version 2.72.27 - 2017-12-23
+    o Fix whistleblower identity field serialization
+
+Changes in version 2.72.26 - 2017-12-21
+    o Fix whistleblower identity field visualization
+
+Changes in version 2.72.25 - 2017-12-15
+    o Improve resiliency of apparmor detection and startup
+    o Apply minor UI bugfixing
+    o Bump npm dependencies to latest stables versions
+
+Changes in version 2.72.24 - 2017-12-08
+    o Apply minor bugfixing
+
+Changes in version 2.72.23 - 2017-11-30
+    o Fix regression on nested questions
+
+Changes in version 2.72.22 - 2017-11-29
+    o Fix regression in postinst in relation to user creation
+
+Changes in version 2.72.21 - 2017-11-28
+    o Fix UI for fields deletion
+
+Changes in version 2.72.20 - 2017-11-18
+    o Fix regression on steps triggers serialization
+
+Changes in version 2.72.19 - 2017-11-12
+    o Fix regression on questions deletion (#2126)
+
+Changes in version 2.72.18 - 2017-11-09
+    o Fix issue #2123
+
+Changes in version 2.72.17 - 2017-11-08
+    o Apply minor bugfixing to process shutdown
+    o Fix API token functionality
+    o Fix UI for visualizing recipients on tip interface
+    o Fix migration script in relation to issue #2078
+    o Update translations
+    o Bump npm dependencies to latest stables versions
+
+Changes in version 2.72.16 - 2017-11-01
+    o Fix UI for uploading images
+    o Fix UI for visualizing recipients on tip interface
+    o Update translations
+
+Changes in version 2.72.15 - 2017-10-30
+    o Fix detection of network sanboxing support currently reported
+      as always missing
+    o Reduce size of logo included inside the application
+    o Fix alignment and margins in relation to RTL UI
+    o Fix creation of title meta in relation to pages with empty title
+    o Fix UI for enabled/disabled submission based on user connection
+      (with/without tor)
+    o Update translations
+
+Changes in version 2.72.14 - 2017-10-29
+    o Implement verification script for application data (1670)
+    o Fix mail translation in relation to few templates
+    o Update translations
+    o Bump npm dependencies to latest stables versions
+
+Changes in version 2.72.13 - 2017-10-24
+    o Improve efficiency of delivery sched
+    o Fix deletion of questionnaire questions
+    o Fix captcha reload on challenge failures
+    o Apply minor rewrites targeting at more code reuse
+    o Update translations
+
+Changes in version 2.72.12 - 2017-10-17
+    o Enable to reach the ACME challenge bypassing HTTP Basic AUTH
+
+Changes in version 2.72.11 - 2017-10-16
+    o Fix UI regression on tip postpone introduced in 2.72.9
+    o Fix possible issue on Context.questionnaire_id migration
+
+Changes in version 2.72.10 - 2017-10-15
+    o Apply minor UI bugfixing
+
+Changes in version 2.72.9 - 2017-10-14
+    o Improve efficiency of delivery sched
+    o Silence misleading errors in init script
+    o Update translations
+
+    Other closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2078
+
+Changes in version 2.72.8 - 2017-10-11
+    o Clean interface for mail templates configuration
+    o Implement notification about seen / not seen messages
+    o Improve shutdown resiliency implementing an hard deadline (30 seconds)
+    o Make it possible to visualize selectbox and checkbox of a specific field
+      sorted alphabetically (#2100)
+
+    Other closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2106
+    - https://github.com/globaleaks/GlobaLeaks/issues/2109
+
+Changes in version 2.72.7 - 2017-10-02
+    o Fix minor issue in init script
+
+Changes in version 2.72.6 - 2017-10-02
+    o Improve exception handling in scheduled jobs
+    o Apply PEP style corrections
+    o Apply texts revisions
+    o Improve packaging of application state
+    o Make it possible to disable admin notifications of exceptions
+    o Make it possible to disable developers notifications of exceptions
+    o Update client libraries
+    o Update translations
+
+    Other closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1875
+    - https://github.com/globaleaks/GlobaLeaks/issues/2099
+
+Changes in version 2.72.5 - 2017-09-23
+    o Fix Let'sEncrypt certificate renewal scheduler
+    o Update translations
+
+Changes in version 2.72.4 - 2017-09-21
+    o Apply PEP8 compliant style changes discovered by Codacy
+    o Extend field triggers to handle hierarchical fields #1727
+    o Fix caching of hidden service name
+    o Fix shutdown handling in OnionService job
+    o Optimize ReceiverTip database queries
+    o Reorder some wizard logic and add license display to the wizard #1927
+    o Refactor handlers and models to improve error handling and uniformity
+    o Update client libraries
+    o Update translations
+
+Changes in version 2.72.3 - 2017-09-11
+    o Apply bugfixing to comment.author initialization
+
+Changes in version 2.72.2 - 2017-09-09
+    o Apply bugfixing to whistleblower identity feature UI
+    o Remove usage of Storm Reference and ReferenceSet API
+
+Changes in version 2.72.1 - 2017-09-05
+    o Apply bugfixing of postinst script
+
+Changes in version 2.72.0 - 2017-08-27
+    o Add profile select logic to the wizard #2039
+    o Add "Select" buttons to PGP key UI elements #792
+    o Optimize image serialization for contexts and receivers
+    o Improve exception mail spooling performance and robustness
+    o Migrate the field, context and questionnaire tables removing key column
+    o Apply bugfixing to HTTPS detection and warning #2067
+    o Apply improvments to UI texts thanks to @comradekingu
+    o Apply minor SSL, logging and python packaging changes
+    o Update translations
+    o Update client dependencies
+
+Changes in version 2.71.3 - 2017-08-23
+    o Apply bugfixing to HTTPS detection and warning
+
+Changes in version 2.71.2 - 2017-08-18
+    o Apply bugfixing to HTTPS detection and warning
+
+Changes in version 2.71.1 - 2017-08-10
+    o Apply bugfixing to update detection feature
+    o Apply bugfixing to HTTPS detection and warning
+
+Changes in version 2.71.0 - 2017-08-09
+    o Add an admin API token controllable from gl-admin #2032
+    o Add a dismissable HTTP usage warning to the frontend #2034
+    o Show the security awareness modal also on /submission #2037
+    o Check for platform updates and display update needed in admin UI #1493
+    o Allow paste into password fields #2028
+    o Freeze pyasn1_modules and chardet to python package requirements
+    o Remove migration support for DB versions 15 to 19
+    o Fix include of questionnaires in admin/context
+    o Fix frontend redirect during '$routeChangeError' events
+    o Hardcode release public keys in the install script
+    o Improve error handling in the install script
+    o Apply minor UI and logging changes
+    o Update translations
+
+    Other closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1493
+    - https://github.com/globaleaks/GlobaLeaks/issues/2028
+    - https://github.com/globaleaks/GlobaLeaks/issues/2032
+    - https://github.com/globaleaks/GlobaLeaks/issues/2034
+    - https://github.com/globaleaks/GlobaLeaks/issues/2037
+
+Changes in version 2.70.10 - 2017-07-24
+    o Implement caching on /admin resources
+    o Add time tracking of database transactions #2017
+    o Implement reporting of install failures #2021
+    o Refactor the client for fetching REST resources on demand #2018
+    o At setup time print all the platform addresses on which
+      the platform is reachable #2008
+
+    Other closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/2024
+    - https://github.com/globaleaks/GlobaLeaks/issues/1996
+
+Changes in version 2.70.9 - 2017-07-18
+    o Implement caching in most of admin REST resources
+    o Optimize query for tips list visualization
+    o Fix calculation of handlers response time #1996
+    o Update translations
+
+Changes in version 2.70.8 - 2017-07-13
+    o Fix serialization of fields making use of triggers
+
+Changes in version 2.70.7 - 2017-07-12
+    o Fix Tor connections detections
+    o Fix save of existing questions/questionnaire on update
+
+Changes in version 2.70.6 - 2017-07-11
+    o Apply apparmor profile fixes
+
+Changes in version 2.70.5 - 2017-07-11
+    o Fix init script in relation to gl-admin script update
+
+Changes in version 2.70.4 - 2017-07-11
+    o Fix Tor HS initialization and add checks for proper permissions
+
+Changes in version 2.70.3 - 2017-07-10
+    o Fix serialization of contexts and recipients images #1986
+    o Make it possible to load a custom (pre-existing) hidden service key #1993
+    o Add retries to HS Tor setup and improve debugging of failures #1994
+    o Fix upload of files with unknown file type #1999
+    o Update LICENSE #1975 #1980
+    o Update translations
+
+Changes in version 2.70.2 - 2017-07-02
+    o Set requirement for Tor package >= 0.2.9.11
+    o Improve install script to fix common missing requirements
+      and allow to be executed twice for updating an existing instance
+    o Update translations
+
+Changes in version 2.70.1 - 2017-06-29
+    o Apply minor fix to python-acme mocks for python<2.7.9
+
+Changes in version 2.70.0 - 2017-06-29
+    o Automate SSL certificate management with Let's Encrypt and python-acme #1546
+    o Use Tor ephemeral services and the control port with python-txtorcon #1909
+    o Adjust HTTPS and Tor redirect logic #1982
+    o Fix and allow first setup without iptables or apparmor support #1177
+    o Fix issue on serialization of Context and Recipients images #1986
+    o Updated client dependencies to latest versions
+
+Changes in version 2.67.9 - 2017-06-20
+    o Fix HTTPS and Tor redirect logic
+    o Fix bug with and improve the testing of wbfile upload
+    o Update client dependencies to latest versions
+    o Adjust the submission interface's spacing
+    o Minor changes to REST routing
+
+Changes in version 2.67.8 - 2017-06-15
+    o Fix check_roles configuration for exception handler
+
+Changes in version 2.67.7 - 2017-06-12
+    o Fix check_roles configuration for exception handler
+
+Changes in version 2.67.6 - 2017-06-09
+    o Reimplement minimal REST server removing cyclone dependency
+    o Enforce authentication decorators to be loaded at startup on all REST handlers
+    o Enforce cache decorator to be loaded at startup on all REST handlers
+    o Optimize serialization of objects exposed via /public API
+    o Apply minor style fixes on UI paddings and margins
+    o Move database initialization after daemon startup
+
+Changes in version 2.67.5 - 2017-05-10
+    o Implement search based select box for contexts
+    o Fix visualization of file upload errors showing just last error
+    o Update NPM dependencies
+    o Create search based select box for contexts
+
+    Closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1950
+    - https://github.com/globaleaks/GlobaLeaks/issues/1408
+
+Changes in version 2.67.4 - 2017-04-12
+    o Inject Strict Transport Security header only HTTPS connections
+
+Changes in version 2.67.3 - 2017-04-10
+    o Update client dependencies to latest versions
+
+Changes in version 2.67.2 - 2017-04-01
+    o Fix e2e tests for HTTPS configuration
+    o Update messaging and tor download link
+      shown when javascript is disabled
+    o Optimize loading reducing public API get
+
+Changes in version 2.67.1 - 2017-03-17
+    o Start (restart) apparmor upon globaleaks install
+
+Changes in version 2.67.0 - 2017-03-17
+    o Add Ubuntu Xenial 16.04 support
+    o Add (readd) Bulgarian support thanks to volunteers translations
+
+Changes in version 2.66.1 - 2017-03-06
+    o Revise iptables detection inside init script
+
+Changes in version 2.66.0 - 2017-03-05
+    o Implement HTTPS configuration and support configurable via admin panel
+    o Simplify network sandboxing rules and reduce custom vars in config file.
+      Note that the platform now tries to reserve sockets for port 80 and 443
+      on public interfaces and relies on the iptables rules to drop traffic
+      in cases where NETWORKING_SANDBOXING=1.
+    o Update app armor rules to support sub processing
+    o Implement sub processes pool for HTTPS proxys
+    o Move gzip out of main process into HTTPS proxys
+    o Employ timing independent check_password comparison #1904
+    o Add detection of tor clients via an exit relay IP check
+    o Add admin statistics job timing panel
+    o Fix an issue with admin image uploads
+    o Fix minor ui issues and update frontend libraries
+    o Update translations
+    o Remove bower usage for front end dependencies
+
+    Closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1908
+    - https://github.com/globaleaks/GlobaLeaks/issues/1904
+    - https://github.com/globaleaks/GlobaLeaks/issues/1906
+    - https://github.com/globaleaks/GlobaLeaks/issues/1890
+    - https://github.com/globaleaks/GlobaLeaks/issues/1891
+    - https://github.com/globaleaks/GlobaLeaks/issues/1870
+    - https://github.com/globaleaks/GlobaLeaks/issues/1550
+    - https://github.com/globaleaks/GlobaLeaks/issues/1852
+
+Changes in version 2.65.19 - 2017-02-07
+    o Set request size limit to 1MB (with server side cap at 2MB)
+
+Changes in version 2.65.18 - 2017-02-07
+    o Fix request size check in relation to encoding overhead
+
+    Closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1889
+    - https://github.com/globaleaks/GlobaLeaks/issues/1879
+
+Changes in version 2.65.15 - 2017-01-30
+    o Limit requests size to 100kb
+    o Fix collection of general admin statistics
+
+    Closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1874
+    - https://github.com/globaleaks/GlobaLeaks/issues/1881
+    - https://github.com/globaleaks/GlobaLeaks/issues/1852
+
+Changes in version 2.65.14 - 2017-01-23
+    o Fix migration script 33 in relation to expiration of
+      the access by the whistleblower
+    o Optimize favicon loading
+    o Fix issue #1878
+
+    Closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1878
+
+Changes in version 2.65.13 - 2017-01-18
+    o Fix time check for notification of expiring submissions
+    o Apply minor UI fixes
+    o Update translations
+
+Changes in version 2.65.12 - 2017-01-16
+    o Fix addition of new template for submission expiration summary
+    o Apply minor UI fixes
+    o Update translations
+
+Changes in version 2.65.11 - 2017-01-12
+    o Improve sitemap.xml listing hreflang alternatives
+    o Implement single active session for user [1836]
+    o Implement exception notifications for administrators
+    o Implement summary for Tip expiration
+    o Apply mixed RTL fixes
+    o Update translations
+
+    Closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1836
+    - https://github.com/globaleaks/GlobaLeaks/issues/1829
+    - https://github.com/globaleaks/GlobaLeaks/issues/1831
+    - https://github.com/globaleaks/GlobaLeaks/issues/1771
+    - https://github.com/globaleaks/GlobaLeaks/issues/1868
+
+Changes in version 2.65.10 - 2016-12-13
+    o Apply minor fixes
+
+Changes in version 2.65.9 - 2016-12-08
+    o Packaging fixes
+    o Solved bug preventing admin email to be sent
+    o Update translations
+
+Changes in version 2.65.8 - 2016-12-06
+    o Packaging fixes
+
+Changes in version 2.65.7 - 2016-12-06
+    o Packaging fixes
+
+Changes in version 2.65.6 - 2016-12-06
+    o Packaging fixes
+
+Changes in version 2.65.5 - 2016-12-06
+    o Remove pyc files from packaging following Debian guidelines
+    o Fix attributes of whistleblower identity fields
+    o Update Dutch translation
+
+Changes in version 2.65.4 - 2016-11-29
+    o Fix minor UI defects
+    o Replace recipient name with pseudonym in all the public APIs
+    o Force description input for file uploaded by recipients
+    o Add display of counters of whistleblower file downloads
+    o Add constraint on unique names for file uploads by recipients
+    o Update translations
+
+Changes in version 2.65.3 - 2016-11-24
+    o Apply revision of migration 35
+    o Add pylint checks to the CI tests
+
+Changes in version 2.65.2 - 2016-11-24
+    o Apply revision of migration 35
+
+Changes in version 2.65.1 - 2016-11-24
+    o Apply revision of migration 35
+
+Changes in version 2.65.0 - 2016-11-24
+    o Apply custom css and javascript file only to pages of the whistleblower
+    o Implement file attachments from the recipient to the whistleblower
+    o Enforce stricter ranges for tip access and expiration timeouts
+    o Add "noopener" to increase privacy over new page opening
+    o Bump npm dependencies to latest stables versions
+    o Update translations
+    o Add romanian 100%
+
+    Closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1812
+    - https://github.com/globaleaks/GlobaLeaks/issues/1813
+    - https://github.com/globaleaks/GlobaLeaks/issues/1817
+
+Changes in version 2.64.16 - 2016-11-06
+    o Apply mixed UI fixes
+    o Update translations
+
+Changes in version 2.64.15 - 2016-11-06
+    o Apply mixed UI fixes
+
+Changes in version 2.64.14 - 2016-11-06
+    o Update ukrainian translation
+    o Revise statistics scheduler period
+
+Changes in version 2.64.13 - 2016-11-04
+    o Fix packaging in relation to requirements
+
+Changes in version 2.64.12 - 2016-11-04
+    o Fix migration scripts in relation to unmodifiable strings
+    o Update translations
+
+Changes in version 2.64.11 - 2016-10-31
+    o Fix migration 33 in relation to user images
+    o Rewrite schedulers in order to run them inside threads
+    o Remove ahmia descriptor, no more used
+
+Changes in version 2.64.10 - 2016-10-25
+    o Apply minior bugfixing
+
+Changes in version 2.64.9 - 2016-10-24
+    o Fix integration of Slovenian translation
+    o Simplified job scheduling and monitoring
+
+    Closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1794
+
+Changes in version 2.64.8 - 2016-10-18
+    o Fix integration of Slovenian translation
+
+Changes in version 2.64.7 - 2016-10-16
+    o Fix feature for disabling encryption warnings
+    o Install all zope packages at system level to fix import issue
+    o Update translations
+    o Add Slovenian (82%)
+
+    Closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1754
+    - https://github.com/globaleaks/GlobaLeaks/issues/1778
+    - https://github.com/globaleaks/GlobaLeaks/issues/1791
+    - https://github.com/globaleaks/GlobaLeaks/issues/1790
+
+Changes in version 2.64.6 - 2016-10-04
+    o Fix responsiveness of the sticky footer on small-screen devices
+    o Allow to set an unlimited retention policy
+    o Add polish translation (63%)
+    o Update translations
+
+    Closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1779
+    - https://github.com/globaleaks/GlobaLeaks/issues/1165
+    - https://github.com/globaleaks/GlobaLeaks/issues/1731
+    - https://github.com/globaleaks/GlobaLeaks/issues/994
+
+Changes in version 2.64.5 - 2016-09-26
+    o Apply minor bugfixing
+
+Changes in version 2.64.4 - 2016-09-26
+    o Fix issue on migration 34 (#1759)
+
+    Closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1759
+
+Changes in version 2.64.3 - 2016-09-25
+    o Update translations
+    o Update npm and bower dependencies to latest stables versions.
+
+Changes in version 2.64.2 - 2016-09-23
+    o Complete implementation of migration in relation to
+      removed languages.
+
+    Closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1767
+
+Changes in version 2.64.1 - 2016-09-20
+    o Fix migration script 34 in relation to removed languages
+
+Changes in version 2.64.0 - 2016-09-19
+    o Support updating customized translations
+    o Support for schema-less configurations
+    o Integrate usage of protractor-accessibility-plugin
+    o Improve code coverage from 88% to 91%
+    o Update translations
+
+    Closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1739
+    - https://github.com/globaleaks/GlobaLeaks/issues/1333
+    - https://github.com/globaleaks/GlobaLeaks/issues/1764
+    - https://github.com/globaleaks/GlobaLeaks/issues/1763
+
+Changes in version 2.63.5 - 2016-09-09
+    o Fix migration script 33 in relation to field constraints
+
+    Closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1759
+
+Changes in version 2.63.4 - 2016-09-03
+    o Minor UI fixes
+    o Add CHECK constraints to field table to improve data consistency.
+    o Update translations
+
+Changes in version 2.63.3 - 2016-08-27
+    o Fix initialization of first contexts in relations to recipients selection.
+    o Fix bug not allowing to complete submissions on nodes configured with PGP encryption.
+    o Update npm and bower dependencies to latest stables versions.
+    o Update translations
+
+    Closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1748
+    - https://github.com/globaleaks/GlobaLeaks/issues/1553
+
+Changes in version 2.63.2 - 2016-08-11
+    o Fix migration 31 in relation to issue
+    o Implement shrinkwrap of npm dependencies
+
+    Closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1747
+    - https://github.com/globaleaks/GlobaLeaks/issues/1564
+
+Changes in version 2.63.1 - 2016-08-08
+    o Fix CSS of the sticky footer in relation to the presence/absence of user footer
+
+Changes in version 2.63.0 - 2016-08-08
+    o Subject receipt expiration to a timeout related to last access
+    o Update unsupported browser warning to latest supported browsers
+    o Add client PGP key validatioin by means of OpenPGP.js
+    o Adopt standard sql syntax in compliance with sql-92
+    o Implement no-paste capability on password configurators
+    o Allow configuration of the Tor Browser download link
+
+    Closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1716
+    - https://github.com/globaleaks/GlobaLeaks/issues/1735
+    - https://github.com/globaleaks/GlobaLeaks/issues/1736
+    - https://github.com/globaleaks/GlobaLeaks/issues/1729
+    - https://github.com/globaleaks/GlobaLeaks/issues/1745
+
+Changes in version 2.62.9 - 2016-07-25
+    o Force language detection to prefer url params
+    o Add CSS extensions for customization
+    o Allow newlines inside css elements
+      - #WhistleblowerSubmitBoxHeader
+      - #WhistleblowerLoginPrompt
+
+    Closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1725
+    - https://github.com/globaleaks/GlobaLeaks/issues/1731
+
+Changes in version 2.62.8 - 2016-07-14
+    o Improve UI following
+
+Changes in version 2.62.7 - 2016-07-14
+    o Add missing Catalan json file to the package
+
+Changes in version 2.62.6 - 2016-07-14
+    o Update translations adding Catalan (80%)
+    o Fix API cache reset upon fields update
+
+Changes in version 2.62.5 - 2016-07-10
+    o Refactor build script to enable build of the experimental release
+    o Refactor install script to enable install the experimental release
+    o Update translations adding Catalan (70%)
+
+Changes in version 2.62.4 - 2016-07-05
+    o Implement browser language detection
+    o Fix migration script 31 causing loss of configured css and logo
+    o Update client dependencies to latest stable versions
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1713
+    - https://github.com/globaleaks/GlobaLeaks/issues/1717
+
+Changes in version 2.62.3 - 2016-06-29
+    o Fix generation of content of exception emails.
+
+Changes in version 2.62.2 - 2016-06-28
+    o Improve schedulers implementing resiliency checks and
+      notification of failures
+    o Fix possibility for wizard reset
+    o Improve clientside detection of API failures
+    o Remove grunt-line-remover, dependency no more used
+    o Bump grunt to stable version 1.0.1
+    o Update translations
+
+Changes in version 2.62.1 - 2016-06-26
+    o Fix loading of logo image in relation to API change
+
+Changes in version 2.62.0 - 2016-06-24
+    o Reimplement the wizard as an atomi operation (#1692)
+    o Reduce the type of fonts served by the application to 1 (woff)
+    o Set autocomplete=off on relevant forms
+    o Reimplement internationalization API allowing to override every
+      text via the admin interface
+    o Add possibility to configure a pseudonym in place of
+      the real user name
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1692
+    - https://github.com/globaleaks/GlobaLeaks/issues/1696
+    - https://github.com/globaleaks/GlobaLeaks/issues/1642
+
+Changes in version 2.61.14 - 2016-06-07
+    o Fix issue #1681
+    o Fix issue #1687
+    o Fix issue #1688
+    o Fix issue #1689
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1681
+    - https://github.com/globaleaks/GlobaLeaks/issues/1687
+    - https://github.com/globaleaks/GlobaLeaks/issues/1688
+    - https://github.com/globaleaks/GlobaLeaks/issues/1689
+
+Changes in version 2.61.13 - 2016-05-23
+    o Fix issue #1675
+    o Fix issue #1678
+    o Implement unit testing for encrypted pgp files
+
+Changes in version 2.61.12 - 2016-05-23
+    o Fix issue #1672
+
+Changes in version 2.61.11 - 2016-05-12
+    o Minor UI fixes
+    o Update translations
+
+Changes in version 2.61.10 - 2016-05-11
+    o Add back TipExport until it will be completely
+      reimplemented using browsercrypto.
+
+Changes in version 2.61.9 - 2016-05-11
+    o Fix init script in relation to feature #1663
+
+Changes in version 2.61.8 - 2016-05-11
+    o Implement internationalization of the language selector
+    o Implement internationalization of the datepicker interface
+    o Reduce the round trips needed for the application bootstrap
+      by implementing a unified API including all the required
+      resources.
+    o Deprecate the unsafe IE9 and IE10 and force support for
+      browsers that support webcrypto API.
+    o Remove a large number of dependencies no more needed:
+      blob polyfill
+      jquery
+      zipsteam
+    o Reimplement the proof of woork mechanism in order to use
+      the webcrypto API.
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1641
+    - https://github.com/globaleaks/GlobaLeaks/issues/1644
+    - https://github.com/globaleaks/GlobaLeaks/issues/1660
+    - https://github.com/globaleaks/GlobaLeaks/issues/1641
+    - https://github.com/globaleaks/GlobaLeaks/issues/1656
+    - https://github.com/globaleaks/GlobaLeaks/issues/1663
+
+Changes in version 2.61.7 - 2016-04-25
+    o Fix regression #1655
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1655
+
+Changes in version 2.61.6 - 2016-04-24
+    o Fix exception scattering while configuring contexts
+
+Changes in version 2.61.5 - 2016-04-23
+    o Implement feature (#1426)
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1426
+
+Chages in version 2.61.4 - 2016-04-18
+    Fix streaming encryption of PGP files (#1643)
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1643
+
+Changes in version 2.61.3 - 2016-04-13
+    Fix regression on Context/Users deletion (#1633)
+    Fix issues: #1637, #1639
+    o Add Chinese (Taiwan) translation (67%)
+    o Remove Catalan support fallen below 50% :(
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1633
+    - https://github.com/globaleaks/GlobaLeaks/issues/1637
+    - https://github.com/globaleaks/GlobaLeaks/issues/1639
+    - https://github.com/globaleaks/GlobaLeaks/issues/1467
+
+Changes in version 2.61.2 - 2016-04-09
+    o Fix loading of custom css
+
+Changes in version 2.61.1 - 2016-04-09
+    o Fix ulimit setting in init script
+
+Changes in version 2.61.0 - 2016-04-09
+    o Implement haveged as an additional source of entropy
+    o Implement password meters through the zxcvbn library
+    o Implement an export tip button on the tip list page
+    o Implement HTTP Basic Authentication support to limit 
+      platform access during development
+    o Implement a client side test for SMTP configuration
+    o Implement List visualization for contexts
+    o Implement Card visualization for contexts
+    o Serve Context and Receivers images through the REST API
+      reducing time and overhead loading external images
+    o Implement experimental mlock capability in order to prevent the
+      GL process from swapping RAM to disk
+    o Implement support for limiting date questions with min and max 
+      date options
+    o Implement support for recipients selectively opting in or 
+      opting out of submission notifications
+    o Implement eslint in the continuous integration lifecycle
+    o Refine RTL by using the bootstrap-inline-rtl library
+    o Serve CSS and fonts via the /node REST API in order to
+      reduce load time and address #1601
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1076
+    - https://github.com/globaleaks/GlobaLeaks/issues/1303
+    - https://github.com/globaleaks/GlobaLeaks/issues/1577
+    - https://github.com/globaleaks/GlobaLeaks/issues/1580
+    - https://github.com/globaleaks/GlobaLeaks/issues/1584
+    - https://github.com/globaleaks/GlobaLeaks/issues/1589
+    - https://github.com/globaleaks/GlobaLeaks/issues/1593
+    - https://github.com/globaleaks/GlobaLeaks/issues/1596
+    - https://github.com/globaleaks/GlobaLeaks/issues/1601
+    - https://github.com/globaleaks/GlobaLeaks/issues/1606
+    - https://github.com/globaleaks/GlobaLeaks/issues/1612
+    - https://github.com/globaleaks/GlobaLeaks/issues/1615
+    - https://github.com/globaleaks/GlobaLeaks/issues/1619
+    - https://github.com/globaleaks/GlobaLeaks/issues/1021
+    - https://github.com/globaleaks/GlobaLeaks/issues/1588
+    - https://github.com/globaleaks/GlobaLeaks/issues/1610
+    - https://github.com/globaleaks/GlobaLeaks/issues/1613
+    - https://github.com/globaleaks/GlobaLeaks/issues/1621
+    - https://github.com/globaleaks/GlobaLeaks/issues/1623
+
+Changes in version 2.60.144 - 2016-03-14
+    o Fix regression on private messages
+    o Fix visualization of the loader
+    o Improve unit-testing of PGP scenario
+    o Update translations
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1584
+    - https://github.com/globaleaks/GlobaLeaks/issues/1578
+
+Changes in version 2.60.143 - 2016-02-27
+    o Solve recursion issue on field templates
+
+Changes in version 2.60.142 - 2016-02-26
+    o Remove migration support for db versions < 15
+    o Minor UI fixes
+
+Changes in version 2.60.141 - 2016-02-26
+    o Fix regression in proof of work present since 2.60.136 and affecting IE
+    o Minor UI fixes
+
+Changes in version 2.60.140 - 2016-02-24
+    o Fix serialization of files in submission export
+    o Minor UI fixes
+
+Changes in version 2.60.139 - 2016-02-23
+    o Implement autofocus on unfilled mandatory questions
+    o Make possible configure questionnaires out of contexts and reuse them
+    o Enable autovacuum support for sqlite
+    o Prevent leakage of server timezone in zipfiles
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1574
+    - https://github.com/globaleaks/GlobaLeaks/issues/1467
+
+Changes in version 2.60.138 - 2016-02-17
+    o Minor UI fixes
+    o Add possibility to disable submission steps navigation bar
+    o Enable score feature on checkboxes
+    o Add autocomplete==off to relevant inputboxes
+
+Changes in version 2.60.137 - 2016-02-15
+    o Improve startup messaging
+    o Wait migration script to complete before going to background
+
+Changes in version 2.60.136 - 2016-02-14
+    o Implement experimental score feature on selectbox and checkboxes
+    o Implement experimental contitional questions/steps feature
+    o Implement autologin controller for embedded receipts use case
+    o Rewrite debian packaging of apparmor script
+
+Changes in version 2.60.135 - 2016-02-04
+    o Fix syntax error in apparmor script
+
+Changes in version 2.60.134 - 2016-02-04
+    o Adopt CodeClimate for monitoring of code quality
+    o Improve packaging including libraries version following #1515
+    o Hide experimental features behind a advanced configuration enabler
+    o Implement basic submission export by means of a zip file including
+      questionnaire anwsers, eventual messages and files.
+    o Update all javascript dependencies to latest stables
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1556
+    - https://github.com/globaleaks/GlobaLeaks/issues/1557
+    - https://github.com/globaleaks/GlobaLeaks/issues/1508
+    - https://github.com/globaleaks/GlobaLeaks/issues/1560
+    - https://github.com/globaleaks/GlobaLeaks/issues/1468
+
+Changes in version 2.60.133 - 2016-01-14
+    o UI fixes
+
+Changes in version 2.60.132 - 2016-01-13
+    o UI fixes
+
+Changes in version 2.60.131 - 2016-01-10
+    o Packaging fixes
+
+Changes in version 2.60.130 - 2015-01-06
+    o Minor bugfixing
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1549
+
+Changes in version 2.60.129 - 2015-12-26
+    o UI Fixes
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1544
+    - https://github.com/globaleaks/GlobaLeaks/issues/1545
+
+Changes in version 2.60.128 - 2015-12-24
+    o UI Fixes
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1469
+    - https://github.com/globaleaks/GlobaLeaks/issues/1539
+    - https://github.com/globaleaks/GlobaLeaks/issues/1540
+    - https://github.com/globaleaks/GlobaLeaks/issues/1543
+
+commit 8b33bfa813d5b0f15e90701b88432f8eed8fecf4
+Author: evilaliv3 <giovanni.pellerano@evilaliv3.org>
+Date:   Wed Dec 23 22:25:51 2015 +0100
+
+    Address issue #1540
+
+commit 3d8524bc5170d5c75e021a11e6b4a139a46474e1
+Author: evilaliv3 <giovanni.pellerano@evilaliv3.org>
+Date:   Wed Dec 23 22:05:41 2015 +0100
+
+    Reimplement pending request animation addressing issue #1539
+
+commit ad5fb2aa74a41d49ab11d433319d723287fdad0b
+Author: evilaliv3 <giovanni.pellerano@evilaliv3.org>
+Date:   Tue Dec 22 15:24:26 2015 +0100
+
+    Simplify requirements checking and remove --upgrade from pip install command
+
+commit 6c8576fe3ca73efe2398e8d58b1ca1b17340339b
+Author: evilaliv3 <giovanni.pellerano@evilaliv3.org>
+Date:   Tue Dec 22 01:58:14 2015 +0100
+
+    Implement issue #1469
+
+Changes in version 2.60.127 - 2015-12-21
+    o Fix file upload regression
+
+Changes in version 2.60.126 - 2015-12-21
+    o Minor backend fixes
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1537
+
+Changes in version 2.60.125 - 2015-12-21
+    o UI Fixes
+    o Refactor mail templating system and notification scheduler
+    o Implement Short URL feature (#1527)
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1527
+    - https://github.com/globaleaks/GlobaLeaks/issues/1263
+    - https://github.com/globaleaks/GlobaLeaks/issues/1534
+    - https://github.com/globaleaks/GlobaLeaks/issues/1536
+
+Changes in version 2.60.124 - 2015-12-14
+    o UI Fixes
+    o Packaging fixes
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1530
+
+Changes in version 2.60.123 - 2015-12-11
+    o UI Fixes
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1524
+    - https://github.com/globaleaks/GlobaLeaks/issues/1526
+
+Changes in version 2.60.122 - 2015-12-10
+    o Migration fixes
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1525
+
+Changes in version 2.60.121 - 2015-12-09
+    o Packaging fixes
+    o UI Fixes
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1506
+    - https://github.com/globaleaks/GlobaLeaks/issues/1521
+    - https://github.com/globaleaks/GlobaLeaks/issues/1523
+    - https://github.com/globaleaks/GlobaLeaks/issues/1514
+
+Changes in version 2.60.120 - 2015-12-03
+    o UI Fixes
+    o Migration fixes
+
+Changes in version 2.60.119 - 2015-11-30
+    o UI Fixes
+
+Changes in version 2.60.118 - 2015-11-27
+    o UI Fixes
+    o Update translations
+
+Changes in version 2.60.117 - 2015-11-25
+    o UI Fixes
+    o Update translations
+
+Changes in version 2.60.116 - 2015-11-24
+    o Packaging fixes
+    o Update translations
+
+Changes in version 2.60.115 - 2015-11-22
+    o Packaging fixes
+
+Changes in version 2.60.114 - 2015-11-21
+    o Implement Proof of Work based on the HashCash to improve protection from spam attacks
+    o Implement secure wiping of files upon deletion
+    o Integrate OpenPGP.js library
+    o Integrate the scrypt-async library
+    o Add possibility for admins to configure their PGP key for mail notifications
+    o Add possibility for configuring the title of the main application pages
+    o Split admin/user/custodian authentication from whistleblower authentication handler
+    o Add possibility for enabling the whistleblower to comment/message/file upload on a later stage of the submission
+    o Implement custodian of the whistleblower identities user
+    o Modularize currently implemente admin API handlers
+    o Implement hidden contexts and hidden submission urls
+    o Improve fields validators and their UI
+    o Improve detection of jobs malfunctions by monitoring their timing
+    o Improve detection of client malfunction by implementing secure exception notification to the backend with encrypted notifications for administrators
+    o Bugfix support for IE10
+    o Improve resiliency of migration script
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/799
+    - https://github.com/globaleaks/GlobaLeaks/issues/688
+    - https://github.com/globaleaks/GlobaLeaks/issues/1387
+    - https://github.com/globaleaks/GlobaLeaks/issues/908
+    - https://github.com/globaleaks/GlobaLeaks/issues/1399
+    - https://github.com/globaleaks/GlobaLeaks/issues/1432
+    - https://github.com/globaleaks/GlobaLeaks/issues/185
+    - https://github.com/globaleaks/GlobaLeaks/issues/1450
+    - https://github.com/globaleaks/GlobaLeaks/issues/1449
+    - https://github.com/globaleaks/GlobaLeaks/issues/1457
+    - https://github.com/globaleaks/GlobaLeaks/issues/1410
+    - https://github.com/globaleaks/GlobaLeaks/issues/1458
+    - https://github.com/globaleaks/GlobaLeaks/issues/1459
+    - https://github.com/globaleaks/GlobaLeaks/issues/1438
+    - https://github.com/globaleaks/GlobaLeaks/issues/678
+    - https://github.com/globaleaks/GlobaLeaks/issues/1462
+    - https://github.com/globaleaks/GlobaLeaks/issues/1463
+    - https://github.com/globaleaks/GlobaLeaks/issues/1464
+    - https://github.com/globaleaks/GlobaLeaks/issues/1191
+    - https://github.com/globaleaks/GlobaLeaks/issues/1402
+    - https://github.com/globaleaks/GlobaLeaks/issues/1456
+    - https://github.com/globaleaks/GlobaLeaks/issues/1438
+    - https://github.com/globaleaks/GlobaLeaks/issues/1466
+    - https://github.com/globaleaks/GlobaLeaks/issues/1340
+    - https://github.com/globaleaks/GlobaLeaks/issues/1044
+    - https://github.com/globaleaks/GlobaLeaks/issues/1156
+    - https://github.com/globaleaks/GlobaLeaks/issues/1158
+    - https://github.com/globaleaks/GlobaLeaks/issues/1215
+    - https://github.com/globaleaks/GlobaLeaks/issues/1463
+    - https://github.com/globaleaks/GlobaLeaks/issues/1341
+    - https://github.com/globaleaks/GlobaLeaks/issues/1461
+    - https://github.com/globaleaks/GlobaLeaks/issues/1483
+    - https://github.com/globaleaks/GlobaLeaks/issues/1478
+    - https://github.com/globaleaks/GlobaLeaks/issues/1480
+    - https://github.com/globaleaks/GlobaLeaks/issues/1487
+    - https://github.com/globaleaks/GlobaLeaks/issues/1488
+
+Changes in version 2.60.113 - 2015-10-22
+    o Minor UI fixes
+    o Packaging fixes
+
+Changes in version 2.60.112 - 2015-09-26
+    o Improve unit testing
+
+Changes in version 2.60.111 - 2015-09-26
+    o Improve unit testing
+
+Changes in version 2.60.110 - 2015-09-19
+    o Improve unit testing
+    o Update translations
+
+Changes in version 2.60.109 - 2015-09-16
+    o Minor bugfixing of UI and migration scripts
+
+Changes in version 2.60.108 - 2015-09-07
+    o Minor UI fixes
+
+Changes in version 2.60.107 - 2015-09-07
+    o Minor backend fixes
+    o Minor UI fixes
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1415
+    - https://github.com/globaleaks/GlobaLeaks/issues/1417
+    - https://github.com/globaleaks/GlobaLeaks/issues/1156
+    - https://github.com/globaleaks/GlobaLeaks/issues/1158
+    - https://github.com/globaleaks/GlobaLeaks/issues/1156
+    - https://github.com/globaleaks/GlobaLeaks/issues/1406
+    - https://github.com/globaleaks/GlobaLeaks/issues/1412
+
+Changes in version 2.60.106 - 2015-09-06
+    o Minor backend fixes
+    o Minor UI fixes
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1383
+    - https://github.com/globaleaks/GlobaLeaks/issues/1386
+    - https://github.com/globaleaks/GlobaLeaks/issues/1351
+    - https://github.com/globaleaks/GlobaLeaks/issues/1391
+    - https://github.com/globaleaks/GlobaLeaks/issues/1400
+
+Changes in version 2.60.105 - 2015-08-28
+    o DB migration fixes
+    o Minor UI fixes
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1374
+    - https://github.com/globaleaks/GlobaLeaks/issues/1375
+
+Changes in version 2.60.104 - 2015-08-27
+    o Minor UI fixes
+
+Changes in version 2.60.103 - 2015-08-26
+    o Minor UI fixes
+    o Minor backend fixes
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1366
+
+Changes in version 2.60.102 - 2015-08-24
+    o Minor UI fixes
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1355
+
+Changes in version 2.60.101 - 2015-08-24
+    o Minor UI fixes
+    o Improve error resiliency of file management with a retry mechanism
+    o Add monitoring of Jobs time
+    o Add monitoring of Handlers time
+    o Add clientside exception notification
+    o Implement multi entry fields
+    o Implement horizontal fields ordering
+    o Archive questionnaire datastructure on submit
+    o Serialize questionnaire answers in structured relationl DB in order
+      to allow search and statistics
+
+Changes in version 2.60.100 - 2015-08-13
+    o Minor UI fixes
+
+Changes in version 2.60.99 - 2015-08-04
+    o Minor backend fixes
+
+Changes in version 2.60.98 - 2015-08-03
+    o Minor UI fixes
+
+Changes in version 2.60.97 - 2015-08-03
+    o Improved Tip Page UI
+    o Improved File Uploader UI
+    o Minor UI fixes to submission interface
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1346
+    - https://github.com/globaleaks/GlobaLeaks/issues/1347
+    - https://github.com/globaleaks/GlobaLeaks/issues/1348
+    - https://github.com/globaleaks/GlobaLeaks/issues/1349
+    - https://github.com/globaleaks/GlobaLeaks/issues/923
+    - https://github.com/globaleaks/GlobaLeaks/issues/1233
+    - https://github.com/globaleaks/GlobaLeaks/issues/1332
+    - https://github.com/globaleaks/GlobaLeaks/issues/1350
+
+Changes in version 2.60.96 - 2015-07-30
+    o Minor UI fixes
+
+Changes in version 2.60.95 - 2015-07-30
+    o Minor UI fixes
+
+Changes in version 2.60.94 - 2015-07-28
+    o Minor UI fixes
+
+Changes in version 2.60.93 - 2015-07-28
+    o Minor UI fixes
+
+Changes in version 2.60.92 - 2015-07-28
+    o Minor UI fixes
+
+Changes in version 2.60.91 - 2015-07-18
+    o Minor UI fixes
+
+Changes in version 2.60.90 - 2015-07-17
+    o Minor UI fixes
+
+Changes in version 2.60.89 - 2015-07-15
+    o Minor UI fixes
+
+Changes in version 2.60.88 - 2015-07-15
+    o Minor backend fixes
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1327
+    - https://github.com/globaleaks/GlobaLeaks/issues/1330
+
+Changes in version 2.60.87 - 2015-07-07
+    o Minor UI fixes
+
+Changes in version 2.60.86 - 2015-07-07
+    o Minor UI fixes
+
+Changes in version 2.60.85 - 2015-07-05
+    o Packaging fixes
+
+Changes in version 2.60.84 - 2015-07-05
+    o Fix Apparmor script adding missing allowed paths
+    o Improve UX of Tip page and Tip List page
+    o Remove JQuery dependency app size of ~10%
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1267
+
+Changes in version 2.60.83 - 2015-06-28
+    o Fix bug in file uploader due to parallel chunks
+    o Revise Anti Disk Flood checks
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1310
+    - https://github.com/globaleaks/GlobaLeaks/issues/1313
+    - https://github.com/globaleaks/GlobaLeaks/issues/1316
+
+Changes in version 2.60.82 - 2015-06-22
+    o Improved UX for file uploads
+    o Misc UI fixes
+    o Update Translations
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1224
+    - https://github.com/globaleaks/GlobaLeaks/issues/1257
+    - https://github.com/globaleaks/GlobaLeaks/issues/1295
+    - https://github.com/globaleaks/GlobaLeaks/issues/1300
+    - https://github.com/globaleaks/GlobaLeaks/issues/1302
+    - https://github.com/globaleaks/GlobaLeaks/issues/1305
+    - https://github.com/globaleaks/GlobaLeaks/issues/1299
+
+Changes in version 2.60.81 - 2015-06-14
+    o Misc UI fixes
+    o Update Translations
+
+Changes in version 2.60.80 - 2015-06-14
+    o Misc UI fixes
+
+Changes in version 2.60.79 - 2015-06-14
+    o Misc UI fixes
+    o Update Translations
+
+Changes in version 2.60.78 - 2015-06-14
+    o Internationalization fixes
+
+Changes in version 2.60.77 - 2015-06-13
+    o Bump of AngulaJS to 1.3.16
+    o Important performance improval of tiplist page
+    o General UI improval thanks to angular one-time-binding
+    o Improve anti-flood protections and implement anomaly notifications
+    o Implement simplified templating system
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/798
+    - https://github.com/globaleaks/GlobaLeaks/issues/934
+    - https://github.com/globaleaks/GlobaLeaks/issues/796
+    - https://github.com/globaleaks/GlobaLeaks/issues/297
+    - https://github.com/globaleaks/GlobaLeaks/issues/1228
+    - https://github.com/globaleaks/GlobaLeaks/issues/1281
+    - https://github.com/globaleaks/GlobaLeaks/issues/1282
+    - https://github.com/globaleaks/GlobaLeaks/issues/1288
+    - https://github.com/globaleaks/GlobaLeaks/issues/1294
+    - https://github.com/globaleaks/GlobaLeaks/issues/1285
+
+Changes in version 2.60.76 - 2015-06-10
+    o Minor UI fixes
+
+Changes in version 2.60.75 - 2015-06-09
+    o Minor UI fixes
+
+Changes in version 2.60.74 - 2015-05-30
+    o Minor UI fixes
+
+Changes in version 2.60.73 - 2015-05-28
+    o Packageing fixes
+
+Changes in version 2.60.72 - 2015-05-28
+    o Packageing fixes
+
+Changes in version 2.60.71 - 2015-05-27
+    o Minor UI fixes
+
+Changes in version 2.60.70 - 2015-05-25
+    o Packaging fixes
+    o Improved cross-browser compatibility testing by
+      means of Saucelabs integration with Protractor tests
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1278
+    - https://github.com/globaleaks/GlobaLeaks/issues/1130
+    - https://github.com/globaleaks/GlobaLeaks/issues/1274
+    - https://github.com/globaleaks/GlobaLeaks/issues/1273
+    - https://github.com/globaleaks/GlobaLeaks/issues/1173
+    - https://github.com/globaleaks/GlobaLeaks/issues/1262
+    - https://github.com/globaleaks/GlobaLeaks/issues/444
+    - https://github.com/globaleaks/GlobaLeaks/issues/1258
+
+Changes in version 2.60.69 - 2015-05-02
+    o Packaging fixes
+    o RTL fixes
+
+Changes in version 2.60.68 - 2015-04-29
+    o Updated translations
+    o Minor UI fixes
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1241
+    - https://github.com/globaleaks/GlobaLeaks/issues/1235
+    - https://github.com/globaleaks/GlobaLeaks/issues/1250
+    - https://github.com/globaleaks/GlobaLeaks/issues/1248
+    - https://github.com/globaleaks/GlobaLeaks/issues/1251
+    - https://github.com/globaleaks/GlobaLeaks/issues/1252
+    - https://github.com/globaleaks/GlobaLeaks/issues/1253
+
+Changes in version 2.60.67 - 2015-04-21
+    o Updated translations
+    o Minor UI fixes
+
+Changes in version 2.60.66 - 2015-04-15
+    o Updated translations
+    o Minor UI fixes
+
+Changes in version 2.60.65 - 2015-04-10
+    o Updated translations
+    o Packaging fixes
+
+Changes in version 2.60.64 - 2015-04-09
+    o Revision of the entire application texts
+    o Completion of included translations
+    o Add translations for Albanian, Bulgarian, Bosnian,
+      Welsh, Persian, Kurdish, Slovenian, Russian
+    o Improved File Uploader by means of Flow.js
+    o Implement Submission flood protection based on human Captchas
+    o Improve anomaly detection and admin notification
+    o Implement Tips expiration notification for Receivers
+    o Disable SSL in favor of TLS on SMTP notifications
+    o Minor UI Fixes
+    o Apply bulk code and API cleanup
+
+    The following is the comprehensive list of closed tickets:
+    - https://github.com/globaleaks/GlobaLeaks/issues/1182
+    - https://github.com/globaleaks/GlobaLeaks/issues/921
+    - https://github.com/globaleaks/GlobaLeaks/issues/1193
+    - https://github.com/globaleaks/GlobaLeaks/issues/1187
+    - https://github.com/globaleaks/GlobaLeaks/issues/1207
+    - https://github.com/globaleaks/GlobaLeaks/issues/1208
+    - https://github.com/globaleaks/GlobaLeaks/issues/1209
+    - https://github.com/globaleaks/GlobaLeaks/issues/1212
+    - https://github.com/globaleaks/GlobaLeaks/issues/1210
+    - https://github.com/globaleaks/GlobaLeaks/issues/1164
+    - https://github.com/globaleaks/GlobaLeaks/issues/1193
+    - https://github.com/globaleaks/GlobaLeaks/issues/1187
+    - https://github.com/globaleaks/GlobaLeaks/issues/1106
+    - https://github.com/globaleaks/GlobaLeaks/issues/932
+    - https://github.com/globaleaks/GlobaLeaks/issues/1216
+    - https://github.com/globaleaks/GlobaLeaks/issues/1096
+    - https://github.com/globaleaks/GlobaLeaks/issues/1174
+    - https://github.com/globaleaks/GlobaLeaks/issues/1204
+    - https://github.com/globaleaks/GlobaLeaks/issues/547
+    - https://github.com/globaleaks/GlobaLeaks/issues/1197
+    - https://github.com/globaleaks/GlobaLeaks/issues/1095
+
+Changes in version 2.60.63 - 2015-02-20
+    o Add Catalan (100%)
+    o Minor UI fixes
+
+Changes in version 2.60.62 - 2015-02-16
+    o Fix a directory traversal issue introduced in 2.60.54
+    o Minor UI fixes
+
+Changes in version 2.60.61 - 2015-02-12
+    o Minor UI fixes
+
+Changes in version 2.60.60 - 2015-02-10
+    o Minor UI fixes
+
+Changes in version 2.60.59 - 2015-02-10
+    o Implement initial support for embeddably interfaces
+    o Apply fixes for RTL internationalization
+    o Minor UI fixes
+
+Changes in version 2.60.58 - 2015-02-04
+    o Fix validation of keys with no expiration set
+    o Fix alignment of Urdu as RTL language
+    o Improve resiliency of installation script
+
+Changes in version 2.60.57 - 2015-02-03
+    o Migration script fixes
+
+Changes in version 2.60.56 - 2015-02-03
+    o Added PGP expiration checks
+
+Changes in version 2.60.55 - 2015-01-29
+    o Minor UI fixes
+
+Changes in version 2.60.54 - 2015-01-28
+    o Fixed custom CSS flickering
+
+Changes in version 2.60.53 - 2015-01-26
+    o Minor UI fixes
+
+Changes in version 2.60.52 - 2015-01-23
+    o Minor UI fixes
+
+Changes in version 2.60.51 - 2015-01-22
+    o Various migration fixes
+    o Minor UI fixes
+
+Changes in version 2.60.50 - 2015-01-21
+    o Enabled GZIP compression
+    o Minor UI fixes
+
+Changes in version 2.60.49 - 2015-01-18
+    o Implemented file upload preview
+    o Implemented simplified vertical submission template
+    o Various Bugfixing
+
+Changes in version 2.60.48 - 2015-01-13
+    o Various Bugfixing
+
+Changes in version 2.60.47 - 2015-01-12
+    o Addressed Clientside Performance Issues
+    o Added Finnish (75)
+
+Changes in version 2.60.46 - 2015-01-06
+    o Minor Bugfixing
+
+Changes in version 2.60.45 - 2014-12-30
+    o Added Hebrew (95%)
+    o Minor Bugfixing
+
+Changes in version 2.60.44 - 2014-12-25
+    o Packaging Fixes
+
+Changes in version 2.60.43 - 2014-12-22
+    o Updated Translations
+
+Changes in version 2.60.42 - 2014-12-22
+    o Added support for Field Templates configuration
+    o Added support for Context Steps configuration
+    o Implemented caching for API
+    o Added Support for Stats Tracking and Visualization
+    o Properly packaged as debian package
+    o Removed Pickles in favour of JSON data structures
+    o Implemented basic scripts for ready-to-use globaleaks vagrant machines
+    o Added support of Debian Jessie and Debian 7
+    o Added translation for: Japanese, Ukrainian
+
+    The following is the comprehensive list of closed tickets:
+      - https://github.com/globaleaks/GlobaLeaks/issues/958
+      - https://github.com/globaleaks/GlobaLeaks/issues/998
+      - https://github.com/globaleaks/GlobaLeaks/issues/1008
+      - https://github.com/globaleaks/GlobaLeaks/issues/1004
+      - https://github.com/globaleaks/GlobaLeaks/issues/1007
+      - https://github.com/globaleaks/GlobaLeaks/issues/1011
+      - https://github.com/globaleaks/GlobaLeaks/issues/991
+      - https://github.com/globaleaks/GlobaLeaks/issues/144
+      - https://github.com/globaleaks/GlobaLeaks/issues/1023
+      - https://github.com/globaleaks/GlobaLeaks/issues/1046
+      - https://github.com/globaleaks/GlobaLeaks/issues/980
+      - https://github.com/globaleaks/GlobaLeaks/issues/1052
+      - https://github.com/globaleaks/GlobaLeaks/issues/586
+      - https://github.com/globaleaks/GlobaLeaks/issues/1015
+      - https://github.com/globaleaks/GlobaLeaks/issues/837
+      - https://github.com/globaleaks/GlobaLeaks/issues/1028
+      - https://github.com/globaleaks/GlobaLeaks/issues/1059
+      - https://github.com/globaleaks/GlobaLeaks/issues/295
+      - https://github.com/globaleaks/GlobaLeaks/issues/966
+      - https://github.com/globaleaks/GlobaLeaks/issues/801
+      - https://github.com/globaleaks/GlobaLeaks/issues/996
+      - https://github.com/globaleaks/GlobaLeaks/issues/965
+      - https://github.com/globaleaks/GlobaLeaks/issues/958
+      - https://github.com/globaleaks/GlobaLeaks/issues/917
+      - https://github.com/globaleaks/GlobaLeaks/issues/941
+      - https://github.com/globaleaks/GlobaLeaks/issues/916
+      - https://github.com/globaleaks/GlobaLeaks/issues/911
+      - https://github.com/globaleaks/GlobaLeaks/issues/907
+      - https://github.com/globaleaks/GlobaLeaks/issues/1031
+      - https://github.com/globaleaks/GlobaLeaks/issues/1002
+      - https://github.com/globaleaks/GlobaLeaks/issues/1001
+      - https://github.com/globaleaks/GlobaLeaks/issues/987
+      - https://github.com/globaleaks/GlobaLeaks/issues/918
+      - https://github.com/globaleaks/GlobaLeaks/issues/912
+      - https://github.com/globaleaks/GlobaLeaks/issues/496
+      - https://github.com/globaleaks/GlobaLeaks/issues/1054
+      - https://github.com/globaleaks/GlobaLeaks/issues/1030
+      - https://github.com/globaleaks/GlobaLeaks/issues/1029
+      - https://github.com/globaleaks/GlobaLeaks/issues/1027
+      - https://github.com/globaleaks/GlobaLeaks/issues/1025
+      - https://github.com/globaleaks/GlobaLeaks/issues/1013
+      - https://github.com/globaleaks/GlobaLeaks/issues/1013
+      - https://github.com/globaleaks/GlobaLeaks/issues/859
+      - https://github.com/globaleaks/GlobaLeaks/issues/573
+      - https://github.com/globaleaks/GlobaLeaks/issues/70
+      - https://github.com/globaleaks/GlobaLeaks/issues/1003
+
+Changes in version 2.60.22 - 2014-10-22
+    The following is the comprehensive list of closed tickets:
+      - https://github.com/globaleaks/GlobaLeaks/issues/926
+      - https://github.com/globaleaks/GlobaLeaks/issues/943
+      - https://github.com/globaleaks/GlobaLeaks/issues/978
+      - https://github.com/globaleaks/GlobaLeaks/issues/988
+      - https://github.com/globaleaks/GlobaLeaks/issues/989
+      - https://github.com/globaleaks/GlobaLeaks/issues/992
+      - https://github.com/globaleaks/GlobaLeaks/issues/990
+
+Changes in version 2.60.16 - 2014-09-25
+  This release includes the following new translations:
+    Chinese, Greek, Latvian, Polish, Thai, Turkish
+
+    The following is the comprehensive list of closed tickets:
+      - https://github.com/globaleaks/GlobaLeaks/issues/761
+      - https://github.com/globaleaks/GlobaLeaks/issues/778
+      - https://github.com/globaleaks/GlobaLeaks/issues/868
+      - https://github.com/globaleaks/GlobaLeaks/issues/871
+      - https://github.com/globaleaks/GlobaLeaks/issues/873
+      - https://github.com/globaleaks/GlobaLeaks/issues/878
+      - https://github.com/globaleaks/GlobaLeaks/issues/879
+      - https://github.com/globaleaks/GlobaLeaks/issues/881
+      - https://github.com/globaleaks/GlobaLeaks/issues/882
+      - https://github.com/globaleaks/GlobaLeaks/issues/885
+      - https://github.com/globaleaks/GlobaLeaks/issues/887
+      - https://github.com/globaleaks/GlobaLeaks/issues/890
+      - https://github.com/globaleaks/GlobaLeaks/issues/893
+      - https://github.com/globaleaks/GlobaLeaks/issues/926
+      - https://github.com/globaleaks/GlobaLeaks/issues/933
+      - https://github.com/globaleaks/GlobaLeaks/issues/936
+      - https://github.com/globaleaks/GlobaLeaks/issues/943
+      - https://github.com/globaleaks/GlobaLeaks/issues/949
+      - https://github.com/globaleaks/GlobaLeaks/issues/950
+      - https://github.com/globaleaks/GlobaLeaks/issues/951
+      - https://github.com/globaleaks/GlobaLeaks/issues/953
+      - https://github.com/globaleaks/GlobaLeaks/issues/959
+      - https://github.com/globaleaks/GlobaLeaks/issues/960
+
+Changes in version 2.60 - 2014-04-22
+  This release solve thes issues spotted by [LeastAuthority code audit:
+    https://github.com/globaleaks/GlobaLeaks/wiki/LeastAuthority-Report
+
+  o implemented a JSON API for [ahmia.fi](https://ahmia.fi/search)
+  o https://github.com/globaleaks/GLBackend/commit/79bb5671f3418ef8c8745bee22617bbfc244b377
+  o implemented a simplified first-setup wizard
+  o added translations: Croatian (Croatia), Slovak,
+    Norwegian Bokmål (Norway), Portuguese (Portugal), Swedish
+
+    The following is the comprehensive list of closed tickets:
+      - https://github.com/globaleaks/GlobaLeaks/issues/793
+      - https://github.com/globaleaks/GlobaLeaks/issues/808
+      - https://github.com/globaleaks/GlobaLeaks/issues/571
+      - https://github.com/globaleaks/GlobaLeaks/issues/604
+      - https://github.com/globaleaks/GlobaLeaks/issues/788
+      - https://github.com/globaleaks/GlobaLeaks/issues/781
+      - https://github.com/globaleaks/GlobaLeaks/issues/814
+      - https://github.com/globaleaks/GlobaLeaks/issues/815
+      - https://github.com/globaleaks/GlobaLeaks/issues/818
+      - https://github.com/globaleaks/GlobaLeaks/issues/819
+      - https://github.com/globaleaks/GlobaLeaks/issues/817
+      - https://github.com/globaleaks/GlobaLeaks/issues/822
+      - https://github.com/globaleaks/GlobaLeaks/issues/842
+      - https://github.com/globaleaks/GlobaLeaks/issues/847
+      - https://github.com/globaleaks/GlobaLeaks/issues/850
+      - https://github.com/globaleaks/GlobaLeaks/issues/853
+      - https://github.com/globaleaks/GlobaLeaks/issues/602
+      - https://github.com/globaleaks/GlobaLeaks/issues/828
+      - https://github.com/globaleaks/GlobaLeaks/issues/832
+      - https://github.com/globaleaks/GlobaLeaks/issues/823
+      - https://github.com/globaleaks/GlobaLeaks/issues/829
+      - https://github.com/globaleaks/GlobaLeaks/issues/824
+      - https://github.com/globaleaks/GlobaLeaks/issues/810
+      - https://github.com/globaleaks/GlobaLeaks/issues/809
+      - https://github.com/globaleaks/GlobaLeaks/issues/604
+      - https://github.com/globaleaks/GlobaLeaks/issues/839
+      - https://github.com/globaleaks/GlobaLeaks/issues/845
+      - https://github.com/globaleaks/GlobaLeaks/issues/846
+      - https://github.com/globaleaks/GlobaLeaks/issues/836
+      - https://github.com/globaleaks/GlobaLeaks/issues/823
+      - https://github.com/globaleaks/GlobaLeaks/issues/164
+      - https://github.com/globaleaks/GlobaLeaks/issues/815
+
+Changes in version 2.52 - 2014-01-24
+    The following is the comprehensive list of closed tickets:
+      - https://github.com/globaleaks/GlobaLeaks/issues/395
+      - https://github.com/globaleaks/GlobaLeaks/issues/722
+      - https://github.com/globaleaks/GlobaLeaks/issues/619
+      - https://github.com/globaleaks/GlobaLeaks/issues/676
+      - https://github.com/globaleaks/GlobaLeaks/issues/484
+      - https://github.com/globaleaks/GlobaLeaks/issues/766
+      - https://github.com/globaleaks/GlobaLeaks/issues/765
+      - https://github.com/globaleaks/GlobaLeaks/issues/743
+      - https://github.com/globaleaks/GlobaLeaks/issues/740
+      - https://github.com/globaleaks/GlobaLeaks/issues/756
+      - https://github.com/globaleaks/GlobaLeaks/issues/751
+      - https://github.com/globaleaks/GlobaLeaks/issues/740
+      - https://github.com/globaleaks/GlobaLeaks/issues/729
+      - https://github.com/globaleaks/GlobaLeaks/issues/736
+      - https://github.com/globaleaks/GlobaLeaks/issues/742
+      - https://github.com/globaleaks/GlobaLeaks/issues/594
+      - https://github.com/globaleaks/GlobaLeaks/issues/726
+      - https://github.com/globaleaks/GlobaLeaks/issues/737
+      - https://github.com/globaleaks/GlobaLeaks/issues/745
+      - https://github.com/globaleaks/GlobaLeaks/issues/731
+      - https://github.com/globaleaks/GlobaLeaks/issues/732
+      - https://github.com/globaleaks/GlobaLeaks/issues/757
+      - https://github.com/globaleaks/GlobaLeaks/issues/746
+      - https://github.com/globaleaks/GlobaLeaks/issues/747
+      - https://github.com/globaleaks/GlobaLeaks/issues/731
+      - https://github.com/globaleaks/GlobaLeaks/issues/730
+      - https://github.com/globaleaks/GlobaLeaks/issues/729
+      - https://github.com/globaleaks/GlobaLeaks/issues/716
+      - https://github.com/globaleaks/GlobaLeaks/issues/769
+      - https://github.com/globaleaks/GlobaLeaks/issues/770
+      - https://github.com/globaleaks/GlobaLeaks/issues/744
+
+Changes in version 2.30 - 2013-12-05
+    o added capability for configuring custom CSS from admin panel
+    o added capability for configuring custom translations from admin panel
+    o added capability for uploading/deleting custom files from admin panel
+    o added capability for deleting submission and postponing their expiry time
+    o UI for submission status page restyled to achieve better user experience
+    o UI for submission tip list restyled to achieve better user experience
+
+    The following is the comprehensive list of closed tickets:
+      - https://github.com/globaleaks/GlobaLeaks/issues/703
+      - https://github.com/globaleaks/GlobaLeaks/issues/704
+      - https://github.com/globaleaks/GlobaLeaks/issues/705
+      - https://github.com/globaleaks/GlobaLeaks/issues/701
+      - https://github.com/globaleaks/GlobaLeaks/issues/700
+      - https://github.com/globaleaks/GlobaLeaks/issues/708
+      - https://github.com/globaleaks/GlobaLeaks/issues/709
+
+Changes in version 2.29 - 2013-12-05
+    o updated to Angular 1.2.0, js codebase reduced (~700~ -> ~400k)
+    o implemented UI to view/delete custom uploaded files.
+    o added authentication over file download and collection download
+
+Changes in version 2.28 - 2013-11-05
+    o added new translations (Serbian, Serbian@latin, German Czech)
+
+    The following is the comprehensive list of closed tickets:
+      - https://github.com/globaleaks/GlobaLeaks/issues/698
+      - https://github.com/globaleaks/GlobaLeaks/issues/696
+      - https://github.com/globaleaks/GlobaLeaks/issues/697
+      - https://github.com/globaleaks/GlobaLeaks/issues/695
+      - https://github.com/globaleaks/GlobaLeaks/issues/690
+      - https://github.com/globaleaks/GlobaLeaks/issues/603
+      - https://github.com/globaleaks/GlobaLeaks/issues/497
+      - https://github.com/globaleaks/GlobaLeaks/issues/568
+      - https://github.com/globaleaks/GlobaLeaks/issues/576
+      - https://github.com/globaleaks/GlobaLeaks/issues/629
+      - https://github.com/globaleaks/GlobaLeaks/issues/630
+      - https://github.com/globaleaks/GlobaLeaks/issues/656
+      - https://github.com/globaleaks/GlobaLeaks/issues/658
+      - https://github.com/globaleaks/GlobaLeaks/issues/560
+      - https://github.com/globaleaks/GlobaLeaks/issues/338
+      - https://github.com/globaleaks/GlobaLeaks/issues/620
+      - https://github.com/globaleaks/GlobaLeaks/issues/576
+      - https://github.com/globaleaks/GlobaLeaks/issues/629
+      - https://github.com/globaleaks/GlobaLeaks/issues/638
+      - https://github.com/globaleaks/GlobaLeaks/issues/650
+      - https://github.com/globaleaks/GlobaLeaks/issues/649
+      - https://github.com/globaleaks/GlobaLeaks/issues/547
+      - https://github.com/globaleaks/GlobaLeaks/issues/647
+      - https://github.com/globaleaks/GlobaLeaks/issues/648
+      - https://github.com/globaleaks/GlobaLeaks/issues/630
+      - https://github.com/globaleaks/GlobaLeaks/issues/629
+      - https://github.com/globaleaks/GlobaLeaks/issues/635
+      - https://github.com/globaleaks/GlobaLeaks/issues/625
+      - https://github.com/globaleaks/GlobaLeaks/issues/631
+      - https://github.com/globaleaks/GlobaLeaks/issues/597
+      - https://github.com/globaleaks/GlobaLeaks/issues/612
+      - https://github.com/globaleaks/GlobaLeaks/issues/596
+      - https://github.com/globaleaks/GlobaLeaks/issues/566
+      - https://github.com/globaleaks/GlobaLeaks/issues/611
+      - https://github.com/globaleaks/GlobaLeaks/issues/613
+      - https://github.com/globaleaks/GlobaLeaks/issues/617
+      - https://github.com/globaleaks/GlobaLeaks/issues/614
+      - https://github.com/globaleaks/GlobaLeaks/issues/598
+
+Changes in version 2.26 - 2013-09-09
+    The following is the comprehensive list of closed tickets:
+      - https://github.com/globaleaks/GlobaLeaks/issues/166
+      - https://github.com/globaleaks/GlobaLeaks/issues/605
+
+Changes in version 2.25 - 2013-09-08
+    The following is the comprehensive list of closed tickets:
+      - https://github.com/globaleaks/GlobaLeaks/issues/600
+      - https://github.com/globaleaks/GlobaLeaks/issues/606
+
+Changes in version 2.24.15 - 2013-09-08
+    The following is the comprehensive list of closed tickets:
+      - https://github.com/globaleaks/GlobaLeaks/issues/572
+      - https://github.com/globaleaks/GlobaLeaks/issues/571
+      - https://github.com/globaleaks/GlobaLeaks/issues/592
+      - https://github.com/globaleaks/GlobaLeaks/issues/575
+
+Changes in version 2.24.13 - 2013-09-08
+    The following is the comprehensive list of closed tickets:
+      - https://github.com/globaleaks/GlobaLeaks/issues/565
+      - https://github.com/globaleaks/GlobaLeaks/issues/561
+      - https://github.com/globaleaks/GlobaLeaks/issues/564
+      - https://github.com/globaleaks/GlobaLeaks/issues/570
+      - https://github.com/globaleaks/GlobaLeaks/issues/569
+      - https://github.com/globaleaks/GlobaLeaks/issues/585
+      - https://github.com/globaleaks/GlobaLeaks/issues/581
+      - https://github.com/globaleaks/GlobaLeaks/issues/589
+
+Changes in version 2.24.10 - 2013-08-30
+    The following is the comprehensive list of closed tickets:
+      - https://github.com/globaleaks/GlobaLeaks/issues/512
+      - https://github.com/globaleaks/GlobaLeaks/issues/510
+      - https://github.com/globaleaks/GlobaLeaks/issues/498
+      - https://github.com/globaleaks/GlobaLeaks/issues/483
+      - https://github.com/globaleaks/GlobaLeaks/issues/518
+      - https://github.com/globaleaks/GlobaLeaks/issues/300
+      - https://github.com/globaleaks/GlobaLeaks/issues/513
+      - https://github.com/globaleaks/GlobaLeaks/issues/515
+      - https://github.com/globaleaks/GlobaLeaks/issues/515
+      - https://github.com/globaleaks/GlobaLeaks/issues/550
+      - https://github.com/globaleaks/GlobaLeaks/issues/548
+      - https://github.com/globaleaks/GlobaLeaks/issues/558
+
+Changes in version 2.24.9 - 2013-08-18
+    The following is the comprehensive list of closed tickets:
+      - https://github.com/globaleaks/GlobaLeaks/issues/514
+      - https://github.com/globaleaks/GlobaLeaks/issues/498
+      - https://github.com/globaleaks/GlobaLeaks/issues/509
+      - https://github.com/globaleaks/GlobaLeaks/issues/440
+      - https://github.com/globaleaks/GlobaLeaks/issues/509
+      - https://github.com/globaleaks/GlobaLeaks/issues/511
+      - https://github.com/globaleaks/GlobaLeaks/issues/491
+      - https://github.com/globaleaks/GlobaLeaks/issues/316
+
+Changes in version 2.24.3 - 2013-08-14
+    o updated translations
+
+    The following is the comprehensive list of closed tickets:
+      - https://github.com/globaleaks/GlobaLeaks/issues/514
+      - https://github.com/globaleaks/GlobaLeaks/issues/520
+
+Changes in version 2.24.2 - 2013-08-11
+    o updated translations
+    o Fix typo in download counter
+    o restored exception email
+    o implemented https://github.com/globaleaks/GlobaLeaks/issues/369
+    o fixed two minor elements (unit conversion, http error code)
+
+Changes in version 2.24.1.2 - 2013-08-11
+    o Fixed bug in migrating users from 4-5 
+
+Changes in version 2.24.1.2 - 2013-08-11
+    o Always replenish our RNG before we call it.
+
+Changes in version 2.24.1 - 2013-08-11
+    o Update Translations
+    o Disable "Blow the whistle" button if the node does not support not anonymous submissions and we are not anon.
+    o Disable submit button if not anonymous
+    o implemeented pretty date where has been forgotten
+    o Add some extra strings to be translated
+    o After we fork we shall re-initialize the RNG.
+    o fixed sessions bug, user table bug, and https://github.com/globaleaks/GlobaLeaks/issues/506
+    o Add script for resetting the GLBackend password
+    o Fix bug in updating of User table.
+
+Changes in version 2.24.0 - 2013-08-11
+    o Disable "Add comment" button when no comment is present.
+    o Fix typo
+    o Stop using angular-cookies and just use jquery.
+    o Move the setting of the rootScope whistleblower_id value up
+    o Update Translations
+    o Add support for handling Source Name and Source Email
+    o grunt updateTranslations
+    o Add some basic end to end tests
+    o Disable file download button if the limit is reached
+    o Fix visualization of receivers with long name.
+    o fixed bug in previosu commits
+    o fixed a wrong english sentence
+    o In creation of a Context select all receivers by default
+    o Properly visualize the multi select options
+    o Fix some bugs in the submission form.
+    o Add support for configuring from admin panel
+    o Add support for having all receivers deselected by default
+    o implemented issue https://github.com/globaleaks/GlobaLeaks/issues/319
+    o Update some buggy translations. Thnx alx
+    o Make requests timeout after 30 seconds and stop displaying progress bar
+    o Make sure the images in the receiver selection page are always reloaded
+    o all unitTest fixed runnedgit status1
+    o review Form: format, opened https://github.com/globaleaks/GlobaLeaks/issues/506
+    o fixed unitTest in notification
+    o fixed unitTest in sendmail
+    o extended From: manipoulation with name and email fields
+    o Fix the unittests related to last Context edits
+    o Fix the unittests for authentication
+    o implemented source_from in Notification https://github.com/globaleaks/GlobaLeaks/issues/500
+    o fixed migration bugs and implemented migration for https://github.com/globaleaks/GlobaLeaks/issues/444
+    o Serve end-to-end tests if debug mode enabled
+    o fix to really catch all scattered exceptions
+    o Initialize the mail templates to not include the date timestamp
+    o https://github.com/globaleaks/GlobaLeaks/issues/444
+    o splitted ambiguous errors code, and fixed spare bugs
+    o Make the unittests pass
+    o Fix serving of decoy traffic generating widget.
+    o Add support for having all receivers deselected by default
+    o implemented issue https://github.com/globaleaks/GlobaLeaks/issues/319
+
+Changes in version 2.23.13 - 2013-08-09
+    o Copy decoy to build dir
+    o Move index.html to decoy.html
+    o Move everything into the index.html file
+    o Add support for accepting decoy traffic
+    o fixed postrm script
+
+Changes in version 2.23.12.3 - 2013-08-09
+    o removed some commands from postinst now overridden by dh_apparmor
+    o added #DEBHELPER# token to debian preinst script
+    o added #DEBHELPER# token to debian postinst and postrm scripts
+
+Changes in version 2.23.12.2 - 2013-08-09
+    o Use the custom glclient build from /var/globaleaks/
+    o Add the glclient-build script to the scripts installed by setup.py
+    o Add script to build custom glclient (imported from GlobaLeaks repo)
+
+Changes in version 2.23.12.1 - 2013-08-09
+    o Make the Error become a warning.
+    o Merge branch 'devel', remote-tracking branch 'origin'
+    o fixed tranlation fallback in case of missing default language
+    o added french language
+
+Changes in version 2.23.12 - 2013-07-27
+    o fixed two logs entry, and GPG stdout disabled, but helpful in future GPG optimization
+    o fixed bug https://github.com/globaleaks/GlobaLeaks/issues/471
+    o fixed some issues introduced in commit https://github.com/globaleaks/GLBackend/commit/7b5c24ad5c79ca1b9fd182a4164653d17a60b752
+    o fix against latest merges
+    o changed default of expiration key checks
+    o completed and tested key expiration scheduler, part of https://github.com/globaleaks/GlobaLeaks/issues/187
+    o approached GPG expiration scheduled check https://github.com/globaleaks/GlobaLeaks/issues/289
+    o Fix https://github.com/globaleaks/GlobaLeaks/issues/466 apparmor recache on installation/upgrade
+    o migration scripts fixes
+    o fixed localization of context_name in admin tip overview
+    o fixed test_gpg unit test
+    o aligned migration script with https://github.com/globaleaks/GLBackend/commit/e681bf98850f5df81944eddb7058c51a19713f5f
+    o fixed some bugs related to PGP notifications and files encryption
+    o fixed a bug present introduced by commit https://github.com/globaleaks/GLBackend/commit/4258c358f6d28e0b47134336deaea5ff96230a3b
+    o fixed a bug spotted debugging issue https://github.com/globaleaks/GlobaLeaks/issues/441
+    o fixed mail notification (unicode values prevented exceptions notifications)
+    o enabled Storm debugging (it was never been used up to now)
+    o fixed checksum unitTest
+    o fixed translation in receiver desc in tip
+    o added apparmor rules for gpg
+    o fixed permissions on /var/globaleaks/torhs
+    o renamed db backup extension from .olddb to .bak
+    o receipt regexp validation https://github.com/globaleaks/GlobaLeaks/issues/458
+    o updated default presentation value: Welcome to GlobaLeaks™
+    o fixed a bug related to the new node variable presentation
+    o enhanced and refactored a core part of migration script:
+    o supported encrypted file status and download: https://github.com/globaleaks/GlobaLeaks/issues/187
+    o implemented shm/ramdisk supports for GPG ops https://github.com/globaleaks/GlobaLeaks/issues/283
+    o fixed a localization bug in submission
+    o extended DB, admin, UT and migration to supports default_lang https://github.com/globaleaks/GlobaLeaks/issues/403
+    o restored mail initialization with our defaults (errors and notification)
+    o fixed unitTest for https://github.com/globaleaks/GlobaLeaks/issues/416
+    o https://github.com/globaleaks/GlobaLeaks/issues/301
+    o .travis.yml aligned to GlobaLeaks repository
+    o globaleaks DB version 4 https://github.com/globaleaks/GlobaLeaks/issues/416
+    o fixed a bug in db conversion script
+    o implemented GPG sanitization: https://github.com/globaleaks/GlobaLeaks/issues/322
+    o completed https://github.com/globaleaks/GlobaLeaks/issues/275
+    o corrected boolean acquire for PGP preferences https://github.com/globaleaks/GlobaLeaks/issues/187
+    o start refactor of GPG, now supported https://github.com/globaleaks/GlobaLeaks/issues/275
+    o completed exception things: https://github.com/globaleaks/GlobaLeaks/issues/390
+    o removed node email UI, added GPG pref in admin: https://github.com/globaleaks/GlobaLeaks/issues/187
+    o Update translations
+    o Fix some bugs in the progress bar visualization
+    o fixed a typ0 in translatable sentence
+    o Improve the behavior of the Reciever and node logo file upload
+    o https://github.com/globaleaks/GlobaLeaks/issues/475
+    o Make the submission steps translatable
+    o Add support for picking the default language from the admin interface
+    o Only display language selector if more than 1 language is available
+    o Fix styling bugs introduced in previous commits
+    o fixed PGP receiver preferences view
+    o english sentence corrected
+    o removed multipart encoding from form configuration
+    o fixed a bug related to checkbox in receiver preferences
+    o Fix bug in language selection switching
+    o .travis.yml aligned to GlobaLeaks repository
+    o fixed tor2web security settings configuration
+    o Fix bug in language selection switching
+    o fixed regexp_receipt (missing escape for backslash)
+    o enhanced admin view for https://github.com/globaleaks/GlobaLeaks/issues/187
+    o completed Admin UI for https://github.com/globaleaks/GlobaLeaks/issues/416
+    o .travis.yml aligned to GlobaLeaks repository
+    o modify starting page with https://github.com/globaleaks/GlobaLeaks/issues/416
+    o customization message https://github.com/globaleaks/GlobaLeaks/issues/418
+    o added the default value for receipt_regexp=[A-Z]{4}\+[0-9]{5}
+    o restored GPG in GLClient: https://github.com/globaleaks/GlobaLeaks/issues/187
+
+    The following is the comprehensive list of closed tickets:
+      - https://github.com/globaleaks/GlobaLeaks/issues/296
+      - https://github.com/globaleaks/GlobaLeaks/issues/485
+      - https://github.com/globaleaks/GlobaLeaks/issues/482
+      - https://github.com/globaleaks/GlobaLeaks/issues/467
+      - https://github.com/globaleaks/GlobaLeaks/issues/415
+      - https://github.com/globaleaks/GlobaLeaks/issues/485
+      - https://github.com/globaleaks/GlobaLeaks/issues/460
+      - https://github.com/globaleaks/GlobaLeaks/issues/453
+
+Changes in version 2.23.11 - 2013-07-14
+    o fixed test_models and made timetolive test more reliable
+    o restored globaleaks exception email
+    o solved a couple of FIXME related timetolive
+    o forgotten update 2 to 3 DB version module
+
+Changes in version 2.23.10 - 2013-07-13
+    o Backend translation support in GLClient: reload the page when language changes
+    o Use the GL-Language header to keep track of current locale
+    o added globaleaks favicon.ico and package aligned
+    o unit tests fixed and aligned to latest localization changes
+    o fixed some bugs related to localization updates
+    o fixed some bugs related on fields validation https://github.com/globaleaks/GlobaLeaks/issues
+    o sanity check in l10 function
+    o updated DB to version 3 (fields translation supports)
+    o localization fixes
+    o Outline algorithm for migrating form fields from OLD to NEW
+    o Add method for logging exceptions
+    o Bugfix in:
+    o submission creation.
+    o node serialization
+    o creation of receivers
+    o Set the key value to be the name of the field
+    o Comment out the stuff related to setting tip and submission expiration configuration
+    o Remove reference to system_default_lang()
+    o Remove unneeded imports
+    o Major refactoring on multi language support in backend
+    o Use a smarter pattern for nesting values inside the lang code key
+    o Uniform the arguments that transact decorated functions take and pass a default argument to them
+    o Fix unittests to work with the new code
+    o Refactor defaults to not have a hardcoded language
+    o Add default_language to GLSetting
+    o Add languages_enabled to GLSetting
+    o Reference GLSetting.error_reporting_    o instead of using a hardcoded value
+    o Place the sample submission fields in settings.py
+    o https://github.com/globaleaks/GlobaLeaks/issues/302
+    o implemented acquire_localized text function
+    o fixed a typo in mail template (%NoneName% -> %NodeName%)
+    o implemented request https://github.com/globaleaks/GlobaLeaks/issues/443
+    o improved login/logout unit testing
+    o debian/globaleaks.apparmor-profile corrected (added some needed capabilities)
+    o fixed a bug related to apparmor and default sys.excepthook
+    o Fix group permissions on /var/run/globaleaks back to globaleaks
+    o Fields now handle GL-Language https://github.com/globaleaks/GlobaLeaks/issues/411
+    o Completed https://github.com/globaleaks/GlobaLeaks/issues/411 + all UT broken
+
+Changes in version 2.23.8 - 2013-07-08
+    o fixed permissions to /var/globaleaks/torhs
+
+Changes in version 2.23.7 - 2013-07-08
+    o various bugfix (421, 436, 425)
+    o vietnamese language added
+
+Changes in version 2.23.4 - 2013-07-05
+    o pip packages naming and version fixes
+
+Changes in version 2.23.3 - 2013-07-05
+    o pip packages naming and version fixes
+
+Changes in version 2.23.2 - 2013-07-05
+    o fixed issues 390, 389, 398, 229, 86, 153, 396, 412, 298, 303, 396
+    o implemented a GLClient password suggestions both on admin admin and receivers
+    o implemented a minimal GLBackend password validation
+    o better implementation of HTTP Exception handling
+    o fixed a bug related to keep-alive connections and protocol status variables.
+
+Changes in version 2.23.1 - 2013-06-30
+    o insert a timebuffer to avoid Travis false negative
+    o Review of text strings
+    o updateTranslations
+
+Changes in version 2.23 - 2013-06-28
+    o authentication credentials and tokens are no more written into log files; enhanced login accountability/debug lines (https://github.com/globaleaks/GlobaLeaks/issues/318)
+    o implemented scheduled session cleaner (https://github.com/globaleaks/GlobaLeaks/issues/269)
+    o removed Pillow: https://github.com/globaleaks/GlobaLeaks/issues/247 https://github.com/globaleaks/GlobaLeaks/issues/246 https://github.com/globaleaks/GlobaLeaks/issues/146 + added a tribute for all the journalists (due to pillow removal, receivers' pictures may not resize correctly)
+    o fixed bug in database migration, when more versions are upgraded at once (https://github.com/globaleaks/GlobaLeaks/issues/344)
+    o Started support for configuring descriptive text, context related text and submission fields in multiple language (https://github.com/globaleaks/GlobaLeaks/issues/278)
+    o Do dh_apparmor before dh_install
+    o completed db migration 0 to 2 (languages) https://github.com/globaleaks/GlobaLeaks/issues/278
+    o Debian package override Tor files is solved (https://github.com/globaleaks/GlobaLeaks/issues/351)
+    o Change version to be >=
+    o added conditional check to avoid duplicate edits of apparmor local system_tor file
+    o fixed unitTest with languages: [https://github.com/globaleaks/GlobaLeaks/issues/278]
+    o fixed session expiration: https://github.com/globaleaks/GlobaLeaks/issues/353
+    o fixed migration bug https://github.com/globaleaks/GlobaLeaks/issues/342
+    o fixed two bugs spotted in testing
+    o Fix bug in context serialization.
+    o Add script for generating error code handling in GLCLient
+    o extended error communication with variable arguments https://github.com/globaleaks/GlobaLeaks/issues/281
+    o completed notification selection: https://github.com/globaleaks/GlobaLeaks/issues/360
+    o added storm >= 0.20 to requirements. removed strorm monkey patching related to "foreign keys"
+    o removed from GLB relative date: https://github.com/globaleaks/GlobaLeaks/issues/356
+    o Added little explanation about what's is done by the script
+    o removed libjpeg-dev from the dependencies list
+    o removed Pillow: https://github.com/globaleaks/GlobaLeaks/issues/247
+    o https://github.com/globaleaks/GlobaLeaks/issues/246
+    o https://github.com/globaleaks/GlobaLeaks/issues/146
+    o Disable switching step when file upload is in progress.
+    o status view, checksum display, updated https://github.com/globaleaks/GlobaLeaks/issues/334
+    o minor UI fixes
+    o Refactoring of fileuploader
+    o Implement cancel all uploads button
+    o Don't change step while upload is in progress.
+    o Move themes to themes script
+    o Make the version of gettext be more flexible
+    o Add marks for inserting glclient custom build styles
+    o Using build keyword makes grunt a sad pig :(
+    o Go for other route
+    o Fix typo
+    o Improve receipt acceptance page.
+
+Changes in version 0.2.0.21 - 2013-06-24
+    o receiver view updated with AdvSett
+    o solved critical security flaw in Receiver auth
+    o updated init guide examples related to network sandboxing
+    o apparmor and a globaleaks profile is now installed automagically
+    o fixed UT and updated DB with 283 and notification/files
+    o globaleaks/plugins/notification.py
+    o feat and test of https://github.com/globaleaks/GlobaLeaks/issues/268
+    o session expire (for admin, Receivers and Whistleblowers) when used after the default lifetime https://github.com/globaleaks/GlobaLeaks/issues/269
+    o enhanced unitTest helpers
+    o Implemented migration system
+    o better support for iptables (https://github.com/globaleaks/GlobaLeaks/issues/291)
+    o default init.d script variables values moved to /etc/default/globaleaks
+    o added globaleaks.default file used during packaging and setupped as /etc/default/globaleaks
+    o enhanced status checker
+    o Continous integration with Travis improved
+    o changed pip usage in package install procedure
+    o added debian postinst test for /etc/apparmor.d/usr.sbin.tor existance
+    o return code correct when quitting
+    o updated .travis.yml with permissions corrections
+    o clean the previous DB state
+    o edited scripts to permit fine selection of branches/tags/commits
+    o fixed/supported receiver notification preferences
+    o Forcing headers: "Server:globaleaks", "X-Content-Type-Options:nosniff"
+    o Forced header: "X-Download-Options:noopen" on Downloaded files
+    o added some mitigation to information leakage on Browser/Proxy Cache
+    o added mitigation to clickjacking attacks on iframes
+    o implemented file/notification settings options
+    o added conditional apparmor sandboxing based on a default config variable (currently set to disabled)
+    o fixed the check to see if setup.py need to use a local glclient
+    o init script fixed
+    o extended -z option (devel mode)
+    o updated setup.py with respect to actual master
+    o updated requirements.txt
+    o removed -shutil.rmtree(glclient_path) from setup.py
+    o Fix globaleaks URL in notification
+    o fixed title import bug: https://github.com/globaleaks/GlobaLeaks/issues/328
+    o fixed an exception triggered when an email fail
+    o Update README.md: simplified and unified to GLClient
+    o fixed apparmor profile for tor
+    o corrected setup.py to include translations.js (temporary fix before minification)
+    o corrected setup.py to include translations.js (temporary fix before minification)
+    o updated hardcoded email/password used for development purpose
+    o fixed credential + 0.2.0.20
+    o fixed -j (cyclone debug) bug
+    o two cmdline arguments separated: --devel-mode(false/true), --glc_path(none/path)
+    o minor fix to output formatting
+    o fixed a mistakeable naming
+    o fixed bool import for receiver preferences
+    o submission and tip in context, expect hours and days, no more seconds
+    o finally fixed jsondump -j/--io
+    o partial supports of advanced settings context+main
+    o https://github.com/globaleaks/GlobaLeaks/issues/249
+    o works continue in receiver preferences
+    o Fix configuration settings to work properly.
+    o completed and cleaned context advaced settings
+    o cleaned submission main
+    o Make the templates a variable.
+    o Add script that outputs javascript file of translations
+    o add main controller to handle template loading
+    o Add MD5 library.
+    o improved and completed receiver prefs and delete/update key
+    o enhanced Admin receiver interface with GPG I/O
+    o Add support for language switching in GlobaLeaks UI.
+    o Default to english language
+    o Add built translation script
+    o Add node-gettext as a development dependency
+    o fixed view bugs and aligned new REST for admin
+    o Revert "Add node-gettext as a development dependency"
+    o added node-gettext 0.2.1 to grunt requirements
+    o updated node-gettext requirement to version 0.2.11
+    o added .travis.yml equal to GLBackend one with minor adaptations)
+    o fixed/supported receiver notification preferences
+    o cleared GPG interface and fixed checkboxes behavior
+    o supported mail subject modification by Admin
+    o added translation of receiver prefs+GPG.
+    o update localization
+    o fixed two typos
+    o dirty hack to make translations.js in index.html
+    o fixed tor2web checkboxes for admin UI
+    o corrected some url from /img/ to /images/
+    o enhanced Tor2Web UI
+    o fixed Gruntfile https://github.com/globaleaks/GlobaLeaks/issues/324
+    o changed receiver preferences checkbox and resumed button
+    o Fix translation generator to be a module
+    o Delete deprecated python script for generating translations
+    o Update Gruntfile to support extracting strings to localize
+    o Fix some bugs in gruntfile
+    o reverted a change of 12f4b66a0a8cd6fc057ed3d9f7d226a2c3973d19
+    o Readme.md simplified and unified to GLBackend
+    o Add functions for pushing and pulling source language file
+    o Add support for fetching translations and importing them into GLClient
+    o Improve gruntfile
+    o Update all translation files with latest.
+    o running successfully grunt makeTranslations
+    o removed tag from UI, restored translation in advanced settings
+    o integrated new advanced settings strings
+    o Fix bug with travis.
+
+Changes in version 0.2.0.19 - 2013-05-31
+    o updated SQL schema in order to supports advanced settings
+    o update settings in order to keep default separated from runtime variables
+    o updated serialization and REST to supports advanced settings
+    o logging fixes
+    o merged master & solved node.py conflict
+    o updated GLSettings.memory_copy and .defaults
+    o updated notification table with Title template
+    o minor fixes
+    o updated models, SQL, admin, anon, REST on new vars
+    o fixed unitTest with new UI vars supports
+    o fixed submission_abuses
+    o fixed UT in test_models
+    o minor fixes in unitTest (jobs, notification, tip)
+    o fixed a debian postinst bug related to python code compiling.
+    o fixed a logical bug in tor2web update
+    o unicode with 'true' 'false' accepted as bool
+    o added apparmor configuration made by Anatole
+    o updated init.d script by Anatole
+    o added apparmor configuration
+    o updated init.d script
+    o added Tor apparmor
+    o made silent python errors
+    o restored default receipt regexp: https://github.com/globaleaks/GlobaLeaks/issues/265
+    o globaleaks version 0.2.0.19 (packaging fixed)
+    o show version of GL system in admin Content Setting
+    o Fix bug in receiver selection and submission
+    o Properly visualize also special text fields.
+    o updated Receiver,Node and Context to supports advanced conf
+    o Update bootstrap version
+    o Set the receivers of the selected context before creating submission
+    o Implement comfort loader in all HTTP requests
+    o Style the comfort loader
+    o Change loader to be a spinner.
+    o Display information on the fact that a tip does not exist of has expired
+    o fix #50
+    o Implement translation of texts support.
+    o Add script for generating pot files
+
+Changes in version 0.2.0.18 - 2013-05-24
+    o minor tweaking
+    o fixed error reporting https://github.com/globaleaks/GlobaLeaks/issues/246
+    o public API receivers and contexts return only usable data https://github.com/globaleaks/GlobaLeaks/issues/250
+    o solved an exception triggered by exception notification. 'recursion: see recursion.'
+    o updated tip REST to easily discern if WB or receiver has the data
+    o made version reserved information https://github.com/globaleaks/GlobaLeaks/issues/135
+    o handled group/user/both specification
+    o added info messages and clean exits for db related errors in reference to: https://github.com/globaleaks/GlobaLeaks/issues/243
+    o debian postinst updated to set correct home directory and shell for user globaleaks
+    o Node logo reloaded runtime: https://github.com/globaleaks/GlobaLeaks/issues/251
+    o cleaned discrimination between WB and receiver identification in status page
+    o solved slow loading wrong message: https://github.com/globaleaks/GlobaLeaks/issues/209
+    o submission do not make mistakes anymore about being configured or not, within Tor delay
+
+Changes in version 0.2.0.16 - 2013-05-23
+    o minor tweaking
+    o fixed inclusions in MANIFEST.in
+    o added empty setup.cfg
+    o trying to fix debian packaging
+    o added support for notification errors logging (detected error + verbose traceback)
+    o added an exception raise if db schema file is not accessible. this check is needed and does also avoid creation of empy db file
+    o removed torrc from staticdata
+    o fixed test_notification (added the sendmail_mock event argument)
+    o removed torrc from files to be installed
+
+Changes in version 0.2.0.12 - 2013-05-22
+    o added requirements.txt to MANIFEST.in
+    o addedd versioning in exception mail
+    o password strength checker: https://github.com/globaleaks/GlobaLeaks/issues/114
+
+Changes in version 0.2.0.11 - 2013-05-21
+    o fixed cleaning when internalfile.file_path equals a corresponding receiverfile.file_path.
+    o some cleaning in file import, logs and verbosity
+    o aligned setup.py with requirements.txt (the first now uses the latter)
+    o notification fixes as per https://github.com/globaleaks/GlobaLeaks/issues/223
+    o fixed unitTest of hidden service format
+    o new password asked twice for Admin and Receiver https://github.com/globaleaks/GlobaLeaks/issues/165
+    o notification fixes in reference to https://github.com/globaleaks/GlobaLeaks/issues/223
+    o solved a bug that prevented selection of contexts on submission page
+    o fixed public site regexp: T2W suggested but not enforced
+
+Changes in version 0.2.0.9 - 2013-05-17
+    o receiverfiles are now correctly marked as notified.
+    o Fixed readme warning
+    o Configuration check moved to GLB (as per https://github.com/globaleaks/GlobaLeaks/issues/230)
+    o added tests for storm foreign keys support on delete on cascade. fixed some tests.
+    o disable WAL that seems to not work over openvz (simfs)
+    o moved to GLB the configuration check https://github.com/globaleaks/GlobaLeaks/issues/230
+    o a link to the login page is needed from the homepage
+    o approached issue https://github.com/globaleaks/GlobaLeaks/issues/209 with ng-cloak
+    o approached https://github.com/globaleaks/GlobaLeaks/issues/218 https://github.com/globaleaks/GlobaLeaks/issues/215 and cleanings
+
+Changes in version 0.2.0.7 - 2013-05-15
+    o add glclient hash
+
+Changes in version 0.2.0.5 - 2013-05-15
+    o removed a testing line
+
+Changes in version 0.2.0.4 - 2013-05-15
+    o glbackend version is now written into __init__.py and imported from other python scripts.
+    o patch to zstorm to enable foreign keys and wal (https://code.launchpad.net/~evilaliv3/storm/storm)
+    o ESMTP Errors are now logged using log.err()
+    o minor safety corrections to debian postinst
+    o Update home.html
+    o Update privacybox.html
+    o Delete cookies using $.removeCookie()
+
+Changes in version 0.2.0.3 - 2013-05-15
+    o Fixed reciver-> receiver issue  
+    o Debug log more readable
+    o Fixed bug in admin file upload
+    o Fixed notification.py: public site notification
+    o Fixed unhandled exception ( https://github.com/globaleaks/GlobaLeaks/issues/212)
+    o Fixed versions in setup.py, changelog and init
+
+Changes in version 0.2.0 - 2013-05-09
+  First release of GlobaLeaks 0.2 Alpha.
+
+  o Whistleblowing
+    - Secure submission of files and form fields
+    - Whistleblower can log-in with Submission's Receipt at a later stage to add new material
+    - Receivers get notification of new tip available and access them securely
+    - Multiple Context support to collect Tips on different topic
+    - Multiple and Selectable Receivers to let Whistleblower choose to who submit to
+
+  o Security and Anonymity
+    - Secure Linux Installation
+    - Anonymous publishing communications over Tor Hidden Service with no ability to know Whistleblower's IP
+    - Outbound communications anonymized trough Tor
+    - Prevent leaks with strict network sandboxing
+    - Strict data-retention policy with self-cleaning of submission data at expiry
+    - Privacy enforced logging (no ip address or sensitive data)
+
+  o Management
+    - Web Administration interface over Tor Hidden Service
+    - Add/Modify/Remove/Assign Multiple Context
+    - Add/Modify/Remove Multiple Receiver
+    - Configure Tor Hidden Service
+    - User, System, Tip Overview to check operation status
+    - Configure email account to be used for notification
+    - Customize email notification templates
+
+  o Misc
+    - Distributed as a Debian package (Easier installation / maintenance)
+    - Advanced configurations on settings file
+    - Notification of receiver of new tip/comment via email
+    - Whistleblower and Receivers can see all receiver's activity (access/download of tip)
+    - Whistleblower can send submission to a specific receiver
+    - Unhanded Stack exception are sent via email to Node Admin (as an automatic error reporting system)
+
+  o Limitations
+    - User interface need graphical improvements and usability review
+    - User interface customization need to be improved to support "upgrade" without manual procedures
+    - Interface is english language only (internationalization is upcoming in beta)
+    - The maximum file size that can be uploaded is limited by the server RAM size (need optimization)
+    - Not all the "Security Features" (described in Threat model) are still implemented (expected for Beta)
+    - Email notifications and files are not PGP encrypted
+    - Source code audit still not done (upcoming for beta)
+    - Some settings have still to be tweaked modifying python file (settings.py) and not trough UI

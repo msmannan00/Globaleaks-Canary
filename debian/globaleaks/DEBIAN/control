@@ -1,0 +1,12 @@
+Package: globaleaks
+Version: 4.10.19.1
+Architecture: all
+Maintainer: Giovanni Pellerano <giovanni.pellerano@globaleaks.org>
+Installed-Size: 20199
+Depends: python3:any, adduser, apparmor, apparmor-utils, gnupg, iptables, lsb-base, python3-acme, python3-debian, python3-cryptography, python3-h2, python3-nacl, python3-openssl, python3-gnupg, python3-priority, python3-sqlalchemy, python3-twisted, python3-txtorcon, tor
+Section: web
+Priority: optional
+Homepage: https://www.globaleaks.org/
+Description: Free and open-source whistleblowing software
+ GlobaLeaks is free, open source software enabling anyone to easily set up and
+ maintain a secure whistleblowing platform
