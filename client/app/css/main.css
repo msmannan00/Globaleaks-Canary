@@ -232,6 +232,8 @@ h6 {
   display: block;
   margin-bottom: 0.5em;
 }
+.mt-auto { margin-top: auto }
+.mb-auto { margin-bottom: auto }
 
 #Sidebar a.active,
 #Sidebar a:active.active,
@@ -241,9 +243,8 @@ h6 {
   width: max-content;
 }
 
-/* #PageContent {
-  min-height: 94vh;
-} */
+#PageContent {
+}
 
 #HeaderBox {
   padding: 1em;

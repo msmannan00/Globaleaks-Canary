@@ -32,11 +32,7 @@ module.exports = function(grunt) {
         files: [
           { dest: "app/assets/license.txt", cwd: ".", src: ["../LICENSE"], expand: false, flatten: true },
 
-          { dest: "app/lib/css/", cwd: ".", src: ["node_modules/@fortawesome/fontawesome-free/css/fontawesome.css"], expand: true, flatten: true },
-          { dest: "app/lib/css/", cwd: ".", src: ["node_modules/@fortawesome/fontawesome-free/css/regular.css"], expand: true, flatten: true },
-          { dest: "app/lib/css/", cwd: ".", src: ["node_modules/@fortawesome/fontawesome-free/css/solid.css"], expand: true, flatten: true },
-
-          { dest: "app/assets/lib/js/", cwd: ".", src: ["node_modules/bootstrap/dist/js/bootstrap.js"], expand: true, flatten: true },
+          { dest: "app/assets/lib/css/", cwd: ".", src: ["node_modules/@fortawesome/fontawesome-free/css/solid.css"], expand: true, flatten: true },
         ]
       },
       build: {
