@@ -8,7 +8,7 @@
       "schematics": {},
       "root": "",
       "sourceRoot": "app",
-      "prefix": "views",
+      "prefix": "src",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
