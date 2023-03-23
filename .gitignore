@@ -34,6 +34,7 @@ yarn-error.log
 .sass-cache/
 /connect.lock
 /coverage
+/backend
 /client/app/assets/lib/css
 /client/app/assets/lib/js
 /.pybuild
@@ -48,3 +49,6 @@ Thumbs.db
 .eslintrc.json
 .editorconfig
 .github/FUNDING.yml
+*.pid
+backend/workingdir/globaleaks.pid
+backend/workingdir/globaleaks.db
