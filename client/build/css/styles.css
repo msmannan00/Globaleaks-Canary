@@ -9780,7 +9780,7 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 
-#BrowserNotSupported{
+#BrowserNotSupported {
   display: none;
 }
 
@@ -9860,7 +9860,7 @@ a:hover,
 }
 
 .filterSelected {
-  color: #377ABC;
+  color: #377abc;
 }
 
 .dropdown-multiselect button::after {
@@ -10023,15 +10023,15 @@ h6 {
   width: max-content;
 }
 
-#PageContent {
+/* #PageContent {
   min-height: 94vh;
-}
+} */
 
 #HeaderBox {
   padding: 1em;
 }
 
-#ContentBox{
+#ContentBox {
   padding: 2em;
 }
 
