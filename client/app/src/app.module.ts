@@ -16,13 +16,14 @@ import { HeaderComponent } from './shared_component/header/header.component';
 import { UserComponent } from './shared_component/header/template/user/user.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HomeComponent } from './pages/home/home.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, UserComponent],
+  declarations: [AppComponent, HeaderComponent, UserComponent, HomeComponent],
   imports: [
     HttpClientModule,
     AppRoutingModule,
