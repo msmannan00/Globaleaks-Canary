@@ -4,7 +4,6 @@ import {HttpService} from "./http.service";
 import {Observable} from "rxjs";
 import {AppConfigService} from "../app-config.service";
 import {errorCodes} from "../models/error-code";
-import {Root} from "../models/public-model";
 import {Session} from "../models/Session";
 
 @Injectable({
