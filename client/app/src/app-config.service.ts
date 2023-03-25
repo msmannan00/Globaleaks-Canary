@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from "./services/http.service";
-import {Error, Root} from "./models/public-model";
+import {Root} from "./models/public-model";
 import {TranslateService} from "@ngx-translate/core";
+import {errorCodes} from "./models/error-code";
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +10,10 @@ import {TranslateService} from "@ngx-translate/core";
 export class AppConfigService{
 
   public_node = <Root>{};
-  appStarted:boolean = false;
+  appStarted:boolean = true;
   showLoadingPanel:boolean = false;
   sidebar = null;
-  error = <Error>{};
+  errorCodes = new errorCodes()
 
   constructor(public appServices: HttpService, public translateService: TranslateService) {
     this.localInitialization();
