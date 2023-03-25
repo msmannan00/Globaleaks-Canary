@@ -20,13 +20,14 @@ import {ErrorCatchingInterceptor, RequestInterceptor} from "./services/http-inte
 import {Keepalive, NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {AuthenticationService} from "./services/authentication.service";
+import { HomeComponent } from './pages/home/home.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, UserComponent],
+  declarations: [AppComponent, HeaderComponent, UserComponent, HomeComponent],
   imports: [
     HttpClientModule,
     AppRoutingModule,

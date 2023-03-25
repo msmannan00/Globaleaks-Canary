@@ -4,11 +4,12 @@ import {AppComponent} from "./app.component";
 import {AdminRoutingModule} from "./admin/admin-routing.module";
 import {RouterModule, Routes} from "@angular/router";
 import {AppGuard} from "./app.guard";
+import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AppComponent,
+    component: HomeComponent,
     pathMatch: 'full',
   },
   {
