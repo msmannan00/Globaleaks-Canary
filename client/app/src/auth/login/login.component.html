@@ -7,10 +7,10 @@
       <app-default-login *ngIf="!appConfig.public_node.node.simplified_login" [loginData]='loginData' [loginFormValid]='false'></app-default-login>
 
       <br />
-      <div id="LoginErrorAuthenticationFailed" class="alert alert-danger" *ngIf="appConfig.error.code === 9">
+      <div id="LoginErrorAuthenticationFailed" class="alert alert-danger" *ngIf="appConfig.errorCodes.code === 9">
         <span>{{'Authentication failed'|translate}}</span>
       </div>
-      <div id="LoginErrorExpired" class="alert alert-danger" *ngIf="appConfig.error.code === 13">
+      <div id="LoginErrorExpired" class="alert alert-danger" *ngIf="appConfig.errorCodes.code === 13">
         <span>{{'The code is either invalid or expired.'|translate}}</span>
       </div>
     </form>
