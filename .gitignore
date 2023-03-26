@@ -53,3 +53,4 @@ Thumbs.db
 *.pid
 backend/workingdir/globaleaks.pid
 backend/workingdir/globaleaks.db
+*.db
