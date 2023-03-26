@@ -7,16 +7,16 @@ import {
   HttpClient, HttpErrorResponse,
 } from '@angular/common/http';
 import {catchError, from, Observable, switchMap, throwError} from 'rxjs';
-import {tokenResponse} from "../models/token-response";
+import {tokenResponse} from "../dataModels/authentication/token-response";
 import {CryptoService} from "../crypto.service";
 import {AppConfigService} from "../app-config.service";
-import {errorCodes} from "../models/error-code";
+import {errorCodes} from "../dataModels/error-code";
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if (httpRequest.url.toString()=="api/authentication") {
+    if (httpRequest.url.toString()=="api/authentication" || httpRequest.url.toString()=="api/reset/password") {
       return this.httpClient.post('api/token', {user: 123}).pipe(switchMap((response) => {
         let token = Object.assign(new tokenResponse(), response)
         return from(this.cryptoService.proofOfWork(token.id))

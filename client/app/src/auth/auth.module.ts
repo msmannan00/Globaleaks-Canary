@@ -6,6 +6,8 @@ import { DefaultLoginComponent } from './login/templates/default-login/default-l
 import {TranslateModule} from "@ngx-translate/core";
 import {FormsModule} from "@angular/forms";
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { PasswordreqestedComponent } from './passwordreqested/passwordreqested.component';
+import { PasswordResetResponseComponent } from './password-reset-response/password-reset-response.component';
 
 
 
@@ -14,7 +16,9 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
     LoginComponent,
     SimpleLoginComponent,
     DefaultLoginComponent,
-    PasswordResetComponent
+    PasswordResetComponent,
+    PasswordreqestedComponent,
+    PasswordResetResponseComponent
   ],
     imports: [
         CommonModule,
