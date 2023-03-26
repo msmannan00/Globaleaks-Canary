@@ -16,7 +16,6 @@ export class UtilsService {
   }
 
   openSupportModal() {
-    alert("open support model");
     // return this.openConfirmableModalDialog("views/modals/request_support.html", {});
   }
 

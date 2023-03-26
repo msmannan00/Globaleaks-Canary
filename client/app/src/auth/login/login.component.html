@@ -2,16 +2,15 @@
   <div class="col-auto">
     <form name="loginForm" autocomplete="off" novalidate>
       <input class="d-none" type="password" name="disable-autocomplete-hack" />
-      <app-simple-login [loginData]='loginData' [loginFormValid]='false'></app-simple-login>
-      <!-- <app-simple-login *ngIf="appConfig.public_node.node.simplified_login" [loginData]='loginData'
-        [loginFormValid]='false'></app-simple-login> -->
-      <!-- <app-default-login *ngIf="!appConfig.public_node.node.simplified_login" [loginData]='loginData' [loginFormValid]='false'></app-default-login> -->
+
+      <app-simple-login *ngIf="appConfig.public_node.node.simplified_login" [loginData]='loginData' [loginFormValid]='false'></app-simple-login>
+      <app-default-login *ngIf="!appConfig.public_node.node.simplified_login" [loginData]='loginData' [loginFormValid]='false'></app-default-login>
 
       <br />
-      <div id="LoginErrorAuthenticationFailed" class="alert alert-danger" *ngIf="appConfig.error.code === 9">
+      <div id="LoginErrorAuthenticationFailed" class="alert alert-danger" *ngIf="appConfig.errorCodes.code === 9">
         <span>{{'Authentication failed'|translate}}</span>
       </div>
-      <div id="LoginErrorExpired" class="alert alert-danger" *ngIf="appConfig.error.code === 13">
+      <div id="LoginErrorExpired" class="alert alert-danger" *ngIf="appConfig.errorCodes.code === 13">
         <span>{{'The code is either invalid or expired.'|translate}}</span>
       </div>
     </form>
