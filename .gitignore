@@ -39,10 +39,11 @@ yarn-error.log
 /client/app/assets/lib/js
 /.pybuild
 /client/build
+/backend/workingdir
 /libpeerconnection.log
 testem.log
 /typings
-
+/client/build/js
 # System files
 .DS_Store
 Thumbs.db

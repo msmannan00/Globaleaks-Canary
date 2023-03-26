@@ -20,7 +20,9 @@ import {ErrorCatchingInterceptor, RequestInterceptor} from "./services/http-inte
 import {Keepalive, NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {AuthenticationService} from "./services/authentication.service";
-import { HomeComponent } from './dashboard/home/home.component';
+import { HomeComponent } from './pages/home/home.component';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -37,6 +39,8 @@ export function createTranslateLoader(http: HttpClient) {
     NgIdleKeepaliveModule.forRoot(),
     AuthModule,
     SharedModule,
+    FormsModule,
+    NgSelectModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en',
       loader: {

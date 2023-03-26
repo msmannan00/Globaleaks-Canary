@@ -18,6 +18,11 @@
     <div class="form-group">
       <label>{{'Please select your account:'|translate}}</label>
       <!-- <select class="form-control" data-ng-model="loginData.loginUsername" data-ng-options="item.id as item.name for item in public.receivers | orderBy:'name'" required></select> -->
+      <ng-select [items]="appConfig.public_node.receivers" bindLabel="name" bindValue="id"
+        placeholder="Select a receiver" [(ngModel)]="loginData.loginUsername" required>
+      </ng-select>
+      <!-- <ng-select [items]="cities" bindLabel="name" placeholder="Select city" [(ngModel)]="selectedCity">
+      </ng-select> -->
     </div>
 
     <div *ngIf="loginData.loginUsername">
