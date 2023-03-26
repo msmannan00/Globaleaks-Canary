@@ -42,7 +42,8 @@
               "node_modules/@fortawesome/fontawesome-free/css/regular.css",
               "node_modules/@fortawesome/fontawesome-free/css/solid.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
-              "app/assets/lib/css/solid.css"
+              "app/assets/lib/css/solid.css",
+              "node_modules/@ng-select/ng-select/themes/default.theme.css"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.js"
