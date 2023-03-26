@@ -17,6 +17,8 @@ import { UserComponent } from './shared_component/header/template/user/user.comp
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HomeComponent } from './pages/home/home.component';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -33,6 +35,8 @@ export function createTranslateLoader(http: HttpClient) {
     BrowserModule,
     AuthModule,
     SharedModule,
+    FormsModule,
+    NgSelectModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en',
       loader: {
