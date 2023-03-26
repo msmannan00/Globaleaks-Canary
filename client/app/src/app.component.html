@@ -1,11 +1,13 @@
-<div id="PageOverlay" *ngIf="!appConfig.appStarted && !appConfig.showLoadingPanel">
+<div id="PageOverlay" *ngIf="!appConfig.appStarted || appConfig.showLoadingPanel">
   <div id="Loader"></div>
 </div>
 
 <div id="PageContent" *ngIf="appConfig.appStarted">
 
-  <!-- <div data-ng-if="!public.node.root_tenant && public.node.mode === 'demo'" data-ng-include="'views/partials/demo.html'"></div>
-    <div data-ng-if="Utils.isWhistleblowerPage() && !public.node.disable_privacy_badge" data-ng-include="'views/partials/privacybadge.html'"></div> -->
+  <!--
+  <div data-ng-if="!public.node.root_tenant && public.node.mode === 'demo'" data-ng-include="'views/partials/demo.html'"></div>
+  <div data-ng-if="Utils.isWhistleblowerPage() && !public.node.disable_privacy_badge" data-ng-include="'views/partials/privacybadge.html'"></div>
+  -->
 
   <views-header></views-header>
   <!--<div id="MessagesConsoleBox" data-ng-include="'views/partials/messageconsole.html'"></div>-->
@@ -16,4 +18,4 @@
     </div>
   </div>
 </div>
-<app-footer class="footer mb-auto"></app-footer>
+<app-footer class="footer mt-auto "></app-footer>

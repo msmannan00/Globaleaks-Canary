@@ -9,7 +9,4 @@ import {AppConfigService} from "../../app-config.service";
 export class HeaderComponent {
   constructor(public appConfig: AppConfigService) {
   }
-  setHomepage(){
-    alert("xxx");
-  }
 }

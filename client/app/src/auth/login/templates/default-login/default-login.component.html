@@ -5,7 +5,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
       </div>
-      <input class="form-control" name="username" placeholder="{{'Username' | translate}}" value="{{authentication.loginData.loginUsername}}" type="text" required />
+      <input class="form-control" name="username" placeholder="{{'Username' | translate}}" [(ngModel)]="authentication.loginData.loginUsername" type="text" required />
     </div>
   </div>
 
@@ -14,7 +14,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
       </div>
-      <input class="form-control" name="password" placeholder="{{'Password' | translate}}" value="{{authentication.loginData.loginPassword}}" type="password" required />
+      <input class="form-control" name="password" placeholder="{{'Password' | translate}}" [(ngModel)]="authentication.loginData.loginPassword" type="password" required />
     </div>
   </div>
 
