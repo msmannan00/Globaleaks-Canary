@@ -20,7 +20,7 @@ import {ErrorCatchingInterceptor, RequestInterceptor} from "./services/http-inte
 import {Keepalive, NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {AuthenticationService} from "./services/authentication.service";
-import { HomeComponent } from './dashboard/home/home.component';
+import {HomeComponent} from "./dashboard/home/home.component";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -31,7 +31,6 @@ export function createTranslateLoader(http: HttpClient) {
   imports: [
     HttpClientModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     SharedModule,
     BrowserModule,
     NgIdleKeepaliveModule.forRoot(),

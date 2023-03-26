@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-auto">
-    <form name="loginForm" autocomplete="off" novalidate>
+
+    <form autocomplete="off" novalidate>
       <input class="d-none" type="password" name="disable-autocomplete-hack" />
 
       <app-simple-login *ngIf="appConfig.public_node.node.simplified_login" [loginData]='loginData' [loginFormValid]='false'></app-simple-login>

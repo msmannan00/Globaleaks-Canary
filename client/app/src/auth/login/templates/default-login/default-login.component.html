@@ -1,6 +1,5 @@
 <div *ngIf="!authentication.requireAuthCode">
   <div class="form-group">
-
     <div class="input-group">
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
@@ -40,7 +39,7 @@
     <div class="input-group-btn">
       <button id="login-button" class="btn btn-primary" [disabled]="authentication.loginInProgress || loginFormValid" (click)="authentication.login(0, authentication.loginData.loginUsername, authentication.loginData.loginPassword, authentication.loginData.loginAuthCode)" type="submit">
         <i class="fa-solid fa-sign-in-alt"></i>
-        &nbsp;<span>{{'Log in'|translate}}</span>
+        <span>{{'Log in'|translate}}</span>
       </button>
 
       <!--<a class="btn" (click)="utils.openSupportModal()" data-uib-tooltip="{{'Request support' | translate}}"><i class="fa-solid fa-life-ring"></i></a>-->

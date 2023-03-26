@@ -4,6 +4,7 @@ import {AuthenticationService} from "../../services/authentication.service";
 import {LoginDataRef} from "./model/login-model";
 import {AuthRoutingModule} from "../auth-routing.module";
 import {Router} from "@angular/router";
+import {Form, NgForm} from "@angular/forms";
 
 
 @Component({
@@ -14,11 +15,8 @@ import {Router} from "@angular/router";
 export class LoginComponent{
 
   loginData = new LoginDataRef();
+  ngForm: any;
   loginForm: any;
-
-  public isFormValid() : boolean{
-    return this.loginForm.valid;
-  }
 
   constructor(public appConfig: AppConfigService, public authentication: AuthenticationService, private router: Router) {
 

@@ -56,9 +56,6 @@ export class AppConfigService{
     }
     this.pageTitle = "Globaleaks"
 
-    alert(projectTitle)
-    alert(pageTitle)
-
     //window.document.getElementsByName("description")[0].content = this.public_node.node.description;
   }
 
