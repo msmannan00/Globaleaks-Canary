@@ -4,7 +4,8 @@ import {AppComponent} from "./app.component";
 import {AdminRoutingModule} from "./admin/admin-routing.module";
 import {RouterModule, Routes} from "@angular/router";
 import {AppGuard} from "./app.guard";
-import { HomeComponent } from './pages/home/home.component';
+import { HomeComponent } from './dashboard/home/home.component';
+import {PasswordResetResponseComponent} from "./auth/password-reset-response/password-reset-response.component";
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
     canActivate: [AppGuard],
     loadChildren: () => AdminRoutingModule,
   },
+  {
+    path: 'password/reset',
+    component: PasswordResetResponseComponent,
+  }
 ];
 
 @NgModule({

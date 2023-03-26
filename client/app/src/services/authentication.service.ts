@@ -3,8 +3,9 @@ import {LoginDataRef} from "../auth/login/model/login-model";
 import {HttpService} from "./http.service";
 import {Observable} from "rxjs";
 import {AppConfigService} from "../app-config.service";
-import {errorCodes} from "../models/error-code";
-import {Session} from "../models/Session";
+import {errorCodes} from "../dataModels/error-code";
+import {Session} from "../dataModels/authentication/Session";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,22 @@ export class AuthenticationService {
     }
   }
 
+  resetPassword(username:string){
+
+    const param=JSON.stringify({"username":username});
+    this.httpService.requestResetLogin(param).subscribe
+    (
+      {
+        next: response => {
+          this.router.navigate(['/login/passwordreset/requested']).then(r => {});
+        },
+        error: (error: any) => {
+          alert(JSON.stringify(error));
+        }
+      }
+    );
+  }
+
   login(tid?:any, username?:any, password?:any, authcode?:any, authtoken?:any){
     if(authtoken === undefined){
       authtoken = "";
@@ -56,8 +73,7 @@ export class AuthenticationService {
       if (username === "whistleblower") {
         requestObservable = this.httpService.requestGeneralLogin("");
       } else {
-        const param=JSON.stringify({"tid":tid,"username":username,"password":password,"authcode":authcode});
-        requestObservable = this.httpService.requestGeneralLogin(param);
+        requestObservable = this.httpService.requestGeneralLogin(JSON.stringify({"tid":tid,"username":username,"password":password,"authcode":authcode}));
       }
     }
 
@@ -76,10 +92,9 @@ export class AuthenticationService {
         }
       }
     );
-
   }
 
-  constructor(public httpService: HttpService, public appConfigService: AppConfigService) {
+  constructor(public httpService: HttpService, public appConfigService: AppConfigService, private router: Router) {
     let json = window.sessionStorage.getItem("session")
     if(json!=null){
       this.session = JSON.parse(json);
