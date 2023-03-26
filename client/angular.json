@@ -34,10 +34,10 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.css",
+              "app/css/ui-select-bootstrap4-fix.css",
               "app/css/loader.css",
               "app/css/main.css",
               "app/css/print.css",
-              "app/css/ui-select-bootstrap4-fix.css",
               "node_modules/@fortawesome/fontawesome-free/css/fontawesome.css",
               "node_modules/@fortawesome/fontawesome-free/css/regular.css",
               "node_modules/@fortawesome/fontawesome-free/css/solid.css",
