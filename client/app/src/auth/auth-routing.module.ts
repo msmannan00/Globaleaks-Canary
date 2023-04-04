@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import {LoginComponent} from "./login/login.component";
 import {PasswordResetComponent} from "./password-reset/password-reset.component";
 import {PasswordreqestedComponent} from "./passwordreqested/passwordreqested.component";
-import {PasswordResetResponseComponent} from "./password-reset-response/password-reset-response.component";
 
 const routes: Routes = [
   {

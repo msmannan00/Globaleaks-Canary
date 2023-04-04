@@ -1,4 +1,4 @@
-<div id="BrowserNotSupported" *ngIf="!appConfig.appStarted || appConfig.showLoadingPanel">
+<div id="BrowserNotSupported" *ngIf="!rootDataService.appStarted || rootDataService.showLoadingPanel">
   <h1>Error!</h1><br /><br />
   <div>
     You are running an unsupported and potentially vulnerable browser.<br /><br />
@@ -21,11 +21,11 @@
 </div>
 
 
-<div id="PageOverlay" *ngIf="!appConfig.appStarted || appConfig.showLoadingPanel">
+<div id="PageOverlay" *ngIf="rootDataService.showLoadingPanel">
   <div id="Loader"></div>
 </div>
 
-<div id="PageContent" *ngIf="appConfig.appStarted">
+<div id="PageContent" *ngIf="rootDataService.appStarted">
 
   <!--
   <div data-ng-if="!public.node.root_tenant && public.node.mode === 'demo'" data-ng-include="'views/partials/demo.html'"></div>

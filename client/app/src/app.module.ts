@@ -10,7 +10,7 @@ import {
   HashLocationStrategy,
   LocationStrategy,
 } from '@angular/common';
-import { AppConfigService } from './app-config.service';
+import { AppConfigService } from './services/app-config.service';
 import { SharedModule } from './shared_component/shared.module';
 import { HeaderComponent } from './shared_component/header/header.component';
 import { UserComponent } from './shared_component/header/template/user/user.component';
@@ -21,6 +21,10 @@ import {Keepalive, NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {AuthenticationService} from "./services/authentication.service";
 import {HomeComponent} from "./dashboard/home/home.component";
+import { PipedTranslationPipe } from './pipes/PipedTranslationPipe';
+import {ApplicationPipedModule} from "./pipes/application-piped/application-piped.module";
+import {NgSelectModule} from "@ng-select/ng-select";
+import {FormsModule} from "@angular/forms";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -29,6 +33,7 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
   declarations: [AppComponent, HeaderComponent, UserComponent, HomeComponent],
   imports: [
+    ApplicationPipedModule,
     HttpClientModule,
     AppRoutingModule,
     SharedModule,
@@ -44,8 +49,11 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient],
       },
     }),
+    NgSelectModule,
+    FormsModule,
   ],
   providers: [
+    PipedTranslationPipe,
     { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
     { provide: APP_BASE_HREF, useValue: '/' },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
@@ -80,6 +88,7 @@ export class AppModule {
           window.location.replace("about:blank");
         } else {
           this.authentication.deleteSession();
+          this.authentication.loginRedirect(false)
         }
       }
     });

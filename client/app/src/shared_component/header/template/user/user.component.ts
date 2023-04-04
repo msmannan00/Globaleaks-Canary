@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import {AuthenticationService} from "../../../../services/authentication.service";
+import {PreferenceResolver} from "../../../../dataResolvers/preference.resolver";
+import {AppConfigService} from "../../../../services/app-config.service";
+import {UtilsService} from "../../../../services/utils.service";
+import {AppDataService} from "../../../../app-data.service";
 
 @Component({
   selector: 'views-user',
@@ -6,5 +11,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent {
+  selectedCar: any;
+  cars = [
+    { id: 1, name: 'Volvo' },
+    { id: 2, name: 'Saab' },
+    { id: 3, name: 'Opel' },
+    { id: 4, name: 'Audi' },
+  ];
 
+  constructor(public authentication: AuthenticationService, public preferences:PreferenceResolver, public appConfig: AppConfigService, public utils: UtilsService, public appDataService:AppDataService) {
+  }
 }

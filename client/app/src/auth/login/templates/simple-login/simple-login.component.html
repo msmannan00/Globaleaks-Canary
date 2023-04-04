@@ -1,61 +1,63 @@
-<div *ngIf="!authentication.requireAuthCode">
-  <div *ngIf="appConfig.public_node.receivers.length === 1">
-    <div class="form-group">
-      <input class="form-control" name="password" value="{{loginData.loginUsername}}"
-        placeholder="{{'Password' | translate}}" type="password" required />
-    </div>
-    <div class="form-group " data-ng-init="loginData.loginUsername = appConfig.public_node.receivers[0].id">
-      <button id="login-button" class="btn btn-primary" [disabled]="authentication.loginInProgress || loginFormValid"
-        (click)="authentication.login(0, loginData.loginUsername, loginData.loginPassword)" type="submit">
-        <i class="fa-solid fa-sign-in-alt"></i>
-        &nbsp;<span>{{'Log in'|translate}}</span>
-      </button>
-
-    </div>
-  </div>
-
-  <div *ngIf="appConfig.public_node.receivers.length !== 1">
-    <div class="form-group">
-      <label>{{'Please select your account:'|translate}}</label>
-      <!-- <select class="form-control" data-ng-model="loginData.loginUsername" data-ng-options="item.id as item.name for item in public.receivers | orderBy:'name'" required></select> -->
-      <ng-select [items]="appConfig.public_node.receivers" bindLabel="name" bindValue="id"
-        placeholder="Select a receiver" [(ngModel)]="loginData.loginUsername" required>
-      </ng-select>
-      <!-- <ng-select [items]="cities" bindLabel="name" placeholder="Select city" [(ngModel)]="selectedCity">
-      </ng-select> -->
-    </div>
-
-    <div *ngIf="loginData.loginUsername">
+<div [formGroup]="loginValidator">
+  <div *ngIf="!authentication.requireAuthCode">
+    <div *ngIf="appDataService.public_node.receivers.length === 1">
       <div class="form-group">
-        <label>{{'Now type your password, then click \'Log in\':'|translate}}</label>
-        <input class="form-control" name="password" data-ng-model="loginData.loginPassword" type="password" required />
+        <input class="form-control" name="password" formControlName="password" value="{{loginData.loginUsername}}"
+               placeholder="{{'Password' | translate}}" type="password" required />
       </div>
-
-      <div class="form-group">
-        <button id="login-button" class="btn btn-primary" [disabled]="authentication.loginInProgress || loginFormValid"
-          (click)="authentication.login(0, loginData.loginUsername, loginData.loginPassword)" type="submit">
+      <div class="form-group " data-ng-init="loginData.loginUsername = appConfig.public_node.receivers[0].id">
+        <button id="login-button" class="btn btn-primary" [disabled]="authentication.loginInProgress || loginValidator.invalid"
+                (click)="authentication.login(0, loginData.loginUsername, loginData.loginPassword)" type="submit">
           <i class="fa-solid fa-sign-in-alt"></i>
           &nbsp;<span>{{'Log in'|translate}}</span>
         </button>
 
-        &nbsp;<span id="forgot-button">
+      </div>
+    </div>
+
+    <div *ngIf="appDataService.public_node.receivers.length !== 1">
+      <div class="form-group">
+        <label>{{'Please select your account:'|translate}}</label>
+        <!-- <select class="form-control" data-ng-model="loginData.loginUsername" data-ng-options="item.id as item.name for item in public.receivers | orderBy:'name'" required></select> -->
+        <ng-select [items]="appDataService.public_node.receivers" bindLabel="name" bindValue="id"
+                   placeholder="Select a receiver" [(ngModel)]="loginData.loginUsername" required>
+        </ng-select>
+        <!-- <ng-select [items]="cities" bindLabel="name" placeholder="Select city" [(ngModel)]="selectedCity">
+        </ng-select> -->
+      </div>
+
+      <div *ngIf="loginData.loginUsername">
+        <div class="form-group">
+          <label>{{'Now type your password, then click \'Log in\':'|translate}}</label>
+          <input class="form-control" name="password" formControlName="password" data-ng-model="loginData.loginPassword" type="password" required />
+        </div>
+
+        <div class="form-group">
+          <button id="login-button" class="btn btn-primary" [disabled]="authentication.loginInProgress || loginValidator.invalid"
+                  (click)="authentication.login(0, loginData.loginUsername, loginData.loginPassword)" type="submit">
+            <i class="fa-solid fa-sign-in-alt"></i>
+            &nbsp;<span>{{'Log in'|translate}}</span>
+          </button>
+
+          &nbsp;<span id="forgot-button">
           <a class="btn btn-outline-secondary" href="#/login/passwordreset" translate="Forgot password?"></a>
         </span>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div data-ng-if="authentication.requireAuthCode">
-  <div class="form-group">
-    <label>{{'Enter the two factor authentication code'|translate}}</label>
-    <input class="form-control" data-ng-model="loginData.loginAuthCode" type="text" size="6" maxlength="6" required />
+  <div data-ng-if="authentication.requireAuthCode">
+    <div class="form-group">
+      <label>{{'Enter the two factor authentication code'|translate}}</label>
+      <input class="form-control" data-ng-model="loginData.loginAuthCode" type="text" size="6" maxlength="6" required />
+    </div>
+
+    <button id="login-button" class="btn btn-primary" [disabled]="authentication.loginInProgress || loginValidator.invalid"
+            (click)="authentication.login(0, loginData.loginUsername, loginData.loginPassword, loginData.loginAuthCode)"
+            type="submit">
+      <i class="fa-solid fa-sign-in-alt"></i>
+      &nbsp;<span data-translate>{{'Log in'|translate}}</span>
+    </button>
   </div>
-
-  <button id="login-button" class="btn btn-primary" [disabled]="authentication.loginInProgress || loginFormValid"
-    (click)="authentication.login(0, loginData.loginUsername, loginData.loginPassword, loginData.loginAuthCode)"
-    type="submit">
-    <i class="fa-solid fa-sign-in-alt"></i>
-    &nbsp;<span data-translate>{{'Log in'|translate}}</span>
-  </button>
 </div>

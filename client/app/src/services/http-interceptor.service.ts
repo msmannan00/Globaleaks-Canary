@@ -9,12 +9,20 @@ import {
 import {catchError, from, Observable, switchMap, throwError} from 'rxjs';
 import {tokenResponse} from "../dataModels/authentication/token-response";
 import {CryptoService} from "../crypto.service";
-import {AppConfigService} from "../app-config.service";
-import {errorCodes} from "../dataModels/error-code";
+import {AuthenticationService} from "./authentication.service";
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    let authHeader = this.authenticationService.getHeader();
+    let authRequest = httpRequest
+    for (let [key, value] of authHeader) {
+      authRequest = httpRequest.clone({
+        headers: authRequest.headers
+          .set(key, value)
+      });
+    }
 
     if (httpRequest.url.toString()=="api/authentication" || httpRequest.url.toString()=="api/reset/password") {
       return this.httpClient.post('api/token', {user: 123}).pipe(switchMap((response) => {
@@ -31,11 +39,11 @@ export class RequestInterceptor implements HttpInterceptor {
           );
       }));
     } else {
-      return next.handle(httpRequest);
+      return next.handle(authRequest);
     }
   }
 
-  constructor(private httpClient: HttpClient, private cryptoService: CryptoService, public appConfigService: AppConfigService) {
+  constructor(public authenticationService: AuthenticationService, private httpClient: HttpClient, private cryptoService: CryptoService) {
   }
 }
 
@@ -43,6 +51,7 @@ export class RequestInterceptor implements HttpInterceptor {
 export class ErrorCatchingInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
     return next.handle(request)
       .pipe(
         catchError((error: HttpErrorResponse) => {
@@ -51,7 +60,7 @@ export class ErrorCatchingInterceptor implements HttpInterceptor {
       )
   }
 
-  constructor(public appConfigService: AppConfigService) {
+  constructor() {
   }
 
 }
