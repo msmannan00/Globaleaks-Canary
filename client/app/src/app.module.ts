@@ -2,7 +2,6 @@ import {HostListener, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import { AuthModule } from './auth/auth.module';
 import {
@@ -63,7 +62,6 @@ export function createTranslateLoader(http: HttpClient) {
 })
 export class AppModule {
 
-  idleState = 'Not started.';
   timedOut = false;
   title = 'angular-idle-timeout';
 
@@ -103,9 +101,7 @@ export class AppModule {
 
   reset() {
     this.idle.watch();
-    this.idleState = 'Started.';
     this.timedOut = false;
-    this.authentication.logout()
     this.authentication.reset()
   }
 }

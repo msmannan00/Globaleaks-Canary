@@ -13,7 +13,7 @@ import {preferenceResolverModel} from "../dataModels/resolvers/preferenceResolve
 })
 export class PreferenceResolver implements Resolve<boolean> {
 
-  dataModel:preferenceResolverModel
+  dataModel:preferenceResolverModel = new preferenceResolverModel()
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     let requestObservable = this.httpService.requestPreferenceResource({"update": {method: "PUT"}})
