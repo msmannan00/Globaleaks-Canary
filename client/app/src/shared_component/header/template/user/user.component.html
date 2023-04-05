@@ -1,7 +1,7 @@
-<div [hidden]="preferences.dataModel.password_change_needed || preferences.dataModel.require_two_factor">
+<div [hidden]="preferences.dataModel && (preferences.dataModel.password_change_needed || preferences.dataModel.require_two_factor)">
 
-  <div id="LanguagePickerBox" *ngIf="appDataService.public.node.languages_enabled.length > -11" class="float-right ml-1 mb-2">
-    <ng-select [clearable]="false" [(ngModel)]="glTranslationService.state.language">
+  <div id="LanguagePickerBox" *ngIf="appDataService.public.node.languages_enabled.length > 1" class="float-right ml-1 mb-2">
+    <ng-select [clearable]="false" (change)="glTranslationService.onChange()" [(ngModel)]="glTranslationService.language">
       <ng-option *ngFor="let lang of appDataService.languages_enabled_selector" [value]="lang.code">{{lang.native}}</ng-option>
     </ng-select>
   </div>

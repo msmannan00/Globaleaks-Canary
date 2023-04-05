@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Input} from '@angular/core';
 import {HttpService} from "./internal/http.service";
 import {TranslateService} from "@ngx-translate/core";
 import {UtilsService} from "./utils.service";
@@ -100,7 +100,7 @@ export class AppConfigService{
         this.rootDataService.public.node.languages_supported.forEach(function(lang:any){
           self.rootDataService.languages_supported.set(lang.code, lang)
 
-          if (self.rootDataService.public.node.languages_enabled[lang.code] !== -1) {
+          if (self.rootDataService.public.node.languages_enabled.includes(lang.code)) {
             self.rootDataService.languages_enabled.set(lang.code, lang)
             self.rootDataService.languages_enabled_selector.push(lang);
           }

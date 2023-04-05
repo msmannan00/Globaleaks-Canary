@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {HostListener, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,7 +27,7 @@ import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
 
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, './data/i18n/', '.json');
 }
 
 @NgModule({
@@ -72,6 +72,11 @@ export class AppModule {
     this.initIdleState();
   }
 
+  @HostListener('window:beforeunload')
+  async ngOnDestroy() {
+    this.reset();
+  }
+
   globalInitializations() {
     this.appConfigService.initTranslation();
   }
@@ -100,6 +105,8 @@ export class AppModule {
     this.idle.watch();
     this.idleState = 'Started.';
     this.timedOut = false;
+    this.authentication.logout()
+    this.authentication.reset()
   }
 }
 

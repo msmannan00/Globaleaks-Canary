@@ -45,7 +45,7 @@ export interface Node {
     whistleblowing_button: string
     whistleblowing_question: string
     root_tenant: boolean
-    languages_enabled: number[]
+    languages_enabled: string[]
     languages_supported: LanguagesSupported[]
     script: boolean
     css: any

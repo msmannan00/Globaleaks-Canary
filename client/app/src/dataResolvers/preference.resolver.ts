@@ -24,7 +24,6 @@ export class PreferenceResolver implements Resolve<boolean> {
           this.dataModel = response
         },
         error: (error: any) => {
-          alert("Resolve Error : " + JSON.stringify(error))
         }
       }
     );

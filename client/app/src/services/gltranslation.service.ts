@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import {Injectable, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
+import {Observable, Subject} from "rxjs";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
-export class GLTranslationService {
+export class GLTranslationService{
 
   facts = {
     userChoice: null,
@@ -19,7 +21,7 @@ export class GLTranslationService {
     language: ""
   };
 
-  language:any
+  language:string
 
   isSelectable(language:any){
     if (language === null) {
@@ -53,7 +55,6 @@ export class GLTranslationService {
     document.getElementsByTagName("html")[0].setAttribute("dir", useRightToLeft ? "rtl" : "ltr");
     this.translateService.use(lang)
     this.translateService.setDefaultLang(lang)
-    //lang = lang.replace("_", "-").toLowerCase();
   }
 
   determineLanguage(){
@@ -72,7 +73,35 @@ export class GLTranslationService {
     this.determineLanguage();
   }
 
-  constructor(public translateService: TranslateService) {
+  validLang(inp:string) {
+    if (!inp) {
+      return false;
+    }
 
+    if (this.enabledLanguages.length) {
+      return this.enabledLanguages.indexOf(inp) > -1;
+    }
+
+    return true;
+  }
+
+  setLang(choice:any) {
+    if (choice) {
+      choice = this.state.language;
+    }
+
+    if (this.validLang(choice)) {
+      this.facts.userChoice = choice;
+      this.determineLanguage();
+    }
+  }
+
+
+  onChange(){
+    this.state.language = this.language
+    this.setLang(this.language)
+  }
+
+  constructor(public translateService: TranslateService) {
   }
 }
