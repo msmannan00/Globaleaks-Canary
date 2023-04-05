@@ -33,6 +33,8 @@ module.exports = function(grunt) {
           { dest: "app/assets/license.txt", cwd: ".", src: ["../LICENSE"], expand: false, flatten: true },
 
           { dest: "app/assets/lib/css/", cwd: ".", src: ["node_modules/@fortawesome/fontawesome-free/css/solid.css"], expand: true, flatten: true },
+          { dest: "app/lib/webfonts", cwd: ".", src: ["node_modules/font-awesome/fonts/*"], expand: true, flatten: true },
+          { dest: "app/lib/webfonts", cwd: ".", src: ["node_modules/@fortawesome/fontawesome-free/webfonts/*"], expand: true, flatten: true },
         ]
       },
       build: {
@@ -92,6 +94,18 @@ module.exports = function(grunt) {
         dest: './tmp/css/',
         options: {
           replacements: [
+            {
+              pattern: /'fa-solid-/ig,
+              replacement: function () {
+                return "'../lib/webfonts/fa-solid-";
+              }
+            },
+            {
+              pattern: /\.\.\/webfonts/ig,
+              replacement: function () {
+                return "../lib/webfonts";
+              }
+            },
             {
               pattern: /_-webfonts-/ig,
               replacement: function () {
@@ -273,6 +287,10 @@ module.exports = function(grunt) {
         },
         options: {
           replacements: [
+            {
+              pattern: "<script src=\"runtime.js\" type=\"module\"></script><script src=\"polyfills.js\" type=\"module\"></script><script src=\"main.js\" type=\"module\"></script>",
+              replacement: ""
+            },
             {
               pattern: "<link rel=\"stylesheet\" href=\"styles.css\"></head>",
               replacement: ""

@@ -10,7 +10,7 @@ import {password_recovery_response_model} from "../../dataModels/authentication/
 export class HttpService{
 
   getPublicResource(): Observable<any>{
-    return this.httpClient.get<any>("/api/public");
+    return this.httpClient.get<any>("/api/public", {observe: 'response'});
   }
 
   requestGeneralLogin(param: string): Observable<any>{

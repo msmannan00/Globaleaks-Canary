@@ -20,7 +20,7 @@
 
     <button id="login-button" class="btn btn-primary" [disabled]="authentication.loginInProgress || loginValidator.invalid" (click)="authentication.login(0, authentication.loginData.loginUsername, authentication.loginData.loginPassword)" type="submit">
       <i class="fa-solid fa-sign-in-alt"></i>
-      &nbsp;<span data-translate>Log in</span>
+      &nbsp;<span>{{'Log in'|translate}}</span>
     </button>
 
     &nbsp;

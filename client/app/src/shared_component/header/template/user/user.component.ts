@@ -4,6 +4,7 @@ import {PreferenceResolver} from "../../../../dataResolvers/preference.resolver"
 import {AppConfigService} from "../../../../services/app-config.service";
 import {UtilsService} from "../../../../services/utils.service";
 import {AppDataService} from "../../../../app-data.service";
+import {GLTranslationService} from "../../../../services/gltranslation.service";
 
 @Component({
   selector: 'views-user',
@@ -11,14 +12,10 @@ import {AppDataService} from "../../../../app-data.service";
   styleUrls: ['./user.component.css']
 })
 export class UserComponent {
-  selectedCar: any;
-  cars = [
-    { id: 1, name: 'Volvo' },
-    { id: 2, name: 'Saab' },
-    { id: 3, name: 'Opel' },
-    { id: 4, name: 'Audi' },
-  ];
 
-  constructor(public authentication: AuthenticationService, public preferences:PreferenceResolver, public appConfig: AppConfigService, public utils: UtilsService, public appDataService:AppDataService) {
+  constructor(public authentication: AuthenticationService, public preferences:PreferenceResolver, public appConfig: AppConfigService, public utils: UtilsService, public appDataService:AppDataService, public glTranslationService:GLTranslationService) {
+    //alert(JSON.stringify(appDataService.languages_enabled_selector))
   }
+
+  protected readonly GLTranslationService = GLTranslationService;
 }

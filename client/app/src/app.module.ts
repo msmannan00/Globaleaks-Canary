@@ -1,8 +1,7 @@
-import { NgModule } from '@angular/core';
+import {HostListener, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import { AuthModule } from './auth/auth.module';
 import {
@@ -27,7 +26,7 @@ import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
 
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, './data/i18n/', '.json');
 }
 
 @NgModule({
@@ -63,13 +62,17 @@ export function createTranslateLoader(http: HttpClient) {
 })
 export class AppModule {
 
-  idleState = 'Not started.';
   timedOut = false;
   title = 'angular-idle-timeout';
 
   constructor(public appConfigService: AppConfigService, private idle: Idle, private keepalive: Keepalive, public authentication: AuthenticationService) {
     this.globalInitializations();
     this.initIdleState();
+  }
+
+  @HostListener('window:beforeunload')
+  async ngOnDestroy() {
+    this.reset();
   }
 
   globalInitializations() {
@@ -98,8 +101,8 @@ export class AppModule {
 
   reset() {
     this.idle.watch();
-    this.idleState = 'Started.';
     this.timedOut = false;
+    this.authentication.reset()
   }
 }
 
