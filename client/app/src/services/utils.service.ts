@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {AppConfigService} from "./app-config.service";
 import {AuthenticationService} from "./authentication.service";
 import {AppDataService} from "../app-data.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class UtilsService {
     return location.pathname === "/submission";
   }
   showUserStatusBox() {
-    return this.appDataService.public_node.node.wizard_done &&
+    return this.appDataService.public.node.wizard_done &&
       this.appDataService.page !== "homepage" &&
       this.appDataService.page !== "submissionpage" &&
       this.authenticationService.session &&
@@ -48,8 +48,8 @@ export class UtilsService {
   }
 
   openSupportModal() {
-    if (this.appDataService.public_node.node.custom_support_url) {
-      window.open(this.appDataService.public_node.node.custom_support_url, "_blank");
+    if (this.appDataService.public.node.custom_support_url) {
+      window.open(this.appDataService.public.node.custom_support_url, "_blank");
     } else {
       return this.openConfirmableModalDialog("views/modals/request_support.html", {});
     }
@@ -58,24 +58,65 @@ export class UtilsService {
   routeCheck(){
     let path = location.pathname;
     if (path !== "/") {
-      this.appConfigService.setPage("")
+      this.appDataService.page = ""
     }
 
-    if (!this.appDataService.public_node) {
+    if (!this.appDataService.public) {
       return;
     }
 
-    if (!this.appDataService.public_node.node.wizard_done) {
+    if (!this.appDataService.public.node.wizard_done) {
       location.replace("/wizard");
-    } else if (path === "/" && this.appDataService.public_node.node.enable_signup) {
-      this.appConfigService.setPage("signuppage")
-    } else if ((path === "/" || path === "/submission") && this.appDataService.public_node.node.adminonly && !this.authenticationService.session) {
+    } else if (path === "/" && this.appDataService.public.node.enable_signup) {
+      this.appDataService.page = "signuppage"
+
+    } else if ((path === "/" || path === "/submission") && this.appDataService.public.node.adminonly && !this.authenticationService.session) {
       location.replace("/admin");
     }
-
   }
 
-  constructor(public appConfigService: AppConfigService, public authenticationService:AuthenticationService, public appDataService:AppDataService) {
+  setTitle(){
+    if (!this.appDataService.public) {
+      return;
+    }
+
+    let projectTitle = this.appDataService.public.node.name, pageTitle = this.appDataService.public.node.header_title_homepage;
+
+
+
+    if (location.pathname !== "/") {
+      pageTitle = "Globaleaks";
+    }
+
+    if(pageTitle.length>0){
+      pageTitle = this.translateService.instant("wow");
+    }
+
+    this.appDataService.projectTitle = projectTitle !== "GLOBALEAKS" ? projectTitle : "";
+    this.appDataService.pageTitle = pageTitle !== projectTitle ? pageTitle : "";
+
+    if (pageTitle) {
+      pageTitle = this.translateService.instant("wow");
+      window.document.title = projectTitle + " - " + pageTitle;
+    } else {
+      window.document.title = projectTitle;
+    }
+
+    let element = window.document.getElementsByName("description")[0]
+    if (element instanceof HTMLMetaElement) {
+      element.content = this.appDataService.public.node.description;
+    }
+  }
+  array_to_map(receivers: any[]) {
+    let ret = new Map<any, any>();
+    receivers.forEach((item, index) => {
+      ret.set(index, item);
+    });
+
+    return ret;
+  }
+
+  constructor(public authenticationService:AuthenticationService, public appDataService:AppDataService, public translateService: TranslateService) {
   }
 
 }

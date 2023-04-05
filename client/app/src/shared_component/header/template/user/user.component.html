@@ -1,11 +1,9 @@
 <div [hidden]="preferences.dataModel.password_change_needed || preferences.dataModel.require_two_factor">
 
-  <ng-select [(ngModel)]="selectedCar">
-    <ng-option *ngFor="let car of cars" [value]="car.id">{{car.name}}</ng-option>
-  </ng-select>
-
-  <div id="LanguagePickerBox" *ngIf="appDataService.public_node.node.languages_enabled.length > 1" class="float-right ml-1 mb-2">
-    <!--<select class="form-control" data-ng-model="GLTranslate.state.language" data-ng-options="item.code as item.native for item in languages_enabled_selector | orderBy:'native'"></select>-->
+  <div id="LanguagePickerBox" *ngIf="appDataService.public.node.languages_enabled.length > -11" class="float-right ml-1 mb-2">
+    <ng-select [clearable]="false" [(ngModel)]="glTranslationService.state.language">
+      <ng-option *ngFor="let lang of appDataService.languages_enabled_selector" [value]="lang.code">{{lang.native}}</ng-option>
+    </ng-select>
   </div>
 
   <div id="LoginStatusBox" *ngIf="utils.showUserStatusBox()" class="float-right ml-1 mb-2">

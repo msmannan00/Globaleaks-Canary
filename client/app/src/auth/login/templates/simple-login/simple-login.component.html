@@ -1,6 +1,6 @@
 <div [formGroup]="loginValidator">
   <div *ngIf="!authentication.requireAuthCode">
-    <div *ngIf="appDataService.public_node.receivers.length === 1">
+    <div *ngIf="appDataService.public.receivers.length === 1">
       <div class="form-group">
         <input class="form-control" name="password" formControlName="password" value="{{loginData.loginUsername}}"
                placeholder="{{'Password' | translate}}" type="password" required />
@@ -15,11 +15,11 @@
       </div>
     </div>
 
-    <div *ngIf="appDataService.public_node.receivers.length !== 1">
+    <div *ngIf="appDataService.public.receivers.length !== 1">
       <div class="form-group">
         <label>{{'Please select your account:'|translate}}</label>
         <!-- <select class="form-control" data-ng-model="loginData.loginUsername" data-ng-options="item.id as item.name for item in public.receivers | orderBy:'name'" required></select> -->
-        <ng-select [items]="appDataService.public_node.receivers" bindLabel="name" bindValue="id"
+        <ng-select [items]="appDataService.public.receivers" bindLabel="name" bindValue="id"
                    placeholder="Select a receiver" [(ngModel)]="loginData.loginUsername" required>
         </ng-select>
         <!-- <ng-select [items]="cities" bindLabel="name" placeholder="Select city" [(ngModel)]="selectedCity">
