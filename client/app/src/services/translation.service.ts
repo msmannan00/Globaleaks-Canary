@@ -2,6 +2,7 @@ import {ChangeDetectorRef, Injectable, Input, OnChanges, SimpleChanges} from '@a
 import {TranslateService} from "@ngx-translate/core";
 import {Observable, Subject} from "rxjs";
 import {Router} from "@angular/router";
+import {UtilsService} from "../shared/services/utils.service";
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,6 @@ export class TranslationService {
   };
 
   language:string
-
   isSelectable(language:any){
     if (language === null) {
       return false;
@@ -34,7 +34,6 @@ export class TranslationService {
 
     return true;
   }
-
   bestLanguage(facts:any){
     let lang:any = "*";
     if (this.isSelectable(this.facts.userChoice)) {
@@ -49,14 +48,12 @@ export class TranslationService {
 
     return lang;
   }
-
   updateTranslationServices(lang:string){
     let useRightToLeft = ["ar", "dv", "fa", "fa_AF", "he", "ps", "ug", "ur"].indexOf(lang) !== -1;
     document.getElementsByTagName("html")[0].setAttribute("dir", useRightToLeft ? "rtl" : "ltr");
     this.translateService.use(lang)
     this.translateService.setDefaultLang(lang)
   }
-
   determineLanguage(){
     this.language = this.state.language = this.bestLanguage(this.facts);
     if (this.state.language !== "*") {
@@ -64,7 +61,6 @@ export class TranslationService {
       window.document.getElementsByTagName("html")[0].setAttribute("lang", this.state.language);
     }
   }
-
   addNodeFacts(defaultLang:any, languages_enabled:any){
     this.facts.nodeDefault = defaultLang;
 
@@ -72,7 +68,6 @@ export class TranslationService {
 
     this.determineLanguage();
   }
-
   validLang(inp:string) {
     if (!inp) {
       return false;
@@ -84,7 +79,6 @@ export class TranslationService {
 
     return true;
   }
-
   setLang(choice:any) {
     if (choice) {
       choice = this.state.language;
@@ -95,13 +89,13 @@ export class TranslationService {
       this.determineLanguage();
     }
   }
-
-
   onChange(){
     this.state.language = this.language
     this.setLang(this.language)
+    this.utilsService.reloadCurrentRoute();
   }
 
-  constructor(public translateService: TranslateService) {
+
+  constructor(public translateService: TranslateService, private router: Router, public utilsService:UtilsService) {
   }
 }

@@ -20,7 +20,7 @@ import {Keepalive, NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {AuthenticationService} from "./services/authentication.service";
 import {HomeComponent} from "./pages/dashboard/home/home.component";
-import { TranslatePipe } from './shared/pipes/translate';
+import { TranslatorPipe } from './shared/pipes/translate';
 import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
 
@@ -50,7 +50,7 @@ export function createTranslateLoader(http: HttpClient) {
     FormsModule,
   ],
   providers: [
-    TranslatePipe,
+    TranslatorPipe,
     { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
     { provide: APP_BASE_HREF, useValue: '/' },
     { provide: LocationStrategy, useClass: HashLocationStrategy },

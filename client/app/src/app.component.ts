@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {AppConfigService} from "./services/app-config.service";
 import {AppDataService} from "./app-data.service";
+import {TranslationService} from "./services/translation.service";
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import {AppDataService} from "./app-data.service";
 })
 export class AppComponent{
 
-  constructor(public appConfig: AppConfigService, public rootDataService:AppDataService) {
+  constructor(public appConfig: AppConfigService, public appDataService:AppDataService, public translateService:TranslationService) {
 
   }
 }

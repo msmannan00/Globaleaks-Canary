@@ -13,9 +13,7 @@ import {TranslationService} from "../../../../../services/translation.service";
 })
 export class UserComponent {
 
-  constructor(public authentication: AuthenticationService, public preferences:PreferenceResolver, public appConfig: AppConfigService, public utils: UtilsService, public appDataService:AppDataService, public glTranslationService:TranslationService) {
-    //alert(JSON.stringify(appDataService.languages_enabled_selector))
+  constructor(public authentication: AuthenticationService, public preferences:PreferenceResolver, public appConfig: AppConfigService, public utils: UtilsService, public appDataService:AppDataService, public translationService:TranslationService) {
   }
 
-  protected readonly GLTranslationService = TranslationService;
 }

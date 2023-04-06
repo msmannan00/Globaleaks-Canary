@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {AuthenticationService} from "../../services/authentication.service";
 import {AppDataService} from "../../app-data.service";
 import {TranslateService} from "@ngx-translate/core";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,12 @@ export class UtilsService {
     return result;
   }
 
+  reloadCurrentRoute() {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+      this.router.navigate([currentUrl]);
+    });
+  }
   showWBLoginBox(){
     return location.pathname === "/submission";
   }
@@ -116,7 +123,7 @@ export class UtilsService {
     return ret;
   }
 
-  constructor(public authenticationService:AuthenticationService, public appDataService:AppDataService, public translateService: TranslateService) {
+  constructor(public authenticationService:AuthenticationService, public appDataService:AppDataService, public translateService: TranslateService, private router: Router) {
   }
 
 }
