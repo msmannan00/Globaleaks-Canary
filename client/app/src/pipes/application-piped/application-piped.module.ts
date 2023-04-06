@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
-import {PipedTranslationPipe} from "../PipedTranslationPipe";
+import {TranslatePipe} from "../translate";
 
 @NgModule({
   imports: [
     // dep modules
   ],
   declarations: [
-    PipedTranslationPipe
+    TranslatePipe
   ],
   exports: [
-    PipedTranslationPipe
+    TranslatePipe
   ]
 })
 export class ApplicationPipedModule {}

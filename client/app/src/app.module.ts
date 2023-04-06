@@ -15,12 +15,12 @@ import { HeaderComponent } from './shared_component/header/header.component';
 import { UserComponent } from './shared_component/header/template/user/user.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import {ErrorCatchingInterceptor, RequestInterceptor} from "./services/http-interceptor.service";
+import {ErrorCatchingInterceptor, RequestInterceptor} from "./services/glResuestInterceptor";
 import {Keepalive, NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {AuthenticationService} from "./services/authentication.service";
 import {HomeComponent} from "./dashboard/home/home.component";
-import { PipedTranslationPipe } from './pipes/PipedTranslationPipe';
+import { TranslatePipe } from './pipes/translate';
 import {ApplicationPipedModule} from "./pipes/application-piped/application-piped.module";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
@@ -52,7 +52,7 @@ export function createTranslateLoader(http: HttpClient) {
     FormsModule,
   ],
   providers: [
-    PipedTranslationPipe,
+    TranslatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
     { provide: APP_BASE_HREF, useValue: '/' },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
