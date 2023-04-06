@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { AuthRoutingModule } from './auth/auth-routing.module';
-import {AdminRoutingModule} from "./admin/admin-routing.module";
+import { AuthRoutingModule } from './modules/auth/auth-routing.module';
+import {AdminRoutingModule} from "./modules/admin/admin-routing.module";
 import {RouterModule, Routes} from "@angular/router";
 import {SessionGuard} from "./app-guard.service";
-import { HomeComponent } from './dashboard/home/home.component';
-import {PasswordResetResponseComponent} from "./auth/password-reset-response/password-reset-response.component";
-import {RecipientRoutingModule} from "./recipient/recipient-routing.module";
+import { HomeComponent } from './modules/dashboard/home/home.component';
+import {PasswordResetResponseComponent} from "./modules/auth/password-reset-response/password-reset-response.component";
+import {RecipientRoutingModule} from "./modules/recipient/recipient-routing.module";
 import {PreferenceResolver} from "./shared/resolvers/preference.resolver";
 
 

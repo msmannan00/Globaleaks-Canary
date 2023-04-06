@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import {password_recovery_model} from "../../dataModels/authentication/password_recovery_model";
+import {password_recovery_model} from "../../../models/authentication/password_recovery_model";
 import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
-import {HttpService} from "../../shared/services/http.service";
+import {HttpService} from "../../../shared/services/http.service";
 
 @Component({
   selector: 'src-password-reset-response',

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './modules/auth/auth.module';
 import {
   APP_BASE_HREF,
   HashLocationStrategy,
@@ -19,7 +19,7 @@ import {ErrorCatchingInterceptor, RequestInterceptor} from "./services/glResuest
 import {Keepalive, NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {AuthenticationService} from "./services/authentication.service";
-import {HomeComponent} from "./dashboard/home/home.component";
+import {HomeComponent} from "./modules/dashboard/home/home.component";
 import { TranslatePipe } from './shared/pipes/translate';
 import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";

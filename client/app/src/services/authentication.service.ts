@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import {LoginDataRef} from "../auth/login/model/login-model";
+import {LoginDataRef} from "../modules/auth/login/model/login-model";
 import {HttpService} from "../shared/services/http.service";
 import {Observable} from "rxjs";
 import {AppConfigService} from "./app-config.service";
-import {Session} from "../dataModels/authentication/Session";
+import {Session} from "../models/authentication/Session";
 import {Router} from "@angular/router";
 import {TranslateService} from "@ngx-translate/core";
 import {LocationStrategy} from "@angular/common";
 import {HttpClient} from "@angular/common/http";
 import {AppDataService} from "../app-data.service";
-import {errorCodes} from "../dataModels/app/error-code";
+import {errorCodes} from "../models/app/error-code";
 
 @Injectable({
   providedIn: 'root'

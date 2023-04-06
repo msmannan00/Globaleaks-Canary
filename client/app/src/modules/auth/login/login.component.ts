@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
-import {AppConfigService} from "../../services/app-config.service";
-import {AuthenticationService} from "../../services/authentication.service";
+import {AppConfigService} from "../../../services/app-config.service";
+import {AuthenticationService} from "../../../services/authentication.service";
 import {LoginDataRef} from "./model/login-model";
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {AppDataService} from "../../app-data.service";
+import {AppDataService} from "../../../app-data.service";
 
 
 @Component({

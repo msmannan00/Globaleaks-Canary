@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import { Observable } from 'rxjs';
-import {password_recovery_response_model} from "../../dataModels/authentication/password_recovery_response_model";
+import {password_recovery_response_model} from "../../models/authentication/password_recovery_response_model";
 
 
 @Injectable({

@@ -25341,7 +25341,7 @@ function $ParseProvider() {
  *
  * - $q is integrated with the {@link ng.$rootScope.Scope} Scope model observation
  *   mechanism in AngularJS, which means faster propagation of resolution or rejection into your
- *   dataModels and avoiding unnecessary browser repaints, which would result in flickering UI.
+ *   models and avoiding unnecessary browser repaints, which would result in flickering UI.
  * - Q has many more features than $q, but that comes at a cost of bytes. $q is tiny, but contains
  *   all the important functionality needed for common async tasks.
  *
@@ -33823,7 +33823,7 @@ var inputType = {
    * @param {string} ngModel Assignable AngularJS expression to data-bind to.
    * @param {string} value The value to which the `ngModel` expression should be set when selected.
    *    Note that `value` only supports `string` values, i.e. the scope model needs to be a string,
-   *    too. Use `ngValue` if you need complex dataModels (`number`, `object`, ...).
+   *    too. Use `ngValue` if you need complex models (`number`, `object`, ...).
    * @param {string=} name Property name of the form under which the control is published.
    * @param {string=} ngChange AngularJS expression to be executed when input changes due to user
    *    interaction with the input element.
@@ -38824,7 +38824,7 @@ addSetValidityMethod({
  * ## Complex Models (objects or collections)
  *
  * By default, `ngModel` watches the model by reference, not value. This is important to know when
- * binding inputs to dataModels that are objects (e.g. `Date`) or collections (e.g. arrays). If only properties of the
+ * binding inputs to models that are objects (e.g. `Date`) or collections (e.g. arrays). If only properties of the
  * object or collection change, `ngModel` will not be notified and so the input will not be  re-rendered.
  *
  * The model must be assigned an entirely new object or collection before a re-rendering will occur.
@@ -38857,7 +38857,7 @@ addSetValidityMethod({
  * Keep in mind that ngAnimate can detect each of these classes when added and removed.
  *
  * @animations
- * Animations within dataModels are triggered when any of the associated CSS classes are added and removed
+ * Animations within models are triggered when any of the associated CSS classes are added and removed
  * on the input element which is attached to the model. These classes include: `.ng-pristine`, `.ng-dirty`,
  * `.ng-invalid` and `.ng-valid` as well as any other validations that are performed on the model itself.
  * The animations that are triggered within ngModel are similar to how they work in ngClass and
@@ -38916,7 +38916,7 @@ addSetValidityMethod({
  * Sometimes it's helpful to bind `ngModel` to a getter/setter function.  A getter/setter is a
  * function that returns a representation of the model when called with zero arguments, and sets
  * the internal state of a model when called with an argument. It's sometimes useful to use this
- * for dataModels that have an internal representation that's different from what the model exposes
+ * for models that have an internal representation that's different from what the model exposes
  * to the view.
  *
  * <div class="alert alert-success">

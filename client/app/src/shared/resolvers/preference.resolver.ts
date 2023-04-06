@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import {HttpService} from "../services/http.service";
-import {preferenceResolverModel} from "../../dataModels/resolvers/preferenceResolverModel";
+import {preferenceResolverModel} from "../../models/resolvers/preferenceResolverModel";
 
 @Injectable({
   providedIn: 'root'

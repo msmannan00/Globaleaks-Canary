@@ -9,7 +9,7 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
 import { PasswordreqestedComponent } from './passwordreqested/passwordreqested.component';
 import { PasswordResetResponseComponent } from './password-reset-response/password-reset-response.component';
 import {TranslateModule} from "@ngx-translate/core";
-import {SharedModule} from "../shared.module";
+import {SharedModule} from "../../shared.module";
 
 @NgModule({
   declarations: [

@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AppConfigService } from '../../../../services/app-config.service';
-import { AuthenticationService } from '../../../../services/authentication.service';
+import { AppConfigService } from '../../../../../services/app-config.service';
+import { AuthenticationService } from '../../../../../services/authentication.service';
 import { LoginDataRef } from '../../model/login-model';
 import {FormControl, Validators} from "@angular/forms";
-import {UtilsService} from "../../../../shared/services/utils.service";
-import {AppDataService} from "../../../../app-data.service";
+import {UtilsService} from "../../../../../shared/services/utils.service";
+import {AppDataService} from "../../../../../app-data.service";
 
 @Component({
   selector: 'app-simple-login',

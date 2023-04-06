@@ -7,7 +7,7 @@ import {
   HttpClient, HttpErrorResponse,
 } from '@angular/common/http';
 import {catchError, from, Observable, switchMap, throwError} from 'rxjs';
-import {tokenResponse} from "../dataModels/authentication/token-response";
+import {tokenResponse} from "../models/authentication/token-response";
 import {CryptoService} from "../crypto.service";
 import {AuthenticationService} from "./authentication.service";
 
