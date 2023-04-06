@@ -1,9 +1,9 @@
 import {Injectable, Input} from '@angular/core';
-import {HttpService} from "./internal/http.service";
+import {HttpService} from "../shared/services/http.service";
 import {TranslateService} from "@ngx-translate/core";
-import {UtilsService} from "./utils.service";
+import {UtilsService} from "../shared/services/utils.service";
 import {AppDataService} from "../app-data.service";
-import {FieldUtilitiesService} from "./field-utilities.service";
+import {FieldUtilitiesService} from "../shared/services/field-utilities.service";
 import {GLTranslationService} from "./gltranslation.service";
 
 @Injectable({

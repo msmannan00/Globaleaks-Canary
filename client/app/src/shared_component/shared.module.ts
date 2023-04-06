@@ -5,7 +5,7 @@ import { UserHomeComponent } from './user-home/user-home.component';
 import { UserWarningsComponent } from './user-warnings/user-warnings.component';
 import { ReceiptComponent } from './receipt/receipt.component';
 import {FormsModule} from "@angular/forms";
-import {TranslatePipe} from "../pipes/translate";
+import {TranslatePipe} from "../shared/pipes/translate";
 
 @NgModule({
   imports: [

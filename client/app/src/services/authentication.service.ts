@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {LoginDataRef} from "../auth/login/model/login-model";
-import {HttpService} from "./internal/http.service";
+import {HttpService} from "../shared/services/http.service";
 import {Observable} from "rxjs";
 import {AppConfigService} from "./app-config.service";
 import {Session} from "../dataModels/authentication/Session";

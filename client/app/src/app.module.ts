@@ -20,7 +20,7 @@ import {Keepalive, NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {AuthenticationService} from "./services/authentication.service";
 import {HomeComponent} from "./dashboard/home/home.component";
-import { TranslatePipe } from './pipes/translate';
+import { TranslatePipe } from './shared/pipes/translate';
 import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
 

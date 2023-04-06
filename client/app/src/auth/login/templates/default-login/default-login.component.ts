@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {AppConfigService} from "../../../../services/app-config.service";
 import {AuthenticationService} from "../../../../services/authentication.service";
 import {LoginDataRef} from "../../model/login-model";
-import {UtilsService} from "../../../../services/utils.service";
+import {UtilsService} from "../../../../shared/services/utils.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({

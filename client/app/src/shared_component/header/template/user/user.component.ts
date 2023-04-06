@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {AuthenticationService} from "../../../../services/authentication.service";
-import {PreferenceResolver} from "../../../../dataResolvers/preference.resolver";
+import {PreferenceResolver} from "../../../../shared/resolvers/preference.resolver";
 import {AppConfigService} from "../../../../services/app-config.service";
-import {UtilsService} from "../../../../services/utils.service";
+import {UtilsService} from "../../../../shared/services/utils.service";
 import {AppDataService} from "../../../../app-data.service";
 import {GLTranslationService} from "../../../../services/gltranslation.service";
 

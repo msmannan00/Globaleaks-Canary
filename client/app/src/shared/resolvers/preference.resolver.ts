@@ -1,26 +1,29 @@
 import { Injectable } from '@angular/core';
 import {
-  Router, Resolve,
+  Resolve,
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import {HttpService} from "../services/internal/http.service";
+import {HttpService} from "../services/http.service";
+import {preferenceResolverModel} from "../../dataModels/resolvers/preferenceResolverModel";
 
 @Injectable({
   providedIn: 'root'
 })
-export class JobsResolver implements Resolve<boolean> {
+export class PreferenceResolver implements Resolve<boolean> {
+
+  dataModel:preferenceResolverModel = new preferenceResolverModel()
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    let requestObservable = this.httpService.requestJobResource({"update": {method: "PUT"}})
+    let requestObservable = this.httpService.requestPreferenceResource({"update": {method: "PUT"}})
 
     requestObservable.subscribe(
       {
-        next: response => {
+        next: (response:preferenceResolverModel) => {
+          this.dataModel = response
         },
         error: (error: any) => {
-          alert("Resolve Error : " + JSON.stringify(error))
         }
       }
     );

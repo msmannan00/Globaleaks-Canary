@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {AuthenticationService} from "./authentication.service";
-import {AppDataService} from "../app-data.service";
+import {AuthenticationService} from "../../services/authentication.service";
+import {AppDataService} from "../../app-data.service";
 import {TranslateService} from "@ngx-translate/core";
 
 @Injectable({
