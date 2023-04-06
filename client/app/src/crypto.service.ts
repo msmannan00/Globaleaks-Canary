@@ -47,7 +47,6 @@ export class CryptoService {
     }
 
     if (typeof digestPremise.then !== "undefined") {
-      digestPremise.then;
       digestPremise.then(res => {
         this.calculateHash(res, resolve)
       });

@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AppConfigService } from '../../../../app-config.service';
+import { AppConfigService } from '../../../../services/app-config.service';
 import { AuthenticationService } from '../../../../services/authentication.service';
 import { LoginDataRef } from '../../model/login-model';
+import {FormControl, Validators} from "@angular/forms";
+import {UtilsService} from "../../../../services/utils.service";
+import {AppDataService} from "../../../../app-data.service";
 
 @Component({
   selector: 'app-simple-login',
@@ -9,20 +12,17 @@ import { LoginDataRef } from '../../model/login-model';
   styleUrls: ['./simple-login.component.css'],
 })
 export class SimpleLoginComponent {
-  // cities = [
-  //   { id: 1, name: 'Vilnius' },
-  //   { id: 2, name: 'Kaunas' },
-  //   { id: 3, name: 'Pavilnys', disabled: true },
-  //   { id: 4, name: 'Pabradė' },
-  //   { id: 5, name: 'Klaipėda' },
-  // ];
-  // selectedCity = null;
+
   @Input() loginData: LoginDataRef;
-  @Input() loginFormValid: boolean;
-  constructor(
-    public appConfig: AppConfigService,
-    public authentication: AuthenticationService
-  ) {
-    console.log('appConfig =>', appConfig);
+  @Input() loginValidator: any;
+
+  ngOnInit() { this.initForm() }
+
+  initForm() {
+    this.loginValidator.addControl("username", new FormControl('', Validators.required));
+    this.loginValidator.addControl("password", new FormControl('', Validators.required));
+  }
+
+  constructor(public utils: UtilsService, public appConfig: AppConfigService, public authentication: AuthenticationService, public appDataService:AppDataService) {
   }
 }

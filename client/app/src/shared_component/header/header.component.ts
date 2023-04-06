@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {AppConfigService} from "../../app-config.service";
+import {AppConfigService} from "../../services/app-config.service";
+import {AppDataService} from "../../app-data.service";
 
 @Component({
   selector: 'views-header',
@@ -7,6 +8,6 @@ import {AppConfigService} from "../../app-config.service";
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  constructor(public appConfig: AppConfigService) {
+  constructor(public appConfig: AppConfigService, public appDataService:AppDataService) {
   }
 }

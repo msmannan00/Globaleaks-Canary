@@ -6,7 +6,7 @@ import {AuthenticationService} from "./services/authentication.service";
 @Injectable({
   providedIn: 'root'
 })
-export class AppGuard implements CanActivate {
+export class SessionGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {

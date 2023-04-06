@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
-import {AppConfigService} from "./app-config.service";
+import {AppConfigService} from "./services/app-config.service";
+import {AppDataService} from "./app-data.service";
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,8 @@ import {AppConfigService} from "./app-config.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent{
-  constructor(public appConfig: AppConfigService) {
+
+  constructor(public appConfig: AppConfigService, public rootDataService:AppDataService) {
 
   }
 }
