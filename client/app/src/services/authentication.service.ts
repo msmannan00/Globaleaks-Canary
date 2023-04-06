@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {LoginDataRef} from "../modules/auth/login/model/login-model";
+import {LoginDataRef} from "../pages/auth/login/model/login-model";
 import {HttpService} from "../shared/services/http.service";
 import {Observable} from "rxjs";
 import {AppConfigService} from "./app-config.service";

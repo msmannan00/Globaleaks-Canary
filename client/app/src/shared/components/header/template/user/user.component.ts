@@ -4,7 +4,7 @@ import {PreferenceResolver} from "../../../../resolvers/preference.resolver";
 import {AppConfigService} from "../../../../../services/app-config.service";
 import {UtilsService} from "../../../../services/utils.service";
 import {AppDataService} from "../../../../../app-data.service";
-import {GLTranslationService} from "../../../../../services/gltranslation.service";
+import {TranslationService} from "../../../../../services/translation.service";
 
 @Component({
   selector: 'views-user',
@@ -13,9 +13,9 @@ import {GLTranslationService} from "../../../../../services/gltranslation.servic
 })
 export class UserComponent {
 
-  constructor(public authentication: AuthenticationService, public preferences:PreferenceResolver, public appConfig: AppConfigService, public utils: UtilsService, public appDataService:AppDataService, public glTranslationService:GLTranslationService) {
+  constructor(public authentication: AuthenticationService, public preferences:PreferenceResolver, public appConfig: AppConfigService, public utils: UtilsService, public appDataService:AppDataService, public glTranslationService:TranslationService) {
     //alert(JSON.stringify(appDataService.languages_enabled_selector))
   }
 
-  protected readonly GLTranslationService = GLTranslationService;
+  protected readonly GLTranslationService = TranslationService;
 }

@@ -8,6 +8,7 @@ export class TranslatePipe {
   constructor(private translateService:TranslateService) {
   }
   transform(value: string) {
+    alert(this.translateService.defaultLang)
     return this.translateService.instant(value);
   }
 }

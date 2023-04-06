@@ -4,7 +4,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {UtilsService} from "../shared/services/utils.service";
 import {AppDataService} from "../app-data.service";
 import {FieldUtilitiesService} from "../shared/services/field-utilities.service";
-import {GLTranslationService} from "./gltranslation.service";
+import {TranslationService} from "./translation.service";
 
 @Injectable({
   providedIn: 'root'
@@ -113,7 +113,7 @@ export class AppConfigService{
     });
   }
 
-  constructor(public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public rootDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:GLTranslationService) {
+  constructor(public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public rootDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService) {
     this.localInitialization();
   }
 }

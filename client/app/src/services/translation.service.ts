@@ -1,4 +1,4 @@
-import {Injectable, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {ChangeDetectorRef, Injectable, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
 import {Observable, Subject} from "rxjs";
 import {Router} from "@angular/router";
@@ -6,7 +6,7 @@ import {Router} from "@angular/router";
 @Injectable({
   providedIn: 'root'
 })
-export class GLTranslationService{
+export class TranslationService {
 
   facts = {
     userChoice: null,

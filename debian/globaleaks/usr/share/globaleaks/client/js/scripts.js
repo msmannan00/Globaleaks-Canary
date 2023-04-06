@@ -9170,7 +9170,7 @@ var isAutoBootstrapAllowed = allowAutoBootstrap(window.document);
  *
  * You can specify an **AngularJS module** to be used as the root module for the application.  This
  * module will be loaded into the {@link auto.$injector} when the application is bootstrapped. It
- * should contain the application code needed or have dependencies on other modules that will
+ * should contain the application code needed or have dependencies on other pages that will
  * contain the code. See {@link angular.module} for more information.
  *
  * In the example below if the `ngApp` directive were not placed on the `html` element then the
@@ -9359,10 +9359,10 @@ function angularInit(element, bootstrap) {
  * ```
  *
  * @param {DOMElement} element DOM element which is the root of AngularJS application.
- * @param {Array<String|Function|Array>=} modules an array of modules to load into the application.
+ * @param {Array<String|Function|Array>=} modules an array of pages to load into the application.
  *     Each item in the array should be the name of a predefined module or a (DI annotated)
  *     function that will be invoked by the injector as a `config` block.
- *     See: {@link angular.module modules}
+ *     See: {@link angular.module pages}
  * @param {Object=} config an object for defining configuration options for the application. The
  *     following keys are supported:
  *
@@ -9395,7 +9395,7 @@ function bootstrap(element, modules, config) {
     }]);
 
     if (config.debugInfoEnabled) {
-      // Pushing so that this overrides `debugInfoEnabled` setting defined in user's `modules`.
+      // Pushing so that this overrides `debugInfoEnabled` setting defined in user's `pages`.
       modules.push(['$compileProvider', function($compileProvider) {
         $compileProvider.debugInfoEnabled(true);
       }]);
@@ -9682,7 +9682,7 @@ var NODE_TYPE_DOCUMENT_FRAGMENT = 11;
  * @module ng
  * @description
  *
- * Interface for configuring AngularJS {@link angular.module modules}.
+ * Interface for configuring AngularJS {@link angular.module pages}.
  */
 
 function setupModuleLoader(window) {
@@ -9696,7 +9696,7 @@ function setupModuleLoader(window) {
 
   var angular = ensure(window, 'angular', Object);
 
-  // We need to expose `angular.$$minErr` to modules such as `ngResource` that reference it during bootstrap
+  // We need to expose `angular.$$minErr` to pages such as `ngResource` that reference it during bootstrap
   angular.$$minErr = angular.$$minErr || minErr;
 
   return ensure(angular, 'module', function() {
@@ -9710,8 +9710,8 @@ function setupModuleLoader(window) {
      * @description
      *
      * The `angular.module` is a global place for creating, registering and retrieving AngularJS
-     * modules.
-     * All modules (AngularJS core or 3rd party) that should be available to an application must be
+     * pages.
+     * All pages (AngularJS core or 3rd party) that should be available to an application must be
      * registered using this mechanism.
      *
      * Passing one argument retrieves an existing {@link angular.Module},
@@ -9737,7 +9737,7 @@ function setupModuleLoader(window) {
      * }]);
      * ```
      *
-     * Then you can create an injector and load your modules like this:
+     * Then you can create an injector and load your pages like this:
      *
      * ```js
      * var injector = angular.injector(['ng', 'myModule'])
@@ -9817,10 +9817,10 @@ function setupModuleLoader(window) {
            * ```
            *
            * You can also retrieve this information during runtime via the
-           * {@link $injector#modules `$injector.modules`} property:
+           * {@link $injector#modules `$injector.pages`} property:
            *
            * ```js
-           * var version = $injector.modules['myModule'].info().version;
+           * var version = $injector.pages['myModule'].info().version;
            * ```
            */
           info: function(value) {
@@ -9838,7 +9838,7 @@ function setupModuleLoader(window) {
            * @module ng
            *
            * @description
-           * Holds the list of modules which the injector will load before the current module is
+           * Holds the list of pages which the injector will load before the current module is
            * loaded.
            */
           requires: requires,
@@ -10041,7 +10041,7 @@ function setupModuleLoader(window) {
            *    Useful for application initialization.
            * @description
            * Use this method to register work which should be performed when the injector is done
-           * loading all modules.
+           * loading all pages.
            */
           run: function(block) {
             runBlocks.push(block);
@@ -11841,7 +11841,7 @@ function annotate(fn, strictDi, name) {
  *
  * `$injector` is used to retrieve object instances as defined by
  * {@link auto.$provide provider}, instantiate types, invoke methods,
- * and load modules.
+ * and load pages.
  *
  * The following always holds true:
  *
@@ -11891,7 +11891,7 @@ function annotate(fn, strictDi, name) {
  * @name $injector#modules
  * @type {Object}
  * @description
- * A hash containing all the modules that have been loaded into the
+ * A hash containing all the pages that have been loaded into the
  * $injector.
  *
  * You can use this property to find out information about a module via the
@@ -11900,10 +11900,10 @@ function annotate(fn, strictDi, name) {
  * For example:
  *
  * ```
- * var info = $injector.modules['ngAnimate'].info();
+ * var info = $injector.pages['ngAnimate'].info();
  * ```
  *
- * **Do not use this property to attempt to modify the modules after the application
+ * **Do not use this property to attempt to modify the pages after the application
  * has been bootstrapped.**
  */
 
@@ -12051,23 +12051,23 @@ function annotate(fn, strictDi, name) {
  *
  * **This is a dangerous API, which you use at your own risk!**
  *
- * Add the specified modules to the current injector.
+ * Add the specified pages to the current injector.
  *
  * This method will add each of the injectables to the injector and execute all of the config and run
  * blocks for each module passed to the method.
  *
  * If a module has already been loaded into the injector then it will not be loaded again.
  *
- * * The application developer is responsible for loading the code containing the modules; and for
+ * * The application developer is responsible for loading the code containing the pages; and for
  * ensuring that lazy scripts are not downloaded and executed more often that desired.
  * * Previously compiled HTML will not be affected by newly loaded directives, filters and components.
  * * Modules cannot be unloaded.
  *
- * You can use {@link $injector#modules `$injector.modules`} to check whether a module has been loaded
+ * You can use {@link $injector#modules `$injector.pages`} to check whether a module has been loaded
  * into the injector, which may indicate whether the script has been executed already.
  *
  * @example
- * Here is an example of loading a bundle of modules, with a utility method called `getScript`:
+ * Here is an example of loading a bundle of pages, with a utility method called `getScript`:
  *
  * ```javascript
  * app.factory('loadModule', function($injector) {
@@ -12077,10 +12077,10 @@ function annotate(fn, strictDi, name) {
  * })
  * ```
  *
- * @param {Array<String|Function|Array>=} mods an array of modules to load into the application.
+ * @param {Array<String|Function|Array>=} mods an array of pages to load into the application.
  *     Each item in the array should be the name of a predefined module or a (DI annotated)
  *     function that will be invoked by the injector as a `config` block.
- *     See: {@link angular.module modules}
+ *     See: {@link angular.module pages}
  */
 
 
@@ -28960,7 +28960,7 @@ function $TemplateRequestProvider() {
    * `$templateRequest` is used internally by {@link $compile}, {@link ngRoute.$route}, and directives such
    * as {@link ngInclude} to download and cache templates.
    *
-   * 3rd party modules should use `$templateRequest` if their services or directives are loading
+   * 3rd party pages should use `$templateRequest` if their services or directives are loading
    * templates.
    *
    * @param {string|TrustedResourceUrl} tpl The HTTP request template URL
@@ -44506,7 +44506,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 
 
-/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	// expose the pages object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
 
 /******/ 	// expose the module cache
@@ -48553,7 +48553,7 @@ function $RouteProvider() {
    * The default value is true.
    *
    * **Note**:<br />
-   * You may want to disable the default behavior when unit-testing modules that depend on
+   * You may want to disable the default behavior when unit-testing pages that depend on
    * `ngRoute`, in order to avoid an unexpected request for the default route's template.
    *
    * @param {boolean=} enabled - If provided, update the internal `eagerInstantiationEnabled` flag.
@@ -54302,7 +54302,7 @@ return 'pascalprecht.translate';
 /******/ 	}
 
 
-/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	// expose the pages object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
 
 /******/ 	// expose the module cache
@@ -56778,7 +56778,7 @@ if (typeof module !== "undefined" && module.exports) {
 
     // Register as a named AMD module, since Flow can be concatenated with other
     // files that may use define, but not via a proper concatenation script that
-    // understands anonymous AMD modules. A named AMD is safest and most robust
+    // understands anonymous AMD pages. A named AMD is safest and most robust
     // way to register. Lowercase flow is used because AMD module names are
     // derived from file names, and Flow is normally delivered in a lowercase
     // file name. Do this after creating the global so that if an AMD module wants
@@ -56791,7 +56791,7 @@ if (typeof module !== "undefined" && module.exports) {
 
 (function(window, document) {
 
-// Create all modules and define dependencies to make sure they exist
+// Create all pages and define dependencies to make sure they exist
 // and are loaded in the correct order to satisfy dependency injection
 // before all nested files are concatenated by Grunt
 

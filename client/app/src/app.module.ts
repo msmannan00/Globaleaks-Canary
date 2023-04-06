@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
-import { AuthModule } from './modules/auth/auth.module';
+import { AuthModule } from './pages/auth/auth.module';
 import {
   APP_BASE_HREF,
   HashLocationStrategy,
@@ -15,11 +15,11 @@ import { HeaderComponent } from './shared/components/header/header.component';
 import { UserComponent } from './shared/components/header/template/user/user.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import {ErrorCatchingInterceptor, RequestInterceptor} from "./services/glResuestInterceptor";
+import {ErrorCatchingInterceptor, RequestInterceptor} from "./services/request.interceptor";
 import {Keepalive, NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {AuthenticationService} from "./services/authentication.service";
-import {HomeComponent} from "./modules/dashboard/home/home.component";
+import {HomeComponent} from "./pages/dashboard/home/home.component";
 import { TranslatePipe } from './shared/pipes/translate';
 import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
