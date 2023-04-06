@@ -15,7 +15,7 @@ import { HeaderComponent } from './shared_component/header/header.component';
 import { UserComponent } from './shared_component/header/template/user/user.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import {ErrorCatchingInterceptor, RequestInterceptor} from "./services/http-interceptor.service";
+import {ErrorCatchingInterceptor, RequestInterceptor} from "./services/glResuestInterceptor";
 import {Keepalive, NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {AuthenticationService} from "./services/authentication.service";
