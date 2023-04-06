@@ -21,7 +21,6 @@ import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {AuthenticationService} from "./services/authentication.service";
 import {HomeComponent} from "./dashboard/home/home.component";
 import { TranslatePipe } from './pipes/translate';
-import {ApplicationPipedModule} from "./pipes/application-piped/application-piped.module";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
 
@@ -32,7 +31,6 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
   declarations: [AppComponent, HeaderComponent, UserComponent, HomeComponent],
   imports: [
-    ApplicationPipedModule,
     HttpClientModule,
     AppRoutingModule,
     SharedModule,
