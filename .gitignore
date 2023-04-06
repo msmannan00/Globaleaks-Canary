@@ -23,6 +23,7 @@ yarn-error.log
 
 # Visual Studio Code
 .vscode/*
+.vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -35,8 +36,7 @@ yarn-error.log
 /connect.lock
 /coverage
 /backend/*
-/client/app/assets/lib/css
-/client/app/assets/lib/js
+/client/app/assets/lib/*
 /.pybuild
 /client/build
 /backend/workingdir
