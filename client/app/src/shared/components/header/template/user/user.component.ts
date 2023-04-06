@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import {AuthenticationService} from "../../../../services/authentication.service";
-import {PreferenceResolver} from "../../../../shared/resolvers/preference.resolver";
-import {AppConfigService} from "../../../../services/app-config.service";
-import {UtilsService} from "../../../../shared/services/utils.service";
-import {AppDataService} from "../../../../app-data.service";
-import {GLTranslationService} from "../../../../services/gltranslation.service";
+import {AuthenticationService} from "../../../../../services/authentication.service";
+import {PreferenceResolver} from "../../../../resolvers/preference.resolver";
+import {AppConfigService} from "../../../../../services/app-config.service";
+import {UtilsService} from "../../../../services/utils.service";
+import {AppDataService} from "../../../../../app-data.service";
+import {GLTranslationService} from "../../../../../services/gltranslation.service";
 
 @Component({
   selector: 'views-user',

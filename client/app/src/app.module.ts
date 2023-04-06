@@ -10,9 +10,9 @@ import {
   LocationStrategy,
 } from '@angular/common';
 import { AppConfigService } from './services/app-config.service';
-import { SharedModule } from './shared_component/shared.module';
-import { HeaderComponent } from './shared_component/header/header.component';
-import { UserComponent } from './shared_component/header/template/user/user.component';
+import { SharedModule } from './shared.module';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { UserComponent } from './shared/components/header/template/user/user.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import {ErrorCatchingInterceptor, RequestInterceptor} from "./services/glResuestInterceptor";

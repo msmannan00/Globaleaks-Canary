@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {AppConfigService} from "../../services/app-config.service";
-import {AppDataService} from "../../app-data.service";
+import {AppConfigService} from "../../../services/app-config.service";
+import {AppDataService} from "../../../app-data.service";
 
 @Component({
   selector: 'views-header',

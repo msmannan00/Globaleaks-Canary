@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FooterComponent} from "./footer/footer.component";
-import { UserHomeComponent } from './user-home/user-home.component';
-import { UserWarningsComponent } from './user-warnings/user-warnings.component';
-import { ReceiptComponent } from './receipt/receipt.component';
+import {FooterComponent} from "./shared/components/footer/footer.component";
+import { ReceiptComponent } from './shared/components/receipt/receipt.component';
 import {FormsModule} from "@angular/forms";
-import {TranslatePipe} from "../shared/pipes/translate";
+import {TranslatePipe} from "./shared/pipes/translate";
+import {UserHomeComponent} from "./shared/components/header/template/user-home/user-home.component";
 
 @NgModule({
   imports: [
@@ -15,7 +14,6 @@ import {TranslatePipe} from "../shared/pipes/translate";
   declarations: [
     FooterComponent,
     UserHomeComponent,
-    UserWarningsComponent,
     ReceiptComponent,
     TranslatePipe
   ],
