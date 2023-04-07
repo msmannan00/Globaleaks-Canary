@@ -23,6 +23,7 @@ import {HomeComponent} from "./pages/dashboard/home/home.component";
 import { TranslatorPipe } from './shared/pipes/translate';
 import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
+import {ActionModule} from "./pages/action/action.module";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './data/i18n/', '.json');
@@ -37,6 +38,7 @@ export function createTranslateLoader(http: HttpClient) {
     BrowserModule,
     NgIdleKeepaliveModule.forRoot(),
     AuthModule,
+    ActionModule,
     SharedModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en',

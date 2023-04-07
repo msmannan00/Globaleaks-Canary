@@ -14,6 +14,7 @@ export class DefaultLoginComponent {
 
   @Input() loginData: LoginDataRef;
   @Input() loginValidator: any;
+  loginAuthCode: any;
 
   ngOnInit() { this.initForm() }
 

@@ -109,10 +109,10 @@ export class AuthenticationService {
         error: (error: any) => {
           this.loginInProgress = false;
           this.rootDataService.showLoadingPanel = false
-          if (error.data && error.data.error_code) {
-            if (error.data.error_code === 4) {
+          if (error.error && error.error.error_code) {
+            if (error.error.error_code === 4) {
               this.requireAuthCode = true;
-            } else if (error.data.error_code !== 13) {
+            } else if (error.error.error_code !== 13) {
               this.reset();
             }
           }
