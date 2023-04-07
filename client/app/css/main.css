@@ -5,6 +5,9 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+.no-gutter{
+  padding: 0;
+}
 .ng-select div,
 .ng-select input,
 .ng-select span {

@@ -24,8 +24,8 @@ import {SharedModule} from "../../shared.module";
       CommonModule,
       TranslateModule,
       FormsModule,
-      NgSelectModule,
       ReactiveFormsModule,
+      NgSelectModule,
       SharedModule
     ]
 })

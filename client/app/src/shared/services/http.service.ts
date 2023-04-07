@@ -23,6 +23,11 @@ export class HttpService{
     return this.httpClient.delete("api/session",{'headers':headers })
   }
 
+  request2FA(data:any): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.put("api/user/operations",data)
+  }
+
   requestChangePassword(param: string): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.put<password_recovery_response_model>("api/reset/password", param,{'headers':headers })

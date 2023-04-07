@@ -35,16 +35,16 @@
     </div>
 
     <div class="input-group">
-      <input class="form-control" [(ngModel)]="authentication.loginData.loginAuthCode" type="text" size="6" maxlength="6" required />
+
+      <input class="form-control" [ngModelOptions]="{standalone: true}"  [(ngModel)]="authentication.loginData.loginAuthCode" type="text" size="6" maxlength="6" required />
 
       <div class="input-group-btn">
-        <button id="login-button" class="btn btn-primary" [disabled]="authentication.loginInProgress || loginValidator.invalid" (click)="authentication.login(0, authentication.loginData.loginUsername, authentication.loginData.loginPassword, authentication.loginData.loginAuthCode)" type="submit">
+        <button id="login-button" class="btn btn-primary" [disabled]="authentication.loginInProgress || loginValidator.invalid || authentication.loginData.loginAuthCode.length !=6" (click)="authentication.login(0, authentication.loginData.loginUsername, authentication.loginData.loginPassword, authentication.loginData.loginAuthCode)" type="submit">
           <i class="fa-solid fa-sign-in-alt"></i>
-          <span>{{'Log in'|translate}}</span>
+          &nbsp;<span>{{'Log in'|translate}}</span>
         </button>
 
         <a class="btn" (click)="utils.openSupportModal()" data-toggle="tooltip" title="{{'Request support' | scopedTranslate}}"><i class="fa-solid fa-life-ring"></i></a>
-        <a class="btn" (click)="utils.openSupportModal()"><i class="fa-solid fa-life-ring"></i></a>
       </div>
     </div>
   </div>

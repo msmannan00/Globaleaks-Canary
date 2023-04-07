@@ -34,11 +34,14 @@
 
   <views-header></views-header>
   <!--<div id="MessagesConsoleBox" data-ng-include="'views/partials/messageconsole.html'"></div>-->
+
   <div id="PageContent">
     <div id="ContentBox">
       <div class="row">
         <!--<nav ng-if="appConfig.sidebar" id="Sidebar" class="col-md-2 flex-column" data-ng-include="appConfig.sidebar"></nav>-->
-        <router-outlet class="col-md-12"></router-outlet>
+        <span class="col-md-12 no-gutter">
+          <router-outlet></router-outlet>
+        </span>
       </div>
     </div>
   </div>

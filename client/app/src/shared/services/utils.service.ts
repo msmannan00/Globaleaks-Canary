@@ -58,6 +58,7 @@ export class UtilsService {
     if (this.appDataService.public.node.custom_support_url) {
       window.open(this.appDataService.public.node.custom_support_url, "_blank");
     } else {
+      alert("SUPPORT MODEL NOT CONFIGURED")
       return this.openConfirmableModalDialog("views/modals/request_support.html", {});
     }
   }
@@ -121,6 +122,12 @@ export class UtilsService {
     });
 
     return ret;
+  }
+
+  copyToClipboard(data:string) {
+    if (window.navigator.clipboard && window.isSecureContext) {
+      window.navigator.clipboard.writeText(data);
+    }
   }
 
   constructor(public authenticationService:AuthenticationService, public appDataService:AppDataService, public translateService: TranslateService, private router: Router) {
