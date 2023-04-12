@@ -21,8 +21,10 @@ export class SimpleLoginComponent {
   initForm() {
     this.loginValidator.addControl("username", new FormControl('', Validators.required));
     this.loginValidator.addControl("password", new FormControl('', Validators.required));
+    this.loginData.loginUsername = this.appDataService.public.receivers[0].id
   }
 
   constructor(public utils: UtilsService, public appConfig: AppConfigService, public authentication: AuthenticationService, public appDataService:AppDataService) {
   }
-}
+
+ }
