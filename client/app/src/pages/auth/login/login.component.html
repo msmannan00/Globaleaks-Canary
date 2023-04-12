@@ -3,6 +3,7 @@
     <form [formGroup]="loginValidator" autocomplete="off">
       <input class="d-none" type="password" name="disable-autocomplete-hack" />
 
+
       <app-simple-login *ngIf="appDataService.public.node.simplified_login" [loginValidator]="loginValidator" [loginData]='loginData'></app-simple-login>
       <app-default-login *ngIf="!appDataService.public.node.simplified_login" [loginValidator]="loginValidator" [loginData]='loginData' ></app-default-login>
 
