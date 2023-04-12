@@ -22,10 +22,16 @@ const routes: Routes = [
   },
   {
     path: 'login',
+    resolve: {
+      PreferenceResolver
+    },
     loadChildren: () => AuthRoutingModule,
   },
   {
     path: 'action',
+    resolve: {
+      PreferenceResolver
+    },
     loadChildren: () => ActionRoutingModule,
   },
   {

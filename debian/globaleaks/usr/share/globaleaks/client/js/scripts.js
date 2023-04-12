@@ -7694,9 +7694,9 @@ function minErr(module, ErrorConstructor) {
  * @description
  *
  * The ng module is loaded by default when an AngularJS application is started. The module itself
- * contains the essential components for an AngularJS application to function. The table below
+ * contains the essential partials for an AngularJS application to function. The table below
  * lists a high level breakdown of each of the services/factories, filters, directives and testing
- * components available within this core module.
+ * partials available within this core module.
  *
  */
 
@@ -10005,7 +10005,7 @@ function setupModuleLoader(window) {
            * @name angular.Module#component
            * @module ng
            * @param {string|Object} name Name of the component in camelCase (i.e. `myComp` which will match `<my-comp>`),
-           *    or an object map of components where the keys are the names and the values are the component definition objects.
+           *    or an object map of partials where the keys are the names and the values are the component definition objects.
            * @param {Object} options Component definition object (a simplified
            *    {@link ng.$compile#directive-definition-object directive definition object})
            *
@@ -12060,7 +12060,7 @@ function annotate(fn, strictDi, name) {
  *
  * * The application developer is responsible for loading the code containing the pages; and for
  * ensuring that lazy scripts are not downloaded and executed more often that desired.
- * * Previously compiled HTML will not be affected by newly loaded directives, filters and components.
+ * * Previously compiled HTML will not be affected by newly loaded directives, filters and partials.
  * * Modules cannot be unloaded.
  *
  * You can use {@link $injector#modules `$injector.pages`} to check whether a module has been loaded
@@ -12090,7 +12090,7 @@ function annotate(fn, strictDi, name) {
  *
  * @description
  *
- * The {@link auto.$provide $provide} service has a number of methods for registering components
+ * The {@link auto.$provide $provide} service has a number of methods for registering partials
  * with the {@link auto.$injector $injector}. Many of these functions are also exposed on
  * {@link angular.Module}.
  *
@@ -14901,9 +14901,9 @@ function $TemplateCacheProvider() {
  *   be detected by AngularJS's change detector and thus not trigger `$onChanges`. This hook is invoked with no arguments;
  *   if detecting changes, you must store the previous value(s) for comparison to the current values.
  * * `$onDestroy()` - Called on a views when its containing scope is destroyed. Use this hook for releasing
- *   external resources, watches and event handlers. Note that components have their `$onDestroy()` hooks called in
+ *   external resources, watches and event handlers. Note that partials have their `$onDestroy()` hooks called in
  *   the same order as the `$scope.$broadcast` events are triggered, which is top down. This means that parent
- *   components will have their `$onDestroy()` hook called before child components.
+ *   partials will have their `$onDestroy()` hook called before child partials.
  * * `$postLink()` - Called after this views's element and its children have been linked. Similar to the post-link
  *   function this hook can be used to set up DOM event handlers and do direct DOM manipulation.
  *   Note that child elements that contain `templateUrl` directives will not have been compiled and linked since
@@ -14911,7 +14911,7 @@ function $TemplateCacheProvider() {
  *   suspended until that occurs.
  *
  * #### Comparison with life-cycle hooks in the new Angular
- * The new Angular also uses life-cycle hooks for its components. While the AngularJS life-cycle hooks are similar there are
+ * The new Angular also uses life-cycle hooks for its partials. While the AngularJS life-cycle hooks are similar there are
  * some differences that you should be aware of, especially when it comes to moving your code from AngularJS to Angular:
  *
  * * AngularJS hooks are prefixed with `$`, such as `$onInit`. Angular hooks are prefixed with `ng`, such as `ngOnInit`.
@@ -15043,7 +15043,7 @@ function $TemplateCacheProvider() {
  *
  * * **`{...}` (an object hash):** A new "isolate" scope is created for the directive's template.
  * The 'isolate' scope differs from normal scope in that it does not prototypically
- * inherit from its parent scope. This is useful when creating reusable components, which should not
+ * inherit from its parent scope. This is useful when creating reusable partials, which should not
  * accidentally read or modify data in the parent scope. Note that an isolate scope
  * directive without a `template` or `templateUrl` will not apply the isolate scope
  * to its children elements.
@@ -15315,7 +15315,7 @@ function $TemplateCacheProvider() {
  * Directives Guide} for an example.
  *
  * There are very few scenarios where element replacement is required for the application function,
- * the main one being reusable custom components that are used within SVG contexts
+ * the main one being reusable custom partials that are used within SVG contexts
  * (because SVG doesn't work with custom elements in the DOM tree).
  *
  * #### `transclude`
@@ -16317,7 +16317,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
    * @name $compileProvider#component
    * @module ng
    * @param {string|Object} name Name of the component in camelCase (i.e. `myComp` which will match `<my-comp>`),
-   *    or an object map of components where the keys are the names and the values are the component definition objects.
+   *    or an object map of partials where the keys are the names and the values are the component definition objects.
    * @param {Object} options Component definition object (a simplified
    *    {@link ng.$compile#directive-definition-object directive definition object}),
    *    with the following properties (all optional):
@@ -16361,16 +16361,16 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
    * @returns {ng.$compileProvider} the compile provider itself, for chaining of function calls.
    * @description
    * Register a **component definition** with the compiler. This is a shorthand for registering a special
-   * type of directive, which represents a self-contained UI component in your application. Such components
+   * type of directive, which represents a self-contained UI component in your application. Such partials
    * are always isolated (i.e. `scope: {}`) and are always restricted to elements (i.e. `restrict: 'E'`).
    *
    * Component definitions are very simple and do not require as much configuration as defining general
    * directives. Component definitions usually consist only of a template and a views backing it.
    *
-   * In order to make the definition easier, components enforce best practices like use of `controllerAs`,
+   * In order to make the definition easier, partials enforce best practices like use of `controllerAs`,
    * `bindToController`. They always have **isolate scope** and are restricted to elements.
    *
-   * Here are a few examples of how you would usually define components:
+   * Here are a few examples of how you would usually define partials:
    *
    * ```js
    *   var myMod = angular.module(...);
@@ -21415,7 +21415,7 @@ function $InterpolateProvider() {
      * an interpolated expression consisting of a single-quote (`'`) and the `' }}` string.
      *
      * @knownIssue
-     * All directives and components must use the standard `{{` `}}` interpolation symbols
+     * All directives and partials must use the standard `{{` `}}` interpolation symbols
      * in their templates. If you change the application interpolation symbols the {@link $compile}
      * service will attempt to denormalize the standard symbols to the custom symbols.
      * The denormalization process is not clever enough to know not to replace instances of the standard
@@ -21933,7 +21933,7 @@ var $jsonpCallbacksProvider = /** @this */ function() {
  * @name $locale
  *
  * @description
- * $locale service provides localization rules for various AngularJS components. As of right now the
+ * $locale service provides localization rules for various AngularJS partials. As of right now the
  * only public api is:
  *
  * * `id` – `{string}` – locale id formatted as `languageId-countryId` (e.g. `en-us`)
@@ -29292,7 +29292,7 @@ var ipv6InBrackets = urlParsingNode.hostname === '[::1]';
  * Implementation Notes for IE
  * ---------------------------
  * IE <= 10 normalizes the URL when assigned to the anchor node similar to the other
- * browsers.  However, the parsed components will not be set if the URL assigned did not specify
+ * browsers.  However, the parsed partials will not be set if the URL assigned did not specify
  * them.  (e.g. if you assign a.href = "foo", then a.protocol, a.host, etc. will be empty.)  We
  * work around that by performing the parsing in a 2nd step by taking a previously normalized
  * URL (e.g. by assigning to a.href) and assigning it a.href again.  This correctly populates the
@@ -30145,7 +30145,7 @@ function numberFilter($locale) {
 }
 
 /**
- * Parse a number (as a string) into three components that can be used
+ * Parse a number (as a string) into three partials that can be used
  * for formatting the number.
  *
  * (Significant bits of this parse algorithm came from https://github.com/MikeMcl/big.js/)
@@ -36060,7 +36060,7 @@ var ngCloakDirective = ngDirective({
  * The `ngController` directive attaches a views class to the view. This is a key aspect of how angular
  * supports the principles behind the Model-View-Controller design pattern.
  *
- * MVC components in angular:
+ * MVC partials in angular:
  *
  * * Model — Models are the properties of a scope; scopes are attached to the DOM where scope properties
  *   are accessed through bindings.
@@ -40604,7 +40604,7 @@ var ngPluralizeDirective = ['$locale', '$interpolate', '$log', function($locale,
  *
  * Note that if you want to assign from a child into the parent scope, you must initialize the
  * target property on the parent scope, otherwise `ngRef` will assign on the child scope.
- * This commonly happens when assigning elements or components wrapped in {@link ngIf} or
+ * This commonly happens when assigning elements or partials wrapped in {@link ngIf} or
  * {@link ngRepeat}. See the second example below.
  *
  *
@@ -40651,9 +40651,9 @@ var ngPluralizeDirective = ['$locale', '$interpolate', '$log', function($locale,
  *
  * @example
  * ### ngRef inside scopes
- * This example shows how `ngRef` works with child scopes. The `ngRepeat`-ed `myWrapper` components
+ * This example shows how `ngRef` works with child scopes. The `ngRepeat`-ed `myWrapper` partials
  * are assigned to the scope of `myRoot`, because the `toggles` property has been initialized.
- * The repeated `myToggle` components are published to the child scopes created by `ngRepeat`.
+ * The repeated `myToggle` partials are published to the child scopes created by `ngRepeat`.
  * `ngIf` behaves similarly - the assignment of `myToggle` happens in the `ngIf` child scope,
  * because the target property has not been initialized on the `myRoot` component views.
  *
@@ -48383,7 +48383,7 @@ function $RouteProvider() {
    *      For easier access to the resolved dependencies from the template, the `resolve` map will
    *      be available on the scope of the route, under `$resolve` (by default) or a custom name
    *      specified by the `resolveAs` property (see below). This can be particularly useful, when
-   *      working with {@link angular.Module#component components} as route templates.<br />
+   *      working with {@link angular.Module#component partials} as route templates.<br />
    *      <div class="alert alert-warning">
    *        **Note:** If your scope already contains a property with this name, it will be hidden
    *        or overwritten. Make sure, you specify an appropriate name for this property, that
@@ -65422,7 +65422,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.multiMap', 'ui.bootstrap.sta
 angular.module('ui.bootstrap.paging', [])
 /**
  * Helper internal service for generating common views code between the
- * pager and pagination components
+ * pager and pagination partials
  */
 .factory('uibPaging', ['$parse', function($parse) {
   return {

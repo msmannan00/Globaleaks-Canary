@@ -11,11 +11,11 @@ import {
 } from '@angular/common';
 import { AppConfigService } from './services/app-config.service';
 import { SharedModule } from './shared.module';
-import { HeaderComponent } from './shared/components/header/header.component';
-import { UserComponent } from './shared/components/header/template/user/user.component';
+import { HeaderComponent } from './shared/partials/header/header.component';
+import { UserComponent } from './shared/partials/header/template/user/user.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import {ErrorCatchingInterceptor, RequestInterceptor} from "./services/request.interceptor";
+import {CompletedInterceptor, ErrorCatchingInterceptor, RequestInterceptor} from "./services/request.interceptor";
 import {Keepalive, NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {AuthenticationService} from "./services/authentication.service";
@@ -57,6 +57,7 @@ export function createTranslateLoader(http: HttpClient) {
     { provide: APP_BASE_HREF, useValue: '/' },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: CompletedInterceptor, multi: true},
   ],
   bootstrap: [AppComponent],
 })

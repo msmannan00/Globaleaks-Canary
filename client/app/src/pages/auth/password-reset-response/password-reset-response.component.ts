@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {password_recovery_model} from "../../../models/authentication/password_recovery_model";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {HttpService} from "../../../shared/services/http.service";
 
@@ -22,7 +22,7 @@ export class PasswordResetResponseComponent {
         next: response => {
 
           if(response.status === "success") {
-            location.replace("/login?token=" + response.token);
+            this.router.navigate([("/login")], {queryParams:{token:response.token}});
           } else {
             if (response.status === "require_recovery_key") {
               this.request.recovery_key = "";
@@ -36,33 +36,8 @@ export class PasswordResetResponseComponent {
       }
     );
 
-
-
-
-
-
-
-
-
-
-
-
-
-    /*$http.put("api/reset/password", $scope.request).then(function(response) {
-      if(response.data.status === "success") {
-        $location.url("/login?token=" + response.data.token);
-      } else {
-        if (response.data.status === "require_recovery_key") {
-          $scope.request.recovery_key = "";
-        }
-
-        $scope.request.auth_code = "";
-        $scope.state = response.data.status;
-      }
-    });*/
   };
-
-  constructor(private route: ActivatedRoute, public httpService: HttpService) {
+  constructor(private route: ActivatedRoute, public httpService: HttpService, private router:Router) {
     this.request.reset_token = this.route.snapshot.queryParams["token"] || ""
     this.request.recovery_key = this.route.snapshot.queryParams["recovery"] || ""
 

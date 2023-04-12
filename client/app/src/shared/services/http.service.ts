@@ -13,6 +13,11 @@ export class HttpService{
     return this.httpClient.get<any>("/api/public", {observe: 'response'});
   }
 
+  requestAuthTokenLogin(param: string): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.post("api/tokenauth", param,{'headers':headers })
+  }
+
   requestGeneralLogin(param: string): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.post("api/authentication", param,{'headers':headers })
@@ -23,7 +28,7 @@ export class HttpService{
     return this.httpClient.delete("api/session",{'headers':headers })
   }
 
-  request2FA(data:any): Observable<any>{
+  requestOperations(data:any): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.put("api/user/operations",data)
   }

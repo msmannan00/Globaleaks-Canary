@@ -23,7 +23,7 @@ export class ForcedTwoFactorComponent {
       }
     }
 
-    let requestObservable = this.httpService.request2FA(data);
+    let requestObservable = this.httpService.requestOperations(data);
     requestObservable.subscribe(
         {
           next: response => {

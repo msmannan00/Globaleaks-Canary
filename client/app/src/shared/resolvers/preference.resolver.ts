@@ -15,14 +15,12 @@ export class PreferenceResolver implements Resolve<boolean> {
 
   dataModel:preferenceResolverModel = new preferenceResolverModel()
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+  resolve(route: ActivatedRouteSnapshot, c: RouterStateSnapshot): Observable<boolean> {
     let requestObservable = this.httpService.requestPreferenceResource({"update": {method: "PUT"}})
-
     requestObservable.subscribe(
         {
             next: (response:preferenceResolverModel) => {
                 this.dataModel = response
-
                 if (this.dataModel.password_change_needed) {
                     this.router.navigate(["/action/forcedpasswordchange"]);
                 } else if (this.dataModel.require_two_factor) {

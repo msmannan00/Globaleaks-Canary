@@ -72,7 +72,7 @@ export class AuthenticationService {
     let requestObservable:Observable<any>
     this.rootDataService.showLoadingPanel = true;
     if (authtoken) {
-      requestObservable = this.httpService.requestGeneralLogin("");
+      requestObservable = this.httpService.requestAuthTokenLogin(JSON.stringify({"authtoken":authtoken}));
     } else {
       if (username === "whistleblower") {
         requestObservable = this.httpService.requestGeneralLogin("");
