@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {AuthenticationService} from "../../../services/authentication.service";
 import {AppConfigService} from "../../../services/app-config.service";
+import {AppDataService} from "../../../app-data.service";
 
 @Component({
   selector: 'src-receipt',
@@ -10,6 +11,6 @@ import {AppConfigService} from "../../../services/app-config.service";
 export class ReceiptComponent {
   formatted_receipt: any;
 
-  constructor(public authentication: AuthenticationService, public appConfig: AppConfigService) {
+  constructor(public authentication: AuthenticationService, public appConfig: AppConfigService, public  appDataService:AppDataService) {
   }
 }

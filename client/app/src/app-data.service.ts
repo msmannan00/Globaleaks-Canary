@@ -15,7 +15,7 @@ export class AppDataService {
   pageTitle = "Globaleaks"
   projectTitle = ""
   header_title = ""
-  page = ""
+  page = "homepage"
 
   contexts_by_id:Map<string, any>
   receivers_by_id:any

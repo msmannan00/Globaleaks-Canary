@@ -34,6 +34,10 @@ export class UtilsService {
       !this.authenticationService.session.require_password_change;
   }
 
+  isWhistleblowerPage() {
+    return ["/", "/submission"].indexOf(location.pathname) !== -1;
+  }
+
   openConfirmableModalDialog(template:any, arg:any, scope?:any){
     /*scope = !scope ? $rootScope : scope;
 

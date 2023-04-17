@@ -24,6 +24,7 @@ import { TranslatorPipe } from './shared/pipes/translate';
 import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
 import {ActionModule} from "./pages/action/action.module";
+import {WhistleblowerModule} from "./pages/whistleblower/whistleblower.module";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './data/i18n/', '.json');
@@ -50,6 +51,7 @@ export function createTranslateLoader(http: HttpClient) {
     }),
     NgSelectModule,
     FormsModule,
+    WhistleblowerModule,
   ],
   providers: [
     TranslatorPipe,

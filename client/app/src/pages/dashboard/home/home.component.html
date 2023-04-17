@@ -1,1 +1,5 @@
-<h1>Dashboard Under Construction</h1>
+<ng-container [ngSwitch]="appDataService.page">
+    <div *ngSwitchCase="'homepage'">
+        <src-homepage></src-homepage>
+    </div>
+</ng-container>

@@ -10,6 +10,8 @@ import {QRCodeModule} from "angularx-qrcode";
 import { PasswordChangeComponent } from './shared/partials/password-change/password-change.component';
 import { PasswordMeterComponent } from './shared/components/password-meter/password-meter.component';
 import {NgbProgressbar} from "@ng-bootstrap/ng-bootstrap";
+import { PrivacybadgeComponent } from './shared/partials/privacybadge/privacybadge.component';
+import {MarkdownModule} from "ngx-markdown";
 
 @NgModule({
     imports: [
@@ -19,6 +21,7 @@ import {NgbProgressbar} from "@ng-bootstrap/ng-bootstrap";
         QRCodeModule,
         ReactiveFormsModule,
         NgbProgressbar,
+        MarkdownModule,
     ],
   declarations: [
     FooterComponent,
@@ -27,11 +30,13 @@ import {NgbProgressbar} from "@ng-bootstrap/ng-bootstrap";
     Enable2fa,
     PasswordChangeComponent,
     PasswordMeterComponent,
+    PrivacybadgeComponent,
   ],
     exports: [
         FooterComponent,
         ReceiptComponent,
         TranslatorPipe,
+        PrivacybadgeComponent,
         Enable2fa,
         PasswordChangeComponent,
     ]})
