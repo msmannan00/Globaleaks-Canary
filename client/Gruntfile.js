@@ -30,8 +30,8 @@ module.exports = function(grunt) {
     copy: {
       sources: {
         files: [
+          { dest: "build/index.html", cwd: ".", src: ["app/index.html"], expand: false, flatten: true },
           { dest: "app/assets/license.txt", cwd: ".", src: ["../LICENSE"], expand: false, flatten: true },
-
           { dest: "app/assets/lib/css/", cwd: ".", src: ["node_modules/@fortawesome/fontawesome-free/css/solid.css"], expand: true, flatten: true },
           { dest: "app/assets/lib/webfonts", cwd: ".", src: ["node_modules/font-awesome/fonts/*"], expand: true, flatten: true },
           { dest: "app/assets/lib/webfonts", cwd: ".", src: ["node_modules/@fortawesome/fontawesome-free/webfonts/*"], expand: true, flatten: true },

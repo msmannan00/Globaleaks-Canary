@@ -38,6 +38,10 @@ export class UtilsService {
     return ["/", "/submission"].indexOf(location.pathname) !== -1;
   }
 
+  stopPropagation(event:Event){
+    event.stopPropagation()
+  }
+
   openConfirmableModalDialog(template:any, arg:any, scope?:any){
     /*scope = !scope ? $rootScope : scope;
 

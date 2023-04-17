@@ -12,6 +12,7 @@ import { PasswordMeterComponent } from './shared/components/password-meter/passw
 import {NgbProgressbar} from "@ng-bootstrap/ng-bootstrap";
 import { PrivacybadgeComponent } from './shared/partials/privacybadge/privacybadge.component';
 import {MarkdownModule} from "ngx-markdown";
+import { StripHtmlPipe } from './shared/pipes/strip-html.pipe';
 
 @NgModule({
     imports: [
@@ -31,6 +32,7 @@ import {MarkdownModule} from "ngx-markdown";
     PasswordChangeComponent,
     PasswordMeterComponent,
     PrivacybadgeComponent,
+    StripHtmlPipe,
   ],
     exports: [
         FooterComponent,

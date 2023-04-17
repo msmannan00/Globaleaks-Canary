@@ -25,6 +25,7 @@ import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
 import {ActionModule} from "./pages/action/action.module";
 import {WhistleblowerModule} from "./pages/whistleblower/whistleblower.module";
+import {MarkdownModule} from "ngx-markdown";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './data/i18n/', '.json');
@@ -38,6 +39,7 @@ export function createTranslateLoader(http: HttpClient) {
     SharedModule,
     BrowserModule,
     NgIdleKeepaliveModule.forRoot(),
+    MarkdownModule.forRoot(),
     AuthModule,
     ActionModule,
     SharedModule,

@@ -8,7 +8,9 @@ import {UtilsService} from "../../services/utils.service";
   styleUrls: ['./privacybadge.component.css']
 })
 export class PrivacybadgeComponent {
+  public markdown: string;
   constructor(public appDataService: AppDataService, public utilsService: UtilsService) {
+    this.markdown = appDataService.public.node.custom_privacy_badge_text
   }
 
 }
