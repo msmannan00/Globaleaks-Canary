@@ -2,21 +2,21 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomepageComponent } from './homepage/homepage.component';
 import {TranslateModule} from "@ngx-translate/core";
-import { ReceiptComponent } from './receipt/receipt.component';
+import {SharedModule} from "../../shared.module";
 
 
 
 @NgModule({
     declarations: [
         HomepageComponent,
-        ReceiptComponent
     ],
     exports: [
         HomepageComponent
     ],
     imports: [
         CommonModule,
-        TranslateModule
+        TranslateModule,
+        SharedModule
     ]
 })
 export class WhistleblowerModule { }

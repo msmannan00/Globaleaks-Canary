@@ -13,6 +13,7 @@ import {NgbProgressbar} from "@ng-bootstrap/ng-bootstrap";
 import { PrivacybadgeComponent } from './shared/partials/privacybadge/privacybadge.component';
 import {MarkdownModule} from "ngx-markdown";
 import { StripHtmlPipe } from './shared/pipes/strip-html.pipe';
+import { ReceiptvalidatorDirective } from './shared/directive/receiptvalidator.directive';
 
 @NgModule({
     imports: [
@@ -33,6 +34,7 @@ import { StripHtmlPipe } from './shared/pipes/strip-html.pipe';
     PasswordMeterComponent,
     PrivacybadgeComponent,
     StripHtmlPipe,
+    ReceiptvalidatorDirective,
   ],
     exports: [
         FooterComponent,

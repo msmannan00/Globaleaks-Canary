@@ -9,8 +9,8 @@ import {AppDataService} from "../../../app-data.service";
   styleUrls: ['./receipt.component.css']
 })
 export class ReceiptComponent {
-  formatted_receipt: any;
+  formatted_receipt = "";
 
-  constructor(public authentication: AuthenticationService, public appConfig: AppConfigService, public  appDataService:AppDataService) {
+  constructor(public authenticationService: AuthenticationService, public appConfig: AppConfigService, public  appDataService:AppDataService) {
   }
 }

@@ -26,6 +26,7 @@ import {FormsModule} from "@angular/forms";
 import {ActionModule} from "./pages/action/action.module";
 import {WhistleblowerModule} from "./pages/whistleblower/whistleblower.module";
 import {MarkdownModule} from "ngx-markdown";
+import {ReceiptvalidatorDirective} from "./shared/directive/receiptvalidator.directive";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './data/i18n/', '.json');
@@ -56,6 +57,7 @@ export function createTranslateLoader(http: HttpClient) {
     WhistleblowerModule,
   ],
   providers: [
+    ReceiptvalidatorDirective,
     TranslatorPipe,
     { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
     { provide: APP_BASE_HREF, useValue: '/' },
