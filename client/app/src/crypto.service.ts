@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import sha256, {  } from "fast-sha256";
-import {UtilsService} from "./services/utils.service";
+import {UtilsService} from "./shared/services/utils.service";
 
 @Injectable({
   providedIn: 'root'

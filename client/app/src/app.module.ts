@@ -3,27 +3,27 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './pages/auth/auth.module';
 import {
   APP_BASE_HREF,
   HashLocationStrategy,
   LocationStrategy,
 } from '@angular/common';
 import { AppConfigService } from './services/app-config.service';
-import { SharedModule } from './shared_component/shared.module';
-import { HeaderComponent } from './shared_component/header/header.component';
-import { UserComponent } from './shared_component/header/template/user/user.component';
+import { SharedModule } from './shared.module';
+import { HeaderComponent } from './shared/partials/header/header.component';
+import { UserComponent } from './shared/partials/header/template/user/user.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import {ErrorCatchingInterceptor, RequestInterceptor} from "./services/glResuestInterceptor";
+import {CompletedInterceptor, ErrorCatchingInterceptor, RequestInterceptor} from "./services/request.interceptor";
 import {Keepalive, NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {AuthenticationService} from "./services/authentication.service";
-import {HomeComponent} from "./dashboard/home/home.component";
-import { TranslatePipe } from './pipes/translate';
-import {ApplicationPipedModule} from "./pipes/application-piped/application-piped.module";
+import {HomeComponent} from "./pages/dashboard/home/home.component";
+import { TranslatorPipe } from './shared/pipes/translate';
 import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
+import {ActionModule} from "./pages/action/action.module";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './data/i18n/', '.json');
@@ -32,13 +32,13 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
   declarations: [AppComponent, HeaderComponent, UserComponent, HomeComponent],
   imports: [
-    ApplicationPipedModule,
     HttpClientModule,
     AppRoutingModule,
     SharedModule,
     BrowserModule,
     NgIdleKeepaliveModule.forRoot(),
     AuthModule,
+    ActionModule,
     SharedModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en',
@@ -52,11 +52,12 @@ export function createTranslateLoader(http: HttpClient) {
     FormsModule,
   ],
   providers: [
-    TranslatePipe,
+    TranslatorPipe,
     { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
     { provide: APP_BASE_HREF, useValue: '/' },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: CompletedInterceptor, multi: true},
   ],
   bootstrap: [AppComponent],
 })

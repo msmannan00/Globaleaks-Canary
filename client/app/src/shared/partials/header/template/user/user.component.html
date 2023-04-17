@@ -1,0 +1,36 @@
+<div [hidden]="preferences.dataModel && (preferences.dataModel.password_change_needed || preferences.dataModel.require_two_factor)">
+
+  <div id="LanguagePickerBox" *ngIf="appDataService.public.node.languages_enabled.length > 1" class="float-right ml-1 mb-2">
+    <ng-select [clearable]="false" (change)="translationService.onChange()" [(ngModel)]="translationService.language">
+      <ng-option *ngFor="let lang of appDataService.languages_enabled_selector" [value]="lang.code">{{lang.native}}</ng-option>
+    </ng-select>
+  </div>
+
+  <div id="LoginStatusBox" *ngIf="utils.showUserStatusBox()" class="float-right ml-1 mb-2">
+
+    <span id="UsernameBox" *ngIf="authentication.session.role !== 'whistleblower'">
+      <label>{{preferences.dataModel.name}}</label>
+      <span class="text-separator">|</span>
+    </span>
+
+    <span id="HomeLinkBox" *ngIf="authentication.session.role !== 'whistleblower'">
+      <a id="HomepageLink" [href]="authentication.session.homepage" data-toggle="tooltip" title="{{'Home' | scopedTranslate }}"><i class="fa-solid fa-fw fa-home"></i></a>
+      <span class="text-separator">|</span>
+    </span>
+    <span id="PreferencesLinkBox" *ngIf="authentication.session.role !== 'whistleblower' && !authentication.session.properties.management_session">
+      <a id="PreferencesLink" [href]="authentication.session.preferencespage" data-toggle="tooltip" title="{{'Preferences' | scopedTranslate}}"><i class="fa-solid fa-fw fa-user"></i></a>
+      <span class="text-separator">|</span>
+    </span>
+    <span id="SupportLinkBox" *ngIf="authentication.session && authentication.session.role !== 'whistleblower'">
+      <a id="SupportLink" href="" (click)="utils.openSupportModal()" data-toggle="tooltip" title="{{'Request support' | scopedTranslate}}"><i class="fa-solid fa-fw fa-life-ring"></i></a>
+      <span class="text-separator">|</span>
+    </span>
+    <span id="LogoutLinkBox">
+      <i class="glyphicon glyphicon-user"></i>
+    </span>
+    <span id="LogoutLinkBox">
+      <a id="LogoutLink" href="#" (click)="authentication.logout()" data-toggle="tooltip" title="{{'Logout' | scopedTranslate}}"><i class="fa-solid fa-fw fa-sign-out-alt"></i><span *ngIf="authentication.session.role === 'whistleblower'"><span> </span><span data-translate>Logout</span></span></a>
+    </span>
+  </div>
+  <src-receipt id="WhistleblowerLoginBox" class="ml-1 mb-1" *ngIf="utils.showWBLoginBox()"></src-receipt>
+</div>

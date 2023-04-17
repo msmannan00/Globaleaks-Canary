@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import {LoginDataRef} from "../auth/login/model/login-model";
-import {HttpService} from "./internal/http.service";
+import {LoginDataRef} from "../pages/auth/login/model/login-model";
+import {HttpService} from "../shared/services/http.service";
 import {Observable} from "rxjs";
 import {AppConfigService} from "./app-config.service";
-import {Session} from "../dataModels/authentication/Session";
+import {Session} from "../models/authentication/Session";
 import {Router} from "@angular/router";
 import {TranslateService} from "@ngx-translate/core";
 import {LocationStrategy} from "@angular/common";
 import {HttpClient} from "@angular/common/http";
 import {AppDataService} from "../app-data.service";
-import {errorCodes} from "../dataModels/app/error-code";
+import {errorCodes} from "../models/app/error-code";
 
 @Injectable({
   providedIn: 'root'
@@ -72,7 +72,7 @@ export class AuthenticationService {
     let requestObservable:Observable<any>
     this.rootDataService.showLoadingPanel = true;
     if (authtoken) {
-      requestObservable = this.httpService.requestGeneralLogin("");
+      requestObservable = this.httpService.requestAuthTokenLogin(JSON.stringify({"authtoken":authtoken}));
     } else {
       if (username === "whistleblower") {
         requestObservable = this.httpService.requestGeneralLogin("");
@@ -109,10 +109,10 @@ export class AuthenticationService {
         error: (error: any) => {
           this.loginInProgress = false;
           this.rootDataService.showLoadingPanel = false
-          if (error.data && error.data.error_code) {
-            if (error.data.error_code === 4) {
+          if (error.error && error.error.error_code) {
+            if (error.error.error_code === 4) {
               this.requireAuthCode = true;
-            } else if (error.data.error_code !== 13) {
+            } else if (error.error.error_code !== 13) {
               this.reset();
             }
           }
