@@ -35,7 +35,7 @@ export class UtilsService {
   }
 
   isWhistleblowerPage() {
-    return ["/", "/submission"].indexOf(location.pathname) !== -1;
+    return ["/", "/submission"].indexOf(this.router.url) !== -1;
   }
 
   stopPropagation(event:Event){
