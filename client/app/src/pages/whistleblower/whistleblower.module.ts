@@ -3,20 +3,25 @@ import { CommonModule } from '@angular/common';
 import { HomepageComponent } from './homepage/homepage.component';
 import {TranslateModule} from "@ngx-translate/core";
 import {SharedModule} from "../../shared.module";
+import {MarkdownModule} from "ngx-markdown";
+import { TippageComponent } from './tippage/tippage/tippage.component';
 
 
 
 @NgModule({
     declarations: [
         HomepageComponent,
+        TippageComponent,
     ],
     exports: [
-        HomepageComponent
+        HomepageComponent,
+        TippageComponent
     ],
     imports: [
         CommonModule,
         TranslateModule,
-        SharedModule
+        SharedModule,
+        MarkdownModule
     ]
 })
 export class WhistleblowerModule { }

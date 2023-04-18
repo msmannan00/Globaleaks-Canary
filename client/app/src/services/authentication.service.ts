@@ -75,7 +75,8 @@ export class AuthenticationService {
       requestObservable = this.httpService.requestAuthTokenLogin(JSON.stringify({"authtoken":authtoken}));
     } else {
       if (username === "whistleblower") {
-        requestObservable = this.httpService.requestGeneralLogin("");
+        password = password.replace(/\D/g,"");
+        requestObservable = this.httpService.requestWhistleBlowerLogin(JSON.stringify({"receipt": password}));
       } else {
         requestObservable = this.httpService.requestGeneralLogin(JSON.stringify({"tid":tid,"username":username,"password":password,"authcode":authcode}));
       }
@@ -99,7 +100,7 @@ export class AuthenticationService {
             if (this.session.role === "whistleblower") {
               if (password) {
                 this.rootDataService.page="tippage";
-                location.replace("/");
+                this.router.navigate(['/']).then(r => {});
               }
             } else {
               this.router.navigate([this.session.homepage]).then(r => {});

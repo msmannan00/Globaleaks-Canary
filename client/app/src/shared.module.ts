@@ -43,5 +43,6 @@ import { ReceiptvalidatorDirective } from './shared/directive/receiptvalidator.d
         PrivacybadgeComponent,
         Enable2fa,
         PasswordChangeComponent,
+        StripHtmlPipe,
     ]})
 export class SharedModule { }

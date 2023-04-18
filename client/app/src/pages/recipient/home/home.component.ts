@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {AppDataService} from "../../../app-data.service";
 
 @Component({
   selector: 'src-home',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-
+  constructor(public appDataService:AppDataService) {
+  }
 }
