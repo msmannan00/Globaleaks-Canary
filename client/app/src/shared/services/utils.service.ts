@@ -19,7 +19,7 @@ export class UtilsService {
 
   reloadCurrentRoute() {
     const currentUrl = this.router.url;
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+    this.router.navigateByUrl('login', {skipLocationChange: true}).then(() => {
       this.router.navigate([currentUrl]);
     });
   }
@@ -123,12 +123,12 @@ export class UtilsService {
       element.content = this.appDataService.public.node.description;
     }
   }
-  array_to_map(receivers: any[]) {
-    let ret = new Map<any, any>();
-    receivers.forEach((item, index) => {
-      ret.set(index, item);
-    });
+  array_to_map(receivers: any) {
+    let ret:any = {};
 
+    receivers.forEach(function(element:any){
+      ret[element.id]=element
+    });
     return ret;
   }
 
@@ -141,4 +141,28 @@ export class UtilsService {
   constructor(public authenticationService:AuthenticationService, public appDataService:AppDataService, public translateService: TranslateService, private router: Router) {
   }
 
+  getSubmissionStatusText(status:any, substatus:any, submission_statuses:any) {
+    let text;
+    for (let i = 0; i < submission_statuses.length; i++) {
+      if (submission_statuses[i].id === status) {
+        text = submission_statuses[i].label;
+
+        let substatuses = submission_statuses[i].substatuses;
+        for (let j = 0; j < substatuses.length; j++) {
+          if (substatuses[j].id === substatus) {
+            text += "(" + substatuses[j].label + ")";
+            break;
+          }
+        }
+        break;
+      }
+    }
+
+    return text;
+  }
+
+  isNever(time: string) {
+    let date = new Date(time);
+    return date.getTime() === 32503680000000;
+  }
 }

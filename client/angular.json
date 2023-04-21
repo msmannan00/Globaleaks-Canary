@@ -13,6 +13,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "fast-sha256",
+              "qrcode"
+            ],
             "optimization": {
               "scripts": true,
               "styles": {
@@ -117,6 +121,5 @@
   },
   "cli": {
     "analytics": false
-  },
-
+  }
 }

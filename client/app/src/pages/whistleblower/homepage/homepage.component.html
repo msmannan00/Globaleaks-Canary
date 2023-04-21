@@ -15,7 +15,7 @@
     <div id="WhistleblowerSubmitBox" class="mb-4" *ngIf="!appDataService.public.node.disable_submissions && (appDataService.public.node.https_whistleblower || appDataService.connection.tor)">
         <markdown id="WhistleblowingQuestion" *ngIf="appDataService.public.node.whistleblowing_question" [data]="appDataService.public.node.whistleblowing_question | stripHtml"></markdown>
 
-        <button id="WhistleblowingButton" data-ng-click="openSubmission()" class="btn btn-primary">{{appDataService.public.node.whistleblowing_button}}</button>
+        <button id="WhistleblowingButton" (click)="openSubmission()" class="btn btn-primary">{{appDataService.public.node.whistleblowing_button}}</button>
     </div>
     <div id="WhistleblowerLoginBox" *ngIf="appDataService.public.node.https_whistleblower || appDataService.connection.tor">
         <src-receipt></src-receipt>

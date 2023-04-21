@@ -7,12 +7,13 @@
             <div class="input-group">
                 <input id="receipt-input" class="form-control" type="text" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" size="19" [(ngModel)]="formatted_receipt" #receiptinput="ngModel" customReceiptValidator>
                 <span class="input-group-append">
-          <button id="ReceiptButton"
-                  (click)="authenticationService.login(0, 'whistleblower', formatted_receipt)" class="btn btn-primary"
-                  [disabled]="formatted_receipt.length !== 19 || authenticationService.loginInProgress || receiptinput.errors?.['receiptvalidator']" type="submit">
-            <span>{{'Log in'|translate}}</span>
-          </button>
-        </span>
+
+                  <button id="ReceiptButton"
+                          (click)="authenticationService.login(0, 'whistleblower', formatted_receipt)" class="btn btn-primary"
+                          [disabled]="formatted_receipt.length < 16 || authenticationService.loginInProgress || !receiptinput.errors?.['receiptvalidator']" type="submit">
+                    <span>{{'Log in'|translate}}</span>
+                  </button>
+                </span>
             </div>
         </div>
     </div>

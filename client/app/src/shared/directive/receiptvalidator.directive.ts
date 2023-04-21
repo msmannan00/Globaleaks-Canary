@@ -1,4 +1,4 @@
-import { Directive } from '@angular/core';
+import {Directive, HostListener} from '@angular/core';
 import {AbstractControl, Validator, NG_VALIDATORS, ValidationErrors} from '@angular/forms';
 
 @Directive({
@@ -14,12 +14,20 @@ export class ReceiptvalidatorDirective implements Validator{
   constructor() {
   }
 
+  current_val = ""
+  @HostListener('keyup', ['$event'])
+  @HostListener('paste', ['$event'])
+  @HostListener('keydown', ['$event']) onKeyDown(e: KeyboardEvent) {
+    const input = e.target as HTMLInputElement;
+    input.value = this.current_val
+  }
+
   validate(control: AbstractControl): ValidationErrors | null {
 
-    if (control.value && control.value.length != 10) {
+    let result = "";
+    if(control.value){
       let viewValue = control.value.replace(/\D/g, "");
 
-      let result = "";
       while (viewValue.length) {
         result += viewValue.substring(0, 4);
         if(viewValue.length >= 4) {
@@ -31,14 +39,17 @@ export class ReceiptvalidatorDirective implements Validator{
           break;
         }
       }
-      control.setValue(result)
+
+      this.current_val = result.trim()
+
       if (result.length === 19) {
         return { 'receiptvalidator': true };
+      }else {
+        return { 'receiptvalidator': false };
       }
-
-      return { 'receiptvalidator': false };
     }
-    return null;
+    this.current_val = ""
+    return { 'receiptvalidator': true };
   }
 
 }

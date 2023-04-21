@@ -1,0 +1,22 @@
+<div id="message-{{index}}" [ngSwitch]="message.type" class="mt-2">
+    <div *ngSwitchCase="'whistleblower'" class="messageWB">
+        <div class="row">
+            <div class="col-md-6" [ngSwitch]="authenticationService.session.role">
+                <div *ngSwitchCase="'whistleblower'" ><span data-translate>To:</span> {{wbtipService.tip.receivers_by_id[message.receiver_involved_id].name}}</div>
+                <div *ngSwitchCase="'receiver'">{{'Whistleblower'|translate}}</div>
+            </div>
+            <div class="col-md-6 text-right">{{message.creation_date | date:'dd-MM-yyyy HH:mm'}}</div>
+        </div>
+        <div class="preformatted">{{message.content}}</div>
+    </div>
+    <div *ngSwitchCase="'receiver'" class="message">
+        <div class="row">
+            <div class="col-md-6" [ngSwitch]="authenticationService.session.role">
+                <div *ngSwitchCase="'whistleblower'"><span>{{'From:'|translate}}</span> {{wbtipService.tip.receivers_by_id[message.receiver_involved_id].name}}</div>
+                <div *ngSwitchCase="'receiver'">{{wbtipService.tip.receivers_by_id[message.receiver_involved_id].name}}</div>
+            </div>
+            <div class="col-md-6 text-right">{{message.creation_date | date:'dd-MM-yyyy HH:mm'}}</div>
+        </div>
+        <div class="preformatted">{{message.content}}</div>
+    </div>
+</div>

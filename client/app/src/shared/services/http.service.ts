@@ -62,7 +62,7 @@ export class HttpService{
     return this.httpClient.get("api/admin/submission_statuses", {'headers':headers, params: param })
   }
 
-  whistleBlowerTIp(param: any): Observable<any>{
+  whistleBlowerTip(param: any): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.get("api/wbtip", {'headers':headers, params: param })
   }

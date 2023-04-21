@@ -10,4 +10,8 @@ import {AppDataService} from "../../../app-data.service";
 export class HomepageComponent {
   constructor(public appDataService: AppDataService) {
   }
+
+    openSubmission() {
+
+    }
 }

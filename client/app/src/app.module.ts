@@ -9,6 +9,7 @@ import {
   HashLocationStrategy,
   LocationStrategy,
 } from '@angular/common';
+import { OrderModule } from 'ngx-order-pipe'; // <- import OrderModule
 import { AppConfigService } from './services/app-config.service';
 import { SharedModule } from './shared.module';
 import { HeaderComponent } from './shared/partials/header/header.component';
@@ -43,6 +44,7 @@ export function createTranslateLoader(http: HttpClient) {
     MarkdownModule.forRoot(),
     AuthModule,
     ActionModule,
+    OrderModule,
     SharedModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en',

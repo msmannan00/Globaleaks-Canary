@@ -1,4 +1,4 @@
-import {Injectable, Input} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpService} from "../shared/services/http.service";
 import {TranslateService} from "@ngx-translate/core";
 import {UtilsService} from "../shared/services/utils.service";
@@ -69,20 +69,22 @@ export class AppConfigService{
         this.rootDataService.receivers_by_id = this.utilsService.array_to_map(this.rootDataService.public.receivers);
         this.rootDataService.questionnaires_by_id = this.utilsService.array_to_map(this.rootDataService.public.questionnaires);
 
+
         this.rootDataService.submission_statuses = this.rootDataService.public.submission_statuses;
         this.rootDataService.submission_statuses_by_id = this.utilsService.array_to_map(this.rootDataService.public.submission_statuses);
 
-        this.rootDataService.questionnaires_by_id.forEach((element: any, key: number) => {
-          //this.fieldUtilitiesService.parseQuestionnaire(this.rootDataService.questionnaires_by_id.get(key), {})
-          this.rootDataService.questionnaires_by_id.get(key).steps = this.rootDataService.questionnaires_by_id.get(key).steps.sort((a:any,b:any)=>a.order > b.order)
-        });
 
-        this.rootDataService.contexts_by_id.forEach((element: any, key: string) => {
-          this.rootDataService.contexts_by_id.get(key).questionnaire = this.rootDataService.questionnaires_by_id[this.rootDataService.contexts_by_id.get(key).questionnaire_id];
-          if (this.rootDataService.contexts_by_id.get(key).additional_questionnaire_id) {
-            this.rootDataService.contexts_by_id.get(key).additional_questionnaire = this.rootDataService.questionnaires_by_id[this.rootDataService.contexts_by_id.get(key).additional_questionnaire_id];
+        for (let [key, element] of Object.entries(this.rootDataService.questionnaires_by_id)) {
+          this.fieldUtilitiesService.parseQuestionnaire(this.rootDataService.questionnaires_by_id[key], {})
+          this.rootDataService.questionnaires_by_id[key].steps = this.rootDataService.questionnaires_by_id[key].steps.sort((a:any,b:any)=>a.order > b.order)
+        }
+
+        for (let [key, element] of Object.entries(this.rootDataService.contexts_by_id)) {
+          this.rootDataService.contexts_by_id[key].questionnaire = this.rootDataService.questionnaires_by_id[this.rootDataService.contexts_by_id[key].questionnaire_id];
+          if (this.rootDataService.contexts_by_id[key].additional_questionnaire_id) {
+            this.rootDataService.contexts_by_id[key].additional_questionnaire = this.rootDataService.questionnaires_by_id[this.rootDataService.contexts_by_id[key].additional_questionnaire_id];
           }
-        });
+        }
 
         this.rootDataService.connection = {
           "tor": data.headers["X-Check-Tor"] === "true" || location.host.match(/\.onion$/),

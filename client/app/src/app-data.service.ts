@@ -17,9 +17,9 @@ export class AppDataService {
   header_title = ""
   page = "homepage"
 
-  contexts_by_id:Map<string, any>
-  receivers_by_id:any
-  questionnaires_by_id:any
+  contexts_by_id:any = {}
+  receivers_by_id:any={}
+  questionnaires_by_id:any={}
   submission_statuses: any;
   submission_statuses_by_id: any;
   connection: { tor: any };
@@ -27,6 +27,8 @@ export class AppDataService {
   languages_enabled_selector: any[];
   languages_enabled = new Map<number, any>();
   languages_supported: Map<number, string>;
+  score: number;
+  ctx: string;
 
   constructor() { }
 }

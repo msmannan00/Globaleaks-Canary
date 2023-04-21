@@ -288,7 +288,19 @@ module.exports = function(grunt) {
         options: {
           replacements: [
             {
-              pattern: "<script src=\"runtime.js\" type=\"module\"></script><script src=\"polyfills.js\" type=\"module\"></script><script src=\"main.js\" type=\"module\"></script>",
+              pattern: "<script src=\"runtime.js\" type=\"module\"></script>",
+              replacement: ""
+            },
+            {
+              pattern: "<script src=\"polyfills.js\" type=\"module\"></script>",
+              replacement: ""
+            },
+            {
+              pattern: "<script src=\"main.js\" type=\"module\"></script>",
+              replacement: ""
+            },
+            {
+              pattern: "<script src=\"scripts.js\" defer></script>",
               replacement: ""
             },
             {

@@ -4,7 +4,8 @@ import { HomepageComponent } from './homepage/homepage.component';
 import {TranslateModule} from "@ngx-translate/core";
 import {SharedModule} from "../../shared.module";
 import {MarkdownModule} from "ngx-markdown";
-import { TippageComponent } from './tippage/tippage/tippage.component';
+import { TippageComponent } from './tippage/tippage.component';
+import { WhistleblowerIdentityComponent } from './whistleblower-identity/whistleblower-identity.component';
 
 
 
@@ -12,6 +13,7 @@ import { TippageComponent } from './tippage/tippage/tippage.component';
     declarations: [
         HomepageComponent,
         TippageComponent,
+        WhistleblowerIdentityComponent
     ],
     exports: [
         HomepageComponent,
@@ -21,7 +23,7 @@ import { TippageComponent } from './tippage/tippage/tippage.component';
         CommonModule,
         TranslateModule,
         SharedModule,
-        MarkdownModule
+        MarkdownModule,
     ]
 })
 export class WhistleblowerModule { }

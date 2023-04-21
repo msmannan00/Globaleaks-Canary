@@ -5,6 +5,7 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+
 .no-gutter{
   padding: 0;
 }
@@ -90,6 +91,9 @@
   .ng-value-container
   .ng-value {
   visibility: hidden;
+}
+.visually-hidden{
+  display: none !important;
 }
 .ng-select.ng-select-single .ng-select-container .ng-value-container {
   white-space: nowrap;
