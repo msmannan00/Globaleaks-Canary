@@ -13,7 +13,7 @@
                   <span *ngIf="authenticationService.session.role === 'whistleblower'">
                      <span><span>{{'Recipient'|translate}}</span>:<span>&nbsp;</span></span>
                      <ng-select id="message-recipient-selector" [(ngModel)]="wbtipService.tip.msg_receiver_selected">
-                       <ng-option *ngFor="let item of wbtipService.tip.msg_receivers_selector" [value]="item.key | orderBy:'value'"></ng-option>
+                       <ng-option *ngFor="let item of wbtipService.tip.msg_receivers_selector" [value]="item.key | orderBy:['value', false]"></ng-option>
                      </ng-select>
                   </span>
                 </div>

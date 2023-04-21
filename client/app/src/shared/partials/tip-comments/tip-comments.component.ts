@@ -28,7 +28,4 @@ export class TipCommentsComponent {
   newComment() {
 
   }
-
-  protected readonly reverse = reverse;
-  protected readonly orderBy = orderBy;
 }

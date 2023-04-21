@@ -40,6 +40,7 @@ import { TipCommentsComponent } from './shared/partials/tip-comments/tip-comment
 import { TipMessagesComponent } from './shared/partials/tip-messages/tip-messages.component';
 import { TipMessageComponent } from './shared/partials/tip-message/tip-message.component';
 import { LimitToPipe } from './shared/pipes/limit-to.pipe';
+import { OrderByPipe } from './shared/pipes/order-by.pipe';
 
 @NgModule({
     imports: [
@@ -86,7 +87,8 @@ import { LimitToPipe } from './shared/pipes/limit-to.pipe';
     TipCommentsComponent,
     TipMessagesComponent,
     TipMessageComponent,
-    LimitToPipe
+    LimitToPipe,
+    OrderByPipe
   ],
     exports: [
         FooterComponent,

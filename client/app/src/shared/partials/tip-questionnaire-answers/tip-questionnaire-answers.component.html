@@ -13,7 +13,6 @@
                  <span>{{'Questionnaire'|translate}}</span>
                  <span>{{index + 1}}</span>
              </div>
-
              <div *ngFor="let step of questionnaire.steps | orderBy:'order'; let questionare_steps = index">
 
                  <dt id="step={{questionare_steps}}" *ngIf="questionnaire.steps.length > 1 && wbtipService.tip.context.show_steps_navigation_interface && step.enabled">

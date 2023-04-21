@@ -28,7 +28,7 @@
 
         <div *ngIf="wbtipService.tip.comments.length">
 
-            <div id="SubmissionComments" *ngFor="let comment of wbtipService.tip.comments | orderBy: 'order':true; let index = index">
+            <div id="SubmissionComments" *ngFor="let comment of wbtipService.tip.comments | orderBy:'creation_date':true; let index = index">
                 <div id="comment-{{index}}" [ngSwitch]="comment.type" class="mt-2">
                     <div *ngSwitchCase="'whistleblower'" class="messageWB">
                         <div class="row">
