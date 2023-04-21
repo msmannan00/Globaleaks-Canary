@@ -8,7 +8,7 @@ export class OrderByPipe implements PipeTransform {
 
   constructor(private orderPipe: OrderPipe) {
   }
-  transform(value: any, expression:any, reverse:any = false): any {
+  transform(value: any, expression:any, reverse:any = false): any[] {
     return this.orderPipe.transform(value, expression, reverse);
   }
 
