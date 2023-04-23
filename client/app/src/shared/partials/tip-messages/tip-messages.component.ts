@@ -10,6 +10,9 @@ import {AuthenticationService} from "../../../services/authentication.service";
 })
 export class TipMessagesComponent {
   collapsed = false;
+  newMessageContent = ""
+  currentMessagesPage: number = 1;
+  itemsPerPage = 5;
 
   public toggleColapse(){
     this.collapsed = !this.collapsed
@@ -19,6 +22,9 @@ export class TipMessagesComponent {
   }
 
   newMessage() {
-
+    this.wbtipService.newMessages(this.newMessageContent);
+    this.newMessageContent = "";
   }
+
+  protected readonly JSON = JSON;
 }

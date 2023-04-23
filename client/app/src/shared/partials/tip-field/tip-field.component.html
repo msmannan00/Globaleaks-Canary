@@ -4,12 +4,12 @@
         <span>{{fields.label}}</span>
     </div>
     <div *ngIf="!hasMultipleEntries(fieldAnswers[fields.id])">
-        <src-tip-field-answer-entry [field]="fields" [entry]="fieldAnswers[fields.id][0]"></src-tip-field-answer-entry>
+        sss2<src-tip-field-answer-entry [field]="fields" [fieldAnswers]=fieldAnswers [entry]="fieldAnswers[fields.id][0]"></src-tip-field-answer-entry>
     </div>
     <div *ngIf="hasMultipleEntries(fieldAnswers[fields.id])">
-        <div *ngFor="let entry of fieldAnswers[fields.id] | orderBy:['y', 'x']">
+        sss3<div *ngFor="let entry of fieldAnswers[fields.id] | orderBy:['y', 'x']">
             <div class="nested"><span class="text-muted">#{{index + 1}}</span></div>
-            <src-tip-field-answer-entry [field]="fields" class="nested"></src-tip-field-answer-entry>
+        sss4<src-tip-field-answer-entry [field]="fields" class="nested"></src-tip-field-answer-entry>
         </div>
     </div>
 </div>

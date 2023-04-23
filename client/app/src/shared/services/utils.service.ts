@@ -17,6 +17,10 @@ export class UtilsService {
     return result;
   }
 
+  scrollToTop() {
+    window.document.getElementsByTagName("body")[0].scrollIntoView();
+  }
+
   reloadCurrentRoute() {
     const currentUrl = this.router.url;
     this.router.navigateByUrl('login', {skipLocationChange: true}).then(() => {

@@ -48,6 +48,16 @@ export class HttpService{
     return this.httpClient.post("api/reset/password", param,{'headers':headers })
   }
 
+  requestNewComment(param: string): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.post("api/wbtip/comments", param,{'headers':headers })
+  }
+
+  requestNewMessage(param: string, suburl:string): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.post("api/wbtip/messages/"+suburl, param,{'headers':headers })
+  }
+
   requestPreferenceResource(param: any): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.get("api/preferences", {'headers':headers })

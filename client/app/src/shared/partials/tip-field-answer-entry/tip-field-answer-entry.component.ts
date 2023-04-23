@@ -8,6 +8,7 @@ import {Component, Input} from '@angular/core';
 export class TipFieldAnswerEntryComponent {
   @Input() entry:any
   @Input() field:any
+  @Input() fieldAnswers:any
 
   format = 'dd/MM/yyyy';
   locale = 'en-US';

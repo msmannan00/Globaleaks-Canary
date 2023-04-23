@@ -122,7 +122,7 @@ export class FieldUtilitiesService {
         return;
       }
 
-      if (scope.public.node.enable_scoring_system) {
+      if (scope.appDataService.public.node.enable_scoring_system) {
         scope.answers[field.id].forEach(function(entry:any){
           localscope.calculateScore(scope, field, entry);
         });
@@ -194,11 +194,12 @@ export class FieldUtilitiesService {
     }
 
     if (scope.context) {
-      scope.submission.setContextReceivers(scope.context.id);
+      // scope.submission.setContextReceivers(scope.context.id);
     }
 
     let localscope = this
-    scope.questionnaire.forEach(function(step:any){
+
+    scope.questionnaire.steps.forEach(function(step:any){
       step.enabled = self.isFieldTriggered(null, step, scope.answers, scope.score);
       localscope.updateAnswers(scope, step, step.children, scope.answers);
     });

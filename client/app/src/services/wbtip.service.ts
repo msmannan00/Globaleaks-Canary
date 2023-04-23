@@ -3,6 +3,7 @@ import {Observable} from "rxjs";
 import {HttpService} from "../shared/services/http.service";
 import {WBTipData} from "../models/whistleblower/WBTipData";
 import {AppDataService} from "../app-data.service";
+import {UtilsService} from "../shared/services/utils.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class WbtipService {
     this.tip = response;
     this.tip.context = this.appDataService.contexts_by_id[this.tip.context_id];
     this.tip.questionnaire = this.appDataService.questionnaires_by_id[this.tip.context['questionnaire_id']];
+
     this.tip.additional_questionnaire = this.appDataService.questionnaires_by_id[this.tip.context['questionnaire_id']];
     this.tip.msg_receiver_selected = null;
     this.tip.msg_receivers_selector = [];
@@ -37,10 +39,37 @@ export class WbtipService {
 
   }
 
-  newMessages(){
-
+  newMessages(content:string){
+    alert(JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content}))
+    const param=JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content});
+    this.httpService.requestNewMessage(JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content}), this.tip.msg_receiver_selected).subscribe
+    (
+        {
+          next: response => {
+            this.utilsService.reloadCurrentRoute()
+          },
+          error: (error: any) => {
+              alert(JSON.stringify(error))
+          }
+        }
+    );
   }
 
-  constructor(private httpService:HttpService, public appDataService:AppDataService) {
+  newComment(content:string) {
+    const param=JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content});
+    this.httpService.requestNewComment(JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content})).subscribe
+    (
+        {
+          next: response => {
+            this.utilsService.reloadCurrentRoute()
+          },
+          error: (error: any) => {
+              alert(JSON.stringify(error))
+          }
+        }
+    );
+  }
+
+  constructor(private httpService:HttpService, public appDataService:AppDataService, public utilsService:UtilsService) {
   }
 }

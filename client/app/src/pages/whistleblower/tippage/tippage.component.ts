@@ -7,6 +7,7 @@ import {AppDataService} from "../../../app-data.service";
 import {UtilsService} from "../../../shared/services/utils.service";
 import {Observable} from "rxjs";
 import {WBTipData} from "../../../models/whistleblower/WBTipData";
+import {AuthenticationService} from "../../../services/authentication.service";
 
 @Component({
   selector: 'src-tippage',
@@ -25,11 +26,12 @@ export class TippageComponent {
   showEditLabelInput = false;
   score = 0;
   ctx:string;
-  whistleblower_identity_field:any
   rows:any
   questionnaire: any;
   private submission: any;
   private tip:any
+  questionnaires:any
+  private fields: any;
 
   openGrantTipAccessModal() {
 
@@ -55,36 +57,36 @@ export class TippageComponent {
     let x, i, j, k, questionnaire, step;
 
     for (x=0; x<tip.questionnaires.length; x++) {
-      questionnaire = tip.questionnaires[x];
-      this.fieldUtilities.parseQuestionnaire(questionnaire, {});
+      this.questionnaire = tip.questionnaires[x];
+      this.fieldUtilities.parseQuestionnaire(this.questionnaire, {});
 
-      for (i=0; i<questionnaire.steps.length; i++) {
-        step = questionnaire.steps[i];
-        if (this.fieldUtilities.isFieldTriggered(null, step, questionnaire.answers, this.tip.score)) {
+      for (i=0; i<this.questionnaire.steps.length; i++) {
+        step = this.questionnaire.steps[i];
+        if (this.fieldUtilities.isFieldTriggered(null, step, this.questionnaire.answers, this.tip.score)) {
           for (j=0; j<step.children.length; j++) {
-            this.filterNotTriggeredField(step, step.children[j], questionnaire.answers);
+            this.filterNotTriggeredField(step, step.children[j], this.questionnaire.answers);
           }
         }
       }
 
-      for (i=0; i<questionnaire.steps.length; i++) {
-        step = questionnaire.steps[i];
+      for (i=0; i<this.questionnaire.steps.length; i++) {
+        step = this.questionnaire.steps[i];
         j = step.children.length;
         while (j--) {
           if (step.children[j]["template_id"] === "whistleblower_identity") {
-            this.whistleblower_identity_field = step.children[j];
-            this.whistleblower_identity_field.enabled = true;
-            step.children.splice(j, 1);
-            this.questionnaire = { ... this.whistleblower_identity_field};
+            this.tip.whistleblower_identity_field = step.children[j];
+            this.tip.whistleblower_identity_field.enabled = true;
+
+            this.questionnaire = {
+              steps: [{... this.tip.whistleblower_identity_field}]
+            };
 
             this.tip.fields = this.questionnaire.steps[0].children;
             this.rows = this.fieldUtilities.splitRows(this.tip.fields);
+            this.fieldUtilities.onAnswersUpdate(this);
 
-            this.fieldUtilities.onAnswersUpdate(this.tip);
-            alert(JSON.stringify(this.tip))
-
-            for (k=0; k<this.whistleblower_identity_field.children.length; k++) {
-              this.filterNotTriggeredField(this.whistleblower_identity_field, this.whistleblower_identity_field.children[k], this.tip.data.whistleblower_identity);
+            for (k=0; k<this.tip.whistleblower_identity_field.children.length; k++) {
+              this.filterNotTriggeredField(this.tip.whistleblower_identity_field, this.tip.whistleblower_identity_field.children[k], this.tip.data.whistleblower_identity);
             }
           }
         }
@@ -162,7 +164,7 @@ export class TippageComponent {
     )
   }
 
-  constructor(public utilsService:UtilsService, public appDataService:AppDataService, public fieldUtilities:FieldUtilitiesService, private activatedRoute: ActivatedRoute, private httpService:HttpService, public wbtipService:WbtipService) {
+  constructor(public authenticationService:AuthenticationService, public utilsService:UtilsService, public appDataService:AppDataService, public fieldUtilities:FieldUtilitiesService, private activatedRoute: ActivatedRoute, private httpService:HttpService, public wbtipService:WbtipService) {
   }
 
 }

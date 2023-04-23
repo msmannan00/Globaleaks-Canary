@@ -26,19 +26,22 @@ export class WBTipData {
     context:any = {};
     questionnaire: any;
     additional_questionnaire: any;
-    msg_receiver_selected: null;
+    msg_receiver_selected: any;
     msg_receivers_selector: any[];
     tip_id: any;
     receivers_by_id: any;
     submissionStatusStr: any;
     label: any;
-    newMessagesContent: string;
+    newMessagesContent: string = "";
     newMessageContent: string;
+    fields: any;
+    whistleblower_identity_field: any;
+    answers = {}
 }
 
 export class Questionnaire {
     steps: Step[]
-    answers: any
+    answers = {}
 }
 
 export class Step {
@@ -142,4 +145,5 @@ export class Receiver {
 
 export class Data {
     whistleblower_identity: any;
+    whistleblower_identity_provided: boolean = false;
 }

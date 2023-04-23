@@ -20,7 +20,6 @@ export class WbtipResolver implements Resolve<boolean> {
   tip:WBTipData = new WBTipData()
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    alert("xxsasd3")
 
     let requestObservable:Observable<any> = this.httpService.whistleBlowerTip({})
     requestObservable.subscribe(
@@ -46,11 +45,9 @@ export class WbtipResolver implements Resolve<boolean> {
             });
 
             this.wbtipService.tip = this.tip;
-            alert("asd2")
           },
           error: (error: any) => {
             alert(JSON.stringify(error))
-            alert("asd3")
           }
         })
 

@@ -41,6 +41,9 @@ import { TipMessagesComponent } from './shared/partials/tip-messages/tip-message
 import { TipMessageComponent } from './shared/partials/tip-message/tip-message.component';
 import { LimitToPipe } from './shared/pipes/limit-to.pipe';
 import { OrderByPipe } from './shared/pipes/order-by.pipe';
+import { ScrollToBottomDirective } from './shared/directive/scroll-to-bottom.directive';
+import { TipReceiverListComponent } from './shared/partials/tip-receiver-list/tip-receiver-list.component';
+import { WhistleblowerIdentityFieldComponent } from './pages/field/whistleblower-identity-field/whistleblower-identity-field.component';
 
 @NgModule({
     imports: [
@@ -88,7 +91,10 @@ import { OrderByPipe } from './shared/pipes/order-by.pipe';
     TipMessagesComponent,
     TipMessageComponent,
     LimitToPipe,
-    OrderByPipe
+    OrderByPipe,
+    ScrollToBottomDirective,
+    TipReceiverListComponent,
+    WhistleblowerIdentityFieldComponent
   ],
     exports: [
         FooterComponent,
@@ -106,5 +112,8 @@ import { OrderByPipe } from './shared/pipes/order-by.pipe';
         WidgetWbfilesComponent,
         TipCommentsComponent,
         TipMessagesComponent,
+        TipReceiverListComponent,
+        RfileUploadStatusComponent,
+        WhistleblowerIdentityFieldComponent,
     ]})
 export class SharedModule { }

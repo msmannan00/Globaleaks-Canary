@@ -15,4 +15,5 @@ export class TipMessageComponent {
   constructor(public wbtipService:WbtipService, public authenticationService:AuthenticationService) {
   }
 
+  protected readonly JSON = JSON;
 }

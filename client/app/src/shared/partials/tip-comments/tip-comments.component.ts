@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {WbtipService} from "../../../services/wbtip.service";
 import {AuthenticationService} from "../../../services/authentication.service";
 import {UtilsService} from "../../services/utils.service";
 import {orderBy, reverse} from "lodash";
 import { OrderPipe } from 'ngx-order-pipe';
+import {ScrollToBottomDirective} from "../../directive/scroll-to-bottom.directive";
 
 @Component({
   selector: 'src-tip-comments',
@@ -11,6 +12,9 @@ import { OrderPipe } from 'ngx-order-pipe';
   styleUrls: ['./tip-comments.component.css']
 })
 export class TipCommentsComponent {
+
+  @ViewChild(ScrollToBottomDirective)
+  scroll: ScrollToBottomDirective;
 
   collapsed = false
   newCommentContent = ""
@@ -26,6 +30,7 @@ export class TipCommentsComponent {
   }
 
   newComment() {
-
+    this.wbtipService.newComment(this.newCommentContent);
+    this.newCommentContent = "";
   }
 }

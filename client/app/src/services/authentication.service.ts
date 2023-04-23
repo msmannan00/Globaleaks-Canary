@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import {LoginDataRef} from "../pages/auth/login/model/login-model";
 import {HttpService} from "../shared/services/http.service";
 import {Observable} from "rxjs";
-import {AppConfigService} from "./app-config.service";
-import {Session} from "../models/authentication/Session";
 import {Router} from "@angular/router";
 import {TranslateService} from "@ngx-translate/core";
 import {LocationStrategy} from "@angular/common";

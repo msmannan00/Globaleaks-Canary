@@ -19,4 +19,5 @@ export class TipFieldComponent {
   constructor(public wbtipService:WbtipService) {
   }
 
+  protected readonly JSON = JSON;
 }
