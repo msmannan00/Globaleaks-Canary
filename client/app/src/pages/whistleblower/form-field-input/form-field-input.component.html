@@ -1,0 +1,212 @@
+<div class="Question"  ngForm #fieldFormVarName="ngForm">
+    <div [ngSwitch]="field.template_id">
+        <div *ngSwitchCase="'whistleblower_identity'">
+            <src-whistleblower-identity-field [submission]="submission" [field]="field"></src-whistleblower-identity-field>
+        </div>
+        <div *ngSwitchDefault [ngSwitch]="field.type">
+
+            <div *ngSwitchCase="'textarea'" data-ng-model-options="{'debounce':250}">
+                  <textarea
+                  id="{{fieldEntry}}"
+                  [name] = input_entryIndex
+                  class="form-control inputelem"
+                  [minlength]="field.attrs.min_len.value"
+                  [maxlength]="field.attrs.max_len.value"
+                  [(ngModel)]="entryvalue"
+                  [required]="true"
+                  [attr.aria-label]="field.label"
+                  [placeholder]="field.placeholder"
+                  dynamic-textarea></textarea>
+                <div class="clearfix">
+                    <div *ngIf="entryvalue.length && field.attrs.max_len.value > 0 && (field.attrs.max_len.value - entryvalue.length) <= 50" class="float-right">{{entryvalue.length}}/{{field.attrs.max_len.value}}</div>
+                </div>
+
+                <div *ngIf="displayErrors" class="text-danger">
+                    <span *ngIf="fieldFormVarName.form.get(input_entryIndex)?.errors?.['required']">{{'This field is mandatory'|translate}}</span>
+                    <span *ngIf="fieldFormVarName.form.get(input_entryIndex)?.errors?.['minlength']">{{'The answer is too short'|translate}}</span>
+                </div>
+            </div>
+            <div *ngSwitchCase="'selectbox'">
+                sad3
+<!--                <select id="{{fieldEntry}}" name="{{'input-' +  entryIndex}}" class="custom-select inputelem" data-ng-model="entry['value']" data-ng-required="entry.required_status" data-ng-show="field.options.length < 10">-->
+<!--                    <option class="d-none" value=""></option>-->
+<!--                    <option data-ng-repeat="option in field.options | orderBy:field.attrs.display_alphabetically.value ? 'label' : 'order'" id="{{fieldEntry}}-option-{{$index}}" value="{{option.id}}">{{option.label}}</option>-->
+<!--                </select>-->
+<!--                <div class="input-group" data-ng-class="{'d-block': !entry['value']}" data-ng-show="field.options.length >= 10">-->
+<!--                    <ui-select data-ng-model="entry['value']" data-theme="bootstrap" data-on-select="entry['value'] = $item.id; label = $item.label">-->
+<!--                        <ui-select-match data-ng-attr-placeholder="{{'Search' | translate}}">-->
+<!--                            <span data-ng-bind="label"></span>-->
+<!--                        </ui-select-match>-->
+<!--                        <ui-select-choices data-repeat="option in field.options | filter:{'label': $select.search} | orderBy:field.attrs.display_alphabetically.value ? 'label' : 'order'" refresh="" resfresh-delay="0">-->
+<!--                            <span data-ng-bind-html="option.label | highlightSafe: $select.search"></span>-->
+<!--                        </ui-select-choices>-->
+<!--                    </ui-select>-->
+<!--                    <span class="input-append" data-ng-click="entry['value']='';" data-ng-disabled="!entry['value']" data-ng-if="entry['value']"><i class="input-group-text fa-solid fa-times-circle"></i></span>-->
+<!--                </div>-->
+            </div>
+            <div *ngSwitchCase="'multichoice'">
+                sad4
+<!--                <div data-ng-repeat="option in field.options | orderBy:'order'" name="{{'input-' +  entryIndex}}">-->
+<!--                    <input class="form-control-input inputelem" type="radio" id="{{stepId}}-field-{{fieldRow}}-{{fieldCol}}-input-{{entryIndex}}-option-{{$index}}" data-ng-model="entry['value']" value="{{option.id}}" data-ng-required="field.required" />-->
+<!--                    <span data-uib-tooltip="{{option.hint1}}" class="form-control-label" data-ng-class="{'text-underline': option.hint1}">{{option.label}}</span>-->
+<!--                </div>-->
+            </div>
+            <div *ngSwitchCase="'checkbox'">
+                sad5
+<!--                <div data-ng-repeat="option in field.options | orderBy:field.attrs.display_alphabetically.value ? 'label' : 'order'">-->
+<!--                    <label>-->
+<!--                        <input id="{{fieldEntry}}"-->
+<!--                               name="{{'input-' + $parent.entryIndex + '-option-' + entryIndex}}"-->
+<!--                               class="form-control-input inputelem"-->
+<!--                               data-ng-model="entry[option.id]"-->
+<!--                               data-ng-required="entry.required_status"-->
+<!--                               type="checkbox" />-->
+<!--                        <span data-uib-tooltip="{{option.hint1}}" class="form-control-label" data-ng-class="{'text-underline': option.hint1}">{{option.label}}</span>-->
+<!--                    </label>-->
+<!--                </div>-->
+            </div>
+            <div *ngSwitchCase="'date'">
+                sad6
+<!--                <div class="input-group">-->
+<!--                    <input id="{{fieldEntry}}"-->
+<!--                           name="input-{{entryIndex}}"-->
+<!--                           class="form-control inputelem"-->
+<!--                           type="text"-->
+<!--                           readonly="readonly"-->
+<!--                           aria-label="{{field.label}}"-->
+<!--                           data-ng-model="entry['value']"-->
+<!--                           data-ng-required="entry.required_status"-->
+<!--                           data-ng-click="open()"-->
+<!--                           uib-datepicker-popup-->
+<!--                           datepicker-options="dateOptions"-->
+<!--                           is-open="status.opened"-->
+<!--                           show-button-bar="false" />-->
+<!--                    <span class="input-group-append" data-ng-click="open()"><i class="input-group-text fa-solid fa-calendar"></i></span>-->
+<!--                </div>-->
+            </div>
+            <div *ngSwitchCase="'daterange'" class="form-inline">
+                sad7
+<!--        <span class="form-group">-->
+<!--          <label data-translate>From</label>-->
+<!--          <div class="input-group mx-1">-->
+<!--            <input id="{{fieldEntry}}"-->
+<!--                   name="input-{{entryIndex}}"-->
+<!--                   class="form-control inputelem"-->
+<!--                   type="text"-->
+<!--                   readonly="readonly"-->
+<!--                   aria-label="{{field.label}}"-->
+<!--                   data-ng-model="daterange.start"-->
+<!--                   data-ng-required="entry.required_status"-->
+<!--                   data-ng-attr-placeholder="{{field.placeholder}}"-->
+<!--                   data-ng-click="openStart()"-->
+<!--                   uib-datepicker-popup-->
+<!--                   datepicker-options="dateOptions1"-->
+<!--                   is-open="status.openedStart"-->
+<!--                   show-button-bar="false" />-->
+<!--            <span class="input-group-append" data-ng-click="openStart()"><i class="input-group-text fa-solid fa-calendar"></i></span>-->
+<!--          </div>-->
+<!--        </span>-->
+<!--                <span class="form-group mx-1" data-ng-if="daterange.start">-->
+<!--          <label data-translate>To</label>-->
+<!--          <div class="input-group mx-1">-->
+<!--            <input id="{{fieldEntry}}"-->
+<!--                   name="input-{{entryIndex}}"-->
+<!--                   class="form-control inputelem"-->
+<!--                   type="text"-->
+<!--                   readonly="readonly"-->
+<!--                   aria-label="{{field.label}}"-->
+<!--                   data-ng-model="daterange.end"-->
+<!--                   data-ng-required="entry.required_status"-->
+<!--                   data-ng-attr-placeholder="{{field.placeholder}}"-->
+<!--                   data-ng-click="openEnd()"-->
+<!--                   uib-datepicker-popup-->
+<!--                   datepicker-options="dateOptions2"-->
+<!--                   is-open="status.openedEnd"-->
+<!--                   show-button-bar="false" />-->
+<!--            <span class="input-group-append" data-ng-click="openEnd()"><i class="input-group-text fa-solid fa-calendar"></i></span>-->
+<!--          </div>-->
+<!--        </span>-->
+<!--                <span class="ml-1" data-ng-if="daterange.start">-->
+<!--          <button type="button" class="btn btn-outline-secondary" ng-click="clear()"><i class="fa-solid fa-times-circle"></i></button>-->
+<!--        </span>-->
+            </div>
+            <div *ngSwitchCase="'tos'">
+                sad8
+<!--                <div class="form-group tos-text" data-markdown-to-html="field.attrs.text.value | stripHtml"></div>-->
+<!--                <div data-ng-if="field.attrs.attachment.value">-->
+<!--                    <a data-ng-href="{{field.attrs.attachment_url.value}}" rel="noreferrer" target="_blank">{{field.attrs.attachment_text.value}}</a>-->
+<!--                </div>-->
+<!--                <div class="form-check">-->
+<!--                    <label>-->
+<!--                        <input id="{{fieldEntry}}"-->
+<!--                               name="input-{{entryIndex}}"-->
+<!--                               class="form-check-input inputelem"-->
+<!--                               data-ng-model="entry['value']"-->
+<!--                               data-ng-required="entry.required_status"-->
+<!--                               value="{{field.value}}"-->
+<!--                               type="checkbox" />-->
+<!--                        <span class="form-check-label">{{field.attrs.checkbox_label.value}}</span>-->
+<!--                    </label>-->
+<!--                </div>-->
+            </div>
+            <div *ngSwitchCase="'fileupload'">
+                sad9
+<!--                <div id="{{fieldEntry}}" data-ng-include="'views/partials/rfile_upload_button.html'"></div>-->
+<!--            </div>-->
+<!--            <div data-ng-switch-when="fieldgroup">-->
+<!--                <div data-ng-if="field.attrs.multimedia.value" data-ng-switch="field.attrs.multimedia_type.value">-->
+<!--                    <div data-ng-switch-when="image">-->
+<!--                        <img data-ng-src="{{field.attrs.multimedia_url.value}}" />-->
+<!--                    </div>-->
+<!--                    <div data-ng-switch-when="audio">-->
+<!--                        <audio controls>-->
+<!--                            <source data-ng-src="{{field.attrs.multimedia_url.value}}" type="audio/mpeg" />-->
+<!--                        </audio>-->
+<!--                    </div>-->
+<!--                    <div data-ng-switch-when="video">-->
+<!--                        <video controls><source data-ng-src="{{field.attrs.multimedia_url.value}}" type="video/mp4"></video>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div data-ng-include="'views/whistleblower/form.html'"></div>-->
+<!--            </div>-->
+<!--            <div data-ng-switch-default data-ng-model-options="{'debounce':250}">-->
+<!--                <input id="{{fieldEntry}}"-->
+<!--                       name="input-{{entryIndex}}"-->
+<!--                       class="form-control inputelem"-->
+<!--                       data-ng-model="entry['value']"-->
+<!--                       data-ng-minlength="field.attrs.min_len.value"-->
+<!--                       data-ng-pattern="validator"-->
+<!--                       maxlength="{{field.attrs.max_len.value}}"-->
+<!--                       data-ng-required="entry.required_status"-->
+<!--                       data-ng-attr-placeholder="{{field.placeholder}}"-->
+<!--                       aria-label="{{field.label}}"-->
+<!--                       type="text" />-->
+<!--                <div class="clearfix">-->
+<!--                    <div data-ng-if="f['input-' + entryIndex].$error.pattern && field.attrs.input_validation.value === 'custom'" class="text-danger" data-translate>The specified input is not valid.</div>-->
+
+<!--                    <div data-ng-if="f['input-' + entryIndex].$error.pattern && field.attrs.input_validation.value !== 'custom'">-->
+<!--                        <span class="text-danger" data-translate>The specified input is not valid:</span>-->
+<!--                        <span class="text-danger" data-ng-switch="field.attrs.input_validation.value">-->
+<!--              <span data-ng-switch-when="email" data-translate>please enter a valid email address.</span>-->
+<!--              <span data-ng-switch-when="number" class="text-danger" data-translate>please enter numbers only.</span>-->
+<!--              <span data-ng-switch-when="phonenumber" class="text-danger" data-translate>please enter numbers only.</span>-->
+<!--            </span>-->
+<!--                    </div>-->
+
+<!--                    <div data-ng-if="entry['value'].length && field.attrs.max_len.value > 0 && (field.attrs.max_len.value - entry['value'].length) <= 50" class="float-right">{{entry['value'].length}}/{{field.attrs.max_len.value}}</div>-->
+<!--                    <div data-ng-if="entry.required_status && displayErrors()" class="float-left text-danger">-->
+<!--                    </div>-->
+<!--                    <span data-ng-if="f['input-' + entryIndex].$error.required && displayErrors()" class="text-danger" data-translate>This field is mandatory</span>-->
+<!--                    <span data-ng-if="f['input-' + entryIndex].$error.minlength && displayErrors()" class="text-danger" data-translate>The answer is too short</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+<!--    <div data-ng-if="field.type !== 'inputbox' && field.type !== 'textarea' && entry.required_status && displayErrors()" class="text-danger" data-translate>This field is mandatory</div>-->
+<!--    <div data-ng-if="field.type === 'selectbox'" data-ng-repeat="option in field.options">-->
+<!--        <div data-ng-show="option.set && option.hint1"><i class="fa-solid fa-info-circle"></i> {{option.hint1}}</div>-->
+        </div>
+<!--    <div data-ng-repeat="option in field.options">-->
+<!--        <div data-ng-show="option.set && option.hint2" data-ng-class="{'text-danger': option.block_submission}"><i class="fa-solid fa-info-circle"></i> {{option.hint2}}</div>-->
+    </div>
+</div>

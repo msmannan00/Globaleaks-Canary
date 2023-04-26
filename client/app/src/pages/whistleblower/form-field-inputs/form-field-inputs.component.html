@@ -1,0 +1,39 @@
+<div id="{{fieldId}}" class="question">
+    <div class="question-label">
+        <label data-content="field.hint" data-toggle="tooltip" title="{{'field.hint' | scopedTranslate}}" for="{{field.id + '-input-' + 0}}">
+            <span *ngIf="field.label" class="title">{{field.label}}</span>
+            <span *ngIf="field.hint">
+                <i class="fa-solid fa-question-circle"></i>
+            </span>
+            <span *ngIf="field.required" class="text-danger sup" data-toggle="tooltip" title="{{'This field is mandatory' | scopedTranslate}}">*</span>
+        </label>
+    </div>
+    <div class="question-body">
+        <markdown *ngIf="field.description" class="description" [data]="field.description | stripHtml"></markdown>
+        <div class="form-group">
+            <div class="fieldAnswerEntry" *ngFor="let entry of entries; let entryIndex = index">
+<!--            <div class="fieldAnswerEntry" *ngFor="let entry of entries; let entryIndex = index" [ngClass]="{'fieldAnswerEntryFirst': $first, 'fieldAnswerEntryLast': $last}">-->
+                    <div class="fieldAnswerEntryLabel clearfix" *ngIf="entries.length > 1">
+                        <span class="float-left">
+                            <label class="text-muted">
+                              <span>#{{entryIndex + 1}}</span>
+                            </label>
+                        </span>
+                        <span class="float-right">
+                            <span class="text-danger" data-toggle="tooltip" title="{{'Remove' | scopedTranslate}}" (click)="utilsService.deleteFromList(entries, entry)">
+                              <i class="fa-solid fa-times"></i>
+                            </span>
+                        </span>
+                    </div>
+                <src-form-field-input [displayErrors]="displayErrors" [entry]="entry" [entryIndex]="entryIndex" [fieldEntry]="fieldEntry" [submission]="submission" [field]="field" [index]="entryIndex"></src-form-field-input>
+                <!--                </div>-->
+            </div>
+            <div *ngIf="field.multi_entry && field.type === 'fieldgroup'" class="float-right">
+                <button class="btn btn-outline-secondary" (click)="addAnswerEntry()">
+<!--                <button class="btn btn-outline-secondary" (click)="addAnswerEntry(entries, field.id)" aria-label="{{'Add' | translate}}">-->
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
