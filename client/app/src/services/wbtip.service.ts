@@ -40,7 +40,6 @@ export class WbtipService {
   }
 
   newMessages(content:string){
-    alert(JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content}))
     const param=JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content});
     this.httpService.requestNewMessage(JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content}), this.tip.msg_receiver_selected).subscribe
     (
@@ -49,7 +48,6 @@ export class WbtipService {
             this.utilsService.reloadCurrentRoute()
           },
           error: (error: any) => {
-              alert(JSON.stringify(error))
           }
         }
     );
@@ -64,7 +62,6 @@ export class WbtipService {
             this.utilsService.reloadCurrentRoute()
           },
           error: (error: any) => {
-              alert(JSON.stringify(error))
           }
         }
     );

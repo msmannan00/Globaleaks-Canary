@@ -3,6 +3,9 @@ import {AuthenticationService} from "../../services/authentication.service";
 import {AppDataService} from "../../app-data.service";
 import {TranslateService} from "@ngx-translate/core";
 import {Router} from "@angular/router";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {RequestSupportComponent} from "../modals/request-support/request-support.component";
+import {HttpService} from "./http.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +18,29 @@ export class UtilsService {
       result[i] = str.charCodeAt(i);
     }
     return result;
+  }
+
+  isUploading(uploads?:any){
+    for (let key in uploads) {
+      if (uploads[key] &&
+          uploads[key].isUploading &&
+          uploads[key].isUploading()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  getCardSize(num:number) {
+    if (num < 2) {
+      return "col-md-12";
+    } else if (num === 2) {
+      return "col-md-6";
+    } else if (num === 3) {
+      return "col-md-4";
+    } else {
+      return "col-md-3 col-sm-6";
+    }
   }
 
   scrollToTop() {
@@ -70,8 +96,7 @@ export class UtilsService {
     if (this.appDataService.public.node.custom_support_url) {
       window.open(this.appDataService.public.node.custom_support_url, "_blank");
     } else {
-      alert("SUPPORT MODEL NOT CONFIGURED")
-      return this.openConfirmableModalDialog("views/modals/request_support.html", {});
+      this.modalService.open(RequestSupportComponent);
     }
   }
 
@@ -142,9 +167,6 @@ export class UtilsService {
     }
   }
 
-  constructor(public authenticationService:AuthenticationService, public appDataService:AppDataService, public translateService: TranslateService, private router: Router) {
-  }
-
   getSubmissionStatusText(status:any, substatus:any, submission_statuses:any) {
     let text;
     for (let i = 0; i < submission_statuses.length; i++) {
@@ -169,4 +191,20 @@ export class UtilsService {
     let date = new Date(time);
     return date.getTime() === 32503680000000;
   }
+
+  deleteFromList(list:any, elem:any) {
+    let idx = list.indexOf(elem);
+    if (idx !== -1) {
+      list.splice(idx, 1);
+    }
+  }
+
+    submitSupportRequest(arg: any) {
+      const param=JSON.stringify({"mail_address": arg.mail_address, "text": arg.text, "url": location.pathname});
+      this.httpService.requestSuppor(param).subscribe();
+   }
+
+  constructor(public httpService: HttpService, public modalService: NgbModal, public authenticationService:AuthenticationService, public appDataService:AppDataService, public translateService: TranslateService, private router: Router) {
+  }
+
 }

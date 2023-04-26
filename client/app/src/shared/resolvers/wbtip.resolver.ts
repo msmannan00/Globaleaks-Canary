@@ -47,7 +47,6 @@ export class WbtipResolver implements Resolve<boolean> {
             this.wbtipService.tip = this.tip;
           },
           error: (error: any) => {
-            alert(JSON.stringify(error))
           }
         })
 

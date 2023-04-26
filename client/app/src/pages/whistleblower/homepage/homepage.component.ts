@@ -12,6 +12,6 @@ export class HomepageComponent {
   }
 
     openSubmission() {
-
+      this.appDataService.page = "submissionpage"
     }
 }

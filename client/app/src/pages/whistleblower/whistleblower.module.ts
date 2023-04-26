@@ -7,6 +7,17 @@ import {MarkdownModule} from "ngx-markdown";
 import { TippageComponent } from './tippage/tippage.component';
 import { WhistleblowerIdentityComponent } from '../../shared/partials/whistleblower-identity/whistleblower-identity.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { SubmissionComponent } from './submission/submission.component';
+import { ContextSelectionComponent } from './context-selection/context-selection.component';
+import { SubmissionErrorComponent } from './submission-error/submission-error.component';
+import { StepErrorComponent } from './step-error/step-error.component';
+import { StepErrorEntryComponent } from './step-error/template/step-error-entry/step-error-entry.component';
+import { ReceiverSelectionComponent } from './receiver-selection/receiver-selection.component';
+import { ReceiverCardComponent } from './receiver-card/receiver-card.component';
+import { FormComponent } from './form/form.component';
+import { FormFieldInputsComponent } from './form-field-inputs/form-field-inputs.component';
+import { FormFieldInputComponent } from './form-field-input/form-field-input.component';
+import { WhistleblowerIdentityFieldComponent } from './fields/whistleblower-identity-field/whistleblower-identity-field.component';
 
 
 
@@ -14,11 +25,23 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     declarations: [
         HomepageComponent,
         TippageComponent,
-        WhistleblowerIdentityComponent
+        WhistleblowerIdentityComponent,
+        SubmissionComponent,
+        ContextSelectionComponent,
+        SubmissionErrorComponent,
+        StepErrorComponent,
+        StepErrorEntryComponent,
+        ReceiverSelectionComponent,
+        ReceiverCardComponent,
+        FormComponent,
+        FormFieldInputsComponent,
+        FormFieldInputComponent,
+        WhistleblowerIdentityFieldComponent,
     ],
     exports: [
         HomepageComponent,
-        TippageComponent
+        TippageComponent,
+        SubmissionComponent
     ],
     imports: [
         CommonModule,

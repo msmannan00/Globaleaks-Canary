@@ -29,6 +29,7 @@ export class AppConfigService{
     this.appServices.getPublicResource().subscribe({
       next: data => {
         this.rootDataService.public = data.body;
+
         //this.translateService.setDefaultLang(this.rootDataService.public.node.default_language);
         //this.translateService.use(this.rootDataService.public.node.default_language);
         //this.utilsService.routeCheck()

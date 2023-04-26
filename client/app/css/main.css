@@ -873,10 +873,6 @@ p:last-child {
   text-align: left;
 }
 
-.selectCard {
-  text-align: right;
-}
-
 .fieldAnswerEntry {
   margin-top: 1em;
 }
@@ -940,11 +936,6 @@ p:last-child {
 .StepIndex,
 #SubmissionButtons button {
   margin-right: 1em;
-}
-
-.StepIndex,
-#SubmissionButtons button {
-  margin-left: 1em;
 }
 
 .StepIndexSelected {

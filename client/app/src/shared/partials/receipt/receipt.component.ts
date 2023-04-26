@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import {AuthenticationService} from "../../../services/authentication.service";
 import {AppConfigService} from "../../../services/app-config.service";
 import {AppDataService} from "../../../app-data.service";
-import {ReceiptvalidatorDirective} from "../../directive/receiptvalidator.directive";
 
 @Component({
   selector: 'src-receipt',

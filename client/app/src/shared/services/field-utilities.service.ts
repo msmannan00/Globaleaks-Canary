@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class FieldUtilitiesService {
-
   parseQuestionnaire(questionnaire:any, parsedFields:any){
     let self = this;
 
@@ -13,6 +12,38 @@ export class FieldUtilitiesService {
     });
 
     return parsedFields;
+  }
+
+  underscore(s:any) {
+    return s.replace(new RegExp("-", "g"), "_");
+  }
+
+  fieldFormName(id:any){
+    return "fieldForm_" + this.underscore(id);
+  }
+
+  getClass(field:any, row_length:number){
+    if (field.width !== 0) {
+      return "col-md-" + field.width;
+    }
+
+    return "col-md-" + ((row_length > 12) ? 1 : (12 / row_length));
+  }
+
+  flatten_field = (id_map: any, field: any): void => {
+    if (field.children.length === 0) {
+      id_map[field.id] = field;
+      return id_map;
+    } else {
+      id_map[field.id] = field;
+      return field.children.reduce(this.flatten_field, id_map);
+    }
+  };
+
+  build_field_id_map(questionnaire:any){
+    return questionnaire.steps.reduce((id_map: any, cur_step: any) => {
+      return cur_step.children.reduce(this.flatten_field, id_map);
+    }, {});
   }
 
   findField(answers_obj:any, field_id:any): any {
@@ -194,7 +225,7 @@ export class FieldUtilitiesService {
     }
 
     if (scope.context) {
-      // scope.submission.setContextReceivers(scope.context.id);
+      scope.submission.setContextReceivers(scope.context.id);
     }
 
     let localscope = this
@@ -293,5 +324,6 @@ export class FieldUtilitiesService {
   }
 
 
-constructor() { }
+  constructor() {
+  }
 }

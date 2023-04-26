@@ -43,7 +43,8 @@ import { LimitToPipe } from './shared/pipes/limit-to.pipe';
 import { OrderByPipe } from './shared/pipes/order-by.pipe';
 import { ScrollToBottomDirective } from './shared/directive/scroll-to-bottom.directive';
 import { TipReceiverListComponent } from './shared/partials/tip-receiver-list/tip-receiver-list.component';
-import { WhistleblowerIdentityFieldComponent } from './pages/field/whistleblower-identity-field/whistleblower-identity-field.component';
+import { FilterPipe } from './shared/pipes/filter.pipe';
+import { RequestSupportComponent } from './shared/modals/request-support/request-support.component';
 
 @NgModule({
     imports: [
@@ -94,7 +95,8 @@ import { WhistleblowerIdentityFieldComponent } from './pages/field/whistleblower
     OrderByPipe,
     ScrollToBottomDirective,
     TipReceiverListComponent,
-    WhistleblowerIdentityFieldComponent
+    FilterPipe,
+    RequestSupportComponent
   ],
     exports: [
         FooterComponent,
@@ -104,6 +106,8 @@ import { WhistleblowerIdentityFieldComponent } from './pages/field/whistleblower
         Enable2fa,
         PasswordChangeComponent,
         StripHtmlPipe,
+        FilterPipe,
+        OrderByPipe,
         TipInfoComponent,
         TipQuestionnaireAnswersComponent,
         TipAdditionalQuestionnaireInviteComponent,
@@ -114,6 +118,5 @@ import { WhistleblowerIdentityFieldComponent } from './pages/field/whistleblower
         TipMessagesComponent,
         TipReceiverListComponent,
         RfileUploadStatusComponent,
-        WhistleblowerIdentityFieldComponent,
     ]})
 export class SharedModule { }
