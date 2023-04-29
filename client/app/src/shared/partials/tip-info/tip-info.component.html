@@ -4,8 +4,8 @@
             <div class="col-md-12">
                 <div class="float-left">
                   <span class="input-group">
-                    <input id="assignLabelInput" type="text" class="form-control" placeholder="{{'Label' | scopedTranslate}}" [(ngModel)]="tipService.tip.label" />
-                    <span class="input-group-append" data-toggle="tooltip" title="{{'Label the report' | scopedTranslate}} ">
+                    <input id="assignLabelInput" type="text" class="form-control" placeholder="{{'Label' | translate}}" [(ngModel)]="tipService.tip.label" />
+                    <span class="input-group-append" data-toggle="tooltip" title="{{'Label the report' | translate}} ">
                       <button id="assignLabelButton" class="btn btn-primary" (click)="updateLabel(tipService.tip.label)">
                         <i class="fa-solid fa-tag"></i>
                       </button>
@@ -81,9 +81,9 @@
                 </td>
                 <td class="TipInfoLastAccess" *ngIf="authenticationService.session.role === 'receiver'">
                     <i *ngIf="tipService.tip.last_access >= tipService.tip.update_date" class="fa-solid fa-check"
-                       data-toggle="tooltip" title="{{'The whistleblower has already read the last update' | scopedTranslate}} ({{tipService.tip.last_access | date:'dd-MM-yyyy HH:mm'}})"></i>
+                       data-toggle="tooltip" title="{{'The whistleblower has already read the last update' | translate}} ({{tipService.tip.last_access | date:'dd-MM-yyyy HH:mm'}})"></i>
                     <i *ngIf="tipService.tip.last_access < tipService.tip.update_date" class="fa-solid fa-times"
-                       data-toggle="tooltip" title="{{'The whistleblower has not read the last update yet' | scopedTranslate}}"></i>
+                       data-toggle="tooltip" title="{{'The whistleblower has not read the last update yet' | translate}}"></i>
                 </td>
                 <td class="TipInfoConnection" *ngIf="authenticationService.session.role === 'receiver'">
                     <i *ngIf="tipService.tip.tor" class="fa-solid fa-check"></i>

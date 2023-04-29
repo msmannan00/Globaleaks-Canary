@@ -2,7 +2,7 @@
     <div class="col-md-12">
     <span id="link-reload"
           (click)="utilsService.reloadCurrentRoute()"
-          data-toggle="tooltip" title="{{'Refresh' | scopedTranslate}}"
+          data-toggle="tooltip" title="{{'Refresh' | translate}}"
           class="btn btn-outline-secondary">
       <i class="fa-solid fa-sync"></i>
     </span>
@@ -35,8 +35,8 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <src-tip-files-whistleblower *ngIf="wbtipService.tip.enable_attachments"></src-tip-files-whistleblower>
-<!--        <src-widget-wbfiles *ngIf="wbtipService.tip.wbfiles.length"></src-widget-wbfiles>-->
+        <src-tip-files-whistleblower [fileupload_url]="fileupload_url" *ngIf="wbtipService.tip.enable_attachments"></src-tip-files-whistleblower>
+        <src-widget-wbfiles *ngIf="wbtipService.tip.wbfiles && wbtipService.tip.wbfiles.length"></src-widget-wbfiles>
     </div>
 </div>
 <div class="row">

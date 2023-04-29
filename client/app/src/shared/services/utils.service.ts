@@ -199,10 +199,21 @@ export class UtilsService {
     }
   }
 
-    submitSupportRequest(arg: any) {
-      const param=JSON.stringify({"mail_address": arg.mail_address, "text": arg.text, "url": location.pathname});
-      this.httpService.requestSuppor(param).subscribe();
-   }
+  showFilePreview(content_type: string) {
+    let content_types = [
+      "image/gif",
+      "image/jpeg",
+      "image/png",
+      "image/bmp"
+    ];
+
+    return content_types.indexOf(content_type) > -1;
+  }
+
+  submitSupportRequest(arg: any) {
+    const param=JSON.stringify({"mail_address": arg.mail_address, "text": arg.text, "url": location.pathname});
+    this.httpService.requestSuppor(param).subscribe();
+  }
 
   constructor(public httpService: HttpService, public modalService: NgbModal, public authenticationService:AuthenticationService, public appDataService:AppDataService, public translateService: TranslateService, private router: Router) {
   }

@@ -16,4 +16,6 @@ export class TipQuestionnaireAnswersComponent {
   constructor(public utilsService:UtilsService, public wbtipService:WbtipService) {
   }
 
+  protected readonly JSON = JSON;
+  protected readonly alert = alert;
 }

@@ -11,7 +11,7 @@
                 </div>
                 <div id="PrivacyBadgeDownloadLink"><a class="btn btn-sm btn-secondary" href="https://www.torproject.org/download/" rel="noreferrer" target="_blank"><i class="fa-solid fa-download"></i> <span>{{'Download the Tor Browser'|translate}}</span></a></div>
                 <div *ngIf="appDataService.public.node.onionservice">
-                   <span>{{'Then, copy and paste the following address into the Tor Browser:'|translate}}</span> <span class="onionaddress" data-toggle="tooltip" title="{{'Copy to clipboard' | scopedTranslate}}" (click)="utilsService.copyToClipboard(appDataService.public.node.onionservice); utilsService.stopPropagation($event)">{{appDataService.public.node.onionservice}}</span>
+                   <span>{{'Then, copy and paste the following address into the Tor Browser:'|translate}}</span> <span class="onionaddress" data-toggle="tooltip" title="{{'Copy to clipboard' | translate}}" (click)="utilsService.copyToClipboard(appDataService.public.node.onionservice); utilsService.stopPropagation($event)">{{appDataService.public.node.onionservice}}</span>
                 </div>
             </div>
         </div>

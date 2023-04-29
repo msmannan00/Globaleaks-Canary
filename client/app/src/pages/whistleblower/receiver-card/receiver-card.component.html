@@ -3,11 +3,11 @@
         <div class="col-md-1">
             <div *ngIf="submission.selected_receivers[receiver.id]">
                 <div *ngIf="!receiver.forcefully_selected">
-                    <i class="fa-solid fa-check-square" data-toggle="tooltip" title="{{'Unselect this recipient' | scopedTranslate}}"></i>
+                    <i class="fa-solid fa-check-square" data-toggle="tooltip" title="{{'Unselect this recipient' | translate}}"></i>
                 </div>
             </div>
             <div *ngIf="!submission.selected_receivers[receiver.id] && !receiver.forcefully_selected">
-                <i class="fa-solid fa-square" data-toggle="tooltip" title="{{'Select this recipient' | scopedTranslate}}"></i>
+                <i class="fa-solid fa-square" data-toggle="tooltip" title="{{'Select this recipient' | translate}}"></i>
             </div>
         </div>
     </div>
