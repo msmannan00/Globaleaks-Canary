@@ -1,8 +1,10 @@
 import {AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Transfer} from "@flowjs/ngx-flow";
+import {FlowDirective, Transfer} from "@flowjs/ngx-flow";
 import {Subscription} from "rxjs";
 import {AuthenticationService} from "../../../services/authentication.service";
 import {AppDataService} from "../../../app-data.service";
+import {forEach} from "lodash";
+import {FlowFile} from "@flowjs/flow.js";
 
 @Component({
   selector: 'src-rfile-upload-button',
@@ -12,14 +14,16 @@ import {AppDataService} from "../../../app-data.service";
 export class RfileUploadButtonComponent implements AfterViewInit, OnDestroy, OnInit{
 
   @Input() fileupload_url:any;
+  @ViewChild('flowAdvanced', { static: true }) flowAdvanced: FlowDirective;
 
   field:any = undefined
   fileinput:any
   showerror:boolean
-  errorTransfer:Transfer
+  errorFile:Transfer
   uploads:any={}
   confirmButton = false
   _fakemodel: any = {};
+  currentSessionSize = 0
 
   autoUploadSubscription: Subscription;
 
@@ -33,26 +37,35 @@ export class RfileUploadButtonComponent implements AfterViewInit, OnDestroy, OnI
   }
 
   ngAfterViewInit() {
+    const self = this;
+    this.flowAdvanced.transfers$.subscribe((event,) => {
+      if(self.currentSessionSize!=event.transfers.length){
+        if(this.errorFile){
+          this.errorFile.flowFile.cancel()
+          self.showerror = false
+        }
+        self.confirmButton = false;
+
+        self.currentSessionSize = event.transfers.length
+        event.transfers.forEach(function(file){
+          if(self.appDataService.public.node.maximum_filesize < (file.size/1000000)){
+            self.showerror = true
+            file.flowFile.pause()
+            self.errorFile = file
+          }else {
+            self.confirmButton = true
+          }
+        });
+      }
+    });
   }
   ngOnDestroy(): void {
     this._fakemodel = null
   }
 
-  confirmButtonStatus(status:boolean){
-    this.confirmButton = status
-  }
-  onError(transfer:Transfer){
-    if(this.errorTransfer){
-      this.errorTransfer.flowFile.cancel()
-    }
-    this.errorTransfer = transfer
-  }
-  onErrorStatus(status:boolean){
-    this.showerror = status
-  }
-
-  constructor(public authenticationService:AuthenticationService, public apasdpDataService:AppDataService) {
+  constructor(public authenticationService:AuthenticationService, public appDataService:AppDataService) {
   }
 
   protected readonly Float32Array = Float32Array;
+  protected readonly undefined = undefined;
 }

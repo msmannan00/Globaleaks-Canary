@@ -1,10 +1,10 @@
 <div>
     <ng-container #flowAdvanced="flow"  [flowConfig]="{target: fileupload_url, testChunks:false, permanentErrors : [ 500, 501 ], headers : {'X-Session':authenticationService.session.id}}"></ng-container>
+
     <div class="drag-drop" flowDrop [flow]="flowAdvanced.flowJs">
         <div *ngIf="field === undefined || field.multi_entry">
             <div class="custom-file">
-                <input [attr.id]="fileinput" flowButton [flow]="flowAdvanced.flowJs" [(ngModel)]="_fakemodel[fileinput]" type="file" [flowAttributes]="{accept: '*'}" class="custom-file-input inputelem" [required]="field && field.required && !uploads[fileinput].files.length" />
-                <label [attr.for]="fileinput" class="btn btn-sm btn-outline-secondary">
+                <label flowButton [flow]="flowAdvanced.flowJs" [flowAttributes]="{accept: '*'}" class="btn btn-sm btn-outline-secondary">
                     <i class="fa-solid fa-upload"></i>
                     <span>{{'Upload'|translate}}</span>
                 </label>
@@ -14,7 +14,7 @@
         </div>
         <div *ngIf="field !== undefined && !field.multi_entry">
             <div class="custom-file">
-                <input [attr.id]="fileinput" id="customFile-{{fileinput}}" flowButton [flow]="flowAdvanced.flowJs" type="file" [(ngModel)]="_fakemodel[fileinput]" [disabled]="uploads[fileinput].files.length" class="custom-file-input inputelem" [required]="field && field.required && !uploads[fileinput].files.length"/>
+                <input [attr.id]="fileinput" id="customFile-{{fileinput}}" flowButton [flow]="flowAdvanced.flowJs" [(ngModel)]="_fakemodel[fileinput]" [disabled]="uploads[fileinput].files.length" class="custom-file-input inputelem" [required]="field && field.required && !uploads[fileinput].files.length"/>
                 <label [attr.for]="fileinput" class="btn btn-sm btn-outline-secondary">
                     <i class="fa-solid fa-upload"></i>
                     <span>{{'Upload'|translate}}</span>
@@ -23,56 +23,35 @@
             </div>
         </div>
 
-        <div *ngIf="errorTransfer && showerror">
+        <div *ngIf="showerror">
             <br>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <a href="#" class="close" (click)="errorTransfer.flowFile.cancel() ; onErrorStatus(false)" data-dismiss="alert" aria-label="close">&times;</a>
-                {{'File size not accepted.'|translate}} {{errorTransfer.flowFile.file.name}} {{'Maximum file size is:'|translate}} {{apasdpDataService.public.node.maximum_filesize}}MB
+                <a href="#" class="close" (click)="errorFile.flowFile.cancel() ; showerror=false" data-dismiss="alert" aria-label="close">&times;</a>
+                {{'File size not accepted.'|translate}} {{errorFile.flowFile.name}} {{'Maximum file size is:'|translate}} {{appDataService.public.node.maximum_filesize}}MB
             </div>
         </div>
-    </div>
 
+    </div>
 
     <div class="transfers">
         <div data-flow-name="flow" class="row">
             <div [ngClass]="{'col-md-12': (flowAdvanced.transfers$ | async)?.transfers?.length === 1, 'col-md-6 col-sm-12': (flowAdvanced.transfers$ | async)?.transfers?.length !== 1}" *ngFor="let transfer of (flowAdvanced.transfers$ | async)?.transfers">
-                 <div class="fileUploadBox mt-2 mb-2">
-                     <div *ngIf="apasdpDataService.public.node.maximum_filesize < (transfer.size/1000000)">
-                         {{onErrorStatus(true)}}
-                         {{transfer.flowFile.pause() }}
-                         {{onError(transfer)}}
-                     </div>
-                     <div *ngIf="apasdpDataService.public.node.maximum_filesize >= (transfer.size/1000000)">
-                         <src-rfile-upload-status [file]="transfer"></src-rfile-upload-status>
-                         {{onErrorStatus(false)}}
-                     </div>
-                 </div>
-             </div>
-        </div>
-    </div>
-
-
-    <div *ngIf="!(flowAdvanced.somethingToUpload$ | async)">
-        {{confirmButtonStatus(false)}}
-    </div>
-
-    <div *ngIf="(flowAdvanced.somethingToUpload$ | async)">
-        <div *ngFor="let file of flowAdvanced.flowJs.files;let index = index">
-            <div *ngIf="!file.paused">
-                {{confirmButtonStatus(true)}}
-            </div>
-            <div *ngIf="file.paused">
-                {{file.cancel()}}
+                <div class="fileUploadBox mt-2 mb-2">
+                    <div *ngIf="appDataService.public.node.maximum_filesize >= (transfer.size/1000000)">
+                        <src-rfile-upload-status [file]="transfer"></src-rfile-upload-status>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div *ngIf="confirmButton">
-            <button id="files-action-confirm" class="btn btn-sm btn-outline-secondary" (click)="flowAdvanced.upload()">
-                <i class="fa-solid fa-upload"></i>
-                <span>{{'Confirm'|translate}}</span>
-            </button>
-        </div>
     </div>
+
+    <ng-container *ngIf="confirmButton">
+        <button id="files-action-confirm" class="btn btn-sm btn-outline-secondary" (click)="flowAdvanced.upload()">
+            <i class="fa-solid fa-upload"></i>
+            <span>{{'Confirm'|translate}}</span>
+        </button>
+    </ng-container>
+
 
     <src-rfiles-upload-status *ngIf="(flowAdvanced.transfers$ | async)?.flow?.files" [estimatedtime]="(flowAdvanced.transfers$ | async)?.flow?.timeRemaining()" [progress]="(flowAdvanced.transfers$ | async)?.totalProgress"  [uploading]="(flowAdvanced.transfers$ | async)?.flow?.isUploading()"></src-rfiles-upload-status>
 
