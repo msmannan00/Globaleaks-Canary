@@ -39,24 +39,21 @@ export class RfileUploadButtonComponent implements AfterViewInit, OnDestroy, OnI
   ngAfterViewInit() {
     const self = this;
     this.flowAdvanced.transfers$.subscribe((event,) => {
-      if(self.currentSessionSize!=event.transfers.length){
-        if(this.errorFile){
-          this.errorFile.flowFile.cancel()
-          self.showerror = false
+      self.confirmButton = false;
+      self.showerror = false
+      event.transfers.forEach(function(file){
+        if(file.paused && self.errorFile){
+          self.errorFile.flowFile.cancel()
+          return
         }
-        self.confirmButton = false;
-
-        self.currentSessionSize = event.transfers.length
-        event.transfers.forEach(function(file){
-          if(self.appDataService.public.node.maximum_filesize < (file.size/1000000)){
-            self.showerror = true
-            file.flowFile.pause()
-            self.errorFile = file
-          }else {
-            self.confirmButton = true
-          }
-        });
-      }
+        if(self.appDataService.public.node.maximum_filesize < (file.size/1000000)){
+          self.showerror = true
+          file.flowFile.pause()
+          self.errorFile = file
+        }else {
+          self.confirmButton = true
+        }
+      });
     });
   }
   ngOnDestroy(): void {
