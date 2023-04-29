@@ -50,7 +50,7 @@ export class RfileUploadButtonComponent implements AfterViewInit, OnDestroy, OnI
           self.showerror = true
           file.flowFile.pause()
           self.errorFile = file
-        }else {
+        }else if(!file.complete){
           self.confirmButton = true
         }
       });
