@@ -28,6 +28,8 @@ import {ActionModule} from "./pages/action/action.module";
 import {WhistleblowerModule} from "./pages/whistleblower/whistleblower.module";
 import {MarkdownModule} from "ngx-markdown";
 import {ReceiptvalidatorDirective} from "./shared/directive/receiptvalidator.directive";
+import { NgxFlowModule, FlowInjectionToken } from '@flowjs/ngx-flow';
+import * as Flow from "@flowjs/flow.js";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './data/i18n/', '.json');
@@ -40,6 +42,7 @@ export function createTranslateLoader(http: HttpClient) {
     AppRoutingModule,
     SharedModule,
     BrowserModule,
+    NgxFlowModule,
     NgIdleKeepaliveModule.forRoot(),
     MarkdownModule.forRoot(),
     AuthModule,
@@ -66,6 +69,7 @@ export function createTranslateLoader(http: HttpClient) {
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: CompletedInterceptor, multi: true},
+    { provide: FlowInjectionToken, useValue: Flow}
   ],
   bootstrap: [AppComponent],
 })

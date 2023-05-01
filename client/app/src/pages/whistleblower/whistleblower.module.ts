@@ -41,7 +41,8 @@ import { WhistleblowerIdentityFieldComponent } from './fields/whistleblower-iden
     exports: [
         HomepageComponent,
         TippageComponent,
-        SubmissionComponent
+        SubmissionComponent,
+        WhistleblowerIdentityFieldComponent
     ],
     imports: [
         CommonModule,

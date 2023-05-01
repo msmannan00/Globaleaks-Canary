@@ -45,6 +45,12 @@ import { ScrollToBottomDirective } from './shared/directive/scroll-to-bottom.dir
 import { TipReceiverListComponent } from './shared/partials/tip-receiver-list/tip-receiver-list.component';
 import { FilterPipe } from './shared/pipes/filter.pipe';
 import { RequestSupportComponent } from './shared/modals/request-support/request-support.component';
+import {WhistleblowerModule} from "./pages/whistleblower/whistleblower.module";
+import {
+    WhistleblowerIdentityFieldComponent
+} from "./pages/field/whistleblower-identity-field/whistleblower-identity-field.component";
+import {NgxFlowModule} from "@flowjs/ngx-flow";
+import { RfilesUploadStatusComponent } from './shared/partials/rfiles-upload-status/rfiles-upload-status.component';
 
 @NgModule({
     imports: [
@@ -63,41 +69,44 @@ import { RequestSupportComponent } from './shared/modals/request-support/request
         NgbPaginationLast,
         NgbPaginationNumber,
         NgbPaginationPages,
+        NgxFlowModule,
     ],
-  declarations: [
-    FooterComponent,
-    ReceiptComponent,
-    TranslatorPipe,
-    Enable2fa,
-    PasswordChangeComponent,
-    PasswordMeterComponent,
-    PrivacybadgeComponent,
-    StripHtmlPipe,
-    DatePipe,
-    ReceiptvalidatorDirective,
-    TipInfoComponent,
-    TipQuestionnaireAnswersComponent,
-    TipSubmissionStatusComponent,
-    TipAdditionalQuestionnaireInviteComponent,
-    TipFieldComponent,
-    TipFieldAnswerEntryComponent,
-    DatePipe,
-    SplitPipe,
-    TipFilesWhistleblowerComponent,
-    WidgetWbfilesComponent,
-    ByteFmtPipe,
-    RfileUploadButtonComponent,
-    RfileUploadStatusComponent,
-    TipCommentsComponent,
-    TipMessagesComponent,
-    TipMessageComponent,
-    LimitToPipe,
-    OrderByPipe,
-    ScrollToBottomDirective,
-    TipReceiverListComponent,
-    FilterPipe,
-    RequestSupportComponent
-  ],
+    declarations: [
+        FooterComponent,
+        ReceiptComponent,
+        TranslatorPipe,
+        Enable2fa,
+        PasswordChangeComponent,
+        PasswordMeterComponent,
+        PrivacybadgeComponent,
+        StripHtmlPipe,
+        DatePipe,
+        ReceiptvalidatorDirective,
+        TipInfoComponent,
+        TipQuestionnaireAnswersComponent,
+        TipSubmissionStatusComponent,
+        TipAdditionalQuestionnaireInviteComponent,
+        TipFieldComponent,
+        TipFieldAnswerEntryComponent,
+        DatePipe,
+        SplitPipe,
+        TipFilesWhistleblowerComponent,
+        WidgetWbfilesComponent,
+        ByteFmtPipe,
+        RfileUploadButtonComponent,
+        RfileUploadStatusComponent,
+        TipCommentsComponent,
+        TipMessagesComponent,
+        TipMessageComponent,
+        LimitToPipe,
+        OrderByPipe,
+        ScrollToBottomDirective,
+        TipReceiverListComponent,
+        FilterPipe,
+        RequestSupportComponent,
+        WhistleblowerIdentityFieldComponent,
+        RfilesUploadStatusComponent
+    ],
     exports: [
         FooterComponent,
         ReceiptComponent,

@@ -76,6 +76,7 @@ export class TippageComponent {
           if (step.children[j]["template_id"] === "whistleblower_identity") {
             this.tip.whistleblower_identity_field = step.children[j];
             this.tip.whistleblower_identity_field.enabled = true;
+            step.children.splice(j, 1);
 
             this.questionnaire = {
               steps: [{... this.tip.whistleblower_identity_field}]

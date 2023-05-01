@@ -12,10 +12,13 @@ import {ActionRoutingModule} from "./pages/action/action-routing.module";
 
 const routes: Routes = [
   {
+    path: 'routing',
+    pathMatch: 'full',
+  },
+  {
     path: '',
     component: HomeComponent,
     resolve: {
-      PreferenceResolver
     },
     pathMatch: 'full',
   },
