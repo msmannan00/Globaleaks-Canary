@@ -4,7 +4,7 @@
 			<div class="input-group mb-3">
 				<span class="input-group-text"><i class="fa-solid fa-user"></i></span>
 				<input class="form-control" name="username" formControlName="username"
-					placeholder="{{'Username' | scopedTranslate}}" [(ngModel)]="authentication.loginData.loginUsername"
+					placeholder="{{'Username' | translate}}" [(ngModel)]="authentication.loginData.loginUsername"
 					type="text" required />
 			</div>
 		</div>
@@ -13,7 +13,7 @@
 			<div class="input-group">
 				<span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
 				<input class="form-control" name="password" formControlName="password"
-					placeholder="{{'Password' | scopedTranslate}}" [(ngModel)]="authentication.loginData.loginPassword"
+					placeholder="{{'Password' | translate}}" [(ngModel)]="authentication.loginData.loginPassword"
 					type="password" required />
 			</div>
 		</div>
@@ -52,7 +52,7 @@
 				</button>
 
 				<a class="btn" (click)="utils.openSupportModal()" data-toggle="tooltip"
-					title="{{'Request support' | scopedTranslate}}"><i class="fa-solid fa-life-ring"></i></a>
+					title="{{'Request support' | translate}}"><i class="fa-solid fa-life-ring"></i></a>
 			</div>
 		</div>
 	</div>
