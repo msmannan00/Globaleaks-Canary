@@ -1,59 +1,71 @@
-<div id="TipCommunicationComments" class="card card-default" >
-    <div class="card-header clearfix" (click)="toggleColapse(); utilsService.stopPropagation($event);">
-        <span>{{'Comments'|translate}}</span>
-          <span class="float-right">
-          <i *ngIf="!collapsed" class="fa-solid fa-chevron-up" data-toggle="tooltip" title="{{'Collapse' | translate}}"></i>
-          <i *ngIf="collapsed" class="fa-solid fa-chevron-down" data-toggle="tooltip" title="{{'Expand' | translate}}"></i>
-        </span>
-    </div>
-    <div class="card-body" *ngIf="!collapsed">
-        <div *ngIf="wbtipService.tip.status !== 'closed' && wbtipService.tip.context.enable_comments && (authenticationService.session.role !== 'whistleblower' || wbtipService.tip.enable_two_way_comments)" class="row">
-            <div class="col-md-12 clearfix">
-                <textarea id="TipCommunicationCommentsInput" [(ngModel)]="newCommentContent" maxlength="4096" class="form-control" autocomplete="off"></textarea>
-                <span class="float-right">{{newCommentContent.length ? newCommentContent.length : '0'}}/4096</span>
-            </div>
-            <div class="col-md-12 clearfix">
-                <button id="comment-action-send" class="btn btn-primary" (click)="newComment()" [disabled]="!newCommentContent">
-                    <i class="fa-solid fa-comment"></i>
-                    <span>{{'Send'|translate}}</span>
-                </button>
-                <div *ngif="authenticationService.session.role === 'receiver' && !wbtipService.tip.context.enable_two_way_comments" class="form-group">
-<!--                    <label class="inline-checkbox">-->
-<!--                        <input [(ngModel)]="wbtipService.tip.enable_two_way_comments" data-ng-change="tip.operation('set', {'key': 'enable_two_way_comments', 'value': tip.enable_two_way_comments})" type="checkbox" />-->
-<!--                        <span data-translate>Allow the whistleblower to write comments</span>-->
-<!--                    </label>-->
-                </div>
-            </div>
-        </div>
+<div id="TipCommunicationComments" class="card card-default">
+	<div class="card-header d-flex justify-content-between"
+		(click)="toggleColapse(); utilsService.stopPropagation($event);">
+		<span>{{'Comments'|translate}}</span>
+		<span class="">
+			<i *ngIf="!collapsed" class="fa-solid fa-chevron-up" data-toggle="tooltip"
+				title="{{'Collapse' | translate}}"></i>
+			<i *ngIf="collapsed" class="fa-solid fa-chevron-down" data-toggle="tooltip"
+				title="{{'Expand' | translate}}"></i>
+		</span>
+	</div>
+	<div class="card-body" *ngIf="!collapsed">
+		<div *ngIf="wbtipService.tip.status !== 'closed' && wbtipService.tip.context.enable_comments && (authenticationService.session.role !== 'whistleblower' || wbtipService.tip.enable_two_way_comments)"
+			class="row">
+			<div class="col-md-12 clearfix">
+				<textarea id="TipCommunicationCommentsInput" [(ngModel)]="newCommentContent" maxlength="4096"
+					class="form-control" autocomplete="off"></textarea>
+				<span class="float-right">{{newCommentContent.length ? newCommentContent.length : '0'}}/4096</span>
+			</div>
+			<div class="col-md-12 clearfix">
+				<button id="comment-action-send" class="btn btn-primary" (click)="newComment()"
+					[disabled]="!newCommentContent">
+					<i class="fa-solid fa-comment"></i>
+					<span>{{'Send'|translate}}</span>
+				</button>
+				<div *ngif="authenticationService.session.role === 'receiver' && !wbtipService.tip.context.enable_two_way_comments"
+					class="form-group">
+					<!--                    <label class="inline-checkbox">-->
+					<!--                        <input [(ngModel)]="wbtipService.tip.enable_two_way_comments" data-ng-change="tip.operation('set', {'key': 'enable_two_way_comments', 'value': tip.enable_two_way_comments})" type="checkbox" />-->
+					<!--                        <span data-translate>Allow the whistleblower to write comments</span>-->
+					<!--                    </label>-->
+				</div>
+			</div>
+		</div>
 
-        <div *ngIf="wbtipService.tip.comments.length">
-            <div id="SubmissionComments" *ngFor="let comment of ((wbtipService.tip.comments | orderBy:'creation_date': true) | slice: (currentCommentsPage-1) * itemsPerPage : (currentCommentsPage-1) * itemsPerPage + itemsPerPage); let index = index">
-                <div id="comment-{{index}}" [ngSwitch]="comment.type" class="mt-2">
-                    <div *ngSwitchCase="'whistleblower'" class="messageWB">
-                        <div class="row">
-                            <div class="col-md-6">{{'Whistleblower'|translate}}</div>
-                            <div class="col-md-6 text-right">{{comment.creation_date | date:'dd-MM-yyyy HH:mm'}}</div>
-                        </div>
-                        <div class="preformatted">{{comment.content}}</div>
-                    </div>
-                    <div *ngSwitchCase="'receiver'" class="message">
-                        <div class="row">
-                            <div class="col-md-6">{{wbtipService.tip.receivers_by_id[comment.author].name}}</div>
-                            <div class="col-md-6 text-right">{{comment.creation_date | date:'dd-MM-yyyy HH:mm'}}</div>
-                        </div>
-                        <div class="preformatted">{{comment.content}}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+		<div *ngIf="wbtipService.tip.comments.length">
+			<div id="SubmissionComments"
+				*ngFor="let comment of ((wbtipService.tip.comments | orderBy:'creation_date': true) | slice: (currentCommentsPage-1) * itemsPerPage : (currentCommentsPage-1) * itemsPerPage + itemsPerPage); let index = index">
+				<div id="comment-{{index}}" [ngSwitch]="comment.type" class="mt-2">
+					<div *ngSwitchCase="'whistleblower'" class="messageWB">
+						<div class="row">
+							<div class="col-md-6">{{'Whistleblower'|translate}}</div>
+							<div class="col-md-6 text-right">{{comment.creation_date | date:'dd-MM-yyyy HH:mm'}}</div>
+						</div>
+						<div class="preformatted">{{comment.content}}</div>
+					</div>
+					<div *ngSwitchCase="'receiver'" class="message">
+						<div class="row">
+							<div class="col-md-6">{{wbtipService.tip.receivers_by_id[comment.author].name}}</div>
+							<div class="col-md-6 text-right">{{comment.creation_date | date:'dd-MM-yyyy HH:mm'}}</div>
+						</div>
+						<div class="preformatted">{{comment.content}}</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-        <div class="mt-2 text-center" *ngIf="wbtipService.tip.comments.length > itemsPerPage">
-            <ngb-pagination class="pagination-sm" [collectionSize]="wbtipService.tip.comments.length" [(page)]="currentCommentsPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [ellipses]="true" [boundaryLinks]="true">
-                <ng-template ngbPaginationPrevious>< {{'Previous' | translate}}</ng-template>
-                <ng-template ngbPaginationNext>{{'Next' | translate}} ></ng-template>
-                <ng-template ngbPaginationFirst><< {{'First' | translate}}</ng-template>
-                <ng-template ngbPaginationLast>{{'Last' | translate}} >></ng-template>
-            </ngb-pagination>
-        </div>
-    </div>
+		<div class="mt-2 text-center" *ngIf="wbtipService.tip.comments.length > itemsPerPage">
+			<ngb-pagination class="pagination-sm" [collectionSize]="wbtipService.tip.comments.length"
+				[(page)]="currentCommentsPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [ellipses]="true"
+				[boundaryLinks]="true">
+				<ng-template ngbPaginationPrevious>
+					< {{'Previous' | translate}}</ng-template>
+						<ng-template ngbPaginationNext>{{'Next' | translate}} ></ng-template>
+						<ng-template ngbPaginationFirst>
+							<< {{'First' | translate}}</ng-template>
+								<ng-template ngbPaginationLast>{{'Last' | translate}} >></ng-template>
+			</ngb-pagination>
+		</div>
+	</div>
 </div>

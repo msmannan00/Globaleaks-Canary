@@ -9,7 +9,6 @@
 .settings/
 *.sublime-workspace
 
-
 # Miscellaneous
 client/editorconfig
 client/package-lock.json
@@ -60,3 +59,6 @@ client/typings
 # System files
 client/.DS_Store
 client/Thumbs.db
+
+# angular
+.angular/

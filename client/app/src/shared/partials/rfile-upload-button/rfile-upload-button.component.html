@@ -26,8 +26,8 @@
         <div *ngIf="showerror">
             <br>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <a href="#" class="close" (click)="errorFile.flowFile.cancel() ; showerror=false" data-dismiss="alert" aria-label="close">&times;</a>
                 {{'File size not accepted.'|translate}} {{errorFile.flowFile.name}} {{'Maximum file size is:'|translate}} {{appDataService.public.node.maximum_filesize}}MB
+                <a href="#" class="close" (click)="errorFile.flowFile.cancel() ; showerror=false" data-dismiss="alert" aria-label="close">&times;</a>
             </div>
         </div>
 
