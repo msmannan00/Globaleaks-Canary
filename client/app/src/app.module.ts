@@ -9,6 +9,7 @@ import {
   HashLocationStrategy,
   LocationStrategy,
 } from '@angular/common';
+import { OrderModule } from 'ngx-order-pipe'; // <- import OrderModule
 import { AppConfigService } from './services/app-config.service';
 import { SharedModule } from './shared.module';
 import { HeaderComponent } from './shared/partials/header/header.component';
@@ -24,6 +25,11 @@ import { TranslatorPipe } from './shared/pipes/translate';
 import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
 import {ActionModule} from "./pages/action/action.module";
+import {WhistleblowerModule} from "./pages/whistleblower/whistleblower.module";
+import {MarkdownModule} from "ngx-markdown";
+import {ReceiptvalidatorDirective} from "./shared/directive/receiptvalidator.directive";
+import { NgxFlowModule, FlowInjectionToken } from '@flowjs/ngx-flow';
+import * as Flow from "@flowjs/flow.js";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './data/i18n/', '.json');
@@ -36,9 +42,12 @@ export function createTranslateLoader(http: HttpClient) {
     AppRoutingModule,
     SharedModule,
     BrowserModule,
+    NgxFlowModule,
     NgIdleKeepaliveModule.forRoot(),
+    MarkdownModule.forRoot(),
     AuthModule,
     ActionModule,
+    OrderModule,
     SharedModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en',
@@ -50,14 +59,17 @@ export function createTranslateLoader(http: HttpClient) {
     }),
     NgSelectModule,
     FormsModule,
+    WhistleblowerModule,
   ],
   providers: [
+    ReceiptvalidatorDirective,
     TranslatorPipe,
     { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
     { provide: APP_BASE_HREF, useValue: '/' },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: CompletedInterceptor, multi: true},
+    { provide: FlowInjectionToken, useValue: Flow}
   ],
   bootstrap: [AppComponent],
 })

@@ -17615,13 +17615,13 @@ a.close.disabled {
   margin-top: auto !important;
 }
 
-[dir=ltr] .mr-auto, [dir=ltr] .mx-auto {
+/* [dir=ltr] .mr-auto, [dir=ltr] .mx-auto {
   margin-right: auto !important;
-}
+} */
 
-[dir=rtl] .mr-auto, [dir=rtl] .mx-auto {
+/* [dir=rtl] .mr-auto, [dir=rtl] .mx-auto {
   margin-left: auto !important;
-}
+} */
 
 [dir] .mb-auto, [dir] .my-auto {
   margin-bottom: auto !important;
@@ -20718,10 +20718,10 @@ a:hover,
   margin: 1em;
 }
 
-#WhistleblowerLoginForm input {
+/* #WhistleblowerLoginForm input {
   width: 14rem;
   text-align: center;
-}
+} */
 
 .recoverykeyinput {
   width: 64rem;

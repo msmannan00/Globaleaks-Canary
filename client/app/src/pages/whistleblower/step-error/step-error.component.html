@@ -1,0 +1,9 @@
+<div *ngIf="parent.displayStepErrors(parent.navigation)">
+    <p>{{'In this step the answers to the following questions are either missing or invalid:'|translate}}</p>
+
+    <ul *ngFor="let step of parent.stepForm(parent.navigation).error(); let track = index">
+        <span *ngFor="let err in step.errors" >
+        <src-step-error-entry [parent]="parent" [err]="err"></src-step-error-entry>
+        </span>
+    </ul>
+</div>

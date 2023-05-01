@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import {LoginDataRef} from "../pages/auth/login/model/login-model";
 import {HttpService} from "../shared/services/http.service";
 import {Observable} from "rxjs";
-import {AppConfigService} from "./app-config.service";
-import {Session} from "../models/authentication/Session";
 import {Router} from "@angular/router";
 import {TranslateService} from "@ngx-translate/core";
 import {LocationStrategy} from "@angular/common";
@@ -75,7 +73,8 @@ export class AuthenticationService {
       requestObservable = this.httpService.requestAuthTokenLogin(JSON.stringify({"authtoken":authtoken}));
     } else {
       if (username === "whistleblower") {
-        requestObservable = this.httpService.requestGeneralLogin("");
+        password = password.replace(/\D/g,"");
+        requestObservable = this.httpService.requestWhistleBlowerLogin(JSON.stringify({"receipt": password}));
       } else {
         requestObservable = this.httpService.requestGeneralLogin(JSON.stringify({"tid":tid,"username":username,"password":password,"authcode":authcode}));
       }
@@ -99,7 +98,7 @@ export class AuthenticationService {
             if (this.session.role === "whistleblower") {
               if (password) {
                 this.rootDataService.page="tippage";
-                location.replace("/");
+                this.router.navigate(['/']).then(r => {});
               }
             } else {
               this.router.navigate([this.session.homepage]).then(r => {});

@@ -1,17 +1,28 @@
-<label id="WhistleblowerLoginQuestion" class="text-normalized" data-translate>Have you already filed a report?</label><br>
-<label id="WhistleblowerLoginQuestion" class="text-normalized" data-translate>Enter your receipt.</label>
-<br><br><form id="WhistleblowerLoginForm" autocomplete="off" novalidate>
-  <div class="form-group d-block mx-auto">
-    <div class="input-group">
-      <input id="receipt-input" class="form-control form-control-big" type="text" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" size="19" [(ngModel)]="formatted_receipt" name="receipt-input">
-    </div>
-  </div>
+<!-- <form #WhistleblowerLoginForm="ngForm" autocomplete="off" novalidate> -->
+<form id="WhistleblowerLoginForm" autocomplete="off" novalidate>
+	<div>
+		<label id="WhistleblowerLoginQuestion" for="receipt-input">
+			{{'Have you already filed a report? Enter your receipt.'|translate}}
+		</label>
+	</div>
+	<div class="d-flex justify-content-center">
+		<div class="form-group">
+			<div class="input-group">
+				<input #receiptinput="ngModel" [(ngModel)]="formatted_receipt" id="receipt-input" class="form-control"
+					type="text" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" size="19" customReceiptValidator>
 
-  <br><button id="ReceiptButton"
-              (click)="authentication.login(0, 'whistleblower', formatted_receipt)" class="btn btn-primary col-12 btn btn-outline-light btn-custom btn-hover"
-              [disabled]="formatted_receipt.length !== 19 || authentication.loginInProgress" type="submit">
-  <span data-translate>Log in</span>
-</button>
+				<button
+					[disabled]="formatted_receipt.length < 16 || authenticationService.loginInProgress || !receiptinput.errors?.['receiptvalidator']"
+					(click)="authenticationService.login(0, 'whistleblower', formatted_receipt)" id="ReceiptButton"
+					class="btn btn-primary" type="submit">
+					<span>
+						{{'Log in'|translate}}
+					</span>
+				</button>
+			</div>
+		</div>
+	</div>
 </form>
-<br>
-<div class="alert alert-danger text-danger-custom col-12" data-ng-show="appConfig.errorCodes.code == 9" data-translate>The receipt is either invalid or the report has expired.</div>
+<div *ngIf="appDataService.errorCodes.code == 9" class="LoginErrorBoxHomepage text-danger">
+	{{'The receipt is either invalid or the report has expired.'|translate}}
+</div>

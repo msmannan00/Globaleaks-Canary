@@ -7,16 +7,18 @@ import { HomeComponent } from './pages/dashboard/home/home.component';
 import {PasswordResetResponseComponent} from "./pages/auth/password-reset-response/password-reset-response.component";
 import {RecipientRoutingModule} from "./pages/recipient/recipient-routing.module";
 import {PreferenceResolver} from "./shared/resolvers/preference.resolver";
-import {ForcedTwoFactorComponent} from "./pages/action/forced-two-factor/forced-two-factor.component";
 import {ActionRoutingModule} from "./pages/action/action-routing.module";
 
 
 const routes: Routes = [
   {
+    path: 'routing',
+    pathMatch: 'full',
+  },
+  {
     path: '',
     component: HomeComponent,
     resolve: {
-      preferences: PreferenceResolver
     },
     pathMatch: 'full',
   },

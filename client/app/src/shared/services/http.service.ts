@@ -23,6 +23,11 @@ export class HttpService{
     return this.httpClient.post("api/authentication", param,{'headers':headers })
   }
 
+  requestWhistleBlowerLogin(param: string): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.post("api/receiptauth", param,{'headers':headers })
+  }
+
   requestDeleteSession(): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.delete("api/session",{'headers':headers })
@@ -43,19 +48,37 @@ export class HttpService{
     return this.httpClient.post("api/reset/password", param,{'headers':headers })
   }
 
+  requestSuppor(param: string): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.post("api/support", param,{'headers':headers })
+  }
+  requestNewComment(param: string): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.post("api/wbtip/comments", param,{'headers':headers })
+  }
+
+  requestNewMessage(param: string, suburl:string): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.post("api/wbtip/messages/"+suburl, param,{'headers':headers })
+  }
+
   requestPreferenceResource(param: any): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.get("api/preferences", {'headers':headers })
   }
 
+  requestTipResource(param: any): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.get("api/admin/auditlog/tips", {'headers':headers })
+  }
   requestSubmissionStatusResource(param: any): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.get("api/admin/submission_statuses", {'headers':headers, params: param })
   }
 
-  requestTipCollectionResource(param: any): Observable<any>{
+  whistleBlowerTip(param: any): Observable<any>{
     const headers = { 'content-type': 'application/json'}
-    return this.httpClient.get("api/admin/auditlog/tips", {'headers':headers, params: param })
+    return this.httpClient.get("api/wbtip", {'headers':headers, params: param })
   }
 
   requestAdminTenantResource(param: any): Observable<any>{

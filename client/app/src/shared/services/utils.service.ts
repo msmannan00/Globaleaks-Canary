@@ -3,6 +3,9 @@ import {AuthenticationService} from "../../services/authentication.service";
 import {AppDataService} from "../../app-data.service";
 import {TranslateService} from "@ngx-translate/core";
 import {Router} from "@angular/router";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {RequestSupportComponent} from "../modals/request-support/request-support.component";
+import {HttpService} from "./http.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +20,36 @@ export class UtilsService {
     return result;
   }
 
+  isUploading(uploads?:any){
+    for (let key in uploads) {
+      if (uploads[key] &&
+          uploads[key].isUploading &&
+          uploads[key].isUploading()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  getCardSize(num:number) {
+    if (num < 2) {
+      return "col-md-12";
+    } else if (num === 2) {
+      return "col-md-6";
+    } else if (num === 3) {
+      return "col-md-4";
+    } else {
+      return "col-md-3 col-sm-6";
+    }
+  }
+
+  scrollToTop() {
+    window.document.getElementsByTagName("body")[0].scrollIntoView();
+  }
+
   reloadCurrentRoute() {
     const currentUrl = this.router.url;
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+    this.router.navigateByUrl('routing', {skipLocationChange: true}).then(() => {
       this.router.navigate([currentUrl]);
     });
   }
@@ -32,6 +62,14 @@ export class UtilsService {
       this.appDataService.page !== "submissionpage" &&
       this.authenticationService.session &&
       !this.authenticationService.session.require_password_change;
+  }
+
+  isWhistleblowerPage() {
+    return ["/", "/submission"].indexOf(this.router.url) !== -1;
+  }
+
+  stopPropagation(event:Event){
+    event.stopPropagation()
   }
 
   openConfirmableModalDialog(template:any, arg:any, scope?:any){
@@ -58,8 +96,7 @@ export class UtilsService {
     if (this.appDataService.public.node.custom_support_url) {
       window.open(this.appDataService.public.node.custom_support_url, "_blank");
     } else {
-      alert("SUPPORT MODEL NOT CONFIGURED")
-      return this.openConfirmableModalDialog("views/modals/request_support.html", {});
+      this.modalService.open(RequestSupportComponent);
     }
   }
 
@@ -115,12 +152,12 @@ export class UtilsService {
       element.content = this.appDataService.public.node.description;
     }
   }
-  array_to_map(receivers: any[]) {
-    let ret = new Map<any, any>();
-    receivers.forEach((item, index) => {
-      ret.set(index, item);
-    });
+  array_to_map(receivers: any) {
+    let ret:any = {};
 
+    receivers.forEach(function(element:any){
+      ret[element.id]=element
+    });
     return ret;
   }
 
@@ -130,7 +167,55 @@ export class UtilsService {
     }
   }
 
-  constructor(public authenticationService:AuthenticationService, public appDataService:AppDataService, public translateService: TranslateService, private router: Router) {
+  getSubmissionStatusText(status:any, substatus:any, submission_statuses:any) {
+    let text;
+    for (let i = 0; i < submission_statuses.length; i++) {
+      if (submission_statuses[i].id === status) {
+        text = submission_statuses[i].label;
+
+        let substatuses = submission_statuses[i].substatuses;
+        for (let j = 0; j < substatuses.length; j++) {
+          if (substatuses[j].id === substatus) {
+            text += "(" + substatuses[j].label + ")";
+            break;
+          }
+        }
+        break;
+      }
+    }
+
+    return text;
+  }
+
+  isNever(time: string) {
+    let date = new Date(time);
+    return date.getTime() === 32503680000000;
+  }
+
+  deleteFromList(list:any, elem:any) {
+    let idx = list.indexOf(elem);
+    if (idx !== -1) {
+      list.splice(idx, 1);
+    }
+  }
+
+  showFilePreview(content_type: string) {
+    let content_types = [
+      "image/gif",
+      "image/jpeg",
+      "image/png",
+      "image/bmp"
+    ];
+
+    return content_types.indexOf(content_type) > -1;
+  }
+
+  submitSupportRequest(arg: any) {
+    const param=JSON.stringify({"mail_address": arg.mail_address, "text": arg.text, "url": location.pathname});
+    this.httpService.requestSuppor(param).subscribe();
+  }
+
+  constructor(public httpService: HttpService, public modalService: NgbModal, public authenticationService:AuthenticationService, public appDataService:AppDataService, public translateService: TranslateService, private router: Router) {
   }
 
 }
