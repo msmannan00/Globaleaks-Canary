@@ -199,10 +199,10 @@ h6 {
 	font-size: 1.1em;
 }
 
-.container-fluid {
-	padding: 0;
-	overflow-x: hidden;
-}
+/* .container-fluid {
+  padding: 0;
+  overflow-x: hidden;
+} */
 
 .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active {
@@ -678,13 +678,13 @@ p:last-child {
 	padding: 1em;
 }
 
-.fileButtons {
+/* .fileButtons {
 	text-align: right;
-}
+} */
 
-.fileButtons {
+/* .fileButtons {
 	text-align: left;
-}
+} */
 
 .configSection {
 	margin-bottom: 1em;
