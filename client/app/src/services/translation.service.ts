@@ -28,6 +28,7 @@ export class TranslationService {
 
   state = {
     language: "",
+    dir: "",
   };
 
   language: string;
@@ -57,15 +58,20 @@ export class TranslationService {
     return lang;
   }
   updateTranslationServices(lang: string) {
-    console.log("updateTranslationServices");
-
-    let useRightToLeft =
-      ["ar", "dv", "fa", "fa_AF", "he", "ps", "ug", "ur"].indexOf(lang) !== -1;
-    const direction = useRightToLeft ? "rtl" : "ltr";
-    this.loadDirectionalStylesheet(direction);
-    document.getElementsByTagName("html")[0].setAttribute("dir", direction);
+    this.state.dir = this.findDirection(lang);
+    document
+      .getElementsByTagName("html")[0]
+      .setAttribute("dir", this.state.dir);
     this.translateService.use(lang);
     this.translateService.setDefaultLang(lang);
+  }
+
+  findDirection(lang: string) {
+    let useRightToLeft =
+      ["ar", "dv", "fa", "fa_AF", "he", "ps", "ug", "ur"].indexOf(lang) !== -1;
+    // const direction = useRightToLeft ? "rtl" : "ltr";
+    return useRightToLeft ? "rtl" : "ltr";
+    // this.loadDirectionalStylesheet(direction);
   }
 
   determineLanguage() {
@@ -78,13 +84,12 @@ export class TranslationService {
     }
   }
   addNodeFacts(defaultLang: any, languages_enabled: any) {
-    console.log("check");
-
     this.facts.nodeDefault = defaultLang;
 
     this.enabledLanguages = languages_enabled;
-
     this.determineLanguage();
+
+    this.loadDirectionalStylesheet(this.state.dir);
   }
   validLang(inp: string) {
     if (!inp) {
@@ -114,20 +119,40 @@ export class TranslationService {
     this.utilsService.reloadCurrentRoute();
   }
 
-  loadDirectionalStylesheet(direction: string) {
-    if (direction === "rtl") {
-      this.loadCssFile("lib/bootstrap/bootstrap.rtl.css");
-    } else {
-      this.loadCssFile("lib/bootstrap/bootstrap.css");
-    }
+  changeLanguage(language: string) {
+    this.state.language = language;
+    this.setLang(this.language);
+    this.utilsService.reloadCurrentRoute();
+    return this.state;
   }
 
-  loadCssFile(cssUrl: string) {
+  loadDirectionalStylesheet(direction: string) {
+    this.loadCssFile(this.findDirectionalStyelsheet(direction), "bootstrap");
+  }
+
+  findDirectionalStyelsheet(direction: string) {
+    return direction === "rtl"
+      ? "lib/bootstrap/bootstrap.rtl.css"
+      : "lib/bootstrap/bootstrap.css";
+  }
+
+  loadCssFile(cssUrl: string, id: string) {
+    console.log("1");
+
     const linkElement = this.renderer.createElement("link");
     this.renderer.setAttribute(linkElement, "rel", "stylesheet");
     this.renderer.setAttribute(linkElement, "type", "text/css");
+    this.renderer.setAttribute(linkElement, "id", id);
     this.renderer.setAttribute(linkElement, "href", cssUrl);
     this.renderer.appendChild(document.head, linkElement);
+    console.log("2");
+  }
+
+  updateCssFile(cssFile: string, elementREf: ElementRef) {
+    // console.log("this.renderer =>", this.renderer);
+    // console.log("12");
+    // this.renderer.setAttribute(elementREf, "href", cssFile);
+    // console.log("ss1");
   }
 
   private renderer: Renderer2;
