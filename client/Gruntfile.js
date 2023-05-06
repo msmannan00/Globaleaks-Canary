@@ -1,5 +1,5 @@
 /* eslint no-console: 0 */
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   let fs = require("fs"),
     path = require("path"),
     superagent = require("superagent"),
@@ -35,6 +35,8 @@ module.exports = function(grunt) {
           { dest: "app/assets/lib/css/", cwd: ".", src: ["node_modules/@fortawesome/fontawesome-free/css/solid.css"], expand: true, flatten: true },
           { dest: "app/assets/lib/webfonts", cwd: ".", src: ["node_modules/font-awesome/fonts/*"], expand: true, flatten: true },
           { dest: "app/assets/lib/webfonts", cwd: ".", src: ["node_modules/@fortawesome/fontawesome-free/webfonts/*"], expand: true, flatten: true },
+          { dest: "app/assets/lib/bootstrap", cwd: ".", src: ["node_modules/bootstrap/dist/css/*"], expand: true, flatten: true },
+
         ]
       },
       build: {
@@ -320,7 +322,7 @@ module.exports = function(grunt) {
       "pushTranslationsSource": {
         options: {
           // Static text.
-          question: "WARNING:\n"+
+          question: "WARNING:\n" +
             "this task may cause translations loss and should be executed only on master branch.\n\n" +
             "Are you sure you want to proceed (Y/N)?",
           input: "_key:y"
@@ -378,22 +380,22 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-usemin");
   grunt.loadNpmTasks("gruntify-eslint");
 
-  let readNoTranslateStrings = function() {
+  let readNoTranslateStrings = function () {
     return JSON.parse(grunt.file.read("app/data_src/notranslate_strings.json"));
   };
 
   let notranslate_strings = readNoTranslateStrings();
 
-  function str_escape (val) {
-    if (typeof(val) !== "string") {
+  function str_escape(val) {
+    if (typeof (val) !== "string") {
       return val;
     }
 
     return val.replace(/[\n]/g, "\\n").replace(/[\t]/g, "\\r");
   }
 
-  function str_unescape (val) {
-    if (typeof(val) !== "string") {
+  function str_unescape(val) {
+    if (typeof (val) !== "string") {
       return val;
     }
 
@@ -415,7 +417,7 @@ module.exports = function(grunt) {
     sourceFile = "pot/en.po",
     transifexApiKey = readTransifexApiKey();
 
-  function updateTxSource(cb){
+  function updateTxSource(cb) {
     let url = baseurl + "/resource_strings_async_uploads";
 
     let content = {
@@ -439,9 +441,9 @@ module.exports = function(grunt) {
     };
 
     agent.post(url)
-      .set({"Content-Type": "application/vnd.api+json", "Authorization": "Bearer " + transifexApiKey})
+      .set({ "Content-Type": "application/vnd.api+json", "Authorization": "Bearer " + transifexApiKey })
       .send(content)
-      .end(function(err, res) {
+      .end(function (err, res) {
         if (res) {
           if (res.ok) {
             cb();
@@ -454,12 +456,12 @@ module.exports = function(grunt) {
       });
   }
 
-  function listLanguages(cb){
+  function listLanguages(cb) {
     let url = baseurl + "/projects/o:otf:p:globaleaks/languages";
 
     agent.get(url)
-      .set({"Authorization": "Bearer " + transifexApiKey})
-      .end(function(err, res) {
+      .set({ "Authorization": "Bearer " + transifexApiKey })
+      .end(function (err, res) {
         if (res) {
           if (res.ok) {
             let result = JSON.parse(res.text);
@@ -477,7 +479,7 @@ module.exports = function(grunt) {
     let url = baseurl + "/resource_translations_async_downloads";
 
     agent.post(url)
-      .set({"Authorization": "Bearer " + transifexApiKey, "Content-Type": "application/vnd.api+json"})
+      .set({ "Authorization": "Bearer " + transifexApiKey, "Content-Type": "application/vnd.api+json" })
       .send({
         "data": {
           "attributes": {
@@ -502,14 +504,14 @@ module.exports = function(grunt) {
           "type": "resource_translations_async_downloads"
         }
       })
-      .end(function(err, res) {
+      .end(function (err, res) {
         if (res && res.ok) {
           url = JSON.parse(res.text).data.links.self;
 
-          let fetchPO = function(url) {
+          let fetchPO = function (url) {
             agent.get(url)
-              .set({"Authorization": "Bearer " + transifexApiKey})
-              .end(function(err, res) {
+              .set({ "Authorization": "Bearer " + transifexApiKey })
+              .end(function (err, res) {
                 if (res && res.ok) {
                   if (res.redirects.length) {
                     let stream = fs.createWriteStream("pot/" + langCode + ".po");
@@ -519,7 +521,7 @@ module.exports = function(grunt) {
                     });
 
                     agent.get(res.redirects[0])
-                      .set({"Authorization": "Bearer " + transifexApiKey})
+                      .set({ "Authorization": "Bearer " + transifexApiKey })
                       .pipe(stream);
 
                   } else {
@@ -544,8 +546,8 @@ module.exports = function(grunt) {
     let url = baseurl + "/resource_language_stats/o:otf:p:globaleaks:r:master:l:" + langCode;
 
     agent.get(url)
-      .set({"Authorization": "Bearer " + transifexApiKey})
-      .end(function(err, res) {
+      .set({ "Authorization": "Bearer " + transifexApiKey })
+      .end(function (err, res) {
         if (res && res.ok) {
           let content = JSON.parse(res.text);
 
@@ -562,13 +564,13 @@ module.exports = function(grunt) {
       });
   }
 
-  function fetchTxTranslations(cb){
+  function fetchTxTranslations(cb) {
     let fetched_languages = 0,
       total_languages,
       supported_languages = {};
 
-    listLanguages(function(result) {
-      result.data = result.data.sort(function(a, b) {
+    listLanguages(function (result) {
+      result.data = result.data.sort(function (a, b) {
         if (a.code > b.code) {
           return 1;
         }
@@ -582,8 +584,8 @@ module.exports = function(grunt) {
 
       total_languages = result.data.length;
 
-      let fetchLanguage = function(language) {
-        fetchTxTranslationsForLanguage(language.attributes.code, function(ret){
+      let fetchLanguage = function (language) {
+        fetchTxTranslationsForLanguage(language.attributes.code, function (ret) {
           if (ret) {
             console.log("Fetched " + language.attributes.code);
             supported_languages[language.attributes.code] = language.attributes.name;
@@ -598,7 +600,7 @@ module.exports = function(grunt) {
 
             for (let i in sorted_keys) {
               console.log(" { \"code\": \"" + sorted_keys[i] +
-                "\", \"name\": \"" + supported_languages[sorted_keys[i]] +"\" },");
+                "\", \"name\": \"" + supported_languages[sorted_keys[i]] + "\" },");
             }
 
             cb(supported_languages);
@@ -612,7 +614,7 @@ module.exports = function(grunt) {
     });
   }
 
-  grunt.registerTask("makeTranslationsSource", function() {
+  grunt.registerTask("makeTranslationsSource", function () {
     let data = {
       "charset": "UTF-8",
       "headers": {
@@ -681,7 +683,7 @@ module.exports = function(grunt) {
       let filecontent = grunt.file.read(filepath),
         lines = filecontent.split("\n");
 
-      for (let i=0; i<lines.length; i++){
+      for (let i = 0; i < lines.length; i++) {
         // we skip adding empty strings and variable only strings
         if (lines[i] !== "" && !lines[i].match(/^{[a-zA-Z0-9]+}/g)) {
           addString(lines[i]);
@@ -702,7 +704,7 @@ module.exports = function(grunt) {
     }
 
     function extractStringsFromDir(dir) {
-      grunt.file.recurse(dir, function(absdir, rootdir, subdir, filename) {
+      grunt.file.recurse(dir, function (absdir, rootdir, subdir, filename) {
         let filepath = path.join(dir, subdir || "", filename || "");
         extractStringsFromFile(filepath);
       });
@@ -710,16 +712,16 @@ module.exports = function(grunt) {
 
     ["app/translations.html",
       "app/data_src/appdata.json",
-      "app/data/field_attrs.json"].forEach(function(file) {
-      extractStringsFromFile(file);
-    });
+      "app/data/field_attrs.json"].forEach(function (file) {
+        extractStringsFromFile(file);
+      });
 
     ["app/views",
       "app/data_src/questionnaires",
       "app/data_src/questions",
-      "app/data_src/txt"].forEach(function(dir) {
-      extractStringsFromDir(dir);
-    });
+      "app/data_src/txt"].forEach(function (dir) {
+        extractStringsFromDir(dir);
+      });
 
     grunt.file.mkdir("pot");
 
@@ -728,18 +730,18 @@ module.exports = function(grunt) {
     console.log("Written " + Object.keys(data["translations"][""]).length + " string to pot/en.po.");
   });
 
-  grunt.registerTask("☠☠☠pushTranslationsSource☠☠☠", function() {
+  grunt.registerTask("☠☠☠pushTranslationsSource☠☠☠", function () {
     updateTxSource(this.async());
   });
 
-  grunt.registerTask("fetchTranslations", function() {
+  grunt.registerTask("fetchTranslations", function () {
     let done = this.async(),
       gt = new Gettext(),
       lang_code;
 
     gt.setTextDomain("main");
 
-    fetchTxTranslations(function(supported_languages) {
+    fetchTxTranslations(function (supported_languages) {
       gt.addTranslations("en", "main", gettextParser.po.parse(fs.readFileSync("pot/en.po")));
       let strings = Object.keys(gettextParser.po.parse(fs.readFileSync("pot/en.po"))["translations"][""]);
 
@@ -767,14 +769,14 @@ module.exports = function(grunt) {
     });
   });
 
-  grunt.registerTask("makeAppData", function() {
+  grunt.registerTask("makeAppData", function () {
     let done = this.async(),
       gt = new Gettext(),
       supported_languages = [];
 
     gt.setTextDomain("main");
 
-    grunt.file.recurse("pot/", function(absdir, rootdir, subdir, filename) {
+    grunt.file.recurse("pot/", function (absdir, rootdir, subdir, filename) {
       supported_languages.push(filename.replace(/.po$/, ""));
     });
 
@@ -784,12 +786,12 @@ module.exports = function(grunt) {
       templates = appdata["templates"],
       templates_sources = {};
 
-    let translate_object = function(object, keys) {
+    let translate_object = function (object, keys) {
       for (let k in keys) {
         if (object[keys[k]]["en"] === "")
           continue;
 
-        supported_languages.forEach(function(lang_code) {
+        supported_languages.forEach(function (lang_code) {
           gt.setLocale(lang_code);
           let translation = gt.gettext(str_escape(object[keys[k]]["en"]));
           if (translation !== undefined) {
@@ -799,7 +801,7 @@ module.exports = function(grunt) {
       }
     };
 
-    let translate_field = function(field) {
+    let translate_field = function (field) {
       let i;
       translate_object(field, ["label", "description", "hint"]);
 
@@ -816,7 +818,7 @@ module.exports = function(grunt) {
       }
     };
 
-    let translate_step = function(step) {
+    let translate_step = function (step) {
       translate_object(step, ["label", "description"]);
 
       for (let c in step["children"]) {
@@ -824,22 +826,22 @@ module.exports = function(grunt) {
       }
     };
 
-    let translate_questionnaire = function(questionnaire) {
-      questionnaire["steps"].forEach(function(step) {
+    let translate_questionnaire = function (questionnaire) {
+      questionnaire["steps"].forEach(function (step) {
         translate_step(step);
       });
     };
 
     gt.addTranslations("en", "main", gettextParser.po.parse(fs.readFileSync("pot/en.po")));
 
-    grunt.file.recurse("app/data_src/txt", function(absdir, rootdir, subdir, filename) {
+    grunt.file.recurse("app/data_src/txt", function (absdir, rootdir, subdir, filename) {
       let template_name = filename.split(".txt")[0],
         filepath = path.join("app/data_src/txt", subdir || "", filename || "");
 
       templates_sources[template_name] = grunt.file.read(filepath);
     });
 
-    supported_languages.forEach(function(lang_code) {
+    supported_languages.forEach(function (lang_code) {
       gt.setLocale(lang_code);
       gt.addTranslations(lang_code, "main", gettextParser.po.parse(fs.readFileSync("pot/" + lang_code + ".po")));
 
@@ -852,7 +854,7 @@ module.exports = function(grunt) {
 
         let lines = templates_sources[template_name].split("\n");
 
-        for (let i=0; i<lines.length; i++) {
+        for (let i = 0; i < lines.length; i++) {
           let translation = gt.gettext(str_escape(lines[i]));
           if (translation === undefined) {
             continue;
@@ -874,7 +876,7 @@ module.exports = function(grunt) {
 
     for (let k in appdata["node"]) {
       output["node"][k] = {};
-      supported_languages.forEach(function(lang_code) {
+      supported_languages.forEach(function (lang_code) {
         gt.setLocale(lang_code);
         output["node"][k][lang_code] = str_unescape(gt.gettext(str_escape(appdata["node"][k]["en"])));
       });
@@ -884,7 +886,7 @@ module.exports = function(grunt) {
 
     fs.writeFileSync("app/data/appdata.json", output);
 
-    grunt.file.recurse("app/data_src/questionnaires", function(absdir, rootdir, subdir, filename) {
+    grunt.file.recurse("app/data_src/questionnaires", function (absdir, rootdir, subdir, filename) {
       let srcpath = path.join("app/data_src/questionnaires", subdir || "", filename || "");
       let dstpath = path.join("app/data/questionnaires", subdir || "", filename || "");
       let questionnaire = JSON.parse(fs.readFileSync(srcpath));
@@ -892,7 +894,7 @@ module.exports = function(grunt) {
       fs.writeFileSync(dstpath, JSON.stringify(questionnaire, null, 2));
     });
 
-    grunt.file.recurse("app/data_src/questions", function(absdir, rootdir, subdir, filename) {
+    grunt.file.recurse("app/data_src/questions", function (absdir, rootdir, subdir, filename) {
       let srcpath = path.join("app/data_src/questions", subdir || "", filename || "");
       let dstpath = path.join("app/data/questions", subdir || "", filename || "");
       let field = JSON.parse(fs.readFileSync(srcpath));
@@ -903,19 +905,19 @@ module.exports = function(grunt) {
     done();
   });
 
-  grunt.registerTask("verifyAppData", function() {
+  grunt.registerTask("verifyAppData", function () {
     let app_data = JSON.parse(fs.readFileSync("app/data/appdata.json"));
     let var_map = JSON.parse(fs.readFileSync("app/data/templates_descriptor.json"));
 
     let failures = [];
 
     function recordFailure(template_name, lang, text, msg) {
-      let line = template_name + " : "+ lang + " : " + msg;
+      let line = template_name + " : " + lang + " : " + msg;
       failures.push(line);
     }
 
     function checkIfRightTagsUsed(variables, lang, text, template_name, expected_tags) {
-      expected_tags.forEach(function(tag) {
+      expected_tags.forEach(function (tag) {
         if (text.indexOf(tag) === -1) {
           recordFailure(template_name, lang, text, "missing expected tag: " + tag);
         }
@@ -943,7 +945,7 @@ module.exports = function(grunt) {
         recordFailure(template_name, lang, text, "mistaken variable tags");
       }
 
-      tags.forEach(function(tag) {
+      tags.forEach(function (tag) {
         if (variables.indexOf(tag) < 0) {
           recordFailure(template_name, lang, text, "invalid tag " + tag);
         }
@@ -964,7 +966,7 @@ module.exports = function(grunt) {
     }
 
     if (failures.length !== 0) {
-      failures.forEach(function(failure) {
+      failures.forEach(function (failure) {
         console.log(failure);
       });
 
