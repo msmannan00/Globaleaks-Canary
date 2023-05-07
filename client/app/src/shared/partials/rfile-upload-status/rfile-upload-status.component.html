@@ -5,7 +5,11 @@
                 <div class="imgPreview">
                     <img alt="preview picture" [flowSrc]="file" *ngIf="utilsService.showFilePreview(file.flowFile.file.type)" />
                 </div>
-                <div class="fileButtons">
+                {{formuploader}}
+                {{file.flowFile.isComplete()}}
+                {{file.flowFile.isUploading()}}
+
+                <div class="fileButtons" *ngIf="!formuploader || (!file.flowFile.isComplete() && !file.flowFile.isUploading())">
                     <div *ngIf="appDataService.page === 'submissionpage' || !file.complete" class="removeFileButton text-danger">
                         <div class="btn btn-sm btn-danger" (click)="file.flowFile.cancel()"><i class="fa-solid fa-times" aria-label="{'Remove' | translate}"></i></div>
                     </div>

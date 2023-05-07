@@ -48,6 +48,11 @@ export class HttpService{
     return this.httpClient.post("api/reset/password", param,{'headers':headers })
   }
 
+  requestReportSubmission(param: string): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.post("api/submission", param,{'headers':headers })
+  }
+
   requestSuppor(param: string): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.post("api/support", param,{'headers':headers })

@@ -38,7 +38,6 @@
 						],
 						"styles": [
 							"node_modules/bootstrap/dist/css/bootstrap.css",
-							"node_modules/bootstrap/dist/css/bootstrap.rtl.css",
 							"app/css/ui-select-bootstrap4-fix.css",
 							"app/css/loader.css",
 							"app/css/main.css",

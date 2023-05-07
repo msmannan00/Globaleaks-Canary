@@ -16,6 +16,10 @@ export class SubmissionResourceService {
     this.context_id = context_id
   }
 
+  save(){
+
+  }
+
   constructor() {
   }
 }

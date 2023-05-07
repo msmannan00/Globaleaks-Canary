@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {AppDataService} from "../app-data.service";
 import {AuthenticationService} from "./authentication.service";
 import {SubmissionResourceService} from "./submission-resource.service";
+import {HttpService} from "../shared/services/http.service";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,9 @@ export class SubmissionService {
   mandatory_receivers = 0;
   optional_receivers = 0;
   selected_receivers:any = {};
+  blocked = false
+  uploads:any = {}
+  errorComponentState:any = {}
 
   setContextReceivers(context_id:number){
     this.context = this.appDataService.contexts_by_id[context_id];
@@ -62,20 +67,40 @@ export class SubmissionService {
   submit() {
     this._submission.receivers = [];
     let self = this
-    this.selected_receivers.forEach(function (selected:any, id:any) {
-      if (selected) {
-        self._submission.receivers.push(id);
-      }
-    });
 
-    return this._submission.$save().then(function(response:any) {
-      location.pathname = "/";
-      self.authenticationService.session.receipt = response.receipt;
-      self.appDataService.page = "receiptpage";
-    });
+    for (const key in this.selected_receivers) {
+      if (this.selected_receivers.hasOwnProperty(key)) {
+        alert(key)
+        self._submission.receivers.push(key);
+      }
+    }
+
+    let _submission_data =  {
+      context_id: this._submission.context_id,
+      receivers: this._submission.receivers,
+      identity_provided: this._submission.identity_provided,
+      answers: this._submission.answers,
+      answer: this._submission.answer,
+      score: this._submission.score
+    };
+
+    const param=JSON.stringify(_submission_data);
+    this.httpService.requestReportSubmission(param).subscribe
+    (
+        {
+          next: response => {
+            location.pathname = "/";
+            self.authenticationService.session.receipt = response.receipt;
+            self.appDataService.page = "receiptpage";
+          },
+          error: (error: any) => {
+            alert(JSON.stringify(error))
+          }
+        }
+    );
   };
 
-  constructor(public appDataService:AppDataService, public authenticationService:AuthenticationService, public  submissionResourceService:SubmissionResourceService) {
+  constructor(private router: Router, public httpService: HttpService, public appDataService:AppDataService, public authenticationService:AuthenticationService, public  submissionResourceService:SubmissionResourceService) {
     this.self = this;
 
   }

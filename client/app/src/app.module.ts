@@ -30,6 +30,7 @@ import {MarkdownModule} from "ngx-markdown";
 import {ReceiptvalidatorDirective} from "./shared/directive/receiptvalidator.directive";
 import { NgxFlowModule, FlowInjectionToken } from '@flowjs/ngx-flow';
 import * as Flow from "@flowjs/flow.js";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './data/i18n/', '.json');
@@ -38,6 +39,7 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
   declarations: [AppComponent, HeaderComponent, UserComponent, HomeComponent],
   imports: [
+    NgbModule,
     HttpClientModule,
     AppRoutingModule,
     SharedModule,

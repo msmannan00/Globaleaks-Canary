@@ -51,6 +51,7 @@ import {
 } from "./pages/field/whistleblower-identity-field/whistleblower-identity-field.component";
 import {NgxFlowModule} from "@flowjs/ngx-flow";
 import { RfilesUploadStatusComponent } from './shared/partials/rfiles-upload-status/rfiles-upload-status.component';
+import { NgFormChangeDirective } from './shared/directive/ng-form-change.directive';
 
 @NgModule({
     imports: [
@@ -105,7 +106,8 @@ import { RfilesUploadStatusComponent } from './shared/partials/rfiles-upload-sta
         FilterPipe,
         RequestSupportComponent,
         WhistleblowerIdentityFieldComponent,
-        RfilesUploadStatusComponent
+        RfilesUploadStatusComponent,
+        NgFormChangeDirective
     ],
     exports: [
         FooterComponent,
@@ -127,5 +129,8 @@ import { RfilesUploadStatusComponent } from './shared/partials/rfiles-upload-sta
         TipMessagesComponent,
         TipReceiverListComponent,
         RfileUploadStatusComponent,
+        RfileUploadButtonComponent,
+        RfilesUploadStatusComponent,
+        NgFormChangeDirective,
     ]})
 export class SharedModule { }

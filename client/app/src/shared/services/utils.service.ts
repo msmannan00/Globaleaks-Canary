@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {RequestSupportComponent} from "../modals/request-support/request-support.component";
 import {HttpService} from "./http.service";
+import {Transfer} from "@flowjs/ngx-flow";
 
 @Injectable({
   providedIn: 'root'
@@ -21,14 +22,23 @@ export class UtilsService {
   }
 
   isUploading(uploads?:any){
-    for (let key in uploads) {
-      if (uploads[key] &&
-          uploads[key].isUploading &&
-          uploads[key].isUploading()) {
-        return true;
+
+    if(uploads){
+      for (let key in uploads) {
+        if(uploads[key].flowFile && uploads[key].flowFile.isUploading()){
+          return true;
+        }
       }
     }
     return false;
+  }
+
+  resumeFileUploads(uploads: any){
+    for (let key in uploads) {
+      if (uploads[key] && uploads[key].flowFile) {
+        uploads[key].flowFile.resume()
+      }
+    }
   }
 
   getCardSize(num:number) {
@@ -43,8 +53,18 @@ export class UtilsService {
     }
   }
 
+  windowScrolled = false
+  onWindowScroll() {
+    if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
+      this.windowScrolled = true;
+    }
+    else if (this.windowScrolled && window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop < 10) {
+      this.windowScrolled = false;
+    }
+  }
+
   scrollToTop() {
-    window.document.getElementsByTagName("body")[0].scrollIntoView();
+    document.documentElement.scrollTop = 0;
   }
 
   reloadCurrentRoute() {

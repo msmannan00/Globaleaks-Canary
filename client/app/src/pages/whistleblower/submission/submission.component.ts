@@ -1,10 +1,10 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {AppDataService} from "../../../app-data.service";
 import {FieldUtilitiesService} from "../../../shared/services/field-utilities.service";
 import {SubmissionService} from "../../../services/submission.service";
 import {UtilsService} from "../../../shared/services/utils.service";
 import {AuthenticationService} from "../../../services/authentication.service";
-import {NgForm} from "@angular/forms";
+import {AbstractControl, FormGroup, NgForm} from "@angular/forms";
 
 @Component({
   selector: 'src-submission',
@@ -12,9 +12,10 @@ import {NgForm} from "@angular/forms";
   styleUrls: ['./submission.component.css']
 })
 export class SubmissionComponent{
-
   answers:any = {};
   @ViewChild('submissionForm') public submissionForm: NgForm;
+  @ViewChildren('stepform') stepforms: QueryList<NgForm>;
+  stepformlist:any = {}
 
   context_id = "";
   context:any = undefined;
@@ -29,7 +30,7 @@ export class SubmissionComponent{
   receiver_selection_step: number;
   contextsOrderPredicate = this.appDataService.public.node.show_contexts_in_alphabetical_order ? "name" : "order";
   selectable_contexts :any[]
-  submission:any
+  submission:SubmissionService
   show_steps_navigation_bar = false
 
   firstStepIndex() {
@@ -76,6 +77,9 @@ export class SubmissionComponent{
     }
   };
 
+  onFieldUpdated(){
+  }
+
   selectContext(context: any) {
     this.context = context
     this.prepareSubmission(context)
@@ -121,16 +125,24 @@ export class SubmissionComponent{
     return this.firstStepIndex() === this.lastStepIndex();
   };
 
-  stepForm(index:number):any {
-    if (index !== -1) {
-      let form = document.getElementById("step-"+index);
-      return (form && form.querySelector(".inputelem.ng-invalid"));
+  initStepForm(form:NgForm, id:any){
+    this.stepformlist[id] = form
+  }
+
+  stepForm(index:any):any {
+    if (this.stepforms && index !== -1) {
+      return this.stepforms.get(index)
     }
   };
 
-  displayStepErrors(index:number) {
+  displayStepErrors(index:number):any {
     if (index !== -1) {
-      return this.stepForm(index);
+      let response = this.stepForm(index)
+      if(response){
+        return response?.invalid
+      }else {
+        return false
+      }
     }
   };
 
@@ -154,8 +166,38 @@ export class SubmissionComponent{
     return false;
   };
 
+  uploading(){
+    return this.utilsService.isUploading(this.uploads)
+  }
+
+  calculateEstimatedTime(){
+    let time = 0
+    for (let key in this.uploads) {
+      if(this.uploads[key].flowFile && this.uploads[key].flowFile.isUploading()){
+        time = time + this.uploads[key].flowFile.timeRemaining()
+      }
+    }
+    return time
+  }
+
+  calculateProgress(){
+    let progress = 0
+    let totalFiles = 0
+    for (let key in this.uploads) {
+      if(this.uploads[key].flowFile){
+        progress = progress + this.uploads[key].flowFile.timeRemaining()
+        totalFiles+=1
+      }
+    }
+    if(totalFiles==0){
+      return 0
+    }
+
+    return (100 - (progress/totalFiles)*100)
+  }
+
   displayErrors() {
-    if (!(this.validate[this.navigation] || this.submission.done)) {
+    if (!(this.validate[this.navigation])) {
       return false;
     }
 
@@ -166,69 +208,53 @@ export class SubmissionComponent{
     if (!this.hasNextStep() && this.submissionHasErrors()) {
       return true;
     }
-    if (this.displayStepErrors(this.navigation)) {
+    if(this.displayStepErrors(this.navigation)) {
       return true;
     }
     return false;
   };
 
   checkForInvalidFields() {
-    for(var i = 0; i <= this.navigation; i++) {
-      if (this.questionnaire.steps[i].enabled) {
-        let form = document.getElementById("step_" + i);
-        if(form){
-          let firstInvalid = form.querySelector(".inputelem.ng-invalid");
-
-          if (firstInvalid) {
-            return false;
-          }
-        }
+    for(let counter = 0; counter <= this.stepforms.length; counter++) {
+      if (this.stepforms.get(counter)?.invalid) {
+        return false
       }
     }
-
     return true;
   }
 
-  completeSubmission(){
+  completeSubmission(event: Event){
     this.fieldUtilitiesService.onAnswersUpdate(this);
-
-    this.validate[this.navigation] = true;
-
-    if (!this.checkForInvalidFields()) {
-      this.utilsService.scrollToTop();
+    event.preventDefault();
+    if (!this.runValidation()) {
+      this.utilsService.scrollToTop()
       return;
     }
 
-    //this.done = true;
+    this.done = true;
 
-    for (let key in this.uploads) {
-      if (this.uploads[key]) {
-        this.uploads[key].resume();
-      }
-    }
+    this.submission._submission.answers = this.answers;
 
-    //let self = this
+    this.utilsService.resumeFileUploads(this.uploads);
+
     setInterval(() => {
-      for (let key in this.uploads) {
-        if (this.uploads[key] &&
-            this.uploads[key].isUploading &&
-            this.uploads[key].isUploading()) {
-          return;
+      if(this.uploads){
+        for (let key in this.uploads) {
+
+          if(this.uploads[key].flowFile && this.uploads[key].flowFile.isUploading()){
+            return
+          }
         }
       }
 
-      // return $http.post("api/wbtip/" + $scope.tip.id + "/update",{"cmd": "additional_questionnaire", "answers": this.answers}).
-      // then(function(){
-      //   self.utilsService.reloadCurrentRoute()
-      // });
+      return this.submission.submit();
     }, 1000);
   }
 
   runValidation() {
     this.validate[this.navigation] = true;
 
-    if (this.navigation > -1 && !this.checkForInvalidFields()) {
-      this.utilsService.scrollToTop();
+    if (!this.areReceiversSelected() || !this.checkForInvalidFields()) {
       return false;
     }
 
@@ -265,8 +291,11 @@ export class SubmissionComponent{
     }
   };
 
+  onFormChange() {
+    this.fieldUtilitiesService.onAnswersUpdate(this);
+  }
+
   constructor(public authenticationService:AuthenticationService, public appDataService:AppDataService,public utilsService:UtilsService ,public fieldUtilitiesService:FieldUtilitiesService, public submissionService:SubmissionService) {
     this.initializeSubmission();
   }
-
 }

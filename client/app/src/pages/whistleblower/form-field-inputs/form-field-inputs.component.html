@@ -11,8 +11,7 @@
     <div class="question-body">
         <markdown *ngIf="field.description" class="description" [data]="field.description | stripHtml"></markdown>
         <div class="form-group">
-            <div class="fieldAnswerEntry" *ngFor="let entry of entries; let entryIndex = index">
-<!--            <div class="fieldAnswerEntry" *ngFor="let entry of entries; let entryIndex = index" [ngClass]="{'fieldAnswerEntryFirst': $first, 'fieldAnswerEntryLast': $last}">-->
+            <div class="fieldAnswerEntry" *ngFor="let entry of entries; let entryIndex = index;let first = first;let last = last;" [ngClass]="{'fieldAnswerEntryFirst': first, 'fieldAnswerEntryLast': last}">
                     <div class="fieldAnswerEntryLabel clearfix" *ngIf="entries.length > 1">
                         <span class="float-left">
                             <label class="text-muted">
@@ -25,12 +24,11 @@
                             </span>
                         </span>
                     </div>
-                <src-form-field-input [displayErrors]="displayErrors" [entry]="entry" [entryIndex]="entryIndex" [fieldEntry]="fieldEntry" [submission]="submission" [field]="field" [index]="entryIndex"></src-form-field-input>
-                <!--                </div>-->
+
+               <src-form-field-input [uploads]="uploads" [fields]="fields" [step]="step" [answers]="answers" [fieldId]="fieldId" [displayErrors]="displayErrors" [entry]="entry" [entryIndex]="entryIndex" [fieldEntry]="fieldEntry" [submission]="submission" [field]="field" [index]="entryIndex"></src-form-field-input>
             </div>
             <div *ngIf="field.multi_entry && field.type === 'fieldgroup'" class="float-right">
                 <button class="btn btn-outline-secondary" (click)="addAnswerEntry()">
-<!--                <button class="btn btn-outline-secondary" (click)="addAnswerEntry(entries, field.id)" aria-label="{{'Add' | translate}}">-->
                     <i class="fa-solid fa-plus"></i>
                 </button>
             </div>
