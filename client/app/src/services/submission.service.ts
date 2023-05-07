@@ -70,7 +70,6 @@ export class SubmissionService {
 
     for (const key in this.selected_receivers) {
       if (this.selected_receivers.hasOwnProperty(key)) {
-        alert(key)
         self._submission.receivers.push(key);
       }
     }
@@ -94,7 +93,6 @@ export class SubmissionService {
             self.appDataService.page = "receiptpage";
           },
           error: (error: any) => {
-            alert(JSON.stringify(error))
           }
         }
     );

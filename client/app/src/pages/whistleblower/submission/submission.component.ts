@@ -223,9 +223,8 @@ export class SubmissionComponent{
     return true;
   }
 
-  completeSubmission(event: Event){
+  completeSubmission(){
     this.fieldUtilitiesService.onAnswersUpdate(this);
-    event.preventDefault();
     if (!this.runValidation()) {
       this.utilsService.scrollToTop()
       return;
@@ -237,7 +236,7 @@ export class SubmissionComponent{
 
     this.utilsService.resumeFileUploads(this.uploads);
 
-    setInterval(() => {
+    let intervalId = setInterval(() => {
       if(this.uploads){
         for (let key in this.uploads) {
 
@@ -247,7 +246,8 @@ export class SubmissionComponent{
         }
       }
 
-      return this.submission.submit();
+      this.submission.submit();
+      clearInterval(intervalId); // Clear the interval
     }, 1000);
   }
 

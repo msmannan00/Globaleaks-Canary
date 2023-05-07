@@ -43,10 +43,14 @@ export class RfileUploadButtonComponent implements AfterViewInit, OnDestroy, OnI
 
       self.confirmButton = false;
       self.showerror = false
-      if(self.uploads[self.fileinput]){
+      if(self.uploads && self.uploads[self.fileinput]){
         self.uploads[self.fileinput] = {}
       }
       event.transfers.forEach(function(file){
+        if(!self.uploads){
+          self.uploads = {}
+        }
+
         self.uploads[self.fileinput] = file
 
         if(file.paused && self.errorFile){
@@ -62,17 +66,15 @@ export class RfileUploadButtonComponent implements AfterViewInit, OnDestroy, OnI
         }
       });
       // if(this.uploads && this.uploads[this.fileinput]){
-        // this.submission.uploads[this.fileinput] = this.uploads[this.fileinput]
+      // this.submission.uploads[this.fileinput] = this.uploads[this.fileinput]
       // }
     });
   }
 
   deleteFile(){
-    alert(JSON.stringify(this.errorFile))
   }
 
   ngOnDestroy(): void {
-    this._fakemodel = null
   }
 
   constructor(public authenticationService:AuthenticationService, public appDataService:AppDataService) {

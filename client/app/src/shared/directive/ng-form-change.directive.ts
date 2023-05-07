@@ -13,7 +13,7 @@ export class NgFormChangeDirective implements OnInit, OnDestroy{
   constructor(private ngForm: NgForm) { }
 
   ngOnInit() {
-    this.formSubscription = this.ngForm.form.valueChanges.pipe(debounceTime(250)).subscribe(() => {
+    this.formSubscription = this.ngForm.form.valueChanges.pipe(debounceTime(150)).subscribe(() => {
       this.formChange.emit();
     });
   }

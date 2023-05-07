@@ -4,7 +4,7 @@
     <div class="drag-drop" flowDrop [flow]="flowAdvanced.flowJs">
         <div class="custom-file">
 
-            <input #uploader [attr.id]="fileinput" id="customFile-{{fileinput}}" flowButton [flow]="flowAdvanced.flowJs" [(ngModel)]="_fakemodel[fileinput]" [style.display]="'none'" class="custom-file-input inputelem" [required]="field && field.required"/>
+            <input #uploader [attr.id]="fileinput" id="customFile-{{fileinput}}" flowButton [flow]="flowAdvanced.flowJs" [style.display]="'none'" class="custom-file-input inputelem" [required]="field && field.required"/>
             <label [attr.for]="fileinput" class="btn btn-sm btn-outline-secondary">
                 <i class="fa-solid fa-upload"></i>
                 <span>{{'Upload'|translate}}</span>

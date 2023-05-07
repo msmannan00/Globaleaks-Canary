@@ -56,7 +56,7 @@
             </button>
 
             <src-rfiles-upload-status [progress]="calculateProgress()" [estimatedtime]="calculateEstimatedTime()" [uploading]="uploading()" *ngIf="!hasNextStep()"></src-rfiles-upload-status>
-            <button id="SubmitButton" class="btn btn-primary" *ngIf="!hasNextStep()" (click)="completeSubmission($event)" [disabled]="!authenticationService.session || submission.blocked || done" type="submit">{{'Submit'|translate}}</button>
+            <button id="SubmitButton" class="btn btn-primary" *ngIf="!hasNextStep()" (click)="completeSubmission()" [disabled]="!authenticationService.session || submission.blocked || done" type="submit">{{'Submit'|translate}}</button>
         </div>
     </form>
 </div>
