@@ -225,6 +225,7 @@ export class SubmissionComponent{
 
   completeSubmission(){
     this.fieldUtilitiesService.onAnswersUpdate(this);
+
     if (!this.runValidation()) {
       this.utilsService.scrollToTop()
       return;

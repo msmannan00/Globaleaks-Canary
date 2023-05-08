@@ -29,7 +29,7 @@ export class TippageComponent {
   rows:any
   questionnaire: any;
   private submission: any;
-  private tip:any
+  public tip:any
   questionnaires:any
   private fields: any;
 
@@ -168,4 +168,5 @@ export class TippageComponent {
   constructor(public authenticationService:AuthenticationService, public utilsService:UtilsService, public appDataService:AppDataService, public fieldUtilities:FieldUtilitiesService, private activatedRoute: ActivatedRoute, private httpService:HttpService, public wbtipService:WbtipService) {
   }
 
+  protected readonly JSON = JSON;
 }

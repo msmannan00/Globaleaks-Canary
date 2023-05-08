@@ -5,14 +5,14 @@
         </div>
         <div *ngSwitchDefault [ngSwitch]="field.type">
 
-            <div *ngSwitchCase="'textarea'" data-ng-model-options="{'debounce':250}">
+            <div *ngSwitchCase="'textarea'">
                   <textarea
                           id="{{fieldEntry}}"
                           [name] = input_entryIndex
                           class="form-control inputelem"
                           [minlength]="field.attrs.min_len.value"
                           [maxlength]="field.attrs.max_len.value"
-                          [(ngModel)]="entryvalue"
+                          [(ngModel)]="entry['value']"
                           [required]="entry.required_status"
                           #textarea="ngModel"
                           [attr.aria-label]="field.label"
