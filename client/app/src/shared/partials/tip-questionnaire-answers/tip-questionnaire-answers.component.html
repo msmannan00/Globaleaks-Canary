@@ -25,8 +25,9 @@
 				</dt>
 				<div *ngIf="step.enabled">
 					<div *ngFor="let field of step.children | orderBy:['y', 'x']; let index_step = index">
-						<src-tip-field [fieldAnswers]="questionnaire.answers" [fields]="field"
-							[index]="index_step"></src-tip-field>
+						<ng-container *ngIf="field.type!='fileupload'">
+							<src-tip-field [fieldAnswers]="questionnaire.answers" [fields]="field" [index]="index_step"></src-tip-field>
+						</ng-container>
 					</div>
 				</div>
 			</div>
