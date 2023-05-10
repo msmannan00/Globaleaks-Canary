@@ -122,8 +122,8 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
     this.answers = {};
     this.uploads = {};
     this.questionnaire = this.wbtipService.tip.additional_questionnaire;
-    this.field_id_map = this.fieldUtilitiesService.build_field_id_map(this.questionnaire);
     this.fieldUtilitiesService.onAnswersUpdate(this);
+    this.field_id_map = this.fieldUtilitiesService.build_field_id_map(this.questionnaire);
   };
 
   completeSubmission(){
