@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {WbtipService} from "../../../services/wbtip.service";
 import {UtilsService} from "../../services/utils.service";
 import {orderBy} from "lodash";
@@ -11,6 +11,11 @@ import {orderBy} from "lodash";
 export class WhistleblowerIdentityComponent {
   collapsed = false;
   protected readonly JSON = JSON;
+  @Input() field:any
+  @Input() step:any
+  @Input() answers:any
+  identity_provided:boolean = false
+  @Output() provideIdentityInformation = new EventEmitter<{ param1: any, param2: any }>();
 
   public toggleColapse(){
     this.collapsed = !this.collapsed
@@ -20,7 +25,7 @@ export class WhistleblowerIdentityComponent {
     this.collapsed = this.wbtipService.tip.data.whistleblower_identity_provided
   }
 
-    provideIdentityInformation(id:any, answers: any) {
-
-    }
+  stateChanged(status:boolean){
+    this.identity_provided = status
+  }
 }

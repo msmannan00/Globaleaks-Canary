@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ControlContainer, NgForm} from "@angular/forms";
 
 @Component({
@@ -10,6 +10,7 @@ import {ControlContainer, NgForm} from "@angular/forms";
 export class WhistleblowerIdentityFieldComponent implements OnInit{
   @Input() submission:any
   @Input() field:any
+  @Output() stateChanged = new EventEmitter<boolean>();
 
   @Input() stepId:any
   @Input() fieldCol:any
@@ -21,14 +22,17 @@ export class WhistleblowerIdentityFieldComponent implements OnInit{
   @Input() fields:any
   @Input() displayErrors:any
   @Input() identity_provided:any = false
+  @Input() identitychanged:any
 
   protected readonly JSON = JSON;
 
   changeIdentitySetting(status:boolean): void {
     this.identity_provided = status
+    this.stateChanged.emit(status)
   }
 
   ngOnInit(): void {
     this.identity_provided = true
+    this.stateChanged.emit(true)
   }
 }

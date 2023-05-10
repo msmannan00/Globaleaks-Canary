@@ -90,6 +90,11 @@ export class HttpService{
     return this.httpClient.post("api/wbtip/"+tipid+"/update", param,{'headers':headers })
   }
 
+  whistleBlowerIdentityUpdate(param: any, tipid:string): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.post("api/wbtip/"+tipid+"/provideidentityinformation", param,{'headers':headers })
+  }
+
   requestAdminTenantResource(param: any): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.get("api/admin/tenants", {'headers':headers, params: param })

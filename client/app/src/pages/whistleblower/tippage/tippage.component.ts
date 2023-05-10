@@ -22,7 +22,7 @@ export class TippageComponent {
   currentCommentsPage = 1;
   currentMessagesPage = 1;
   answers = {};
-  uploads = {};
+  uploads:any = {};
   showEditLabelInput = false;
   score = 0;
   ctx:string;
@@ -32,6 +32,7 @@ export class TippageComponent {
   public tip:any
   questionnaires:any
   private fields: any;
+  identity_provided = false
 
   openGrantTipAccessModal() {
 
@@ -163,6 +164,35 @@ export class TippageComponent {
           }
         }
     )
+  }
+
+  provideIdentityInformation(eventData: { param1: string, param2: number }) {
+    let intervalId = setInterval(() => {
+      if(this.uploads){
+        for (let key in this.uploads) {
+
+          if(this.uploads[key].flowFile && this.uploads[key].flowFile.isUploading()){
+            return
+          }
+        }
+      }
+
+      this.httpService.whistleBlowerIdentityUpdate({"identity_field_id": this.tip.whistleblower_identity_field.id, "identity_field_answers": this.answers}, this.wbtipService.tip.id).subscribe
+      (
+          {
+            next: response => {
+              this.utilsService.reloadCurrentRoute()
+            },
+            error: (error: any) => {
+              alert(JSON.stringify(error))
+            }
+          }
+      );
+
+      this.utilsService.reloadCurrentRoute()
+      clearInterval(intervalId); // Clear the interval
+    }, 1000);
+
   }
 
   constructor(public authenticationService:AuthenticationService, public utilsService:UtilsService, public appDataService:AppDataService, public fieldUtilities:FieldUtilitiesService, private activatedRoute: ActivatedRoute, private httpService:HttpService, public wbtipService:WbtipService) {

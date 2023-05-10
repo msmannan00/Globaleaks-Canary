@@ -141,28 +141,31 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
       }
     }
 
-    if(this.uploads){
-      for (let key in this.uploads) {
+    let intervalId = setInterval(() => {
+      if(this.uploads){
+        for (let key in this.uploads) {
 
-        if(this.uploads[key].flowFile && this.uploads[key].flowFile.isUploading()){
-          return
-        }
-      }
-    }
-
-    this.httpService.whistleBlowerTipUpdate({"cmd": "additional_questionnaire", "answers": this.answers}, this.wbtipService.tip.id).subscribe
-    (
-        {
-          next: response => {
-            this.utilsService.reloadCurrentRoute()
-          },
-          error: (error: any) => {
-            alert(JSON.stringify(error))
+          if(this.uploads[key].flowFile && this.uploads[key].flowFile.isUploading()){
+            return
           }
         }
-    );
+      }
 
-    this.activeModal.dismiss()
+      this.httpService.whistleBlowerTipUpdate({"cmd": "additional_questionnaire", "answers": this.answers}, this.wbtipService.tip.id).subscribe
+      (
+          {
+            next: response => {
+              this.utilsService.reloadCurrentRoute()
+            },
+            error: (error: any) => {
+              alert(JSON.stringify(error))
+            }
+          }
+      );
+
+      clearInterval(intervalId);
+      this.activeModal.dismiss()
+    }, 1000);
   }
 
   stepForm(index:any):any {
