@@ -21,6 +21,7 @@ export class FormFieldInputsComponent implements OnInit{
   @Input() displayErrors: boolean;
   @Input() fields:any
   @Input() uploads:any
+  @Input() identity_provided:any
 
   fieldId:string
   entries: any;

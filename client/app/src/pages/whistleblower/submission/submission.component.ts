@@ -17,6 +17,7 @@ export class SubmissionComponent{
   @ViewChildren('stepform') stepforms: QueryList<NgForm>;
   stepformlist:any = {}
 
+  identity_provided = false
   context_id = "";
   context:any = undefined;
   receiversOrderPredicate:any
@@ -230,7 +231,7 @@ export class SubmissionComponent{
       this.utilsService.scrollToTop()
       return;
     }
-
+    this.submission._submission.identity_provided = this.identity_provided
     this.done = true;
 
     this.submission._submission.answers = this.answers;

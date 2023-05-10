@@ -10,7 +10,6 @@ import {orderBy} from "lodash";
 })
 export class WhistleblowerIdentityComponent {
   collapsed = false;
-  submission = {}
   protected readonly JSON = JSON;
 
   public toggleColapse(){

@@ -16,6 +16,7 @@ export class FormComponent implements OnInit{
   @Input() submission:any
   @Input() displayErrors: boolean;
   @Input() entry:any
+  @Input() identity_provided:any
 
   fields: any;
   stepId: string;

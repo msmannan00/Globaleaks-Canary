@@ -47,7 +47,6 @@ export class HttpService{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.post("api/reset/password", param,{'headers':headers })
   }
-
   requestReportSubmission(param: string): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.post("api/submission", param,{'headers':headers })
@@ -84,6 +83,11 @@ export class HttpService{
   whistleBlowerTip(param: any): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.get("api/wbtip", {'headers':headers, params: param })
+  }
+
+  whistleBlowerTipUpdate(param: any, tipid:string): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.post("api/wbtip/"+tipid+"/update", param,{'headers':headers })
   }
 
   requestAdminTenantResource(param: any): Observable<any>{

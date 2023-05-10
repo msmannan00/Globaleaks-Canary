@@ -1,7 +1,7 @@
 <div class="Question" [ngModelGroup]="fieldFormVarName" id="{{fieldFormVarName}}">
     <div [ngSwitch]="field.template_id">
         <div *ngSwitchCase="'whistleblower_identity'">
-            <src-whistleblower-identity-field [index]="index" [step]="rows" [entry]="entry" [fields]="fields" [answers]="answers" [displayErrors]="displayErrors" [submission]="submission" [field]="field"></src-whistleblower-identity-field>
+            <src-whistleblower-identity-field [identity_provided]="identity_provided" [index]="index" [step]="rows" [entry]="entry" [fields]="fields" [answers]="answers" [displayErrors]="displayErrors" [submission]="submission" [field]="field"></src-whistleblower-identity-field>
         </div>
         <div *ngSwitchDefault [ngSwitch]="field.type">
 
@@ -153,7 +153,7 @@
                     </div>
                 </div>
 
-                <src-form [displayErrors]="displayErrors" [entry]="entry" [answers]="answers" [step]="rows" [submission]="submission" [index]="index"></src-form>
+                <src-form [identity_provided]="identity_provided" [displayErrors]="displayErrors" [entry]="entry" [answers]="answers" [step]="rows" [submission]="submission" [index]="index"></src-form>
             </div>
             <div *ngSwitchDefault>
                 <input id="{{fieldEntry}}"

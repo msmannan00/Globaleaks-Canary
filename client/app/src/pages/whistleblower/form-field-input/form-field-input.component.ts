@@ -23,6 +23,7 @@ export class FormFieldInputComponent implements OnInit{
   @Input() answers:any
   @Input() fields:any
   @Input() uploads:any
+  @Input() identity_provided:any
 
   entryvalue: any = "";
   fieldFormVar: any = {};
@@ -61,7 +62,7 @@ export class FormFieldInputComponent implements OnInit{
 
   validateUploadSubmission(){
 
-    if(this.submission.uploads[this.field ? this.field.id : 'status_page']!=undefined && (this.field.type == 'fileupload' && this.submission.uploads && this.submission.uploads[this.field ? this.field.id : 'status_page'] && Object.keys(this.submission.uploads[this.field ? this.field.id : 'status_page']).length==0)){
+    if(this.uploads && this.uploads[this.field ? this.field.id : 'status_page']!=undefined && (this.field.type == 'fileupload' && this.uploads && this.uploads[this.field ? this.field.id : 'status_page'] && Object.keys(this.uploads[this.field ? this.field.id : 'status_page']).length==0)){
       return true
     }
 

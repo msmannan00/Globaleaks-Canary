@@ -498,6 +498,10 @@ input[type="file"] {
 	}
 }
 
+.modal-dialog{
+	max-width: 1000px;
+}
+
 .drag-drop {
 	padding: 1em;
 	background-color: #f5f7fa;

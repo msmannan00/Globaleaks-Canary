@@ -20,10 +20,15 @@ export class WhistleblowerIdentityFieldComponent implements OnInit{
   @Input() entry:any
   @Input() fields:any
   @Input() displayErrors:any
+  @Input() identity_provided:any = false
+
   protected readonly JSON = JSON;
 
+  changeIdentitySetting(status:boolean): void {
+    this.identity_provided = status
+  }
 
   ngOnInit(): void {
-    this.submission._submission.identity_provided = true
+    this.identity_provided = true
   }
 }

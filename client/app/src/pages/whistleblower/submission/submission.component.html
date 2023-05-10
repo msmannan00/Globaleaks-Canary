@@ -37,7 +37,7 @@
                         <span *ngIf="step && step.enabled && submission">
                             <div id="step-{{index}}" ngForm #stepform="ngForm" ngFormChanges (ngFormChange)="onFormChange()">
                                 <markdown *ngIf="step.description" class="description" [data]="step.description | stripHtml"></markdown>
-                                <src-form [uploads]="uploads" [displayErrors]="displayErrors()" [answers]="answers" [submission]="submission" [step]="step" [index]="index"></src-form>
+                                <src-form [identity_provided]=identity_provided [uploads]="uploads" [displayErrors]="displayErrors()" [answers]="answers" [submission]="submission" [step]="step" [index]="index"></src-form>
                             </div>
                         </span>
                     </div>

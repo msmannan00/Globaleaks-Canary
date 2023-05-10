@@ -29,8 +29,8 @@
 		</div>
 		<div *ngIf="wbtipService.tip.status !== 'closed' && !wbtipService.tip.data.whistleblower_identity">
 			<form #wbform="ngForm">
-				<src-whistleblower-identity-field></src-whistleblower-identity-field>
-				<src-rfile-upload-status></src-rfile-upload-status>
+<!--				<src-whistleblower-identity-field></src-whistleblower-identity-field>-->
+<!--				<src-rfile-upload-status></src-rfile-upload-status>-->
 				<div id="SubmitBox">
 					<button id="SubmitButton" class="btn btn-primary float-right"
 						(click)="provideIdentityInformation(wbtipService.tip.data.whistleblower_identity.id, wbtipService.tip.answers)"
