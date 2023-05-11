@@ -1,4 +1,14 @@
-import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {FlowDirective, Transfer} from "@flowjs/ngx-flow";
 import {Subscription} from "rxjs";
 import {AuthenticationService} from "../../../services/authentication.service";
@@ -21,6 +31,7 @@ export class RfileUploadButtonComponent implements AfterViewInit, OnDestroy, OnI
   @Input() field:any = undefined
   @ViewChild('flowAdvanced', { static: true }) flowAdvanced: FlowDirective;
   @ViewChild('uploader') uploader: ElementRef;
+  @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
 
   fileinput:any
   showerror:boolean
@@ -47,6 +58,7 @@ export class RfileUploadButtonComponent implements AfterViewInit, OnDestroy, OnI
         self.uploads[self.fileinput] = {}
       }
       event.transfers.forEach(function(file){
+
         if(!self.uploads){
           self.uploads = {}
         }
@@ -65,9 +77,7 @@ export class RfileUploadButtonComponent implements AfterViewInit, OnDestroy, OnI
           self.confirmButton = true
         }
       });
-      // if(this.uploads && this.uploads[this.fileinput]){
-      // this.submission.uploads[this.fileinput] = this.uploads[this.fileinput]
-      // }
+      this.notifyFileUpload.emit(this.uploads)
     });
   }
 

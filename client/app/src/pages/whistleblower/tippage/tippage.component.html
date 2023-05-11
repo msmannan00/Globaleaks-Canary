@@ -1,3 +1,4 @@
+
 <div id="Toolbar" class="row">
     <div class="col-md-12">
     <span id="link-reload"
@@ -32,7 +33,7 @@
         <src-tip-questionnaire-answers></src-tip-questionnaire-answers>
     </div>
     <div class="col-md-6" *ngIf="wbtipService.tip.enable_whistleblower_identity">
-        <src-whistleblower-identity (provideIdentityInformation)=provideIdentityInformation($event) [answers]="answers" [step]="this.tip.whistleblower_identity_field" [field]="this.tip.whistleblower_identity_field"></src-whistleblower-identity>
+        <src-whistleblower-identity (onFormUpdate)="onFormChange()" (provideIdentityInformation)=provideIdentityInformation($event) [answers]="answers" [step]="wbtipService.tip.whistleblower_identity_field" [field]="wbtipService.tip.whistleblower_identity_field"></src-whistleblower-identity>
     </div>
 </div>
 <div class="row">

@@ -181,21 +181,26 @@ export class TippageComponent {
       (
           {
             next: response => {
+              clearInterval(intervalId); // Clear the interval
               this.utilsService.reloadCurrentRoute()
             },
             error: (error: any) => {
               alert(JSON.stringify(error))
+              clearInterval(intervalId); // Clear the interval
+              this.utilsService.reloadCurrentRoute()
             }
           }
       );
 
-      this.utilsService.reloadCurrentRoute()
-      clearInterval(intervalId); // Clear the interval
     }, 1000);
 
   }
 
-  constructor(public authenticationService:AuthenticationService, public utilsService:UtilsService, public appDataService:AppDataService, public fieldUtilities:FieldUtilitiesService, private activatedRoute: ActivatedRoute, private httpService:HttpService, public wbtipService:WbtipService) {
+  onFormChange() {
+    this.fieldUtilitiesService.onAnswersUpdate(this);
+  }
+
+  constructor(public fieldUtilitiesService:FieldUtilitiesService,public authenticationService:AuthenticationService, public utilsService:UtilsService, public appDataService:AppDataService, public fieldUtilities:FieldUtilitiesService, private activatedRoute: ActivatedRoute, private httpService:HttpService, public wbtipService:WbtipService) {
   }
 
   protected readonly JSON = JSON;

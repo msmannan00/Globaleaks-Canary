@@ -27,6 +27,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
   field_id_map:any
   done:boolean;
   uploads:any = {}
+  fileupload_url ="api/wbtip/rfile"
 
   singleStepForm() {
     return this.firstStepIndex() === this.lastStepIndex();
@@ -150,6 +151,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
           }
         }
       }
+      this.fieldUtilitiesService.onAnswersUpdate(this);
 
       this.httpService.whistleBlowerTipUpdate({"cmd": "additional_questionnaire", "answers": this.answers}, this.wbtipService.tip.id).subscribe
       (
@@ -191,13 +193,15 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
     }
 
     return !!this.displayStepErrors(this.navigation);
-
   };
 
   onFormChange() {
     this.fieldUtilitiesService.onAnswersUpdate(this);
   }
 
+  onFileUpload(upload:any) {
+    this.fieldUtilitiesService.onAnswersUpdate(this);
+  }
   ngOnInit(): void {
     this.prepareSubmission();
   }

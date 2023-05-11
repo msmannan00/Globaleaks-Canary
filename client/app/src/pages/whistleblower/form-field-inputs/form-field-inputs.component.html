@@ -25,7 +25,7 @@
                         </span>
                     </div>
 
-               <src-form-field-input [identity_provided] = identity_provided [uploads]="uploads" [fields]="fields" [step]="step" [answers]="answers" [fieldId]="fieldId" [displayErrors]="displayErrors" [entry]="entry" [entryIndex]="entryIndex" [fieldEntry]="fieldEntry" [submission]="submission" [field]="field" [index]="entryIndex"></src-form-field-input>
+               <src-form-field-input [fileupload_url]="fileupload_url" (notifyFileUpload)="notifyFileUpload.emit()" [identity_provided] = identity_provided [uploads]="uploads" [fields]="fields" [step]="step" [answers]="answers" [fieldId]="fieldId" [displayErrors]="displayErrors" [entry]="entry" [entryIndex]="entryIndex" [fieldEntry]="fieldEntry" [submission]="submission" [field]="field" [index]="entryIndex"></src-form-field-input>
             </div>
             <div *ngIf="field.multi_entry && field.type === 'fieldgroup'" class="float-right">
                 <button class="btn btn-outline-secondary" (click)="addAnswerEntry()">

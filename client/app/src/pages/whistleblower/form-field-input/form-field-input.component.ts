@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FieldUtilitiesService} from "../../../shared/services/field-utilities.service";
 import {ControlContainer, NgForm, NgModelGroup} from "@angular/forms";
 import {SubmissionService} from "../../../services/submission.service";
@@ -24,6 +24,8 @@ export class FormFieldInputComponent implements OnInit{
   @Input() fields:any
   @Input() uploads:any
   @Input() identity_provided:any
+  @Input() fileupload_url:any
+  @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
 
   entryvalue: any = "";
   fieldFormVar: any = {};
