@@ -50,4 +50,5 @@ export class FormFieldInputsComponent implements OnInit{
     this.entries.push({});
   };
 
+  protected readonly navigator = navigator;
 }
