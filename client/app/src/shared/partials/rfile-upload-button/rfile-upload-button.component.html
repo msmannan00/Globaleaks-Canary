@@ -1,5 +1,5 @@
 <div>
-    <ng-container #flowAdvanced="flow" [flowConfig]="{target: fileupload_url, speedSmoothingFactor:0.01 , singleFile:(field !== undefined && !field.multi_entry), testChunks:false, permanentErrors : [ 500, 501 ], headers : {'X-Session':authenticationService.session.id}}"></ng-container>
+    <ng-container #flowAdvanced="flow" [flowConfig]="{target: fileupload_url, speedSmoothingFactor:0.01 , singleFile:(field !== undefined && !field.multi_entry), allowDuplicateUploads:false, testChunks:false, permanentErrors : [ 500, 501 ], headers : {'X-Session':authenticationService.session.id}}"></ng-container>
 
     <div class="drag-drop" flowDrop [flow]="flowAdvanced.flowJs">
         <div class="custom-file">
@@ -33,7 +33,7 @@
         </div>
     </div>
 
-    <ng-container *ngIf="confirmButton && !formuploader">
+    <ng-container *ngIf="confirmButton && !formuploader && !(flowAdvanced.transfers$ | async)?.flow?.isUploading()">
         <button id="files-action-confirm" class="btn btn-sm btn-outline-secondary" (click)="flowAdvanced.upload()">
             <i class="fa-solid fa-upload"></i>
             <span>{{'Confirm'|translate}}</span>

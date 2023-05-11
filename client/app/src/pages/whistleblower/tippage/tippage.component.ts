@@ -123,6 +123,35 @@ export class TippageComponent {
   newComment() {
   };
 
+  uploading(){
+    return this.utilsService.isUploading(this.uploads)
+  }
+
+  calculateEstimatedTime(){
+    let time = 0
+    for (let key in this.uploads) {
+      if(this.uploads[key].flowFile && this.uploads[key].flowFile.isUploading()){
+        time = time + this.uploads[key].flowFile.timeRemaining()
+      }
+    }
+    return time
+  }
+
+  calculateProgress(){
+    let progress = 0
+    let totalFiles = 0
+    for (let key in this.uploads) {
+      if(this.uploads[key].flowFile){
+        progress = progress + this.uploads[key].flowFile.timeRemaining()
+        totalFiles+=1
+      }
+    }
+    if(totalFiles==0){
+      return 0
+    }
+
+    return (100 - (progress/totalFiles)*100)
+  }
   newMessage() {
   };
 

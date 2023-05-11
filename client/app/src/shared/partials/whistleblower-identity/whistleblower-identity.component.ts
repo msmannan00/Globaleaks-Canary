@@ -15,10 +15,14 @@ export class WhistleblowerIdentityComponent {
   @Input() field:any
   @Input() step:any
   @Input() answers:any
-  identity_provided:boolean = false
   @Output() provideIdentityInformation = new EventEmitter<{ param1: any, param2: any }>();
   @Output() onFormUpdate = new EventEmitter<void>();
   @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
+
+  @Input() uploadEstimateTime:any
+  @Input() isuploading:any
+  @Input() uploadprogress:any
+  identity_provided:boolean = false
 
   public toggleColapse(){
     this.collapsed = !this.collapsed

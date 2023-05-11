@@ -34,9 +34,11 @@ export class UtilsService {
   }
 
   resumeFileUploads(uploads: any){
-    for (let key in uploads) {
-      if (uploads[key] && uploads[key].flowFile) {
-        uploads[key].flowFile.resume()
+    if(uploads){
+      for (let key in uploads) {
+        if (uploads[key] && uploads[key].flowJs) {
+          uploads[key].flowJs.upload()
+        }
       }
     }
   }

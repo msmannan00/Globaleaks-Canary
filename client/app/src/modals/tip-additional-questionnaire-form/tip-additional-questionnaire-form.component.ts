@@ -25,7 +25,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
   questionnaire:any
   answers:any = {};
   field_id_map:any
-  done:boolean;
+  done:boolean = false;
   uploads:any = {}
   fileupload_url ="api/wbtip/rfile"
 
@@ -53,6 +53,45 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
 
     return last_enabled;
   };
+
+  uploading(){
+    let uploading = false
+    if(this.uploads && this.done){
+      for (let key in this.uploads) {
+        if (this.uploads[key].flowJs && this.uploads[key].flowJs.isUploading()) {
+          uploading = true
+        }
+      }
+    }
+
+    return uploading
+  }
+
+  calculateEstimatedTime(){
+    let timeRemaining = 0
+    if(this.uploads && this.done){
+      for (let key in this.uploads) {
+        if (this.uploads[key] && this.uploads[key].flowJs) {
+          timeRemaining += this.uploads[key].flowJs.timeRemaining()
+        }
+      }
+    }
+
+    return timeRemaining
+  }
+
+  calculateProgress(){
+    let progress = 0
+    if(this.uploads && this.done){
+      for (let key in this.uploads) {
+        if (this.uploads[key] && this.uploads[key].flowJs) {
+          progress += this.uploads[key].flowJs.progress()
+        }
+      }
+    }
+
+    return progress
+  }
 
   hasNextStep() {
     return this.navigation < this.lastStepIndex();
@@ -136,11 +175,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
     }
 
     this.done = true;
-    for (let key in this.uploads) {
-      if (this.uploads[key] && this.uploads[key].flowFile) {
-        this.uploads[key].flowFile.resume()
-      }
-    }
+    this.utilsService.resumeFileUploads(this.uploads);
 
     let intervalId = setInterval(() => {
       if(this.uploads){
@@ -152,6 +187,10 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
         }
       }
       this.fieldUtilitiesService.onAnswersUpdate(this);
+
+      if(this.uploading()){
+        return;
+      }
 
       this.httpService.whistleBlowerTipUpdate({"cmd": "additional_questionnaire", "answers": this.answers}, this.wbtipService.tip.id).subscribe
       (
@@ -200,8 +239,12 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
   }
 
   onFileUpload(upload:any) {
-    this.fieldUtilitiesService.onAnswersUpdate(this);
+    if(upload){
+      this.uploads = upload
+      this.fieldUtilitiesService.onAnswersUpdate(this);
+    }
   }
+
   ngOnInit(): void {
     this.prepareSubmission();
   }

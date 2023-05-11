@@ -1,10 +1,11 @@
-import {Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {AppDataService} from "../../../app-data.service";
 import {FieldUtilitiesService} from "../../../shared/services/field-utilities.service";
 import {SubmissionService} from "../../../services/submission.service";
 import {UtilsService} from "../../../shared/services/utils.service";
 import {AuthenticationService} from "../../../services/authentication.service";
-import {AbstractControl, FormGroup, NgForm} from "@angular/forms";
+import {NgForm} from "@angular/forms";
+import {Transfer} from "@flowjs/ngx-flow";
 
 @Component({
   selector: 'src-submission',
@@ -168,33 +169,47 @@ export class SubmissionComponent{
   };
 
   uploading(){
-    return this.utilsService.isUploading(this.uploads)
+    let uploading = false
+    if(this.uploads && this.done){
+      for (let key in this.uploads) {
+        if (this.uploads[key].flowJs && this.uploads[key].flowJs.isUploading()) {
+          uploading = true
+        }
+      }
+    }
+
+    return uploading
   }
 
   calculateEstimatedTime(){
-    let time = 0
-    for (let key in this.uploads) {
-      if(this.uploads[key].flowFile && this.uploads[key].flowFile.isUploading()){
-        time = time + this.uploads[key].flowFile.timeRemaining()
+    let timeRemaining = 0
+    if(this.uploads && this.done){
+      for (let key in this.uploads) {
+        if (this.uploads[key] && this.uploads[key].flowJs) {
+          timeRemaining += this.uploads[key].flowJs.timeRemaining()
+        }
       }
     }
-    return time
+
+    if(!isFinite(timeRemaining)){
+      timeRemaining=0
+    }
+    return timeRemaining
   }
 
   calculateProgress(){
     let progress = 0
-    let totalFiles = 0
-    for (let key in this.uploads) {
-      if(this.uploads[key].flowFile){
-        progress = progress + this.uploads[key].flowFile.timeRemaining()
-        totalFiles+=1
+    if(this.uploads && this.done){
+      for (let key in this.uploads) {
+        if (this.uploads[key] && this.uploads[key].flowJs) {
+          progress += this.uploads[key].flowJs.progress()
+        }
       }
     }
-    if(totalFiles==0){
-      return 0
+    if(!isFinite(progress)){
+      progress=0
     }
-
-    return (100 - (progress/totalFiles)*100)
+    return progress
   }
 
   displayErrors() {
@@ -232,11 +247,11 @@ export class SubmissionComponent{
       return;
     }
     this.submission._submission.identity_provided = this.identity_provided
-    this.done = true;
 
     this.submission._submission.answers = this.answers;
 
     this.utilsService.resumeFileUploads(this.uploads);
+    this.done = true;
 
     let intervalId = setInterval(() => {
       if(this.uploads){
@@ -246,6 +261,9 @@ export class SubmissionComponent{
             return
           }
         }
+      }
+      if(this.uploading()){
+        return;
       }
 
       this.submission.submit();
@@ -295,6 +313,13 @@ export class SubmissionComponent{
 
   onFormChange() {
     this.fieldUtilitiesService.onAnswersUpdate(this);
+  }
+
+  notifyFileUpload(uploads:any) {
+    if(uploads){
+      this.uploads = uploads
+      this.fieldUtilitiesService.onAnswersUpdate(this);
+    }
   }
 
   constructor(public authenticationService:AuthenticationService, public appDataService:AppDataService,public utilsService:UtilsService ,public fieldUtilitiesService:FieldUtilitiesService, public submissionService:SubmissionService) {

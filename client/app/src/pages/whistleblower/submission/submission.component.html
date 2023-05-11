@@ -37,7 +37,7 @@
                         <span *ngIf="step && step.enabled && submission">
                             <div id="step-{{index}}" ngForm #stepform="ngForm" ngFormChanges (ngFormChange)="onFormChange()">
                                 <markdown *ngIf="step.description" class="description" [data]="step.description | stripHtml"></markdown>
-                                <src-form [fileupload_url]="'api/submission/attachment'" [identity_provided]=identity_provided [uploads]="uploads" [displayErrors]="displayErrors()" [answers]="answers" [submission]="submission" [step]="step" [index]="index"></src-form>
+                                <src-form (notifyFileUpload)="notifyFileUpload($event)" [fileupload_url]="'api/submission/attachment'" [identity_provided]=identity_provided [uploads]="uploads" [displayErrors]="displayErrors()" [answers]="answers" [submission]="submission" [step]="step" [index]="index"></src-form>
                             </div>
                         </span>
                     </div>
@@ -56,7 +56,7 @@
             </button>
 
             <src-rfiles-upload-status [progress]="calculateProgress()" [estimatedtime]="calculateEstimatedTime()" [uploading]="uploading()" *ngIf="!hasNextStep()"></src-rfiles-upload-status>
-            <button id="SubmitButton" class="btn btn-primary" *ngIf="!hasNextStep()" (click)="completeSubmission()" [disabled]="!authenticationService.session || submission.blocked || done" type="submit">{{'Submit'|translate}}</button>
+            <br><button id="SubmitButton" class="btn btn-primary" *ngIf="!hasNextStep()" (click)="completeSubmission()" [disabled]="!authenticationService.session || submission.blocked || done" type="submit">{{'Submit'|translate}}</button>
         </div>
     </form>
 </div>

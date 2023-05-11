@@ -54,16 +54,14 @@ export class RfileUploadButtonComponent implements AfterViewInit, OnDestroy, OnI
 
       self.confirmButton = false;
       self.showerror = false
-      if(self.uploads && self.uploads[self.fileinput]){
-        self.uploads[self.fileinput] = {}
+
+      if(!self.uploads){
+        self.uploads = {}
+      }
+      if(self.uploads && !self.uploads[self.fileinput]){
+        self.uploads[self.fileinput] = []
       }
       event.transfers.forEach(function(file){
-
-        if(!self.uploads){
-          self.uploads = {}
-        }
-
-        self.uploads[self.fileinput] = file
 
         if(file.paused && self.errorFile){
           self.errorFile.flowFile.cancel()
@@ -77,7 +75,9 @@ export class RfileUploadButtonComponent implements AfterViewInit, OnDestroy, OnI
           self.confirmButton = true
         }
       });
-      this.notifyFileUpload.emit(this.uploads)
+      console.log(self.uploads[self.fileinput])
+      self.uploads[self.fileinput]=self.flowAdvanced
+      this.notifyFileUpload.emit(self.uploads)
     });
   }
 

@@ -9,4 +9,5 @@ export class RfilesUploadStatusComponent {
   @Input() uploading:any
   @Input() progress:any
   @Input() estimatedtime:any
+  protected readonly isFinite = isFinite;
 }
