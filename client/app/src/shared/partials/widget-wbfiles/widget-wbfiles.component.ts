@@ -11,6 +11,9 @@ import {UtilsService} from "../../services/utils.service";
 export class WidgetWbfilesComponent {
 
   @Input() index:any
+  @Input() ctx:any
+  @Input() receivers_by_id:any
+
   collapsed = false;
   submission={}
 
@@ -21,4 +24,5 @@ export class WidgetWbfilesComponent {
   constructor(public wbtipService:WbtipService, public utilsService:UtilsService) {
   }
 
+  protected readonly JSON = JSON;
 }

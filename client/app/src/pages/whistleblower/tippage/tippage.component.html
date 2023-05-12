@@ -39,7 +39,7 @@
 <div class="row">
     <div class="col-md-12">
         <src-tip-files-whistleblower [fileupload_url]="fileupload_url" *ngIf="wbtipService.tip.enable_attachments"></src-tip-files-whistleblower>
-        <src-widget-wbfiles *ngIf="wbtipService.tip.wbfiles && wbtipService.tip.wbfiles.length"></src-widget-wbfiles>
+        <src-widget-wbfiles [receivers_by_id]="tip.receivers_by_id" [ctx]="ctx"  *ngIf="wbtipService.tip.wbfiles && wbtipService.tip.wbfiles.length"></src-widget-wbfiles>
     </div>
 </div>
 <div class="row">

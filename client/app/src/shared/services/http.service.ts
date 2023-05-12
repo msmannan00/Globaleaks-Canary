@@ -43,6 +43,11 @@ export class HttpService{
     return this.httpClient.put<password_recovery_response_model>("api/reset/password", param,{'headers':headers })
   }
 
+  requestToken(param: string): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.post("api/token", param,{'headers':headers })
+  }
+
   requestResetLogin(param: string): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.post("api/reset/password", param,{'headers':headers })

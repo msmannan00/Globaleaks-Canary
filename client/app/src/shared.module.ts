@@ -52,6 +52,7 @@ import {
 import {NgxFlowModule} from "@flowjs/ngx-flow";
 import { RfilesUploadStatusComponent } from './shared/partials/rfiles-upload-status/rfiles-upload-status.component';
 import { NgFormChangeDirective } from './shared/directive/ng-form-change.directive';
+import { WbfilesComponent } from './shared/partials/wbfiles/wbfiles.component';
 
 @NgModule({
     imports: [
@@ -107,7 +108,8 @@ import { NgFormChangeDirective } from './shared/directive/ng-form-change.directi
         RequestSupportComponent,
         WhistleblowerIdentityFieldComponent,
         RfilesUploadStatusComponent,
-        NgFormChangeDirective
+        NgFormChangeDirective,
+        WbfilesComponent
     ],
     exports: [
         FooterComponent,

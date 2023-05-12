@@ -1,0 +1,44 @@
+<div class="wbfile card card-default">
+    <div class="card-body">
+        <div class="top-row clearfix">
+             <span class="float-left">
+                <span class="text-muted" *ngIf="ctx === 'download'">
+                    <span>{{'Filename'|translate}}</span>:
+                </span>
+                <span class="filename">{{wbfile.name}}</span>
+             </span>
+             <span class="float-right">
+                <span>
+                    <span class="download-button btn btn-sm btn-primary" (click)="downloadWBFile(wbfile)">
+                        <i class="fa-solid fa-download"></i>
+                    </span>
+                   <button *ngIf="authenticationService.session.role === 'receiver'" class="btn btn-sm btn-danger" (click)="deleteWBFile(wbfile)">
+                   <i class="fa-solid fa-trash"></i>
+                   </button>
+                </span>
+             </span>
+        </div>
+        <div class="file-info-row">
+            <span *ngIf="receivers_by_id[wbfile.author]">
+                 <span>{{'From'|translate}}</span>: <span>{{receivers_by_id[wbfile.author].name}}</span>
+            </span>
+                <span class="px-1">
+            <span>{{'Date'|translate}}</span>:
+                    <span>{{wbfile.creation_date | date:'dd-MM-yyyy HH:MM'}}</span>
+            </span>
+            <span class="px-1">
+                <span>{{'Size:'|translate}}</span>
+                <span>{{wbfile.size | byteFmt:2}}</span>
+            </span>
+                <span class="px-1" *ngIf="ctx === 'rtip'">
+                <span>{{'Number of downloads'|translate}}</span>: <span>{{wbfile.downloads}}</span>
+            </span>
+        </div>
+        <div *ngIf="wbfile.description">
+             <span>
+                 <span>{{'Description'|translate}}</span>:
+             </span>
+             <span> {{wbfile.description}} </span>
+        </div>
+    </div>
+</div>

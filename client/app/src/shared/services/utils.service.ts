@@ -21,6 +21,12 @@ export class UtilsService {
     return result;
   }
 
+  download(url:string){
+    // return new TokenResource().$get().then(function(token) {
+    //   $window.open(url + "?token=" + token.id + ":" + token.answer);
+    // });
+  }
+
   isUploading(uploads?:any){
 
     if(uploads){
