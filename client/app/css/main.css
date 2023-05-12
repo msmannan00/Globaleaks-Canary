@@ -498,6 +498,10 @@ input[type="file"] {
 	}
 }
 
+.hidden {
+	display: none;
+}
+
 .modal-dialog{
 	max-width: 900px;
 }

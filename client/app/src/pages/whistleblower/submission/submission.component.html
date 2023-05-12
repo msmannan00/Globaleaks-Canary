@@ -35,12 +35,12 @@
                 <div *ngIf="navigation !== -1">
                     <div *ngFor="let step of submission.context.questionnaire.steps | orderBy:'order'; let index = index">
                         <span *ngIf="step && step.enabled && submission">
-                            <ng-container *ngIf="navigation === index">
+                            <div [class.hidden]="navigation !== index">
                                 <div id="step-{{index}}" ngForm #stepform="ngForm" ngFormChanges (ngFormChange)="onFormChange()">
                                     <markdown *ngIf="step.description" class="description" [data]="step.description | stripHtml"></markdown>
                                     <src-form (notifyFileUpload)="notifyFileUpload($event)" [fileupload_url]="'api/submission/attachment'" [identity_provided]=identity_provided [uploads]="uploads" [displayErrors]="displayErrors()" [answers]="answers" [submission]="submission" [step]="step" [index]="index"></src-form>
                                 </div>
-                            </ng-container>
+                            </div>
                         </span>
                     </div>
                 </div>

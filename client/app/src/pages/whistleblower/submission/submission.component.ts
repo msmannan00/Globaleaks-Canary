@@ -23,7 +23,7 @@ export class SubmissionComponent{
   context:any = undefined;
   receiversOrderPredicate:any
   navigation = -1;
-  validate:any = {};
+  validate:any = [];
   score = 0;
   done:boolean;
   uploads:any = {}
@@ -231,9 +231,13 @@ export class SubmissionComponent{
   };
 
   checkForInvalidFields() {
-    for(let counter = 0; counter <= this.stepforms.length; counter++) {
-      if (this.stepforms.get(counter)?.invalid) {
-        return false
+    for(let counter = 0; counter <= this.navigation; counter++) {
+      this.validate[counter] = true
+      if (this.questionnaire.steps[counter].enabled) {
+        if (this.stepforms.get(counter)?.invalid) {
+          this.navigation = counter;
+          return false
+        }
       }
     }
     return true;
@@ -287,10 +291,9 @@ export class SubmissionComponent{
     }
 
     if (this.hasNextStep()) {
-      // this.submissionForm.$dirty = false;
       for (let i = this.navigation + 1; i <= this.lastStepIndex(); i++) {
         if (this.fieldUtilitiesService.isFieldTriggered(null, this.questionnaire.steps[i], this.answers, this.score)) {
-          this.navigation = i;
+          this.navigation = i
           this.utilsService.scrollToTop();
           return;
         }
@@ -300,7 +303,6 @@ export class SubmissionComponent{
 
   decrementStep() {
     if (this.hasPreviousStep()) {
-      // this.submissionForm.dirty = false;
       for (var i = this.navigation - 1; i >= this.firstStepIndex(); i--) {
         if (i === -1 || this.fieldUtilitiesService.isFieldTriggered(null, this.questionnaire.steps[i], this.answers, this.score)) {
           this.navigation = i;
