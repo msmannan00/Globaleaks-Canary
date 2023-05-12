@@ -102,9 +102,13 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
   };
 
   checkForInvalidFields() {
-    for(let counter = 0; counter <= this.stepforms.length; counter++) {
-      if (this.stepforms.get(counter)?.invalid) {
-        return false
+    for(let counter = 0; counter <= this.navigation; counter++) {
+      this.validate[counter] = true
+      if (this.questionnaire.steps[counter].enabled) {
+        if (this.stepforms.get(counter)?.invalid) {
+          this.navigation = counter;
+          return false
+        }
       }
     }
     return true;
