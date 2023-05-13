@@ -28,12 +28,12 @@
 
 		</div>
 		<div *ngIf="wbtipService.tip.status !== 'closed' && !wbtipService.tip.data.whistleblower_identity">
-			<form #wbform="ngForm">
-				<src-whistleblower-identity-field></src-whistleblower-identity-field>
-				<src-rfile-upload-status></src-rfile-upload-status>
+			<form #wbform="ngForm" ngFormChanges (ngFormChange)="onFormChange()">
+				<src-whistleblower-identity-field [step]="step" (stateChanged)="stateChanged($event)" [identity_provided]="identity_provided" [answers]="answers" [field]="field" [index]="0"></src-whistleblower-identity-field>
+				<src-rfiles-upload-status [progress]="uploadprogress" [estimatedtime]="uploadEstimateTime" [uploading]="isuploading"></src-rfiles-upload-status>
 				<div id="SubmitBox">
-					<button id="SubmitButton" class="btn btn-primary float-right"
-						(click)="provideIdentityInformation(wbtipService.tip.data.whistleblower_identity.id, wbtipService.tip.answers)"
+					<button *ngIf="identity_provided" id="SubmitButton" class="btn btn-primary float-right"
+						(click)="provideIdentityInformation.emit({ param1: field.id, param2: answers })"
 						[disabled]="wbform.invalid" type="submit">
 						<i id="SubmitIconOK" class="fa-solid fa-check"></i>
 						<span>{{'Submit'|translate}}</span>

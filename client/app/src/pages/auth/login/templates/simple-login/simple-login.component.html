@@ -20,7 +20,7 @@
       <label>{{'Please select your account:'|translate}}</label>
 
       <ng-select [clearable]="false" [ngModelOptions]="{standalone: true}" [(ngModel)]="loginData.loginUsername">
-        <ng-option *ngFor="let item of appDataService.public.receivers" [value]="item.id">{{item.name}}</ng-option>cd .
+        <ng-option *ngFor="let item of appDataService.public.receivers" [value]="item.id">{{item.name}}</ng-option>
       </ng-select>
 
     </div>

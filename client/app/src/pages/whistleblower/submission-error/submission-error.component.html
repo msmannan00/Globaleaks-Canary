@@ -1,25 +1,25 @@
-<!--<div id="SubmissionErrors" class="alert alert-secondary mb-2">-->
-<!--    <div *ngIf="!parent.hasPreviousStep()">-->
-<!--        <div *ngIf="!parent.areReceiversSelected()">-->
-<!--            <p>{{'You must select at least one recipient.'|translate}}</p>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div *ngIf="!parent.hasNextStep()">-->
-<!--&lt;!&ndash;        <div data-ng-if="Utils.isUploading(uploads)">&ndash;&gt;-->
-<!--&lt;!&ndash;            <span data-translate>Waiting for the file(s) to finish uploading.</span>&nbsp;&ndash;&gt;-->
-<!--&lt;!&ndash;            <i class="fa-solid fa-sync gly-spin"></i>&ndash;&gt;-->
-<!--&lt;!&ndash;        </div>&ndash;&gt;-->
-<!--        <div *ngIf="parent.submission.context.show_steps_navigation_interface && !parent.singleStepForm() && (!parent.areReceiversSelected() || submissionForm.invalid)">-->
-<!--            <p>{{'The following steps have errors:'|translate}}</p>-->
-<!--            <ul>-->
-<!--                <li *ngIf="!parent.areReceiversSelected()" (click)="parent.goToStep(-1)">{{'Recipient selection'|translate}}</li>-->
-<!--            </ul>-->
-<!--            <ul *ngIf="submissionForm.invalid">-->
-<!--                <span *ngFor="let step of parent.submission.context.questionnaire.steps | orderBy:'order'; let index = index">-->
-<!--                    <li *ngIf="parent.displayStepErrors(index)" class="err-link" (click)="parent.goToStep(index)">{{step.label}}</li>-->
-<!--                </span>-->
-<!--            </ul>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <src-step-error [parent]="parent" ></src-step-error>-->
-<!--</div>-->
+<div id="SubmissionErrors" class="alert alert-secondary mb-2">
+    <div *ngIf="!hasPreviousStep">
+        <div *ngIf="!areRecieverSelected">
+            <p>{{'You must select at least one recipient.'|translate}}</p>
+        </div>
+    </div>
+    <div *ngIf="!hasNextStep">
+        <div *ngIf="utilsService.isUploading(uploads)">
+            <span>{{'Waiting for the file(s) to finish uploading.'|translate}}</span>&nbsp;
+            <i class="fa-solid fa-sync gly-spin"></i>
+        </div>
+        <div *ngIf="show_steps_navigation_interface && !singlestepform && (!areRecieverSelected || submissionForm.invalid)">
+            <p>{{'The following steps have errors:'|translate}}</p>
+            <ul>
+                <li *ngIf="!areRecieverSelected" (click)="goToStep.emit(-1)">{{'Recipient selection'|translate}}</li>
+            </ul>
+            <ul *ngIf="submissionForm.invalid">
+                <span *ngFor="let step of context.questionnaire.steps | orderBy:'order'; let index = index">
+                    <li *ngIf="displayStepErrors(index)"  class="err-link" (click)="goToStep.emit(index)">{{step.label}}</li>
+                </span>
+            </ul>
+        </div>
+    </div>
+    <src-step-error [field_id_map]="field_id_map" [stepforms] = stepforms [submission]="submission" (goToStep)="goToStep.emit()" [stepForm]="stepform"  [navigation]="navigation" [displayStepErrors]="displayStepErrors" ></src-step-error>
+</div>

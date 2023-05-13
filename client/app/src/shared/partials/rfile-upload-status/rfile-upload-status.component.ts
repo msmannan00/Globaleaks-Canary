@@ -11,9 +11,7 @@ import {Subscription} from "rxjs";
 })
 export class RfileUploadStatusComponent {
   @Input() file:Transfer
+  @Input() formuploader:boolean
   constructor(public utilsService:UtilsService, public appDataService:AppDataService) {
   }
-
-  protected readonly alert = alert;
-  protected readonly JSON = JSON;
 }

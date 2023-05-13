@@ -29,7 +29,7 @@
         </div>
         <br />
         <div *ngIf="wbtipService.tip.status !== 'closed'">
-            <src-rfile-upload-button [fileupload_url]="fileupload_url"></src-rfile-upload-button>
+            <src-rfile-upload-button [formuploader]=false [fileupload_url]="fileupload_url"></src-rfile-upload-button>
         </div>
     </div>
 </div>

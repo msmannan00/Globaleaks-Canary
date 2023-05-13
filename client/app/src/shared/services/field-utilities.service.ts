@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {Constants} from "../constants/constants";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,22 @@ export class FieldUtilitiesService {
 
   fieldFormName(id:any){
     return "fieldForm_" + this.underscore(id);
+  }
+
+  getValidator(field:any){
+    let validators:any = {
+      "custom": field.attrs.regexp ? field.attrs.regexp.value : "",
+      "none": "",
+      "email": Constants.email_regexp,
+      "number": Constants.number_regexp,
+      "phonenumber": Constants.phonenumber_regexp,
+    };
+
+    if (field.attrs.input_validation) {
+      return validators[field.attrs.input_validation.value];
+    } else {
+      return "";
+    }
   }
 
   getClass(field:any, row_length:number){
@@ -178,7 +195,7 @@ export class FieldUtilitiesService {
             }
           }
         } else if (field.type === "fileupload") {
-          entry.required_status = field.required && (!scope.uploads[field.id] || !scope.uploads[field.id].files.length);
+          entry.required_status = field.required && (!scope.uploads[field.id] || !scope.uploads[field.id].size);
         } else {
           entry.required_status = field.required && !entry["value"];
         }

@@ -18,6 +18,10 @@ import { FormComponent } from './form/form.component';
 import { FormFieldInputsComponent } from './form-field-inputs/form-field-inputs.component';
 import { FormFieldInputComponent } from './form-field-input/form-field-input.component';
 import { WhistleblowerIdentityFieldComponent } from './fields/whistleblower-identity-field/whistleblower-identity-field.component';
+import {NgSelectModule} from "@ng-select/ng-select";
+import {NgbInputDatepicker} from "@ng-bootstrap/ng-bootstrap";
+import { ReceiptComponent } from './receipt/receipt.component';
+import { TipAdditionalQuestionnaireFormComponent } from '../../modals/tip-additional-questionnaire-form/tip-additional-questionnaire-form.component';
 
 
 
@@ -37,12 +41,15 @@ import { WhistleblowerIdentityFieldComponent } from './fields/whistleblower-iden
         FormFieldInputsComponent,
         FormFieldInputComponent,
         WhistleblowerIdentityFieldComponent,
+        ReceiptComponent,
+        TipAdditionalQuestionnaireFormComponent,
     ],
     exports: [
         HomepageComponent,
         TippageComponent,
         SubmissionComponent,
-        WhistleblowerIdentityFieldComponent
+        WhistleblowerIdentityFieldComponent,
+        ReceiptComponent
     ],
     imports: [
         CommonModule,
@@ -51,6 +58,8 @@ import { WhistleblowerIdentityFieldComponent } from './fields/whistleblower-iden
         MarkdownModule,
         ReactiveFormsModule,
         FormsModule,
+        NgSelectModule,
+        NgbInputDatepicker,
     ]
 })
 export class WhistleblowerModule { }

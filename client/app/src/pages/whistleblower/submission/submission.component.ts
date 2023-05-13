@@ -1,10 +1,11 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {AppDataService} from "../../../app-data.service";
 import {FieldUtilitiesService} from "../../../shared/services/field-utilities.service";
 import {SubmissionService} from "../../../services/submission.service";
 import {UtilsService} from "../../../shared/services/utils.service";
 import {AuthenticationService} from "../../../services/authentication.service";
 import {NgForm} from "@angular/forms";
+import {Transfer} from "@flowjs/ngx-flow";
 
 @Component({
   selector: 'src-submission',
@@ -12,15 +13,17 @@ import {NgForm} from "@angular/forms";
   styleUrls: ['./submission.component.css']
 })
 export class SubmissionComponent{
-
   answers:any = {};
   @ViewChild('submissionForm') public submissionForm: NgForm;
+  @ViewChildren('stepform') stepforms: QueryList<NgForm>;
+  stepformlist:any = {}
 
+  identity_provided = false
   context_id = "";
   context:any = undefined;
   receiversOrderPredicate:any
   navigation = -1;
-  validate:any = {};
+  validate:any = [];
   score = 0;
   done:boolean;
   uploads:any = {}
@@ -29,7 +32,7 @@ export class SubmissionComponent{
   receiver_selection_step: number;
   contextsOrderPredicate = this.appDataService.public.node.show_contexts_in_alphabetical_order ? "name" : "order";
   selectable_contexts :any[]
-  submission:any
+  submission:SubmissionService
   show_steps_navigation_bar = false
 
   firstStepIndex() {
@@ -76,6 +79,9 @@ export class SubmissionComponent{
     }
   };
 
+  onFieldUpdated(){
+  }
+
   selectContext(context: any) {
     this.context = context
     this.prepareSubmission(context)
@@ -121,16 +127,24 @@ export class SubmissionComponent{
     return this.firstStepIndex() === this.lastStepIndex();
   };
 
-  stepForm(index:number):any {
-    if (index !== -1) {
-      let form = document.getElementById("step-"+index);
-      return (form && form.querySelector(".inputelem.ng-invalid"));
+  initStepForm(form:NgForm, id:any){
+    this.stepformlist[id] = form
+  }
+
+  stepForm(index:any):any {
+    if (this.stepforms && index !== -1) {
+      return this.stepforms.get(index)
     }
   };
 
-  displayStepErrors(index:number) {
+  displayStepErrors(index:number):any {
     if (index !== -1) {
-      return this.stepForm(index);
+      let response = this.stepForm(index)
+      if(response){
+        return response?.invalid
+      }else {
+        return false
+      }
     }
   };
 
@@ -154,8 +168,52 @@ export class SubmissionComponent{
     return false;
   };
 
+  uploading(){
+    let uploading = false
+    if(this.uploads && this.done){
+      for (let key in this.uploads) {
+        if (this.uploads[key].flowJs && this.uploads[key].flowJs.isUploading()) {
+          uploading = true
+        }
+      }
+    }
+
+    return uploading
+  }
+
+  calculateEstimatedTime(){
+    let timeRemaining = 0
+    if(this.uploads && this.done){
+      for (let key in this.uploads) {
+        if (this.uploads[key] && this.uploads[key].flowJs) {
+          timeRemaining += this.uploads[key].flowJs.timeRemaining()
+        }
+      }
+    }
+
+    if(!isFinite(timeRemaining)){
+      timeRemaining=0
+    }
+    return timeRemaining
+  }
+
+  calculateProgress(){
+    let progress = 0
+    if(this.uploads && this.done){
+      for (let key in this.uploads) {
+        if (this.uploads[key] && this.uploads[key].flowJs) {
+          progress += this.uploads[key].flowJs.progress()
+        }
+      }
+    }
+    if(!isFinite(progress)){
+      progress=0
+    }
+    return progress
+  }
+
   displayErrors() {
-    if (!(this.validate[this.navigation] || this.submission.done)) {
+    if (!(this.validate[this.navigation])) {
       return false;
     }
 
@@ -166,69 +224,61 @@ export class SubmissionComponent{
     if (!this.hasNextStep() && this.submissionHasErrors()) {
       return true;
     }
-    if (this.displayStepErrors(this.navigation)) {
+    if(this.displayStepErrors(this.navigation)) {
       return true;
     }
     return false;
   };
 
   checkForInvalidFields() {
-    for(var i = 0; i <= this.navigation; i++) {
-      if (this.questionnaire.steps[i].enabled) {
-        let form = document.getElementById("step_" + i);
-        if(form){
-          let firstInvalid = form.querySelector(".inputelem.ng-invalid");
-
-          if (firstInvalid) {
-            return false;
-          }
+    for(let counter = 0; counter <= this.navigation; counter++) {
+      this.validate[counter] = true
+      if (this.questionnaire.steps[counter].enabled) {
+        if (this.stepforms.get(counter)?.invalid) {
+          this.navigation = counter;
+          return false
         }
       }
     }
-
     return true;
   }
 
   completeSubmission(){
     this.fieldUtilitiesService.onAnswersUpdate(this);
 
-    this.validate[this.navigation] = true;
-
-    if (!this.checkForInvalidFields()) {
-      this.utilsService.scrollToTop();
+    if (!this.runValidation()) {
+      this.utilsService.scrollToTop()
       return;
     }
+    this.submission._submission.identity_provided = this.identity_provided
 
-    //this.done = true;
+    this.submission._submission.answers = this.answers;
 
-    for (let key in this.uploads) {
-      if (this.uploads[key]) {
-        this.uploads[key].resume();
-      }
-    }
+    this.utilsService.resumeFileUploads(this.uploads);
+    this.done = true;
 
-    //let self = this
-    setInterval(() => {
-      for (let key in this.uploads) {
-        if (this.uploads[key] &&
-            this.uploads[key].isUploading &&
-            this.uploads[key].isUploading()) {
-          return;
+    let intervalId = setInterval(() => {
+      if(this.uploads){
+        for (let key in this.uploads) {
+
+          if(this.uploads[key].flowFile && this.uploads[key].flowFile.isUploading()){
+            return
+          }
         }
       }
+      if(this.uploading()){
+        return;
+      }
 
-      // return $http.post("api/wbtip/" + $scope.tip.id + "/update",{"cmd": "additional_questionnaire", "answers": this.answers}).
-      // then(function(){
-      //   self.utilsService.reloadCurrentRoute()
-      // });
+      this.submission.submit();
+      clearInterval(intervalId); // Clear the interval
     }, 1000);
   }
 
   runValidation() {
     this.validate[this.navigation] = true;
 
-    if (this.navigation > -1 && !this.checkForInvalidFields()) {
-      this.utilsService.scrollToTop();
+    if (!this.areReceiversSelected() || !this.checkForInvalidFields()) {
       return false;
     }
 
@@ -241,10 +291,9 @@ export class SubmissionComponent{
     }
 
     if (this.hasNextStep()) {
-      // this.submissionForm.$dirty = false;
       for (let i = this.navigation + 1; i <= this.lastStepIndex(); i++) {
         if (this.fieldUtilitiesService.isFieldTriggered(null, this.questionnaire.steps[i], this.answers, this.score)) {
-          this.navigation = i;
+          this.navigation = i
           this.utilsService.scrollToTop();
           return;
         }
@@ -254,7 +303,6 @@ export class SubmissionComponent{
 
   decrementStep() {
     if (this.hasPreviousStep()) {
-      // this.submissionForm.dirty = false;
       for (var i = this.navigation - 1; i >= this.firstStepIndex(); i--) {
         if (i === -1 || this.fieldUtilitiesService.isFieldTriggered(null, this.questionnaire.steps[i], this.answers, this.score)) {
           this.navigation = i;
@@ -265,8 +313,18 @@ export class SubmissionComponent{
     }
   };
 
+  onFormChange() {
+    this.fieldUtilitiesService.onAnswersUpdate(this);
+  }
+
+  notifyFileUpload(uploads:any) {
+    if(uploads){
+      this.uploads = uploads
+      this.fieldUtilitiesService.onAnswersUpdate(this);
+    }
+  }
+
   constructor(public authenticationService:AuthenticationService, public appDataService:AppDataService,public utilsService:UtilsService ,public fieldUtilitiesService:FieldUtilitiesService, public submissionService:SubmissionService) {
     this.initializeSubmission();
   }
-
 }

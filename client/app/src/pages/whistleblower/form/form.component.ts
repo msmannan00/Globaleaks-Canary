@@ -12,8 +12,13 @@ export class FormComponent implements OnInit{
   @Input() step:any
   @Input() index:any
   @Input() answers:any
+  @Input() uploads:any
   @Input() submission:any
   @Input() displayErrors: boolean;
+  @Input() entry:any
+  @Input() identity_provided:any
+  @Input() fileupload_url:any
+  @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
 
   fields: any;
   stepId: string;
@@ -22,10 +27,16 @@ export class FormComponent implements OnInit{
 
 
   initialize(){
-    this.fields = this.step.children;
+    if(this.step.children){
+      this.fields = this.step.children;
+    }else {
+      this.fields = [];
+    }
     this.stepId = "step-" + this.index;
     this.rows = this.fieldUtilitiesService.splitRows(this.fields);
-
+    if(this.rows.length==0){
+      this.rows = this.step
+    }
     this.status = {
       opened: false,
     };

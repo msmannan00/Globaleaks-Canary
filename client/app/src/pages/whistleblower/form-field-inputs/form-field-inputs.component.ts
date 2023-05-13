@@ -13,11 +13,17 @@ export class FormFieldInputsComponent implements OnInit{
   @Input() fieldRow:any
   @Input() fieldCol:any
   @Input() stepId:any
+  @Input() step:any
   @Input() entry:any
   @Input() answers:any
   @Input() submission:any
   @Input() index:any
   @Input() displayErrors: boolean;
+  @Input() fields:any
+  @Input() uploads:any
+  @Input() identity_provided:any
+  @Input() fileupload_url:any
+  @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
 
   fieldId:string
   entries: any;
@@ -27,7 +33,7 @@ export class FormFieldInputsComponent implements OnInit{
   }
 
   getAnswersEntries(entry:any) {
-    if (typeof entry === "undefined") {
+    if (!entry || typeof entry === "undefined") {
       return this.answers[this.field.id];
     }
 
@@ -44,4 +50,5 @@ export class FormFieldInputsComponent implements OnInit{
     this.entries.push({});
   };
 
+  protected readonly navigator = navigator;
 }

@@ -8,8 +8,8 @@
 	<div class="d-flex justify-content-center">
 		<div class="form-group">
 			<div class="input-group">
-				<input #receiptinput="ngModel" [(ngModel)]="formatted_receipt" id="receipt-input" class="form-control"
-					type="text" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" size="19" customReceiptValidator>
+				<input [autocomplete]="'off'" #receiptinput="ngModel" [(ngModel)]="formatted_receipt" id="receipt-input" class="form-control"
+					type="text" autocomplete="receipt" name="receipt" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" size="19" customReceiptValidator>
 
 				<button
 					[disabled]="formatted_receipt.length < 16 || authenticationService.loginInProgress || !receiptinput.errors?.['receiptvalidator']"

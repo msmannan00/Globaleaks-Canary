@@ -43,9 +43,18 @@ export class HttpService{
     return this.httpClient.put<password_recovery_response_model>("api/reset/password", param,{'headers':headers })
   }
 
+  requestToken(param: string): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.post("api/token", param,{'headers':headers })
+  }
+
   requestResetLogin(param: string): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.post("api/reset/password", param,{'headers':headers })
+  }
+  requestReportSubmission(param: string): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.post("api/submission", param,{'headers':headers })
   }
 
   requestSuppor(param: string): Observable<any>{
@@ -79,6 +88,16 @@ export class HttpService{
   whistleBlowerTip(param: any): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.get("api/wbtip", {'headers':headers, params: param })
+  }
+
+  whistleBlowerTipUpdate(param: any, tipid:string): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.post("api/wbtip/"+tipid+"/update", param,{'headers':headers })
+  }
+
+  whistleBlowerIdentityUpdate(param: any, tipid:string): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.post("api/wbtip/"+tipid+"/provideidentityinformation", param,{'headers':headers })
   }
 
   requestAdminTenantResource(param: any): Observable<any>{

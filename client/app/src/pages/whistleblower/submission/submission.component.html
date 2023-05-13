@@ -24,9 +24,9 @@
                 </div>
             </ul>
             <div id="SubmissionTabsContentBox" class="tab-content">
-<!--                <div *ngIf="displayErrors()">-->
-<!--                    <src-submission-error [submissionForm]="submissionForm" ></src-submission-error>-->
-<!--                </div>-->
+                <div *ngIf="displayErrors()">
+                    <src-submission-error [field_id_map]="field_id_map" [stepforms]="stepforms" [submission]="submission" [uploads]="submission.uploads" [stepform]="stepForm" [hasPreviousStep] = hasPreviousStep() [areRecieverSelected] = areReceiversSelected() [displayStepErrors]="displayStepErrors"  [submissionForm]="submissionForm" ></src-submission-error>
+                </div>
                 <div id="step-receiver-selection" *ngIf="submission.context.allow_recipients_selection">
                     <div *ngIf="navigation === -1">
                         <src-receiver-selection (switchSelection)="switch_selection($event)" [receiversOrderPredicate]="receiversOrderPredicate" [submission]="submission" [show_steps_navigation_bar]="show_steps_navigation_bar"></src-receiver-selection>
@@ -34,11 +34,12 @@
                 </div>
                 <div *ngIf="navigation !== -1">
                     <div *ngFor="let step of submission.context.questionnaire.steps | orderBy:'order'; let index = index">
-                        <span *ngIf="step.enabled">
-
-                            <div id="step-{{index}}" ngForm #step_{{index}}="ngForm">
-                                <markdown *ngIf="step.description" class="description" [data]="step.description | stripHtml"></markdown>
-                                <src-form [displayErrors]="displayErrors()" [answers]="answers" [submission]="submission" [step]="step" [index]="index" ></src-form>
+                        <span *ngIf="step && step.enabled && submission">
+                            <div [class.hidden]="navigation !== index">
+                                <div id="step-{{index}}" ngForm #stepform="ngForm" ngFormChanges (ngFormChange)="onFormChange()">
+                                    <markdown *ngIf="step.description" class="description" [data]="step.description | stripHtml"></markdown>
+                                    <src-form (notifyFileUpload)="notifyFileUpload($event)" [fileupload_url]="'api/submission/attachment'" [identity_provided]=identity_provided [uploads]="uploads" [displayErrors]="displayErrors()" [answers]="answers" [submission]="submission" [step]="step" [index]="index"></src-form>
+                                </div>
                             </div>
                         </span>
                     </div>
@@ -55,8 +56,9 @@
                 <span>{{'Next'|translate}}</span>
                 <i class="fa-solid fa-arrow-circle-right"></i>
             </button>
-<!--            <div *ngIf="!hasNextStep() && done" data-ng-include="'views/partials/rfiles_upload_status.html'"></div>-->
-            <button id="SubmitButton" class="btn btn-primary" *ngIf="!hasNextStep()" (click)="completeSubmission()" [disabled]="!authenticationService.session || submission.blocked || done" type="submit">{{'Submit'|translate}}</button>
+
+            <src-rfiles-upload-status [progress]="calculateProgress()" [estimatedtime]="calculateEstimatedTime()" [uploading]="uploading()" *ngIf="!hasNextStep()"></src-rfiles-upload-status>
+            <br><button id="SubmitButton" class="btn btn-primary" *ngIf="!hasNextStep()" (click)="completeSubmission()" [disabled]="!authenticationService.session || submission.blocked || done" type="submit">{{'Submit'|translate}}</button>
         </div>
     </form>
 </div>

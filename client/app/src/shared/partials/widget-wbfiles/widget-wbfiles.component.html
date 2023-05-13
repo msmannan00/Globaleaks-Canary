@@ -8,7 +8,11 @@
     </div>
     <div class="card-body" *ngIf="!collapsed">
         <div *ngFor="let wbfile of wbtipService.tip.wbfiles | orderBy: 'creation_date'">
-            <div id="wbfile-{{index}}" data-wbfile></div>
+            <div id="wbfile-{{index}}">
+                <src-wbfiles [ctx]="ctx" [receivers_by_id]="receivers_by_id" [wbfile]="wbfile"></src-wbfiles>
+            </div>
         </div>
     </div>
 </div>
+
+

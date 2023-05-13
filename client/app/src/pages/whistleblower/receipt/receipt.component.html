@@ -1,0 +1,23 @@
+<div class="row" *ngIf="appDataService.page === 'receiptpage'">
+    <div class="col-md-12">
+        <div id="ReceiptText">
+            <span>{{'Thank you.'|translate}}</span> <span>{{'Your report was successful.'|translate}}</span> <span>{{'We will try to get back to you as soon as possible.'|translate}}</span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-secondary">
+            <div class="card-header">
+                <span>{{'Remember your receipt for this report.'|translate}}</span>
+            </div>
+            <div class="card-body">
+                <div id="Receipt"><div class="btn btn-light" data-toggle="tooltip" title="{{'Copy to clipboard' | translate}}" (click)="utilsService.copyToClipboard(authenticationService.session.receipt)">{{formatted_receipt(authenticationService.session.receipt)}}</div></div>
+                <div>{{'Use the 16 digit receipt to log in. It will allow you to view any messages we sent you, and also to add extra info.'|translate}}</div>
+                <div class="mt-md-3 clearfix" *ngIf="appDataService.page === 'receiptpage'">
+                    <button id="ReceiptButton" class="float-right btn btn-primary" (click)="authenticationService.login(0, 'whistleblower', authenticationService.session.receipt)">{{'View your report'}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

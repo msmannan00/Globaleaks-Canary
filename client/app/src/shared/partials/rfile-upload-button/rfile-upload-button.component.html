@@ -1,36 +1,24 @@
 <div>
-    <ng-container #flowAdvanced="flow"  [flowConfig]="{target: fileupload_url, testChunks:false, permanentErrors : [ 500, 501 ], headers : {'X-Session':authenticationService.session.id}}"></ng-container>
+    <ng-container #flowAdvanced="flow" [flowConfig]="{target: fileupload_url, speedSmoothingFactor:0.01 , singleFile:(field !== undefined && !field.multi_entry), allowDuplicateUploads:false, testChunks:false, permanentErrors : [ 500, 501 ], headers : {'X-Session':authenticationService.session.id}}"></ng-container>
 
     <div class="drag-drop" flowDrop [flow]="flowAdvanced.flowJs">
-        <div *ngIf="field === undefined || field.multi_entry">
-            <div class="custom-file">
-                <label flowButton [flow]="flowAdvanced.flowJs" [flowAttributes]="{accept: '*'}" class="btn btn-sm btn-outline-secondary">
-                    <i class="fa-solid fa-upload"></i>
-                    <span>{{'Upload'|translate}}</span>
-                </label>
+        <div class="custom-file">
 
-                <span class="mx-2">{{'Select a file or drag it here.'|translate}}</span>
-            </div>
-        </div>
-        <div *ngIf="field !== undefined && !field.multi_entry">
-            <div class="custom-file">
-                <input [attr.id]="fileinput" id="customFile-{{fileinput}}" flowButton [flow]="flowAdvanced.flowJs" [(ngModel)]="_fakemodel[fileinput]" [disabled]="uploads[fileinput].files.length" class="custom-file-input inputelem" [required]="field && field.required && !uploads[fileinput].files.length"/>
-                <label [attr.for]="fileinput" class="btn btn-sm btn-outline-secondary">
-                    <i class="fa-solid fa-upload"></i>
-                    <span>{{'Upload'|translate}}</span>
-                </label>
-                <span class="mx-2">{{'Select a file or drag it here.'|translate}}</span>
-            </div>
+            <input #uploader [attr.id]="fileinput" id="customFile-{{fileinput}}" flowButton [flow]="flowAdvanced.flowJs" [style.display]="'none'" class="custom-file-input inputelem" [required]="field && field.required"/>
+            <label [attr.for]="fileinput" class="btn btn-sm btn-outline-secondary">
+                <i class="fa-solid fa-upload"></i>
+                <span>{{'Upload'|translate}}</span>
+            </label>
+            <span class="mx-2">{{'Select a file or drag it here.'|translate}}</span>
         </div>
 
         <div *ngIf="showerror">
             <br>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{'File size not accepted.'|translate}} {{errorFile.flowFile.name}} {{'Maximum file size is:'|translate}} {{appDataService.public.node.maximum_filesize}}MB
-                <a href="#" class="close" (click)="errorFile.flowFile.cancel() ; showerror=false" data-dismiss="alert" aria-label="close">&times;</a>
+                <a href="#" class="close" (click)="errorFile.flowFile.cancel() ;showerror=false" data-dismiss="alert" aria-label="close">&times;</a>
             </div>
         </div>
-
     </div>
 
     <div class="transfers">
@@ -38,14 +26,14 @@
             <div [ngClass]="{'col-md-12': (flowAdvanced.transfers$ | async)?.transfers?.length === 1, 'col-md-6 col-sm-12': (flowAdvanced.transfers$ | async)?.transfers?.length !== 1}" *ngFor="let transfer of (flowAdvanced.transfers$ | async)?.transfers">
                 <div class="fileUploadBox mt-2 mb-2">
                     <div *ngIf="appDataService.public.node.maximum_filesize >= (transfer.size/1000000)">
-                        <src-rfile-upload-status [file]="transfer"></src-rfile-upload-status>
+                        <src-rfile-upload-status [formuploader]="formuploader" [file]="transfer"></src-rfile-upload-status>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <ng-container *ngIf="confirmButton">
+    <ng-container *ngIf="confirmButton && !formuploader && !(flowAdvanced.transfers$ | async)?.flow?.isUploading()">
         <button id="files-action-confirm" class="btn btn-sm btn-outline-secondary" (click)="flowAdvanced.upload()">
             <i class="fa-solid fa-upload"></i>
             <span>{{'Confirm'|translate}}</span>
@@ -53,6 +41,6 @@
     </ng-container>
 
 
-    <src-rfiles-upload-status *ngIf="(flowAdvanced.transfers$ | async)?.flow?.files" [estimatedtime]="(flowAdvanced.transfers$ | async)?.flow?.timeRemaining()" [progress]="(flowAdvanced.transfers$ | async)?.totalProgress"  [uploading]="(flowAdvanced.transfers$ | async)?.flow?.isUploading()"></src-rfiles-upload-status>
+    <src-rfiles-upload-status *ngIf="!formuploader && (flowAdvanced.transfers$ | async)?.flow?.files" [estimatedtime]="(flowAdvanced.transfers$ | async)?.flow?.timeRemaining()" [progress]="(flowAdvanced.transfers$ | async)?.totalProgress"  [uploading]="(flowAdvanced.transfers$ | async)?.flow?.isUploading()"></src-rfiles-upload-status>
 
 </div>

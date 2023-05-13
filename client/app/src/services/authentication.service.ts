@@ -167,7 +167,7 @@ export class AuthenticationService {
     }
   };
 
-  constructor(public httpService: HttpService, public rootDataService:AppDataService, private router: Router, private translateService:TranslateService, private location:LocationStrategy, private httpClient: HttpClient) {
+  constructor(public httpService: HttpService, public rootDataService:AppDataService, private router: Router) {
     let json = window.sessionStorage.getItem("session")
     if(json!=null){
       this.session = JSON.parse(json);
