@@ -207,7 +207,6 @@ h6 {
 
 .container-fluid {
 	padding: 0;
-	/*overflow-x: hidden;*/
 }
 
 .nav-tabs .nav-item.show .nav-link,
@@ -692,13 +691,13 @@ p:last-child {
 	padding: 1em;
 }
 
-.fileButtons {
+/* .fileButtons {
 	text-align: right;
-}
+} */
 
-.fileButtons {
+/* .fileButtons {
 	text-align: left;
-}
+} */
 
 .configSection {
 	margin-bottom: 1em;

@@ -1,29 +1,38 @@
-import {ChangeDetectorRef, Injectable, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {TranslateService} from "@ngx-translate/core";
-import {Observable, Subject} from "rxjs";
-import {Router} from "@angular/router";
-import {UtilsService} from "../shared/services/utils.service";
+import {
+  ChangeDetectorRef,
+  Injectable,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  Renderer2,
+  ElementRef,
+  RendererFactory2,
+} from "@angular/core";
+import { TranslateService } from "@ngx-translate/core";
+import { Observable, Subject } from "rxjs";
+import { Router } from "@angular/router";
+import { UtilsService } from "../shared/services/utils.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class TranslationService {
-
   facts = {
     userChoice: null,
     urlParam: null,
     userPreference: null,
-    nodeDefault: null
+    nodeDefault: null,
   };
 
-  enabledLanguages:Array<any>;
+  enabledLanguages: Array<any>;
 
   state = {
-    language: ""
+    language: "",
+    dir: "",
   };
 
-  language:string
-  isSelectable(language:any){
+  language: string;
+  isSelectable(language: any) {
     if (language === null) {
       return false;
     }
@@ -34,8 +43,8 @@ export class TranslationService {
 
     return true;
   }
-  bestLanguage(facts:any){
-    let lang:any = "*";
+  bestLanguage(facts: any) {
+    let lang: any = "*";
     if (this.isSelectable(this.facts.userChoice)) {
       lang = facts.userChoice;
     } else if (this.isSelectable(this.facts.urlParam)) {
@@ -48,27 +57,41 @@ export class TranslationService {
 
     return lang;
   }
-  updateTranslationServices(lang:string){
-    let useRightToLeft = ["ar", "dv", "fa", "fa_AF", "he", "ps", "ug", "ur"].indexOf(lang) !== -1;
-    document.getElementsByTagName("html")[0].setAttribute("dir", useRightToLeft ? "rtl" : "ltr");
-    this.translateService.use(lang)
-    this.translateService.setDefaultLang(lang)
+  updateTranslationServices(lang: string) {
+    this.state.dir = this.findDirection(lang);
+    document
+      .getElementsByTagName("html")[0]
+      .setAttribute("dir", this.state.dir);
+    this.translateService.use(lang);
+    this.translateService.setDefaultLang(lang);
   }
-  determineLanguage(){
+
+  findDirection(lang: string) {
+    let useRightToLeft =
+      ["ar", "dv", "fa", "fa_AF", "he", "ps", "ug", "ur"].indexOf(lang) !== -1;
+    // const direction = useRightToLeft ? "rtl" : "ltr";
+    return useRightToLeft ? "rtl" : "ltr";
+    // this.loadDirectionalStylesheet(direction);
+  }
+
+  determineLanguage() {
     this.language = this.state.language = this.bestLanguage(this.facts);
     if (this.state.language !== "*") {
       this.updateTranslationServices(this.state.language);
-      window.document.getElementsByTagName("html")[0].setAttribute("lang", this.state.language);
+      window.document
+        .getElementsByTagName("html")[0]
+        .setAttribute("lang", this.state.language);
     }
   }
-  addNodeFacts(defaultLang:any, languages_enabled:any){
+  addNodeFacts(defaultLang: any, languages_enabled: any) {
     this.facts.nodeDefault = defaultLang;
 
     this.enabledLanguages = languages_enabled;
-
     this.determineLanguage();
+
+    this.loadDirectionalStylesheet(this.state.dir);
   }
-  validLang(inp:string) {
+  validLang(inp: string) {
     if (!inp) {
       return false;
     }
@@ -79,7 +102,7 @@ export class TranslationService {
 
     return true;
   }
-  setLang(choice:any) {
+  setLang(choice: any) {
     if (choice) {
       choice = this.state.language;
     }
@@ -89,13 +112,57 @@ export class TranslationService {
       this.determineLanguage();
     }
   }
-  onChange(){
-    this.state.language = this.language
-    this.setLang(this.language)
+
+  onChange() {
+    this.state.language = this.language;
+    this.setLang(this.language);
     this.utilsService.reloadCurrentRoute();
   }
 
+  changeLanguage(language: string) {
+    this.state.language = language;
+    this.setLang(this.language);
+    this.utilsService.reloadCurrentRoute();
+    return this.state;
+  }
 
-  constructor(public translateService: TranslateService, private router: Router, public utilsService:UtilsService) {
+  loadDirectionalStylesheet(direction: string) {
+    this.loadCssFile(this.findDirectionalStyelsheet(direction), "bootstrap");
+  }
+
+  findDirectionalStyelsheet(direction: string) {
+    return direction === "rtl"
+      ? "lib/bootstrap/bootstrap.rtl.css"
+      : "lib/bootstrap/bootstrap.css";
+  }
+
+  loadCssFile(cssUrl: string, id: string) {
+    console.log("1");
+
+    const linkElement = this.renderer.createElement("link");
+    this.renderer.setAttribute(linkElement, "rel", "stylesheet");
+    this.renderer.setAttribute(linkElement, "type", "text/css");
+    this.renderer.setAttribute(linkElement, "id", id);
+    this.renderer.setAttribute(linkElement, "href", cssUrl);
+    this.renderer.appendChild(document.head, linkElement);
+    console.log("2");
+  }
+
+  updateCssFile(cssFile: string, elementREf: ElementRef) {
+    // console.log("this.renderer =>", this.renderer);
+    // console.log("12");
+    // this.renderer.setAttribute(elementREf, "href", cssFile);
+    // console.log("ss1");
+  }
+
+  private renderer: Renderer2;
+
+  constructor(
+    public translateService: TranslateService,
+    private router: Router,
+    public utilsService: UtilsService,
+    private rendererFactory: RendererFactory2 // private elementRef: ElementRef
+  ) {
+    this.renderer = rendererFactory.createRenderer(null, null);
   }
 }
