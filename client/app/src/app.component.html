@@ -1,51 +1,53 @@
-<div class="container" id="BrowserNotSupported" *ngIf="!appDataService.started || appDataService.showLoadingPanel">
-  <h1>Error!</h1><br /><br />
-  <div>
-    You are running an unsupported and potentially vulnerable browser.<br /><br />
-    In order to use GlobaLeaks you are strongly advised to download and install the Tor Browser.<br />
-    The Tor Browser includes various privacy and security enhancements not present in other browsers.<br /><br />
-    <a href="https://www.torproject.org/download/" rel="noreferrer" target="_blank" class="text-center">[ Download the
-      Tor Browser ]</a><br /><br />
-    This is the list of the other supported browsers:<br />
-    <ul>
-      <li>Mozilla Firefox &gt;= 38</li>
-      <li>Google Chrome &gt;= 45</li>
-      <li>Brave &gt;= 1.20.110</li>
-      <li>Edge (any)</li>
-      <li>Internet Explorer 11</li>
-      <li>Safari: &gt;= 8</li>
-      <li>iOS &gt;= 9</li>
-      <li>Android &gt;= 4.4</li>
-    </ul>
-  </div>
-</div>
-
-
-<div id="PageOverlay" *ngIf="appDataService.showLoadingPanel">
-  <div id="Loader"></div>
-</div>
-
-<div id="PageContent" *ngIf="appDataService.started">
-
-  <!--
-  <div data-ng-if="!public.node.root_tenant && public.node.mode === 'demo'" data-ng-include="'views/partials/demo.html'"></div>
-  -->
-  <div *ngIf="utilsService.isWhistleblowerPage() && !appDataService.public.node.disable_privacy_badge">
-    <src-privacybadge></src-privacybadge>
+<div [dir]="translate.currentLang === 'ar' ? 'rtl' : 'ltr'">
+  <div class="container" id="BrowserNotSupported" *ngIf="!appDataService.started || appDataService.showLoadingPanel">
+    <h1>Error!</h1><br /><br />
+    <div>
+      You are running an unsupported and potentially vulnerable browser.<br /><br />
+      In order to use GlobaLeaks you are strongly advised to download and install the Tor Browser.<br />
+      The Tor Browser includes various privacy and security enhancements not present in other browsers.<br /><br />
+      <a href="https://www.torproject.org/download/" rel="noreferrer" target="_blank" class="text-center">[ Download the
+        Tor Browser ]</a><br /><br />
+      This is the list of the other supported browsers:<br />
+      <ul>
+        <li>Mozilla Firefox &gt;= 38</li>
+        <li>Google Chrome &gt;= 45</li>
+        <li>Brave &gt;= 1.20.110</li>
+        <li>Edge (any)</li>
+        <li>Internet Explorer 11</li>
+        <li>Safari: &gt;= 8</li>
+        <li>iOS &gt;= 9</li>
+        <li>Android &gt;= 4.4</li>
+      </ul>
+    </div>
   </div>
 
-  <views-header></views-header>
-  <!--<div id="MessagesConsoleBox" data-ng-include="'views/partials/messageconsole.html'"></div>-->
 
-  <div id="PageContent">
-    <div id="ContentBox">
-      <div class="row">
-        <!--<nav ng-if="appConfig.sidebar" id="Sidebar" class="col-md-2 flex-column" data-ng-include="appConfig.sidebar"></nav>-->
-        <span class="col-md-12 no-gutter">
+  <div id="PageOverlay" *ngIf="appDataService.showLoadingPanel">
+    <div id="Loader"></div>
+  </div>
+
+  <div id="PageContent" *ngIf="appDataService.started">
+
+    <!--
+    <div data-ng-if="!public.node.root_tenant && public.node.mode === 'demo'" data-ng-include="'views/partials/demo.html'"></div>
+    -->
+    <div *ngIf="utilsService.isWhistleblowerPage() && !appDataService.public.node.disable_privacy_badge">
+      <src-privacybadge></src-privacybadge>
+    </div>
+
+    <views-header></views-header>
+    <!--<div id="MessagesConsoleBox" data-ng-include="'views/partials/messageconsole.html'"></div>-->
+
+    <div id="PageContent">
+      <div id="ContentBox">
+        <div class="row">
+          <!--<nav ng-if="appConfig.sidebar" id="Sidebar" class="col-md-2 flex-column" data-ng-include="appConfig.sidebar"></nav>-->
+          <span class="col-md-12 no-gutter">
           <router-outlet></router-outlet>
         </span>
+        </div>
       </div>
     </div>
   </div>
+  <app-footer class="footer mt-auto "></app-footer>
 </div>
-<app-footer class="footer mt-auto "></app-footer>
