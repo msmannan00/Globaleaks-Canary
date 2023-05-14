@@ -6,10 +6,10 @@
     <div class="form-group">
       <button id="login-button" class="btn btn-primary" [disabled]="authentication.loginInProgress || loginData.loginPassword.length==0" (click)="authentication.login(0, loginData.loginUsername, loginData.loginPassword)" type="submit">
         <i class="fa-solid fa-sign-in-alt"></i>
-        &nbsp;<span>{{'Log in'|translate}}</span>
+        <span>{{'Log in'|translate}}</span>
       </button>
 
-      &nbsp;<span id="forgot-button">
+      <span id="forgot-button">
         <a class="btn btn-outline-secondary" href="#/login/passwordreset">{{'Forgot password?'|translate}}</a>
       </span>
     </div>
@@ -34,10 +34,10 @@
       <div class="form-group">
         <button id="login-button" class="btn btn-primary" [disabled]="authentication.loginInProgress || loginData.loginPassword.length==0" (click)="authentication.login(0, loginData.loginUsername, loginData.loginPassword)" type="submit">
           <i class="fa-solid fa-sign-in-alt"></i>
-          &nbsp;<span>{{'Log in'|translate}}</span>
+          <span>{{'Log in'|translate}}</span>
         </button>
 
-        &nbsp;<span id="forgot-button">
+        <span id="forgot-button">
           <a class="btn btn-outline-secondary" href="/#/login/passwordreset">{{'Forgot password?'|translate}}</a>
         </span>
       </div>
@@ -53,6 +53,6 @@
 
   <button id="login-button" class="btn btn-primary" [disabled]="authentication.loginInProgress || loginData.loginUsername.length == 0" (click)="authentication.login(0, loginData.loginUsername, loginData.loginPassword, loginData.loginAuthCode)" type="submit">
     <i class="fa-solid fa-sign-in-alt"></i>
-    &nbsp;<span>{{'Log in'|translate}}</span>
+    <span>{{'Log in'|translate}}</span>
   </button>
 </div>

@@ -17,7 +17,6 @@ export class TranslationService {
 
   onChange(changedLanguage:string) {
     this.language = changedLanguage
-    this.translateService.use(this.language);
     this.translateService.use(this.language).subscribe(() => {
       this.translateService.getTranslation(this.language).subscribe(() => {
         this.utilsService.reloadCurrentRoute()

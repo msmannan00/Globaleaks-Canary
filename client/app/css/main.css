@@ -42,6 +42,11 @@ a:hover,
 	color: #5797d5;
 }
 
+.fa-solid{
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
 .onionaddress {
 	font-weight: bold;
 	word-break: break-all;
@@ -161,7 +166,6 @@ a:hover,
 }
 
 .form-control,
-.custom-select,
 .custom-select {
 	background-color: #f5f7fa;
 }

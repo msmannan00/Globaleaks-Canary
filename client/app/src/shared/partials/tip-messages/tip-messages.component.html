@@ -15,7 +15,7 @@
 			<div class="col-md-12 clearfix">
 				<div class="form-inline">
 					<span *ngIf="authenticationService.session.role === 'whistleblower'">
-						<span><span>{{'Recipient'|translate}}</span>:<span>&nbsp;</span></span>
+						<span><span>{{'Recipient'|translate}}</span>:<span></span></span>
 						<ng-select id="message-recipient-selector" class="mb-3" [clearable]="false"
 							[(ngModel)]="wbtipService.tip.msg_receiver_selected">
 							<ng-option *ngFor="let item of wbtipService.tip.msg_receivers_selector"

@@ -1,4 +1,4 @@
-import {Component, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {AppDataService} from "../../../app-data.service";
 import {FieldUtilitiesService} from "../../../shared/services/field-utilities.service";
 import {SubmissionService} from "../../../services/submission.service";
@@ -6,13 +6,16 @@ import {UtilsService} from "../../../shared/services/utils.service";
 import {AuthenticationService} from "../../../services/authentication.service";
 import {NgForm} from "@angular/forms";
 import {Transfer} from "@flowjs/ngx-flow";
+import {TranslationService} from "../../../services/translation.service";
+import {TranslateService} from "@ngx-translate/core";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'src-submission',
   templateUrl: './submission.component.html',
   styleUrls: ['./submission.component.css']
 })
-export class SubmissionComponent{
+export class SubmissionComponent implements OnInit{
   answers:any = {};
   @ViewChild('submissionForm') public submissionForm: NgForm;
   @ViewChildren('stepform') stepforms: QueryList<NgForm>;
@@ -150,13 +153,15 @@ export class SubmissionComponent{
 
   lastStepIndex() {
     let last_enabled = 0;
+    if(this.questionnaire){
 
-    for (let i = 0; i < this.questionnaire.steps.length; i++) {
-      if (this.fieldUtilitiesService.isFieldTriggered(null, this.questionnaire.steps[i], this.answers, this.score)) {
-        last_enabled = i;
+      for (let i = 0; i < this.questionnaire.steps.length; i++) {
+        if (this.fieldUtilitiesService.isFieldTriggered(null, this.questionnaire.steps[i], this.answers, this.score)) {
+          last_enabled = i;
+        }
       }
-    }
 
+    }
     return last_enabled;
   };
 
@@ -324,7 +329,13 @@ export class SubmissionComponent{
     }
   }
 
-  constructor(public authenticationService:AuthenticationService, public appDataService:AppDataService,public utilsService:UtilsService ,public fieldUtilitiesService:FieldUtilitiesService, public submissionService:SubmissionService) {
+  ngOnInit() {
+    this.router.events.subscribe(event => {
+      this.initializeSubmission();
+    });
+  }
+
+  constructor(private router: Router, public translateService:TranslateService, public authenticationService:AuthenticationService, public appDataService:AppDataService,public utilsService:UtilsService ,public fieldUtilitiesService:FieldUtilitiesService, public submissionService:SubmissionService) {
     this.initializeSubmission();
   }
 }

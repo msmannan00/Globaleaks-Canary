@@ -1,4 +1,3 @@
-<div [dir]="translate.currentLang === 'ar' ? 'rtl' : 'ltr'">
   <div class="container" id="BrowserNotSupported" *ngIf="!appDataService.started || appDataService.showLoadingPanel">
     <h1>Error!</h1><br /><br />
     <div>
@@ -26,7 +25,7 @@
     <div id="Loader"></div>
   </div>
 
-  <div id="PageContent" *ngIf="appDataService.started">
+  <div [dir]="translate.currentLang === 'ar' ? 'rtl' : 'ltr'" id="PageContent" *ngIf="appDataService.started">
 
     <!--
     <div data-ng-if="!public.node.root_tenant && public.node.mode === 'demo'" data-ng-include="'views/partials/demo.html'"></div>
@@ -50,4 +49,3 @@
     </div>
   </div>
   <app-footer class="footer mt-auto "></app-footer>
-</div>
