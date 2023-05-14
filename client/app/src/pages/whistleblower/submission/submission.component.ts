@@ -13,7 +13,7 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'src-submission',
   templateUrl: './submission.component.html',
-  styleUrls: ['./submission.component.css']
+  styleUrls: ['./submission.component.css'],
 })
 export class SubmissionComponent implements OnInit{
   answers:any = {};
@@ -331,11 +331,10 @@ export class SubmissionComponent implements OnInit{
 
   ngOnInit() {
     this.router.events.subscribe(event => {
-      this.initializeSubmission();
+      this.appDataService.page = ""
     });
   }
 
   constructor(private router: Router, public translateService:TranslateService, public authenticationService:AuthenticationService, public appDataService:AppDataService,public utilsService:UtilsService ,public fieldUtilitiesService:FieldUtilitiesService, public submissionService:SubmissionService) {
-    this.initializeSubmission();
   }
 }

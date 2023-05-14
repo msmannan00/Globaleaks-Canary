@@ -77,7 +77,7 @@ export class UtilsService {
 
   reloadCurrentRoute() {
     const currentUrl = this.router.url;
-    this.router.navigateByUrl('routing', {skipLocationChange: true}).then(() => {
+    this.router.navigateByUrl(currentUrl, {skipLocationChange: true}).then(() => {
       this.router.navigate([currentUrl]);
     });
   }

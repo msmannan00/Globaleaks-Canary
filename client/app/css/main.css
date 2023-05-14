@@ -30,6 +30,7 @@ body {
 a,
 a:hover,
 a:active,
+.nav-link-custom,
 a:focus {
 	color: #205282;
 	outline: 0;
@@ -656,6 +657,8 @@ p:last-child {
 .StepIndex,
 #SubmissionButtons button {
 	margin-right: 1em;
+	margin-right: 10px;
+	margin-left: 10px;
 }
 
 .StepIndexSelected {
@@ -739,8 +742,32 @@ p:last-child {
 	min-width: 20vw !important;
 }
 
+[dir='ltr'] .form-group > .input-group > .left-radius {
+	border-radius: 5px 0 0 5px;
+}
+[dir='rtl'] .form-group > .input-group > .left-radius {
+	border-radius: 0 5px 5px 0 !important;
+}
+
+[dir='ltr'] .form-group > .input-group > .right-radius {
+	border-radius: 0 5px 5px 0;
+}
+[dir='rtl'] .form-group > .input-group > .right-radius {
+	border-radius: 5px 0 0 5px !important;
+}
+
 #LanguagePickerBox .form-control {
 	width: auto;
+}
+
+.input-group.input-group-rtl .form-control{
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.input-group.input-group-rtl .form-control {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
 }
 
 #LoginStatusBox,

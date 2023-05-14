@@ -38,9 +38,9 @@
 						],
 						"styles": [
 							"node_modules/bootstrap/dist/css/bootstrap.css",
+							"app/css/main.css",
 							"app/css/ui-select-bootstrap4-fix.css",
 							"app/css/loader.css",
-							"app/css/main.css",
 							"app/css/print.css",
 							"app/css/button.css",
 							"app/css/ng-select.css",
