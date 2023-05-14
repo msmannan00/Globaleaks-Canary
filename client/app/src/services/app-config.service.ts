@@ -109,7 +109,7 @@ export class AppConfigService{
           }
         });
 
-        this.glTranslationService.addNodeFacts(this.rootDataService.public.node.default_language, this.rootDataService.public.node.languages_enabled)
+        this.glTranslationService.onChange(this.rootDataService.public.node.default_language)
         this.utilsService.setTitle()
         this.rootDataService.started = true;
       }
