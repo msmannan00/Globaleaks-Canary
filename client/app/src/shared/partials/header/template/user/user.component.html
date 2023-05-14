@@ -39,7 +39,7 @@
 			<a id="LogoutLink" href="#" (click)="authentication.logout()" data-toggle="tooltip"
 				title="{{'Logout' | translate}}"><i class="fa-solid fa-fw fa-sign-out-alt"></i><span
 					*ngIf="authentication.session.role === 'whistleblower'"><span> </span><span
-						data-translate>Logout</span></span></a>
+						>{{'Logout'|translate}}</span></span></a>
 		</span>
 	</div>
 	<src-receipt id="WhistleblowerLoginBox" class="ml-1 mb-1" *ngIf="utils.showWBLoginBox()"></src-receipt>

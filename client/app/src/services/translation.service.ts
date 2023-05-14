@@ -22,6 +22,7 @@ export class TranslationService {
         this.utilsService.reloadCurrentRoute()
       });
     });
+
   }
 
   constructor(

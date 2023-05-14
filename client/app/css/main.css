@@ -758,24 +758,6 @@ p:last-child {
 	border-radius: 5px;
 }
 
-/* #HeaderBox #WhistleblowerLoginBox {
-	clear: both;
-} */
-
-/* #HeaderBox #WhistleblowerLoginBox form {
-	clear: both;
-} */
-
-/* #HeaderBox #WhistleblowerLoginBox form,
-#HeaderBox #WhistleblowerLoginBox label {
-	float: right;
-} */
-
-/* #HeaderBox #WhistleblowerLoginBox form,
-#HeaderBox #WhistleblowerLoginBox label {
-	float: left;
-} */
-
 #FooterBox {
 	background-color: #f5f7fa;
 	text-align: center;

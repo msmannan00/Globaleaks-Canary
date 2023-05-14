@@ -1,7 +1,7 @@
 <div *ngIf="fields.enabled && (!preview || fields.preview)" [ngClass]="{'nested': !preview}" class="fieldAnswer">
     <div [ngClass]="{'font-weight-bold': !preview}">
         <span *ngIf="!fields && !preview">{{index + 1}})</span>
-        <span>{{fields.label}}</span>
+        <span>{{fields.label |translate}}</span>
     </div>
     <div *ngIf="!hasMultipleEntries(fieldAnswers[fields.id])">
         <src-tip-field-answer-entry [field]="fields" [fieldAnswers]=fieldAnswers [entry]="fieldAnswers[fields.id][0]"></src-tip-field-answer-entry>

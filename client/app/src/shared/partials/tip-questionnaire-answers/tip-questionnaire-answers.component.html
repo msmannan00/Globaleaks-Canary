@@ -1,7 +1,7 @@
 <div id="TipQuestionnaireAnswersBox" class="card card-default">
 	<div class="card-header d-flex justify-content-between"
 		(click)="toggleColapse(); utilsService.stopPropagation($event)">
-		<span data-translate>Questionnaire answers</span>
+		<span>{{'Questionnaire answers'|translate}}</span>
 		<span class="">
 			<i *ngIf="!collapsed" class="fa-solid fa-chevron-up" data-toggle="tooltip"
 				title="{{'Collapse' | translate}}"></i>
