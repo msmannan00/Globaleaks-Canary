@@ -211,6 +211,12 @@ module.exports = function (grunt) {
               }
             },
             {
+              pattern: /0.375rem/ig,
+              replacement: function () {
+                return "0.3rem";
+              }
+            },
+            {
               pattern: /bd2130/ig,
               replacement: function () {
                 return "fab6b6";

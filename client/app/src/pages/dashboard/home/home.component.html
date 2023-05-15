@@ -1,7 +1,4 @@
 <ng-container [ngSwitch]="appDataService.page">
-    <div *ngSwitchCase="'homepage'">
-        <src-homepage></src-homepage>
-    </div>
     <div *ngSwitchCase="'tippage'">
         <src-tippage></src-tippage>
     </div>
@@ -10,5 +7,8 @@
     </div>
     <div *ngSwitchCase="'receiptpage'">
         <src-receipt-whistleblower></src-receipt-whistleblower>
+    </div>
+    <div *ngSwitchDefault>
+        <src-homepage></src-homepage>
     </div>
 </ng-container>

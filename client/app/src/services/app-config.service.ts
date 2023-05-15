@@ -5,6 +5,7 @@ import {UtilsService} from "../shared/services/utils.service";
 import {AppDataService} from "../app-data.service";
 import {FieldUtilitiesService} from "../shared/services/field-utilities.service";
 import {TranslationService} from "./translation.service";
+import {Route, Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -109,14 +110,19 @@ export class AppConfigService{
           }
         });
 
-        this.glTranslationService.addNodeFacts(this.rootDataService.public.node.default_language, this.rootDataService.public.node.languages_enabled)
+        this.glTranslationService.onChange(this.rootDataService.public.node.default_language)
         this.utilsService.setTitle()
         this.rootDataService.started = true;
       }
     });
+    this.router.events.subscribe(() => {
+      if(this.router.url!=="/" && this.router.url!=="/routing"){
+        this.rootDataService.page = ""
+      }
+    });
   }
 
-  constructor(public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public rootDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService) {
+  constructor(private router: Router, public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public rootDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService) {
     this.localInitialization();
   }
 }
