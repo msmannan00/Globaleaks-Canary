@@ -53,6 +53,8 @@ import {NgxFlowModule} from "@flowjs/ngx-flow";
 import { RfilesUploadStatusComponent } from './shared/partials/rfiles-upload-status/rfiles-upload-status.component';
 import { NgFormChangeDirective } from './shared/directive/ng-form-change.directive';
 import { WbfilesComponent } from './shared/partials/wbfiles/wbfiles.component';
+import { DisableCcpDirective } from './shared/directive/disable-ccp.directive';
+import { SubdomainvalidatorDirective } from './shared/directive/subdomainvalidator.directive';
 
 @NgModule({
     imports: [
@@ -109,7 +111,9 @@ import { WbfilesComponent } from './shared/partials/wbfiles/wbfiles.component';
         WhistleblowerIdentityFieldComponent,
         RfilesUploadStatusComponent,
         NgFormChangeDirective,
-        WbfilesComponent
+        WbfilesComponent,
+        DisableCcpDirective,
+        SubdomainvalidatorDirective
     ],
     exports: [
         FooterComponent,
@@ -134,5 +138,7 @@ import { WbfilesComponent } from './shared/partials/wbfiles/wbfiles.component';
         RfileUploadButtonComponent,
         RfilesUploadStatusComponent,
         NgFormChangeDirective,
+        DisableCcpDirective,
+        SubdomainvalidatorDirective,
     ]})
 export class SharedModule { }

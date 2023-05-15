@@ -8,6 +8,9 @@ import {PasswordResetResponseComponent} from "./pages/auth/password-reset-respon
 import {RecipientRoutingModule} from "./pages/recipient/recipient-routing.module";
 import {PreferenceResolver} from "./shared/resolvers/preference.resolver";
 import {ActionRoutingModule} from "./pages/action/action-routing.module";
+import {SignupRoutingModule} from "./pages/signup/signup-routing.module";
+import {Pageguard} from "./shared/guards/pageguard.service";
+import {ActivationComponent} from "./pages/signup/templates/activation/activation.component";
 
 
 const routes: Routes = [
@@ -17,6 +20,7 @@ const routes: Routes = [
   },
   {
     path: '',
+    canActivate: [Pageguard],
     component: HomeComponent,
     resolve: {
     },
@@ -28,6 +32,13 @@ const routes: Routes = [
       PreferenceResolver
     },
     loadChildren: () => AuthRoutingModule,
+  },
+  {
+    path: 'signup',
+    resolve: {
+      PreferenceResolver
+    },
+    loadChildren: () => SignupRoutingModule,
   },
   {
     path: 'action',
@@ -55,6 +66,10 @@ const routes: Routes = [
   {
     path: 'password/reset',
     component: PasswordResetResponseComponent,
+  },
+  {
+    path: 'activation',
+    component: ActivationComponent,
   }
 ];
 
