@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {HttpService} from "../shared/services/http.service";
 import {TranslateService} from "@ngx-translate/core";
 import {UtilsService} from "../shared/services/utils.service";
@@ -10,7 +10,7 @@ import {Route, Router} from "@angular/router";
 @Injectable({
   providedIn: 'root'
 })
-export class AppConfigService{
+export class AppConfigService implements OnInit{
 
   initTranslation(){
     this.translateService.setDefaultLang('en');
@@ -116,13 +116,20 @@ export class AppConfigService{
       }
     });
     this.router.events.subscribe(() => {
-      if(this.router.url!=="/" && this.router.url!=="/routing"){
-        this.rootDataService.page = ""
+      if(this.router.url == "/" && this.rootDataService.page == "signuppage"){
+        location.replace("/#/signup")
+      }
+      else if(this.router.url!=="/" && this.router.url!=="/routing"){
+        // this.rootDataService.page = ""
       }
     });
   }
 
+
   constructor(private router: Router, public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public rootDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService) {
-    this.localInitialization();
+    this.localInitialization()
+  }
+
+  ngOnInit(): void {
   }
 }

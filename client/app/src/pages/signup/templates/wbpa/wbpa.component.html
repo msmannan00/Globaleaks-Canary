@@ -60,7 +60,7 @@
         <div class="col-md-12 form-group">
             <label>{{'Name'|translate}}</label>
             <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
-            <input name="organization_name" class="form-control" [(ngModel)]="signup.organization_name" type="text" (change)="updateSubdomain.emit()" required>
+            <input name="organization_name" class="form-control" [(ngModel)]="signup.organization_name" type="text" (ngModelChange)="updateSubdomain.emit()" required>
         </div>
     </div><br>
     <div class="row">
