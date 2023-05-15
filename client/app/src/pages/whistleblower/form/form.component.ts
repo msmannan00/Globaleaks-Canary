@@ -48,5 +48,4 @@ export class FormComponent implements OnInit{
   ngOnInit(): void {
     this.initialize()
   }
-  entryvalue: any;
 }

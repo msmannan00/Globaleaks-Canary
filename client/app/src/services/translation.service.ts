@@ -3,6 +3,8 @@ import {
 } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { UtilsService } from "../shared/services/utils.service";
+import {AppConfigService} from "./app-config.service";
+import {AppDataService} from "../app-data.service";
 
 @Injectable({
   providedIn: "root",
@@ -17,6 +19,8 @@ export class TranslationService {
 
   onChange(changedLanguage:string) {
     this.language = changedLanguage
+    let page = this.appDataService.page
+
     this.translateService.use(this.language).subscribe(() => {
       this.translateService.getTranslation(this.language).subscribe(() => {
         this.utilsService.reloadCurrentRoute()
@@ -26,6 +30,7 @@ export class TranslationService {
 
   constructor(
       public translateService: TranslateService,
+      public appDataService:AppDataService,
       public utilsService: UtilsService,
   ) {
 
