@@ -52,6 +52,17 @@ export class HttpService{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.post("api/reset/password", param,{'headers':headers })
   }
+
+  requestSignup(param: string): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.post("api/signup", param,{'headers':headers })
+  }
+
+  requestSignupToken(token: any): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.get("api/signup/"+token, {'headers':headers })
+  }
+
   requestReportSubmission(param: string): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.post("api/submission", param,{'headers':headers })

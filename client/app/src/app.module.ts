@@ -31,6 +31,7 @@ import {ReceiptvalidatorDirective} from "./shared/directive/receiptvalidator.dir
 import { NgxFlowModule, FlowInjectionToken } from '@flowjs/ngx-flow';
 import * as Flow from "@flowjs/flow.js";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {SignupModule} from "./pages/signup/signup.module";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './data/i18n/', '.json');
@@ -48,6 +49,7 @@ export function createTranslateLoader(http: HttpClient) {
     NgIdleKeepaliveModule.forRoot(),
     MarkdownModule.forRoot(),
     AuthModule,
+    SignupModule,
     ActionModule,
     OrderModule,
     SharedModule,
