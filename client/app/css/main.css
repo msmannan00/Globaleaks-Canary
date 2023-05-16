@@ -375,6 +375,7 @@ h6 {
 }
 
 .filePreview {
+	position:relative;
 	height: 12rem;
 }
 
