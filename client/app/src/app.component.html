@@ -1,4 +1,4 @@
-  <div class="container" id="BrowserNotSupported" *ngIf="!appDataService.started || appDataService.showLoadingPanel">
+<div class="container" id="BrowserNotSupported" *ngIf="!appDataService.started || appDataService.showLoadingPanel">
     <h1>Error!</h1><br /><br />
     <div>
       You are running an unsupported and potentially vulnerable browser.<br /><br />
@@ -32,6 +32,7 @@
     -->
     <div *ngIf="utilsService.isWhistleblowerPage() && !appDataService.public.node.disable_privacy_badge">
       <src-privacybadge></src-privacybadge>
+      
     </div>
 
     <views-header></views-header>
@@ -42,6 +43,7 @@
         <div class="row">
           <!--<nav ng-if="appConfig.sidebar" id="Sidebar" class="col-md-2 flex-column" data-ng-include="appConfig.sidebar"></nav>-->
           <span class="col-md-12 no-gutter">
+            
           <router-outlet></router-outlet>
         </span>
         </div>

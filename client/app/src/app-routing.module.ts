@@ -11,6 +11,7 @@ import {ActionRoutingModule} from "./pages/action/action-routing.module";
 import {SignupRoutingModule} from "./pages/signup/signup-routing.module";
 import {Pageguard} from "./shared/guards/pageguard.service";
 import {ActivationComponent} from "./pages/signup/templates/activation/activation.component";
+import { WizardModule } from './pages/wizard/wizard.module';
 
 
 const routes: Routes = [
@@ -70,7 +71,14 @@ const routes: Routes = [
   {
     path: 'activation',
     component: ActivationComponent,
-  }
+  },
+  {
+    path: 'wizard',
+    resolve: {
+      PreferenceResolver
+    },
+    loadChildren: () => WizardModule,
+  },
 ];
 
 @NgModule({

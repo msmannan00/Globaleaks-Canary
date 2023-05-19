@@ -140,5 +140,6 @@ import { SubdomainvalidatorDirective } from './shared/directive/subdomainvalidat
         NgFormChangeDirective,
         DisableCcpDirective,
         SubdomainvalidatorDirective,
+        PasswordMeterComponent
     ]})
 export class SharedModule { }

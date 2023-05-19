@@ -1,0 +1,338 @@
+<form name="wizardForm" novalidate>
+  <div class="clearfix" ngForm #wizardFormStep1="ngForm" *ngIf="step===1">
+    <div class="row wizard-block">
+      <div class="col-md-12">
+        <div class="title">{{'Welcome!'|translate}}</div>
+        <div>
+          {{'The following step-by-step procedure will guide you through creating your whistleblowing platform.'|
+          translate}}
+        </div>
+      </div>
+    </div>
+    <div class="pager float-left">
+      <button class="ButtonNext btn btn-primary" (click)="step = 2">
+        <span>{{'Next' | translate}}</span>
+        <i class="fa-solid fa-arrow-circle-right"></i>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="step===2" ngForm #wizardFormStep2="ngForm" [ngClass]="{'was-validated': validated2}" class="clearfix">
+    <div class="row wizard-block">
+      <div class="col-md-6">
+        <div class="row form-group mb-2">
+          <label class="col-md-4">
+            <span>{{'Project name' | translate}}</span>
+            <span class="text-danger" ngbTooltip="{{'This field is mandatory' | translate}}">*</span>
+          </label>
+          <div class="col-md-8">
+            <input name="node_name" class="form-control" [(ngModel)]="wizard.node_name"
+              [placeholder]="'Project name' | translate" type="text" required>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pager float-left mt-3">
+      <button class="ButtonPrevious btn btn-primary me-1" (click)="step = 1">
+        <i class="fa-solid fa-arrow-circle-left"></i>
+        <span>{{'Previous' | translate}}</span>
+      </button>
+        <button class="ButtonNext btn btn-primary" (click)="(validated2 = true) && !wizardFormStep2.invalid && (step = 4)">
+        <span>{{'Next' | translate}}</span>
+        <i class="fa-solid fa-arrow-circle-right"></i>
+      </button>
+    </div>
+  </div>
+  
+  <!-- <div *ngIf="step == 3" #wizardFormStep3="ngForm" ngForm [ngClass]="{'was-validated': validated3}" class="clearfix">
+    <div class="row wizard-block">
+      <div class="title">{{'Please choose a configuration profile:' | translate}}</div>
+      <div class="col-md-6">
+        <div data-ng-include="'views/wizard/profiles.html'"></div>
+      </div>
+    </div>
+    <div class="pager float-left">
+      <button class="ButtonPrevious btn btn-primary me-1" (click)="step = 2">
+        <i class="fa-solid fa-arrow-circle-left"></i>
+        <span data-translate>{{'Previous' | translate}}</span>
+      </button>
+      <button class="ButtonNext btn btn-primary" (click)="(validated3 = true) && !wizardFormStep3.invalid && (step = 5)">
+        <span data-translate>{{'Next' | translate}}</span>
+        <i class="fa-solid fa-arrow-circle-right"></i>
+      </button>
+    </div>
+  </div> -->
+  
+   
+<!-- step == 4 -->
+  <div *ngIf="step == 4 " #wizardFormStep4="ngForm" ngForm [ngClass]="{'was-validated': validated4}" class="clearfix">
+    <div class="row wizard-block">
+      <div class="col-md-12 title">{{'Admin' | translate}}</div>
+      <div class="col-md-6">
+        <div class="row form-group mb-2">
+          <label class="col-md-4">
+            <span>{{'Username' | translate}}</span>
+            <span class="text-danger" ngbTooltip="{{'This field is mandatory' | translate}}">*</span>
+          </label>
+          <div class="col-md-8">
+            <input name="admin_name" class="form-control" [(ngModel)]="wizard.admin_username" type="text"
+              [placeholder]="'Username' | translate" required>
+          </div>
+        </div>
+        <div class="row form-group mb-2">
+          <label class="col-md-4">
+            <span>{{'Name' | translate}}</span>
+            <span class="text-danger" ngbTooltip="{{'This field is mandatory' | translate}}">*</span>
+          </label>
+          <div class="col-md-8">
+            <input name="admin_name" class="form-control" [(ngModel)]="wizard.admin_name" type="text"
+              [placeholder]="'Name' | translate" required>
+          </div>
+        </div>
+        <div class="row form-group mb-2">
+          <label class="col-md-4">
+            <span>{{'Email address' | translate}}</span>
+            <span class="text-danger" ngbTooltip="{{'This field is mandatory' | translate}}">*</span>
+          </label>
+          <div class="col-md-8">
+            <input name="admin_email" #admin_email="ngModel" class="form-control" 
+              [(ngModel)]="wizard.admin_mail_address"
+              [placeholder]="'Email address' | translate" [pattern]="emailRegexp" type="text"
+              [ngClass]="{'is-invalid': validated4 && (admin_email?.errors?.['required'] || admin_email?.errors?.['pattern'])}"
+              required>
+            <div class="text-danger" *ngIf="admin_email?.errors?.['pattern']">
+              <span>{{'Invalid email address' | translate}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="row form-group mb-2">
+          <label class="col-md-4">
+            <span>{{'Password' | translate}}</span>
+            <span class="text-danger" ngbTooltip="{{'This field is mandatory' | translate}}">*</span>
+          </label>
+          <div class="col-md-8">
+            <input name="password" #password="ngModel" class="form-control" (ngModelChange)="passwordStrengthValidator(password.value)" [(ngModel)]="wizard.admin_password" type="password"
+              [placeholder]="'Password' | translate" autocomplete="off"
+              [ngClass]="{'is-invalid': validated4 && (password?.errors?.['required'] || (password?.errors?.['passwordStrength']))}"
+              required />
+              {{password.value}}
+            <!-- TODO -->
+            <!-- <password-meter *ngIf="passwordStrengthScore" value="passwordStrengthScore"></password-meter> -->
+            <src-password-meter 
+              *ngIf="passwordStrengthScore>0" 
+              [Strengthtype]="strengthType" 
+              [Strengthtext]="strengthText" 
+              [password]='changePasswordArgs.password' 
+              [passwordStrengthScore]='passwordStrengthScore' ></src-password-meter>
+         
+            <div class="text-danger"
+              *ngIf="!password?.errors?.['required'] && password?.errors?.['passwordStrengthValidator']">
+              <p>
+                {{'The chosen password is too weak. A valid password should be at least 12 characters long and contain a variety of characters including at least a lowercase character, a capital character, a number and a special character.' | translate}}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="row form-group mb-2">
+          <label class="col-md-4">
+            <span>{{'Password' | translate}}</span> (<span>{{'Confirm' | translate}}</span>)
+            <span class="text-danger" ngbTooltip="{{'This field is mandatory' | translate}}">*</span>
+          </label>
+          <div class="col-md-8">
+            <input name="checkpassword" class="form-control" [(ngModel)]="admin_check_password" type="password"
+              [placeholder]="'Password' | translate" autocomplete="off"
+              [ngClass]="{'is-invalid': validated4 && (!password?.errors?.['passwordStrengthValidator'] && wizard.admin_password && (wizard.admin_password !== admin_check_password))}"
+              required />
+            <div class="text-danger"
+              *ngIf="validated4  && (!password?.errors?.['passwordStrengthValidator'] && wizard.admin_password && (wizard.admin_password !== admin_check_password))"
+              >{{'The two passwords do not match' | translate}}</div>
+          </div>
+        </div>
+        <div class="row form-group mb-2">
+          <div class="col-md-12">
+            <div class="form-check">
+              <input class="form-check-input inputelem" type="checkbox" [(ngModel)]="wizard.admin_escrow">
+              <span class="form-check-label">
+                {{'Make it possible for this admin to reset user passwords.' | translate}}
+              </span>
+            </div>
+            <div>
+              {{'We advise selecting this option if you would like to protect data from being lost in the situation where recipients lose their passwords. On the other hand, we would not advise using this feature if you want to setup a system where only recipients are able to access submissions.' | translate}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pager float-left">
+      <button class="ButtonPrevious btn btn-primary me-1" (click)="step = 2">
+        <i class="fa-solid fa-arrow-circle-left"></i>
+        <span>{{'Previous' | translate}}</span>
+      </button>
+      <button class="ButtonNext btn btn-primary"
+        (click)="(validated4 = true) && !(wizardFormStep4.invalid || (wizard.admin_password !== admin_check_password)) && (step = 5)">
+        <span>{{'Next' | translate}}</span>
+        <i class="fa-solid fa-arrow-circle-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="step == 5" #wizardFormStep5="ngForm" ngForm [ngClass]="{'was-validated': validated5}"
+    class="clearfix">
+    <div class="row wizard-block">
+      <div class="col-md-12 title">{{'Recipient' | translate}}</div>
+      <div class="col-md-6">
+        <div *ngIf="!wizard.skip_recipient_account_creation">
+          <div class="row form-group mb-2">
+            <label class="col-md-4">
+              <span>{{'Username' | translate}}</span>
+              <span class="text-danger" ngbTooltip="{{'This field is mandatory' | translate}}">*</span>
+            </label>
+            <div class="col-md-8">
+              <input name="admin_name" class="form-control" [(ngModel)]="wizard.receiver_username" type="text"
+                [placeholder]="'Username' | translate"
+                [ngClass]="{'is-invalid': wizard.receiver_username === wizard.admin_username}" required>
+              <div class="text-danger" *ngIf="wizard.receiver_username === wizard.admin_username">
+                <span>{{'Please choose a different username.' | translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group mb-2">
+            <label class="col-md-4">
+              <span>{{'Name' | translate}}</span>
+              <span class="text-danger" ngbTooltip="{{'This field is mandatory' | translate}}">*</span>
+            </label>
+            <div class="col-md-8">
+              <input name="receiver_name" class="form-control" [(ngModel)]="wizard.receiver_name" type="text"
+                [placeholder]="'Name' | translate" [disabled]="wizard.skip_recipient_account_creation" required>
+            </div>
+          </div>
+          <div class="row form-group mb-2">
+            <label class="col-md-4">
+              <span>{{'Email address' | translate}}</span>
+              <span class="text-danger" ngbTooltip="{{'This field is mandatory' | translate}}">*</span>
+            </label>
+            <div class="col-md-8">
+              <input name="receiver_email" #receiver_email="ngModel" class="form-control" 
+                [(ngModel)]="wizard.receiver_mail_address"
+                [pattern]="emailRegexp" type="text" [placeholder]="'Email address' | translate"
+                [ngClass]="{'is-invalid': validated5 && receiver_email?.errors?.['required'] || receiver_email?.errors?.['pattern']}"
+                [disabled]="wizard.skip_recipient_account_creation" required>
+              <div class="text-danger" *ngIf="receiver_email?.errors?.['pattern']">
+                <span>{{'Invalid email address' | translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group mb-2">
+            <label class="col-md-4">
+              <span>{{'Password' | translate}}</span>
+              <span class="text-danger" ngbTooltip="{{'This field is mandatory' | translate}}">*</span>
+            </label>
+            <div class="col-md-8">
+              <input name="password" #receiver_password="ngModel" class="form-control" [(ngModel)]="wizard.receiver_password" type="password"
+                [placeholder]="'Password' | translate" autocomplete="off"
+                [ngClass]="{'is-invalid': validated5 && (receiver_password?.errors?.['required']|| (receiver_password?.errors?.['passwordStrength']))}"
+                required />
+                <src-password-meter 
+                *ngIf="passwordStrengthScore>0" 
+                [Strengthtype]="strengthType" 
+                [Strengthtext]="strengthText" 
+                [password]='changePasswordArgs.password' 
+                [passwordStrengthScore]='passwordStrengthScore' ></src-password-meter>
+           
+              <!-- <password-meter *ngIf="passwordStrengthScore" value="passwordStrengthScore"></password-meter> -->
+              <div class="text-danger"
+                *ngIf="!receiver_password?.errors?.['required'] && receiver_password?.errors?.['passwordStrengthValidator']">
+                <p>{{'The chosen password is too weak. A valid password should be at least 12 characters long and contain a variety of characters including at least a lowercase character, a capital character, a number and a special character.' | translate}}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group mb-2">
+            <label class="col-md-4">
+              <span>{{'Password' | translate}}</span> (<span>{{'Confirm' | translate}}</span>)
+              <span class="text-danger" ngbTooltip="{{'This field is mandatory' | translate}}">*</span>
+            </label>
+            <div class="col-md-8">
+              <input name="checkpassword" class="form-control" [(ngModel)]="recipient_check_password" type="password"
+                [placeholder]="'Password' | translate" autocomplete="off"
+                [ngClass]="{'is-invalid': validated4 && (!receiver_password?.errors?.['passwordStrengthValidator']  && wizard.receiver_password && (wizard.receiver_password !== recipient_check_password))}"
+                required />
+              <div class="text-danger"
+                *ngIf="validated4  && (!receiver_password?.errors?.['passwordStrengthValidator']  && wizard.receiver_password && (wizard.receiver_password !== recipient_check_password))">
+                {{'The two passwords do not match' | translate}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row form-group mb-2">
+          <div class="col-md-12">
+            <div class="form-check">
+              <input class="form-check-input inputelem" type="checkbox"
+                [(ngModel)]="wizard.skip_recipient_account_creation">
+              <span class="form-check-label">{{'Skip the recipient account creation.' | translate}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pager float-left">
+      <button class="ButtonPrevious btn btn-primary me-2" (click)="step = 4">
+        <i class="fa-solid fa-arrow-circle-left"></i>
+        <span>{{'Previous' | translate}}</span>
+      </button>
+      <button class="ButtonNext btn btn-primary"
+        (click)="(validated5 = true) && !(wizardFormStep5.invalid || (wizard.receiver_username === wizard.admin_username)) && (step = 6)">
+        <span>{{'Next' | translate}}</span>
+        <i class="fa-solid fa-arrow-circle-right"></i>
+      </button>
+    </div>
+  </div> 
+
+  <!--  -->
+  <div *ngIf="step == 6" #wizardFormStep6="ngForm" ngForm [ngClass]="{'was-validated': validated6}" class="clearfix">
+    <div class="row wizard-block">
+      <div class="col-md-12">
+        <div class="form-group">
+          <div class="title" >{{'License' | translate}}</div>
+          <div class="tos-text mb-3">{{ licenseContent }}</div>
+
+          <div class="form-check">
+            <input name="tosAccept" class="tos-agreement-input form-check-input inputelem" type="checkbox" data-ng-model="tosAccept" required>
+            <span class="tos-agreement-label form-check-label">{{'I have read and agree to the terms of the license.' | translate}}</span>
+          </div>
+          <!-- <div class="form-check" *ngIf="public.node.root_tenant"> -->
+            <div class="form-check" >
+            <input class="form-check-input inputelem" data-ng-model="wizard.enable_developers_exception_notification" type="checkbox">
+            <span>{{'Notify developers of software problems' | translate}}</span>
+            <div>{{'By enabling this feature, you will contribute to the development and security of the platform.' | translate}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pager float-left mt-3">
+      <button class="ButtonPrevious btn btn-primary me-1" (click)="step = 5">
+        <i class="fa-solid fa-arrow-circle-left"></i>
+        <span>{{'Previous' | translate}}</span>
+      </button>
+      <button class="ButtonNext btn btn-primary" (click)="(validated6 = true) && !wizardFormStep6.invalid && complete()">
+        <span>{{'Next' | translate}}</span>
+        <i class="fa-solid fa-arrow-circle-right"></i>
+      </button>
+    </div>
+  </div>
+  
+<!--  -->
+  <div *ngIf="step == 7" class="clearfix">
+    <div class="row wizard-block">
+      <div class="col-md-10">
+        <div class="congratulations">
+          <div class="title">{{'Congratulations!' | translate}}</div>
+          <div>{{'You have completed the platform wizard.' | translate}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="pager float-left">
+      <button class="ButtonNext btn btn-primary" (click)="goToAdminInterface()" type="submit"><span>{{'Proceed' | translate}}</span></button>
+    </div>
+  </div>
+
+
+</form>
