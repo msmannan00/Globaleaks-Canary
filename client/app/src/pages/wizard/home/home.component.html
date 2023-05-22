@@ -121,7 +121,7 @@
               *ngIf="passwordStrengthScore>0" 
               [Strengthtype]="strengthType" 
               [Strengthtext]="strengthText" 
-              [password]='changePasswordArgs.password' 
+              [password]='wizard.admin_password' 
               [passwordStrengthScore]='passwordStrengthScore' ></src-password-meter>
          
             <div class="text-danger"
@@ -231,12 +231,12 @@
                 [placeholder]="'Password' | translate" autocomplete="off"
                 [ngClass]="{'is-invalid': validated5 && (receiver_password?.errors?.['required']|| (receiver_password?.errors?.['passwordStrength']))}"
                 required />
-                <src-password-meter 
+                <!-- <src-password-meter 
                 *ngIf="passwordStrengthScore>0" 
                 [Strengthtype]="strengthType" 
                 [Strengthtext]="strengthText" 
                 [password]='changePasswordArgs.password' 
-                [passwordStrengthScore]='passwordStrengthScore' ></src-password-meter>
+                [passwordStrengthScore]='passwordStrengthScore' ></src-password-meter> -->
            
               <!-- <password-meter *ngIf="passwordStrengthScore" value="passwordStrengthScore"></password-meter> -->
               <div class="text-danger"
