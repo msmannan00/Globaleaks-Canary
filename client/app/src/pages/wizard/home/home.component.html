@@ -43,24 +43,24 @@
     </div>
   </div>
   
-  <!-- <div *ngIf="step == 3" #wizardFormStep3="ngForm" ngForm [ngClass]="{'was-validated': validated3}" class="clearfix">
+  <div *ngIf="step == 3" #wizardFormStep3="ngForm" ngForm [ngClass]="{'was-validated': validated3}" class="clearfix">
     <div class="row wizard-block">
       <div class="title">{{'Please choose a configuration profile:' | translate}}</div>
       <div class="col-md-6">
-        <div data-ng-include="'views/wizard/profiles.html'"></div>
+        <app-profile></app-profile>
       </div>
     </div>
-    <div class="pager float-left">
+    <div class="pager float-left mt-3">
       <button class="ButtonPrevious btn btn-primary me-1" (click)="step = 2">
         <i class="fa-solid fa-arrow-circle-left"></i>
-        <span data-translate>{{'Previous' | translate}}</span>
+        <span>{{'Previous' | translate}}</span>
       </button>
       <button class="ButtonNext btn btn-primary" (click)="(validated3 = true) && !wizardFormStep3.invalid && (step = 5)">
-        <span data-translate>{{'Next' | translate}}</span>
+        <span>{{'Next' | translate}}</span>
         <i class="fa-solid fa-arrow-circle-right"></i>
       </button>
     </div>
-  </div> -->
+  </div>
   
    
 <!-- step == 4 -->
@@ -295,12 +295,11 @@
           <div class="tos-text mb-3">{{ licenseContent }}</div>
 
           <div class="form-check">
-            <input name="tosAccept" class="tos-agreement-input form-check-input inputelem" type="checkbox" data-ng-model="tosAccept" required>
+            <input name="tosAccept" class="tos-agreement-input form-check-input inputelem" type="checkbox" [(ngModel)]="tosAccept" required>
             <span class="tos-agreement-label form-check-label">{{'I have read and agree to the terms of the license.' | translate}}</span>
           </div>
-          <!-- <div class="form-check" *ngIf="public.node.root_tenant"> -->
-            <div class="form-check" >
-            <input class="form-check-input inputelem" data-ng-model="wizard.enable_developers_exception_notification" type="checkbox">
+            <div class="form-check" *ngIf="appDataService.public.node.root_tenant">
+            <input class="form-check-input inputelem" [(ngModel)]="wizard.enable_developers_exception_notification" type="checkbox">
             <span>{{'Notify developers of software problems' | translate}}</span>
             <div>{{'By enabling this feature, you will contribute to the development and security of the platform.' | translate}}</div>
           </div>

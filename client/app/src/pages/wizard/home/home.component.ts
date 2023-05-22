@@ -2,8 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup,FormBuilder, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AppDataService } from 'app/src/app-data.service';
 import { AuthenticationService } from 'app/src/services/authentication.service';
 import { Constants } from 'app/src/shared/constants/constants';
+import {HttpService} from "../../../shared/services/http.service";
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -25,7 +28,7 @@ export class HomeComponent {
   wizardFormStep5: FormGroup;
   wizardFormStep6: FormGroup;
   licenseContent: string = `Content from license.txt`;
-
+  tosAccept:boolean=false;
   emailRegexp=Constants.email_regexp;
 
   //Password Meter
@@ -119,21 +122,21 @@ passwordStrengthValidator(password:string){
   constructor(
     private router: Router,
     private http: HttpClient,
-    private authenticationService: AuthenticationService  ) {}
+    private authenticationService: AuthenticationService,
+    public appDataService: AppDataService , public httpService: HttpService ) {}
+
+
   ngOnInit() {
-    // if (this.public.node.wizard_done) {
-    //   this.router.navigate(['/']);
-    //   return;
-    // }
+
+    if (this.appDataService.public.node.wizard_done) {
+      this.router.navigate(['/']);
+      return;
+    }
 
     this.http.get('license.txt', { responseType: 'text' })
     .subscribe(data => {
       this.licenseContent = data;
     });
-
-
-   
-
 
   }
 
@@ -143,17 +146,32 @@ passwordStrengthValidator(password:string){
     if (this.completed) {
       return;
     }
-      this.step += 1;  //Temporaty
-
     this.completed = true;
 
-    this.http.post("api/wizard", this.wizard).subscribe(() => {
-      // this.step += 1;
-    });
+    // this.http.post("api/wizard", this.wizard).subscribe(() => {
+    //   // this.step += 1;
+    // });
+
+    const param=JSON.stringify(this.wizard);
+    this.httpService.requestSignup(param).subscribe
+    (
+        {
+            next: response => {
+                this.step +=1
+            },
+            error: (error: any) => {
+                alert(JSON.stringify(error))
+            }
+        }
+    );
+
+
+
   }
 
   goToAdminInterface() {
-    // this.authenticationService.login(0, this.wizard.admin_username, this.wizard.admin_password, "", "").subscribe(() => {
+    // this.authenticationService.
+    // login(0, this.wizard.admin_username, this.wizard.admin_password, "", "").subscribe(() => {
     //   this.router.navigate(['/admin/home']);
     // });
   }

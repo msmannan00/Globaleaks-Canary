@@ -6,16 +6,16 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'app/src/shared.module';
+import { ProfileComponent } from './home/templates/profile.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
-    // Add more routes as needed
   ];
   
 
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent,ProfileComponent],
   imports: [RouterModule.forChild(routes),CommonModule,TranslateModule, NgbTooltipModule,FormsModule,SharedModule],
   exports: [RouterModule],
   providers: [],
