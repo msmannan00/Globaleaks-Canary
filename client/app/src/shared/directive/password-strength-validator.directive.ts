@@ -1,5 +1,5 @@
 import { Directive, Input, Output, EventEmitter } from '@angular/core';
-import { NG_VALIDATORS, AbstractControl, Validator } from '@angular/forms';
+import { NG_VALIDATORS, AbstractControl, Validator, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 @Directive({
   selector: '[passwordStrengthValidator]',
@@ -13,10 +13,10 @@ export class PasswordStrengthValidatorDirective implements Validator {
   @Input('passwordStrengthValidator') passwordStrength: string;
   @Output() passwordStrengthChange = new EventEmitter<number>();
 
-  validate(control: AbstractControl): { [key: string]: any } | null {
+  validate(control: AbstractControl): ValidationErrors | null {
     const pwd = control.value;
 
-    const types:any = {
+    const types: any = {
       lower: /[a-z]/.test(pwd),
       upper: /[A-Z]/.test(pwd),
       symbols: /\W/.test(pwd),
@@ -25,7 +25,7 @@ export class PasswordStrengthValidatorDirective implements Validator {
 
     let variation1 = 0;
     let variation2 = 0;
-    const letters:any = {};
+    const letters: any = {};
     let score = 0;
 
     if (pwd) {
@@ -51,7 +51,9 @@ export class PasswordStrengthValidatorDirective implements Validator {
       }
     }
 
-    this.passwordStrengthChange.emit(score);
+    if (control) {
+      this.passwordStrengthChange.emit(score);
+    }
 
     return score > 1 ? null : { passwordStrengthValidator: true };
   }
