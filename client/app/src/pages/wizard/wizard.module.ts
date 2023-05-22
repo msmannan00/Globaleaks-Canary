@@ -1,23 +1,25 @@
 import { NgModule } from '@angular/core';
-import { HomeComponent } from './home/home.component';
-import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
-import { SharedModule } from 'app/src/shared.module';
-import { ProfileComponent } from './home/templates/profile.component';
-
-const routes: Routes = [
-    { path: '', component: HomeComponent },
-  ];
-  
+import {TranslateModule} from "@ngx-translate/core";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {NgSelectModule} from "@ng-select/ng-select";
+import {SharedModule} from "../../shared.module";
+import {WizardComponent} from "./wizard/wizard.component";
+import {ProfileComponent} from "./wizard/template/profile/profile.component";
 
 
 @NgModule({
-  declarations: [HomeComponent,ProfileComponent],
-  imports: [RouterModule.forChild(routes),CommonModule,TranslateModule, NgbTooltipModule,FormsModule,SharedModule],
-  exports: [RouterModule],
-  providers: [],
+  declarations: [
+    WizardComponent,
+    ProfileComponent
+  ],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgSelectModule,
+    SharedModule
+  ]
 })
 export class WizardModule { }

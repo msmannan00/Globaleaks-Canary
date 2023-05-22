@@ -139,10 +139,9 @@ export class UtilsService {
     }
 
     if (!this.appDataService.public.node.wizard_done) {
-      location.replace("/wizard");
+      // location.replace("/#/wizard");
     } else if (path === "/" && this.appDataService.public.node.enable_signup) {
       this.appDataService.page = "signuppage"
-
     } else if ((path === "/" || path === "/submission") && this.appDataService.public.node.adminonly && !this.authenticationService.session) {
       location.replace("/admin");
     }

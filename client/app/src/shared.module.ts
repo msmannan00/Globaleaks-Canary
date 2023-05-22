@@ -55,6 +55,7 @@ import { NgFormChangeDirective } from './shared/directive/ng-form-change.directi
 import { WbfilesComponent } from './shared/partials/wbfiles/wbfiles.component';
 import { DisableCcpDirective } from './shared/directive/disable-ccp.directive';
 import { SubdomainvalidatorDirective } from './shared/directive/subdomainvalidator.directive';
+import { PasswordStrengthValidatorDirective } from './shared/directive/password-strength-validator.directive';
 
 @NgModule({
     imports: [
@@ -113,7 +114,9 @@ import { SubdomainvalidatorDirective } from './shared/directive/subdomainvalidat
         NgFormChangeDirective,
         WbfilesComponent,
         DisableCcpDirective,
-        SubdomainvalidatorDirective
+        SubdomainvalidatorDirective,
+        PasswordStrengthValidatorDirective,
+        PasswordStrengthValidatorDirective
     ],
     exports: [
         FooterComponent,
@@ -140,6 +143,7 @@ import { SubdomainvalidatorDirective } from './shared/directive/subdomainvalidat
         NgFormChangeDirective,
         DisableCcpDirective,
         SubdomainvalidatorDirective,
-        PasswordMeterComponent
+        PasswordMeterComponent,
+        PasswordStrengthValidatorDirective
     ]})
 export class SharedModule { }

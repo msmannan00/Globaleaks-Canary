@@ -56,7 +56,7 @@ export class AuthenticationService {
     );
   }
 
-  login(tid?:any, username?:any, password?:any, authcode?:any, authtoken?:any){
+  login(tid?:any, username?:any, password?:any, authcode?:any, authtoken?:any, callback?: () => void){
 
     if(authtoken === undefined){
       authtoken = "";
@@ -103,6 +103,9 @@ export class AuthenticationService {
             } else {
               this.router.navigate([this.session.homepage]).then(r => {});
             }
+          }
+          if (callback) {
+            callback()
           }
         },
         error: (error: any) => {

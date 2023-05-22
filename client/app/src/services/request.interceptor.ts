@@ -23,7 +23,7 @@ export class RequestInterceptor implements HttpInterceptor {
           .set(key, value)
       });
     }
-    if (httpRequest.url.toString()=="api/signup" || httpRequest.url.toString()=="api/submission" ||  httpRequest.url.toString()=="api/receiptauth" || httpRequest.url.toString()=="api/tokenauth" || httpRequest.url.toString()=="api/authentication" || httpRequest.url.toString()=="api/reset/password") {
+    if (httpRequest.url.toString()=="api/wizard" || httpRequest.url.toString()=="api/signup" || httpRequest.url.toString()=="api/submission" ||  httpRequest.url.toString()=="api/receiptauth" || httpRequest.url.toString()=="api/tokenauth" || httpRequest.url.toString()=="api/authentication" || httpRequest.url.toString()=="api/reset/password") {
 
       return this.httpClient.post('api/token', {user: 123}).pipe(switchMap((response) => {
         let token = Object.assign(new tokenResponse(), response)

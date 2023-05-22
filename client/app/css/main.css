@@ -743,6 +743,10 @@ p:last-child {
 	min-width: 20vw !important;
 }
 
+.form-group {
+	margin-bottom: 1rem;
+}
+
 [dir='ltr'] .form-group > .input-group > .left-radius {
 	border-radius: 5px 0 0 5px;
 }
