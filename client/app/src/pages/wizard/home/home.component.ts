@@ -32,11 +32,11 @@ export class HomeComponent {
   passwordStrengthScore: number=0;
   strengthText = ""
   strengthType = ""
-  changePasswordArgs = {
-    current: "",
-    password: "",
-    confirm: ""
-};
+//   changePasswordArgs = {
+//     current: "",
+//     password: "",
+//     confirm: ""
+// };
 passwordStrengthValidator(password:string){
     let types = [
         /[a-z]/.test(password),
