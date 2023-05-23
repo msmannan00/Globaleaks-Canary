@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AppConfigService } from '../../../../../services/app-config.service';
 import { AuthenticationService } from '../../../../../services/authentication.service';
 import { LoginDataRef } from '../../model/login-model';
-import {FormControl, Validators} from "@angular/forms";
+import {ControlContainer, FormControl, NgForm, Validators} from "@angular/forms";
 import {UtilsService} from "../../../../../shared/services/utils.service";
 import {AppDataService} from "../../../../../app-data.service";
 
@@ -10,6 +10,7 @@ import {AppDataService} from "../../../../../app-data.service";
   selector: 'app-simple-login',
   templateUrl: './simple-login.component.html',
   styleUrls: ['./simple-login.component.css'],
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
 })
 export class SimpleLoginComponent {
 

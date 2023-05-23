@@ -6,6 +6,8 @@ import {AuthenticationService} from "../../../services/authentication.service";
 import {HttpService} from "../../../shared/services/http.service";
 import {AppDataService} from "../../../app-data.service";
 import {TranslationService} from "../../../services/translation.service";
+import {UtilsService} from "../../../shared/services/utils.service";
+import {AppConfigService} from "../../../services/app-config.service";
 
 @Component({
   selector: 'src-wizard',
@@ -79,7 +81,7 @@ export class WizardComponent implements OnInit{
 
   goToAdminInterface(){
     const promise = () => {
-      this.router.navigate(['/admin/home']).then(r => {});
+      this.appConfigService.reloadRoute('/admin/home')
     };
     this.authenticationService.login(0, this.wizard.admin_username, this.wizard.admin_password, "", "",promise)
   }
@@ -99,7 +101,7 @@ export class WizardComponent implements OnInit{
     this.wizard.node_language = this.translationService.language
   }
 
-  constructor(private translationService: TranslationService, private router: Router, private http: HttpClient, private authenticationService: AuthenticationService, public appDataService: AppDataService , public httpService: HttpService )
+  constructor(public appConfigService: AppConfigService, private utilsService: UtilsService, private translationService: TranslationService, private router: Router, private http: HttpClient, private authenticationService: AuthenticationService, public appDataService: AppDataService , public httpService: HttpService )
   {
   }
 

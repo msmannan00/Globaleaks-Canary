@@ -74,6 +74,9 @@ const routes: Routes = [
   },
   {
     path: 'wizard',
+    resolve: {
+      PreferenceResolver
+    },
     loadChildren: () => WizardRoutingModule,
   }
 ];
