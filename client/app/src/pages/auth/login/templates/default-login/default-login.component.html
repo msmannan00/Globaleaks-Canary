@@ -1,9 +1,9 @@
-<div [formGroup]="loginValidator">
+<div >
 	<div *ngIf="!authentication.requireAuthCode">
 		<div class="form-group">
 			<div class="input-group mb-3">
 				<span class="input-group-text"><i class="fa-solid fa-user"></i></span>
-				<input class="form-control" name="username" formControlName="username"
+				<input class="form-control" name="username" 
 					placeholder="{{'Username' | translate}}" [(ngModel)]="authentication.loginData.loginUsername"
 					type="text" required />
 			</div>
@@ -12,7 +12,7 @@
 		<div class="form-group mb-3">
 			<div class="input-group">
 				<span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-				<input class="form-control" name="password" formControlName="password"
+				<input class="form-control" name="password"
 					placeholder="{{'Password' | translate}}" [(ngModel)]="authentication.loginData.loginPassword"
 					type="password" required />
 			</div>

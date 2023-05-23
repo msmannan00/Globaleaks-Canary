@@ -15,11 +15,9 @@ import {AppDataService} from "../../../app-data.service";
 export class LoginComponent{
 
   loginData = new LoginDataRef();
-  loginValidator: FormGroup;
 
   ngOnInit() {
-    this.loginValidator = this.builder.group({
-    })
+   
     this.route.queryParams.subscribe(params => {
       if("token" in params){
         let token = params['token'];
