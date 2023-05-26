@@ -29,6 +29,10 @@ export class AuthenticationService {
     window.sessionStorage.removeItem("session");
   };
 
+  isSessionActive(){
+    return this.session
+  }
+
   setSession(response:any){
     this.session = response;
 
