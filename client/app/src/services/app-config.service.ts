@@ -25,7 +25,11 @@ export class AppConfigService implements OnInit{
     this.rootDataService.page = page
   }
 
-  private localInitialization(){
+  hello(){
+
+  }
+
+  private localInitialization(callback?: () => void){
 
     this.appServices.getPublicResource().subscribe({
       next: data => {
@@ -113,21 +117,42 @@ export class AppConfigService implements OnInit{
         this.glTranslationService.onChange(this.rootDataService.public.node.default_language)
         this.utilsService.setTitle()
         this.rootDataService.started = true;
-      }
-    });
-    this.router.events.subscribe(() => {
-      if(this.router.url == "/" && this.rootDataService.page == "signuppage"){
-        location.replace("/#/signup")
-      }
-      else if(this.router.url!=="/" && this.router.url!=="/routing"){
-        // this.rootDataService.page = ""
+        if(callback){
+          callback()
+        }
       }
     });
   }
 
+  onRouteChange(){
+    this.router.events.subscribe(() => {
+      if(this.rootDataService.public.node){
+        if (!this.rootDataService.public.node.wizard_done) {
+          location.replace("/#/wizard");
+        }
+        else if(this.router.url == "/" && this.rootDataService.page == "signuppage"){
+          location.replace("/#/signup")
+        }
+      }
+    });
+  }
+
+  reloadRoute(newPath: string) {
+    const promise = () => {
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.router.navigated = false;
+      this.router.navigateByUrl(this.router.url).then(() => {
+        if (newPath) {
+          this.router.navigate([newPath], { replaceUrl: true });
+        }
+      });
+    };
+    this.localInitialization(promise)
+  }
 
   constructor(private router: Router, public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public rootDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService) {
     this.localInitialization()
+    this.onRouteChange();
   }
 
   ngOnInit(): void {

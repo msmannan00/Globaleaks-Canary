@@ -7,6 +7,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {RequestSupportComponent} from "../modals/request-support/request-support.component";
 import {HttpService} from "./http.service";
 import {Transfer} from "@flowjs/ngx-flow";
+import {AppConfigService} from "../../services/app-config.service";
 
 @Injectable({
   providedIn: 'root'
@@ -138,11 +139,8 @@ export class UtilsService {
       return;
     }
 
-    if (!this.appDataService.public.node.wizard_done) {
-      location.replace("/wizard");
-    } else if (path === "/" && this.appDataService.public.node.enable_signup) {
+    if (path === "/" && this.appDataService.public.node.enable_signup) {
       this.appDataService.page = "signuppage"
-
     } else if ((path === "/" || path === "/submission") && this.appDataService.public.node.adminonly && !this.authenticationService.session) {
       location.replace("/admin");
     }
@@ -243,7 +241,7 @@ export class UtilsService {
     this.httpService.requestSuppor(param).subscribe();
   }
 
-  constructor(public httpService: HttpService, public modalService: NgbModal, public authenticationService:AuthenticationService, public appDataService:AppDataService, public translateService: TranslateService, private router: Router) {
+  constructor(public appConfigService: AppConfigService, public httpService: HttpService, public modalService: NgbModal, public authenticationService:AuthenticationService, public appDataService:AppDataService, public translateService: TranslateService, private router: Router) {
   }
 
 }

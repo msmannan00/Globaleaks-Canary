@@ -46,9 +46,13 @@ module.exports = function (grunt) {
         files: [
           { dest: "build/css", cwd: "tmp/css", src: ["**"], expand: true },
           { dest: "build/js", cwd: "tmp/js", src: ["**"], expand: true },
-          { dest: "build", cwd: "tmp/assets", src: ["**"], expand: true },
+          { dest: "build/data", cwd: "tmp/assets/data", src: ["**"], expand: true },
+          { dest: "build/lib", cwd: "tmp/assets/lib", src: ["**"], expand: true },
           { dest: "build/index.html", cwd: ".", src: ["tmp/index.html"], expand: false, flatten: true },
-          { dest: "build/assets/loader.js", cwd: ".", src: ["tmp/assets/loader.js"], expand: false, flatten: true },
+          { dest: "build/assets/favicon.ico", cwd: ".", src: ["tmp/assets/favicon.ico"], expand: false, flatten: true },
+          { dest: "build/license.txt", cwd: ".", src: ["tmp/assets/license.txt"], expand: false, flatten: true },
+          { dest: "build/loader.js", cwd: ".", src: ["tmp/assets/loader.js"], expand: false, flatten: true },
+          // { dest: "build", cwd: "tmp/assets", src: ["**"], expand: true },
         ]
       },
       coverage: {
