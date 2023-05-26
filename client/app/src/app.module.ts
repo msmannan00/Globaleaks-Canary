@@ -33,6 +33,7 @@ import * as Flow from "@flowjs/flow.js";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {SignupModule} from "./pages/signup/signup.module";
 import { WizardModule } from './pages/wizard/wizard.module';
+import { RecipientModule } from './pages/recipient/recipient.module';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './data/i18n/', '.json');
@@ -54,6 +55,7 @@ export function createTranslateLoader(http: HttpClient) {
     ActionModule,
     OrderModule,
     WizardModule,
+    RecipientModule,
     SharedModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en',

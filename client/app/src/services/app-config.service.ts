@@ -5,13 +5,14 @@ import {UtilsService} from "../shared/services/utils.service";
 import {AppDataService} from "../app-data.service";
 import {FieldUtilitiesService} from "../shared/services/field-utilities.service";
 import {TranslationService} from "./translation.service";
-import {Route, Router} from "@angular/router";
+import {Route, Router,NavigationEnd, ActivatedRoute} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppConfigService implements OnInit{
-
+  public sidebar: string= '';
+  public headerTitle:string = 'Globaleaks';
   initTranslation(){
     this.translateService.setDefaultLang('en');
     this.translateService.use('en');
@@ -150,7 +151,25 @@ export class AppConfigService implements OnInit{
     this.localInitialization(promise)
   }
 
-  constructor(private router: Router, public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public rootDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService) {
+
+  
+  routeChangeListener() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        const currentRoute = this.activatedRoute.firstChild?.snapshot;
+        if (currentRoute?.data) {
+          this.headerTitle = currentRoute.data['headerTitle'];
+          this.sidebar = currentRoute.data['sidebar'];
+          document.title = this.headerTitle;
+        }
+      }
+    });
+  }
+  
+
+
+
+  constructor(private router: Router,private activatedRoute: ActivatedRoute, public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public rootDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService) {
     this.localInitialization()
     this.onRouteChange();
   }

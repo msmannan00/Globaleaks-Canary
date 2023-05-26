@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {AppDataService} from "../../../app-data.service";
 import {HttpService} from "../../../shared/services/http.service";
+import { AppConfigService } from 'app/src/services/app-config.service';
 
 @Component({
   selector: 'src-signup',
@@ -51,7 +52,11 @@ export class SignupComponent {
         );
     }
 
-    constructor(public appDataService:AppDataService, public httpService: HttpService) {
+    constructor(public appDataService:AppDataService, public httpService: HttpService, public appConfig:AppConfigService) {
+    }
+
+    ngOnInit(){
+        this.appConfig.routeChangeListener();
     }
 
 }

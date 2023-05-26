@@ -41,11 +41,13 @@
     <div id="PageContent">
       <div id="ContentBox">
         <div class="row">
-          <!--<nav ng-if="appConfig.sidebar" id="Sidebar" class="col-md-2 flex-column" data-ng-include="appConfig.sidebar"></nav>-->
-          <span class="col-md-12 no-gutter">
+          <nav *ngIf="appConfig.sidebar" id="Sidebar" class="col-md-2 flex-column" data-ng-include="appConfig.sidebar">
+            <src-receipt-sidebar *ngIf="appConfig.sidebar=='recipient-sidebar'"></src-receipt-sidebar>
+          </nav>
+          <main [ngClass]="{'col-lg-10 col-md-8 col-sm-12': appConfig.sidebar, 'col-md-12': !appConfig.sidebar}">
             
           <router-outlet></router-outlet>
-        </span>
+        </main>
         </div>
       </div>
     </div>

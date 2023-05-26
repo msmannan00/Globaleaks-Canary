@@ -56,6 +56,8 @@ import { WbfilesComponent } from './shared/partials/wbfiles/wbfiles.component';
 import { DisableCcpDirective } from './shared/directive/disable-ccp.directive';
 import { SubdomainvalidatorDirective } from './shared/directive/subdomainvalidator.directive';
 import { PasswordStrengthValidatorDirective } from './shared/directive/password-strength-validator.directive';
+import { UserHomeComponent } from './shared/partials/user-home/user-home.component';
+import { UserWarningsComponent } from './shared/partials/user-warnings/user-warnings.component';
 
 @NgModule({
     imports: [
@@ -116,7 +118,9 @@ import { PasswordStrengthValidatorDirective } from './shared/directive/password-
         DisableCcpDirective,
         SubdomainvalidatorDirective,
         PasswordStrengthValidatorDirective,
-        PasswordStrengthValidatorDirective
+        PasswordStrengthValidatorDirective,
+        UserHomeComponent,
+        UserWarningsComponent
     ],
     exports: [
         FooterComponent,
@@ -144,6 +148,8 @@ import { PasswordStrengthValidatorDirective } from './shared/directive/password-
         DisableCcpDirective,
         SubdomainvalidatorDirective,
         PasswordMeterComponent,
-        PasswordStrengthValidatorDirective
+        PasswordStrengthValidatorDirective,
+        UserHomeComponent,
+        UserWarningsComponent
     ]})
 export class SharedModule { }

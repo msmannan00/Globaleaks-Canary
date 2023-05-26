@@ -92,6 +92,11 @@ export class HttpService{
     return this.httpClient.get("api/preferences", {'headers':headers })
   }
 
+  requestNodeResource(param: any): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.get("api/admin/node", {'headers':headers })
+  }
+
   requestTipResource(param: any): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.get("api/admin/auditlog/tips", {'headers':headers })

@@ -26,9 +26,11 @@ const routes: Routes = [
     resolve: {
     },
     pathMatch: 'full',
+   
   },
   {
     path: 'login',
+    
     resolve: {
       // PreferenceResolver
     },
@@ -40,6 +42,7 @@ const routes: Routes = [
       // PreferenceResolver
     },
     loadChildren: () => SignupRoutingModule,
+   
   },
   {
     path: 'action',
@@ -55,6 +58,10 @@ const routes: Routes = [
       //  PreferenceResolver
     },
     loadChildren: () => RecipientRoutingModule,
+    data:{
+      headerTitle: 'Recipient',
+      sidebar: 'recipient-sidebar'
+    }
   },
   {
     path: 'admin',

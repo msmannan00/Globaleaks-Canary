@@ -16,7 +16,9 @@ export class AppComponent{
   changeLang(lang: string) {
     this.translate.use(lang);
   }
-
+  ngOnInit(){
+    this.appConfig.routeChangeListener();
+  }
   constructor(public translate: TranslateService, public appConfig: AppConfigService, public appDataService:AppDataService, public translateService:TranslationService,public utilsService:UtilsService) {
 
   }
