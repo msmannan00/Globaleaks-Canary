@@ -241,6 +241,12 @@ export class UtilsService {
     this.httpService.requestSuppor(param).subscribe();
   }
 
+  runUserOperation(operation: string, args: any, refresh: boolean) {
+    return this.httpService.runOperation("api/user/operations", operation, args, refresh);
+  }
+  runRecipientOperation(operation: string, args: any, refresh: boolean) {
+    return this.httpService.runOperation("api/recipient/operations", operation, args, refresh);
+  }
   constructor(public appConfigService: AppConfigService, public httpService: HttpService, public modalService: NgbModal, public authenticationService:AuthenticationService, public appDataService:AppDataService, public translateService: TranslateService, private router: Router) {
   }
 

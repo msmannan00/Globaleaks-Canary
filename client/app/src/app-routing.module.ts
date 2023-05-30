@@ -6,12 +6,14 @@ import {SessionGuard} from "./app-guard.service";
 import { HomeComponent } from './pages/dashboard/home/home.component';
 import {PasswordResetResponseComponent} from "./pages/auth/password-reset-response/password-reset-response.component";
 import {RecipientRoutingModule} from "./pages/recipient/recipient-routing.module";
-// import {PreferenceResolver} from "./shared/resolvers/preference.resolver";
+import {PreferenceResolver} from "./shared/resolvers/preference.resolver";
 import {ActionRoutingModule} from "./pages/action/action-routing.module";
 import {SignupRoutingModule} from "./pages/signup/signup-routing.module";
 import {Pageguard} from "./shared/guards/pageguard.service";
 import {ActivationComponent} from "./pages/signup/templates/activation/activation.component";
 import {WizardRoutingModule} from "./pages/wizard/wizard-routing.module";
+import { NodeResolver } from './shared/resolvers/node.resolver';
+import { RtipsResolver } from './shared/resolvers/rtips.resolver';
 
 
 const routes: Routes = [
@@ -55,7 +57,7 @@ const routes: Routes = [
     path: 'recipient',
     canActivate: [SessionGuard],
     resolve: {
-      //  PreferenceResolver
+       PreferenceResolver,NodeResolver,RtipsResolver
     },
     loadChildren: () => RecipientRoutingModule,
     data:{
@@ -67,7 +69,7 @@ const routes: Routes = [
     path: 'admin',
     canActivate: [SessionGuard],
     resolve: {
-      // PreferenceResolver
+      NodeResolver
     },
     loadChildren: () => AdminRoutingModule,
   },

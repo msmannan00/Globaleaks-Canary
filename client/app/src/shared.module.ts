@@ -58,6 +58,9 @@ import { SubdomainvalidatorDirective } from './shared/directive/subdomainvalidat
 import { PasswordStrengthValidatorDirective } from './shared/directive/password-strength-validator.directive';
 import { UserHomeComponent } from './shared/partials/user-home/user-home.component';
 import { UserWarningsComponent } from './shared/partials/user-warnings/user-warnings.component';
+import { GrantAccessComponent } from './shared/modals/grant-access/grant-access.component';
+import { RevokeAccessComponent } from './shared/modals/revoke-access/revoke-access.component';
+import { DeleteConfirmationComponent } from './shared/modals/delete-confirmation/delete-confirmation.component';
 
 @NgModule({
     imports: [
@@ -120,7 +123,10 @@ import { UserWarningsComponent } from './shared/partials/user-warnings/user-warn
         PasswordStrengthValidatorDirective,
         PasswordStrengthValidatorDirective,
         UserHomeComponent,
-        UserWarningsComponent
+        UserWarningsComponent,
+        GrantAccessComponent,
+        RevokeAccessComponent,
+        DeleteConfirmationComponent
     ],
     exports: [
         FooterComponent,
@@ -150,6 +156,10 @@ import { UserWarningsComponent } from './shared/partials/user-warnings/user-warn
         PasswordMeterComponent,
         PasswordStrengthValidatorDirective,
         UserHomeComponent,
-        UserWarningsComponent
+        UserWarningsComponent,
+        GrantAccessComponent,
+        RevokeAccessComponent,
+        DeleteConfirmationComponent
+
     ]})
 export class SharedModule { }

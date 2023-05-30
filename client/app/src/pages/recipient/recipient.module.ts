@@ -10,6 +10,7 @@ import { TipsComponent } from './tips/tips.component';
 import { TipComponent } from './tip/tip.component';
 import { WhistleBlowerComponent } from './whistleblower-identity/whistleblower-identity.component';
 import { SettingsComponent } from './settings/settings.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,10 +19,11 @@ import { SettingsComponent } from './settings/settings.component';
     TipsComponent,
     TipComponent,
     WhistleBlowerComponent,
-    SettingsComponent
+    SettingsComponent,
+    
   ],
   imports: [
-    CommonModule,RouterModule,TranslateModule,SharedModule
+    CommonModule,RouterModule,TranslateModule,SharedModule,FormsModule
   ],
   exports:[SidebarComponent]
 })

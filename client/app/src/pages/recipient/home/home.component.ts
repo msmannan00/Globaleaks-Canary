@@ -9,17 +9,10 @@ import { HttpService } from 'app/src/shared/services/http.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  sidebar:boolean = true;
-  constructor(public appDataService:AppDataService, private http:HttpService) {
+  constructor(public appDataService:AppDataService, ) {
   }
 
   ngOnInit(){
-    this.http.requestNodeResource({ "update": { method: "PUT" } })
-      .subscribe({
-        next: (response) => console.log(response),
-        error: (e) => console.error(e),
-        complete: () => console.info('complete') 
-    }
-      );
+ 
   }
 }

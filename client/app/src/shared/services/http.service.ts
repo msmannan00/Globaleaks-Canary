@@ -175,7 +175,14 @@ export class HttpService{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.get("api/rtips", {'headers':headers })
   }
+  runOperation(url: string, operation: string, args: any, refresh: boolean) {
+    const data = {
+      operation: operation,
+      args: args
+    };
 
+    return this.httpClient.get(url, { params: data });
+  }
   constructor(private httpClient: HttpClient) {
   }
 }
