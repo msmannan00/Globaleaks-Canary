@@ -14,14 +14,6 @@ import { NavigationEnd, Router } from '@angular/router';
 export class AppComponent{
 
   showSidebar:boolean= true;
-
-  excludedUrls = [
-    '#/recipient/reports'
-  ];
-  currentUrl = this.router.url;
-  // 
-
-
   changeLang(lang: string) {
     this.translate.use(lang);
   }
@@ -32,14 +24,12 @@ export class AppComponent{
           '/recipient/reports'
         ];
         const currentUrl = event.url;
-
         this.showSidebar = !excludedUrls.includes(currentUrl);
       }
     });
   }
   ngOnInit(){
     this.appConfig.routeChangeListener();
-    console.log(this.currentUrl)
     this.checkToShowSidebar()
   }
   constructor(
