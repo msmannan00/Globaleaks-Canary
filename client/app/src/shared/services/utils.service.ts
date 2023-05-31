@@ -247,6 +247,9 @@ export class UtilsService {
   runRecipientOperation(operation: string, args: any, refresh: boolean) {
     return this.httpService.runOperation("api/recipient/operations", operation, args, refresh);
   }
+  go(path: string): void {
+    this.router.navigateByUrl(path);
+  }
   constructor(public appConfigService: AppConfigService, public httpService: HttpService, public modalService: NgbModal, public authenticationService:AuthenticationService, public appDataService:AppDataService, public translateService: TranslateService, private router: Router) {
   }
 

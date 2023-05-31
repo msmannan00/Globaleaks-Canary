@@ -918,3 +918,9 @@ html#Receipt {
 .fas {
 	transform: scaleX(-1);
 }
+
+
+.input-group-append span{
+	border-top-left-radius: 0 !important;
+	border-bottom-left-radius: 0 !important;
+}
