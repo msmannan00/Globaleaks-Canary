@@ -270,11 +270,13 @@
               </div>
             </div>
           </td>
-          <td class="TipInfoScore" *ngIf="appDataService.public.node.enable_scoring_system" data-ng-switch="tip.score">
-            <span data-ng-switch-when="0">-</span>
-            <span class="badge badge-primary" data-ng-switch-when="1">{{'Low' | translate}}</span>
-            <span class="badge badge-primary" data-ng-switch-when="2">{{'Medium' | translate}}</span>
-            <span class="badge badge-primary" data-ng-switch-when="3">{{'High' | translate}}</span>
+          <td class="TipInfoScore" *ngIf="appDataService.public.node.enable_scoring_system">
+            <ng-container [ngSwitch]="tip.score">
+              <span *ngSwitchCase="0">-</span>
+              <span class="badge badge-primary" *ngSwitchCase="1">{{ 'Low' | translate }}</span>
+              <span class="badge badge-primary" *ngSwitchCase="2">{{ 'Medium' | translate }}</span>
+              <span class="badge badge-primary" *ngSwitchCase="3">{{ 'High' | translate }}</span>
+            </ng-container>
           </td> 
         </tr>
         </ng-container>
