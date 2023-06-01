@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { PreferenceResolver } from 'app/src/shared/resolvers/preference.resolver';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'src-receipt-sidebar',
@@ -9,8 +10,7 @@ import { PreferenceResolver } from 'app/src/shared/resolvers/preference.resolver
 export class SidebarComponent  {
   message: string;
 
-  constructor() {
+  constructor(public preferenceResolver: PreferenceResolver) {
   }
-
  
 }

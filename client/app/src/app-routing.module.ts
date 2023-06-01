@@ -34,14 +34,14 @@ const routes: Routes = [
     path: 'login',
     
     resolve: {
-      // PreferenceResolver
+      PreferenceResolver
     },
     loadChildren: () => AuthRoutingModule,
   },
   {
     path: 'signup',
     resolve: {
-      // PreferenceResolver
+      PreferenceResolver
     },
     loadChildren: () => SignupRoutingModule,
    
@@ -49,7 +49,7 @@ const routes: Routes = [
   {
     path: 'action',
     resolve: {
-      // PreferenceResolver
+      PreferenceResolver
     },
     loadChildren: () => ActionRoutingModule,
   },
@@ -84,7 +84,7 @@ const routes: Routes = [
   {
     path: 'wizard',
     resolve: {
-      // PreferenceResolver
+      PreferenceResolver
     },
     loadChildren: () => WizardRoutingModule,
   }

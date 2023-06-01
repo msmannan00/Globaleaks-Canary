@@ -6,6 +6,7 @@ import {AppDataService} from "../app-data.service";
 import {FieldUtilitiesService} from "../shared/services/field-utilities.service";
 import {TranslationService} from "./translation.service";
 import {Route, Router,NavigationEnd, ActivatedRoute} from "@angular/router";
+import {PreferenceResolver} from "../shared/resolvers/preference.resolver";
 
 @Injectable({
   providedIn: 'root'
@@ -115,7 +116,14 @@ export class AppConfigService implements OnInit{
           }
         });
 
-        this.glTranslationService.onChange(this.rootDataService.public.node.default_language)
+        if(this.preferenceResolver.dataModel && this.preferenceResolver.dataModel.language){
+          setTimeout(() => {
+            this.glTranslationService.onChange(this.preferenceResolver.dataModel.language)
+          }, 250);
+        }else {
+          this.glTranslationService.onChange(this.rootDataService.public.node.default_language)
+        }
+
         this.utilsService.setTitle()
         this.rootDataService.started = true;
         if(callback){
@@ -160,16 +168,15 @@ export class AppConfigService implements OnInit{
         if (currentRoute?.data) {
           this.headerTitle = currentRoute.data['headerTitle'];
           this.sidebar = currentRoute.data['sidebar'];
-          document.title = this.headerTitle;
+          if(this.headerTitle){
+            document.title = this.headerTitle;
+          }
         }
       }
     });
   }
-  
 
-
-
-  constructor(private router: Router,private activatedRoute: ActivatedRoute, public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public rootDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService) {
+  constructor(private preferenceResolver:PreferenceResolver, private router: Router,private activatedRoute: ActivatedRoute, public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public rootDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService) {
     this.localInitialization()
     this.onRouteChange();
   }

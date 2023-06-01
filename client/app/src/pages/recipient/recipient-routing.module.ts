@@ -4,6 +4,7 @@ import {HomeComponent} from "./home/home.component";
 import { PreferenceResolver } from 'app/src/shared/resolvers/preference.resolver';
 import { TipsComponent } from './tips/tips.component';
 import { SettingsComponent } from './settings/settings.component';
+import {PreferencesComponent} from "../../shared/partials/preferences/preferences.component";
 
 const routes: Routes = [
   {
@@ -19,6 +20,11 @@ const routes: Routes = [
   {
     path: 'settings',
     component: SettingsComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'preferences',
+    component: PreferencesComponent,
     pathMatch: 'full',
   }
 ];

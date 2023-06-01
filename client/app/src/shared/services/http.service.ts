@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import { Observable } from 'rxjs';
 import {password_recovery_response_model} from "../../models/authentication/password_recovery_response_model";
+import {Router} from "@angular/router";
 
 
 @Injectable({
@@ -33,9 +34,18 @@ export class HttpService{
     return this.httpClient.delete("api/session",{'headers':headers })
   }
 
-  requestOperations(data:any): Observable<any>{
-    const headers = { 'content-type': 'application/json'}
-    return this.httpClient.put("api/user/operations",data)
+  requestOperations(data:any, header?:any): Observable<any>{
+    let headers = { 'content-type': 'application/json'}
+    if(header){
+      headers = header
+    }
+
+    return this.httpClient.put("api/user/operations",data, {headers})
+  }
+
+  updatePreferenceResource(data:any, header?:any): Observable<any>{
+    let headers = { 'content-type': 'application/json'}
+    return this.httpClient.put("api/preferences",data, {headers})
   }
 
   requestChangePassword(param: string): Observable<any>{
@@ -176,13 +186,23 @@ export class HttpService{
     return this.httpClient.get("api/rtips", {'headers':headers })
   }
   runOperation(url: string, operation: string, args: any, refresh: boolean) {
+
     const data = {
       operation: operation,
       args: args
     };
 
-    return this.httpClient.get(url, { params: data });
+    if(refresh){
+      setTimeout(() => {
+        const currentUrl = this.router.url;
+        this.router.navigateByUrl('routing', {skipLocationChange: true, replaceUrl: true}).then(() => {
+          this.router.navigate([currentUrl]);
+        });
+      }, 150);
+    }
+
+    return this.httpClient.put(url,data)
   }
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private router: Router) {
   }
 }
