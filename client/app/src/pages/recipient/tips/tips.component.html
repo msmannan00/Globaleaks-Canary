@@ -1,45 +1,39 @@
 <ng-container *ngIf="rtips.dataModel.rtips">
+<!--  -->
 
- 
+<!--  -->
 <div id="Toolbar" class="row">
     <div class="col-md-12">
-      <a id="link-home" routerLink="/reipient/home" data-toggle="tooltip" title="{{'Home' | translate}}"
+      <a id="link-home" routerLink="/recipient/home" data-toggle="tooltip" title="{{'Home' | translate}}"
         class="btn btn-outline-secondary">
         <i class="fa-solid fa-arrow-left"></i>
       </a>
-
-      
       <span id="tip-action-select-all" *ngIf="selectedTips.length !== rtips.dataModel.rtips.length "
         (click)="selectAll()" data-toggle="tooltip" title="{{'Select all' | translate}}"
         class="btn btn-outline-secondary">
         <i class="fa-solid fa-square"></i>
       </span>
-
       <span id="tip-action-select-all" *ngIf="selectedTips.length === rtips.dataModel.rtips.length"
         (click)="deselectAll()" data-toggle="tooltip" title="{{'Deselect all' | translate}}"
         class="btn btn-outline-secondary">
         <i class="fa-solid fa-check-square"></i>
       </span>
-
       <span *ngIf="selectedTips.length">
         <span id="tip-action-grant-access-selected" *ngIf="preference.dataModel.can_grant_access_to_reports"
           (click)="openGrantAccessModal()" data-toggle="tooltip" title="{{'Grant access' | translate}}"
           class="btn btn-outline-secondary">
           <i class="fa-solid fa-user-plus"></i>
         </span>
-
         <span id="tip-action-revoke-access-selected" *ngIf="preference.dataModel.can_grant_access_to_reports"
           (click)="openRevokeAccessModal()" data-toggle="tooltip" title="{{'Revoke access' | translate}}"
           class="btn btn-outline-secondary">
           <i class="fa-solid fa-user-minus"></i>
         </span>
-
         <span id="tip-action-delete-selected" *ngIf="preference.dataModel.can_delete_submission"
           (click)="tipDeleteSelected()" data-toggle="tooltip" title="{{'Delete' | translate}}"
           class="btn btn-outline-secondary">
           <i class="fa-solid fa-trash"></i>
         </span>
-
         <span id="tip-action-export-selected" (click)="tipsExport()" data-toggle="tooltip"
           title="{{'Export' | translate}}" class="btn btn-outline-secondary">
           <i class="fa-solid fa-save"></i>
@@ -93,7 +87,7 @@
           <th class="TipInfoContext" *ngIf="appDataService.public.contexts.length > 1">
             <span (click)="sortKey = 'context_name'; sortReverse = !sortReverse">
               <i class="fa-solid fa-inbox"></i>
-              <span data-translate>Channel</span>
+              <span>{{'Channel' | translate}}</span>
               <span *ngIf="sortKey == 'context_name'">
                 <span *ngIf="!sortReverse" class="fa-solid fa-caret-down"></span>
                 <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
@@ -109,7 +103,7 @@
           <th class="TipInfoLabel">
             <span (click)="sortKey = 'label'; sortReverse = !sortReverse">
               <i class="fa-solid fa-tag"></i>
-              <span data-translate>Label</span>
+              <span>{{'Label' | translate}}</span>
               <span *ngIf="sortKey == 'label'">
                 <span *ngIf="!sortReverse" class="fa-solid fa-caret-down"></span>
                 <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
@@ -119,7 +113,7 @@
           <th class="TipInfoStatus">
             <span (click)="sortKey = 'submissionStatusStr'; sortReverse = !sortReverse">
               <i class="fa-solid fa-dot-circle"></i>
-              <span data-translate>Status</span>
+              <span>{{'Status' | translate}}</span>
               <span *ngIf="sortKey == 'submissionStatusStr'">
                 <span *ngIf="!sortReverse" class="fa-solid fa-caret-down"></span>
                 <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
@@ -127,15 +121,33 @@
             </span>
             <span class="DropdownMultiselectContainer">
               <i class="fa-solid fa-filter" data-ng-class="{filterSelected: checkFilter(dropdownStatusModel)}"></i>
-              <span data-ng-dropdown-multiselect data-options="dropdownStatusData"
+              <!-- <span data-ng-dropdown-multiselect data-options="dropdownStatusData"
                 data-selected-model="dropdownStatusModel" data-events="on_changed"
-                data-extra-settings="dropdownSettings" data-translation-texts="dropdownDefaultText"></span>
+                data-extra-settings="dropdownSettings" data-translation-texts="dropdownDefaultText"></span> -->
+                <!-- <div ngbDropdown>
+                  <button class="btn btn-primary" id="dropdown" ngbDropdownToggle>
+                    Toggle Dropdown
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdown">
+                    <button
+                      *ngFor="let option of dropdownStatusData2"
+                      class="dropdown-item"
+                      type="button"
+                      (click)="toggleSelection(option)"
+                      [class.active]="isSelected2(option)"
+                    >
+                      {{ option }}
+                    </button>
+                  </div>
+                </div> -->
+               
+                <!--  -->
             </span>
           </th>
           <th class="TipInfoSubmissionDate">
             <span (click)="sortKey = 'creation_date'; sortReverse = !sortReverse">
               <i class="fa-solid fa-clock"></i>
-              <span data-translate>Report date</span>
+              <span>{{'Report date' | translate}}</span>
               <span *ngIf="sortKey == 'creation_date'">
                 <span *ngIf="!sortReverse" class="fa-solid fa-caret-down"></span>
                 <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
@@ -149,7 +161,7 @@
           <th class="TipInfoUpdateDate">
             <span (click)="sortKey = 'update_date'; sortReverse = !sortReverse">
               <i class="fa-solid fa-clock"></i>
-              <span data-translate>Last update</span>
+              <span>{{'Last update' | translate}}</span>
               <span *ngIf="sortKey == 'update_date'">
                 <span *ngIf="!sortReverse" class="fa-solid fa-caret-down"></span>
                 <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
@@ -161,7 +173,7 @@
           <th class="TipInfoExpirationDate">
             <span (click)="sortKey = 'expiration_date'; sortReverse = !sortReverse">
               <i class="fa-solid fa-hourglass"></i>
-              <span data-translate>Expiration date</span>
+              <span>{{'Expiration date' | translate}}</span>
               <span *ngIf="sortKey == 'expiration_date'">
                 <span *ngIf="!sortReverse" class="fa-solid fa-caret-down"></span>
                 <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
@@ -176,14 +188,14 @@
           <th class="TipInfoPreview">
             <span>
               <i class="fa-solid fa-list-alt"></i>
-              <span data-translate>Preview</span>
+              <span>{{'Preview' |translate}}</span>
             </span>
           </th>
           <!-- $parent.sortKey Removed and need to confirm -->
           <th class="TipInfoScore" *ngIf="appDataService.public.node.enable_scoring_system">
             <span (click)="sortKey = 'score'; sortReverse = !sortReverse">
               <i class="fa-solid fa-flash"></i>
-              <span data-translate>Score</span>
+              <span>{{'Score' | translate}}</span>
               <span *ngIf="sortKey == 'score'">
                 <span *ngIf="!sortReverse" class="fa-solid fa-caret-down"></span>
                 <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
@@ -226,14 +238,14 @@
           <td class="TipInfoID">{{tip.progressive}}</td>
           <td class="TipInfoContext" *ngIf="appDataService.public.contexts.length > 1">{{tip.context_name}}</td>
           <td class="TipInfoLabel">{{tip.label}}</td>
-          <td class="TipInfoStatus"><span>{{tip.submissionStatusStr}}</span></td>
+          <td class="TipInfoStatus"><span> {{tip.submissionStatusStr}}</span></td>
           <td class="TipInfoSubmissionDate">
             <span>{{tip.creation_date | date:'dd-MM-yyyy HH:mm'}}</span>
           </td>
           <td class="TipInfoUpdateDate">{{tip.update_date | date:'dd-MM-yyyy HH:mm'}}</td>
           <td class="TipInfoExpirationDate">
-            <!-- <span *ngIf="!Utils.isNever(tip.expiration_date)">{{tip.expiration_date | date:'dd-MM-yyyy'}}</span>
-            <span *ngIf="Utils.isNever(tip.expiration_date)">-</span> -->
+            <span *ngIf="!utils.isNever(tip.expiration_date)">{{tip.expiration_date | date:'dd-MM-yyyy'}}</span>
+            <span *ngIf="utils.isNever(tip.expiration_date)">-</span>
           </td>
           <td class="TipInfoLastAccess">
             <i *ngIf="tip.last_access >= tip.update_date" class="fa-solid fa-check"
@@ -251,31 +263,33 @@
                   class="fa-solid fa-envelope text-secondary"></i>: {{tip.message_count}}</span>
             </div>
             <div class="preview">
-              <div *ngFor="let step of tip.questionnaire; " data-ng-init="fieldAnswers = tip.answers; preview=true">
+              <div *ngFor="let step of tip.questionnaire;">
                 <div *ngFor="let field of step.children" >
-                  <src-tip-field></src-tip-field> 
+                  <src-tip-field [fieldAnswers]="tip.answers" [preview]="true"></src-tip-field>
                 </div>
               </div>
             </div>
           </td>
-          <td class="TipInfoScore" *ngIf="appDataService.public.node.enable_scoring_system" data-ng-switch="tip.score">
-            <span data-ng-switch-when="0">-</span>
-            <span class="badge badge-primary" data-ng-switch-when="1" data-translate>Low</span>
-            <span class="badge badge-primary" data-ng-switch-when="2" data-translate>Medium</span>
-            <span class="badge badge-primary" data-ng-switch-when="3" data-translate>High</span>
-          </td>
+          <td class="TipInfoScore" *ngIf="appDataService.public.node.enable_scoring_system">
+            <ng-container [ngSwitch]="tip.score">
+              <span *ngSwitchCase="0">-</span>
+              <span class="badge badge-primary" *ngSwitchCase="1">{{ 'Low' | translate }}</span>
+              <span class="badge badge-primary" *ngSwitchCase="2">{{ 'Medium' | translate }}</span>
+              <span class="badge badge-primary" *ngSwitchCase="3">{{ 'High' | translate }}</span>
+            </ng-container>
+          </td> 
         </tr>
         </ng-container>
       
       </tbody>
     </table>
 
-    <div class="text-center" *ngIf="filteredTips.length > itemsPerPage">
-      <!-- <ul data-uib-pagination total-items="filteredTips.length" first-text="<< {{'First' | translate}}"
+    <!-- <div class="text-center" *ngIf="filteredTips.length > itemsPerPage">
+      <ul data-uib-pagination total-items="filteredTips.length" first-text="<< {{'First' | translate}}"
         last-text="{{'Last' | translate}} >>" previous-text="< {{'Previous' | translate}}"
         next-text="{{'Next' | translate}} >" items-per-page="itemsPerPage" data-ng-model="currentPage" max-size="10"
-        class="pagination-sm" boundary-links="true" force-ellipses="true"></ul> -->
-    </div>
+        class="pagination-sm" boundary-links="true" force-ellipses="true"></ul>
+    </div> -->
   </div>
 </div>
 

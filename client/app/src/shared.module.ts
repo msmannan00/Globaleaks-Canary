@@ -14,7 +14,8 @@ import {
     NgbPaginationFirst, NgbPaginationLast,
     NgbPaginationNext, NgbPaginationNumber, NgbPaginationPages,
     NgbPaginationPrevious,
-    NgbProgressbar, NgbDatepickerModule, NgbNav, NgbNavItem, NgbNavLink, NgbNavContent
+    NgbNav, NgbNavItem, NgbNavLink, NgbNavContent,
+    NgbProgressbar,NgbDatepickerModule,NgbDropdownModule
 } from "@ng-bootstrap/ng-bootstrap";
 import { PrivacybadgeComponent } from './shared/partials/privacybadge/privacybadge.component';
 import {MarkdownModule} from "ngx-markdown";
@@ -92,6 +93,7 @@ import { ConfirmationWith2faComponent } from './shared/modals/confirmation-with2
         NgbNavItem,
         NgbNavLink,
         NgbNavContent,
+        NgbDropdownModule
     ],
     declarations: [
         FooterComponent,

@@ -76,17 +76,24 @@ export class TipsComponent {
   }
 
   openRevokeAccessModal(){
-    this.utils.runUserOperation("get_users_names", {}, true).subscribe((response: any) => {
-      const modalRef = this.modalService.open(RevokeAccessComponent);
-      modalRef.componentInstance.users_names = response.data;
-      modalRef.componentInstance.confirmFun = (receiver_id: any) => {
-        const args = {
-          rtips: this.selectedTips,
-          receiver: receiver_id
-        };
-        return this.utils.runRecipientOperation("revoke", args, true);
-      };
-    });
+    this.utils.runUserOperation("get_users_names", {}, true).subscribe(
+      {
+        next: response => {
+          const modalRef = this.modalService.open(RevokeAccessComponent);
+          modalRef.componentInstance.users_names = response;
+          modalRef.componentInstance.confirmFun = (receiver_id: any) => {
+            const args = {
+              rtips: this.selectedTips,
+              receiver: receiver_id
+            };
+            return this.utils.runRecipientOperation("revoke", args, true);
+          };
+        },
+        error: (error: any) => {
+          alert(JSON.stringify(error));
+        }
+      }
+    );
   }
   tipDeleteSelected(){
     const modalRef = this.modalService.open(DeleteConfirmationComponent);
@@ -124,8 +131,13 @@ export class TipsComponent {
   }
   
   ngOnInit(){
+    console.log(this.rtips)
   }
 
+// 
+
+
+// 
   constructor(public httpService : HttpService, 
     public rtips : RtipsResolver,
     public preference: PreferenceResolver,
