@@ -52,7 +52,9 @@ export class DateRangeSelectorComponent {
 			this.toDate = null;
 			this.fromDate = date;
 		}
-		this.emitDateSelection.emit({ fromDate: this.fromDate, toDate: this.toDate });
+		if (this.fromDate && this.toDate) {
+			this.emitDateSelection.emit({ fromDate: this.fromDate, toDate: this.toDate });
+		  }
 	}
 
 	isHovered(date: NgbDate) {

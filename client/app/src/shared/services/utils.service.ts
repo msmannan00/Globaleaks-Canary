@@ -265,6 +265,51 @@ export class UtilsService {
     const date = new Date(dateObj.year, dateObj.month - 1, dateObj.day);
     return date.getTime();
   }
+
+  getStaticFilter(data: any[], model: any[], key: string): any[] {
+    if (model.length === 0) {
+      return data;
+    } else {
+      const rows: any[] = [];
+      data.forEach(data_row => {
+        model.forEach(selected_option => {
+          if (key === 'score') {
+            const scoreLabel = this.maskScore(data_row[key]);
+            if (scoreLabel === selected_option.label) {
+              rows.push(data_row);
+            }
+          } else if (key === 'status') {
+            if (data_row[key] === selected_option.label) {
+              rows.push(data_row);
+            }
+          } else {
+            if (data_row[key] === selected_option.label) {
+              rows.push(data_row);
+            }
+          }
+        });
+      });
+      return rows;
+    }
+  }
+  getDateFilter(Tips: any[], report_date_filter: number[], update_date_filter: number[], expiry_date_filter: number[]): any[] {
+    const filteredTips: any[] = [];
+    Tips.forEach(rows => {
+      const m_row_rdate = new Date(rows.last_access).getTime();
+      const m_row_udate = new Date(rows.update_date).getTime();
+      const m_row_edate = new Date(rows.expiration_date).getTime();
+
+      if (
+        (report_date_filter === null || (report_date_filter !== null && (report_date_filter[0] === 0 || report_date_filter[0] === report_date_filter[1] || (m_row_rdate > report_date_filter[0] && m_row_rdate < report_date_filter[1])))) &&
+        (update_date_filter === null || (update_date_filter !== null && (update_date_filter[0] === 0 || update_date_filter[0] === update_date_filter[1] || (m_row_udate > update_date_filter[0] && m_row_udate < update_date_filter[1])))) &&
+        (expiry_date_filter === null || (expiry_date_filter !== null && (expiry_date_filter[0] === 0 || expiry_date_filter[0] === expiry_date_filter[1] || (m_row_edate > expiry_date_filter[0] && m_row_edate < expiry_date_filter[1]))))
+      ) {
+        filteredTips.push(rows);
+      }
+    });
+
+    return filteredTips;
+  }
   constructor(
     public appConfigService: AppConfigService, 
     public httpService: HttpService, 

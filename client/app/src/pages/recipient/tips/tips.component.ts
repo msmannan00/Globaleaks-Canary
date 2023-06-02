@@ -171,18 +171,31 @@ export class TipsComponent {
   onReportFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
     alert("Report Date Function")
     const { fromDate, toDate } = event;
-    alert(JSON.stringify(fromDate))
-    alert(this.utils.getTimestampFromDate(fromDate))
+    this.reportDateFilter = [this.utils.getTimestampFromDate(fromDate),this.utils.getTimestampFromDate(toDate)]
+    alert(this.reportDateFilter);
+    this.applyFilter();
   }
   onUpdateFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
     alert("Update Date Function")
     const { fromDate, toDate } = event;
+    this.updateDateFilter = [this.utils.getTimestampFromDate(fromDate),this.utils.getTimestampFromDate(toDate)]
+    alert(this.updateDateFilter);
+    this.applyFilter();
   }
   onExpiryFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
     alert("Expiry Date Function")
     const { fromDate, toDate } = event;
+    this.expiryDateFilter = [this.utils.getTimestampFromDate(fromDate),this.utils.getTimestampFromDate(toDate)]
+    alert(this.expiryDateFilter);
+    this.applyFilter();
   }
- 
+  applyFilter(){
+    this.filteredTips = this.utils.getStaticFilter(this.rtips.dataModel.rtips, this.dropdownStatusModel, "submissionStatusStr");
+    this.filteredTips = this.utils.getStaticFilter(this.filteredTips, this.dropdownContextModel, "context_name");
+    this.filteredTips = this.utils.getStaticFilter(this.filteredTips, this.dropdownScoreModel, "score");
+    this.filteredTips = this.utils.getDateFilter(this.filteredTips, this.reportDateFilter, this.updateDateFilter, this.expiryDateFilter);
+    
+  }
   ngOnInit(){
     if(Array.isArray(this.rtips.dataModel.rtips)){
       console.log(this.rtips.dataModel)
