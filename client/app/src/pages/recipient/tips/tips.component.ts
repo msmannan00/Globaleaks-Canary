@@ -194,7 +194,6 @@ export class TipsComponent {
     this.filteredTips = this.utils.getStaticFilter(this.filteredTips, this.dropdownContextModel, "context_name");
     this.filteredTips = this.utils.getStaticFilter(this.filteredTips, this.dropdownScoreModel, "score");
     this.filteredTips = this.utils.getDateFilter(this.filteredTips, this.reportDateFilter, this.updateDateFilter, this.expiryDateFilter);
-    
   }
   ngOnInit(){
     if(Array.isArray(this.rtips.dataModel.rtips)){

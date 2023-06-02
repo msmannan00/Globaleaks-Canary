@@ -14,6 +14,7 @@ import {ActivationComponent} from "./pages/signup/templates/activation/activatio
 import {WizardRoutingModule} from "./pages/wizard/wizard-routing.module";
 import { NodeResolver } from './shared/resolvers/node.resolver';
 import { RtipsResolver } from './shared/resolvers/rtips.resolver';
+import { TipComponent } from './pages/recipient/tip/tip.component';
 
 
 const routes: Routes = [
@@ -87,6 +88,14 @@ const routes: Routes = [
       // PreferenceResolver
     },
     loadChildren: () => WizardRoutingModule,
+  },
+  {
+    path: 'status/:tip_id',
+    component: TipComponent,
+    pathMatch: 'full',
+    data:{
+      headerTitle: 'Report',
+    }
   }
 ];
 

@@ -248,6 +248,7 @@ export class UtilsService {
     return this.httpService.runOperation("api/recipient/operations", operation, args, refresh);
   }
   go(path: string): void {
+    alert(path);
     this.router.navigateByUrl(path);
   }
   maskScore(score:number){
