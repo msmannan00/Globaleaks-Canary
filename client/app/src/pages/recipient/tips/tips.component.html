@@ -147,8 +147,8 @@
               <!-- <span data-date-range-picker data-ng-model="reportDateModel"
               data-on-date-change="onReportFilterChange"></span> -->
               <div class="ngb-dtepicker-container ms-1">
-                <i class="fas fa-calendar" (click)="reportDatePicker=!reportDatePicker"></i>
-                <ngbd-datepicker-range #datePicker (emitDateSelection)="onReportFilterChange($event)"
+                <i class="fas fa-calendar" [ngClass]="{'calendar-active':  reportDateFilter}" (click)="reportDatePicker=!reportDatePicker;lastUpdatePicker=false;expirationDatePicker=false;"></i>
+                <ngbd-datepicker-range #datePicker [currentDates]="reportDateModel"  (emitDateSelection)="onReportFilterChange($event)"
                   *ngIf="reportDatePicker"></ngbd-datepicker-range>
               </div>
 
@@ -165,8 +165,8 @@
               <!-- <span data-date-range-picker data-ng-model="updateDateModel"
               data-on-date-change="onUpdateFilterChange"></span> -->
               <div class="ngb-dtepicker-container ms-1">
-                <i class="fas fa-calendar" (click)="lastUpdatePicker=!lastUpdatePicker"></i>
-                <ngbd-datepicker-range #datePicker (emitDateSelection)="onUpdateFilterChange($event)"
+                <i class="fas fa-calendar" [ngClass]="{'calendar-active':  updateDateFilter}" (click)="lastUpdatePicker=!lastUpdatePicker;reportDatePicker=false;expirationDatePicker=false;"></i>
+                <ngbd-datepicker-range #datePicker [currentDates]="updateDateModel" (emitDateSelection)="onUpdateFilterChange($event)"
                   *ngIf="lastUpdatePicker"></ngbd-datepicker-range>
               </div>
             </th>
@@ -182,8 +182,8 @@
               <!-- <span data-date-range-picker data-ng-model="expiryDateModel"
               data-on-date-change="onExpiryFilterChange"></span> -->
               <div class="ngb-dtepicker-container ms-1">
-                <i class="fas fa-calendar" (click)="expirationDatePicker=!expirationDatePicker"></i>
-                <ngbd-datepicker-range #datePicker (emitDateSelection)="onExpiryFilterChange($event)"
+                <i class="fas fa-calendar" [ngClass]="{'calendar-active':  expiryDateFilter}" (click)="expirationDatePicker=!expirationDatePicker;reportDatePicker=false;lastUpdatePicker=false;"></i>
+                <ngbd-datepicker-range #datePicker [currentDates]="expiryDateModel" (emitDateSelection)="onExpiryFilterChange($event)"
                   *ngIf="expirationDatePicker"></ngbd-datepicker-range>
               </div>
             </th>

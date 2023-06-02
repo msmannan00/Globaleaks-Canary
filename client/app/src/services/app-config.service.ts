@@ -13,7 +13,6 @@ import {PreferenceResolver} from "../shared/resolvers/preference.resolver";
 })
 export class AppConfigService implements OnInit{
   public sidebar: string= '';
-  public headerTitle:string = 'Globaleaks';
   initTranslation(){
     this.translateService.setDefaultLang('en');
     this.translateService.use('en');
@@ -166,11 +165,7 @@ export class AppConfigService implements OnInit{
       if (event instanceof NavigationEnd) {
         const currentRoute = this.activatedRoute.firstChild?.snapshot;
         if (currentRoute?.data) {
-          this.headerTitle = currentRoute.data['headerTitle'];
           this.sidebar = currentRoute.data['sidebar'];
-          if(this.headerTitle){
-            document.title = this.headerTitle;
-          }
         }
       }
     });

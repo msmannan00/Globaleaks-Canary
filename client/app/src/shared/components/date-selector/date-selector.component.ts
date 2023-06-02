@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbDate, NgbCalendar, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
@@ -9,38 +9,25 @@ import { JsonPipe } from '@angular/common';
 	standalone: true,
 	imports: [NgbDatepickerModule, FormsModule, JsonPipe],
 	templateUrl: './date-selector.component.html',
-	styles: [
-		`
-			.custom-day {
-				text-align: center;
-				padding: 0.185rem 0.25rem;
-				display: inline-block;
-				height: 2rem;
-				width: 2rem;
-			}
-			.custom-day.focused {
-				background-color: #e6e6e6;
-			}
-			.custom-day.range,
-			.custom-day:hover {
-				background-color: rgb(2, 117, 216);
-				color: white;
-			}
-			.custom-day.faded {
-				background-color: rgba(2, 117, 216, 0.5);
-			}
-		`,
-	],
 })
 export class DateRangeSelectorComponent {
 	hoveredDate: NgbDate | null = null;
 	@Output() emitDateSelection: EventEmitter<{ fromDate: NgbDate | null; toDate: NgbDate | null }> = new EventEmitter();
-
+	@Input() currentDates: any;
 	fromDate: NgbDate | null = null;
   	toDate: NgbDate | null = null;
 
+	
 	constructor(calendar: NgbCalendar) {
 		
+	}
+
+	ngOnInit(){
+		if(this.currentDates){
+			this.fromDate = this.currentDates.fromDate
+			this.toDate = this.currentDates.toDate
+			console.log(this.currentDates.fromDate)
+		}
 	}
 
 	onDateSelection(date: NgbDate) {
@@ -66,7 +53,12 @@ export class DateRangeSelectorComponent {
 	isInside(date: NgbDate) {
 		return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
 	}
-
+	resetDatepicker() {
+		this.fromDate = null;
+		this.toDate = null;
+		this.emitDateSelection.emit({ fromDate: this.fromDate, toDate: this.toDate });
+		alert('date is reset');
+	  }
 	isRange(date: NgbDate) {
 		return (
 			date.equals(this.fromDate) ||

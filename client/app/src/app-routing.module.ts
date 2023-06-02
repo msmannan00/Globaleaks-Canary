@@ -62,7 +62,6 @@ const routes: Routes = [
     },
     loadChildren: () => RecipientRoutingModule,
     data:{
-      headerTitle: 'Recipient',
       sidebar: 'recipient-sidebar'
     }
   },
@@ -93,9 +92,7 @@ const routes: Routes = [
     path: 'status/:tip_id',
     component: TipComponent,
     pathMatch: 'full',
-    data:{
-      headerTitle: 'Report',
-    }
+   
   }
 ];
 

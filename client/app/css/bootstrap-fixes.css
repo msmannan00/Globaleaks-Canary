@@ -4,8 +4,7 @@ ngb-datepicker{
     left: -130px !important; */
     width: 300px;
     display: block;
-    background: #fff;
-    box-shadow: 0 0px 10px rgba(0,0,0,0.4);
+   
 }
 ngbd-datepicker-range{
   position: absolute;
@@ -15,6 +14,12 @@ ngbd-datepicker-range{
 .ngb-dtepicker-container{
     display: inline-block;
     position: relative;
+  
+}
+.ngb-dtepicker-container-inner{
+    background: #fff;
+    box-shadow: 0 0px 10px rgba(0,0,0,0.4);
+    padding: 10px 0;
 }
 .ngb-dtepicker-container input{
     width: 0;

@@ -322,6 +322,9 @@ download(url:string){
 
     return filteredTips;
   }
+  print(){
+    window.print();
+  }
   constructor(
     public appConfigService: AppConfigService, 
     public httpService: HttpService, 

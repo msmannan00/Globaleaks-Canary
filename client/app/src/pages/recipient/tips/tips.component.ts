@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { NgbDate, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppDataService } from 'app/src/app-data.service';
 import { DeleteConfirmationComponent } from 'app/src/shared/modals/delete-confirmation/delete-confirmation.component';
@@ -16,69 +16,71 @@ import { UtilsService } from 'app/src/shared/services/utils.service';
   templateUrl: './tips.component.html',
   styleUrls: ['./tips.component.css']
 })
-export class TipsComponent {
-  search:string | undefined;
+export class TipsComponent implements OnInit {
+  search: string | undefined;
   selectedTips: any[] = [];
   //TO DO Filter
-  filteredTips: any[] = this.rtips.dataModel.rtips;
-  currentPage:number = 1;
-  itemsPerPage:number = 20;
-  dropdownSettings = {dynamicTitle: false, showCheckAll: false, showUncheckAll: false, enableSearch: true, displayProp: "label", idProp: "label", itemsShowLimit: 5};
+  filteredTips: any[];
+  currentPage: number = 1;
+  itemsPerPage: number = 20;
+  dropdownSettings = { dynamicTitle: false, showCheckAll: false, showUncheckAll: false, enableSearch: true, displayProp: "label", idProp: "label", itemsShowLimit: 5 };
 
-  reportDateFilter:any = null;
-  updateDateFilter:any = null;
-  expiryDateFilter:any = null;
-
-  dropdownStatusModel:any[] = [];
-  dropdownStatusData:any[] = [];
-  dropdownContextModel:any[] = [];
-  dropdownContextData:any[] = [];
-  dropdownScoreModel:any[] = [];
-  dropdownScoreData:any[] = [];
+  reportDateFilter: any = null;
+  updateDateFilter: any = null;
+  expiryDateFilter: any = null;
+  reportDateModel: any = null;
+  updateDateModel: any = null;
+  expiryDateModel: any = null;
+  dropdownStatusModel: any[] = [];
+  dropdownStatusData: any[] = [];
+  dropdownContextModel: any[] = [];
+  dropdownContextData: any[] = [];
+  dropdownScoreModel: any[] = [];
+  dropdownScoreData: any[] = [];
   sortKey: string = 'creation_date';
   sortReverse: boolean = true;
   //NEED TO CONFIRM FOLLOWING
-  index:number;
-	date: { year: number; month: number };
+  index: number;
+  date: { year: number; month: number };
   submission_statuses: any;
-  reportDatePicker:boolean=false;
-  lastUpdatePicker:boolean=false;
-  expirationDatePicker:boolean=false;
+  reportDatePicker: boolean = false;
+  lastUpdatePicker: boolean = false;
+  expirationDatePicker: boolean = false;
 
-  selectAll(){
+  selectAll() {
     this.selectedTips = [];
     this.filteredTips.forEach(tip => {
-    this.selectedTips.push(tip.id);
-  });
+      this.selectedTips.push(tip.id);
+    });
   }
-  deselectAll(){
-    this.selectedTips=[]
+  deselectAll() {
+    this.selectedTips = []
   }
 
-  openGrantAccessModal(){
+  openGrantAccessModal() {
     alert('Alert from outside');
 
     this.utils.runUserOperation("get_users_names", {}, true).subscribe(
-        {
-          next: response => {
-            const modalRef = this.modalService.open(GrantAccessComponent);
-            modalRef.componentInstance.users_names = response;
-            modalRef.componentInstance.confirmFun = (receiver_id: any) => {
-              const args = {
-                rtips: this.selectedTips,
-                receiver: receiver_id
-              };
-              return this.utils.runRecipientOperation("grant", args, true);
+      {
+        next: response => {
+          const modalRef = this.modalService.open(GrantAccessComponent);
+          modalRef.componentInstance.users_names = response;
+          modalRef.componentInstance.confirmFun = (receiver_id: any) => {
+            const args = {
+              rtips: this.selectedTips,
+              receiver: receiver_id
             };
-          },
-          error: (error: any) => {
-            alert(JSON.stringify(error));
-          }
+            return this.utils.runRecipientOperation("grant", args, true);
+          };
+        },
+        error: (error: any) => {
+          alert(JSON.stringify(error));
         }
+      }
     );
   }
 
-  openRevokeAccessModal(){
+  openRevokeAccessModal() {
     this.utils.runUserOperation("get_users_names", {}, true).subscribe(
       {
         next: response => {
@@ -98,22 +100,22 @@ export class TipsComponent {
       }
     );
   }
-  tipDeleteSelected(){
+  tipDeleteSelected() {
     const modalRef = this.modalService.open(DeleteConfirmationComponent);
     modalRef.componentInstance.selectedTips = this.selectedTips;
     modalRef.componentInstance.operation = "delete";
   }
-  tipsExport(){
+  tipsExport() {
     for (let i = 0; i < this.selectedTips.length; i++) {
-      (function(i) {
+      (function (i) {
         // this.tokenResource.get().subscribe((token: any) => {
         //   window.open(`api/rtips/${this.selectedTips[i]}/export?token=${token.id}:${token.answer}`);
         // });
       })(i);
     }
   }
-  reload(){
-    location.reload()
+  reload() {
+    this.utils.reloadCurrentRoute();
   }
   tipSwitch(id: number): void {
     this.index = this.selectedTips.indexOf(id);
@@ -126,13 +128,13 @@ export class TipsComponent {
   isSelected(id: any): boolean {
     return this.selectedTips.indexOf(id) !== -1;
   }
-  exportTip(id:number){}
+  exportTip(id: number) { }
   markReportStatus(date: string): boolean {
     const report_date = new Date(date);
     const current_date = new Date();
     return current_date > report_date;
   }
-  
+
 
   processTips() {
     const uniqueKeys: string[] = [];
@@ -165,50 +167,78 @@ export class TipsComponent {
 
   //Logic for datepickers
 
-  fromDate: NgbDate | null = null;
-  toDate: NgbDate | null = null;
 
   onReportFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
-    alert("Report Date Function")
     const { fromDate, toDate } = event;
-    this.reportDateFilter = [this.utils.getTimestampFromDate(fromDate),this.utils.getTimestampFromDate(toDate)]
-    alert(this.reportDateFilter);
+    this.reportDateModel = { fromDate, toDate };
+    if (!fromDate && !toDate) {
+      this.reportDateFilter = null;
+      this.closeAllDatePickers();
+    } else {
+      this.reportDateFilter = [this.utils.getTimestampFromDate(fromDate), this.utils.getTimestampFromDate(toDate)]
+    }
     this.applyFilter();
   }
   onUpdateFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
-    alert("Update Date Function")
     const { fromDate, toDate } = event;
-    this.updateDateFilter = [this.utils.getTimestampFromDate(fromDate),this.utils.getTimestampFromDate(toDate)]
-    alert(this.updateDateFilter);
+    this.updateDateModel = { fromDate, toDate };
+    if (!fromDate && !toDate) {
+      this.updateDateFilter = null;
+      this.closeAllDatePickers();
+    } else {
+      this.updateDateFilter = [this.utils.getTimestampFromDate(fromDate), this.utils.getTimestampFromDate(toDate)]
+    }
     this.applyFilter();
   }
   onExpiryFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
-    alert("Expiry Date Function")
     const { fromDate, toDate } = event;
-    this.expiryDateFilter = [this.utils.getTimestampFromDate(fromDate),this.utils.getTimestampFromDate(toDate)]
-    alert(this.expiryDateFilter);
+    this.expiryDateModel = { fromDate, toDate };
+    if (!fromDate && !toDate) {
+      this.expiryDateFilter = null;
+      this.closeAllDatePickers();
+    } else {
+      this.expiryDateFilter = [this.utils.getTimestampFromDate(fromDate), this.utils.getTimestampFromDate(toDate)]
+    }
     this.applyFilter();
   }
-  applyFilter(){
+  applyFilter() {
     this.filteredTips = this.utils.getStaticFilter(this.rtips.dataModel.rtips, this.dropdownStatusModel, "submissionStatusStr");
     this.filteredTips = this.utils.getStaticFilter(this.filteredTips, this.dropdownContextModel, "context_name");
     this.filteredTips = this.utils.getStaticFilter(this.filteredTips, this.dropdownScoreModel, "score");
     this.filteredTips = this.utils.getDateFilter(this.filteredTips, this.reportDateFilter, this.updateDateFilter, this.expiryDateFilter);
   }
-  ngOnInit(){
-    if(Array.isArray(this.rtips.dataModel.rtips)){
-      console.log(this.rtips.dataModel)
-      // this.processTips();
+  ngOnInit() {
+    alert(JSON.stringify(this.rtips.dataModel.rtips))
+    this.filteredTips = this.rtips.dataModel.rtips;
+  }
+  ngAfterViewInit() {
+
+  }
+
+  // BODY CLICK HANDLER
+  @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent) {
+    const clickedElement = event.target as HTMLElement;
+    const isContainerClicked = clickedElement.classList.contains('ngb-dtepicker-container') ||
+      clickedElement.closest('.ngb-dtepicker-container') !== null;
+
+    if (!isContainerClicked && !this.elementRef.nativeElement.contains(clickedElement)) {
+      this.closeAllDatePickers();
     }
   }
- 
-  constructor(public httpService : HttpService, 
-    public rtips : RtipsResolver,
+  closeAllDatePickers() {
+    this.reportDatePicker = false;
+    this.lastUpdatePicker = false;
+    this.expirationDatePicker = false;
+  }
+  constructor(public httpService: HttpService,
+    public rtips: RtipsResolver,
     public preference: PreferenceResolver,
-    public modalService: NgbModal, 
-    public utils:UtilsService,
-    public appDataService:AppDataService
-    ) {
-     
-    }
+    public modalService: NgbModal,
+    public utils: UtilsService,
+    public appDataService: AppDataService,
+    private renderer: Renderer2, private elementRef: ElementRef
+  ) {
+
+  }
 }
