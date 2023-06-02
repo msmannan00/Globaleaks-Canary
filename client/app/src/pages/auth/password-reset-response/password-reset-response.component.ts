@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {password_recovery_model} from "../../../models/authentication/password_recovery_model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable} from "rxjs";
@@ -9,7 +9,7 @@ import {HttpService} from "../../../shared/services/http.service";
   templateUrl: './password-reset-response.component.html',
   styleUrls: ['./password-reset-response.component.css']
 })
-export class PasswordResetResponseComponent {
+export class PasswordResetResponseComponent implements OnInit{
   state = "start";
   request = new password_recovery_model()
 
@@ -37,13 +37,17 @@ export class PasswordResetResponseComponent {
     );
 
   };
-  constructor(private route: ActivatedRoute, public httpService: HttpService, private router:Router) {
+
+  ngOnInit(): void {
     this.request.reset_token = this.route.snapshot.queryParams["token"] || ""
     this.request.recovery_key = this.route.snapshot.queryParams["recovery"] || ""
 
     if(this.state == "start"){
       this.submit()
     }
+  }
+
+  constructor(private route: ActivatedRoute, public httpService: HttpService, private router:Router) {
   }
 
 }

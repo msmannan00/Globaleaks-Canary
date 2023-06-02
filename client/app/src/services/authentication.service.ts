@@ -128,12 +128,14 @@ export class AuthenticationService {
     );
   }
 
-  public getHeader(){
+  public getHeader(confirmation?:string){
     let header = new Map<string, string>();
-
     if (this.session) {
       header.set("X-Session", this.session.id);
       header.set("Accept-Language", "en");
+    }
+    if(confirmation){
+      header.set("X-Confirmation", confirmation);
     }
 
     return header;
@@ -144,6 +146,7 @@ export class AuthenticationService {
     requestObservable.subscribe(
       {
         next: response => {
+          let xx = response.data;
           if (this.session.role === "whistleblower") {
             this.deleteSession();
             this.rootDataService.page="homepage";

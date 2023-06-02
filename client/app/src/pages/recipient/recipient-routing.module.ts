@@ -5,6 +5,7 @@ import { PreferenceResolver } from 'app/src/shared/resolvers/preference.resolver
 import { TipsComponent } from './tips/tips.component';
 import { SettingsComponent } from './settings/settings.component';
 import { TipComponent } from './tip/tip.component';
+import {PreferencesComponent} from "../../shared/partials/preferences/preferences.component";
 
 const routes: Routes = [
   {
@@ -22,8 +23,11 @@ const routes: Routes = [
     component: SettingsComponent,
     pathMatch: 'full',
   },
-  
-  
+  {
+    path: 'preferences',
+    component: PreferencesComponent,
+    pathMatch: 'full',
+  }
 ];
 
 @NgModule({

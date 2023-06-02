@@ -14,6 +14,7 @@ import {
     NgbPaginationFirst, NgbPaginationLast,
     NgbPaginationNext, NgbPaginationNumber, NgbPaginationPages,
     NgbPaginationPrevious,
+    NgbNav, NgbNavItem, NgbNavLink, NgbNavContent,
     NgbProgressbar,NgbDatepickerModule,NgbDropdownModule
 } from "@ng-bootstrap/ng-bootstrap";
 import { PrivacybadgeComponent } from './shared/partials/privacybadge/privacybadge.component';
@@ -62,6 +63,13 @@ import { GrantAccessComponent } from './shared/modals/grant-access/grant-access.
 import { RevokeAccessComponent } from './shared/modals/revoke-access/revoke-access.component';
 import { DeleteConfirmationComponent } from './shared/modals/delete-confirmation/delete-confirmation.component';
 import { DateRangeSelectorComponent } from './shared/components/date-selector/date-selector.component';
+import { PreferencesComponent } from './shared/partials/preferences/preferences.component';
+import { PreferenceTab1Component } from './shared/partials/preference-tabs/preference-tab1/preference-tab1.component';
+import { PreferenceTab2Component } from './shared/partials/preference-tabs/preference-tab2/preference-tab2.component';
+import { Enable2faComponent } from './shared/modals/enable2fa/enable2fa.component';
+import { EncryptionRecoveryKeyComponent } from './shared/modals/encryption-recovery-key/encryption-recovery-key.component';
+import { ConfirmationWithPasswordComponent } from './shared/modals/confirmation-with-password/confirmation-with-password.component';
+import { ConfirmationWith2faComponent } from './shared/modals/confirmation-with2fa/confirmation-with2fa.component';
 
 @NgModule({
     imports: [
@@ -83,7 +91,12 @@ import { DateRangeSelectorComponent } from './shared/components/date-selector/da
         NgxFlowModule,
         NgbDatepickerModule,
         NgbDropdownModule,
-        DateRangeSelectorComponent
+        DateRangeSelectorComponent,
+        NgbNav,
+        NgbNavItem,
+        NgbNavLink,
+        NgbNavContent,
+        NgbDropdownModule
     ],
     declarations: [
         FooterComponent,
@@ -132,6 +145,13 @@ import { DateRangeSelectorComponent } from './shared/components/date-selector/da
         RevokeAccessComponent,
         DeleteConfirmationComponent,
         
+        PreferencesComponent,
+        PreferenceTab1Component,
+        PreferenceTab2Component,
+        Enable2faComponent,
+        EncryptionRecoveryKeyComponent,
+        ConfirmationWithPasswordComponent,
+        ConfirmationWith2faComponent
     ],
     exports: [
         FooterComponent,

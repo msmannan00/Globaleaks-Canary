@@ -26,7 +26,6 @@
 			<span>{{'Log in'| translate}}</span>
 		</button>
 
-		&nbsp;
 		<span id="forgot-button">
 			<a class="btn btn-outline-secondary" href="#/login/passwordreset" translate="Forgot password?"></a>
 		</span>
@@ -44,7 +43,7 @@
 
 			<div class="input-group-btn">
 				<button id="login-button" class="btn btn-primary"
-					[disabled]="authentication.loginInProgress || loginValidator.invalid || authentication.loginData.loginAuthCode.length !=6"
+					[disabled]="authentication.loginInProgress  || loginValidator.invalid || authentication.loginData.loginAuthCode.length !=6"
 					(click)="authentication.login(0, authentication.loginData.loginUsername, authentication.loginData.loginPassword, authentication.loginData.loginAuthCode)"
 					type="submit">
 					<i class="fa-solid fa-sign-in-alt"></i>

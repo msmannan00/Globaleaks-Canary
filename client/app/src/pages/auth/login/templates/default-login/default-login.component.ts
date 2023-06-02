@@ -3,12 +3,13 @@ import {AppConfigService} from "../../../../../services/app-config.service";
 import {AuthenticationService} from "../../../../../services/authentication.service";
 import {LoginDataRef} from "../../model/login-model";
 import {UtilsService} from "../../../../../shared/services/utils.service";
-import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
+import {ControlContainer, FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-default-login',
   templateUrl: './default-login.component.html',
-  styleUrls: ['./default-login.component.css']
+  styleUrls: ['./default-login.component.css'],
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
 })
 export class DefaultLoginComponent {
 

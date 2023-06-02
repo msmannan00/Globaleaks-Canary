@@ -22,7 +22,18 @@ export class UtilsService {
     return result;
   }
 
-  download(url:string){
+role_l10n(role:string) {
+  var ret = "";
+
+  if (role) {
+    ret = role === "receiver" ? "recipient" : role;
+    ret = ret.charAt(0).toUpperCase() + ret.substr(1)
+  }
+
+  return ret;
+}
+
+download(url:string){
     // return new TokenResource().$get().then(function(token) {
     //   $window.open(url + "?token=" + token.id + ":" + token.answer);
     // });
@@ -160,13 +171,13 @@ export class UtilsService {
     }
 
     if(pageTitle.length>0){
-      pageTitle = this.translateService.instant("wow");
+      pageTitle = this.translateService.instant(pageTitle);
     }
 
     this.appDataService.projectTitle = projectTitle !== "GLOBALEAKS" ? projectTitle : "";
     this.appDataService.pageTitle = pageTitle !== projectTitle ? pageTitle : "";
 
-    if (pageTitle) {
+    if (pageTitle && pageTitle.length>0) {
       pageTitle = this.translateService.instant("wow");
       window.document.title = projectTitle + " - " + pageTitle;
     } else {

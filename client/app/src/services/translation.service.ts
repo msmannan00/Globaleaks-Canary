@@ -5,6 +5,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { UtilsService } from "../shared/services/utils.service";
 import {AppConfigService} from "./app-config.service";
 import {AppDataService} from "../app-data.service";
+import {PreferenceResolver} from "../shared/resolvers/preference.resolver";
 
 @Injectable({
   providedIn: "root",
@@ -14,7 +15,11 @@ export class TranslationService {
   language=""
   onInit(changedLanguage:string) {
     this.language = changedLanguage
-    this.translateService.setDefaultLang(this.language);
+    if(this.preferenceResolver.dataModel){
+      this.translateService.setDefaultLang(this.preferenceResolver.dataModel.language);
+    }else {
+      this.translateService.setDefaultLang(this.language);
+    }
   }
 
   onChange(changedLanguage:string) {
@@ -29,6 +34,7 @@ export class TranslationService {
   }
 
   constructor(
+      public preferenceResolver: PreferenceResolver,
       public translateService: TranslateService,
       public appDataService:AppDataService,
       public utilsService: UtilsService,
