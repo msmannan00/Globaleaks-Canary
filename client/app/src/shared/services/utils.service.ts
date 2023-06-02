@@ -250,7 +250,28 @@ export class UtilsService {
   go(path: string): void {
     this.router.navigateByUrl(path);
   }
-  constructor(public appConfigService: AppConfigService, public httpService: HttpService, public modalService: NgbModal, public authenticationService:AuthenticationService, public appDataService:AppDataService, public translateService: TranslateService, private router: Router) {
+  maskScore(score:number){
+    if (score === 1) {
+      return this.translateService.instant('Low');
+    } else if (score === 2) {
+      return this.translateService.instant('Medium');
+    } else if (score === 3) {
+      return this.translateService.instant('High');
+    } else {
+      return this.translateService.instant('None');
+    }
+  }
+  getTimestampFromDate(dateObj: { year: number; month: number; day: number | undefined; }) {
+    const date = new Date(dateObj.year, dateObj.month - 1, dateObj.day);
+    return date.getTime();
+  }
+  constructor(
+    public appConfigService: AppConfigService, 
+    public httpService: HttpService, 
+    public modalService: NgbModal, 
+    public authenticationService:AuthenticationService, 
+    public appDataService:AppDataService, 
+    public translateService: TranslateService, private router: Router) {
   }
 
 }

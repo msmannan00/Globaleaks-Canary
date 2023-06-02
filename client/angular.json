@@ -47,7 +47,8 @@
 							"node_modules/@fortawesome/fontawesome-free/css/fontawesome.css",
 							"node_modules/@fortawesome/fontawesome-free/css/solid.css",
 							"app/assets/lib/css/solid.css",
-							"node_modules/@ng-select/ng-select/themes/default.theme.css"
+							"node_modules/@ng-select/ng-select/themes/default.theme.css",
+							"app/css/ngb-datepicker.css"
 						],
 						"scripts": [
 							"node_modules/marked/marked.min.js"

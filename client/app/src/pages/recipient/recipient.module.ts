@@ -11,6 +11,8 @@ import { TipComponent } from './tip/tip.component';
 import { WhistleBlowerComponent } from './whistleblower-identity/whistleblower-identity.component';
 import { SettingsComponent } from './settings/settings.component';
 import { FormsModule } from '@angular/forms';
+import { NgbDatepickerModule, NgbDropdownModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { FormsModule } from '@angular/forms';
     
   ],
   imports: [
-    CommonModule,RouterModule,TranslateModule,SharedModule,FormsModule
+    CommonModule,RouterModule,TranslateModule,SharedModule,FormsModule,
+    NgbModule,
+    NgbDatepickerModule,NgbDropdownModule,
   ],
   exports:[SidebarComponent]
 })

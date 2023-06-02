@@ -52,6 +52,7 @@
 		"load-grunt-tasks": "^5.1.0",
 		"lodash": "^4.17.21",
 		"marked": "^4.3.0",
+		"ng-multiselect-dropdown": "^0.3.9",
 		"ng2-select": "^2.0.0",
 		"ngx-markdown": "^15.1.2",
 		"ngx-order-pipe": "^2.2.0",

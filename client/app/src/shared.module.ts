@@ -61,6 +61,7 @@ import { UserWarningsComponent } from './shared/partials/user-warnings/user-warn
 import { GrantAccessComponent } from './shared/modals/grant-access/grant-access.component';
 import { RevokeAccessComponent } from './shared/modals/revoke-access/revoke-access.component';
 import { DeleteConfirmationComponent } from './shared/modals/delete-confirmation/delete-confirmation.component';
+import { DateRangeSelectorComponent } from './shared/components/date-selector/date-selector.component';
 
 @NgModule({
     imports: [
@@ -81,7 +82,8 @@ import { DeleteConfirmationComponent } from './shared/modals/delete-confirmation
         NgbPaginationPages,
         NgxFlowModule,
         NgbDatepickerModule,
-        NgbDropdownModule
+        NgbDropdownModule,
+        DateRangeSelectorComponent
     ],
     declarations: [
         FooterComponent,
@@ -128,7 +130,8 @@ import { DeleteConfirmationComponent } from './shared/modals/delete-confirmation
         UserWarningsComponent,
         GrantAccessComponent,
         RevokeAccessComponent,
-        DeleteConfirmationComponent
+        DeleteConfirmationComponent,
+        
     ],
     exports: [
         FooterComponent,
@@ -161,7 +164,8 @@ import { DeleteConfirmationComponent } from './shared/modals/delete-confirmation
         UserWarningsComponent,
         GrantAccessComponent,
         RevokeAccessComponent,
-        DeleteConfirmationComponent
+        DeleteConfirmationComponent,
+        DateRangeSelectorComponent
 
     ]})
 export class SharedModule { }

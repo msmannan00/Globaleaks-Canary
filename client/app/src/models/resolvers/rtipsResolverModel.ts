@@ -12,6 +12,8 @@ export interface Questionnaires {
   children: Children[]
   label: string
   description: string
+  [key: string]: any;
+
 }
 
 export interface Children {
@@ -97,6 +99,9 @@ export interface Option {
 }
 
 export interface Rtip {
+  submissionStatusStr?: any
+  context_name?: any
+  context?: any
   id: string
   itip_id: string
   creation_date: string
@@ -111,7 +116,7 @@ export interface Rtip {
   updated: boolean
   context_id: string
   tor: boolean
-  questionnaire: string
+  questionnaire: any
   answers: Answers
   score: number
   status: string
