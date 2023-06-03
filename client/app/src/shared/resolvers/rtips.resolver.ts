@@ -14,7 +14,7 @@ import { AuthenticationService } from 'app/src/services/authentication.service';
 })
 export class RtipsResolver implements Resolve<boolean> {
 
-  dataModel:rtipsResolverModel = new rtipsResolverModel()
+  dataModel:rtipsResolverModel
   
 
   resolve(route: ActivatedRouteSnapshot, c: RouterStateSnapshot): Observable<boolean> {

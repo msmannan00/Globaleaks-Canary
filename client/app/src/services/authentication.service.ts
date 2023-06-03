@@ -33,6 +33,10 @@ export class AuthenticationService {
     return this.session
   }
 
+  routeLogin(){
+    this.loginRedirect(true);
+  }
+
   setSession(response:any){
     this.session = response;
 
@@ -171,9 +175,7 @@ export class AuthenticationService {
 
     if (source_path !== "/login") {
       location.replace("/login");
-
-      //window.location = (<any>this.location)._platformLocation.location.href;
-      //window.location.reload();
+      window.location.reload();
     }
   };
 

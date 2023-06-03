@@ -423,9 +423,9 @@ h6 {
 
 .messageWB,
 .selectedTip,
-.card-header,
-.table-striped tbody tr:nth-of-type(odd),
-.table-striped > tbody > tr.selectedTip:nth-child(odd) > td {
+.card-header{
+/*.table-striped tbody tr:nth-of-type(odd),*/
+/*.table-striped > tbody > tr.selectedTip:nth-child(odd) > td {*/
 	background-color: #f5f7fa;
 }
 
