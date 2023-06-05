@@ -47,7 +47,7 @@ export class TipsComponent implements OnInit {
   reportDatePicker: boolean = false;
   lastUpdatePicker: boolean = false;
   expirationDatePicker: boolean = false;
-
+  oneDayInMilliseconds = 24 * 60 * 60 * 1000;
   selectAll() {
     this.selectedTips = [];
     this.filteredTips.forEach(tip => {
@@ -176,7 +176,7 @@ export class TipsComponent implements OnInit {
       this.reportDateFilter = null;
       this.closeAllDatePickers();
     } else {
-      this.reportDateFilter = [this.utils.getTimestampFromDate(fromDate), this.utils.getTimestampFromDate(toDate)]
+      this.reportDateFilter = [this.utils.getTimestampFromDate(fromDate), this.utils.getTimestampFromDate(toDate)+this.oneDayInMilliseconds]
     }
     this.applyFilter();
   }
@@ -187,7 +187,7 @@ export class TipsComponent implements OnInit {
       this.updateDateFilter = null;
       this.closeAllDatePickers();
     } else {
-      this.updateDateFilter = [this.utils.getTimestampFromDate(fromDate), this.utils.getTimestampFromDate(toDate)]
+      this.updateDateFilter = [this.utils.getTimestampFromDate(fromDate), this.utils.getTimestampFromDate(toDate)+this.oneDayInMilliseconds]
     }
     this.applyFilter();
   }
@@ -198,7 +198,7 @@ export class TipsComponent implements OnInit {
       this.expiryDateFilter = null;
       this.closeAllDatePickers();
     } else {
-      this.expiryDateFilter = [this.utils.getTimestampFromDate(fromDate), this.utils.getTimestampFromDate(toDate)]
+      this.expiryDateFilter = [this.utils.getTimestampFromDate(fromDate), this.utils.getTimestampFromDate(toDate)+this.oneDayInMilliseconds]
     }
     this.applyFilter();
   }
