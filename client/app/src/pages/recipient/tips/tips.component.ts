@@ -9,6 +9,7 @@ import { PreferenceResolver } from 'app/src/shared/resolvers/preference.resolver
 import { RtipsResolver } from 'app/src/shared/resolvers/rtips.resolver';
 import { HttpService } from 'app/src/shared/services/http.service';
 import { UtilsService } from 'app/src/shared/services/utils.service';
+import {ActivatedRoute, Router} from "@angular/router";
 
 
 @Component({
@@ -208,11 +209,11 @@ export class TipsComponent implements OnInit {
     this.filteredTips = this.utils.getDateFilter(this.filteredTips, this.reportDateFilter, this.updateDateFilter, this.expiryDateFilter);
   }
   ngOnInit() {
-    alert(JSON.stringify(this.rtips.dataModel.rtips))
-    this.filteredTips = this.rtips.dataModel.rtips;
-  }
-  ngAfterViewInit() {
-
+    if(!this.rtips.dataModel){
+      this.router.navigate(['/recipient/home']);
+    }else {
+      this.filteredTips = this.rtips.dataModel.rtips;
+    }
   }
 
   // BODY CLICK HANDLER
@@ -236,6 +237,8 @@ export class TipsComponent implements OnInit {
     public preference: PreferenceResolver,
     public modalService: NgbModal,
     public utils: UtilsService,
+    private route: ActivatedRoute,
+    private router: Router,
     public appDataService: AppDataService,
     private renderer: Renderer2, private elementRef: ElementRef
   ) {
