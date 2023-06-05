@@ -185,6 +185,12 @@ export class HttpService{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.get("api/rtips", {'headers':headers })
   }
+  recieverTip(param: any,id:any): Observable<any>{
+    alert('recieverTip is called.')
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.get("api/rtips/"+id, {'headers':headers })
+  }
+
   runOperation(url: string, operation: string, args: any, refresh: boolean) {
 
     const data = {
