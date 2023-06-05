@@ -8,7 +8,7 @@ import { RecieverTipData } from '../models/reciever/RecieverTipData';
 @Injectable({
   providedIn: 'root'
 })
-export class ResolverTipService {
+export class RecieverTipService {
 
   fields:any
   tip:RecieverTipData = new RecieverTipData()
@@ -19,7 +19,7 @@ export class ResolverTipService {
     this.tip.context = this.appDataService.contexts_by_id[this.tip.context_id];
     this.tip.questionnaire = this.appDataService.questionnaires_by_id[this.tip.context['questionnaire_id']];
 
-    this.tip.additional_questionnaire = this.appDataService.questionnaires_by_id[this.tip.context['additional_questionnaire_id']];
+    // this.tip.additional_questionnaire = this.appDataService.questionnaires_by_id[this.tip.context['additional_questionnaire_id']];
 
     this.tip.msg_receiver_selected = null;
     this.tip.msg_receivers_selector = [];
@@ -36,37 +36,37 @@ export class ResolverTipService {
     });
   }
 
-  newCommentContent(){
+  // newCommentContent(){
 
-  }
+  // }
 
-  newMessages(content:string){
-    const param=JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content});
-    this.httpService.requestNewMessage(JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content}), this.tip.msg_receiver_selected).subscribe
-    (
-        {
-          next: response => {
-            this.utilsService.reloadCurrentRoute()
-          },
-          error: (error: any) => {
-          }
-        }
-    );
-  }
+  // newMessages(content:string){
+  //   const param=JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content});
+  //   this.httpService.requestNewMessage(JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content}), this.tip.msg_receiver_selected).subscribe
+  //   (
+  //       {
+  //         next: response => {
+  //           this.utilsService.reloadCurrentRoute()
+  //         },
+  //         error: (error: any) => {
+  //         }
+  //       }
+  //   );
+  // }
 
-  newComment(content:string) {
-    const param=JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content});
-    this.httpService.requestNewComment(JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content})).subscribe
-    (
-        {
-          next: response => {
-            this.utilsService.reloadCurrentRoute()
-          },
-          error: (error: any) => {
-          }
-        }
-    );
-  }
+  // newComment(content:string) {
+  //   const param=JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content});
+  //   this.httpService.requestNewComment(JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content})).subscribe
+  //   (
+  //       {
+  //         next: response => {
+  //           this.utilsService.reloadCurrentRoute()
+  //         },
+  //         error: (error: any) => {
+  //         }
+  //       }
+  //   );
+  // }
 
   constructor(private httpService:HttpService, public appDataService:AppDataService, public utilsService:UtilsService) {
   }

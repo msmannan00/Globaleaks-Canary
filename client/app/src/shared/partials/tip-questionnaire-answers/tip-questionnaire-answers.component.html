@@ -11,15 +11,15 @@
 	</div>
 
 	<div class="card-body" *ngIf="!collapsed">
-		<div *ngFor="let questionnaire of wbtipService.tip.questionnaires;let index = index">
-			<div *ngIf="wbtipService.tip.questionnaires.length > 1">
+		<div *ngFor="let questionnaire of tipService.tip.questionnaires;let index = index">
+			<div *ngIf="tipService.tip.questionnaires.length > 1">
 				<span>{{'Questionnaire'|translate}}</span>
 				<span>{{index + 1}}</span>
 			</div>
 			<div *ngFor="let step of questionnaire.steps | orderBy:'order'; let questionare_steps = index">
 
 				<dt id="step={{questionare_steps}}"
-					*ngIf="questionnaire.steps.length > 1 && wbtipService.tip.context.show_steps_navigation_interface && step.enabled">
+					*ngIf="questionnaire.steps.length > 1 && tipService.tip.context.show_steps_navigation_interface && step.enabled">
 					<span>{{'Step'|translate}}</span>
 					<span>{{questionare_steps + 1}}: {{step.label}}</span>
 				</dt>

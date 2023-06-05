@@ -19,18 +19,18 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <src-tip-info></src-tip-info>
+        <src-tip-info [tipService]="wbtipService"></src-tip-info>
     </div>
 </div>
 <div class="row" *ngIf="wbtipService.tip.context.show_recipients_details">
     <div class="col-md-12">
-        <src-tip-receiver-list></src-tip-receiver-list>
+        <src-tip-receiver-list [tipService]="wbtipService"></src-tip-receiver-list>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-6">
-        <src-tip-questionnaire-answers></src-tip-questionnaire-answers>
+        <src-tip-questionnaire-answers [tipService]="wbtipService"></src-tip-questionnaire-answers>
     </div>
     <div class="col-md-6" *ngIf="wbtipService.tip.enable_whistleblower_identity">
         <src-whistleblower-identity [uploadEstimateTime]="calculateEstimatedTime()" [uploadprogress]="calculateProgress()" [isuploading]="uploading()" (onFormUpdate)="onFormChange()" (provideIdentityInformation)=provideIdentityInformation($event) [answers]="answers" [step]="wbtipService.tip.whistleblower_identity_field" [field]="wbtipService.tip.whistleblower_identity_field"></src-whistleblower-identity>

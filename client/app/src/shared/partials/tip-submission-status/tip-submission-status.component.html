@@ -1,14 +1,17 @@
-<span class="form-inline" (click)="utilsService.stopPropagation($event);">
-  <span id="AssignSubmissionStatus">
-    <span>{{'Status:'|translate}}</span>
-
-      <ng-select [clearable]="false" [ngModelOptions]="{standalone: true}" [(ngModel)]="tipService.tip.status">
-        <ng-option *ngFor="let item of  appDataService.submission_statuses.slice(1)" [value]="item.label"></ng-option>
-      </ng-select>
-
-      <ng-select [clearable]="false" [ngModelOptions]="{standalone: true}" [(ngModel)]="tipService.tip.substatus" [hidden]="!appDataService.submission_statuses_by_id[tipService.tip.status].substatuses.length" (change)="updateSubmissionStatus()">
-        <ng-option *ngFor="let item of  appDataService.submission_statuses_by_id[tipService.tip.status].substatuses" [value]="item.id">{{item.label}}</ng-option>
-      </ng-select>
-
+<ng-container *ngif="status">
+  <span class="form-inline" (click)="utilsService.stopPropagation($event);">
+    <span id="AssignSubmissionStatus">
+      <span>{{'Status:'|translate}}</span>
+  
+        <ng-select [clearable]="false" [ngModelOptions]="{standalone: true}" [(ngModel)]="tipService.tip.status">
+          <ng-option *ngFor="let item of  status.slice(1)" [value]="item.label"></ng-option>
+        </ng-select>
+  
+  
+        <ng-select [clearable]="false" [ngModelOptions]="{standalone: true}" [(ngModel)]="tipService.tip.substatus" [hidden]="!appDataService.submission_statuses_by_id[tipService.tip.status].substatuses.length" (change)="updateSubmissionStatus()">
+          <ng-option *ngFor="let item of  status.substatuses" [value]="item.id">{{item.label}}</ng-option>
+        </ng-select>
+  
+    </span>
   </span>
-</span>
+</ng-container>

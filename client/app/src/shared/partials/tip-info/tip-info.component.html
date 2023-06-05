@@ -1,8 +1,8 @@
 <div id="TipInfoBox" class="card card-default">
 	<div class="card-header" *ngIf="authenticationService.session.role === 'receiver'">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="float-left">
+		<div class="row justify-content-between">
+			<div class="col-md-4">
+				<div >
 					<span class="input-group">
 						<input id="assignLabelInput" type="text" class="form-control"
 							placeholder="{{'Label' | translate}}" [(ngModel)]="tipService.tip.label" />
@@ -15,8 +15,10 @@
 						</span>
 					</span>
 				</div>
-				<div class="float-right" *ngIf="authenticationService.session.role === 'receiver'">
-					<src-tip-submission-status></src-tip-submission-status>
+			</div>
+			<div class="col-md-3">	
+				<div *ngIf="authenticationService.session.role === 'receiver'">
+					<src-tip-submission-status [tipService]="tipService"></src-tip-submission-status>
 				</div>
 			</div>
 		</div>
