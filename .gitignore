@@ -14,7 +14,6 @@ client/editorconfig
 client/package-lock.json
 client/README.md
 client/tsconfig.spec.json
-/backend/*
 /client/app/assets/lib/*
 /client/build
 /client/build/js
