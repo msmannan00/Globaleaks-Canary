@@ -187,10 +187,12 @@ export class HttpService{
   }
   recieverTip(param: any,id:any): Observable<any>{
     const headers = { 'content-type': 'application/json'}
-    
     return this.httpClient.get("api/rtips/"+id, {'headers':headers })
   }
-
+  rtipsRequestNewComment(param: any,id:any): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.post(`api/rtips/${id}/comments`, param,{'headers':headers })
+  }
   runOperation(url: string, operation: string, args: any, refresh: boolean) {
 
     const data = {

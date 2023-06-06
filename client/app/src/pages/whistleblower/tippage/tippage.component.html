@@ -45,12 +45,12 @@
 <div class="row">
     <div class="col-md-6" *ngIf="wbtipService.tip.comments">
         <div *ngIf="wbtipService.tip.context.enable_comments || wbtipService.tip.comments.length">
-            <src-tip-comments></src-tip-comments>
+            <src-tip-comments [tipService]="wbtipService"></src-tip-comments>
         </div>
     </div>
     <div class="col-md-6" *ngIf="wbtipService.tip.messages">
         <div *ngIf="wbtipService.tip.context.enable_messages || wbtipService.tip.messages.length">
-            <src-tip-messages></src-tip-messages>
+            <src-tip-messages ></src-tip-messages>
         </div>
     </div>
 </div>

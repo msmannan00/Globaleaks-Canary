@@ -36,37 +36,37 @@ export class RecieverTipService {
     });
   }
 
-  // newCommentContent(){
+  newCommentContent(){
 
-  // }
+  }
 
-  // newMessages(content:string){
-  //   const param=JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content});
-  //   this.httpService.requestNewMessage(JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content}), this.tip.msg_receiver_selected).subscribe
-  //   (
-  //       {
-  //         next: response => {
-  //           this.utilsService.reloadCurrentRoute()
-  //         },
-  //         error: (error: any) => {
-  //         }
-  //       }
-  //   );
-  // }
+  newMessages(content:string){
+    const param=JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content});
+    this.httpService.requestNewMessage(JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content}), this.tip.msg_receiver_selected).subscribe
+    (
+        {
+          next: response => {
+            this.utilsService.reloadCurrentRoute()
+          },
+          error: (error: any) => {
+          }
+        }
+    );
+  }
 
-  // newComment(content:string) {
-  //   const param=JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content});
-  //   this.httpService.requestNewComment(JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content})).subscribe
-  //   (
-  //       {
-  //         next: response => {
-  //           this.utilsService.reloadCurrentRoute()
-  //         },
-  //         error: (error: any) => {
-  //         }
-  //       }
-  //   );
-  // }
+  newComment(content:string,id:any) {
+    const param=JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content});
+    this.httpService.rtipsRequestNewComment({},id).subscribe
+    (
+        {
+          next: response => {
+            this.utilsService.reloadCurrentRoute()
+          },
+          error: (error: any) => {
+          }
+        }
+    );
+  }
 
   constructor(private httpService:HttpService, public appDataService:AppDataService, public utilsService:UtilsService) {
   }
