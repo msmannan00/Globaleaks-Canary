@@ -71,28 +71,30 @@
     <src-tip-info [tipService]="rtipService"></src-tip-info> 
   </div>
 </div>
-<!-- <div class="row" *ngIf="tip.receivers.length > 1">
+<div class="row" *ngIf="tip.receivers.length > 1">
   <div class="col-md-12">
-    <src-tip-receiver-list [tipService]="rtipService"></src-tip-receiver-list>
+    <!-- <src-tip-receiver-list [tipService]="rtipService"></src-tip-receiver-list> -->
   </div>
-</div> -->
+</div>
 <div class="row">
   <div class="col-md-6">
     <src-tip-questionnaire-answers [tipService]="rtipService"></src-tip-questionnaire-answers>
   </div>
-  <!-- <div class="col-md-6" *ngIf="tip.enable_whistleblower_identity">
+  <div class="col-md-6" *ngIf="tip.enable_whistleblower_identity">
     <src-whistleblower-identity></src-whistleblower-identity>
-  </div> -->
+  </div>
 </div>
-<!-- <div class="row">
+<div class="row">
   <div class="col-md-12">
     <div data-ng-include="'views/partials/tip_files_receiver.html'"></div>
     <div data-ng-include="'views/partials/tip_upload_wbfile.html'"></div>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-6" *ngIf="tip.context.enable_comments || tip.comments.length"
-    data-ng-include="'views/partials/tip_comments.html'"></div>
-  <div class="col-md-6" *ngIf="tip.context.enable_messages || tip.messages.length"
-    data-ng-include="'views/partials/tip_messages.html'"></div>
-</div> -->
+  <div class="col-md-6" *ngIf="tip.context.enable_comments || tip.comments.length">
+    <src-tip-comments [tipService]="rtipService"></src-tip-comments>
+  </div>
+  <div class="col-md-6" *ngIf="tip.context.enable_messages || tip.messages.length">
+    <!-- <src-tip-messages [tipService]="rtipService"></src-tip-messages> -->
+  </div>
+</div>
