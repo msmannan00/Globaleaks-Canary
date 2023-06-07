@@ -1,7 +1,7 @@
 <!-- <form #WhistleblowerLoginForm="ngForm" autocomplete="off" novalidate> -->
 <form id="WhistleblowerLoginForm" autocomplete="off" novalidate>
 	<div>
-		<label id="WhistleblowerLoginQuestion" for="receipt-input">
+		<label id="WhistleblowerLoginQuestion" for="receipt-input" *ngIf="appDataService.page === 'receiptpage'">
 			{{'Have you already filed a report? Enter your receipt.'|translate}}
 		</label>
 	</div>

@@ -926,3 +926,8 @@ html#Receipt {
 }
 
 .calendar-active{color: #377abc;}
+
+.receipt-input {
+	width: 300px;
+	text-align: center;
+}

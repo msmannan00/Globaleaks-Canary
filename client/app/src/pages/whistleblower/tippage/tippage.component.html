@@ -10,7 +10,7 @@
     </div>
 </div>
 <div *ngIf="appDataService.receipt">
-    <src-receipt></src-receipt>
+    <src-receipt-whistleblower></src-receipt-whistleblower>
 </div>
 <div class="row" *ngIf="wbtipService.tip.status !== 'closed' && wbtipService.tip.context.additional_questionnaire_id && wbtipService.tip.questionnaires.length === 1">
     <div class="col-md-12">
