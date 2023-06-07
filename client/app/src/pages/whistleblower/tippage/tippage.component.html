@@ -9,7 +9,7 @@
     </span>
     </div>
 </div>
-<div *ngIf="authenticationService.session.receipt">
+<div *ngIf="appDataService.receipt">
     <src-receipt></src-receipt>
 </div>
 <div class="row" *ngIf="wbtipService.tip.status !== 'closed' && wbtipService.tip.context.additional_questionnaire_id && wbtipService.tip.questionnaires.length === 1">
