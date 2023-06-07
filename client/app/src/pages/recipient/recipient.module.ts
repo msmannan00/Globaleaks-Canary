@@ -8,10 +8,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from 'app/src/shared.module';
 import { TipsComponent } from './tips/tips.component';
 import { TipComponent } from './tip/tip.component';
-import { WhistleBlowerComponent } from './whistleblower-identity/whistleblower-identity.component';
 import { SettingsComponent } from './settings/settings.component';
 import { FormsModule } from '@angular/forms';
 import { NgbDatepickerModule, NgbDropdownModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { WhistleBlowerIdentityRecieverComponent } from './whistleblower-identity-reciever/whistleblower-identity-reciever.component';
 
 @NgModule({
   declarations: [
@@ -19,9 +19,8 @@ import { NgbDatepickerModule, NgbDropdownModule, NgbModule } from '@ng-bootstrap
     SidebarComponent,
     TipsComponent,
     TipComponent,
-    WhistleBlowerComponent,
     SettingsComponent,
-    
+    WhistleBlowerIdentityRecieverComponent
   ],
   imports: [
     CommonModule,RouterModule,TranslateModule,SharedModule,FormsModule,

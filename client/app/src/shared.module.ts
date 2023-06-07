@@ -46,7 +46,6 @@ import { ScrollToBottomDirective } from './shared/directive/scroll-to-bottom.dir
 import { TipReceiverListComponent } from './shared/partials/tip-receiver-list/tip-receiver-list.component';
 import { FilterPipe } from './shared/pipes/filter.pipe';
 import { RequestSupportComponent } from './shared/modals/request-support/request-support.component';
-import {WhistleblowerModule} from "./pages/whistleblower/whistleblower.module";
 import {
     WhistleblowerIdentityFieldComponent
 } from "./pages/field/whistleblower-identity-field/whistleblower-identity-field.component";
@@ -70,6 +69,7 @@ import { Enable2faComponent } from './shared/modals/enable2fa/enable2fa.componen
 import { EncryptionRecoveryKeyComponent } from './shared/modals/encryption-recovery-key/encryption-recovery-key.component';
 import { ConfirmationWithPasswordComponent } from './shared/modals/confirmation-with-password/confirmation-with-password.component';
 import { ConfirmationWith2faComponent } from './shared/modals/confirmation-with2fa/confirmation-with2fa.component';
+import { TipOperationFileIdentityAccessRequestComponent } from './shared/modals/tip-operation-file-identity-access-request/tip-operation-file-identity-access-request.ompoent';
 
 @NgModule({
     imports: [
@@ -144,14 +144,14 @@ import { ConfirmationWith2faComponent } from './shared/modals/confirmation-with2
         GrantAccessComponent,
         RevokeAccessComponent,
         DeleteConfirmationComponent,
-        
         PreferencesComponent,
         PreferenceTab1Component,
         PreferenceTab2Component,
         Enable2faComponent,
         EncryptionRecoveryKeyComponent,
         ConfirmationWithPasswordComponent,
-        ConfirmationWith2faComponent
+        ConfirmationWith2faComponent,
+        TipOperationFileIdentityAccessRequestComponent
     ],
     exports: [
         FooterComponent,
@@ -185,7 +185,8 @@ import { ConfirmationWith2faComponent } from './shared/modals/confirmation-with2
         GrantAccessComponent,
         RevokeAccessComponent,
         DeleteConfirmationComponent,
-        DateRangeSelectorComponent
+        DateRangeSelectorComponent,
+        TipOperationFileIdentityAccessRequestComponent
 
     ]})
 export class SharedModule { }

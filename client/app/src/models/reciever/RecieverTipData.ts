@@ -36,6 +36,7 @@ export class RecieverTipData {
     msg_receivers_selector: MsgReceiversSelector[];
     receivers_by_id: ReceiversById;
     submissionStatusStr: any;
+whistleblower_identity_field: any;
   }
   
   export interface Questionnaire {
@@ -148,7 +149,10 @@ export class RecieverTipData {
     name: string;
   }
   
-  export interface Data {}
+  export interface Data {
+    whistleblower_identity_provided: boolean;
+    whistleblower_identity:any;
+}
   
   export interface Context {
     id: string;

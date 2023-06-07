@@ -1,4 +1,5 @@
-<div id="Toolbar" class="row">
+<ng-container *ngIf="tip">
+  <div id="Toolbar" class="row">
   <div class="col-md-12">
     <a id="link-tiplist" routerLink="#/recipient/reports" data-toggle="tooltip" title="{{'Reports' | translate}}"
       class="btn btn-outline-secondary">
@@ -36,8 +37,8 @@
       class="btn btn-outline-secondary">
       <i class="fa-solid fa-user-minus"></i>
     </span>
-
-    <!-- <span id="tip-action-postpone"
+<!-- 
+    <span id="tip-action-postpone"
             *ngIf="preferencesService.dataModel.can_postpone_expiration && contexts_by_id[tip.context_id].tip_timetolive > 0"
             (click)="tip_postpone()"
            data-toggle="tooltip" title="{{'Postpone the expiration date' | translate}}"
@@ -70,18 +71,21 @@
   <div class="col-md-12">
     <src-tip-info [tipService]="rtipService"></src-tip-info> 
   </div>
-</div>
-<div class="row" *ngIf="tip.receivers.length > 1">
-  <div class="col-md-12">
-    <!-- <src-tip-receiver-list [tipService]="rtipService"></src-tip-receiver-list> -->
+</div> 
+<ng-container *ngIf="tip.receivers">
+  <div class="row" *ngIf="tip.receivers.length > 1">
+    <div class="col-md-12">
+      <src-tip-receiver-list [tipService]="rtipService"></src-tip-receiver-list>
+    </div>
   </div>
-</div>
+</ng-container>
 <div class="row">
   <div class="col-md-6">
     <src-tip-questionnaire-answers [tipService]="rtipService"></src-tip-questionnaire-answers>
   </div>
-  <div class="col-md-6" *ngIf="tip.enable_whistleblower_identity">
-    <src-whistleblower-identity></src-whistleblower-identity>
+  
+  <div class="col-md-6" *ngIf="tip.enable_whistleblower_identity" >
+    <src-whistleblower-identity-reciever></src-whistleblower-identity-reciever>
   </div>
 </div>
 <div class="row">
@@ -91,10 +95,14 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-6" *ngIf="tip.context.enable_comments || tip.comments.length">
-    <src-tip-comments [tipService]="rtipService"></src-tip-comments>
-  </div>
-  <div class="col-md-6" *ngIf="tip.context.enable_messages || tip.messages.length">
-    <!-- <src-tip-messages [tipService]="rtipService"></src-tip-messages> -->
-  </div>
+  <ng-container  *ngIf="tip.context">
+    <div class="col-md-6" *ngIf="tip.context.enable_comments || tip.comments.length">
+      <src-tip-comments [tipService]="rtipService"></src-tip-comments>
+    </div>
+    <div class="col-md-6" *ngIf="tip.context.enable_messages || tip.messages.length">
+      <src-tip-messages [tipService]="rtipService"></src-tip-messages>
+    </div>
+  </ng-container>
+  
 </div>
+</ng-container>

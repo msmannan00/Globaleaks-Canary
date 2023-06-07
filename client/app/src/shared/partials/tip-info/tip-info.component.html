@@ -18,7 +18,7 @@
 			</div>
 			<div class="col-md-3">	
 				<div *ngIf="authenticationService.session.role === 'receiver'">
-					<src-tip-submission-status [tipService]="tipService"></src-tip-submission-status>
+					<!-- <src-tip-submission-status [tipService]="tipService"></src-tip-submission-status> -->
 				</div>
 			</div>
 		</div>
@@ -73,7 +73,10 @@
 					<td class="TipInfoID" *ngIf="authenticationService.session.role === 'receiver'">
 						{{tipService.tip.progressive}}</td>
 					<td class="TipInfoContext" *ngIf="appDataService.public.contexts.length > 1">
-						{{tipService.tip.context.name}}</td>
+						<ng-container *ngIf="tipService.tip.context">
+							{{tipService.tip.context.name}}
+						</ng-container>	
+					</td>
 					<td class="TipInfoCreationDate">{{tipService.tip.creation_date | date:'dd-MM-yyyy HH:mm'}}</td>
 					<td class="TipInfoUpdateDate">{{tipService.tip.update_date | date:'dd-MM-yyyy HH:mm'}}</td>
 					<td class="TipInfoExpirationDate">

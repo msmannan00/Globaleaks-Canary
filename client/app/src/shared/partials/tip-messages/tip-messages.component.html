@@ -10,15 +10,15 @@
 		</span>
 	</div>
 	<div class="card-body" *ngIf="!collapsed">
-		<div *ngIf="wbtipService.tip.status !== 'closed' && wbtipService.tip.context.enable_messages && (authenticationService.session.role !== 'whistleblower' || wbtipService.tip.enable_two_way_messages)"
+		<div *ngIf="tipService.tip.status !== 'closed' && tipService.tip.context.enable_messages && (authenticationService.session.role !== 'whistleblower' || tipService.tip.enable_two_way_messages)"
 			class="row">
 			<div class="col-md-12 clearfix">
 				<div class="form-inline">
 					<span *ngIf="authenticationService.session.role === 'whistleblower'">
 						<span><span>{{'Recipient'|translate}}</span>:<span></span></span>
 						<ng-select id="message-recipient-selector" class="mb-3" [clearable]="false"
-							[(ngModel)]="wbtipService.tip.msg_receiver_selected">
-							<ng-option *ngFor="let item of wbtipService.tip.msg_receivers_selector"
+							[(ngModel)]="tipService.tip.msg_receiver_selected">
+							<ng-option *ngFor="let item of tipService.tip.msg_receivers_selector"
 								[value]="item.key | orderBy:['value', false]">{{item.value}}</ng-option>
 						</ng-select>
 					</span>
@@ -30,29 +30,29 @@
 			<div class="col-md-12 clearfix">
 
 				<button id="message-action-send" class="btn btn-primary" (click)="newMessage()"
-					[disabled]="!newMessageContent || (authenticationService.session.role === 'whistleblower' && !wbtipService.tip.msg_receiver_selected)">
+					[disabled]="!newMessageContent || (authenticationService.session.role === 'whistleblower' && !tipService.tip.msg_receiver_selected)">
 					<i class="fa-solid fa-comment"></i>
 					<span>{{'Send'|translate}}</span>
 				</button>
-				<div *ngif="authenticationService.session.role === 'receiver' && !wbtipService.tip.context.enable_two_way_messages"
+				<div *ngif="authenticationService.session.role === 'receiver' && !tipService.tip.context.enable_two_way_messages"
 					class="form-group">
 					<label>
-						<!--                        <input [(ngModel)]="wbtipService.tip.enable_two_way_messages" data-ng-change="tip.operation('set', {'key': 'enable_two_way_messages', 'value': tip.enable_two_way_messages})" type="checkbox" />-->
+						<!--                        <input [(ngModel)]="tipService.tip.enable_two_way_messages" data-ng-change="tip.operation('set', {'key': 'enable_two_way_messages', 'value': tip.enable_two_way_messages})" type="checkbox" />-->
 						<span>{{'Allow the whistleblower to send messages'|translate}}</span>
 					</label>
 				</div>
 			</div>
 		</div>
 
-		<div *ngIf="wbtipService.tip.messages.length">
+		<div *ngIf="tipService.tip.messages.length">
 			<div
-				*ngFor="let message of ((wbtipService.tip.messages | orderBy:'creation_date': true) | slice: (currentMessagesPage-1) * itemsPerPage : (currentMessagesPage-1) * itemsPerPage + itemsPerPage); let index = index">
-				<src-tip-message [index]="index" [message]="message"></src-tip-message>
+				*ngFor="let message of ((tipService.tip.messages | orderBy:'creation_date': true) | slice: (currentMessagesPage-1) * itemsPerPage : (currentMessagesPage-1) * itemsPerPage + itemsPerPage); let index = index">
+				<src-tip-message [tipService]="tipService" [index]="index" [message]="message"></src-tip-message>
 			</div>
 		</div>
 
-		<div class="mt-2 text-center" *ngIf="wbtipService.tip.messages.length > itemsPerPage">
-			<ngb-pagination class="pagination-sm" [collectionSize]="wbtipService.tip.messages.length"
+		<div class="mt-2 text-center" *ngIf="tipService.tip.messages.length > itemsPerPage">
+			<ngb-pagination class="pagination-sm" [collectionSize]="tipService.tip.messages.length"
 				[(page)]="currentMessagesPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [ellipses]="true"
 				[boundaryLinks]="true">
 				<ng-template ngbPaginationPrevious>

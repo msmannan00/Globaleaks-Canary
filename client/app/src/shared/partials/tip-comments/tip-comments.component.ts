@@ -33,9 +33,9 @@ export class TipCommentsComponent {
     console.log('Console from tips');
     console.log(this.tipService);
   }
-  newComment(id:any) {
+  newComment() {
    
-    this.tipService.newComment(this.newCommentContent,id);
+    this.tipService.newComment(this.newCommentContent);
     this.newCommentContent = "";
   }
 }

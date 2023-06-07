@@ -1,10 +1,9 @@
 import { Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { NgbDate, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDate, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppDataService } from 'app/src/app-data.service';
 import { DeleteConfirmationComponent } from 'app/src/shared/modals/delete-confirmation/delete-confirmation.component';
 import { GrantAccessComponent } from 'app/src/shared/modals/grant-access/grant-access.component';
 import { RevokeAccessComponent } from 'app/src/shared/modals/revoke-access/revoke-access.component';
-import { FilterPipe } from 'app/src/shared/pipes/filter.pipe';
 import { PreferenceResolver } from 'app/src/shared/resolvers/preference.resolver';
 import { RtipsResolver } from 'app/src/shared/resolvers/rtips.resolver';
 import { HttpService } from 'app/src/shared/services/http.service';
