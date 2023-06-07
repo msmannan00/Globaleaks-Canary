@@ -2,18 +2,13 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppDataService } from 'app/src/app-data.service';
-import { RecieverTipData } from 'app/src/models/reciever/RecieverTipData';
-import { WBTipData } from 'app/src/models/whistleblower/WBTipData';
 import { RecieverTipService } from 'app/src/services/recievertip.service';
-import { DeleteConfirmationComponent } from 'app/src/shared/modals/delete-confirmation/delete-confirmation.component';
 import { GrantAccessComponent } from 'app/src/shared/modals/grant-access/grant-access.component';
 import { RevokeAccessComponent } from 'app/src/shared/modals/revoke-access/revoke-access.component';
 import { PreferenceResolver } from 'app/src/shared/resolvers/preference.resolver';
-import { RtipsResolver } from 'app/src/shared/resolvers/rtips.resolver';
 import { HttpService } from 'app/src/shared/services/http.service';
 import { UtilsService } from 'app/src/shared/services/utils.service';
 import { Observable } from 'rxjs';
-import { ChangeDetectorRef } from '@angular/core';
 import { FieldUtilitiesService } from 'app/src/shared/services/field-utilities.service';
 
 
@@ -146,6 +141,7 @@ export class TipComponent {
       }
     }
   }
+
   ngOnInit() {
     this.loadTipDate();
   }
@@ -182,7 +178,7 @@ export class TipComponent {
       }
     )
   }
- 
+  
   tipToggleStar() { }
   tipNotify(b: boolean) { }
   tipDelete() { }

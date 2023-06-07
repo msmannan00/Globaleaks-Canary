@@ -193,6 +193,13 @@ export class HttpService{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.post(`api/rtips/${id}/comments`, param,{'headers':headers })
   }
+  retipRequestNewMessage(param: any,id:any): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.post(`api/rtips/${id}/messages`, param,{'headers':headers })
+  }
+  accessIdentity(id:any): Observable<any> {
+    return this.httpClient.post(`api/rtips/${id}/iars`, {"request_motivation": ""});
+  }
   runOperation(url: string, operation: string, args: any, refresh: boolean) {
 
     const data = {

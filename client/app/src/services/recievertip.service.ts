@@ -42,7 +42,7 @@ export class RecieverTipService {
 
   newMessages(content:string){
     const param=JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content});
-    this.httpService.requestNewMessage(JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content}), this.tip.msg_receiver_selected).subscribe
+    this.httpService.retipRequestNewMessage(JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content}), this.tip.id).subscribe
     (
         {
           next: response => {
@@ -54,15 +54,16 @@ export class RecieverTipService {
     );
   }
 
-  newComment(content:string,id:any) {
+  newComment(content:string) {
     const param=JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content});
-    this.httpService.rtipsRequestNewComment({},id).subscribe
+    this.httpService.rtipsRequestNewComment(param,this.tip.id).subscribe
     (
         {
           next: response => {
             this.utilsService.reloadCurrentRoute()
           },
           error: (error: any) => {
+            alert(JSON.stringify(error))
           }
         }
     );

@@ -50,7 +50,7 @@
     </div>
     <div class="col-md-6" *ngIf="wbtipService.tip.messages">
         <div *ngIf="wbtipService.tip.context.enable_messages || wbtipService.tip.messages.length">
-            <src-tip-messages ></src-tip-messages>
+            <src-tip-messages [tipService]="wbtipService"></src-tip-messages>
         </div>
     </div>
 </div>
