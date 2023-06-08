@@ -70,6 +70,7 @@ import { EncryptionRecoveryKeyComponent } from './shared/modals/encryption-recov
 import { ConfirmationWithPasswordComponent } from './shared/modals/confirmation-with-password/confirmation-with-password.component';
 import { ConfirmationWith2faComponent } from './shared/modals/confirmation-with2fa/confirmation-with2fa.component';
 import { TipOperationFileIdentityAccessRequestComponent } from './shared/modals/tip-operation-file-identity-access-request/tip-operation-file-identity-access-request.ompoent';
+import { TipFilesReceiverComponent } from './shared/partials/tip-files-receiver/tip-files-receiver.component';
 
 @NgModule({
     imports: [
@@ -151,7 +152,8 @@ import { TipOperationFileIdentityAccessRequestComponent } from './shared/modals/
         EncryptionRecoveryKeyComponent,
         ConfirmationWithPasswordComponent,
         ConfirmationWith2faComponent,
-        TipOperationFileIdentityAccessRequestComponent
+        TipOperationFileIdentityAccessRequestComponent,
+        TipFilesReceiverComponent
     ],
     exports: [
         FooterComponent,
@@ -186,7 +188,8 @@ import { TipOperationFileIdentityAccessRequestComponent } from './shared/modals/
         RevokeAccessComponent,
         DeleteConfirmationComponent,
         DateRangeSelectorComponent,
-        TipOperationFileIdentityAccessRequestComponent
+        TipOperationFileIdentityAccessRequestComponent,
+        TipFilesReceiverComponent
 
     ]})
 export class SharedModule { }

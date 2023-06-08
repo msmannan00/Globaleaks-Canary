@@ -15,19 +15,18 @@ export class TipOperationFileIdentityAccessRequestComponent {
   request_motivation:any;
   modal: NgbModalRef;
 
-  openModal(content: any) {
-    this.modal = this.modalService.open(content);
-  }
+  
 
   confirm() {
-    if (this.modal) {
-      this.modal.dismiss();
-    }
-    return this.http.post("api/rtips/" + this.tipsService.tip.id + "/iars", { "request_motivation": this.request_motivation })
-    .pipe(
-      finalize(() => {
-        this.reload();
-      })
+      this.modalService.dismissAll();
+    this.http.post("api/rtips/" + this.tipsService.tip.id + "/iars", {"request_motivation": this.request_motivation})
+    .subscribe(
+      response => {
+        this.utils.reloadCurrentRoute();
+      },
+      error => {
+        console.error(error);
+      }
     );
   }
   reload() {
@@ -35,9 +34,7 @@ export class TipOperationFileIdentityAccessRequestComponent {
   }
 
   cancel() {
-    if (this.modal) {
-      this.modal.dismiss();
-    }
+      this.modalService.dismissAll();
   }
   ngOnInit(){
   }

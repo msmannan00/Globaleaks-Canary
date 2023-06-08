@@ -1,7 +1,7 @@
 <ng-container *ngIf="tip">
   <div id="Toolbar" class="row">
   <div class="col-md-12">
-    <a id="link-tiplist" routerLink="#/recipient/reports" data-toggle="tooltip" title="{{'Reports' | translate}}"
+    <a id="link-tiplist" routerLink="/recipient/reports" data-toggle="tooltip" title="{{'Reports' | translate}}"
       class="btn btn-outline-secondary">
       <i class="fa-solid fa-arrow-left"></i>
     </a>
@@ -90,8 +90,8 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <div data-ng-include="'views/partials/tip_files_receiver.html'"></div>
-    <div data-ng-include="'views/partials/tip_upload_wbfile.html'"></div>
+    <!-- <src-tip-files-receiver></src-tip-files-receiver> -->
+    <!-- <div data-ng-include="'views/partials/tip_upload_wbfile.html'"></div> -->
   </div>
 </div>
 <div class="row">

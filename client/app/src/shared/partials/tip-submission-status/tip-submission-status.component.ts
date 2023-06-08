@@ -9,18 +9,15 @@ import { RecieverTipService } from 'app/src/services/recievertip.service';
   templateUrl: './tip-submission-status.component.html',
   styleUrls: ['./tip-submission-status.component.css']
 })
-export class TipSubmissionStatusComponent implements OnInit{
+export class TipSubmissionStatusComponent {
   @Input() tipService: RecieverTipService | WbtipService  ;
-  status:any = null
   updateSubmissionStatus() {
+    console.log(this.tipService.tip.substatus);
     this.tipService.tip.submissionStatusStr = this.utilsService.getSubmissionStatusText(this.tipService.tip.status, this.tipService.tip.substatus, this.appDataService.submission_statuses);
   };
-
-  ngOnInit(): void {
-    console.log(JSON.stringify(this.tipService.tip))
-    this.status = this.appDataService.submission_statuses_by_id[this.tipService.tip.status]
+  ngOnInit(){
+    console.log(this.tipService.tip.status)
   }
-
   constructor(public utilsService:UtilsService,  public appDataService:AppDataService) {
   }
 }

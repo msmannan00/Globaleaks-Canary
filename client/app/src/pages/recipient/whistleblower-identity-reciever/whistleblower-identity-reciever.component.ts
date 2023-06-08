@@ -25,7 +25,6 @@ export class WhistleBlowerIdentityRecieverComponent {
   access_identity(){
    return this.httpService.accessIdentity(this.tipService.tip.id).subscribe(
       response => {
-        console.log(response);
         this.utils.reloadCurrentRoute();
       },
       error => {

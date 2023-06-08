@@ -7,6 +7,7 @@ export interface Root {
 }
 
 export interface Node {
+viewer: any
     adminonly: boolean
     pgp:any
     custom_support_url: string
