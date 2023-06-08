@@ -31,12 +31,13 @@
             <!-- <div data-ng-repeat="field in whistleblower_identity_field.children | orderBy:['y', 'x']">
               <span data-ng-init="fieldAnswers=tipService.tip.data.whistleblower_identity" data-ng-include="'views/partials/tip_field.html'"></span>
             </div> -->
-            <div *ngFor="let field of tipService.tip.whistleblower_identity_field.children; let index = index">
+            <div *ngFor="let field of tipService.tip.whistleblower_identity_field.children ; let index = index">
               <src-tip-field [fields]=field [fieldAnswers]=tipService.tip.data.whistleblower_identity
 					    [index]="index"></src-tip-field>
             </div>
             
           </div>
+
           <div *ngIf="!tipService.tip.iar || tipService.tip.iar.reply === 'denied'">
             <button *ngIf="tipService.tip.custodian" class="btn btn-sm btn-primary" (click)="file_identity_access_request()">{{"Request access to the whistleblower's identity" | translate}}</button>
             <button *ngIf="!tipService.tip.custodian" class="btn btn-sm btn-primary" (click)="access_identity()">{{'Show' | translate}}</button>

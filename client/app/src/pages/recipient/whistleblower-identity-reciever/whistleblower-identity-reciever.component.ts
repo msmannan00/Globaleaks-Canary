@@ -5,6 +5,7 @@ import { TipOperationFileIdentityAccessRequestComponent } from 'app/src/shared/m
 import { FieldUtilitiesService } from 'app/src/shared/services/field-utilities.service';
 import { HttpService } from 'app/src/shared/services/http.service';
 import { UtilsService } from 'app/src/shared/services/utils.service';
+import { tap } from 'rxjs';
 
 
 @Component({
@@ -22,14 +23,23 @@ export class WhistleBlowerIdentityRecieverComponent {
     modalRef.componentInstance.tip = this.tipService.tip;
   }
   access_identity(){
-    this.httpService.accessIdentity(this.tipService.tip.id);
+   return this.httpService.accessIdentity(this.tipService.tip.id).subscribe(
+      response => {
+        console.log(response);
+        this.utils.reloadCurrentRoute();
+      },
+      error => {
+        console.error(error);
+      }
+    );
   }
   constructor(
     public tipService:RecieverTipService, 
     public utilsService:UtilsService, 
     public fieldUtilitiesService:FieldUtilitiesService,
     public httpService:HttpService,
-    public modalService:NgbModal
+    public modalService:NgbModal,
+    public utils:UtilsService
     ) {
     // this.collapsed = this.tipService.tip.data.whistleblower_identity_provided
   }
