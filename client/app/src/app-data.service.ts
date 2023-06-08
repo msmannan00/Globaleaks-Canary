@@ -29,6 +29,8 @@ export class AppDataService {
   languages_supported: Map<number, string>;
   score: number;
   ctx: string;
+  receipt:string
+
 
   constructor() { }
 }

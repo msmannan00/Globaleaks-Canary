@@ -105,6 +105,7 @@ export class AuthenticationService {
           } else {
             if (this.session.role === "whistleblower") {
               if (password) {
+                this.rootDataService.receipt = password
                 this.rootDataService.page="tippage";
                 this.router.navigate(['/']).then(r => {});
               }
