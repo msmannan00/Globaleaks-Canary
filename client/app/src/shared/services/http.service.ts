@@ -218,6 +218,13 @@ export class HttpService{
 
     return this.httpClient.put(url,data)
   }
+  tipOperation = (operation:string, args:any,tipId:any) => {
+    const req = {
+      "operation": operation,
+      "args": args
+    };
+    return this.httpClient.put("api/rtips/" + tipId, req);
+  };
   constructor(private httpClient: HttpClient, private router: Router) {
   }
 }

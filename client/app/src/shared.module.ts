@@ -71,6 +71,7 @@ import { ConfirmationWithPasswordComponent } from './shared/modals/confirmation-
 import { ConfirmationWith2faComponent } from './shared/modals/confirmation-with2fa/confirmation-with2fa.component';
 import { TipOperationFileIdentityAccessRequestComponent } from './shared/modals/tip-operation-file-identity-access-request/tip-operation-file-identity-access-request.ompoent';
 import { TipFilesReceiverComponent } from './shared/partials/tip-files-receiver/tip-files-receiver.component';
+import { TipOperationSetReminderComponent } from './shared/modals/tip-operation-set-reminder/tip-operation-set-reminder.component';
 
 @NgModule({
     imports: [
@@ -153,7 +154,8 @@ import { TipFilesReceiverComponent } from './shared/partials/tip-files-receiver/
         ConfirmationWithPasswordComponent,
         ConfirmationWith2faComponent,
         TipOperationFileIdentityAccessRequestComponent,
-        TipFilesReceiverComponent
+        TipFilesReceiverComponent,
+        TipOperationSetReminderComponent
     ],
     exports: [
         FooterComponent,
@@ -189,7 +191,7 @@ import { TipFilesReceiverComponent } from './shared/partials/tip-files-receiver/
         DeleteConfirmationComponent,
         DateRangeSelectorComponent,
         TipOperationFileIdentityAccessRequestComponent,
-        TipFilesReceiverComponent
-
+        TipFilesReceiverComponent,
+        TipOperationSetReminderComponent
     ]})
 export class SharedModule { }

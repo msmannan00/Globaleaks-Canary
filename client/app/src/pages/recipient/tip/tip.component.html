@@ -11,7 +11,7 @@
       <i class="fa-solid fa-star" [ngClass]="{'text-warning': tip.important}"></i>
     </span>
 
-    <span id="tip-action-reminder" (click)="set_reminder()" data-toggle="tooltip"
+    <span id="tip-action-reminder" (click)="setReminder()" data-toggle="tooltip"
       title="{{'Set a reminder' | translate}}" class="btn btn-outline-secondary">
       <i class="fa-solid fa-bell" [ngClass]="{'text-warning': !utils.isNever(tip.reminder_date)}"></i>
     </span>

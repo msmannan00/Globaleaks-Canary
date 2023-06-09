@@ -156,3 +156,8 @@ ngbd-datepicker-range{
 .table-striped tbody tr:nth-of-type(odd) {
   background-color: rgba(255, 255, 255, 0) !important; /* Semi-transparent white color */
 }
+
+.input-group .ngb-dp-month{width: 100% !important;}
+.input-group ngb-datepicker-month{width: 100% !important;}
+.input-group .ngb-dp-month .ngb-dp-day{width: calc(100% / 7) !important; text-align: center;}
+.input-group .ngb-dp-month .ngb-dp-day .btn-primary{background-color: #3e81be !important;}

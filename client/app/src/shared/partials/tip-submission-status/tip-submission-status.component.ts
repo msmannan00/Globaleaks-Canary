@@ -12,11 +12,9 @@ import { RecieverTipService } from 'app/src/services/recievertip.service';
 export class TipSubmissionStatusComponent {
   @Input() tipService: RecieverTipService | WbtipService  ;
   updateSubmissionStatus() {
-    console.log(this.tipService.tip.substatus);
     this.tipService.tip.submissionStatusStr = this.utilsService.getSubmissionStatusText(this.tipService.tip.status, this.tipService.tip.substatus, this.appDataService.submission_statuses);
   };
   ngOnInit(){
-    console.log(this.tipService.tip.status)
   }
   constructor(public utilsService:UtilsService,  public appDataService:AppDataService) {
   }

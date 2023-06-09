@@ -7,11 +7,9 @@
         </ng-option>
       </ng-select>
 
-      <ng-container *ngIf="tipService.tip.status">
         <ng-select [clearable]="false" [ngModelOptions]="{standalone: true}" [(ngModel)]="tipService.tip.substatus" [hidden]="!appDataService.submission_statuses_by_id[tipService.tip.status].substatuses.length" (change)="updateSubmissionStatus()">
           <ng-option *ngFor="let item of  appDataService.submission_statuses_by_id[tipService.tip.status].substatuses" [value]="item.id">{{item.label}}</ng-option>
         </ng-select>
-      </ng-container>
 
   </span>
 </span>

@@ -204,11 +204,13 @@ download(url:string){
     }
   }
 
-  getSubmissionStatusText(status:any, substatus:any, submission_statuses:any) {
+  getSubmissionStatusText(status:any, substatus:any , submission_statuses:any) {
     let text;
     for (let i = 0; i < submission_statuses.length; i++) {
+      console.log(submission_statuses[i].id,'===' ,status);
       if (submission_statuses[i].id === status) {
         text = submission_statuses[i].label;
+       
 
         let substatuses = submission_statuses[i].substatuses;
         for (let j = 0; j < substatuses.length; j++) {
@@ -220,7 +222,6 @@ download(url:string){
         break;
       }
     }
-
     return text;
   }
 
@@ -323,6 +324,12 @@ download(url:string){
   }
   print(){
     window.print();
+  }
+  getPostponeDate(ttl: any): Date {
+    const date = new Date();
+    date.setDate(date.getDate() + ttl + 1);
+    date.setUTCHours(0, 0, 0, 0);
+    return date;
   }
   constructor(
     public appConfigService: AppConfigService, 

@@ -10,6 +10,8 @@ import { HttpService } from 'app/src/shared/services/http.service';
 import { UtilsService } from 'app/src/shared/services/utils.service';
 import { Observable } from 'rxjs';
 import { FieldUtilitiesService } from 'app/src/shared/services/field-utilities.service';
+import { TipOperationSetReminderComponent } from 'app/src/shared/modals/tip-operation-set-reminder/tip-operation-set-reminder.component';
+import { DeleteConfirmationComponent } from 'app/src/shared/modals/delete-confirmation/delete-confirmation.component';
 
 
 @Component({
@@ -30,7 +32,6 @@ export class TipComponent {
   //
   tip: any={};
   contexts_by_id: any;
-  Utils: any;
   submission_statuses: any;
   supportedViewTypes: string[];
   score: any;
@@ -42,9 +43,7 @@ export class TipComponent {
 
 
 
-  set_reminder() { }
-  tip_postpone() { }
-  exportTip(tip: any) { }
+
  
   openGrantTipAccessModal() {
     alert('Alert from outside');
@@ -179,10 +178,42 @@ export class TipComponent {
     )
   }
   
-  tipToggleStar() { }
-  tipNotify(b: boolean) { }
-  tipDelete() { }
+  tipToggleStar() {
+    this.httpService.tipOperation("set",{ "key": "important", "value": !this.rtipService.tip.important }, this.rtipService.tip.id )
+    .subscribe(() => {
+      this.rtipService.tip.important = !this.rtipService.tip.important;
+    });
+   }
+   tipNotify(enable: boolean) {
+    this.httpService.tipOperation("set", { "key": "enable_notifications", "value": enable },this.rtipService.tip.id)
+      .subscribe(() => {
+        this.rtipService.tip.enable_notifications = enable;
+      });
+  }
+  
+  tipDelete() {
+    const modalRef = this.modalService.open(DeleteConfirmationComponent);
+    modalRef.componentInstance.args = {
+    tip: this.rtipService.tip,
+    operation: "delete"
+  };
+   }
+  setReminder() {
+    const modalRef = this.modalService.open(TipOperationSetReminderComponent);
+    modalRef.componentInstance.args = {
+      tip: this.rtipService.tip,
+      operation: "set_reminder",
+      contexts_by_id: this.contexts_by_id,
+      // reminder_date: this.utils.getPostponeDate(this.contexts_by_id[this.tip.context_id].tip_reminder),
+      dateOptions: {
+        minDate: new Date(this.tip.creation_date)
+      },
+      opened: false,
 
+    };
+   }
+  tip_postpone() { }
+  exportTip(tip: any) { }
 
   constructor(
     public utils: UtilsService,
