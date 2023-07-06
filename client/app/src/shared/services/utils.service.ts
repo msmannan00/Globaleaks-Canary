@@ -331,6 +331,8 @@ download(url:string){
     date.setUTCHours(0, 0, 0, 0);
     return date;
   }
+
+
   constructor(
     public appConfigService: AppConfigService, 
     public httpService: HttpService, 

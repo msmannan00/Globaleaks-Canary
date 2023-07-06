@@ -21,8 +21,7 @@ export class DeleteConfirmationComponent {
       return this.http.delete("api/rtips/" + this.args.tip.id)
         .subscribe(() => {
           this.router.navigate(['/recipient/reports']);
-          
-        });
+      });
     }
     return;
   }

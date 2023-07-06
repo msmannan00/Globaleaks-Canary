@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 import { FieldUtilitiesService } from 'app/src/shared/services/field-utilities.service';
 import { TipOperationSetReminderComponent } from 'app/src/shared/modals/tip-operation-set-reminder/tip-operation-set-reminder.component';
 import { DeleteConfirmationComponent } from 'app/src/shared/modals/delete-confirmation/delete-confirmation.component';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -45,40 +46,73 @@ export class TipComponent {
 
 
  
-  openGrantTipAccessModal() {
-    alert('Alert from outside');
+  // openGrantTipAccessModal() {
 
-    this.utils.runUserOperation("get_users_names", {}, true).subscribe(
-      {
-        next: response => {
-          const modalRef = this.modalService.open(GrantAccessComponent);
-          modalRef.componentInstance.users_names = response;
-          modalRef.componentInstance.confirmFun = (receiver_id: any) => {
-            const args = {
-              receiver: receiver_id
-            };
-            return this.utils.runRecipientOperation("grant", args, true);
-          };
-        },
-        error: (error: any) => {
-          alert(JSON.stringify(error));
-        }
-      }
-    );
+  //   this.utils.runUserOperation("get_users_names", {}, true).subscribe(
+  //     {
+  //       next: response => {
+  //         const modalRef = this.modalService.open(GrantAccessComponent);
+  //         modalRef.componentInstance.users_names = response;
+  //         modalRef.componentInstance.confirmFun = (receiver_id: any) => {
+  //           const args = {
+  //             receiver: receiver_id
+  //           };
+
+  //         };
+  //       },
+  //       error: (error: any) => {
+  //         alert(JSON.stringify(error));
+  //       }
+  //     }
+  //   );
+  // }
+
+  openGrantTipAccessModal(): void {
+    this.utils.runUserOperation("get_users_names", {}, true).subscribe((response: any) => {
+      const modalRef = this.modalService.open(GrantAccessComponent);
+      console.log(response);
+      modalRef.componentInstance.args= {
+        users_names: response
+      };
+      modalRef.componentInstance.confirmFun = (receiver_id: any) => {
+        const req = {
+          operation: "grant",
+          args: {
+            receiver: receiver_id
+          },
+        };
+        this.httpService.tipOperation(req.operation,req.args, this.rtipService.tip.id )
+        .subscribe(() => {
+          this.reload();
+        });
+      };
+     
+      modalRef.componentInstance.cancelFun = null;
+    });
   }
+
 
   openRevokeTipAccessModal() {
     this.utils.runUserOperation("get_users_names", {}, true).subscribe(
       {
         next: response => {
           const modalRef = this.modalService.open(RevokeAccessComponent);
-          modalRef.componentInstance.users_names = response;
-          modalRef.componentInstance.confirmFun = (receiver_id: any) => {
-            const args = {
-              receiver: receiver_id
-            };
-            return this.utils.runRecipientOperation("revoke", args, true);
+          modalRef.componentInstance.args= {
+            users_names: response
           };
+          modalRef.componentInstance.confirmFun = (receiver_id: any) => {
+            const req = {
+              operation: "revoke",
+              args: {
+                receiver: receiver_id
+              },
+            };
+            this.httpService.tipOperation(req.operation,req.args, this.rtipService.tip.id )
+            .subscribe(() => {
+              this.reload();
+            });
+          };
+          modalRef.componentInstance.cancelFun = null;
         },
         error: (error: any) => {
           alert(JSON.stringify(error));
@@ -151,7 +185,6 @@ export class TipComponent {
     requestObservable.subscribe(
       {
         next: (response: any) => {
-          console.log(response)
           this.rtipService.initialize(response)
           this.tip = this.rtipService.tip;
           this.activatedRoute.queryParams.subscribe((params: { [x: string]: any; }) => {
@@ -159,15 +192,15 @@ export class TipComponent {
           });
 
           this.tip.context = this.appDataService.contexts_by_id[this.tip.context_id];
-          this.tip.receivers_by_id = this.utilsService.array_to_map(this.tip.receivers);
+          this.tip.receivers_by_id = this.utils.array_to_map(this.tip.receivers);
           this.score = this.tip.score;
           this.ctx = "rtip";
-          // this.exportTip = RTipExport;
+          // this.exportTip = utils.RTipExport;
           // this.downloadRFile = RTipDownloadRFile;
           // this.viewRFile = RTipViewRFile;
           this.showEditLabelInput = this.tip.label === "";
           this.preprocessTipAnswers(this.tip);
-          this.tip.submissionStatusStr = this.utilsService.getSubmissionStatusText(this.tip.status, this.tip.substatus, this.appDataService.submission_statuses)
+          this.tip.submissionStatusStr = this.utils.getSubmissionStatusText(this.tip.status, this.tip.substatus, this.appDataService.submission_statuses)
          
           this.submission = {};
          
@@ -213,7 +246,9 @@ export class TipComponent {
     };
    }
   tip_postpone() { }
-  exportTip(tip: any) { }
+  exportTip(tipId: any) { 
+    this.utils.download("api/rtips/" + tipId + "/export")
+  }
 
   constructor(
     public utils: UtilsService,
@@ -221,8 +256,8 @@ export class TipComponent {
     public modalService: NgbModal,
     private activatedRoute: ActivatedRoute,
     public httpService: HttpService,
+    public http:HttpClient,
     public appDataService: AppDataService,
-    public utilsService: UtilsService,
     public rtipService :RecieverTipService,public fieldUtilities:FieldUtilitiesService, 
   ) {
 
