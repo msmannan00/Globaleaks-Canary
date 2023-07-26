@@ -72,6 +72,7 @@ import { ConfirmationWith2faComponent } from './shared/modals/confirmation-with2
 import { TipOperationFileIdentityAccessRequestComponent } from './shared/modals/tip-operation-file-identity-access-request/tip-operation-file-identity-access-request.ompoent';
 import { TipFilesReceiverComponent } from './shared/partials/tip-files-receiver/tip-files-receiver.component';
 import { TipOperationSetReminderComponent } from './shared/modals/tip-operation-set-reminder/tip-operation-set-reminder.component';
+import { TipOperationPostponeComponent } from './shared/modals/tip-operation-postpone/tip-operation-postpone.component';
 
 @NgModule({
     imports: [
@@ -155,7 +156,8 @@ import { TipOperationSetReminderComponent } from './shared/modals/tip-operation-
         ConfirmationWith2faComponent,
         TipOperationFileIdentityAccessRequestComponent,
         TipFilesReceiverComponent,
-        TipOperationSetReminderComponent
+        TipOperationSetReminderComponent,
+        TipOperationPostponeComponent
     ],
     exports: [
         FooterComponent,

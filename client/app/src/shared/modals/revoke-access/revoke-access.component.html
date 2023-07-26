@@ -1,6 +1,6 @@
 <div class="modal-header">
     <div class="modal-title">{{'Revoke access' | translate}}</div>
-    <button type="button" class="close" (click)="cancel()" [attr.aria-label]="'Close' | translate">
+    <button type="button" class="close btn" (click)="cancel()" [attr.aria-label]="'Close' | translate">
       <i class="fa-solid fa-times"></i>
     </button>
   </div>
@@ -15,10 +15,22 @@
              <span data-ng-bind-html="arg.users_names[receiver.id] | highlight: $select.search"></span>
           </ui-select-choices>
         </ui-select> -->
-        <ng-select [(ngModel)]="receiver_id">
+        <!-- <ng-select [(ngModel)]="receiver_id">
           <ng-option *ngFor="let item of args.users_names | keyvalue " [value]="item.key">
             <span [innerHTML]="item.value"></span>
           </ng-option>
+          <ng-template ng-not-found>
+            No results found
+          </ng-template>
+        </ng-select> -->
+        <ng-select [(ngModel)]="receiver_id">
+          <ng-container *ngFor="let receiver of receivers_by_id | keyvalue">
+            <ng-container *ngFor="let user of args.users_names | keyvalue">
+              <ng-option *ngIf="receiver.key === user.key" [value]="user.key">
+                {{ user.value }}
+              </ng-option>
+            </ng-container>
+          </ng-container>
           <ng-template ng-not-found>
             No results found
           </ng-template>

@@ -92,7 +92,9 @@ const routes: Routes = [
     path: 'status/:tip_id',
     component: TipComponent,
     pathMatch: 'full',
-   
+    resolve: {
+      PreferenceResolver,NodeResolver,RtipsResolver
+   },
   }
 ];
 

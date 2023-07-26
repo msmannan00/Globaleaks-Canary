@@ -21,7 +21,6 @@ Release Checklist
 * update docs/releases.rst to reflect upcoming reality
    * blindly make links to the signatures
    * update heading, date
-   * commit it all
 
 * on both signing-machine and build-machine shells:
    * export VERSION=22.0.0

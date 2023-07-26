@@ -79,6 +79,23 @@ def serialize_comment(session, comment):
         'author': comment.author_id
     }
 
+def serialize_masking(session, masking):
+    """
+    Transaction returning a serialized descriptor of a masking
+
+    :param session: An ORM session
+    :param masking: A model to be serialized
+    :return: A serialized description of the model specified
+    """
+    return {
+        'id': masking.id,
+        'content_id': masking.content_id,
+        'mask_date': masking.mask_date,
+        'internaltip_id': masking.internaltip_id,
+        'temporary_masking': masking.temporary_masking,
+        'permanent_masking': masking.permanent_masking
+    }
+
 
 def serialize_message(session, message):
     """
@@ -109,13 +126,16 @@ def serialize_ifile(session, ifile):
     :param ifile: The ifile to be serialized
     :return: The serialized ifile
     """
+
     return {
         'id': ifile.id,
         'creation_date': ifile.creation_date,
         'name': ifile.name,
         'size': ifile.size,
         'type': ifile.content_type,
-        'filename': ifile.filename
+        'filename': ifile.filename,
+        'reference':ifile.reference
+        
     }
 
 
@@ -134,7 +154,8 @@ def serialize_rfile(session, ifile, rfile):
         'name': ifile.name,
         'size': ifile.size,
         'type': ifile.content_type,
-        'filename': rfile.filename
+        'filename': rfile.filename,
+        'reference':ifile.reference
     }
 
 
@@ -192,6 +213,7 @@ def serialize_itip(session, internaltip, language):
         'receivers': [],
         'messages': [],
         'comments': [],
+        'masking': [],
         'rfiles': [],
         'wbfiles': [],
         'data': {}
@@ -200,6 +222,10 @@ def serialize_itip(session, internaltip, language):
     for comment in session.query(models.Comment) \
                           .filter(models.Comment.internaltip_id == internaltip.id):
         ret['comments'].append(serialize_comment(session, comment))
+        
+    for masking in session.query(models.Masking) \
+                          .filter(models.Masking.internaltip_id == internaltip.id):
+        ret['masking'].append(serialize_masking(session, masking))
 
     for wbfile in session.query(models.WhistleblowerFile) \
                          .filter(models.WhistleblowerFile.receivertip_id == models.ReceiverTip.id,

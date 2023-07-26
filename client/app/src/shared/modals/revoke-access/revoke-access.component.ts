@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RecieverTipService } from 'app/src/services/recievertip.service';
 import { UtilsService } from '../../services/utils.service';
 import { Router } from '@angular/router';
+import { AppDataService } from 'app/src/app-data.service';
 
 
 @Component({
@@ -18,7 +19,10 @@ export class RevokeAccessComponent {
   @Input() confirmFun: Function;
   @Input() cancelFun: Function;
   receiver_id: any;
-
+  receivers_by_id:any={}
+  ngOnInit() {
+    this.receivers_by_id =this.appDataService.receivers_by_id
+  }
 
   confirm(di:any) {
     if (this.confirmFun) {
@@ -42,7 +46,8 @@ export class RevokeAccessComponent {
     public tipsService: RecieverTipService,
     public http: HttpClient,
     public utils: UtilsService,
-    public router: Router
+    public router: Router,
+    public appDataService: AppDataService,
   ) {
   }
 }

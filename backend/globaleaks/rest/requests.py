@@ -44,6 +44,7 @@ field_type_regexp = (r'^('
                      'checkbox|'
                      'tos|'
                      'fileupload|'
+                     'audioUpload|'
                      'number|'
                      'email|'
                      'date|'
@@ -136,6 +137,8 @@ AdminUserDesc = {
     'language': str,
     'notification': bool,
     'can_edit_general_settings': bool,
+    'can_privilege_delete_mask_information': bool,
+    'can_privilege_mask_information': bool,
     'can_delete_submission': bool,
     'can_postpone_expiration': bool,
     'can_grant_access_to_reports': bool,

@@ -1,32 +1,36 @@
 import { Component, Input } from '@angular/core';
-import {AuthenticationService} from "../../../services/authentication.service";
-import {WbtipService} from "../../../services/wbtip.service";
-import {AppDataService} from "../../../app-data.service";
-import {UtilsService} from "../../services/utils.service";
+import { AuthenticationService } from "../../../services/authentication.service";
+import { WbtipService } from "../../../services/wbtip.service";
+import { AppDataService } from "../../../app-data.service";
+import { UtilsService } from "../../services/utils.service";
 import { RecieverTipService } from 'app/src/services/recievertip.service';
-
+import { HttpService } from 'app/src/shared/services/http.service';
 @Component({
   selector: 'src-tip-info',
   templateUrl: './tip-info.component.html',
   styleUrls: ['./tip-info.component.css']
 })
-export class TipInfoComponent{
-  @Input() tipService: RecieverTipService | WbtipService  ;
+export class TipInfoComponent {
+  @Input() tipService: RecieverTipService | WbtipService;
 
 
-  markReportStatus(date:any) {
+  markReportStatus(date: any) {
     let report_date = new Date(date);
     let current_date = new Date();
     return current_date > report_date;
   };
   constructor(
-    public authenticationService:AuthenticationService, 
+    public authenticationService: AuthenticationService,
     // public tipService:WbtipService, 
-    public appDataService:AppDataService, 
-    public utilsService:UtilsService,
-    // public rtipService:RecieverTipService
-    ) {
+    public appDataService: AppDataService,
+    public utilsService: UtilsService,
+    public rtipService: RecieverTipService,
+    public httpService: HttpService,
+
+  ) {
   }
   updateLabel(label: any) {
+    this.httpService.tipOperation("set", { "key": "label", "value": label }, this.rtipService.tip.id).subscribe(() => {
+    });
   }
 }

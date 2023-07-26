@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {AuthenticationService} from "../../services/authentication.service";
 import {AppDataService} from "../../app-data.service";
 import {TranslateService} from "@ngx-translate/core";
@@ -6,8 +6,9 @@ import {NavigationExtras, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {RequestSupportComponent} from "../modals/request-support/request-support.component";
 import {HttpService} from "./http.service";
-import {Transfer} from "@flowjs/ngx-flow";
+// import {Transfer} from "@flowjs/ngx-flow";
 import {AppConfigService} from "../../services/app-config.service";
+import { TokenResource } from './token-resource.service';
 
 @Injectable({
   providedIn: 'root'
@@ -33,11 +34,16 @@ role_l10n(role:string) {
   return ret;
 }
 
-download(url:string){
-    // return new TokenResource().$get().then(function(token) {
-    //   $window.open(url + "?token=" + token.id + ":" + token.answer);
-    // });
-  }
+download(url: string): void {
+  // this.tokenResourceService.getWithProofOfWork().then((token) => {
+  //   this.windowRef.nativeWindow.open(
+  //     url + '?token=' + token.id + ':' + token.answer
+  //   );
+  // });
+  this.tokenResourceService.getWithProofOfWork().then((token: any) => {
+    window.open(`${url}?token=${token.id}:${token.answer}`);
+  });
+}
 
   isUploading(uploads?:any){
 
@@ -171,6 +177,8 @@ download(url:string){
     }
 
     if(pageTitle.length>0){
+      console.log(pageTitle,"pageTitle");
+      
       pageTitle = this.translateService.instant(pageTitle);
     }
 
@@ -207,7 +215,6 @@ download(url:string){
   getSubmissionStatusText(status:any, substatus:any , submission_statuses:any) {
     let text;
     for (let i = 0; i < submission_statuses.length; i++) {
-      console.log(submission_statuses[i].id,'===' ,status);
       if (submission_statuses[i].id === status) {
         text = submission_statuses[i].label;
        
@@ -334,12 +341,15 @@ download(url:string){
 
 
   constructor(
+    public translateService: TranslateService, 
     public appConfigService: AppConfigService, 
     public httpService: HttpService, 
     public modalService: NgbModal, 
     public authenticationService:AuthenticationService, 
     public appDataService:AppDataService, 
-    public translateService: TranslateService, private router: Router) {
+    public tokenResourceService:TokenResource,
+    // @Inject(DOCUMENT) private document: Document,
+    private router: Router) {
   }
 
 }

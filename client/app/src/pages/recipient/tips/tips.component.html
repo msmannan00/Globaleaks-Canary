@@ -46,7 +46,7 @@
       </span>
       <span id="SearchFilter" class="w-auto d-inline-block">
         <span class="input-group ">
-          <input type="text" class="form-control" placeholder="{{'Search' | translate}}" [(ngModel)]="search">
+          <input type="text" class="form-control" placeholder="{{'Search' | translate}}" [(ngModel)]="search" (ngModelChange)="onSearchChange($event)">
           <div class="input-group-append">
             <span class="input-group-text h-100 "><i class="fa-solid fa-search"></i></span>
           </div>
@@ -120,7 +120,51 @@
                 </span>
               </span>
               <span class="DropdownMultiselectContainer">
-                <i class="fa-solid fa-filter" data-ng-class="{filterSelected: checkFilter(dropdownStatusModel)}"></i>
+                <i class="fa-solid fa-filter" [ngClass]="{ filterSelected: checkFilter(dropdownStatusModel) }" (click)="toggleDropdown()"></i>
+                <span [class.hidden]="!dropdownVisible">
+                  <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="dropdownStatusData"
+                    [(ngModel)]="dropdownStatusModel" (ngModelChange)="on_changed(dropdownStatusModel)">
+                  </ng-multiselect-dropdown>
+                </span>
+
+                <!-- <i class="fa-solid fa-filter" [class.filterSelected]="checkFilter(dropdownStatusModel)" (click)="$event.stopPropagation(); myDrop.open();"></i>
+                <div ngbDropdown #myDrop="ngbDropdown" [open]="false">
+                  <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="dropdownManual"  [class.active]="dropdownStatusModel" >
+                    <li ngbDropdownItem *ngFor="let item of dropdownStatusData">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" (change)="on_changed(item)">
+                        {{ item.label }}
+                      </label>
+                    </li>
+                  </ul>
+                </div> -->
+
+                <!-- <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary me-2"
+                    id="dropdownManual"
+                    ngbDropdownAnchor
+                    (focus)="myDrop.open()"
+                  >
+                    Toggle dropdown
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownManual">
+                    <button ngbDropdownItem>Action - 1</button>
+                    <button ngbDropdownItem>Another Action</button>
+                    <button ngbDropdownItem>Something else is here</button>
+                  </div>
+                </div>
+                
+                <button type="button" class="btn btn-outline-success me-2" (click)="$event.stopPropagation(); myDrop.open();">
+                  Open from outside
+                </button>
+                <button type="button" class="btn btn-outline-danger me-2" (click)="$event.stopPropagation(); myDrop.close();">
+                  Close from outside
+                </button> -->
+
+                <!-- <i class="fa-solid fa-filter" data-ng-class="{filterSelected: checkFilter(dropdownStatusModel)}"></i> -->
+
                 <!-- <span data-ng-dropdown-multiselect data-options="dropdownStatusData"
                 data-selected-model="dropdownStatusModel" data-events="on_changed"
                 data-extra-settings="dropdownSettings" data-translation-texts="dropdownDefaultText"></span> -->
@@ -132,6 +176,10 @@
                 [defaultButtonText]="dropdownDefaultText">
                 </ng-multiselect-dropdown> -->
 
+                <!-- <span class="DropdownMultiselectContainer">
+                  <i class="fa-solid fa-filter" data-ng-class="{filterSelected: checkFilter(dropdownStatusModel)}"></i>
+                  <span data-ng-dropdown-multiselect data-options="dropdownStatusData" data-selected-model="dropdownStatusModel" data-events="on_changed" data-extra-settings="dropdownSettings" data-translation-texts="dropdownDefaultText"></span>
+                </span> -->
                 <!--  -->
               </span>
             </th>
@@ -147,9 +195,10 @@
               <!-- <span data-date-range-picker data-ng-model="reportDateModel"
               data-on-date-change="onReportFilterChange"></span> -->
               <div class="ngb-dtepicker-container ms-1">
-                <i class="fas fa-calendar" [ngClass]="{'calendar-active':  reportDateFilter}" (click)="reportDatePicker=!reportDatePicker;lastUpdatePicker=false;expirationDatePicker=false;"></i>
-                <ngbd-datepicker-range #datePicker [currentDates]="reportDateModel"  (emitDateSelection)="onReportFilterChange($event)"
-                  *ngIf="reportDatePicker"></ngbd-datepicker-range>
+                <i class="fas fa-calendar" [ngClass]="{'calendar-active':  reportDateFilter}"
+                  (click)="reportDatePicker=!reportDatePicker;lastUpdatePicker=false;expirationDatePicker=false;"></i>
+                <ngbd-datepicker-range #datePicker [currentDates]="reportDateModel"
+                  (emitDateSelection)="onReportFilterChange($event)" *ngIf="reportDatePicker"></ngbd-datepicker-range>
               </div>
 
             </th>
@@ -165,9 +214,10 @@
               <!-- <span data-date-range-picker data-ng-model="updateDateModel"
               data-on-date-change="onUpdateFilterChange"></span> -->
               <div class="ngb-dtepicker-container ms-1">
-                <i class="fas fa-calendar" [ngClass]="{'calendar-active':  updateDateFilter}" (click)="lastUpdatePicker=!lastUpdatePicker;reportDatePicker=false;expirationDatePicker=false;"></i>
-                <ngbd-datepicker-range #datePicker [currentDates]="updateDateModel" (emitDateSelection)="onUpdateFilterChange($event)"
-                  *ngIf="lastUpdatePicker"></ngbd-datepicker-range>
+                <i class="fas fa-calendar" [ngClass]="{'calendar-active':  updateDateFilter}"
+                  (click)="lastUpdatePicker=!lastUpdatePicker;reportDatePicker=false;expirationDatePicker=false;"></i>
+                <ngbd-datepicker-range #datePicker [currentDates]="updateDateModel"
+                  (emitDateSelection)="onUpdateFilterChange($event)" *ngIf="lastUpdatePicker"></ngbd-datepicker-range>
               </div>
             </th>
             <th class="TipInfoExpirationDate">
@@ -182,8 +232,10 @@
               <!-- <span data-date-range-picker data-ng-model="expiryDateModel"
               data-on-date-change="onExpiryFilterChange"></span> -->
               <div class="ngb-dtepicker-container ms-1">
-                <i class="fas fa-calendar" [ngClass]="{'calendar-active':  expiryDateFilter}" (click)="expirationDatePicker=!expirationDatePicker;reportDatePicker=false;lastUpdatePicker=false;"></i>
-                <ngbd-datepicker-range #datePicker [currentDates]="expiryDateModel" (emitDateSelection)="onExpiryFilterChange($event)"
+                <i class="fas fa-calendar" [ngClass]="{'calendar-active':  expiryDateFilter}"
+                  (click)="expirationDatePicker=!expirationDatePicker;reportDatePicker=false;lastUpdatePicker=false;"></i>
+                <ngbd-datepicker-range #datePicker [currentDates]="expiryDateModel"
+                  (emitDateSelection)="onExpiryFilterChange($event)"
                   *ngIf="expirationDatePicker"></ngbd-datepicker-range>
               </div>
             </th>
@@ -218,7 +270,7 @@
         <tbody id="tipListTableBody">
           <ng-container
             *ngFor="let tip of filteredTips | orderBy:sortKey:sortReverse | slice:((currentPage - 1) * itemsPerPage):((currentPage - 1) * itemsPerPage + itemsPerPage)">
-            <tr id="tip-{{index}}" [ngClass]="{'font-weight-bold': tip.updated, 'selectedTip': isSelected(tip.id)}"
+            <tr id="tip-{{index}}" [ngClass]="{'fw-bold': tip.updated, 'selectedTip': isSelected(tip.id)}"
               class="tip-action-open" (click)="utils.go('/status/' + tip.id)">
               <td>
                 <span class="btn btn-sm btn-outline-secondary" *ngIf="isSelected(tip.id)"

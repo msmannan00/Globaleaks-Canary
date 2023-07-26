@@ -12,6 +12,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { FormsModule } from '@angular/forms';
 import { NgbDatepickerModule, NgbDropdownModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { WhistleBlowerIdentityRecieverComponent } from './whistleblower-identity-reciever/whistleblower-identity-reciever.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { WhistleBlowerIdentityRecieverComponent } from './whistleblower-identity
   imports: [
     CommonModule,RouterModule,TranslateModule,SharedModule,FormsModule,
     NgbModule,
-    NgbDatepickerModule,NgbDropdownModule,
+    NgbDatepickerModule,NgbDropdownModule,NgMultiSelectDropDownModule.forRoot()
+
   ],
   exports:[SidebarComponent]
 })

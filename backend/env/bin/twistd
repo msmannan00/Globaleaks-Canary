@@ -1,4 +1,6 @@
-#!/home/aahir/Gleaks/GlobaLeaks/backend/env/bin/python3
+#!/bin/sh
+'''exec' "/home/faizan-javed/www angular/GlobaLeaks/backend/env/bin/python3" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys

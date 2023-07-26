@@ -15,19 +15,20 @@ export class TipOperationSetReminderComponent {
     request_motivation: any;
     model: NgbDateStruct;
     @Input() args: any;
- 
-
 
     confirm() {
         this.cancel()
 
         if (this.args.operation === "postpone" || this.args.operation === "set_reminder") {
             let date: number;
+            const { year, month, day } = this.args.reminder_date;
+            let dateData = new Date(year, month - 1, day);
+            const timestamp = dateData.getTime();
             if (this.args.operation === "postpone")
                 date = this.args.expiration_date.getTime();
             else{
                 // date = this.args.reminder_date.getTime();
-                date = new Date().getTime();
+                date = timestamp;
             }
 
             const req = {
@@ -66,6 +67,13 @@ export class TipOperationSetReminderComponent {
     }
    
     ngOnInit() {
+        const reminderDate = this.args.reminder_date;
+        const ngbReminderDate: NgbDateStruct = {
+            year: reminderDate.getUTCFullYear(),
+            month: reminderDate.getUTCMonth() + 1, // Add 1 since NgbDateStruct months are 1-based
+            day: reminderDate.getUTCDate()
+        };
+        this.args.reminder_date = ngbReminderDate;
     }
 
     constructor(

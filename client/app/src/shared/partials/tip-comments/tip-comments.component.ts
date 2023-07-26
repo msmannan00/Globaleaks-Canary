@@ -30,8 +30,6 @@ export class TipCommentsComponent {
 
   }
   ngOnInit(){
-    console.log('Console from tips');
-    console.log(this.tipService);
   }
   newComment() {
    

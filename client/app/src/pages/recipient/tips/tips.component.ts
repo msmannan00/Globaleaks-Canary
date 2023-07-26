@@ -8,7 +8,9 @@ import { PreferenceResolver } from 'app/src/shared/resolvers/preference.resolver
 import { RtipsResolver } from 'app/src/shared/resolvers/rtips.resolver';
 import { HttpService } from 'app/src/shared/services/http.service';
 import { UtilsService } from 'app/src/shared/services/utils.service';
-import {ActivatedRoute, Router} from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
+import { TranslateService } from '@ngx-translate/core';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 
 @Component({
@@ -23,8 +25,17 @@ export class TipsComponent implements OnInit {
   filteredTips: any[];
   currentPage: number = 1;
   itemsPerPage: number = 20;
-  dropdownSettings = { dynamicTitle: false, showCheckAll: false, showUncheckAll: false, enableSearch: true, displayProp: "label", idProp: "label", itemsShowLimit: 5 };
-
+  dropdownSettings: IDropdownSettings = {
+  // singleSelection: false,
+  idField: 'id',
+  textField: 'label',
+  // selectAllText: 'Select All',
+  // unSelectAllText: 'Unselect All',
+  itemsShowLimit: 5,
+  allowSearchFilter: true,
+  searchPlaceholderText: this.translateService.instant('Search')
+  };
+  // dropdownSettings = {dynamicTitle: false, showCheckAll: false, showUncheckAll: false, enableSearch: true, displayProp: "label", idProp: "label", itemsShowLimit: 5};
   reportDateFilter: any = null;
   updateDateFilter: any = null;
   expiryDateFilter: any = null;
@@ -39,14 +50,19 @@ export class TipsComponent implements OnInit {
   dropdownScoreData: any[] = [];
   sortKey: string = 'creation_date';
   sortReverse: boolean = true;
+  dropdownVisible = false;
   //NEED TO CONFIRM FOLLOWING
   index: number;
   date: { year: number; month: number };
-  submission_statuses: any;
+  // submission_statuses: any;
   reportDatePicker: boolean = false;
   lastUpdatePicker: boolean = false;
   expirationDatePicker: boolean = false;
   oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+  dropdownDefaultText: any = {
+    buttonDefaultText: '',
+    searchPlaceholder: this.translateService.instant('Search')
+  };
   selectAll() {
     this.selectedTips = [];
     this.filteredTips.forEach(tip => {
@@ -58,13 +74,18 @@ export class TipsComponent implements OnInit {
   }
 
   openGrantAccessModal() {
-    alert('Alert from outside');
+    // alert('Alert from outside');
 
     this.utils.runUserOperation("get_users_names", {}, true).subscribe(
       {
         next: response => {
+          console.log(response,"response");
+          
           const modalRef = this.modalService.open(GrantAccessComponent);
-          modalRef.componentInstance.users_names = response;
+          // modalRef.componentInstance.users_names = response;
+          modalRef.componentInstance.args = {
+            users_names: response
+          };
           modalRef.componentInstance.confirmFun = (receiver_id: any) => {
             const args = {
               rtips: this.selectedTips,
@@ -85,7 +106,10 @@ export class TipsComponent implements OnInit {
       {
         next: response => {
           const modalRef = this.modalService.open(RevokeAccessComponent);
-          modalRef.componentInstance.users_names = response;
+          // modalRef.componentInstance.users_names = response;
+          modalRef.componentInstance.args = {
+            users_names: response
+          };
           modalRef.componentInstance.confirmFun = (receiver_id: any) => {
             const args = {
               rtips: this.selectedTips,
@@ -140,22 +164,21 @@ export class TipsComponent implements OnInit {
     const uniqueKeys: string[] = [];
 
     for (let tip of this.rtips.dataModel.rtips) {
-      tip.context = this.utils.array_to_map(tip.context_id);
+      // tip.context = this.utils.array_to_map(tip.context_id);
+      tip.context = this.appDataService.contexts_by_id[tip.context_id];
       tip.context_name = tip.context.name;
       tip.questionnaire = this.rtips.dataModel.questionnaires[tip.questionnaire];
-      tip.submissionStatusStr = this.utils.getSubmissionStatusText(tip.status, tip.substatus, this.submission_statuses);
-      console.log(tip.submissionStatusStr);
+      tip.submissionStatusStr = this.utils.getSubmissionStatusText(tip.status, tip.substatus, this.appDataService.submission_statuses);
       if (!uniqueKeys.includes(tip.submissionStatusStr)) {
         uniqueKeys.push(tip.submissionStatusStr);
         this.dropdownStatusData.push({ id: this.dropdownStatusData.length + 1, label: tip.submissionStatusStr });
       }
-
       if (!uniqueKeys.includes(tip.context_name)) {
         uniqueKeys.push(tip.context_name);
         this.dropdownContextData.push({ id: this.dropdownContextData.length + 1, label: tip.context_name });
       }
 
-      const scoreLabel = this.utils.maskScore(tip.score);
+      const scoreLabel = this.maskScore(tip.score);
 
       if (!uniqueKeys.includes(scoreLabel)) {
         uniqueKeys.push(scoreLabel);
@@ -163,8 +186,37 @@ export class TipsComponent implements OnInit {
       }
     }
   }
-
-
+  maskScore(score:number){
+    if (score === 1) {
+      return this.translateService.instant('Low');
+    } else if (score === 2) {
+      return this.translateService.instant('Medium');
+    } else if (score === 3) {
+      return this.translateService.instant('High');
+    } else {
+      return this.translateService.instant('None');
+    }
+  }
+  
+  on_changed(dropdownStatusModel:any){
+    this.dropdownStatusModel = dropdownStatusModel
+    this.applyFilter();
+  }
+  checkFilter(filter: any) {
+    return filter.length > 0;
+  };
+  toggleDropdown() {
+    this.dropdownVisible = !this.dropdownVisible;
+  }
+  onSearchChange(value: string | undefined) {
+    if (typeof value !== 'undefined') {
+      this.currentPage = 1;
+      // Replace 'this.resources.rtips.rtips' with the appropriate array containing your tips data
+      this.filteredTips = this.rtips.dataModel.rtips
+        .filter((tip: any) => tip.update_date.includes(value)) // Change 'update_date' to the appropriate property for your filtering
+        .sort((a: any, b: any) => a.update_date.localeCompare(b.update_date)); // Change 'update_date' to the appropriate property for sorting
+    }
+  }
   //Logic for datepickers
 
 
@@ -175,7 +227,7 @@ export class TipsComponent implements OnInit {
       this.reportDateFilter = null;
       this.closeAllDatePickers();
     } else {
-      this.reportDateFilter = [this.utils.getTimestampFromDate(fromDate), this.utils.getTimestampFromDate(toDate)+this.oneDayInMilliseconds]
+      this.reportDateFilter = [this.utils.getTimestampFromDate(fromDate), this.utils.getTimestampFromDate(toDate) + this.oneDayInMilliseconds]
     }
     this.applyFilter();
   }
@@ -186,7 +238,7 @@ export class TipsComponent implements OnInit {
       this.updateDateFilter = null;
       this.closeAllDatePickers();
     } else {
-      this.updateDateFilter = [this.utils.getTimestampFromDate(fromDate), this.utils.getTimestampFromDate(toDate)+this.oneDayInMilliseconds]
+      this.updateDateFilter = [this.utils.getTimestampFromDate(fromDate), this.utils.getTimestampFromDate(toDate) + this.oneDayInMilliseconds]
     }
     this.applyFilter();
   }
@@ -197,21 +249,27 @@ export class TipsComponent implements OnInit {
       this.expiryDateFilter = null;
       this.closeAllDatePickers();
     } else {
-      this.expiryDateFilter = [this.utils.getTimestampFromDate(fromDate), this.utils.getTimestampFromDate(toDate)+this.oneDayInMilliseconds]
+      this.expiryDateFilter = [this.utils.getTimestampFromDate(fromDate), this.utils.getTimestampFromDate(toDate) + this.oneDayInMilliseconds]
     }
     this.applyFilter();
   }
   applyFilter() {
+    console.log(this.rtips.dataModel.rtips,"this.rtips.dataModel.rtipsssssssssssssss");
+    console.log(this.dropdownStatusModel,"this.dropdownStatusModel");
+    
     this.filteredTips = this.utils.getStaticFilter(this.rtips.dataModel.rtips, this.dropdownStatusModel, "submissionStatusStr");
     this.filteredTips = this.utils.getStaticFilter(this.filteredTips, this.dropdownContextModel, "context_name");
     this.filteredTips = this.utils.getStaticFilter(this.filteredTips, this.dropdownScoreModel, "score");
     this.filteredTips = this.utils.getDateFilter(this.filteredTips, this.reportDateFilter, this.updateDateFilter, this.expiryDateFilter);
   }
   ngOnInit() {
-    if(!this.rtips.dataModel){
+    if (!this.rtips.dataModel) {
       this.router.navigate(['/recipient/home']);
-    }else {
+    } else {
+      console.log(this.rtips.dataModel.rtips);
+      
       this.filteredTips = this.rtips.dataModel.rtips;
+      this.processTips()
     }
   }
 
@@ -239,8 +297,7 @@ export class TipsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public appDataService: AppDataService,
-    private renderer: Renderer2, private elementRef: ElementRef
-  ) {
-
-  }
+    private renderer: Renderer2, private elementRef: ElementRef,
+    private translateService: TranslateService
+  ) {}
 }
