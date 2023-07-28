@@ -261,8 +261,6 @@ export class TipComponent {
   }
   
   exportTip(tipId: any) {
-    console.log(tipId,"tipId");
-    
     this.utils.download("api/rtips/" + tipId + "/export")
   }
 

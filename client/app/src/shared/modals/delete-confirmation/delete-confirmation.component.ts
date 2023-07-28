@@ -14,16 +14,33 @@ import { Router } from '@angular/router';
 export class DeleteConfirmationComponent {
 
   @Input() args: any;
+  @Input() selected_tips: any;
+  @Input() operation: any;
 
   confirm() {
     this.cancel()
-    if (this.args.operation === "delete") {
-      return this.http.delete("api/rtips/" + this.args.tip.id)
-        .subscribe(() => {
-          this.router.navigate(['/recipient/reports']);
-      });
+    if (this.args) {
+      if (this.args.operation === "delete") {
+        return this.http.delete("api/rtips/" + this.args.tip.id)
+          .subscribe(() => {
+            this.router.navigate(['/recipient/reports']);
+          });
+      }
+      return;
     }
-    return;
+
+    if (["delete"].indexOf(this.operation) === -1) {
+      return;
+    }
+
+    return this.utils.runRecipientOperation(this.operation, { "rtips": this.selected_tips }, true).subscribe({
+      next: response => {
+        this.utils.reloadCurrentRoute()
+      },
+      error: (error: any) => {
+        alert(JSON.stringify(error))
+      }
+    });
   }
 
   reload() {

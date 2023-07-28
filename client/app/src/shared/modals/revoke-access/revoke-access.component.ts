@@ -25,6 +25,7 @@ export class RevokeAccessComponent {
   }
 
   confirm(di:any) {
+    this.cancel()
     if (this.confirmFun) {
       this.confirmFun(this.receiver_id);
     }

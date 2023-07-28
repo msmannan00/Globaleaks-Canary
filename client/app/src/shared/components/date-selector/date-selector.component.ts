@@ -59,7 +59,7 @@ export class DateRangeSelectorComponent {
     this.fromDate = null;
     this.toDate = null;
     this.emitDateSelection.emit({ fromDate: null, toDate: null });
-    alert('Date is reset');
+    // alert('Date is reset');
   }
 
   isRange(date: NgbDate) {

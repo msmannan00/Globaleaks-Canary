@@ -21,11 +21,9 @@ export class GrantAccessComponent {
   receivers_by_id:any={}
   ngOnInit() {
     this.receivers_by_id =this.appDataService.receivers_by_id
-    console.log(this.args,"args");
-    console.log(this.receivers_by_id,"receivers_by_id");
-    
   }
   confirm(di:any) {
+    this.cancel()
     if (this.confirmFun) {
       this.confirmFun(this.receiver_id);
     }
@@ -50,8 +48,5 @@ export class GrantAccessComponent {
     public appDataService: AppDataService,
     public router: Router
   ) {
-    console.log(appDataService,"appDataService");
-    console.log(tipsService,"tipsService");
-    console.log(utils,"utils");
   }
 }
