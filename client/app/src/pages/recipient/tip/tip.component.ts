@@ -14,6 +14,7 @@ import { TipOperationSetReminderComponent } from 'app/src/shared/modals/tip-oper
 import { DeleteConfirmationComponent } from 'app/src/shared/modals/delete-confirmation/delete-confirmation.component';
 import { HttpClient } from '@angular/common/http';
 import { TipOperationPostponeComponent } from 'app/src/shared/modals/tip-operation-postpone/tip-operation-postpone.component';
+import {CryptoService} from "../../../crypto.service";
 
 
 @Component({
@@ -77,26 +78,6 @@ export class TipComponent {
       }
     )
   }
-  // openGrantTipAccessModal() {
-
-  //   this.utils.runUserOperation("get_users_names", {}, true).subscribe(
-  //     {
-  //       next: response => {
-  //         const modalRef = this.modalService.open(GrantAccessComponent);
-  //         modalRef.componentInstance.users_names = response;
-  //         modalRef.componentInstance.confirmFun = (receiver_id: any) => {
-  //           const args = {
-  //             receiver: receiver_id
-  //           };
-
-  //         };
-  //       },
-  //       error: (error: any) => {
-  //         alert(JSON.stringify(error));
-  //       }
-  //     }
-  //   );
-  // }
 
   openGrantTipAccessModal(): void {
     this.utils.runUserOperation("get_users_names", {}, true).subscribe((response: any) => {
@@ -256,15 +237,27 @@ export class TipComponent {
       },
       opened: false,
       Utils: this.utils
-
     };
   }
   
   exportTip(tipId: any) {
-    this.utils.download("api/rtips/" + tipId + "/export")
+      const param=JSON.stringify({});
+      this.httpService.requestToken(param).subscribe
+      (
+          {
+              next: async token => {
+                  const ans = await this.cryptoService.proofOfWork(token.id);
+                  window.open("api/rtips/" + tipId + "/export" + "?token=" + token.id + ":" + ans);
+              },
+              error: (error: any) => {
+                  alert(JSON.stringify(error))
+              }
+          }
+      );
   }
 
   constructor(
+    private cryptoService: CryptoService,
     public utils: UtilsService,
     public preferencesService: PreferenceResolver,
     public modalService: NgbModal,

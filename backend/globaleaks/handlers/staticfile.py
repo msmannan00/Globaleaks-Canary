@@ -28,7 +28,7 @@ class StaticFileHandler(BaseHandler):
         directory_traversal_check(self.root, abspath)
 
         if filename == 'index.html' and not self.state.settings.disable_csp:
-            self.request.setHeader(b'Content-Security-Policy',
+           self.request.setHeader(b'Content-Security-Policy',
                                    b"base-uri 'none';"
                                    b"connect-src 'self';"
                                    b"default-src 'self'; "

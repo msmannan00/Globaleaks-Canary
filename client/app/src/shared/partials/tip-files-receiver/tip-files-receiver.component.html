@@ -1,4 +1,4 @@
-<div id="TipPageFilesInfoBox" class="card card-default" [attr.aria-expanded]="collapsed">
+<div *ngIf="tipService.tip" id="TipPageFilesInfoBox" class="card card-default" [attr.aria-expanded]="collapsed">
     <div class="card-header clearfix" (click)="collapsed = !collapsed; $event.stopPropagation();">
       <span>{{ 'Attachments' | translate }}</span>
       <span class="float-right">
@@ -7,7 +7,7 @@
       </span>
     </div>
     <div class="card-body" *ngIf="!collapsed">
-      <div *ngIf="tipService.tip.rfiles.length" class="table-responsive">
+      <div *ngIf="tipService.tip.rfiles && tipService.tip.rfiles.length" class="table-responsive">
         <table class="table table-striped" id="fileList">
           <thead>
             <tr>
@@ -19,8 +19,8 @@
               <th>{{ 'File size' | translate }}</th>
             </tr>
           </thead>
-          <!-- <tbody id="fileListBody">
-            <tr id="file-{{$index}}" *ngFor="let file of tipService.tip.rfiles" [ngClass]="{ 'view-supported': supportedViewTypes.includes(file.type) }">
+          <tbody id="fileListBody">
+            <tr id="file-{{index}}" *ngFor="let file of tipService.tip.rfiles as index" [ngClass]="{ 'view-supported': supportedViewTypes.includes(file.type) }">
               <td>{{ file.name }}</td>
               <td *ngIf="appDataService.public.node.viewer">
                 <button class="btn btn-sm btn-primary tip-action-views-file"
@@ -42,17 +42,17 @@
               <td>{{ file.type }}</td>
               <td>{{ file.size | byteFmt:2 }}</td>
             </tr>
-          </tbody> -->
+          </tbody>
         </table>
       </div>
-      <!-- <div *ngIf="Authentication.session.role === 'receiver' && !tipService.tip.context.enable_attachments" class="form-group">
+      <div *ngIf="tipService.tip.context && authenticationService.session.role === 'receiver' && !tipService.tip.context.enable_attachments" class="form-group">
         <label class="inline-checkbox">
           <input [(ngModel)]="tipService.tip.enable_attachments"
-                 (ngModelChange)="tipService.tip.operation('set', {'key': 'enable_attachments', 'value': tipService.tip.enable_attachments})" 
+                 (ngModelChange)="tipService.operation('api/rtips/'+tipService.tip.id,'set', {'key': 'enable_attachments', 'value': tipService.tip.enable_attachments})"
                  type="checkbox" />
           <span>{{ 'Allow the whistleblower to add attachments' | translate }}</span>
         </label>
-      </div> -->
+      </div>
     </div>
   </div>
   

@@ -46,9 +46,37 @@ a:hover,
 	color: #5797d5;
 }
 
-.fa-solid {
+th .fa-solid, .fa-chevron-up, .fa-chevron-down{
 	margin-left: 5px;
 	margin-right: 5px;
+}
+
+.status-container {
+	display: flex;
+	align-items: center;
+}
+
+.status-label {
+	margin-right: 10px;
+}
+
+.select-status, .select-substatus {
+	flex: 1;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+.select-size{
+	width:100px;
+}
+
+.status-container {
+	display: flex;
+	align-items: center;
+}
+
+#AssignSubmissionStatus {
+	justify-content: flex-end;
 }
 
 .onionaddress {

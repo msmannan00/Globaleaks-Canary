@@ -10,6 +10,7 @@ import sys
 import txtorcon
 import tempfile
 import shutil
+from os import mkdir, chmod
 from os.path import join
 from twisted.web.client import readBody
 from twisted.internet.task import react

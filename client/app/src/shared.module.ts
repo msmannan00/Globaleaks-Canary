@@ -73,6 +73,8 @@ import { TipOperationFileIdentityAccessRequestComponent } from './shared/modals/
 import { TipFilesReceiverComponent } from './shared/partials/tip-files-receiver/tip-files-receiver.component';
 import { TipOperationSetReminderComponent } from './shared/modals/tip-operation-set-reminder/tip-operation-set-reminder.component';
 import { TipOperationPostponeComponent } from './shared/modals/tip-operation-postpone/tip-operation-postpone.component';
+import { FileViewComponent } from './shared/modals/file-view/file-view.component';
+import { TipUploadWbfileComponent } from './shared/partials/tip-upload-wbfile/tip-upload-wbfile.component';
 
 @NgModule({
     imports: [
@@ -157,7 +159,9 @@ import { TipOperationPostponeComponent } from './shared/modals/tip-operation-pos
         TipOperationFileIdentityAccessRequestComponent,
         TipFilesReceiverComponent,
         TipOperationSetReminderComponent,
-        TipOperationPostponeComponent
+        TipOperationPostponeComponent,
+        FileViewComponent,
+        TipUploadWbfileComponent
     ],
     exports: [
         FooterComponent,
@@ -194,6 +198,7 @@ import { TipOperationPostponeComponent } from './shared/modals/tip-operation-pos
         DateRangeSelectorComponent,
         TipOperationFileIdentityAccessRequestComponent,
         TipFilesReceiverComponent,
-        TipOperationSetReminderComponent
+        TipOperationSetReminderComponent,
+        TipUploadWbfileComponent
     ]})
 export class SharedModule { }

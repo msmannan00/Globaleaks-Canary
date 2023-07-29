@@ -78,7 +78,7 @@ def main(reactor):
                 print("disconnected: {}".format(reason.value))
                 d.callback(None)
 
-        yield ep.connect(Factory.forProtocol(ToyWebRequestProtocol))  # returns "proto"
+        proto = yield ep.connect(Factory.forProtocol(ToyWebRequestProtocol))
         yield d
         print("All done, closing the circuit")
         yield circ.close()

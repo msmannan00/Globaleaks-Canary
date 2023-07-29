@@ -10,6 +10,7 @@ import {WbtipService} from "../../../services/wbtip.service";
 export class TipFilesWhistleblowerComponent implements OnInit{
   @Input() fileupload_url:any
   collapsed = false
+
   public toggleColapse(){
     this.collapsed = !this.collapsed
   }

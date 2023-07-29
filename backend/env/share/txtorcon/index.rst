@@ -6,16 +6,18 @@ txtorcon
 
 - **docs**:
    - v3 onion: http://fjblvrw2jrxnhtg67qpbzi45r7ofojaoo3orzykesly2j3c2m3htapid.onion/
+   - v2 onion: http://timaq4ygg2iegci7.onion
    - clearnet: https://txtorcon.readthedocs.org
 - **code**: https://github.com/meejah/txtorcon
-- ``torsocks git clone git://fjblvrw2jrxnhtg67qpbzi45r7ofojaoo3orzykesly2j3c2m3htapid.onion/txtorcon.git``
-
-- .. image:: https://github.com/meejah/txtorcon/actions/workflows/python3.yaml/badge.svg
-    :target: https://github.com/meejah/txtorcon/actions
-    :alt: github-actions
+- ``torsocks git clone git://timaq4ygg2iegci7.onion/txtorcon.git``
+- .. image:: https://travis-ci.org/meejah/txtorcon.png?branch=master
+      :target: https://www.travis-ci.org/meejah/txtorcon
 
   .. image:: https://coveralls.io/repos/meejah/txtorcon/badge.svg
       :target: https://coveralls.io/r/meejah/txtorcon
+
+  .. image:: https://codecov.io/gh/meejah/txtorcon/branch/master/graphs/badge.svg?branch=master
+      :target: https://codecov.io/github/meejah/txtorcon?branch=master
 
   .. image:: https://readthedocs.org/projects/txtorcon/badge/?version=stable
       :target: https://txtorcon.readthedocs.io/en/stable
@@ -24,6 +26,10 @@ txtorcon
   .. image:: https://readthedocs.org/projects/txtorcon/badge/?version=latest
       :target: https://txtorcon.readthedocs.io/en/latest
       :alt: ReadTheDocs
+
+  .. image:: https://landscape.io/github/meejah/txtorcon/master/landscape.svg?style=flat
+      :target: https://landscape.io/github/meejah/txtorcon/master
+      :alt: Code Health
 
 .. container:: first_time
 
@@ -43,8 +49,8 @@ txtorcon
     +---------------+---------+---------+
 
 Supported and tested platforms: Python 3.5+, PyPy 5.0.0+, Python 2.7+ (deprecated)
-using Twisted 15.5.0+, 16.3.0+, or 17.1.0+ (see `GitHub Actions
-<https://github.com/meejah/txtorcon/actions>`_).
+using Twisted 15.5.0+, 16.3.0+, or 17.1.0+ (see `travis
+<https://travis-ci.org/meejah/txtorcon>`_).
 
 **Asycnio inter-operation** is now possible, see :ref:`interop_asyncio`
 

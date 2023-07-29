@@ -9,6 +9,7 @@ import {HttpService} from "./http.service";
 // import {Transfer} from "@flowjs/ngx-flow";
 import {AppConfigService} from "../../services/app-config.service";
 import { TokenResource } from './token-resource.service';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +66,21 @@ download(url: string): void {
         }
       }
     }
+  }
+
+  view(url: string, mimetype: string, callback: (blob: Blob) => void): void {
+    const headers = new HttpHeaders({
+      'x-session': this.authenticationService.session.id
+    });
+
+    this.http.get(url, {
+      headers: headers,
+      responseType: 'blob'
+    }).subscribe(
+        (response: Blob) => {
+          callback(response);
+        }
+    );
   }
 
   getCardSize(num:number) {
@@ -341,6 +357,7 @@ download(url: string): void {
 
 
   constructor(
+    private http: HttpClient,
     public translateService: TranslateService, 
     public appConfigService: AppConfigService, 
     public httpService: HttpService, 

@@ -34,6 +34,11 @@ export class HttpService{
     return this.httpClient.delete("api/session",{'headers':headers })
   }
 
+  deleteDBFile(id:string): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.delete("api/wbfile/"+id,{'headers':headers })
+  }
+
   requestOperations(data:any, header?:any): Observable<any>{
     let headers = { 'content-type': 'application/json'}
     if(header){
@@ -189,6 +194,7 @@ export class HttpService{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.get("api/rtips/"+id, {'headers':headers })
   }
+
   rtipsRequestNewComment(param: any,id:any): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.post(`api/rtips/${id}/comments`, param,{'headers':headers })

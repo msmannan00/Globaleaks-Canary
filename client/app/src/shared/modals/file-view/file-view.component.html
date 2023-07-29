@@ -1,0 +1,20 @@
+<div class="modal-header">
+    <div class="modal-title">
+        <h2>{{args.file.name}}</h2>
+    </div>
+    <button type="button" class="close" (click)="cancel()">
+        <i class="fa-solid fa-times"></i>
+    </button>
+</div>
+<div class="modal-body">
+    <div *ngIf="!args.loaded" class="Loader"></div>
+    <iframe *ngIf="args.loaded" id="viewer" [src]="iframeUrl" title="fileviewer" frameborder="0" height="{{args.iframeHeight}}" sandbox="allow-downloads allow-scripts"></iframe>
+</div>
+<div class="modal-footer">
+    <a id="modal-action-cancel"
+       class="btn btn-outline-secondary"
+       (click)="cancel()">
+        <i class="fa-solid fa-times"></i>
+        <span>{{'Close'|translate}}</span>
+    </a>
+</div>

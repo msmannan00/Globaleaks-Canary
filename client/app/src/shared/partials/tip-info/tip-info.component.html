@@ -1,7 +1,7 @@
 <div id="TipInfoBox" class="card card-default">
 	<div class="card-header" *ngIf="authenticationService.session.role === 'receiver'">
 		<div class="row justify-content-between">
-			<div class="col-md-4">
+			<div class="col-md-2">
 				<div >
 					<span class="input-group">
 						<input id="assignLabelInput" type="text" class="form-control"
@@ -18,7 +18,7 @@
 			</div>
 			<div class="col-md-3">	
 				<div *ngIf="authenticationService.session.role === 'receiver'">
-					<!-- <src-tip-submission-status [tipService]="tipService"></src-tip-submission-status> -->
+					 <src-tip-submission-status [tipService]="tipService"></src-tip-submission-status>
 				</div>
 			</div>
 		</div>

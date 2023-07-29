@@ -1,15 +1,16 @@
 <span class="form-inline" (click)="utilsService.stopPropagation($event);">
-  <span id="AssignSubmissionStatus">
-    <span>{{'Status:'|translate}}</span>
-      <ng-select [clearable]="false" [ngModelOptions]="{standalone: true}" [(ngModel)]="tipService.tip.status" (ngModelChange)="updateSubmissionStatus()">
-        <ng-option *ngFor="let item of  appDataService.submission_statuses.slice(1)" [value]="item.label">
-          {{item.label}}
-        </ng-option>
-      </ng-select>
+  <span id="AssignSubmissionStatus" class="status-container">
+    <div class="status-label">{{ 'Status:' | translate }}</div>
+    <ng-select class="select-size" [clearable]="false" [ngModelOptions]="{standalone: true}" [(ngModel)]="tipService.tip.status" (ngModelChange)="updateSubmissionStatus()">
+      <ng-option *ngFor="let item of  appDataService.submission_statuses.slice(1)" [value]="item.label">
+        {{item.label}}
+      </ng-option>
+      <ng-option value=""></ng-option>
+    </ng-select>
 
-        <ng-select [clearable]="false" [ngModelOptions]="{standalone: true}" [(ngModel)]="tipService.tip.substatus" [hidden]="!appDataService.submission_statuses_by_id[tipService.tip.status].substatuses.length" (change)="updateSubmissionStatus()">
-          <ng-option *ngFor="let item of  appDataService.submission_statuses_by_id[tipService.tip.status].substatuses" [value]="item.id">{{item.label}}</ng-option>
-        </ng-select>
-
+    <ng-select class="select-size" *ngIf="tipService.tip.status && appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()]" [clearable]="false" [ngModelOptions]="{standalone: true}" [(ngModel)]="tipService.tip.substatus" [hidden]="!appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()].substatuses.length" (change)="updateSubmissionStatus()">
+      <ng-option *ngFor="let item of appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()].substatuses" [value]="item.id">{{item.label}}</ng-option>
+      <ng-option value=""></ng-option>
+    </ng-select>
   </span>
 </span>

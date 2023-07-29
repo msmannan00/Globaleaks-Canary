@@ -20,7 +20,6 @@ export class RecieverTipService {
     this.tip.questionnaire = this.appDataService.questionnaires_by_id[this.tip.context['questionnaire_id']];
 
     // this.tip.additional_questionnaire = this.appDataService.questionnaires_by_id[this.tip.context['additional_questionnaire_id']];
-
     this.tip.msg_receiver_selected = null;
     this.tip.msg_receivers_selector = [];
 
@@ -54,7 +53,14 @@ export class RecieverTipService {
     );
   }
 
-  newComment(content:string) {
+    operation(url:string, operation:string, args:any) {
+        return this.httpService.runOperation(url, operation, args, false).subscribe({
+            next: response => {
+            }
+        });
+   };
+
+    newComment(content:string) {
     const param=JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content});
     this.httpService.rtipsRequestNewComment(param,this.tip.id).subscribe
     (

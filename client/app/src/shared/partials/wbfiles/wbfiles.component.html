@@ -5,9 +5,9 @@
                 <span class="text-muted" *ngIf="ctx === 'download'">
                     <span>{{'Filename'|translate}}</span>:
                 </span>
-                <span class="filename">{{wbfile.name}}</span>
+                <span class="filename px-1">{{wbfile.name}}</span>
              </span>
-             <span class="float-right">
+             <span class="float-end">
                 <span>
                     <span class="download-button btn btn-sm btn-primary" (click)="downloadWBFile(wbfile)">
                         <i class="fa-solid fa-download"></i>
@@ -36,7 +36,7 @@
         </div>
         <div *ngIf="wbfile.description">
              <span>
-                 <span>{{'Description'|translate}}</span>:
+                 <span class="px-1">{{'Description'|translate}}</span>:
              </span>
              <span> {{wbfile.description}} </span>
         </div>
