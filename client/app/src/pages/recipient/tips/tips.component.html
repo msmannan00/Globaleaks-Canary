@@ -116,7 +116,7 @@
                   <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
                 </span>
               </span>
-              <span class="DropdownMultiselectContainer">
+              <span class="DropdownMultiselectContainer" *ngIf="rtips.dataModel.rtips.length > 0">
                 <i class="fa-solid fa-filter" [ngClass]="{ filterSelected: checkFilter(dropdownStatusModel) }" (click)="toggleDropdown()"></i>
                 <span [class.hidden]="!dropdownVisible">
                   <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="dropdownStatusData"

@@ -13,7 +13,7 @@ import {FlowDirective} from "@flowjs/ngx-flow";
 export class TipUploadWbfileComponent implements AfterViewInit{
   collapsed = false;
   @Input() tip: any = {};
-  file_upload_description: string;
+  file_upload_description: string="";
   fileinput: any = "saddsasasd";
 
   @ViewChild('uploader') uploaderElementRef!: ElementRef<HTMLInputElement>;
