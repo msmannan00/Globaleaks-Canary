@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, Renderer2, ViewChild} from '@angular/core';
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import {UtilsService} from "../../services/utils.service";
@@ -11,8 +11,24 @@ import {UtilsService} from "../../services/utils.service";
 export class FileViewComponent implements OnInit {
   @Input() args: any;
   iframeUrl: SafeResourceUrl;
+  @ViewChild('viewer') viewerFrame: ElementRef;
+  constructor(private sanitizer: DomSanitizer, private renderer: Renderer2, private elementRef: ElementRef, private utilsService:UtilsService, private modalService: NgbModal) {
+   
+  }
+  viewFile() {
+    this.utilsService.view("api/rfile/" + this.args.file.id, this.args.file.type, (blob: Blob) => {
+      this.args.loaded = true;
+      window.addEventListener("message", () => {
+        const data = {
+          tag: this.getFileTag(this.args.file.type),
+          blob: blob
+        };
+        const iframeElement = this.viewerFrame.nativeElement;
+        iframeElement.contentWindow.postMessage(data, "*");
 
-  constructor(private sanitizer: DomSanitizer, private renderer: Renderer2, private elementRef: ElementRef, private utilsService:UtilsService, private modalService: NgbModal) {}
+      }, { once: true });
+    });
+  }
   getFileTag(type:string) {
     if (type === "application/pdf") {
       return "pdf";
@@ -41,22 +57,25 @@ export class FileViewComponent implements OnInit {
 
   ngOnInit() {
     this.iframeUrl = this.sanitizer.bypassSecurityTrustResourceUrl('viewer/index.html');
-    let self = this;
-    this.args.iframeHeight =  window.innerHeight * 0.75;
-    this.args.tags = this.getFileTag(this.args.file.type);
-    this.utilsService.view("api/rfile/" + this.args.file.id, this.args.file.type, (blob: Blob) => {
-      this.args.loaded = true;
-      window.addEventListener("message", function() {
-        let data = {
-          tag: self.args.tag,
-          blob: blob
-        };
+    this.args.iframeHeight = window.innerHeight * 0.75;
+    // this.args.tags = this.getFileTag(this.args.file.type);
+    this.viewFile();
+    
+    // this.utilsService.view("api/rfile/" + this.args.file.id, this.args.file.type, (blob: Blob) => {
+    //   this.args.loaded = true;
+    //   window.addEventListener("message", function() {
+    //     // console.log(self.args.tag,"self.args.tag");
+        
+    //     let data = {
+    //       tag: this.args.tag,
+    //       blob: blob
+    //     };
 
-        const iframeElement = self.elementRef.nativeElement.querySelector("#viewer");
-        iframeElement.contentWindow.postMessage(data, "*");
+    //     const iframeElement = self.elementRef.nativeElement.querySelector("#viewer");
+    //     iframeElement.contentWindow.postMessage(data, "*");
 
-      }, {once: true});
-    });
+    //   }, {once: true});
+    // });
   }
 
   cancel() {
