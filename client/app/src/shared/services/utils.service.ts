@@ -193,8 +193,6 @@ download(url: string): void {
     }
 
     if(pageTitle.length>0){
-      console.log(pageTitle,"pageTitle");
-      
       pageTitle = this.translateService.instant(pageTitle);
     }
 

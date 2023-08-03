@@ -115,8 +115,6 @@ export class TippageComponent {
   };
 
   updateLabel(label:any) {
-    console.log("abc");
-    
   };
 
   updateSubmissionStatus() {

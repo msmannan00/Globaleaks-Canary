@@ -70,14 +70,8 @@ export class TipOperationPostponeComponent {
         }
 
         if (this.args && this.args.dateOptions) {
-            console.log(this.args.dateOptions.minDate,"this.args.dateOptions.minDate");
-            console.log(this.args.dateOptions.maxDate,"this.args.dateOptions.maxDate");
-            
             this.minDate = this.parseNgbDate(this.args.dateOptions.minDate);
             this.maxDate = this.parseNgbDate(this.args.dateOptions.maxDate);
-            console.log(this.minDate,"this.minDate");
-            console.log(this.maxDate,"this.maxDate");
-            
         }
     }
    private parseNgbDate(date: any): NgbDateStruct {

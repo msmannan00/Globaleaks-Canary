@@ -81,8 +81,6 @@ export class TipsComponent implements OnInit {
     this.utils.runUserOperation("get_users_names", {}, true).subscribe(
       {
         next: response => {
-          console.log(response, "response");
-
           const modalRef = this.modalService.open(GrantAccessComponent);
           // modalRef.componentInstance.users_names = response;
           modalRef.componentInstance.args = {
@@ -131,24 +129,24 @@ export class TipsComponent implements OnInit {
     modalRef.componentInstance.selected_tips = this.selectedTips;
     modalRef.componentInstance.operation = "delete";
   }
-  tipsExport() {
-    for (let i = 0; i < this.selectedTips.length; i++) {
-      (function (i) {
-        // this.tokenResourceService.getWithProofOfWork().then((token: any) => {
-        //   window.open(`api/rtips/${this.selectedTips[i]}/export?token=${token.id}:${token.answer}`)
-        // });
-        // this.tokenResource.get().subscribe((token: any) => {
-        //   window.open(`api/rtips/${this.selectedTips[i]}/export?token=${token.id}:${token.answer}`);
-        // });
-      })(i);
-    }
-  }
-  // async tipsExport() {
+  // tipsExport() {
   //   for (let i = 0; i < this.selectedTips.length; i++) {
-  //     const token: any = await this.tokenResourceService.getWithProofOfWork();
-  //     window.open(`api/rtips/${this.selectedTips[i]}/export?token=${token.id}:${token.answer}`);
+  //     (function (i) {
+  //       // this.tokenResourceService.getWithProofOfWork().then((token: any) => {
+  //       //   window.open(`api/rtips/${this.selectedTips[i]}/export?token=${token.id}:${token.answer}`)
+  //       // });
+  //       // this.tokenResource.get().subscribe((token: any) => {
+  //       //   window.open(`api/rtips/${this.selectedTips[i]}/export?token=${token.id}:${token.answer}`);
+  //       // });
+  //     })(i);
   //   }
   // }
+  async tipsExport() {
+    for (let i = 0; i < this.selectedTips.length; i++) {
+      const token: any = await this.tokenResourceService.getWithProofOfWork();
+      window.open(`api/rtips/${this.selectedTips[i]}/export?token=${token.id}:${token.answer}`);
+    }
+  }
 
 
   reload() {
@@ -322,5 +320,6 @@ export class TipsComponent implements OnInit {
     public appDataService: AppDataService,
     private renderer: Renderer2, private elementRef: ElementRef,
     private translateService: TranslateService,
+    private tokenResourceService:TokenResource
   ) { }
 }

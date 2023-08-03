@@ -75,7 +75,6 @@ export class RfileUploadButtonComponent implements AfterViewInit, OnDestroy, OnI
           self.confirmButton = true
         }
       });
-      console.log(self.uploads[self.fileinput])
       self.uploads[self.fileinput]=self.flowAdvanced
       this.notifyFileUpload.emit(self.uploads)
     });

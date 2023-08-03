@@ -16,6 +16,7 @@ export class TipMessageComponent {
 
   constructor( public authenticationService:AuthenticationService) {
   }
-
+  ngOnInit(): void {
+  }
   protected readonly JSON = JSON;
 }
