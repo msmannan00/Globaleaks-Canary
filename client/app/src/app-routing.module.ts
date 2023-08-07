@@ -72,6 +72,9 @@ const routes: Routes = [
       NodeResolver
     },
     loadChildren: () => AdminRoutingModule,
+    data:{
+      sidebar: 'admin-sidebar'
+    }
   },
   {
     path: 'password/reset',

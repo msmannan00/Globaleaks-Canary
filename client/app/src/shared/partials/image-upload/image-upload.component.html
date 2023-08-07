@@ -1,0 +1,20 @@
+<form action="">
+<div id="projectImageLoader" class="imageUpload" #flowAdvanced="flow"
+  [flowConfig]="{target: 'api/admin/files/' + imageUploadId}">
+  <label for="projectImageLoader" class="changePictureButton text-primary"
+    *ngIf="!imageUploadModel[imageUploadModelAttr]" [attr.uibTooltip]="'Edit' | translate" flowButton
+    [flow]="flowAdvanced.flowJs" [flowAttributes]="{ accept: 'image/*' }">
+    <i class="fa-solid fa-edit"></i>
+  </label>
+  <!-- <label [attr.id]="'projectImageLoader'" class="changePictureButton text-danger"
+         (click)="deletePicture()"
+         *ngIf="!imageSrcId && (imageUploadModel[imageUploadModelAttr] || imageUploadObj.files.length)"
+         [attr.uibTooltip]="'Delete' | translate">
+    <i class="fa-solid fa-times"></i>
+  </label> -->
+  <div class="imageUploadThumbnail">
+    <img *ngIf="imageUploadModel[imageUploadModelAttr]" [src]="'s/' + imageUploadId">
+  </div>
+  <div errors-upload></div>
+</div>
+</form>

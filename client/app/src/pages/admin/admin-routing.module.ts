@@ -1,13 +1,25 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {HomeComponent} from "./home/home.component";
+import { SettingsModule } from './settings/settings.module';
+// import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
     pathMatch: 'full',
+  },
+  {
+    path: 'settings',
+    loadChildren: () => SettingsModule,
+    pathMatch: 'full',
   }
+  // {
+  //   path: 'settings',
+  //   component: SettingsComponent,
+  //   pathMatch: 'full',
+  // }
 ];
 
 @NgModule({

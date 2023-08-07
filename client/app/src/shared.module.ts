@@ -75,6 +75,8 @@ import { TipOperationSetReminderComponent } from './shared/modals/tip-operation-
 import { TipOperationPostponeComponent } from './shared/modals/tip-operation-postpone/tip-operation-postpone.component';
 import { FileViewComponent } from './shared/modals/file-view/file-view.component';
 import { TipUploadWbfileComponent } from './shared/partials/tip-upload-wbfile/tip-upload-wbfile.component';
+import { ImageUploadDirective } from './shared/directive/image-upload.directive';
+import { ImageUploadComponent } from './shared/partials/image-upload/image-upload.component';
 
 @NgModule({
     imports: [
@@ -144,6 +146,8 @@ import { TipUploadWbfileComponent } from './shared/partials/tip-upload-wbfile/ti
         SubdomainvalidatorDirective,
         PasswordStrengthValidatorDirective,
         PasswordStrengthValidatorDirective,
+        ImageUploadDirective,
+        ImageUploadComponent,
         UserHomeComponent,
         UserWarningsComponent,
         GrantAccessComponent,
@@ -190,6 +194,8 @@ import { TipUploadWbfileComponent } from './shared/partials/tip-upload-wbfile/ti
         SubdomainvalidatorDirective,
         PasswordMeterComponent,
         PasswordStrengthValidatorDirective,
+        ImageUploadDirective,
+        ImageUploadComponent,
         UserHomeComponent,
         UserWarningsComponent,
         GrantAccessComponent,

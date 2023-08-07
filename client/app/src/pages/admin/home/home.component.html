@@ -1,1 +1,108 @@
-<h1>Admin Under Construction</h1>
+<!-- <h1>Admin Under Construction</h1> -->
+
+<div id="AdminHomepage">
+    <!-- <ngb-tabset>
+      <ngb-tab id="tab-home" [title]="'Home' | translate">
+        <ng-template ngbTabContent>
+          <div class="tab-content" data-ng-include="'views/partials/user_home.html'"></div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab id="tab-changelog">
+        <ng-template ngbTabTitle>
+          <i *ngIf="node.dataModel.update_available" class="fa-solid fa-exclamation-sign text-danger"></i>
+          <span>{{ 'Changelog' | translate }}</span>
+        </ng-template>
+        <ng-template ngbTabContent>
+          <div class="tab-content">
+            <label><span>{{ 'Software version:' | translate }}</span> {{ node.dataModel.version }}</label>
+            <div class="tos-text">{{ node.dataModel.changelog }}</div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab id="tab-license" [title]="'License' | translate">
+        <ng-template ngbTabContent>
+          <div class="tab-content">
+            <div class="tos-text">{{ node.dataModel.license }}</div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset> -->
+    <!-- <a href="#/admin/home" data-ng-class="{'active': location.path() === '/admin/home'}" ><i class="fa fa-home"></i> <span data-translate>Home</span></a>
+<a href="#/admin/settings" data-ng-class="{'active': location.path() === '/admin/settings'}" ><i class="fa-solid fa-sliders"></i> <span data-translate>Settings</span></a>
+<a href="#/admin/users" data-ng-class="{'active': location.path() === '/admin/users'}" span ><i class="fa fa-users"></i> <span data-translate>Users</span></a>
+<a href="#/admin/questionnaires" data-ng-class="{'active': location.path() === '/admin/questionnaires'}" ><i class="fa fa-circle-question"></i> <span data-translate>Questionnaires</span></a>
+<a href="#/admin/contexts" data-ng-class="{'active': location.path() === '/admin/contexts'}" ><i class="fa fa-inbox"></i> <span data-translate>Channels</span></a>
+<a href="#/admin/casemanagement" data-ng-class="{'active': location.path() === '/admin/casemanagement'}" ><i class="fa fa-bars-progress"></i> <span data-translate>Case management</span></a>
+<a href="#/admin/notifications" data-ng-class="{'active': location.path() === '/admin/notifications'}" ><i class="fa fa-envelope"></i> <span data-translate>Notifications</span></a>
+<a href="#/admin/network" data-ng-class="{'active': location.path() === '/admin/network'}" data-ng-if="node.dataModel.root_tenant || Authentication.session.properties.management_session" ><i class="fa fa-network-wired"></i> <span data-translate>Network</span></a>
+<a href="#/admin/sites" data-ng-class="{'active': location.path() === '/admin/sites'}" data-ng-if="node.dataModel.root_tenant" ><i class="fa-solid fa-sitemap"></i> <span data-translate>Sites</span></a>
+<a href="#/admin/auditlog" data-ng-class="{'active': location.path() === '/admin/auditlog'}" ><i class="fa fa-clipboard-list"></i> <span data-translate>Audit log</span></a> -->
+<!-- <a routerLink="/admin/home" [ngClass]="{ 'active': isActive('/admin/home') }">
+  <i class="fa fa-home"></i> <span data-translate>Home</span>
+</a>
+<a routerLink="/admin/settings" [ngClass]="{ 'active': isActive('/admin/settings') }">
+  <i class="fa-solid fa-sliders"></i> <span data-translate>Settings</span>
+</a>
+<a routerLink="/admin/users" [ngClass]="{ 'active': isActive('/admin/users') }">
+  <i class="fa fa-users"></i> <span data-translate>Users</span>
+</a>
+<a routerLink="/admin/questionnaires" [ngClass]="{ 'active': isActive('/admin/questionnaires') }">
+  <i class="fa fa-circle-question"></i> <span data-translate>Questionnaires</span>
+</a>
+<a routerLink="/admin/contexts" [ngClass]="{ 'active': isActive('/admin/contexts') }">
+  <i class="fa fa-inbox"></i> <span data-translate>Channels</span>
+</a>
+<a routerLink="/admin/casemanagement" [ngClass]="{ 'active': isActive('/admin/casemanagement') }">
+  <i class="fa fa-bars-progress"></i> <span data-translate>Case management</span>
+</a>
+<a routerLink="/admin/notifications" [ngClass]="{ 'active': isActive('/admin/notifications') }">
+  <i class="fa fa-envelope"></i> <span data-translate>Notifications</span>
+</a>
+<a routerLink="/admin/network" [ngClass]="{ 'active': isActive('/admin/network') }" *ngIf="node.dataModel.root_tenant || Authentication.session.properties.management_session">
+  <i class="fa fa-network-wired"></i> <span data-translate>Network</span>
+</a>
+<a routerLink="/admin/sites" [ngClass]="{ 'active': isActive('/admin/sites') }" *ngIf="node.dataModel.root_tenant">
+  <i class="fa-solid fa-sitemap"></i> <span data-translate>Sites</span>
+</a>
+<a routerLink="/admin/auditlog" [ngClass]="{ 'active': isActive('/admin/auditlog') }">
+  <i class="fa fa-clipboard-list"></i> <span data-translate>Audit log</span>
+</a> -->
+
+    <div id="AdminHomepage">
+      <!-- <nav #tabsNav="ngbNav" ngbNav> -->
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav nav-tabs">
+          <li [ngbNavItem]="0">
+            <button ngbNavLink>{{ 'Home' | translate }}</button>
+            <ng-template ngbNavContent>
+              <div class="tab-content">
+                <src-user-home></src-user-home>
+              </div>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="1">
+            <button ngbNavLink>
+              <i *ngIf="node.dataModel.update_available" class="fa-solid fa-exclamation-sign text-danger"></i>
+              <span>{{ 'Changelog' | translate }}</span>
+            </button>
+            <ng-template ngbNavContent>
+              <div class="tab-content">
+                <label><span>{{ 'Software version:' | translate }}</span> {{ node.dataModel.version }}</label>
+                <div class="tos-text">{{ node.dataModel.changelog }}</div>
+              </div>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="2">
+            <button ngbNavLink>{{ 'License' | translate }}</button>
+            <ng-template ngbNavContent>
+              <div class="tab-content">
+                <div class="tos-text">{{ node.dataModel.license }}</div>
+              </div>
+            </ng-template>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+      <!-- </nav> -->
+    </div>
+    
+  </div>
+  

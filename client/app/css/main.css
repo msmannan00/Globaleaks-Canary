@@ -524,12 +524,12 @@ textarea.form-control {
 	resize: vertical;
 }
 
-input[type="file"] {
+/* input[type="file"] {
 	position: absolute;
 	visibility: hidden;
 	width: 1px;
 	height: 1px;
-}
+} */
 
 .fa-none::before {
 	content: "\2122";
