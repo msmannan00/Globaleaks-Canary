@@ -10,7 +10,7 @@
                 [data-image-upload-id]="'logo'"></div> -->
         </div>
 
-        <!-- <div class="form-group">
+        <div class="form-group">
         <label>{{ 'Project name' | translate }}</label>
         <input class="form-control" [(ngModel)]="node.dataModel.name" type="text" />
       </div>
@@ -46,9 +46,9 @@
       <div class="form-group" *ngIf="node.authenticationService.session.role === 'admin'">
         <label>{{ 'Whistleblowing button' | translate }}</label>
         <input class="form-control" [(ngModel)]="node.dataModel.whistleblowing_button" type="text" />
-      </div> -->
+      </div>
 
-        <!-- <div class="form-group" *ngIf="public.node.mode === 'default'">
+        <div class="form-group" *ngIf="node.dataModel.mode === 'default'">
         <div class="form-group">
           <label>{{ 'Disclaimer' | translate }}</label>
           <div>
@@ -62,15 +62,15 @@
             <textarea class="form-control" [(ngModel)]="node.dataModel.footer"></textarea>
           </div>
         </div>
-      </div> -->
+      </div>
 
-        <!-- <div class="form-group">
+        <div class="form-group">
         <button class="btn btn-primary"
                 [disabled]="contentForm.invalid"
                 (click)="updateNode()" type="submit">
           <i class="fa-solid fa-check"></i>
           <span>{{ 'Save' | translate }}</span>
         </button>
-      </div> -->
+      </div>
     </div>
 </div>

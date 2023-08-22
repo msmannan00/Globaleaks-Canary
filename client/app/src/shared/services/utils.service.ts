@@ -1,22 +1,27 @@
 import { Inject, Injectable } from '@angular/core';
-import {AuthenticationService} from "../../services/authentication.service";
-import {AppDataService} from "../../app-data.service";
-import {TranslateService} from "@ngx-translate/core";
-import {NavigationExtras, Router} from "@angular/router";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {RequestSupportComponent} from "../modals/request-support/request-support.component";
-import {HttpService} from "./http.service";
+import { AuthenticationService } from "../../services/authentication.service";
+import { AppDataService } from "../../app-data.service";
+import { TranslateService } from "@ngx-translate/core";
+import { NavigationExtras, Router } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { RequestSupportComponent } from "../modals/request-support/request-support.component";
+import { HttpService } from "./http.service";
 // import {Transfer} from "@flowjs/ngx-flow";
-import {AppConfigService} from "../../services/app-config.service";
+import { AppConfigService } from "../../services/app-config.service";
 import { TokenResource } from './token-resource.service';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable, map, catchError, throwError, Subject } from 'rxjs';
+import { ConfirmationWithPasswordComponent } from '../modals/confirmation-with-password/confirmation-with-password.component';
+import { ConfirmationWith2faComponent } from '../modals/confirmation-with2fa/confirmation-with2fa.component';
+import { PreferenceResolver } from '../resolvers/preference.resolver';
+import { DeleteConfirmationComponent } from '../modals/delete-confirmation/delete-confirmation.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
 
-  str2Uint8Array(str:string){
+  str2Uint8Array(str: string) {
     let result = new Uint8Array(str.length);
     for (let i = 0; i < str.length; i++) {
       result[i] = str.charCodeAt(i);
@@ -24,33 +29,33 @@ export class UtilsService {
     return result;
   }
 
-role_l10n(role:string) {
-  var ret = "";
+  role_l10n(role: string) {
+    var ret = "";
 
-  if (role) {
-    ret = role === "receiver" ? "recipient" : role;
-    ret = ret.charAt(0).toUpperCase() + ret.substr(1)
+    if (role) {
+      ret = role === "receiver" ? "recipient" : role;
+      ret = ret.charAt(0).toUpperCase() + ret.substr(1)
+    }
+
+    return ret;
   }
 
-  return ret;
-}
+  download(url: string): void {
+    // this.tokenResourceService.getWithProofOfWork().then((token) => {
+    //   this.windowRef.nativeWindow.open(
+    //     url + '?token=' + token.id + ':' + token.answer
+    //   );
+    // });
+    this.tokenResourceService.getWithProofOfWork().then((token: any) => {
+      window.open(`${url}?token=${token.id}:${token.answer}`);
+    });
+  }
 
-download(url: string): void {
-  // this.tokenResourceService.getWithProofOfWork().then((token) => {
-  //   this.windowRef.nativeWindow.open(
-  //     url + '?token=' + token.id + ':' + token.answer
-  //   );
-  // });
-  this.tokenResourceService.getWithProofOfWork().then((token: any) => {
-    window.open(`${url}?token=${token.id}:${token.answer}`);
-  });
-}
+  isUploading(uploads?: any) {
 
-  isUploading(uploads?:any){
-
-    if(uploads){
+    if (uploads) {
       for (let key in uploads) {
-        if(uploads[key].flowFile && uploads[key].flowFile.isUploading()){
+        if (uploads[key].flowFile && uploads[key].flowFile.isUploading()) {
           return true;
         }
       }
@@ -58,8 +63,8 @@ download(url: string): void {
     return false;
   }
 
-  resumeFileUploads(uploads: any){
-    if(uploads){
+  resumeFileUploads(uploads: any) {
+    if (uploads) {
       for (let key in uploads) {
         if (uploads[key] && uploads[key].flowJs) {
           uploads[key].flowJs.upload()
@@ -77,13 +82,13 @@ download(url: string): void {
       headers: headers,
       responseType: 'blob'
     }).subscribe(
-        (response: Blob) => {
-          callback(response);
-        }
+      (response: Blob) => {
+        callback(response);
+      }
     );
   }
 
-  getCardSize(num:number) {
+  getCardSize(num: number) {
     if (num < 2) {
       return "col-md-12";
     } else if (num === 2) {
@@ -111,11 +116,11 @@ download(url: string): void {
 
   reloadCurrentRoute() {
     const currentUrl = this.router.url;
-    this.router.navigateByUrl('routing', {skipLocationChange: true, replaceUrl: true}).then(() => {
+    this.router.navigateByUrl('routing', { skipLocationChange: true, replaceUrl: true }).then(() => {
       this.router.navigate([currentUrl]);
     });
   }
-  showWBLoginBox(){
+  showWBLoginBox() {
     return location.pathname === "/submission";
   }
   showUserStatusBox() {
@@ -130,28 +135,20 @@ download(url: string): void {
     return ["/", "/submission"].indexOf(this.router.url) !== -1;
   }
 
-  stopPropagation(event:Event){
+  stopPropagation(event: Event) {
     event.stopPropagation()
   }
 
-  openConfirmableModalDialog(template:any, arg:any, scope?:any){
-    /*scope = !scope ? $rootScope : scope;
+   openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
+    scope = !scope ? this : scope;
 
-    var modal = $uibModal.open({
-      templateUrl: template,
-      controller: "ConfirmableModalCtrl",
-      scope: scope,
-      resolve: {
-        arg: function () {
-          return arg;
-        },
-        confirmFun: null,
-        cancelFun: null
-      }
-    });
-
-    return modal.result;*/
-
+    const modalRef = this.modalService.open(DeleteConfirmationComponent);
+    modalRef.componentInstance.arg = arg;
+    modalRef.componentInstance.scope = scope;
+    modalRef.componentInstance.confirmFunction = () => {
+        return this.runAdminOperation("reset_submissions",{},true);
+    };
+    return modalRef.result;
   }
 
   openSupportModal() {
@@ -162,7 +159,7 @@ download(url: string): void {
     }
   }
 
-  routeCheck(){
+  routeCheck() {
     let path = location.pathname;
     if (path !== "/") {
       this.appDataService.page = ""
@@ -179,7 +176,7 @@ download(url: string): void {
     }
   }
 
-  setTitle(){
+  setTitle() {
     if (!this.appDataService.public) {
       return;
     }
@@ -192,14 +189,14 @@ download(url: string): void {
       pageTitle = "Globaleaks";
     }
 
-    if(pageTitle.length>0){
+    if (pageTitle.length > 0) {
       pageTitle = this.translateService.instant(pageTitle);
     }
 
     this.appDataService.projectTitle = projectTitle !== "GLOBALEAKS" ? projectTitle : "";
     this.appDataService.pageTitle = pageTitle !== projectTitle ? pageTitle : "";
 
-    if (pageTitle && pageTitle.length>0) {
+    if (pageTitle && pageTitle.length > 0) {
       pageTitle = this.translateService.instant("wow");
       window.document.title = projectTitle + " - " + pageTitle;
     } else {
@@ -212,26 +209,26 @@ download(url: string): void {
     }
   }
   array_to_map(receivers: any) {
-    let ret:any = {};
+    let ret: any = {};
 
-    receivers.forEach(function(element:any){
-      ret[element.id]=element
+    receivers.forEach(function (element: any) {
+      ret[element.id] = element
     });
     return ret;
   }
 
-  copyToClipboard(data:string) {
+  copyToClipboard(data: string) {
     if (window.navigator.clipboard && window.isSecureContext) {
       window.navigator.clipboard.writeText(data);
     }
   }
 
-  getSubmissionStatusText(status:any, substatus:any , submission_statuses:any) {
+  getSubmissionStatusText(status: any, substatus: any, submission_statuses: any) {
     let text;
     for (let i = 0; i < submission_statuses.length; i++) {
       if (submission_statuses[i].id === status) {
         text = submission_statuses[i].label;
-       
+
 
         let substatuses = submission_statuses[i].substatuses;
         for (let j = 0; j < substatuses.length; j++) {
@@ -251,7 +248,7 @@ download(url: string): void {
     return date.getTime() === 32503680000000;
   }
 
-  deleteFromList(list:any, elem:any) {
+  deleteFromList(list: any, elem: any) {
     let idx = list.indexOf(elem);
     if (idx !== -1) {
       list.splice(idx, 1);
@@ -270,7 +267,7 @@ download(url: string): void {
   }
 
   submitSupportRequest(arg: any) {
-    const param=JSON.stringify({"mail_address": arg.mail_address, "text": arg.text, "url": location.pathname});
+    const param = JSON.stringify({ "mail_address": arg.mail_address, "text": arg.text, "url": location.pathname });
     this.httpService.requestSuppor(param).subscribe();
   }
 
@@ -283,7 +280,7 @@ download(url: string): void {
   go(path: string): void {
     this.router.navigateByUrl(path);
   }
-  maskScore(score:number){
+  maskScore(score: number) {
     if (score === 1) {
       return this.translateService.instant('Low');
     } else if (score === 2) {
@@ -343,7 +340,7 @@ download(url: string): void {
 
     return filteredTips;
   }
-  print(){
+  print() {
     window.print();
   }
   getPostponeDate(ttl: any): Date {
@@ -352,19 +349,111 @@ download(url: string): void {
     date.setUTCHours(0, 0, 0, 0);
     return date;
   }
+  update(node: any) {
+    return this.httpService.requestUpdateAdminNodeResource(node)
+  }
+  AdminL10NResource(lang: any) {
+    return this.httpService.requestAdminL10NResource(lang)
+  }
+  updateAdminL10NResource(data: any, lang: any) {
+    return this.httpService.requestUpdateAdminL10NResource(data, lang)
+  }
+  DefaultL10NResource(lang: any) {
+    return this.httpService.requestDefaultL10NResource(lang)
+  }
 
+  runAdminOperation(operation: any, args: any, refresh: any) {
+    return this.runOperation("api/admin/config", operation, args, refresh);
+  }
+  deleteDialog(){
+    return this.openConfirmableModalDialog("","")
+  }
+  runOperation(api: string, operation: string, args?: any, refresh?: boolean): Promise<void> {
+    const deferred = new Subject<void>();
 
+    const requireConfirmation = [
+      "enable_encryption",
+      "disable_2fa",
+      "get_recovery_key",
+      "toggle_escrow",
+      "toggle_user_escrow",
+      "reset_submissions"
+    ];
+
+    if (!args) {
+      args = {};
+    }
+
+    if (!refresh) {
+      refresh = false;
+    }
+
+    if (requireConfirmation.indexOf(operation) !== -1) {
+      const confirm = (secret: string) => {
+        const headers = new HttpHeaders({ "X-Confirmation": secret });
+        return this.http.put(api, {
+          "operation": operation,
+          "args": args
+        }, { headers }).toPromise().then(
+          (response: any) => {
+            if (refresh) {
+              this.reloadCurrentRoute()
+            }
+            deferred.next(response);
+          },
+          () => { this.getConfirmation(confirm); }
+        );
+      };
+
+      this.getConfirmation(confirm);
+    } else {
+      this.http.put(api, {
+        "operation": operation,
+        "args": args
+      }).toPromise().then(
+        (response: any) => {
+          if (refresh) {
+            this.reloadCurrentRoute()
+          }
+          deferred.next(response);
+        },
+        () => { }
+      );
+    }
+
+    return deferred.toPromise();
+  }
+  getConfirmation(confirmFun: (secret: string) => Promise<void>): void {
+    var modalRef = this.modalService.open(ConfirmationWithPasswordComponent, {});
+    if (this.preferenceResolver.dataModel.two_factor) {
+      modalRef = this.modalService.open(ConfirmationWith2faComponent, {});
+    }
+
+    modalRef.componentInstance.confirmFunction = (secret: string) => {
+      confirmFun(secret).then(
+        () => { },
+        () => { this.getConfirmation(confirmFun); }
+      );
+    };
+  }
+  getFiles(): Observable<any[]> {
+    return this.http.get<any[]>("api/admin/files");
+  }
+  deleteFile(url: string): Observable<void> {
+    return this.http.delete<void>(url);
+  }
   constructor(
     private http: HttpClient,
-    public translateService: TranslateService, 
-    public appConfigService: AppConfigService, 
-    public httpService: HttpService, 
-    public modalService: NgbModal, 
-    public authenticationService:AuthenticationService, 
-    public appDataService:AppDataService, 
-    public tokenResourceService:TokenResource,
-    // @Inject(DOCUMENT) private document: Document,
+    public translateService: TranslateService,
+    public appConfigService: AppConfigService,
+    public httpService: HttpService,
+    public modalService: NgbModal,
+    public authenticationService: AuthenticationService,
+    public appDataService: AppDataService,
+    public preferenceResolver: PreferenceResolver,
+    public tokenResourceService: TokenResource,
     private router: Router) {
+
   }
 
 }

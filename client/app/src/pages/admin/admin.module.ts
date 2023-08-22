@@ -6,6 +6,7 @@ import { SharedModule } from 'app/src/shared.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { UsersComponent } from './users/users.component';
 // import { SettingsComponent } from './settings/settings.component';
 
 
@@ -14,7 +15,8 @@ import { FormsModule } from '@angular/forms';
   declarations: [
     HomeComponent,
     // SettingsComponent,
-    SidebarComponent
+    SidebarComponent,
+    UsersComponent
   ],
   imports: [
     CommonModule,SharedModule,NgbNavModule,NgbModule,RouterModule,FormsModule

@@ -77,6 +77,8 @@ import { FileViewComponent } from './shared/modals/file-view/file-view.component
 import { TipUploadWbfileComponent } from './shared/partials/tip-upload-wbfile/tip-upload-wbfile.component';
 import { ImageUploadDirective } from './shared/directive/image-upload.directive';
 import { ImageUploadComponent } from './shared/partials/image-upload/image-upload.component';
+import { EnableEncryptionComponent } from './shared/modals/enable-encryption/enable-encryption.component';
+import { AdminFileComponent } from './shared/partials/admin-file/admin-file.component';
 
 @NgModule({
     imports: [
@@ -165,7 +167,9 @@ import { ImageUploadComponent } from './shared/partials/image-upload/image-uploa
         TipOperationSetReminderComponent,
         TipOperationPostponeComponent,
         FileViewComponent,
-        TipUploadWbfileComponent
+        TipUploadWbfileComponent,
+        EnableEncryptionComponent,
+        AdminFileComponent
     ],
     exports: [
         FooterComponent,
@@ -205,6 +209,8 @@ import { ImageUploadComponent } from './shared/partials/image-upload/image-uploa
         TipOperationFileIdentityAccessRequestComponent,
         TipFilesReceiverComponent,
         TipOperationSetReminderComponent,
-        TipUploadWbfileComponent
+        TipUploadWbfileComponent,
+        EnableEncryptionComponent,
+        AdminFileComponent
     ]})
 export class SharedModule { }

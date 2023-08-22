@@ -16,9 +16,11 @@ export class DeleteConfirmationComponent {
   @Input() args: any;
   @Input() selected_tips: any;
   @Input() operation: any;
+  confirmFunction: () => void;
 
   confirm() {
     this.cancel()
+    this.confirmFunction()
     if (this.args) {
       if (this.args.operation === "delete") {
         return this.http.delete("api/rtips/" + this.args.tip.id)
@@ -28,19 +30,25 @@ export class DeleteConfirmationComponent {
       }
       return;
     }
-
-    if (["delete"].indexOf(this.operation) === -1) {
-      return;
+    if (this.operation) {
+      if (["delete"].indexOf(this.operation) === -1) {
+        return;
+      }
     }
 
-    return this.utils.runRecipientOperation(this.operation, { "rtips": this.selected_tips }, true).subscribe({
-      next: response => {
-        this.utils.reloadCurrentRoute()
-      },
-      error: (error: any) => {
-        alert(JSON.stringify(error))
-      }
-    });
+    if (this.selected_tips) {
+      return this.utils.runRecipientOperation(this.operation, { "rtips": this.selected_tips }, true).subscribe({
+        next: response => {
+          this.utils.reloadCurrentRoute()
+        },
+        error: (error: any) => {
+          alert(JSON.stringify(error))
+        }
+      });
+    } else {
+      return null
+    }
+
   }
 
   reload() {

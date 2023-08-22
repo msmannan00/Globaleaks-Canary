@@ -111,7 +111,18 @@ export class HttpService{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.get("api/admin/node", {'headers':headers })
   }
-
+  requestUsersResource(param: any): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.get("api/admin/users", {'headers':headers })
+  }
+  requestTenantsResource(param: any): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.get("api/admin/tenants", {'headers':headers })
+  }
+  requestQuestionnairesResource(param: any): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.get("api/admin/questionnaires", {'headers':headers })
+  }
   requestTipResource(param: any): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.get("api/admin/auditlog/tips", {'headers':headers })
@@ -171,7 +182,22 @@ export class HttpService{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.get("api/admin/node", {'headers':headers, params: param })
   }
-
+  requestUpdateAdminNodeResource(data: any): Observable<any>{
+    // const headers = { 'content-type': 'application/json'}
+    return this.httpClient.put("api/admin/node", data)
+  }
+  requestAdminL10NResource(lang: any): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.get("api/admin/l10n/"+lang, {'headers':headers},)
+  }
+  requestUpdateAdminL10NResource(data:any,lang: any): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.put("api/admin/l10n/"+lang, data,)
+  }
+  requestDefaultL10NResource(lang: any): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.get("/data/l10n/"+lang+".json", {'headers':headers},)
+  }
   requestAdminAuditLogResource(param: any): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.get("api/admin/auditlog", {'headers':headers, params: param })

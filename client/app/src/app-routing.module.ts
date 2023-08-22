@@ -15,6 +15,8 @@ import {WizardRoutingModule} from "./pages/wizard/wizard-routing.module";
 import { NodeResolver } from './shared/resolvers/node.resolver';
 import { RtipsResolver } from './shared/resolvers/rtips.resolver';
 import { TipComponent } from './pages/recipient/tip/tip.component';
+import { UsersResolver } from './shared/resolvers/users.resolver';
+import { QuestionnairesResolver } from './shared/resolvers/questionnaires.resolver';
 
 
 const routes: Routes = [
@@ -69,7 +71,7 @@ const routes: Routes = [
     path: 'admin',
     canActivate: [SessionGuard],
     resolve: {
-      NodeResolver
+      NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver
     },
     loadChildren: () => AdminRoutingModule,
     data:{

@@ -1,5 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component, Input } from '@angular/core';
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'src-confirmation-with-password',
@@ -7,13 +7,12 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
   styleUrls: ['./confirmation-with-password.component.css']
 })
 export class ConfirmationWithPasswordComponent {
-
-  secretModel:any;
-  constructor(public activeModal: NgbActiveModal) {
-  }
-
-  confirm(){
-    this.activeModal.close(this.secretModel);
+  confirmFunction: (secret: string) => void;
+  secretModel: any;
+  constructor(public activeModal: NgbActiveModal) { }
+  confirm() {
+    this.confirmFunction(this.secretModel)
+    return this.activeModal.close(this.secretModel);
   }
 
 }

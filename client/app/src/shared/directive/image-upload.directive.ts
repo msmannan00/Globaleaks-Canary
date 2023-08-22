@@ -30,8 +30,6 @@ export class ImageUploadDirective {
     dynamicComponentInstance.imageUploadModelAttr = this.imageUploadModelAttr;
     dynamicComponentInstance.imageUploadId = this.imageUploadId;
     // dynamicComponentInstance.someEvent.subscribe(event => { /* handle event */ });
-    console.log(this.imageUploadModel,"imageUploadModel");
-    console.log(this.imageUploadModelAttr,"imageUploadModelAttr");
-    console.log(this.imageUploadId,"imageUploadId");
+   
   }
 }

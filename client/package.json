@@ -68,6 +68,7 @@
 		"@angular-devkit/build-angular": "^15.2.2",
 		"@angular/cli": "~15.2.2",
 		"@angular/compiler-cli": "^15.2.0",
+		"@babel/highlight": "^7.22.10",
 		"@types/flowjs__flow.js": "^2.13.0",
 		"@types/jasmine": "~4.3.0",
 		"@types/lodash": "^4.14.194",
