@@ -5,6 +5,7 @@ import { SettingsModule } from './settings/settings.module';
 import { UsersComponent } from './users/users.component';
 import { TenantsResolver } from 'app/src/shared/resolvers/tenants.resolver';
 import {AuditlogModule} from "./auditlog/auditlog.module";
+import {UsersModule} from "./users/users.module";
 // import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
