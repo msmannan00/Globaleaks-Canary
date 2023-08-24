@@ -17,6 +17,9 @@ import { RtipsResolver } from './shared/resolvers/rtips.resolver';
 import { TipComponent } from './pages/recipient/tip/tip.component';
 import { UsersResolver } from './shared/resolvers/users.resolver';
 import { QuestionnairesResolver } from './shared/resolvers/questionnaires.resolver';
+import {AuditlogResolver} from "./shared/resolvers/auditlog.resolver";
+import {JobResolver} from "./shared/resolvers/job.resolver";
+import {TipsResolver} from "./shared/resolvers/tips.resolver";
 
 
 const routes: Routes = [
@@ -71,7 +74,7 @@ const routes: Routes = [
     path: 'admin',
     canActivate: [SessionGuard],
     resolve: {
-      NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver
+      NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver, AuditlogResolver, JobResolver, TipsResolver
     },
     loadChildren: () => AdminRoutingModule,
     data:{

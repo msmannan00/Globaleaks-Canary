@@ -3,6 +3,8 @@ import {UtilsService} from "../../services/utils.service";
 import {WbtipService} from "../../../services/wbtip.service";
 import {AuthenticationService} from "../../../services/authentication.service";
 import { RecieverTipService } from 'app/src/services/recievertip.service';
+import {auditlogResolverModel} from "../../../models/resolvers/auditlogResolverModel";
+import {NodeResolver} from "../../resolvers/node.resolver";
 
 @Component({
   selector: 'src-tip-messages',

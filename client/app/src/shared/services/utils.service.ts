@@ -343,6 +343,30 @@ export class UtilsService {
   print() {
     window.print();
   }
+
+  saveAs(filename: string, url: string): void {
+
+    const headers = new HttpHeaders({
+      'X-Session': this.authenticationService.session.id
+    });
+
+    this.http.get(url, { responseType: 'blob', headers: headers }).subscribe(
+        response => {
+          const blob = new Blob([response], { type: 'application/octet-stream' });
+          const blobUrl = URL.createObjectURL(blob);
+
+          const a = document.createElement('a');
+          a.href = blobUrl;
+          a.download = filename;
+          a.click();
+
+          setTimeout(() => {
+            URL.revokeObjectURL(blobUrl);
+          }, 1000);
+        }
+    );
+  }
+
   getPostponeDate(ttl: any): Date {
     const date = new Date();
     date.setDate(date.getDate() + ttl + 1);

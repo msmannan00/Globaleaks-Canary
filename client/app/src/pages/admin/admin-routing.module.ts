@@ -4,6 +4,7 @@ import {HomeComponent} from "./home/home.component";
 import { SettingsModule } from './settings/settings.module';
 import { UsersComponent } from './users/users.component';
 import { TenantsResolver } from 'app/src/shared/resolvers/tenants.resolver';
+import {AuditlogModule} from "./auditlog/auditlog.module";
 // import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
@@ -15,6 +16,11 @@ const routes: Routes = [
   {
     path: 'settings',
     loadChildren: () => SettingsModule,
+    pathMatch: 'full',
+  },
+  {
+    path: 'auditlog',
+    loadChildren: () => AuditlogModule,
     pathMatch: 'full',
   },
   {

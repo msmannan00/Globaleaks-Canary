@@ -314,17 +314,39 @@ table thead th:nth-child(1),
 	padding: 1em;
 }
 
+.nav-link {
+	color: #205282;
+	font-weight: bold;
+}
+
+.nav-link:hover {
+	color: #103253; /* Replace with your desired hover color */
+}
+
+.nav-item.active .nav-link {
+	color: #103253; /* Replace with your desired active text color */
+}
+
 #FooterBox,
 #DemoBadge,
 #PrivacyBadge {
 	padding: 1em;
 }
 
-/* #HeaderBox::after {
-	clear: both;
-	content: "";
-	display: block;
-} */
+table tr {
+	height: 50px !important;
+}
+table tr td {
+	vertical-align: middle !important;
+}
+
+.page-link{
+	color:#205282;
+}
+.btn-link {
+	color:#205282;
+	text-decoration: none;
+}
 
 .default-logo {
 	height: 3.2rem;

@@ -23,11 +23,6 @@ export class NodeResolver implements Resolve<boolean> {
         {
             next: (response:nodeResolverModel) => {
                 this.dataModel = response
-                // if (this.dataModel.password_change_needed) {
-                //     this.router.navigate(["/action/forcedpasswordchange"]);
-                // } else if (this.dataModel.require_two_factor) {
-                //     this.router.navigate(["/action/forcedtwofactor"]);
-                // }
             },
             error: (error: any) => {
             }

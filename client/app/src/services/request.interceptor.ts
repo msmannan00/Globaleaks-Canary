@@ -11,7 +11,6 @@ import {tokenResponse} from "../models/authentication/token-response";
 import {CryptoService} from "../crypto.service";
 import {AuthenticationService} from "./authentication.service";
 import {AppDataService} from "../app-data.service";
-import {AppConfigService} from "./app-config.service";
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
