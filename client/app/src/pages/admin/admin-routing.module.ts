@@ -25,12 +25,14 @@ const routes: Routes = [
   },
   {
     path: 'users',
-    // resolve: {
-    //   TenantsResolver
-    // },
-    component: UsersComponent,
+    loadChildren: () => UsersModule,
     pathMatch: 'full',
   },
+  // {
+  //   path: 'users',
+  //   component: UsersComponent,
+  //   pathMatch: 'full',
+  // },
   // {
   //   path: 'settings',
   //   component: SettingsComponent,
