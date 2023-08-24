@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {HomeComponent} from "./home/home.component";
 import { SettingsModule } from './settings/settings.module';
-import { UsersComponent } from './users/users.component';
-import { TenantsResolver } from 'app/src/shared/resolvers/tenants.resolver';
+import { UsersModule } from './users/users.module';
 // import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
@@ -19,12 +18,14 @@ const routes: Routes = [
   },
   {
     path: 'users',
-    // resolve: {
-    //   TenantsResolver
-    // },
-    component: UsersComponent,
+    loadChildren: () => UsersModule,
     pathMatch: 'full',
   },
+  // {
+  //   path: 'users',
+  //   component: UsersComponent,
+  //   pathMatch: 'full',
+  // },
   // {
   //   path: 'settings',
   //   component: SettingsComponent,

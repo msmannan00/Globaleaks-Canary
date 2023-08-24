@@ -15,6 +15,7 @@ import { ConfirmationWithPasswordComponent } from '../modals/confirmation-with-p
 import { ConfirmationWith2faComponent } from '../modals/confirmation-with2fa/confirmation-with2fa.component';
 import { PreferenceResolver } from '../resolvers/preference.resolver';
 import { DeleteConfirmationComponent } from '../modals/delete-confirmation/delete-confirmation.component';
+import { userResolverModel } from 'app/src/models/resolvers/userResolverModel';
 
 @Injectable({
   providedIn: 'root'
@@ -441,6 +442,72 @@ export class UtilsService {
   }
   deleteFile(url: string): Observable<void> {
     return this.http.delete<void>(url);
+  }
+  deleteAdminUser(user_id:any){
+    return this.httpService.requestDeleteAdminUser(user_id)
+  }
+  // new_context(): AdminContextResource {
+  //   const context = new AdminContextResource();
+  //   context.id = '';
+  //   context.hidden = true;
+  //   context.name = '';
+  //   // ... set other properties ...
+  //   return context;
+  // }
+
+  // new_questionnaire(): AdminQuestionnaireResource {
+  //   const questionnaire = new AdminQuestionnaireResource();
+  //   questionnaire.id = '';
+  //   questionnaire.key = '';
+  //   // ... set other properties ...
+  //   return questionnaire;
+  // }
+
+  // Implement other new_* functions here...
+
+  new_user(): userResolverModel {
+    const user = new userResolverModel();
+    user.id = '';
+    user.username = '';
+    user.role = "receiver";
+    user.enabled = true;
+    user.password_change_needed = true;
+    user.name = "";
+    user.description = "";
+    user.public_name = "";
+    user.mail_address = "";
+    user.pgp_key_fingerprint = "";
+    user.pgp_key_remove = false;
+    user.pgp_key_public = "";
+    user.pgp_key_expiration = "";
+    user.language = "en";
+    user.notification = true;
+    user.forcefully_selected = false;
+    user.can_edit_general_settings = false;
+    user.can_privilege_mask_information = false;
+    user.can_privilege_delete_mask_information = false;
+    user.can_grant_access_to_reports = false;
+    user.can_delete_submission = false;
+    user.can_postpone_expiration = true;
+    return user;
+  }
+
+  // new_redirect(): AdminRedirectResource {
+  //   return new AdminRedirectResource();
+  // }
+
+  // new_tenant(): AdminTenantResource {
+  //   const tenant = new AdminTenantResource();
+  //   tenant.active = true;
+  //   tenant.name = '';
+  //   // ... set other properties ...
+  //   return tenant;
+  // }
+  addAdminUser(user: any) {
+    return this.httpService.requestAddAdminUser(user)
+  }
+  updateAdminUser(id:any,user: any) {
+    return this.httpService.requestUpdateAdminUser(id,user)
   }
   constructor(
     private http: HttpClient,
