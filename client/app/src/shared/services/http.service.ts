@@ -206,6 +206,18 @@ export class HttpService {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.get("api/admin/auditlog", { 'headers': headers, params: param })
   }
+  requestAuditlogResource(param: any): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.get("api/admin/auditlog", {'headers':headers })
+  }
+  requestlogs(url:string): Observable<any>{
+    const headers = {
+      'content-type': 'application/octet-stream',
+      'Accept': 'application/octet-stream',
+      'TE': 'trailers' // Add this line to include TE header
+    };
+    return this.httpClient.get(url, {'headers':headers })
+  }
   requestQuestionareResource(param: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.get("api/admin/questionnaires", { 'headers': headers, params: param })

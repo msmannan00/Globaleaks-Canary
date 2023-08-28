@@ -4,6 +4,8 @@ import { HomeComponent } from "./home/home.component";
 import { SettingsModule } from './settings/settings.module';
 import { UsersModule } from './users/users.module';
 import { ContextsModule } from './contexts/contexts.module';
+import { AuditlogModule } from './auditlog/auditlog.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 const routes: Routes = [
   {
@@ -24,6 +26,16 @@ const routes: Routes = [
   {
     path: 'contexts',
     loadChildren: () => ContextsModule,
+    pathMatch: 'full',
+  },
+  {
+    path: 'auditlog',
+    loadChildren: () => AuditlogModule,
+    pathMatch: 'full',
+  },
+  {
+    path: 'notifications',
+    loadChildren: () => NotificationsModule,
     pathMatch: 'full',
   },
 
