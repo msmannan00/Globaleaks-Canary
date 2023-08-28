@@ -16,6 +16,7 @@ import { ConfirmationWith2faComponent } from '../modals/confirmation-with2fa/con
 import { PreferenceResolver } from '../resolvers/preference.resolver';
 import { DeleteConfirmationComponent } from '../modals/delete-confirmation/delete-confirmation.component';
 import { userResolverModel } from 'app/src/models/resolvers/userResolverModel';
+import { contextResolverModel } from 'app/src/models/resolvers/contextResolverModel';
 
 @Injectable({
   providedIn: 'root'
@@ -344,30 +345,6 @@ export class UtilsService {
   print() {
     window.print();
   }
-
-  saveAs(filename: string, url: string): void {
-
-    const headers = new HttpHeaders({
-      'X-Session': this.authenticationService.session.id
-    });
-
-    this.http.get(url, { responseType: 'blob', headers: headers }).subscribe(
-        response => {
-          const blob = new Blob([response], { type: 'application/octet-stream' });
-          const blobUrl = URL.createObjectURL(blob);
-
-          const a = document.createElement('a');
-          a.href = blobUrl;
-          a.download = filename;
-          a.click();
-
-          setTimeout(() => {
-            URL.revokeObjectURL(blobUrl);
-          }, 1000);
-        }
-    );
-  }
-
   getPostponeDate(ttl: any): Date {
     const date = new Date();
     date.setDate(date.getDate() + ttl + 1);
@@ -470,14 +447,38 @@ export class UtilsService {
   deleteAdminUser(user_id:any){
     return this.httpService.requestDeleteAdminUser(user_id)
   }
-  // new_context(): AdminContextResource {
-  //   const context = new AdminContextResource();
-  //   context.id = '';
-  //   context.hidden = true;
-  //   context.name = '';
-  //   // ... set other properties ...
-  //   return context;
-  // }
+  deleteAdminContext(user_id:any){
+    return this.httpService.requestDeleteAdminContext(user_id)
+  }
+  new_context(): contextResolverModel {
+    const context = new contextResolverModel();
+    context.id = "";
+    context.hidden = true;
+    context.name = "";
+    context.description = "";
+    context.order = 0;
+    context.tip_timetolive = 90;
+    context.tip_reminder_hard = 80;
+    context.tip_reminder_soft = 5;
+    context.show_recipients_details = false;
+    context.allow_recipients_selection = false;
+    context.show_receivers_in_alphabetical_order = true;
+    context.show_steps_navigation_interface = true;
+    context.select_all_receivers = true;
+    context.maximum_selectable_receivers = 0;
+    context.enable_comments = true;
+    context.enable_messages = false;
+    context.enable_two_way_comments = true;
+    context.enable_two_way_messages = true;
+    context.enable_attachments = true;
+    context.questionnaire_id = "";
+    context.additional_questionnaire_id = "";
+    context.score_threshold_medium = 0;
+    context.score_threshold_high = 0;
+    context.tip_reminder = 0;
+    context.receivers = [];
+    return context;
+  }
 
   // new_questionnaire(): AdminQuestionnaireResource {
   //   const questionnaire = new AdminQuestionnaireResource();
@@ -532,6 +533,12 @@ export class UtilsService {
   }
   updateAdminUser(id:any,user: any) {
     return this.httpService.requestUpdateAdminUser(id,user)
+  }
+  addAdminContext(context: any) {
+    return this.httpService.requestAddAdminContext(context)
+  }
+  updateAdminContext(context: any,id:any) {
+    return this.httpService.requestUpdateAdminContext(context,id)
   }
   constructor(
     private http: HttpClient,

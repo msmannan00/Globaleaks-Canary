@@ -111,13 +111,13 @@ export class HttpService {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.get("api/admin/node", { 'headers': headers })
   }
-  requestAuditlogResource(param: any): Observable<any>{
-    const headers = { 'content-type': 'application/json'}
-    return this.httpClient.get("api/admin/auditlog", {'headers':headers })
-  }
   requestUsersResource(param: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.get("api/admin/users", { 'headers': headers })
+  }
+  requestContextsResource(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.get("api/admin/contexts", { 'headers': headers })
   }
   requestTenantsResource(param: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
@@ -131,19 +131,9 @@ export class HttpService {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.get("api/admin/auditlog/tips", { 'headers': headers })
   }
-
-  requestlogs(url:string): Observable<any>{
-    const headers = {
-      'content-type': 'application/octet-stream',
-      'Accept': 'application/octet-stream',
-      'TE': 'trailers' // Add this line to include TE header
-    };
-    return this.httpClient.get(url, {'headers':headers })
-  }
-
-  requestSubmissionStatusResource(param: any): Observable<any>{
-    const headers = { 'content-type': 'application/json'}
-    return this.httpClient.get("api/admin/submission_statuses", {'headers':headers, params: param })
+  requestSubmissionStatusResource(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.get("api/admin/submission_statuses", { 'headers': headers, params: param })
   }
 
   whistleBlowerTip(param: any): Observable<any> {
@@ -255,6 +245,16 @@ export class HttpService {
   }
   requestDeleteAdminUser(id: any): Observable<any> {
     return this.httpClient.delete("api/admin/users/" + id);
+  }
+  requestAddAdminContext(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.post("api/admin/contexts", param, { 'headers': headers })
+  }
+  requestUpdateAdminContext(param: any, id: any): Observable<any> {
+    return this.httpClient.put("api/admin/contexts/" + id, param);
+  }
+  requestDeleteAdminContext(id: any): Observable<any> {
+    return this.httpClient.delete("api/admin/contexts/" + id);
   }
   runOperation(url: string, operation: string, args: any, refresh: boolean) {
 

@@ -20,6 +20,7 @@ import { QuestionnairesResolver } from './shared/resolvers/questionnaires.resolv
 import {AuditlogResolver} from "./shared/resolvers/auditlog.resolver";
 import {JobResolver} from "./shared/resolvers/job.resolver";
 import {TipsResolver} from "./shared/resolvers/tips.resolver";
+import { ContextsResolver } from './shared/resolvers/contexts.resolver';
 
 
 const routes: Routes = [
@@ -74,7 +75,7 @@ const routes: Routes = [
     path: 'admin',
     canActivate: [SessionGuard],
     resolve: {
-      NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver, AuditlogResolver, JobResolver, TipsResolver
+      NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver, ContextsResolver,AuditlogResolver, JobResolver, TipsResolver
     },
     loadChildren: () => AdminRoutingModule,
     data:{
