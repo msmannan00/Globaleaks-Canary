@@ -131,6 +131,10 @@ export class HttpService {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.get("api/admin/auditlog/tips", { 'headers': headers })
   }
+  requestNotificationsResource(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.get("api/admin/notification", { 'headers': headers })
+  }
   requestSubmissionStatusResource(param: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.get("api/admin/submission_statuses", { 'headers': headers, params: param })
@@ -206,17 +210,17 @@ export class HttpService {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.get("api/admin/auditlog", { 'headers': headers, params: param })
   }
-  requestAuditlogResource(param: any): Observable<any>{
-    const headers = { 'content-type': 'application/json'}
-    return this.httpClient.get("api/admin/auditlog", {'headers':headers })
+  requestAuditlogResource(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.get("api/admin/auditlog", { 'headers': headers })
   }
-  requestlogs(url:string): Observable<any>{
+  requestlogs(url: string): Observable<any> {
     const headers = {
       'content-type': 'application/octet-stream',
       'Accept': 'application/octet-stream',
       'TE': 'trailers' // Add this line to include TE header
     };
-    return this.httpClient.get(url, {'headers':headers })
+    return this.httpClient.get(url, { 'headers': headers })
   }
   requestQuestionareResource(param: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
@@ -267,6 +271,9 @@ export class HttpService {
   }
   requestDeleteAdminContext(id: any): Observable<any> {
     return this.httpClient.delete("api/admin/contexts/" + id);
+  }
+  requestUpdateAdminNotification(notification: any): Observable<any> {
+    return this.httpClient.put("api/admin/notification", notification);
   }
   runOperation(url: string, operation: string, args: any, refresh: boolean) {
 

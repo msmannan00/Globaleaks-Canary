@@ -43,7 +43,7 @@
                         [ngClass]="{'is-invalid': email.invalid && (email.dirty || email.touched)}" type="email"
                         required />
                 </div>
-                <div class="text-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+                <div class="text-danger" *ngIf="email?.errors?.['pattern'] && email.invalid && (email.dirty || email.touched)">
                     {{ 'Invalid email address' | translate }}
                 </div>
             </div>

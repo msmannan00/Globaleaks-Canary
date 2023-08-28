@@ -1,8 +1,5 @@
 import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
-import { SidebarComponent } from '../../recipient/sidebar/sidebar.component';
-
-
 @Component({
   selector: 'src-settings',
   templateUrl: './settings.component.html',

@@ -563,6 +563,9 @@ export class UtilsService {
   updateAdminContext(context: any,id:any) {
     return this.httpService.requestUpdateAdminContext(context,id)
   }
+  updateAdminNotification(notification: any) {
+    return this.httpService.requestUpdateAdminNotification(notification)
+  }
   constructor(
     private http: HttpClient,
     public translateService: TranslateService,
