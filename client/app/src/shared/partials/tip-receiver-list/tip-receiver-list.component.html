@@ -10,8 +10,8 @@
 		</span>
 	</div>
 	<div class="card-body" *ngIf="!collapsed">
-		<div *ngFor="let receiver of wbtipService.tip.receivers">
-			<div>{{wbtipService.tip.receivers_by_id[receiver.id].name}}</div>
+		<div *ngFor="let receiver of tipService.tip.receivers">
+			<div>{{tipService.tip.receivers_by_id[receiver.id].name}}</div>
 		</div>
 	</div>
 </div>

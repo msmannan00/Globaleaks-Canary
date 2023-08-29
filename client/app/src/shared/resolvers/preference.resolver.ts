@@ -30,10 +30,9 @@ export class PreferenceResolver implements Resolve<boolean> {
                   } else if (this.dataModel.require_two_factor) {
                       this.router.navigate(["/action/forcedtwofactor"]);
                   }
-                  alert(JSON.stringify(response))
               },
               error: (error: any) => {
-                alert(error)
+                alert(JSON.stringify(error))
               }
           }
       );

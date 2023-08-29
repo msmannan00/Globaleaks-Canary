@@ -55,12 +55,23 @@ export class ErrorCatchingInterceptor implements HttpInterceptor {
     return next.handle(request)
       .pipe(
         catchError((error: HttpErrorResponse) => {
+          if (error.error['error_code'] === 10) {
+            this.authenticationService.deleteSession()
+            this.authenticationService.reset()
+            this.authenticationService.routeLogin()
+          }
+          else if (error.error['error_code'] === 6 && this.authenticationService.isSessionActive()) {
+            if (this.authenticationService.session.role !== "whistleblower") {
+              location.pathname = this.authenticationService.session.homepage
+            }
+          }
+
           return throwError(() => error);
         })
       )
   }
 
-  constructor() {
+  constructor(private authenticationService:AuthenticationService) {
   }
 
 }

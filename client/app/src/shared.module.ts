@@ -14,7 +14,8 @@ import {
     NgbPaginationFirst, NgbPaginationLast,
     NgbPaginationNext, NgbPaginationNumber, NgbPaginationPages,
     NgbPaginationPrevious,
-    NgbProgressbar
+    NgbNav, NgbNavItem, NgbNavLink, NgbNavContent,
+    NgbProgressbar,NgbDatepickerModule,NgbDropdownModule
 } from "@ng-bootstrap/ng-bootstrap";
 import { PrivacybadgeComponent } from './shared/partials/privacybadge/privacybadge.component';
 import {MarkdownModule} from "ngx-markdown";
@@ -45,7 +46,6 @@ import { ScrollToBottomDirective } from './shared/directive/scroll-to-bottom.dir
 import { TipReceiverListComponent } from './shared/partials/tip-receiver-list/tip-receiver-list.component';
 import { FilterPipe } from './shared/pipes/filter.pipe';
 import { RequestSupportComponent } from './shared/modals/request-support/request-support.component';
-import {WhistleblowerModule} from "./pages/whistleblower/whistleblower.module";
 import {
     WhistleblowerIdentityFieldComponent
 } from "./pages/field/whistleblower-identity-field/whistleblower-identity-field.component";
@@ -56,6 +56,29 @@ import { WbfilesComponent } from './shared/partials/wbfiles/wbfiles.component';
 import { DisableCcpDirective } from './shared/directive/disable-ccp.directive';
 import { SubdomainvalidatorDirective } from './shared/directive/subdomainvalidator.directive';
 import { PasswordStrengthValidatorDirective } from './shared/directive/password-strength-validator.directive';
+import { UserHomeComponent } from './shared/partials/user-home/user-home.component';
+import { UserWarningsComponent } from './shared/partials/user-warnings/user-warnings.component';
+import { GrantAccessComponent } from './shared/modals/grant-access/grant-access.component';
+import { RevokeAccessComponent } from './shared/modals/revoke-access/revoke-access.component';
+import { DeleteConfirmationComponent } from './shared/modals/delete-confirmation/delete-confirmation.component';
+import { DateRangeSelectorComponent } from './shared/components/date-selector/date-selector.component';
+import { PreferencesComponent } from './shared/partials/preferences/preferences.component';
+import { PreferenceTab1Component } from './shared/partials/preference-tabs/preference-tab1/preference-tab1.component';
+import { PreferenceTab2Component } from './shared/partials/preference-tabs/preference-tab2/preference-tab2.component';
+import { Enable2faComponent } from './shared/modals/enable2fa/enable2fa.component';
+import { EncryptionRecoveryKeyComponent } from './shared/modals/encryption-recovery-key/encryption-recovery-key.component';
+import { ConfirmationWithPasswordComponent } from './shared/modals/confirmation-with-password/confirmation-with-password.component';
+import { ConfirmationWith2faComponent } from './shared/modals/confirmation-with2fa/confirmation-with2fa.component';
+import { TipOperationFileIdentityAccessRequestComponent } from './shared/modals/tip-operation-file-identity-access-request/tip-operation-file-identity-access-request.ompoent';
+import { TipFilesReceiverComponent } from './shared/partials/tip-files-receiver/tip-files-receiver.component';
+import { TipOperationSetReminderComponent } from './shared/modals/tip-operation-set-reminder/tip-operation-set-reminder.component';
+import { TipOperationPostponeComponent } from './shared/modals/tip-operation-postpone/tip-operation-postpone.component';
+import { FileViewComponent } from './shared/modals/file-view/file-view.component';
+import { TipUploadWbfileComponent } from './shared/partials/tip-upload-wbfile/tip-upload-wbfile.component';
+import { ImageUploadDirective } from './shared/directive/image-upload.directive';
+import { ImageUploadComponent } from './shared/partials/image-upload/image-upload.component';
+import { EnableEncryptionComponent } from './shared/modals/enable-encryption/enable-encryption.component';
+import { AdminFileComponent } from './shared/partials/admin-file/admin-file.component';
 
 @NgModule({
     imports: [
@@ -75,6 +98,14 @@ import { PasswordStrengthValidatorDirective } from './shared/directive/password-
         NgbPaginationNumber,
         NgbPaginationPages,
         NgxFlowModule,
+        NgbDatepickerModule,
+        NgbDropdownModule,
+        DateRangeSelectorComponent,
+        NgbNav,
+        NgbNavItem,
+        NgbNavLink,
+        NgbNavContent,
+        NgbDropdownModule
     ],
     declarations: [
         FooterComponent,
@@ -116,7 +147,29 @@ import { PasswordStrengthValidatorDirective } from './shared/directive/password-
         DisableCcpDirective,
         SubdomainvalidatorDirective,
         PasswordStrengthValidatorDirective,
-        PasswordStrengthValidatorDirective
+        PasswordStrengthValidatorDirective,
+        ImageUploadDirective,
+        ImageUploadComponent,
+        UserHomeComponent,
+        UserWarningsComponent,
+        GrantAccessComponent,
+        RevokeAccessComponent,
+        DeleteConfirmationComponent,
+        PreferencesComponent,
+        PreferenceTab1Component,
+        PreferenceTab2Component,
+        Enable2faComponent,
+        EncryptionRecoveryKeyComponent,
+        ConfirmationWithPasswordComponent,
+        ConfirmationWith2faComponent,
+        TipOperationFileIdentityAccessRequestComponent,
+        TipFilesReceiverComponent,
+        TipOperationSetReminderComponent,
+        TipOperationPostponeComponent,
+        FileViewComponent,
+        TipUploadWbfileComponent,
+        EnableEncryptionComponent,
+        AdminFileComponent
     ],
     exports: [
         FooterComponent,
@@ -144,6 +197,20 @@ import { PasswordStrengthValidatorDirective } from './shared/directive/password-
         DisableCcpDirective,
         SubdomainvalidatorDirective,
         PasswordMeterComponent,
-        PasswordStrengthValidatorDirective
+        PasswordStrengthValidatorDirective,
+        ImageUploadDirective,
+        ImageUploadComponent,
+        UserHomeComponent,
+        UserWarningsComponent,
+        GrantAccessComponent,
+        RevokeAccessComponent,
+        DeleteConfirmationComponent,
+        DateRangeSelectorComponent,
+        TipOperationFileIdentityAccessRequestComponent,
+        TipFilesReceiverComponent,
+        TipOperationSetReminderComponent,
+        TipUploadWbfileComponent,
+        EnableEncryptionComponent,
+        AdminFileComponent
     ]})
 export class SharedModule { }

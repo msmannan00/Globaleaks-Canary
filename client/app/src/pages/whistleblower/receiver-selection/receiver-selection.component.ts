@@ -14,7 +14,6 @@ export class ReceiverSelectionComponent {
   @Input() receiversOrderPredicate:any
   @Output() switchSelection: EventEmitter<any> = new EventEmitter();
 
-
   constructor(public utilsService:UtilsService) {
   }
 

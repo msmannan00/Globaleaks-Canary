@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AppConfigService} from "../../../services/app-config.service";
 import {AuthenticationService} from "../../../services/authentication.service";
 import {LoginDataRef} from "./model/login-model";
@@ -12,14 +12,11 @@ import {AppDataService} from "../../../app-data.service";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent{
+export class LoginComponent implements OnInit{
 
   loginData = new LoginDataRef();
-  loginValidator: FormGroup;
 
   ngOnInit() {
-    this.loginValidator = this.builder.group({
-    })
     this.route.queryParams.subscribe(params => {
       if("token" in params){
         let token = params['token'];

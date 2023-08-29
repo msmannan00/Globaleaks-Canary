@@ -1,4 +1,4 @@
-import {HostListener, NgModule} from '@angular/core';
+import {HostListener, NgModule,CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,7 +14,7 @@ import { AppConfigService } from './services/app-config.service';
 import { SharedModule } from './shared.module';
 import { HeaderComponent } from './shared/partials/header/header.component';
 import { UserComponent } from './shared/partials/header/template/user/user.component';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import {CompletedInterceptor, ErrorCatchingInterceptor, RequestInterceptor} from "./services/request.interceptor";
 import {Keepalive, NgIdleKeepaliveModule} from "@ng-idle/keepalive";
@@ -33,6 +33,8 @@ import * as Flow from "@flowjs/flow.js";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {SignupModule} from "./pages/signup/signup.module";
 import { WizardModule } from './pages/wizard/wizard.module';
+import { RecipientModule } from './pages/recipient/recipient.module';
+import { AdminModule } from './pages/admin/admin.module';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './data/i18n/', '.json');
@@ -54,6 +56,8 @@ export function createTranslateLoader(http: HttpClient) {
     ActionModule,
     OrderModule,
     WizardModule,
+    AdminModule,
+    RecipientModule,
     SharedModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en',
@@ -69,7 +73,7 @@ export function createTranslateLoader(http: HttpClient) {
   ],
   providers: [
     ReceiptvalidatorDirective,
-    TranslatorPipe,
+    TranslatorPipe,TranslateService,
     { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
     { provide: APP_BASE_HREF, useValue: '/' },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
@@ -78,6 +82,7 @@ export function createTranslateLoader(http: HttpClient) {
     { provide: FlowInjectionToken, useValue: Flow}
   ],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {
 

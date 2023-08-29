@@ -29,7 +29,6 @@ export class StepErrorEntryComponent implements OnInit{
   }
 
   initlialize(){
-    console.log()
     this.f_id =  this.err;
     this.f_id = this.f_id.substring(0, this.f_id.indexOf("$"));
     this.f_id = this.f_id.slice(this.pre.length).replace(new RegExp("_", "g"), "-");

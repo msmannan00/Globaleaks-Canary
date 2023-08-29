@@ -47,7 +47,9 @@
 							"node_modules/@fortawesome/fontawesome-free/css/fontawesome.css",
 							"node_modules/@fortawesome/fontawesome-free/css/solid.css",
 							"app/assets/lib/css/solid.css",
-							"node_modules/@ng-select/ng-select/themes/default.theme.css"
+							"node_modules/@ng-select/ng-select/themes/default.theme.css",
+							"node_modules/ng-multiselect-dropdown/themes/ng-multiselect-dropdown.theme.scss",
+							"app/css/bootstrap-fixes.css"
 						],
 						"scripts": [
 							"node_modules/marked/marked.min.js"

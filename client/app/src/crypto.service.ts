@@ -58,7 +58,7 @@ export class CryptoService {
 
     return digestPremise;
   }
-  proofOfWork(data:any){
+  proofOfWork(data: any): Promise<any> {
 
     this.deferred = new Promise((resolve, reject) => {
       this.data = data

@@ -1,0 +1,47 @@
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="form-group">
+            <div class="mb-2">
+                <ng-container *ngFor="let admin_file of admin_files">
+                    <src-admin-file [adminFile]="admin_file"></src-admin-file>
+                </ng-container>
+            </div>
+            <div class="mb-2">
+                <div>{{ 'Files' | translate }}</div>
+                <div class="uploadfile file-custom">
+                    <span class="custom-file">
+                <!-- <ng-container #flow="flow" flowDrop [flowConfig]="{target: 'api/admin/files/custom', speedSmoothingFactor:0.01, singleFile:true,  allowDuplicateUploads:false, testChunks:false, permanentErrors : [ 500, 501 ], headers : {'X-Session':authenticationService.session.id}}"></ng-container> -->
+                        <input #uploader id="customFile" type="file"
+                        [style.display]="'none'" class="custom-file-input inputelem"
+                        (change)="onFileSelected(uploader.files)" />
+                        <!-- <input id="customFile" class="custom-file-input" type="file" [flowBtn] /> -->
+                        <label class="btn btn-sm btn-primary" for="customFile">
+                            <i class="fa-solid fa-upload"></i>
+                            <span>{{ 'Upload' | translate }}</span>
+                        </label>
+                    </span>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped" id="fileList">
+                    <tbody id="fileListBody">
+                        <tr *ngFor="let file of files | orderBy:'name'">
+                            <td>{{file.name}}</td>
+                            <td>
+                                <a class="btn btn-sm btn-primary" [href]="'s/' + file.name" [download]="file.name">
+                                    <i class="fa-solid fa-download"></i>
+                                    <span>{{ 'Download' | translate }}</span>
+                                </a>
+                                <button class="btn btn-sm btn-danger"
+                                    (click)="delete_file('api/admin/files/' + file.id)">
+                                    <i class="fa-solid fa-trash"></i>
+                                    <span>{{ 'Delete' | translate }}</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

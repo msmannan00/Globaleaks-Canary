@@ -9,8 +9,8 @@
     </span>
     </div>
 </div>
-<div *ngIf="authenticationService.session.receipt">
-    <src-receipt></src-receipt>
+<div *ngIf="appDataService.receipt">
+    <src-receipt-whistleblower></src-receipt-whistleblower>
 </div>
 <div class="row" *ngIf="wbtipService.tip.status !== 'closed' && wbtipService.tip.context.additional_questionnaire_id && wbtipService.tip.questionnaires.length === 1">
     <div class="col-md-12">
@@ -19,18 +19,18 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <src-tip-info></src-tip-info>
+        <src-tip-info [tipService]="wbtipService"></src-tip-info>
     </div>
 </div>
 <div class="row" *ngIf="wbtipService.tip.context.show_recipients_details">
     <div class="col-md-12">
-        <src-tip-receiver-list></src-tip-receiver-list>
+        <src-tip-receiver-list [tipService]="wbtipService"></src-tip-receiver-list>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-6">
-        <src-tip-questionnaire-answers></src-tip-questionnaire-answers>
+        <src-tip-questionnaire-answers [tipService]="wbtipService"></src-tip-questionnaire-answers>
     </div>
     <div class="col-md-6" *ngIf="wbtipService.tip.enable_whistleblower_identity">
         <src-whistleblower-identity [uploadEstimateTime]="calculateEstimatedTime()" [uploadprogress]="calculateProgress()" [isuploading]="uploading()" (onFormUpdate)="onFormChange()" (provideIdentityInformation)=provideIdentityInformation($event) [answers]="answers" [step]="wbtipService.tip.whistleblower_identity_field" [field]="wbtipService.tip.whistleblower_identity_field"></src-whistleblower-identity>
@@ -45,12 +45,12 @@
 <div class="row">
     <div class="col-md-6" *ngIf="wbtipService.tip.comments">
         <div *ngIf="wbtipService.tip.context.enable_comments || wbtipService.tip.comments.length">
-            <src-tip-comments></src-tip-comments>
+            <src-tip-comments [tipService]="wbtipService"></src-tip-comments>
         </div>
     </div>
     <div class="col-md-6" *ngIf="wbtipService.tip.messages">
         <div *ngIf="wbtipService.tip.context.enable_messages || wbtipService.tip.messages.length">
-            <src-tip-messages></src-tip-messages>
+            <src-tip-messages [tipService]="wbtipService"></src-tip-messages>
         </div>
     </div>
 </div>

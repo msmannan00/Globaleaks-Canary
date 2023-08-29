@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {UtilsService} from "../../services/utils.service";
 import {WbtipService} from "../../../services/wbtip.service";
 import {AuthenticationService} from "../../../services/authentication.service";
+import { RecieverTipService } from 'app/src/services/recievertip.service';
+import {auditlogResolverModel} from "../../../models/resolvers/auditlogResolverModel";
+import {NodeResolver} from "../../resolvers/node.resolver";
 
 @Component({
   selector: 'src-tip-messages',
@@ -9,6 +12,8 @@ import {AuthenticationService} from "../../../services/authentication.service";
   styleUrls: ['./tip-messages.component.css']
 })
 export class TipMessagesComponent {
+  @Input() tipService: RecieverTipService | WbtipService  ;
+
   collapsed = false;
   newMessageContent = ""
   currentMessagesPage: number = 1;
@@ -18,11 +23,11 @@ export class TipMessagesComponent {
     this.collapsed = !this.collapsed
   }
 
-  constructor(public utilsService:UtilsService, public wbtipService:WbtipService, public authenticationService:AuthenticationService) {
+  constructor(public utilsService:UtilsService, public authenticationService:AuthenticationService) {
   }
 
   newMessage() {
-    this.wbtipService.newMessages(this.newMessageContent);
+    this.tipService.newMessages(this.newMessageContent);
     this.newMessageContent = "";
   }
 

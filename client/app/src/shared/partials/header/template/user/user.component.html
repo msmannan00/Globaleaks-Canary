@@ -13,22 +13,22 @@
 
 		<span id="UsernameBox" *ngIf="authentication.session.role !== 'whistleblower'">
 			<label>{{preferences.dataModel.name}}</label>
-			<span class="text-separator">|</span>
+			<span class="text-separator"> |</span>
 		</span>
 
 		<span id="HomeLinkBox" *ngIf="authentication.session.role !== 'whistleblower'">
-			<a id="HomepageLink" [href]="authentication.session.homepage" data-toggle="tooltip"
+			<a id="HomepageLink" [href]="'#'+authentication.session.homepage" data-toggle="tooltip"
 				title="{{'Home' | translate }}"><i class="fa-solid fa-fw fa-home"></i></a>
 			<span class="text-separator">|</span>
 		</span>
 		<span id="PreferencesLinkBox"
 			*ngIf="authentication.session.role !== 'whistleblower' && !authentication.session.properties.management_session">
-			<a id="PreferencesLink" [href]="authentication.session.preferencespage" data-toggle="tooltip"
+			<a id="PreferencesLink" [href]="'#'+authentication.session.preferencespage" data-toggle="tooltip"
 				title="{{'Preferences' | translate}}"><i class="fa-solid fa-fw fa-user"></i></a>
 			<span class="text-separator">|</span>
 		</span>
 		<span id="SupportLinkBox" *ngIf="authentication.session && authentication.session.role !== 'whistleblower'">
-			<a id="SupportLink" href="" (click)="utils.openSupportModal()" data-toggle="tooltip"
+			<a id="SupportLink" (click)="utils.openSupportModal()" data-toggle="tooltip"
 				title="{{'Request support' | translate}}"><i class="fa-solid fa-fw fa-life-ring"></i></a>
 			<span class="text-separator">|</span>
 		</span>

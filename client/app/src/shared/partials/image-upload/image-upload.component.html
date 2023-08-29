@@ -1,0 +1,22 @@
+<form action="">
+  <div id="projectImageLoader" class="imageUpload">
+    <ng-container #flowAdvanced="flow" flowDrop
+      [flowConfig]="{target: 'api/admin/files/'+imageUploadId, speedSmoothingFactor:0.01, singleFile:true ,allowDuplicateUploads:false, testChunks:false, permanentErrors : [ 500, 501 ], headers : {'X-Session':authenticationService.session.id}}"></ng-container>
+    <input #uploader id="projectImageLoader" (change)="onFileSelected(uploader.files)" type="file" flowButton
+      [flow]="flowAdvanced.flowJs" [style.display]="'none'" [flowAttributes]="{ accept: 'image/*' }" class="custom-file-input inputelem" />
+    <label for="projectImageLoader" class="changePictureButton text-primary"
+      *ngIf="!imageUploadModel[imageUploadModelAttr]" [attr.uibTooltip]="'Edit' | translate"
+      (click)="triggerFileInputClick()">
+      <i class="fa-solid fa-edit"></i>
+    </label>
+    <label [attr.id]="'projectImageLoader'" class="changePictureButton text-danger" (click)="deletePicture()"
+      *ngIf="imageUploadModel[imageUploadModelAttr] || imageUploadObj.files.length"
+      [attr.uibTooltip]="'Delete' | translate">
+      <i class="fa-solid fa-times"></i>
+    </label>
+    <div class="imageUploadThumbnail">
+      <img *ngIf="imageUploadModel[imageUploadModelAttr]" [src]="'s/' + imageUploadId">
+    </div>
+    <!-- <div errors-upload></div> -->
+  </div>
+</form>

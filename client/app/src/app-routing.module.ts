@@ -12,6 +12,16 @@ import {SignupRoutingModule} from "./pages/signup/signup-routing.module";
 import {Pageguard} from "./shared/guards/pageguard.service";
 import {ActivationComponent} from "./pages/signup/templates/activation/activation.component";
 import {WizardRoutingModule} from "./pages/wizard/wizard-routing.module";
+import { NodeResolver } from './shared/resolvers/node.resolver';
+import { RtipsResolver } from './shared/resolvers/rtips.resolver';
+import { TipComponent } from './pages/recipient/tip/tip.component';
+import { UsersResolver } from './shared/resolvers/users.resolver';
+import { QuestionnairesResolver } from './shared/resolvers/questionnaires.resolver';
+import {AuditlogResolver} from "./shared/resolvers/auditlog.resolver";
+import {JobResolver} from "./shared/resolvers/job.resolver";
+import {TipsResolver} from "./shared/resolvers/tips.resolver";
+import { ContextsResolver } from './shared/resolvers/contexts.resolver';
+import { NotificationsResolver } from './shared/resolvers/notifications.resolver';
 
 
 const routes: Routes = [
@@ -26,9 +36,11 @@ const routes: Routes = [
     resolve: {
     },
     pathMatch: 'full',
+   
   },
   {
     path: 'login',
+    
     resolve: {
       PreferenceResolver
     },
@@ -40,6 +52,7 @@ const routes: Routes = [
       PreferenceResolver
     },
     loadChildren: () => SignupRoutingModule,
+   
   },
   {
     path: 'action',
@@ -52,17 +65,23 @@ const routes: Routes = [
     path: 'recipient',
     canActivate: [SessionGuard],
     resolve: {
-       PreferenceResolver
+       PreferenceResolver,NodeResolver,RtipsResolver
     },
     loadChildren: () => RecipientRoutingModule,
+    data:{
+      sidebar: 'recipient-sidebar'
+    }
   },
   {
     path: 'admin',
     canActivate: [SessionGuard],
     resolve: {
-      PreferenceResolver
+      NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver, ContextsResolver,AuditlogResolver, JobResolver, TipsResolver,NotificationsResolver
     },
     loadChildren: () => AdminRoutingModule,
+    data:{
+      sidebar: 'admin-sidebar'
+    }
   },
   {
     path: 'password/reset',
@@ -78,6 +97,14 @@ const routes: Routes = [
       PreferenceResolver
     },
     loadChildren: () => WizardRoutingModule,
+  },
+  {
+    path: 'status/:tip_id',
+    component: TipComponent,
+    pathMatch: 'full',
+    resolve: {
+      PreferenceResolver,NodeResolver,RtipsResolver
+   },
   }
 ];
 

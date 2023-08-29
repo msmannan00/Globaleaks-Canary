@@ -7,8 +7,13 @@ export interface Root {
 }
 
 export interface Node {
+viewer: any
     adminonly: boolean
+    pgp:any
     custom_support_url: string
+    disable_admin_notification:boolean
+    disable_receiver_notification:boolean
+    disable_custodian_notification:boolean
     default_language: string
     default_questionnaire: string
     description: string

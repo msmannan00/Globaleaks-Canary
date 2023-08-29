@@ -18,6 +18,20 @@ export class WbfilesComponent implements OnInit{
   }
 
   deleteWBFile(wbfile: any) {
+      if(this.authenticationService.session.role == "receiver"){
+          const param=JSON.stringify({});
+          this.httpService.deleteDBFile(wbfile.id).subscribe
+          (
+              {
+                  next: async token => {
+                      this.utilsService.reloadCurrentRoute()
+                  },
+                  error: (error: any) => {
+                      alert(JSON.stringify(error))
+                  }
+              }
+          );
+      }
   }
 
   downloadWBFile(wbfile: any) {
@@ -28,7 +42,11 @@ export class WbfilesComponent implements OnInit{
           {
               next: async token => {
                   const ans = await this.cryptoService.proofOfWork(token.id);
-                  window.open("api/wbtip/wbfile/" + wbfile.id + "?token=" + token.id + ":" + ans);
+                  if(this.authenticationService.session.role == "receiver"){
+                      window.open("api/wbfile/" + wbfile.id + "?token=" + token.id + ":" + ans);
+                  }else {
+                      window.open("api/wbtip/wbfile/" + wbfile.id + "?token=" + token.id + ":" + ans);
+                  }
               },
               error: (error: any) => {
                   alert(JSON.stringify(error))

@@ -14,15 +14,13 @@ import {ControlContainer, FormControl, FormGroup, NgForm, Validators} from "@ang
 export class DefaultLoginComponent {
 
   @Input() loginData: LoginDataRef;
-  @Input() loginValidator: any;
+  @Input() loginValidator: NgForm;
   loginAuthCode: any;
-
-  ngOnInit() { this.initForm() }
-
-  initForm() {
-    this.loginValidator.addControl("username", new FormControl('', Validators.required));
-    this.loginValidator.addControl("password", new FormControl('', Validators.required));
+  
+  ngOnInit() { 
+    
   }
+
 
   constructor(public utils: UtilsService, public appConfig: AppConfigService, public authentication: AuthenticationService) {
   }

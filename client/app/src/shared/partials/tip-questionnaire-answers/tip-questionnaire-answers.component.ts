@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {UtilsService} from "../../services/utils.service";
 import {WbtipService} from "../../../services/wbtip.service";
 import {filter} from "rxjs";
+import { RecieverTipService } from 'app/src/services/recievertip.service';
 
 @Component({
   selector: 'src-tip-questionnaire-answers',
@@ -9,11 +10,12 @@ import {filter} from "rxjs";
   styleUrls: ['./tip-questionnaire-answers.component.css']
 })
 export class TipQuestionnaireAnswersComponent {
-  collapsed = false
+  @Input() tipService: RecieverTipService | WbtipService  ;
+  collapsed = false;
   public toggleColapse(){
     this.collapsed = !this.collapsed
   }
-  constructor(public utilsService:UtilsService, public wbtipService:WbtipService) {
+  constructor(public utilsService:UtilsService) {
   }
 
   protected readonly JSON = JSON;

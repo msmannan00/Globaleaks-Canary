@@ -48,7 +48,6 @@ export class PasswordChangeComponent {
     };
 
     onPasswordStrengthChange(score:number){
-      console.log("xx : " + score)
       this.passwordStrengthScore = score
     }
 
