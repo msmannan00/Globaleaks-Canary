@@ -33,7 +33,7 @@ const routes: Routes = [
     path: 'casemanagement',
     loadChildren: () => CasemanagementModule,
     pathMatch: 'full',
-  }
+  },
   {
     path: 'auditlog',
     loadChildren: () => AuditlogModule,
