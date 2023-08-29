@@ -88,8 +88,11 @@ export class SubstatusmanagerComponent {
     this.openConfirmableModalDialog(submissions_status, "")
   }
 
-  save_submissions_status(context:any):void{
-
+  save_submissions_status(submissions_status:any):void{
+    let url = "http://127.0.0.1:8082/api/admin/submission_statuses/" + submissions_status.id
+    this.httpService.requestUpdateStatus(url, submissions_status).subscribe(res => {
+      this.appConfigService.reinit()
+    });
   }
 
   openConfirmableModalDialog(arg: any, scope: any): Promise<any> {

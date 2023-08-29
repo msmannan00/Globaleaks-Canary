@@ -33,7 +33,7 @@
                         <div class="form-group">
                             <label>{{'Label'|translate}}</label>
                             <input name="name" class="form-control" [(ngModel)]="submissions_status.label" [disabled]="submissions_status.system_defined" type="text" required>
-<!--                            <div class="text-danger" *ngIf="editSubmissionStatus.name.$error.required">{{'This field is mandatory'|translate}}</div>-->
+                            <div class="text-danger" *ngIf="editsubmissionStatus?.errors?.['required']">{{'This field is mandatory'|translate}}</div>
                         </div>
                     </div>
                     <div class="col-md-12"><src-substatuses [submissions_status]="submissions_status"></src-substatuses></div>
@@ -41,6 +41,4 @@
             </div>
         </div>
     </div>
-</div>
-<div *ngFor="let submissions_status of appDataServices.submission_statuses; let index = index;let first = first; let last = last;">
 </div>

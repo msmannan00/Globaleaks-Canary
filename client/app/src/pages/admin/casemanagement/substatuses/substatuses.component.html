@@ -16,7 +16,7 @@
                         <div class="form-group">
                             <label>{{'Label'|translate}}</label>
                             <input name="label" class="form-control" [(ngModel)]="new_substatus" type="text" required>
-                            <div class="text-danger" *ngIf="newSubstatus?.errors?.['required']">
+                            <div class="text-danger" *ngIf="!new_substatus || new_substatus.length==0">
                                 <span>{{'This field is mandatory'|translate}}</span>
                             </div>
                         </div>
@@ -56,7 +56,7 @@
                           <span>{{'Edit'|translate}}</span>
                         </button>
                         <button class="btn btn-sm btn-primary" *ngIf="this.substatus_editing[index]"
-                                (click)="save_submissions_substatuses(substatus);">
+                                (click)="save_submissions_substatuses(substatus);" [disabled]="substatus && substatus.label.length==0">
                           <span>{{'Save'|translate}}</span>
                         </button>
                         <button class="btn btn-sm btn-outline-secondary" *ngIf="this.substatus_editing[index]"
@@ -77,6 +77,9 @@
                             <div class="col-md-6">
                                 <label>{{'Label'|translate}}</label>
                                 <input class="form-control" [(ngModel)]="substatus.label" type="text" required/>
+                                <div class="text-danger" *ngIf="!substatus.label || substatus.label==0">
+                                    <span>{{'This field is mandatory'|translate}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>

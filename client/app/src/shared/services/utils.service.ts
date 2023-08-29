@@ -138,6 +138,13 @@ export class UtilsService {
     });
   }
 
+  reloadRoute(): void {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
+  }
+
   showWBLoginBox() {
     return location.pathname === "/submission";
   }
@@ -494,7 +501,7 @@ export class UtilsService {
   }
 
   deleteSubStatus(url:string){
-    return this.httpService.requestDeleteStatus(url)
+    return this.httpService.requestDeleteSubStatus(url)
   }
   new_context(): contextResolverModel {
     const context = new contextResolverModel();

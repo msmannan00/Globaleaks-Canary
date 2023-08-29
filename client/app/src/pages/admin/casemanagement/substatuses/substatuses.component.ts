@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {DeleteConfirmationComponent} from "../../../../shared/modals/delete-confirmation/delete-confirmation.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AppConfigService} from "../../../../services/app-config.service";
+import {HttpService} from "../../../../shared/services/http.service";
 
 @Component({
   selector: 'src-substatuses',
@@ -18,7 +19,7 @@ export class SubstatusesComponent implements OnInit{
     this.showAddSubstatus = !this.showAddSubstatus;
   }
 
-  constructor(private appConfigService:AppConfigService,public modalService: NgbModal, public utilsService:UtilsService, private http: HttpClient) {
+  constructor(private httpService:HttpService, private appConfigService:AppConfigService,public modalService: NgbModal, public utilsService:UtilsService, private http: HttpClient) {
   }
 
   ngOnInit(): void {
@@ -67,7 +68,10 @@ export class SubstatusesComponent implements OnInit{
   }
 
   save_submissions_substatuses(substatus:any):void{
-
+    let url = "http://127.0.0.1:8082/api/admin/submission_statuses/" + this.submissions_status.id + "/substatuses/" + substatus.id
+    this.httpService.requestUpdateStatus(url, substatus).subscribe(res => {
+      this.appConfigService.reinit()
+    });
   }
 
   deleteSubSubmissionStatus(substatus:any):void{

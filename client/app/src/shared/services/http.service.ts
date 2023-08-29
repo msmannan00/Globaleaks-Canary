@@ -279,10 +279,18 @@ export class HttpService {
     return this.httpClient.delete("api/admin/contexts/" + id);
   }
 
-  requestDeleteStatus(url:string): Observable<any> {
+  requestDeleteStatus(id: any): Observable<any> {
+    return this.httpClient.delete("api/admin/submission_statuses/" + id);
+  }
+
+  requestDeleteSubStatus(url:string): Observable<any> {
     return this.httpClient.delete(url);
   }
 
+  requestUpdateStatus(url:string, param:any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.put(url, param, { headers })
+  }
   requestUpdateAdminNotification(notification: any): Observable<any> {
     return this.httpClient.put("api/admin/notification", notification);
   }
