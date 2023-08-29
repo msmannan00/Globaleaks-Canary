@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import sha256, {  } from "fast-sha256";
-import {UtilsService} from "./services/utils.service";
+import {UtilsService} from "./shared/services/utils.service";
 
 @Injectable({
   providedIn: 'root'
@@ -58,7 +58,7 @@ export class CryptoService {
 
     return digestPremise;
   }
-  proofOfWork(data:any){
+  proofOfWork(data: any): Promise<any> {
 
     this.deferred = new Promise((resolve, reject) => {
       this.data = data

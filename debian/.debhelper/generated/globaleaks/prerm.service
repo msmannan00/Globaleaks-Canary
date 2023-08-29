@@ -1,5 +1,0 @@
-# Automatically added by dh_installinit/13.6ubuntu1
-if [ -z "${DPKG_ROOT:-}" ] && [ "$1" = remove ] && [ -x "/etc/init.d/globaleaks" ] ; then
-	invoke-rc.d globaleaks stop || exit 1
-fi
-# End automatically added section

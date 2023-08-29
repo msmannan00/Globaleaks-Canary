@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
-import {LoginDataRef} from "../auth/login/model/login-model";
-import {HttpService} from "./internal/http.service";
+import {LoginDataRef} from "../pages/auth/login/model/login-model";
+import {HttpService} from "../shared/services/http.service";
 import {Observable} from "rxjs";
-import {AppConfigService} from "./app-config.service";
-import {Session} from "../dataModels/authentication/Session";
 import {Router} from "@angular/router";
 import {TranslateService} from "@ngx-translate/core";
 import {LocationStrategy} from "@angular/common";
 import {HttpClient} from "@angular/common/http";
 import {AppDataService} from "../app-data.service";
-import {errorCodes} from "../dataModels/app/error-code";
+import {errorCodes} from "../models/app/error-code";
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +28,14 @@ export class AuthenticationService {
     this.session = null
     window.sessionStorage.removeItem("session");
   };
+
+  isSessionActive(){
+    return this.session
+  }
+
+  routeLogin(){
+    this.loginRedirect(true);
+  }
 
   setSession(response:any){
     this.session = response;
@@ -58,7 +64,7 @@ export class AuthenticationService {
     );
   }
 
-  login(tid?:any, username?:any, password?:any, authcode?:any, authtoken?:any){
+  login(tid?:any, username?:any, password?:any, authcode?:any, authtoken?:any, callback?: () => void){
 
     if(authtoken === undefined){
       authtoken = "";
@@ -72,10 +78,11 @@ export class AuthenticationService {
     let requestObservable:Observable<any>
     this.rootDataService.showLoadingPanel = true;
     if (authtoken) {
-      requestObservable = this.httpService.requestGeneralLogin("");
+      requestObservable = this.httpService.requestAuthTokenLogin(JSON.stringify({"authtoken":authtoken}));
     } else {
       if (username === "whistleblower") {
-        requestObservable = this.httpService.requestGeneralLogin("");
+        password = password.replace(/\D/g,"");
+        requestObservable = this.httpService.requestWhistleBlowerLogin(JSON.stringify({"receipt": password}));
       } else {
         requestObservable = this.httpService.requestGeneralLogin(JSON.stringify({"tid":tid,"username":username,"password":password,"authcode":authcode}));
       }
@@ -98,21 +105,25 @@ export class AuthenticationService {
           } else {
             if (this.session.role === "whistleblower") {
               if (password) {
+                this.rootDataService.receipt = password
                 this.rootDataService.page="tippage";
-                location.replace("/");
+                this.router.navigate(['/']).then(r => {});
               }
             } else {
               this.router.navigate([this.session.homepage]).then(r => {});
             }
           }
+          if (callback) {
+            callback()
+          }
         },
         error: (error: any) => {
           this.loginInProgress = false;
           this.rootDataService.showLoadingPanel = false
-          if (error.data && error.data.error_code) {
-            if (error.data.error_code === 4) {
+          if (error.error && error.error.error_code) {
+            if (error.error.error_code === 4) {
               this.requireAuthCode = true;
-            } else if (error.data.error_code !== 13) {
+            } else if (error.error.error_code !== 13) {
               this.reset();
             }
           }
@@ -122,12 +133,14 @@ export class AuthenticationService {
     );
   }
 
-  public getHeader(){
+  public getHeader(confirmation?:string){
     let header = new Map<string, string>();
-
     if (this.session) {
       header.set("X-Session", this.session.id);
       header.set("Accept-Language", "en");
+    }
+    if(confirmation){
+      header.set("X-Confirmation", confirmation);
     }
 
     return header;
@@ -138,6 +151,7 @@ export class AuthenticationService {
     requestObservable.subscribe(
       {
         next: response => {
+          let xx = response.data;
           if (this.session.role === "whistleblower") {
             this.deleteSession();
             this.rootDataService.page="homepage";
@@ -162,13 +176,11 @@ export class AuthenticationService {
 
     if (source_path !== "/login") {
       location.replace("/login");
-
-      //window.location = (<any>this.location)._platformLocation.location.href;
-      //window.location.reload();
+      window.location.reload();
     }
   };
 
-  constructor(public httpService: HttpService, public rootDataService:AppDataService, private router: Router, private translateService:TranslateService, private location:LocationStrategy, private httpClient: HttpClient) {
+  constructor(public httpService: HttpService, public rootDataService:AppDataService, private router: Router) {
     let json = window.sessionStorage.getItem("session")
     if(json!=null){
       this.session = JSON.parse(json);

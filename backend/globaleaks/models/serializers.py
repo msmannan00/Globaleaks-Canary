@@ -115,7 +115,8 @@ def serialize_ifile(session, ifile):
         'name': ifile.name,
         'size': ifile.size,
         'type': ifile.content_type,
-        'filename': ifile.filename
+        'filename': ifile.filename,
+        'reference':ifile.reference
     }
 
 
@@ -134,7 +135,8 @@ def serialize_rfile(session, ifile, rfile):
         'name': ifile.name,
         'size': ifile.size,
         'type': ifile.content_type,
-        'filename': rfile.filename
+        'filename': rfile.filename,
+        'reference':ifile.reference
     }
 
 
@@ -180,6 +182,7 @@ def serialize_itip(session, internaltip, language):
         'questionnaires': questionnaires,
         'tor': internaltip.tor,
         'mobile': internaltip.mobile,
+        'reminder_date' : internaltip.reminder_date,
         'enable_two_way_comments': internaltip.enable_two_way_comments,
         'enable_two_way_messages': internaltip.enable_two_way_messages,
         'enable_attachments': internaltip.enable_attachments,
@@ -232,7 +235,6 @@ def serialize_rtip(session, itip, rtip, language):
     ret['custodian'] = State.tenants[itip.tid].cache['enable_custodian']
     ret['important'] = itip.important
     ret['label'] = itip.label
-
     ret['enable_notifications'] = rtip.enable_notifications
 
     iar = session.query(models.IdentityAccessRequest) \

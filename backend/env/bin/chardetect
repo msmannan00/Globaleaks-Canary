@@ -1,4 +1,6 @@
-#!/home/morgan/Workspace/GlobaLeaks/backend/env/bin/python3
+#!/bin/sh
+'''exec' "/home/morgan-freeman/Workspace/Globaleaks Fraudline/GlobaLeaks-fork-repository/backend/env/bin/python3" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys

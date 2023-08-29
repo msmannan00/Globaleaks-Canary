@@ -1,0 +1,14 @@
+.btn-primary {
+	/* background-color: #377abc;
+	border-color: #9fc9f1; */
+	background-color: #2866a2;
+	border-color: #2866a2;
+}
+
+.btn-primary:disabled {
+	background-color: #2866a2;
+	border-color: #2866a2;
+}
+.btn{
+	margin-right: 5px;
+}

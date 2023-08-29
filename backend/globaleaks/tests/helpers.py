@@ -279,6 +279,7 @@ class MockDict:
             'additional_questionnaire_id': '',
             'select_all_receivers': True,
             'tip_timetolive': 20,
+            'tip_reminder': 80,
             'maximum_selectable_receivers': 0,
             'show_context': True,
             'show_recipients_details': True,
@@ -354,12 +355,13 @@ class MockDict:
             'two_factor': False,
             'encryption': False,
             'escrow': False,
-            'multisite': False,
             'adminonly': False,
             'basic_auth': False,
             'basic_auth_username': '',
             'basic_auth_password': '',
             'custom_support_url': '',
+            'pgp': False,
+            'viewer': False
         }
 
         self.dummyNetwork = {
@@ -1017,6 +1019,16 @@ class TestHandler(TestGLWithPopulatedDB):
 
 class TestCollectionHandler(TestHandler):
     @inlineCallbacks
+    def setUp(self):
+        yield TestHandler.setUp(self)
+        yield self.fill_data()
+
+    @inlineCallbacks
+    def fill_data(self):
+        # fill_data/create_admin
+        self.dummyAdmin = yield create_user(1, None, self.dummyAdmin, 'en')
+
+    @inlineCallbacks
     def test_get(self):
         if not self._test_desc:
             return
@@ -1050,6 +1062,16 @@ class TestCollectionHandler(TestHandler):
 
 
 class TestInstanceHandler(TestHandler):
+    @inlineCallbacks
+    def setUp(self):
+        yield TestHandler.setUp(self)
+        yield self.fill_data()
+
+    @inlineCallbacks
+    def fill_data(self):
+        # fill_data/create_admin
+        self.dummyAdmin = yield create_user(1, None, self.dummyAdmin, 'en')
+
     @inlineCallbacks
     def test_get(self):
         if not self._test_desc:

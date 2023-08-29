@@ -160,6 +160,9 @@ def db_create_submission(session, tid, request, user_session, client_using_tor, 
     if context.tip_timetolive > 0:
         itip.expiration_date = get_expiration(context.tip_timetolive)
 
+    if context.tip_reminder > 0:
+        itip.reminder_date = get_expiration(context.tip_reminder)
+
     # Evaluate the score level
     itip.score = request['score']
 
@@ -227,6 +230,7 @@ def db_create_submission(session, tid, request, user_session, client_using_tor, 
         new_file.internaltip_id = itip.id
         new_file.filename = uploaded_file['filename']
         new_file.submission = uploaded_file['submission']
+        new_file.reference = uploaded_file['reference']
         session.add(new_file)
 
     for user in receivers:

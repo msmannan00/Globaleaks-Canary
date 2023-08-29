@@ -1,16 +1,18 @@
-import {Injectable, Input} from '@angular/core';
-import {HttpService} from "./internal/http.service";
+import {Injectable, OnInit} from '@angular/core';
+import {HttpService} from "../shared/services/http.service";
 import {TranslateService} from "@ngx-translate/core";
-import {UtilsService} from "./utils.service";
+import {UtilsService} from "../shared/services/utils.service";
 import {AppDataService} from "../app-data.service";
-import {FieldUtilitiesService} from "./field-utilities.service";
-import {GLTranslationService} from "./gltranslation.service";
+import {FieldUtilitiesService} from "../shared/services/field-utilities.service";
+import {TranslationService} from "./translation.service";
+import {Route, Router,NavigationEnd, ActivatedRoute} from "@angular/router";
+import {PreferenceResolver} from "../shared/resolvers/preference.resolver";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AppConfigService{
-
+export class AppConfigService implements OnInit{
+  public sidebar: string= '';
   initTranslation(){
     this.translateService.setDefaultLang('en');
     this.translateService.use('en');
@@ -24,11 +26,16 @@ export class AppConfigService{
     this.rootDataService.page = page
   }
 
-  private localInitialization(){
+  hello(){
+
+  }
+
+  private localInitialization(callback?: () => void){
 
     this.appServices.getPublicResource().subscribe({
       next: data => {
         this.rootDataService.public = data.body;
+
         //this.translateService.setDefaultLang(this.rootDataService.public.node.default_language);
         //this.translateService.use(this.rootDataService.public.node.default_language);
         //this.utilsService.routeCheck()
@@ -69,20 +76,22 @@ export class AppConfigService{
         this.rootDataService.receivers_by_id = this.utilsService.array_to_map(this.rootDataService.public.receivers);
         this.rootDataService.questionnaires_by_id = this.utilsService.array_to_map(this.rootDataService.public.questionnaires);
 
+
         this.rootDataService.submission_statuses = this.rootDataService.public.submission_statuses;
         this.rootDataService.submission_statuses_by_id = this.utilsService.array_to_map(this.rootDataService.public.submission_statuses);
 
-        this.rootDataService.questionnaires_by_id.forEach((element: any, key: number) => {
-          //this.fieldUtilitiesService.parseQuestionnaire(this.rootDataService.questionnaires_by_id.get(key), {})
-          this.rootDataService.questionnaires_by_id.get(key).steps = this.rootDataService.questionnaires_by_id.get(key).steps.sort((a:any,b:any)=>a.order > b.order)
-        });
 
-        this.rootDataService.contexts_by_id.forEach((element: any, key: string) => {
-          this.rootDataService.contexts_by_id.get(key).questionnaire = this.rootDataService.questionnaires_by_id[this.rootDataService.contexts_by_id.get(key).questionnaire_id];
-          if (this.rootDataService.contexts_by_id.get(key).additional_questionnaire_id) {
-            this.rootDataService.contexts_by_id.get(key).additional_questionnaire = this.rootDataService.questionnaires_by_id[this.rootDataService.contexts_by_id.get(key).additional_questionnaire_id];
+        for (let [key, element] of Object.entries(this.rootDataService.questionnaires_by_id)) {
+          this.fieldUtilitiesService.parseQuestionnaire(this.rootDataService.questionnaires_by_id[key], {})
+          this.rootDataService.questionnaires_by_id[key].steps = this.rootDataService.questionnaires_by_id[key].steps.sort((a:any,b:any)=>a.order > b.order)
+        }
+
+        for (let [key, element] of Object.entries(this.rootDataService.contexts_by_id)) {
+          this.rootDataService.contexts_by_id[key].questionnaire = this.rootDataService.questionnaires_by_id[this.rootDataService.contexts_by_id[key].questionnaire_id];
+          if (this.rootDataService.contexts_by_id[key].additional_questionnaire_id) {
+            this.rootDataService.contexts_by_id[key].additional_questionnaire = this.rootDataService.questionnaires_by_id[this.rootDataService.contexts_by_id[key].additional_questionnaire_id];
           }
-        });
+        }
 
         this.rootDataService.connection = {
           "tor": data.headers["X-Check-Tor"] === "true" || location.host.match(/\.onion$/),
@@ -106,14 +115,103 @@ export class AppConfigService{
           }
         });
 
-        this.glTranslationService.addNodeFacts(this.rootDataService.public.node.default_language, this.rootDataService.public.node.languages_enabled)
-        this.utilsService.setTitle()
+        if(this.preferenceResolver.dataModel && this.preferenceResolver.dataModel.language){
+          setTimeout(() => {
+            this.glTranslationService.onChange(this.preferenceResolver.dataModel.language)
+          }, 250);
+        }else {
+          this.glTranslationService.onChange(this.rootDataService.public.node.default_language)
+        }
+
+        this.setTitle()
         this.rootDataService.started = true;
+        if(callback){
+          callback()
+        }
+      }
+    });
+  }
+  setTitle(){
+    if (!this.rootDataService.public) {
+      return;
+    }
+
+    let projectTitle = this.rootDataService.public.node.name, pageTitle = this.rootDataService.public.node.header_title_homepage;
+
+
+
+    if (location.pathname !== "/") {
+      pageTitle = "Globaleaks";
+    }
+
+    if(pageTitle.length>0){
+      pageTitle = this.translateService.instant(pageTitle);
+    }
+
+    this.rootDataService.projectTitle = projectTitle !== "GLOBALEAKS" ? projectTitle : "";
+    this.rootDataService.pageTitle = pageTitle !== projectTitle ? pageTitle : "";
+
+    if (pageTitle && pageTitle.length>0) {
+      pageTitle = this.translateService.instant("wow");
+      window.document.title = projectTitle + " - " + pageTitle;
+    } else {
+      window.document.title = projectTitle;
+    }
+
+    let element = window.document.getElementsByName("description")[0]
+    if (element instanceof HTMLMetaElement) {
+      element.content = this.rootDataService.public.node.description;
+    }
+  }
+  onRouteChange(){
+    this.router.events.subscribe(() => {
+      if(this.rootDataService.public.node){
+        if (!this.rootDataService.public.node.wizard_done) {
+          location.replace("/#/wizard");
+        }
+        else if(this.router.url == "/" && this.rootDataService.page == "signuppage"){
+          location.replace("/#/signup")
+        }
       }
     });
   }
 
-  constructor(public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public rootDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:GLTranslationService) {
-    this.localInitialization();
+  reloadRoute(newPath: string) {
+    const promise = () => {
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.router.navigated = false;
+      this.router.navigateByUrl(this.router.url).then(() => {
+        if (newPath) {
+          this.router.navigate([newPath], { replaceUrl: true });
+        }
+      });
+    };
+    this.localInitialization(promise)
+  }
+
+
+  
+  routeChangeListener() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        const currentRoute = this.activatedRoute.firstChild?.snapshot;
+        if (currentRoute?.data) {
+          this.sidebar = currentRoute.data['sidebar'];
+        }
+      }
+    });
+  }
+
+  reinit(){
+    this.localInitialization()
+    this.onRouteChange();
+  }
+
+  constructor(private preferenceResolver:PreferenceResolver, private router: Router,private activatedRoute: ActivatedRoute, public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public rootDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService)  {
+    this.localInitialization()
+    this.onRouteChange();
+  }
+
+  ngOnInit(): void {
   }
 }

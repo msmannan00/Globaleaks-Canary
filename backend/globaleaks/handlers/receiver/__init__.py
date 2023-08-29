@@ -101,6 +101,7 @@ def get_receivertips(session, tid, receiver_id, user_key, language, args={}):
             'last_access': itip.last_access,
             'update_date': itip.update_date,
             'expiration_date': itip.expiration_date,
+            'reminder_date': itip.reminder_date,
             'progressive': itip.progressive,
             'important': itip.important,
             'label': itip.label,

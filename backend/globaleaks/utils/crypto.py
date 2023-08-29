@@ -2,6 +2,7 @@
 import base64
 import binascii
 import os
+import pyotp
 import random
 import secrets
 import string
@@ -83,13 +84,10 @@ def generateRandomPassword(N: int) -> str:
     return password
 
 
-def generate2FA():
-    return ''.join(secrets.SystemRandom().choice(string.digits) for _ in range(8))
-
-
 def totpVerify(secret: str, token: str) -> None:
-    totp = TOTP(base64.b32decode(secret), 6, hashes.SHA1(), 30, crypto_backend, enforce_key_length=False)
-    totp.verify(token.encode(), time.time())
+    # RFC 6238: step size 30 sec; valid_window = 1; total size of the window: 1.30 sec
+    if not pyotp.TOTP(secret).verify(token, valid_window=1):
+        raise Error
 
 
 def _hash_scrypt(password: bytes, salt: bytes) -> str:

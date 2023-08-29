@@ -1,61 +1,110 @@
 import { NgModule } from '@angular/core';
-import { AuthRoutingModule } from './auth/auth-routing.module';
-import {AdminRoutingModule} from "./admin/admin-routing.module";
+import { AuthRoutingModule } from './pages/auth/auth-routing.module';
+import {AdminRoutingModule} from "./pages/admin/admin-routing.module";
 import {RouterModule, Routes} from "@angular/router";
 import {SessionGuard} from "./app-guard.service";
-import { HomeComponent } from './dashboard/home/home.component';
-import {PasswordResetResponseComponent} from "./auth/password-reset-response/password-reset-response.component";
-import {RecipientRoutingModule} from "./recipient/recipient-routing.module";
-import {PreferenceResolver} from "./dataResolvers/preference.resolver";
-import {RecieverTipResolver} from "./dataResolvers/reciever-tip.resolver";
-import {JobsResolver} from "./dataResolvers/jobs.resolver";
-import {SubmissionStatusResolver} from "./dataResolvers/submission-status.resolver";
-import {QuestionareResolver} from "./dataResolvers/questionare.resolver";
-import {AdminAuditLOgResolver} from "./dataResolvers/admin-audit-log.resolver";
-import {AdminNodeResolver} from "./dataResolvers/admin-node.resolver";
-import {AdminContextResolver} from "./dataResolvers/admin-context.resolver";
-import {AdminFieldTemplateResolver} from "./dataResolvers/admin-field-template.resolver";
-import {AdminUserResolver} from "./dataResolvers/admin-user.resolver";
-import {AdminNetworkResolver} from "./dataResolvers/admin-network.resolver";
-import {AdminNotificationResolver} from "./dataResolvers/admin-notification.resolver";
-import {AdminRedirectResolver} from "./dataResolvers/admin-redirect.resolver";
-import {AdminTenantResolver} from "./dataResolvers/admin-tenant.resolver";
-import {TipCollectionResolver} from "./dataResolvers/tip-collection.resolver";
-import {AppConfigService} from "./services/app-config.service";
-import {AppModule} from "./app.module";
+import { HomeComponent } from './pages/dashboard/home/home.component';
+import {PasswordResetResponseComponent} from "./pages/auth/password-reset-response/password-reset-response.component";
+import {RecipientRoutingModule} from "./pages/recipient/recipient-routing.module";
+import {PreferenceResolver} from "./shared/resolvers/preference.resolver";
+import {ActionRoutingModule} from "./pages/action/action-routing.module";
+import {SignupRoutingModule} from "./pages/signup/signup-routing.module";
+import {Pageguard} from "./shared/guards/pageguard.service";
+import {ActivationComponent} from "./pages/signup/templates/activation/activation.component";
+import {WizardRoutingModule} from "./pages/wizard/wizard-routing.module";
+import { NodeResolver } from './shared/resolvers/node.resolver';
+import { RtipsResolver } from './shared/resolvers/rtips.resolver';
+import { TipComponent } from './pages/recipient/tip/tip.component';
+import { UsersResolver } from './shared/resolvers/users.resolver';
+import { QuestionnairesResolver } from './shared/resolvers/questionnaires.resolver';
+import {AuditlogResolver} from "./shared/resolvers/auditlog.resolver";
+import {JobResolver} from "./shared/resolvers/job.resolver";
+import {TipsResolver} from "./shared/resolvers/tips.resolver";
+import { ContextsResolver } from './shared/resolvers/contexts.resolver';
+import { NotificationsResolver } from './shared/resolvers/notifications.resolver';
+
 
 const routes: Routes = [
   {
-    path: '',
-    component: HomeComponent,
-    resolve: {
-      preferences: PreferenceResolver
-    },
+    path: 'routing',
     pathMatch: 'full',
   },
   {
+    path: '',
+    canActivate: [Pageguard],
+    component: HomeComponent,
+    resolve: {
+    },
+    pathMatch: 'full',
+   
+  },
+  {
     path: 'login',
+    
+    resolve: {
+      PreferenceResolver
+    },
     loadChildren: () => AuthRoutingModule,
+  },
+  {
+    path: 'signup',
+    resolve: {
+      PreferenceResolver
+    },
+    loadChildren: () => SignupRoutingModule,
+   
+  },
+  {
+    path: 'action',
+    resolve: {
+      PreferenceResolver
+    },
+    loadChildren: () => ActionRoutingModule,
   },
   {
     path: 'recipient',
     canActivate: [SessionGuard],
     resolve: {
-      preferences: PreferenceResolver
+       PreferenceResolver,NodeResolver,RtipsResolver
     },
     loadChildren: () => RecipientRoutingModule,
+    data:{
+      sidebar: 'recipient-sidebar'
+    }
   },
   {
     path: 'admin',
     canActivate: [SessionGuard],
     resolve: {
-      preferences: PreferenceResolver
+      NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver, ContextsResolver,AuditlogResolver, JobResolver, TipsResolver,NotificationsResolver
     },
     loadChildren: () => AdminRoutingModule,
+    data:{
+      sidebar: 'admin-sidebar'
+    }
   },
   {
     path: 'password/reset',
     component: PasswordResetResponseComponent,
+  },
+  {
+    path: 'activation',
+    component: ActivationComponent,
+  },
+  {
+    path: 'wizard',
+    resolve: {
+      PreferenceResolver
+    },
+    loadChildren: () => WizardRoutingModule,
+  },
+  {
+    path: 'status/:tip_id',
+    component: TipComponent,
+    pathMatch: 'full',
+    resolve: {
+      PreferenceResolver,NodeResolver,RtipsResolver
+   },
   }
 ];
 

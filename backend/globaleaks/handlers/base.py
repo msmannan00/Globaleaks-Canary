@@ -58,11 +58,13 @@ def connection_check(tid, role, client_ip, client_using_tor):
     :param client_ip: A client IP
     :param client_using_tor: A boolean for signaling Tor use
     """
-    ip_filter = State.tenants[tid].cache['ip_filter'].get(role)
-    if ip_filter and not check_ip(client_ip, ip_filter):
-        raise errors.AccessLocationInvalid
+    ip_filter_enabled = State.tenants[tid].cache.get('ip_filter_' + role + '_enable')
+    if ip_filter_enabled:
+        ip_filter = State.tenants[tid].cache.get('ip_filter_' + role)
+        if not check_ip(client_ip, ip_filter):
+            raise errors.AccessLocationInvalid
 
-    https_allowed = State.tenants[tid].cache['https_allowed'].get(role)
+    https_allowed = State.tenants[tid].cache['https_' + role]
     if not https_allowed and not client_using_tor:
         raise errors.TorNetworkRequired
 
@@ -93,6 +95,7 @@ class BaseHandler(object):
     upload_handler = False
     uploaded_file = None
     allowed_mimetypes = []
+    encryption_type = ''
 
     def __init__(self, state, request):
         self.name = type(self).__name__
@@ -354,7 +357,6 @@ class BaseHandler(object):
             mime_type = 'application/octet-stream'
 
         filename = os.path.basename(self.request.args[b'flowFilename'][0].decode())
-
         self.uploaded_file = {
             'id': file_id,
             'date': datetime_now(),
@@ -365,6 +367,11 @@ class BaseHandler(object):
             'body': f,
             'description': self.request.args.get(b'description', [''])[0]
         }
+
+        if b'encryption_type' in self.request.args:
+            updated_encryption_type = self.request.args[b'encryption_type'][0].decode()
+            self.uploaded_file['reference'] = self.request.args.get( b'reference')[0].decode()
+            setattr(BaseHandler, 'encryption_type', updated_encryption_type)
 
     def write_upload_plaintext_to_disk(self, destination):
         """

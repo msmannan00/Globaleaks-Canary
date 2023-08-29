@@ -26,6 +26,7 @@ def admin_serialize_context(session, context, language):
         'id': context.id,
         'hidden': context.hidden,
         'tip_timetolive': context.tip_timetolive,
+        'tip_reminder': context.tip_reminder,
         'select_all_receivers': context.select_all_receivers,
         'maximum_selectable_receivers': context.maximum_selectable_receivers,
         'show_recipients_details': context.show_recipients_details,

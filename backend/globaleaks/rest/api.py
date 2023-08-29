@@ -34,7 +34,8 @@ from globaleaks.handlers import custodian, \
                                 sitemap, \
                                 support, \
                                 staticfile, \
-                                security
+                                security, \
+                                viewer
 
 from globaleaks.handlers.admin import context as admin_context
 from globaleaks.handlers.admin import field as admin_field
@@ -97,6 +98,7 @@ api_spec = [
 
     # Whistleblower Tip Handlers
     (r'/api/wbtip', wbtip.WBTipInstance),
+    (r'/api/rtip/answer/rfile/' + uuid_regexp, wbtip.WBTipRFileDownload),
     (r'/api/wbtip/comments', wbtip.WBTipCommentCollection),
     (r'/api/wbtip/messages/' + uuid_regexp, wbtip.WBTipMessageCollection),
     (r'/api/wbtip/rfile', attachment.PostSubmissionAttachment),
@@ -173,6 +175,8 @@ api_spec = [
     (r'/l10n/(' + '|'.join(LANGUAGES_SUPPORTED_CODES) + ')', l10n.L10NHandler),
 
     (r'^(/admin|/login|/submission)$', redirect.SpecialRedirectHandler),
+
+    (r'/(viewer/[a-zA-Z0-9_\-\/\.\@]*)', viewer.ViewerHandler),
 
     # This handler attempts to route all non routed get requests
     (r'/([a-zA-Z0-9_\-\/\.\@]*)', staticfile.StaticFileHandler)
@@ -497,29 +501,24 @@ class APIResourceWrapper(Resource):
         if not State.settings.disable_csp:
             request.setHeader(b'Content-Security-Policy',
                               b"base-uri 'none';"
-                              b"connect-src 'self';"
                               b"default-src 'none';"
-                              b"font-src 'self' data:;"
                               b"form-action 'none';"
                               b"frame-ancestors 'none';"
-                              b"img-src 'self' data:;"
-                              b"media-src 'self';"
-                              b"script-src 'self' 'sha256-l4srTx31TC+tE2K4jVVCnC9XfHivkiSs/v+DPWccDDM=';"
-                              b"style-src 'self' 'sha256-fwyo2zCGlh85NfN4rQUlpLM7MB5cry/1AEDA/G9mQJ8=';")
+                              b"sandbox;")
 
             request.setHeader(b"Cross-Origin-Embedder-Policy", "require-corp")
             request.setHeader(b"Cross-Origin-Opener-Policy", "same-origin")
-            request.setHeader(b"Cross-Origin-Resource-Policy", "same-site")
+            request.setHeader(b"Cross-Origin-Resource-Policy", "same-origin")
 
-        # Disable features that could be used to deanonymize the user
-        request.setHeader(b'Permissions-Policy', b"camera=(),"
-                                                 b"document-domain=(),"
-                                                 b"fullscreen=(),"
-                                                 b"geolocation=(),"
-                                                 b"microphone=()")
+            # Disable features that could be used to deanonymize the user
+            request.setHeader(b'Permissions-Policy', b"camera=(),"
+                                                     b"document-domain=(),"
+                                                     b"fullscreen=(),"
+                                                     b"geolocation=(),"
+                                                     b"microphone=()")
 
-        # Prevent old browsers not supporting CSP frame-ancestors directive to includes the platform within an iframe
-        request.setHeader(b'X-Frame-Options', b'deny')
+            # Prevent old browsers not supporting CSP frame-ancestors directive to includes the platform within an iframe
+            request.setHeader(b'X-Frame-Options', b'deny')
 
         # Prevent the browsers to implement automatic mime type detection and execution.
         request.setHeader(b'X-Content-Type-Options', b'nosniff')

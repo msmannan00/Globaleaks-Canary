@@ -22,6 +22,7 @@ class FileHandler(BaseHandler):
     Handler that provide public access to configuration files
     """
     check_roles = 'any'
+
     allowed_mimetypes = [
         'audio/mpeg',
         'font/ttf',

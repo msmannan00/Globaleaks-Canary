@@ -261,7 +261,6 @@ def db_serialize_node(session, tid, language):
     ret['languages_enabled'] = languages if ret['wizard_done'] else list(LANGUAGES_SUPPORTED_CODES)
     ret['languages_supported'] = LANGUAGES_SUPPORTED
 
-    ret['script'] = os.path.exists(os.path.abspath(os.path.join(State.settings.scripts_path, str(tid))))
     for x in special_files:
         ret[x] = session.query(models.File.id).filter(models.File.tid == tid, models.File.name == x).one_or_none()
 
@@ -286,9 +285,6 @@ def db_serialize_node(session, tid, language):
             ret['whistleblowing_button'] = root_tenant_l10n.get_val('whistleblowing_button', language)
             ret['disclaimer_text'] = root_tenant_l10n.get_val('disclaimer_text', language)
 
-            if not ret['script']:
-                ret['script'] = os.path.exists(os.path.abspath(os.path.join(State.settings.scripts_path, "1")))
-
             for x in special_files:
                 if not ret[x]:
                     ret[x] = session.query(models.File.id).filter(models.File.tid == 1, models.File.name == x).one_or_none()
@@ -310,6 +306,7 @@ def serialize_context(session, context, language, data=None):
         'hidden': context.hidden,
         'order': context.order,
         'tip_timetolive': context.tip_timetolive,
+        'tip_reminder': context.tip_reminder,
         'select_all_receivers': context.select_all_receivers,
         'maximum_selectable_receivers': context.maximum_selectable_receivers,
         'show_recipients_details': context.show_recipients_details,
@@ -370,6 +367,10 @@ def serialize_field_attr(attr, language):
         ret['value'] = '0'
     elif ret['name'] == 'max_len' and ret['value'] <= '-1':
         ret['value'] = '4096'
+    elif ret['name'] == 'min_time' and ret['value'] <= '-1':
+        ret['value'] = '10'
+    elif ret['name'] == 'max_time' and ret['value'] <= '-1':
+        ret['value'] = '60'
 
     if attr.type == 'localized':
         get_localized_values(ret, ret, ['value'], language)

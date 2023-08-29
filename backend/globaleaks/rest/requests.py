@@ -44,6 +44,7 @@ field_type_regexp = (r'^('
                      'checkbox|'
                      'tos|'
                      'fileupload|'
+                     'audioUpload|'
                      'number|'
                      'email|'
                      'date|'
@@ -230,9 +231,10 @@ AdminNodeDesc = {
     'log_accesses_of_internal_users': bool,
     'two_factor': bool,
     'encryption': bool,
-    'multisite': bool,
     'adminonly': bool,
-    'custom_support_url': url_regexp_or_empty
+    'custom_support_url': url_regexp_or_empty,
+    'pgp': bool,
+    'viewer': bool
 }
 
 AdminNetworkDesc = {
@@ -349,6 +351,7 @@ AdminContextDesc = {
     'description': str,
     'maximum_selectable_receivers': int,
     'tip_timetolive': int,
+    'tip_reminder': int,
     'receivers': [uuid_regexp],
     'select_all_receivers': bool,
     'show_recipients_details': bool,
@@ -487,6 +490,7 @@ ContextDesc = {
     'receivers': [uuid_regexp],
     'select_all_receivers': bool,
     'tip_timetolive': int,
+    'tip_reminder': int,
     'show_recipients_details': bool,
     'allow_recipients_selection': bool,
     'maximum_selectable_receivers': int,
