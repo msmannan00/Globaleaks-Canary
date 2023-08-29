@@ -11,6 +11,7 @@ backend/globaleaks/tests/*
 *.sublime-workspace
 
 # Miscellaneous
+backend/env/
 client/editorconfig
 client/package-lock.json
 client/README.md
@@ -365,3 +366,4 @@ backend/requirements/requirements-buster.txt
 backend/requirements/requirements-focal.txt
 backend/requirements/requirements-jammy.txt
 backend/setup.cfg
+backend/env/share/txtorcon/txtorcon.rst

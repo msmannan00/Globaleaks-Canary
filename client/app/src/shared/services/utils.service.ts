@@ -31,6 +31,21 @@ export class UtilsService {
     return result;
   }
 
+  newItemOrder(objects: any[], key: string): number {
+    if (objects.length === 0) {
+      return 0;
+    }
+
+    let max = 0;
+    objects.forEach(object => {
+      if (object[key] > max) {
+        max = object[key];
+      }
+    });
+
+    return max + 1;
+  }
+
   role_l10n(role: string) {
     var ret = "";
 
@@ -122,6 +137,7 @@ export class UtilsService {
       this.router.navigate([currentUrl]);
     });
   }
+
   showWBLoginBox() {
     return location.pathname === "/submission";
   }
@@ -449,6 +465,13 @@ export class UtilsService {
   }
   deleteAdminContext(user_id:any){
     return this.httpService.requestDeleteAdminContext(user_id)
+  }
+  deleteStatus(user_id:any){
+    return this.httpService.requestDeleteStatus(user_id)
+  }
+
+  deleteSubStatus(url:string){
+    return this.httpService.requestDeleteStatus(url)
   }
   new_context(): contextResolverModel {
     const context = new contextResolverModel();

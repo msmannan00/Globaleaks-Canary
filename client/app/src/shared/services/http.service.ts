@@ -233,6 +233,12 @@ export class HttpService {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.post(`api/rtips/${id}/messages`, param, { 'headers': headers })
   }
+
+  addSubmissionStatus(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.post(`api/admin/submission_statuses`, param, { 'headers': headers })
+  }
+
   accessIdentity(id: any): Observable<any> {
     return this.httpClient.post(`api/rtips/${id}/iars`, { "request_motivation": "" });
   }
@@ -256,6 +262,14 @@ export class HttpService {
   requestDeleteAdminContext(id: any): Observable<any> {
     return this.httpClient.delete("api/admin/contexts/" + id);
   }
+  requestDeleteStatus(url:string): Observable<any> {
+    return this.httpClient.delete(url);
+  }
+
+  requestDeleteSubStatus(id: any): Observable<any> {
+    return this.httpClient.delete("api/admin/submission_statuses/" + id);
+  }
+
   runOperation(url: string, operation: string, args: any, refresh: boolean) {
 
     const data = {

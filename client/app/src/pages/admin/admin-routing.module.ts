@@ -4,6 +4,7 @@ import { HomeComponent } from "./home/home.component";
 import { SettingsModule } from './settings/settings.module';
 import { UsersModule } from './users/users.module';
 import { ContextsModule } from './contexts/contexts.module';
+import {CasemanagementModule} from "./casemanagement/casemanagement.module";
 
 const routes: Routes = [
   {
@@ -24,6 +25,11 @@ const routes: Routes = [
   {
     path: 'contexts',
     loadChildren: () => ContextsModule,
+    pathMatch: 'full',
+  },
+  {
+    path: 'casemanagement',
+    loadChildren: () => CasemanagementModule,
     pathMatch: 'full',
   },
 

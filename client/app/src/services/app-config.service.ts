@@ -202,6 +202,11 @@ export class AppConfigService implements OnInit{
     });
   }
 
+  reinit(){
+    this.localInitialization()
+    this.onRouteChange();
+  }
+
   constructor(private preferenceResolver:PreferenceResolver, private router: Router,private activatedRoute: ActivatedRoute, public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public rootDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService)  {
     this.localInitialization()
     this.onRouteChange();

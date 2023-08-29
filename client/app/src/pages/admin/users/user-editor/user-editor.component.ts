@@ -92,9 +92,7 @@ export class UserEditorComponent implements OnInit {
     this.dataToParent.emit();
   }
   deleteUser(user: any) {
-    // this.utilsService.deleteDialog()
     this.openConfirmableModalDialog(user,"")
-    
   }
   openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
     scope = !scope ? this : scope;
