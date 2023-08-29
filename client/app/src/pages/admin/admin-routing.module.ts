@@ -5,6 +5,8 @@ import { SettingsModule } from './settings/settings.module';
 import { UsersModule } from './users/users.module';
 import { ContextsModule } from './contexts/contexts.module';
 import {CasemanagementModule} from "./casemanagement/casemanagement.module";
+import { AuditlogModule } from './auditlog/auditlog.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 const routes: Routes = [
   {
@@ -30,6 +32,16 @@ const routes: Routes = [
   {
     path: 'casemanagement',
     loadChildren: () => CasemanagementModule,
+    pathMatch: 'full',
+  }
+  {
+    path: 'auditlog',
+    loadChildren: () => AuditlogModule,
+    pathMatch: 'full',
+  },
+  {
+    path: 'notifications',
+    loadChildren: () => NotificationsModule,
     pathMatch: 'full',
   },
 
