@@ -31,7 +31,6 @@ export class SubstatusesComponent implements OnInit{
       label: this.new_substatus,
       order: order
     };
-    alert(JSON.stringify(new_submissions_substatuses))
 
     this.http.post<any>(
         `api/admin/submission_statuses/${this.submissions_status.id}/substatuses`,
