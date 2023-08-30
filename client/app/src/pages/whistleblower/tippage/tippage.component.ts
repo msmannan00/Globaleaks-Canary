@@ -211,11 +211,11 @@ export class TippageComponent {
           {
             next: response => {
               clearInterval(intervalId); // Clear the interval
-              this.utilsService.reloadCurrentRoute();alert("y5");
+              this.utilsService.reloadCurrentRoute();
             },
             error: (error: any) => {
               clearInterval(intervalId); // Clear the interval
-              this.utilsService.reloadCurrentRoute();alert("y164");
+              this.utilsService.reloadCurrentRoute();
             }
           }
       );

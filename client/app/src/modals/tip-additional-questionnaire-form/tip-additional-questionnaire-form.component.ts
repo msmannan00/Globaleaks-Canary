@@ -200,8 +200,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
       (
           {
             next: response => {
-              alert("abc1")
-              this.utilsService.reloadCurrentRoute();alert("y14");
+              this.utilsService.reloadCurrentRoute();
             },
             error: (error: any) => {
             }

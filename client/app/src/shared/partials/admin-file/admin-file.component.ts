@@ -49,7 +49,7 @@ export class AdminFileComponent implements AfterViewInit, OnDestroy {
   delete_file(url: string): void {
     this.utilsService.deleteFile(url).subscribe(
       () => {
-        this.utilsService.reloadCurrentRoute();alert("xx17");
+        this.utilsService.reloadCurrentRoute();
       },
       (error) => {
         console.error('Error deleting file:', error);

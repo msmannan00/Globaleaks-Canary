@@ -24,7 +24,7 @@ export class WbfilesComponent implements OnInit{
           (
               {
                   next: async token => {
-                      this.utilsService.reloadCurrentRoute();alert("y25");
+                      this.utilsService.reloadCurrentRoute();
                   },
                   error: (error: any) => {
                   }

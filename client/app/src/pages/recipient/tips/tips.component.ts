@@ -146,7 +146,7 @@ export class TipsComponent implements OnInit {
 
 
   reload() {
-    this.utils.reloadCurrentRoute();alert("xx9");
+    this.utils.reloadCurrentRoute();
   }
   tipSwitch(id: number): void {
     this.index = this.selectedTips.indexOf(id);

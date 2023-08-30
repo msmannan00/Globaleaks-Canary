@@ -132,7 +132,7 @@ export class TipComponent {
   }
 
   reload(): void {
-    this.utils.reloadCurrentRoute();alert("y3");
+    this.utils.reloadCurrentRoute();
   }
   filterNotTriggeredField(parent: any, field: any, answers: any): void {
     let i;

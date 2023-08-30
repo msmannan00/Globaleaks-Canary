@@ -43,7 +43,7 @@ export class UsersComponent implements OnInit{
     }
   }
   handleDataFromChild(data: string) {
-    this.utilsService.reloadCurrentRoute();alert("y2");
+    this.utilsService.reloadCurrentRoute();
   }
   add_user(): void {
     var user: userResolverModel = this.utilsService.new_user();

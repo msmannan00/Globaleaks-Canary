@@ -41,7 +41,6 @@ export class ContextsComponent implements OnInit {
     })
   }
   handleDataFromChild(data: string) {
-    alert("abc2")
     this.utilsService.reloadCurrentRoute()
   }
   newItemOrder(objects: any[], key: string): number {
