@@ -21,14 +21,14 @@ export class LoginComponent implements OnInit{
       if("token" in params){
         let token = params['token'];
         this.authentication.login(0, "", "", "", token);
+      }else {
+        if(this.authentication.session !== undefined && this.authentication.session.homepage){
+          this.router.navigateByUrl(this.authentication.session.homepage).then(response => {})
+        }
       }
     });
   };
 
   constructor(public appConfig: AppConfigService, public authentication: AuthenticationService, private router: Router,private route: ActivatedRoute, private builder: FormBuilder, public appDataService:AppDataService) {
-
-    if(this.authentication.session !== undefined && this.authentication.session.homepage){
-      this.router.navigateByUrl(this.authentication.session.homepage).then(response => {})
-    }
   }
 }

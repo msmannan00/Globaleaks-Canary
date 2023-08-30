@@ -64,7 +64,8 @@ export class Tab2Component implements OnInit {
       const flowJsInstance = new Flow({ target: 'api/admin/files/custom', speedSmoothingFactor: 0.01, singleFile: true, allowDuplicateUploads: false, testChunks: false, permanentErrors: [500, 501], headers: { 'X-Session': this.authenticationService.session.id } });
       flowJsInstance.addFile(file);
       flowJsInstance.upload();
-      this.utilsService.reloadCurrentRoute();
+      alert("abc6")
+      this.utilsService.reloadCurrentRoute();alert("xx5");
 
     }
   }
@@ -87,7 +88,8 @@ export class Tab2Component implements OnInit {
     this.utilsService.deleteFile(url).subscribe(
       () => {
         this.updateFiles();
-        this.utilsService.reloadCurrentRoute();
+        alert("abc5")
+        this.utilsService.reloadCurrentRoute();alert("xx6");
       },
       (error) => {
         console.error('Error deleting file:', error);

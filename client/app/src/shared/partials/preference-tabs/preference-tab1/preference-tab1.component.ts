@@ -71,10 +71,10 @@ export class PreferenceTab1Component implements OnInit{
                   {
                       next: response => {
                           this.preferenceResolver.dataModel.two_factor = !this.preferenceResolver.dataModel.two_factor
-                          this.utilsService.reloadCurrentRoute()
+                          this.utilsService.reloadCurrentRoute();alert("y23");
                       },
                       error: (error: any) => {
-                          this.utilsService.reloadCurrentRoute()
+                          this.utilsService.reloadCurrentRoute();alert("y24");
                       }
                   }
               )

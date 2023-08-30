@@ -17,11 +17,13 @@ export class SitesTab1Component implements OnInit{
   toggleAddTenant() {
     this.showAddTenant = !this.showAddTenant;
   }
-  constructor(private httpService: HttpService) {
+  constructor(private httpService: HttpService, private utilsService:UtilsService) {
   }
 
   addTenant(){
-    this.httpService.addTenant(this.newTenant).subscribe();
+    this.httpService.addTenant(this.newTenant).subscribe(res => {
+      this.utilsService.reloadCurrentRoute()
+    });
   }
 
   ngOnInit(): void {

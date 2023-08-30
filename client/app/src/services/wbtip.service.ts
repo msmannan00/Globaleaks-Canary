@@ -46,7 +46,7 @@ export class WbtipService {
     (
         {
           next: response => {
-            this.utilsService.reloadCurrentRoute()
+            this.utilsService.reloadCurrentRoute();alert("y10");
           },
           error: (error: any) => {
           }
@@ -60,7 +60,7 @@ export class WbtipService {
     (
         {
           next: response => {
-            this.utilsService.reloadCurrentRoute()
+            this.utilsService.reloadCurrentRoute();alert("y11");
           },
           error: (error: any) => {
           }

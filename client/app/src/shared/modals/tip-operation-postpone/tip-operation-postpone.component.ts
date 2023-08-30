@@ -51,7 +51,7 @@ export class TipOperationPostponeComponent {
         return;
     }
     reload() {
-        this.utils.reloadCurrentRoute();
+        this.utils.reloadCurrentRoute();alert("xx15");
     }
 
     cancel() {

@@ -22,7 +22,7 @@ export class TipOperationFileIdentityAccessRequestComponent {
     this.http.post("api/rtips/" + this.tipsService.tip.id + "/iars", {"request_motivation": this.request_motivation})
     .subscribe(
       response => {
-        this.utils.reloadCurrentRoute();
+        this.utils.reloadCurrentRoute();alert("xx13");
       },
       error => {
         console.error(error);
@@ -30,7 +30,7 @@ export class TipOperationFileIdentityAccessRequestComponent {
     );
   }
   reload() {
-    this.utils.reloadCurrentRoute();
+    this.utils.reloadCurrentRoute();alert("x14");
   }
 
   cancel() {

@@ -39,10 +39,9 @@ export class DeleteConfirmationComponent {
     if (this.selected_tips) {
       return this.utils.runRecipientOperation(this.operation, { "rtips": this.selected_tips }, true).subscribe({
         next: response => {
-          this.utils.reloadCurrentRoute()
+          this.utils.reloadCurrentRoute();alert("y21");
         },
         error: (error: any) => {
-          alert(JSON.stringify(error))
         }
       });
     } else {
@@ -52,7 +51,7 @@ export class DeleteConfirmationComponent {
   }
 
   reload() {
-    this.utils.reloadCurrentRoute();
+    this.utils.reloadCurrentRoute();alert("xx11");
   }
 
   cancel() {

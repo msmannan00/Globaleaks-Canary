@@ -56,7 +56,7 @@ export class Tab3Component implements OnInit {
 
   updateNode() {
     this.utilsService.update(this.node.dataModel).subscribe(res=>{
-      this.utilsService.reloadCurrentRoute();
+      this.utilsService.reloadCurrentRoute();alert("xx7");
     })
   }
   

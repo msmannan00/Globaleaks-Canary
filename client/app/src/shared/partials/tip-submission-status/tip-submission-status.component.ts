@@ -19,7 +19,7 @@ export class TipSubmissionStatusComponent implements OnInit {
     this.httpService.tipOperation('update_status', args, this.tipService.tip.id)
       .subscribe(
         () => {
-          this.utilsService.reloadCurrentRoute();
+          this.utilsService.reloadCurrentRoute();alert("xx18");
         }
       );
   };
@@ -28,7 +28,7 @@ export class TipSubmissionStatusComponent implements OnInit {
     this.httpService.tipOperation('update_status', args, this.tipService.tip.id)
       .subscribe(
         () => {
-          this.utilsService.reloadCurrentRoute();
+          this.utilsService.reloadCurrentRoute();alert("xx19");
         }
       );
   };

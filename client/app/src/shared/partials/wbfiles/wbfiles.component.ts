@@ -24,10 +24,9 @@ export class WbfilesComponent implements OnInit{
           (
               {
                   next: async token => {
-                      this.utilsService.reloadCurrentRoute()
+                      this.utilsService.reloadCurrentRoute();alert("y25");
                   },
                   error: (error: any) => {
-                      alert(JSON.stringify(error))
                   }
               }
           );
@@ -49,7 +48,6 @@ export class WbfilesComponent implements OnInit{
                   }
               },
               error: (error: any) => {
-                  alert(JSON.stringify(error))
               }
           }
       );

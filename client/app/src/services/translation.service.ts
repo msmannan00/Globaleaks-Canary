@@ -28,7 +28,7 @@ export class TranslationService {
 
     this.translateService.use(this.language).subscribe(() => {
       this.translateService.getTranslation(this.language).subscribe(() => {
-        this.utilsService.reloadCurrentRoute()
+        //this.utilsService.reloadCurrentRoute();
       });
     });
   }

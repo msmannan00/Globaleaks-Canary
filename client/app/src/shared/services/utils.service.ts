@@ -450,7 +450,7 @@ export class UtilsService {
         }, { headers }).toPromise().then(
           (response: any) => {
             if (refresh) {
-              this.reloadCurrentRoute()
+              this.reloadCurrentRoute();alert("y26");
             }
             deferred.next(response);
           },
@@ -466,7 +466,7 @@ export class UtilsService {
       }).toPromise().then(
         (response: any) => {
           if (refresh) {
-            this.reloadCurrentRoute()
+            this.reloadCurrentRoute();alert("y27");
           }
           deferred.next(response);
         },

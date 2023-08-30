@@ -32,7 +32,7 @@ export class RevokeAccessComponent {
   }
 
   reload() {
-    this.utils.reloadCurrentRoute();
+    this.utils.reloadCurrentRoute();alert("xx12");
   }
 
   cancel() {

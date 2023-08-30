@@ -17,7 +17,8 @@ export class NotificationTab1Component implements OnInit {
   ngOnInit(): void { }
   updateNotification(notification: any) {
     this.utilsService.updateAdminNotification(notification).subscribe(res => {
-      this.utilsService.reloadCurrentRoute();
+      alert("abc3")
+      this.utilsService.reloadCurrentRoute();alert("xx3");
     })
   }
   updateThenTestMail(notification: any): void {

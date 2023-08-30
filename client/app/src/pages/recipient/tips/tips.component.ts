@@ -76,8 +76,6 @@ export class TipsComponent implements OnInit {
   }
 
   openGrantAccessModal() {
-    // alert('Alert from outside');
-
     this.utils.runUserOperation("get_users_names", {}, true).subscribe(
       {
         next: response => {
@@ -95,7 +93,6 @@ export class TipsComponent implements OnInit {
           };
         },
         error: (error: any) => {
-          alert(JSON.stringify(error));
         }
       }
     );
@@ -119,7 +116,6 @@ export class TipsComponent implements OnInit {
           };
         },
         error: (error: any) => {
-          alert(JSON.stringify(error));
         }
       }
     );
@@ -150,7 +146,7 @@ export class TipsComponent implements OnInit {
 
 
   reload() {
-    this.utils.reloadCurrentRoute();
+    this.utils.reloadCurrentRoute();alert("xx9");
   }
   tipSwitch(id: number): void {
     this.index = this.selectedTips.indexOf(id);

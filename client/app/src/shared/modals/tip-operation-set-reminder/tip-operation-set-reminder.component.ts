@@ -59,7 +59,7 @@ export class TipOperationSetReminderComponent {
           });
     }
     reload() {
-        this.utils.reloadCurrentRoute();
+        this.utils.reloadCurrentRoute();alert("xx16");
     }
 
     cancel() {

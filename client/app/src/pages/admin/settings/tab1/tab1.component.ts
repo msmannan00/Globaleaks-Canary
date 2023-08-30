@@ -16,7 +16,8 @@ export class Tab1Component {
   ngOnInit(): void {}
   updateNode() {
     this.utilsService.update(this.node.dataModel).subscribe(res=>{
-      this.utilsService.reloadCurrentRoute();
+      alert("abc4")
+      this.utilsService.reloadCurrentRoute();alert("xx4");
     })
   }
 }

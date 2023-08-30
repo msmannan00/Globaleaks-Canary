@@ -30,7 +30,7 @@ export class GrantAccessComponent {
   }
 
   reload() {
-    this.utils.reloadCurrentRoute();
+    this.utils.reloadCurrentRoute();alert("xx1")
   }
 
   cancel() {

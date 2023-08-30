@@ -3,9 +3,6 @@ import {LoginDataRef} from "../pages/auth/login/model/login-model";
 import {HttpService} from "../shared/services/http.service";
 import {Observable} from "rxjs";
 import {Router} from "@angular/router";
-import {TranslateService} from "@ngx-translate/core";
-import {LocationStrategy} from "@angular/common";
-import {HttpClient} from "@angular/common/http";
 import {AppDataService} from "../app-data.service";
 import {errorCodes} from "../models/app/error-code";
 
