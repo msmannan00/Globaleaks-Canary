@@ -32,7 +32,7 @@
 				<button id="message-action-send" class="btn btn-primary" (click)="newMessage()"
 					[disabled]="!newMessageContent || (authenticationService.session.role === 'whistleblower' && !tipService.tip.msg_receiver_selected)">
 					<i class="fa-solid fa-comment"></i>
-					<span>&nbsp;{{'Send'|translate}}</span>
+					<span>{{'Send'|translate}}</span>
 				</button>
 				<div *ngif="authenticationService.session.role === 'receiver' && !tipService.tip.context.enable_two_way_messages"
 					class="form-group">

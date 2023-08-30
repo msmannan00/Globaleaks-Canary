@@ -25,7 +25,7 @@
                         <input #uploader [attr.id]="fileinput" id="customFile-{{fileinput}}" type="file" flowButton [flow]="flowAdvanced.flowJs" [style.display]="'none'" class="custom-file-input inputelem" (change)="onFileSelected(uploader.files)" />
                         <label [attr.for]="fileinput" class="btn btn-primary">
                             <i class="fa-solid fa-upload "></i>
-                            <span>&nbsp; {{'Upload'|translate}}</span>
+                            <span>{{'Upload'|translate}}</span>
                         </label>
                   </span>
                 </div>

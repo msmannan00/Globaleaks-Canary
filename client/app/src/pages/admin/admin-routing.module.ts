@@ -7,6 +7,7 @@ import { ContextsModule } from './contexts/contexts.module';
 import {CasemanagementModule} from "./casemanagement/casemanagement.module";
 import { AuditlogModule } from './auditlog/auditlog.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import {SitesModule} from "./sites/sites.module";
 
 const routes: Routes = [
   {
@@ -17,6 +18,11 @@ const routes: Routes = [
   {
     path: 'settings',
     loadChildren: () => SettingsModule,
+    pathMatch: 'full',
+  },
+  {
+    path: 'sites',
+    loadChildren: () => SitesModule,
     pathMatch: 'full',
   },
   {

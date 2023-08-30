@@ -10,7 +10,7 @@ export class FilterPipe implements PipeTransform {
 
     return items.filter(item => {
       for (const key in item) {
-        if(key==field && item[key]==value){
+        if(key==field && item[key].includes(value)){
           return true
         }
       }

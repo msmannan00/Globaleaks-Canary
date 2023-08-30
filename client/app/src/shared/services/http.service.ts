@@ -34,6 +34,16 @@ export class HttpService {
     return this.httpClient.delete("api/session", { 'headers': headers })
   }
 
+  requestDeleteTenant(url:any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.delete(url, { 'headers': headers })
+  }
+
+  requestUpdateTenant(url:any, data:any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.put(url,data, { 'headers': headers })
+  }
+
   deleteDBFile(id: string): Observable<any> {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.delete("api/wbfile/" + id, { 'headers': headers })
@@ -111,6 +121,12 @@ export class HttpService {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.get("api/admin/node", { 'headers': headers })
   }
+
+  updateNodeResource(data: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.put("api/admin/node", data, { headers })
+  }
+
   requestUsersResource(param: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.get("api/admin/users", { 'headers': headers })
@@ -255,6 +271,15 @@ export class HttpService {
     return this.httpClient.post(`api/admin/submission_statuses`, param, { 'headers': headers })
   }
 
+  fetchTenant(): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.get(`api/admin/tenants`, { 'headers': headers })
+  }
+
+  addTenant(param: any): Observable<any> {
+    return this.httpClient.post("api/admin/tenants", param)
+  }
+
   accessIdentity(id: any): Observable<any> {
     return this.httpClient.post(`api/rtips/${id}/iars`, { "request_motivation": "" });
   }
@@ -282,11 +307,9 @@ export class HttpService {
   requestDeleteStatus(id: any): Observable<any> {
     return this.httpClient.delete("api/admin/submission_statuses/" + id);
   }
-
   requestDeleteSubStatus(url:string): Observable<any> {
     return this.httpClient.delete(url);
   }
-
   requestUpdateStatus(url:string, param:any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.put(url, param, { headers })

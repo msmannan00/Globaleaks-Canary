@@ -21,7 +21,7 @@
 				<button id="comment-action-send" class="btn btn-primary" (click)="newComment()"
 					[disabled]="!newCommentContent">
 					<i class="fa-solid fa-comment"></i>
-					<span>&nbsp; {{'Send'|translate}}</span>
+					<span>{{'Send'|translate}}</span>
 				</button>
 				<div *ngif="authenticationService.session.role === 'receiver' && !tipService.tip.context.enable_two_way_comments"
 					class="form-group">

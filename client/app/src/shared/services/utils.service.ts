@@ -17,11 +17,16 @@ import { PreferenceResolver } from '../resolvers/preference.resolver';
 import { DeleteConfirmationComponent } from '../modals/delete-confirmation/delete-confirmation.component';
 import { userResolverModel } from 'app/src/models/resolvers/userResolverModel';
 import { contextResolverModel } from 'app/src/models/resolvers/contextResolverModel';
+import {NodeResolver} from "../resolvers/node.resolver";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
+
+  updateNode(){
+    this.httpService.updateNodeResource(this.nodeResolver.dataModel).subscribe();
+  }
 
   str2Uint8Array(str: string) {
     let result = new Uint8Array(str.length);
@@ -597,6 +602,7 @@ export class UtilsService {
     return this.httpService.requestUpdateAdminNotification(notification)
   }
   constructor(
+    private nodeResolver:NodeResolver,
     private http: HttpClient,
     public translateService: TranslateService,
     public appConfigService: AppConfigService,
