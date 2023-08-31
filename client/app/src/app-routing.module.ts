@@ -22,6 +22,8 @@ import {JobResolver} from "./shared/resolvers/job.resolver";
 import {TipsResolver} from "./shared/resolvers/tips.resolver";
 import { ContextsResolver } from './shared/resolvers/contexts.resolver';
 import { NotificationsResolver } from './shared/resolvers/notifications.resolver';
+import { NetworkResolver } from './shared/resolvers/network.resolver';
+import { RedirectsResolver } from './shared/resolvers/redirects.resolver';
 
 
 const routes: Routes = [
@@ -76,7 +78,7 @@ const routes: Routes = [
     path: 'admin',
     canActivate: [SessionGuard],
     resolve: {
-      NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver, ContextsResolver,AuditlogResolver, JobResolver, TipsResolver,NotificationsResolver
+      NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver, ContextsResolver,AuditlogResolver, JobResolver, TipsResolver,NotificationsResolver,NetworkResolver,RedirectsResolver
     },
     loadChildren: () => AdminRoutingModule,
     data:{

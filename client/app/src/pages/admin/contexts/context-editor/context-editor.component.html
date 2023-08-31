@@ -6,7 +6,7 @@
             <span class="badge bg-secondary" *ngIf="context.hidden">{{ 'Hidden' | translate }}</span>
         </span>
         <span class="col-md-5 clearfix">
-            <span class="float-right">
+            <span class="float-end">
                 <button *ngIf="index !== 0 && !node.dataModel.show_contexts_in_alphabetical_order"
                     class="btn btn-sm btn-primary" (click)="moveUp($event, index)" [ngbTooltip]="'Move up' | translate">
                     <i class="fa-solid fa-chevron-up"></i>

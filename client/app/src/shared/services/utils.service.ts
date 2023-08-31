@@ -169,14 +169,14 @@ export class UtilsService {
     event.stopPropagation()
   }
 
-   openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
+  openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
     scope = !scope ? this : scope;
 
     const modalRef = this.modalService.open(DeleteConfirmationComponent);
     modalRef.componentInstance.arg = arg;
     modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = () => {
-        return this.runAdminOperation("reset_submissions",{},true);
+      return this.runAdminOperation("reset_submissions", {}, true);
     };
     return modalRef.result;
   }
@@ -381,19 +381,19 @@ export class UtilsService {
     });
 
     this.http.get(url, { responseType: 'blob', headers: headers }).subscribe(
-        response => {
-          const blob = new Blob([response], { type: 'application/octet-stream' });
-          const blobUrl = URL.createObjectURL(blob);
+      response => {
+        const blob = new Blob([response], { type: 'application/octet-stream' });
+        const blobUrl = URL.createObjectURL(blob);
 
-          const a = document.createElement('a');
-          a.href = blobUrl;
-          a.download = filename;
-          a.click();
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename;
+        a.click();
 
-          setTimeout(() => {
-            URL.revokeObjectURL(blobUrl);
-          }, 1000);
-        }
+        setTimeout(() => {
+          URL.revokeObjectURL(blobUrl);
+        }, 1000);
+      }
     );
   }
   getPostponeDate(ttl: any): Date {
@@ -418,8 +418,8 @@ export class UtilsService {
   runAdminOperation(operation: any, args: any, refresh: any) {
     return this.runOperation("api/admin/config", operation, args, refresh);
   }
-  deleteDialog(){
-    return this.openConfirmableModalDialog("","")
+  deleteDialog() {
+    return this.openConfirmableModalDialog("", "")
   }
   runOperation(api: string, operation: string, args?: any, refresh?: boolean): Promise<void> {
     const deferred = new Subject<void>();
@@ -495,18 +495,18 @@ export class UtilsService {
   deleteFile(url: string): Observable<void> {
     return this.http.delete<void>(url);
   }
-  deleteAdminUser(user_id:any){
+  deleteAdminUser(user_id: any) {
     return this.httpService.requestDeleteAdminUser(user_id)
   }
-  deleteAdminContext(user_id:any){
+  deleteAdminContext(user_id: any) {
     return this.httpService.requestDeleteAdminContext(user_id)
   }
-  deleteStatus(user_id:any){
+  deleteStatus(user_id: any) {
     return this.httpService.requestDeleteStatus(user_id)
   }
 
-  deleteSubStatus(url:string){
-    return this.httpService.requestDeleteSubStatus(url)
+  deleteSubStatus(url: string) {
+    return this.httpService.requestDeleteStatus(url)
   }
   new_context(): contextResolverModel {
     const context = new contextResolverModel();
@@ -589,18 +589,39 @@ export class UtilsService {
   addAdminUser(user: any) {
     return this.httpService.requestAddAdminUser(user)
   }
-  updateAdminUser(id:any,user: any) {
-    return this.httpService.requestUpdateAdminUser(id,user)
+  updateAdminUser(id: any, user: any) {
+    return this.httpService.requestUpdateAdminUser(id, user)
   }
   addAdminContext(context: any) {
     return this.httpService.requestAddAdminContext(context)
   }
-  updateAdminContext(context: any,id:any) {
-    return this.httpService.requestUpdateAdminContext(context,id)
+  updateAdminContext(context: any, id: any) {
+    return this.httpService.requestUpdateAdminContext(context, id)
   }
   updateAdminNotification(notification: any) {
     return this.httpService.requestUpdateAdminNotification(notification)
   }
+  readFileAsText(file: File): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        if (event.target) {
+          resolve(event.target.result as string);
+        } else {
+          reject(new Error("Event target is null."));
+        }
+      };
+
+      reader.onerror = (error) => {
+        reject(error);
+      };
+
+      reader.readAsText(file);
+    });
+  }
+
+
   constructor(
     private nodeResolver:NodeResolver,
     private http: HttpClient,

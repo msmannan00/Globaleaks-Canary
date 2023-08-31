@@ -4,10 +4,11 @@ import { HomeComponent } from "./home/home.component";
 import { SettingsModule } from './settings/settings.module';
 import { UsersModule } from './users/users.module';
 import { ContextsModule } from './contexts/contexts.module';
-import {CasemanagementModule} from "./casemanagement/casemanagement.module";
+import { CasemanagementModule } from "./casemanagement/casemanagement.module";
 import { AuditlogModule } from './auditlog/auditlog.module';
 import { NotificationsModule } from './notifications/notifications.module';
-import {SitesModule} from "./sites/sites.module";
+import { SitesModule } from "./sites/sites.module";
+import { NetworkModule } from './network/network.module';
 
 const routes: Routes = [
   {
@@ -48,6 +49,11 @@ const routes: Routes = [
   {
     path: 'notifications',
     loadChildren: () => NotificationsModule,
+    pathMatch: 'full',
+  },
+  {
+    path: 'network',
+    loadChildren: () => NetworkModule,
     pathMatch: 'full',
   },
 

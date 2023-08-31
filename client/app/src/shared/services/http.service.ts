@@ -160,6 +160,61 @@ export class HttpService {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.get("api/admin/submission_statuses", { 'headers': headers, params: param })
   }
+  requestNetworkResource(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.get("api/admin/network", { 'headers': headers })
+  }
+  requestUpdateNetworkResource(param: any): Observable<any> {
+    return this.httpClient.put("api/admin/network", param)
+  }
+  requestTlsConfigResource(): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.get("api/admin/config/tls", { 'headers': headers });
+  }
+  requestDeleteTlsConfigResource(): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.delete("api/admin/config/tls", { 'headers': headers });
+  }
+  requestRedirectsResource(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.get("api/admin/redirects", { 'headers': headers })
+  }
+  requestPostRedirectsResource(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.post("api/admin/redirects", param, { 'headers': headers })
+  }
+  requestDeleteRedirectsResource(id: any): Observable<any> {
+    return this.httpClient.delete("api/admin/redirects/" + id)
+  }
+  requestUpdateTlsConfigFilesResource(name: any, data: any): Observable<any> {
+    return this.httpClient.put("api/admin/config/tls/files/" + name, data)
+  }
+  requestDeleteTlsConfigFilesResource(name: string): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.delete("api/admin/config/tls/files/" + name, { 'headers': headers })
+  }
+  requestAdminAcmeResource(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.post("api/admin/config/acme/run", param, { 'headers': headers })
+  }
+  requestCSRContentResource(name: any, param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.post("api/admin/config/tls/files/" + name, param, { 'headers': headers })
+  }
+  downloadCSRFile(): Observable<Blob> {
+    const url = "api/admin/config/tls/files/csr";
+    return this.httpClient.get(url, { responseType: 'blob' });
+  }
+  disableTLSConfig(): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    const url = "api/admin/config/tls/disable";
+    return this.httpClient.post(url, { 'headers': headers });
+  }
+  enableTLSConfig(): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    const url = "api/admin/config/tls/enable";
+    return this.httpClient.post(url, { 'headers': headers });
+  }
 
   whistleBlowerTip(param: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
@@ -309,10 +364,7 @@ export class HttpService {
     return this.httpClient.delete("api/admin/contexts/" + id);
   }
 
-  requestDeleteStatus(id: any): Observable<any> {
-    return this.httpClient.delete("api/admin/submission_statuses/" + id);
-  }
-  requestDeleteSubStatus(url:string): Observable<any> {
+  requestDeleteStatus(url: string): Observable<any> {
     return this.httpClient.delete(url);
   }
   requestUpdateStatus(url:string, param:any): Observable<any> {
@@ -322,7 +374,7 @@ export class HttpService {
   requestUpdateAdminNotification(notification: any): Observable<any> {
     return this.httpClient.put("api/admin/notification", notification);
   }
-  
+
   runOperation(url: string, operation: string, args: any, refresh: boolean) {
 
     const data = {
