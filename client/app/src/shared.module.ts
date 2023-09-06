@@ -15,7 +15,7 @@ import {
     NgbPaginationNext, NgbPaginationNumber, NgbPaginationPages,
     NgbPaginationPrevious,
     NgbNav, NgbNavItem, NgbNavLink, NgbNavContent,
-    NgbProgressbar,NgbDatepickerModule,NgbDropdownModule
+    NgbProgressbar,NgbDatepickerModule,NgbDropdownModule, NgbTooltipModule
 } from "@ng-bootstrap/ng-bootstrap";
 import { PrivacybadgeComponent } from './shared/partials/privacybadge/privacybadge.component';
 import {MarkdownModule} from "ngx-markdown";
@@ -80,6 +80,10 @@ import { ImageUploadComponent } from './shared/partials/image-upload/image-uploa
 import { EnableEncryptionComponent } from './shared/modals/enable-encryption/enable-encryption.component';
 import { AdminFileComponent } from './shared/partials/admin-file/admin-file.component';
 import { ConfirmationComponent } from './shared/modals/confirmation/confirmation.component';
+import { QuestionnaireDuplicationComponent } from './shared/modals/questionnaire-duplication/questionnaire-duplication.component';
+import { AddOptionHintComponent } from './shared/modals/add-option-hint/add-option-hint.component';
+import { TriggerReceiverComponent } from './shared/modals/trigger-receiver/trigger-receiver.component';
+import { AssignScorePointsComponent } from './shared/modals/assign-score-points/assign-score-points.component';
 
 @NgModule({
     imports: [
@@ -106,7 +110,8 @@ import { ConfirmationComponent } from './shared/modals/confirmation/confirmation
         NgbNavItem,
         NgbNavLink,
         NgbNavContent,
-        NgbDropdownModule
+        NgbDropdownModule,
+        NgbTooltipModule
     ],
     declarations: [
         FooterComponent,
@@ -171,7 +176,11 @@ import { ConfirmationComponent } from './shared/modals/confirmation/confirmation
         TipUploadWbfileComponent,
         EnableEncryptionComponent,
         AdminFileComponent,
-        ConfirmationComponent
+        ConfirmationComponent,
+        QuestionnaireDuplicationComponent,
+        AddOptionHintComponent,
+        TriggerReceiverComponent,
+        AssignScorePointsComponent
     ],
     exports: [
         FooterComponent,
@@ -214,6 +223,10 @@ import { ConfirmationComponent } from './shared/modals/confirmation/confirmation
         TipUploadWbfileComponent,
         EnableEncryptionComponent,
         AdminFileComponent,
-        ConfirmationComponent
+        ConfirmationComponent,
+        QuestionnaireDuplicationComponent,
+        AddOptionHintComponent,
+        TriggerReceiverComponent,
+        AssignScorePointsComponent
     ]})
 export class SharedModule { }

@@ -17,14 +17,15 @@ import { PreferenceResolver } from '../resolvers/preference.resolver';
 import { DeleteConfirmationComponent } from '../modals/delete-confirmation/delete-confirmation.component';
 import { userResolverModel } from 'app/src/models/resolvers/userResolverModel';
 import { contextResolverModel } from 'app/src/models/resolvers/contextResolverModel';
-import {NodeResolver} from "../resolvers/node.resolver";
+import { NodeResolver } from "../resolvers/node.resolver";
+import { questionnaireResolverModel } from 'app/src/models/resolvers/questionnaireModel';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
 
-  updateNode(){
+  updateNode() {
     this.httpService.updateNodeResource(this.nodeResolver.dataModel).subscribe();
   }
 
@@ -538,15 +539,14 @@ export class UtilsService {
     return context;
   }
 
-  // new_questionnaire(): AdminQuestionnaireResource {
-  //   const questionnaire = new AdminQuestionnaireResource();
-  //   questionnaire.id = '';
-  //   questionnaire.key = '';
-  //   // ... set other properties ...
-  //   return questionnaire;
-  // }
-
-  // Implement other new_* functions here...
+  new_questionnaire(): questionnaireResolverModel {
+    const questionnaire = new questionnaireResolverModel();
+    questionnaire.id = "";
+    questionnaire.key = "";
+    questionnaire.name = "";
+    questionnaire.steps = [];
+    return questionnaire;
+  }
 
   new_user(): userResolverModel {
     const user = new userResolverModel();
@@ -574,7 +574,75 @@ export class UtilsService {
     user.can_postpone_expiration = true;
     return user;
   }
-
+  new_step(questionnaire_id: any) {
+    // var step = new AdminStepResource();
+    var step: any = {}
+    step.id = "";
+    step.label = "";
+    step.description = "";
+    step.order = 0;
+    step.children = [];
+    step.questionnaire_id = questionnaire_id;
+    step.triggered_by_score = 0;
+    step.triggered_by_options = [];
+    return step;
+  }
+  new_field(step_id: any, fieldgroup_id: any) {
+    // var field = new AdminFieldResource();
+    var field: any = {}
+    field.id = "";
+    field.key = "";
+    field.instance = "instance";
+    field.descriptor_id = "";
+    field.label = "";
+    field.type = "inputbox";
+    field.description = "";
+    field.hint = "";
+    field.placeholder = "";
+    field.multi_entry = false;
+    field.required = false;
+    field.preview = false;
+    field.attrs = {};
+    field.options = [];
+    field.x = 0;
+    field.y = 0;
+    field.width = 0;
+    field.children = [];
+    field.fieldgroup_id = fieldgroup_id;
+    field.step_id = step_id;
+    field.template_id = "";
+    field.template_override_id = "";
+    field.triggered_by_score = 0;
+    field.triggered_by_options = [];
+    return field;
+  }
+  new_field_template(fieldgroup_id: any) {
+    // var field = new AdminFieldTemplateResource();
+    var field: any = {}
+    field.id = "";
+    field.instance = "template";
+    field.label = "";
+    field.type = "inputbox";
+    field.description = "";
+    field.placeholder = "";
+    field.hint = "";
+    field.multi_entry = false;
+    field.required = false;
+    field.preview = false;
+    field.attrs = {};
+    field.options = [];
+    field.x = 0;
+    field.y = 0;
+    field.width = 0;
+    field.children = [];
+    field.fieldgroup_id = fieldgroup_id;
+    field.step_id = "";
+    field.template_id = "";
+    field.template_override_id = "";
+    field.triggered_by_score = 0;
+    field.triggered_by_options = [];
+    return field;
+  }
   // new_redirect(): AdminRedirectResource {
   //   return new AdminRedirectResource();
   // }
@@ -620,10 +688,52 @@ export class UtilsService {
       reader.readAsText(file);
     });
   }
-
+  moveUp(elem: any): void {
+    elem[this.getYOrderProperty(elem)] -= 1;
+  }
+  
+  moveDown(elem: any): void {
+    elem[this.getYOrderProperty(elem)] += 1;
+  }
+  
+  moveLeft(elem: any): void {
+    elem[this.getXOrderProperty(elem)] -= 1;
+  }
+  
+  moveRight(elem: any): void {
+    elem[this.getXOrderProperty(elem)] += 1;
+  }
+  
+  getXOrderProperty(elem:any): string {
+    return "x";
+  }
+  getYOrderProperty(elem: any): string {
+    let key = "order";
+    if (typeof elem[key] === "undefined") {
+      key = "y";
+    }
+    return key;
+  }
+  
+  assignUniqueOrderIndex(elements: any[]): void {
+    if (elements.length <= 0) {
+      return;
+    }
+  
+    const key = this.getYOrderProperty(elements[0]);
+    if (elements.length) {
+      let i = 0;
+      elements = elements.sort((a, b) => a[key] - b[key]);
+      elements.forEach((element) => {
+        element[key] = i;
+        i += 1;
+      });
+    }
+  }
+  
 
   constructor(
-    private nodeResolver:NodeResolver,
+    private nodeResolver: NodeResolver,
     private http: HttpClient,
     public translateService: TranslateService,
     public appConfigService: AppConfigService,

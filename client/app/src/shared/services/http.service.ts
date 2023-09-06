@@ -34,14 +34,14 @@ export class HttpService {
     return this.httpClient.delete("api/session", { 'headers': headers })
   }
 
-  requestDeleteTenant(url:any): Observable<any> {
+  requestDeleteTenant(url: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.delete(url, { 'headers': headers })
   }
 
-  requestUpdateTenant(url:any, data:any): Observable<any> {
+  requestUpdateTenant(url: any, data: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
-    return this.httpClient.put(url,data, { 'headers': headers })
+    return this.httpClient.put(url, data, { 'headers': headers })
   }
 
   deleteDBFile(id: string): Observable<any> {
@@ -254,7 +254,7 @@ export class HttpService {
   }
   requestAdminFieldTemplateResource(param: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/fieldtemplates", { 'headers': headers, params: param })
+    return this.httpClient.get("api/admin/fieldtemplates", { 'headers': headers })
   }
 
   requestAdminContextResource(param: any): Observable<any> {
@@ -284,7 +284,7 @@ export class HttpService {
   }
   requestAdminAuditLogResource(param: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/auditlog", { 'headers': headers, params: param })
+    return this.httpClient.get("api/admin/auditlog", { 'headers': headers })
   }
   requestAuditlogResource(param: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
@@ -302,7 +302,16 @@ export class HttpService {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.get("api/admin/questionnaires", { 'headers': headers, params: param })
   }
-
+  addQuestionare(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.post(`api/admin/questionnaires`, param, { 'headers': headers })
+  }
+  requestDeleteAdminQuestionare(id: any): Observable<any> {
+    return this.httpClient.delete("api/admin/questionnaires/" + id);
+  }
+  requestUpdateAdminQuestionare(id: any, param: any): Observable<any> {
+    return this.httpClient.put("api/admin/questionnaires/" + id, param);
+  }
   requestJobResource(param: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.get("api/admin/auditlog/jobs", { 'headers': headers })
@@ -357,6 +366,30 @@ export class HttpService {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.post("api/admin/contexts", param, { 'headers': headers })
   }
+  requestAddAdminQuestionnaireStep(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.post("api/admin/steps", param, { 'headers': headers })
+  }
+  requestUpdateAdminQuestionnaireStep(id: any, param: any): Observable<any> {
+    return this.httpClient.put("api/admin/steps/" + id, param);
+  }
+  requestDeleteAdminQuestionareStep(id: any): Observable<any> {
+    return this.httpClient.delete("api/admin/steps/" + id);
+  }
+  requestAddAdminQuestionnaireField(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.post("api/admin/fields", param, { 'headers': headers })
+  }
+  requestAddAdminQuestionnaireFieldTemplate(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.post("api/admin/fieldtemplates", param, { 'headers': headers })
+  }
+  requestUpdateAdminQuestionnaireField(id: any, param: any): Observable<any> {
+    return this.httpClient.put("api/admin/fields/" + id, param);
+  }
+  requestDeleteAdminQuestionareField(id: any): Observable<any> {
+    return this.httpClient.delete("api/admin/fields/" + id);
+  }
   requestUpdateAdminContext(param: any, id: any): Observable<any> {
     return this.httpClient.put("api/admin/contexts/" + id, param);
   }
@@ -364,10 +397,10 @@ export class HttpService {
     return this.httpClient.delete("api/admin/contexts/" + id);
   }
 
-  requestDeleteStatus(url: string): Observable<any> {
-    return this.httpClient.delete(url);
+  requestDeleteStatus(id: string): Observable<any> {
+    return this.httpClient.delete("api/admin/submission_statuses/" + id);
   }
-  requestUpdateStatus(url:string, param:any): Observable<any> {
+  requestUpdateStatus(url: string, param: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.put(url, param, { headers })
   }
