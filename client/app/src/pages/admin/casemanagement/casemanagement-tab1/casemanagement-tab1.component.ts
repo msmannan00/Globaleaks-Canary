@@ -21,7 +21,7 @@ export class CasemanagementTab1Component {
   };
 
   addSubmissionStatus() {
-    const order = 123; // replace with the actual order value
+    const order = -1; // replace with the actual order value
     const newSubmissionsStatus = {
       label: this.new_submissions_status.label,
       order: order

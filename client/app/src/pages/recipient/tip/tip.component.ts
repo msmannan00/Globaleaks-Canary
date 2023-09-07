@@ -126,14 +126,13 @@ export class TipComponent {
           modalRef.componentInstance.cancelFun = null;
         },
         error: (error: any) => {
-          alert(JSON.stringify(error));
         }
       }
     );
   }
 
   reload(): void {
-    this.utils.reloadCurrentRoute()
+    this.utils.reloadCurrentRoute();
   }
   filterNotTriggeredField(parent: any, field: any, answers: any): void {
     let i;
@@ -250,7 +249,6 @@ export class TipComponent {
                   window.open("api/rtips/" + tipId + "/export" + "?token=" + token.id + ":" + ans);
               },
               error: (error: any) => {
-                  alert(JSON.stringify(error))
               }
           }
       );

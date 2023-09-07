@@ -110,9 +110,9 @@
 						*ngIf="authenticationService.session.role === 'receiver' && appDataService.public.node.enable_scoring_system"
 						[ngSwitch]="tipService.tip.score">
 						<span *ngSwitchCase="0">-</span>
-						<span class="badge badge-primary" *ngSwitchCase="1">{{'Low'|translate}}</span>
-						<span class="badge badge-primary" *ngSwitchCase="2">{{'Medium'|translate}}</span>
-						<span class="badge badge-primary" *ngSwitchCase="3">{{'High'|translate}}</span>
+						<span class="badge bg-primary" *ngSwitchCase="1">{{'Low'|translate}}</span>
+						<span class="badge bg-primary" *ngSwitchCase="2">{{'Medium'|translate}}</span>
+						<span class="badge bg-primary" *ngSwitchCase="3">{{'High'|translate}}</span>
 					</td>
 				</tr>
 			</tbody>

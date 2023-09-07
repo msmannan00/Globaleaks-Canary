@@ -17,11 +17,17 @@ import { PreferenceResolver } from '../resolvers/preference.resolver';
 import { DeleteConfirmationComponent } from '../modals/delete-confirmation/delete-confirmation.component';
 import { userResolverModel } from 'app/src/models/resolvers/userResolverModel';
 import { contextResolverModel } from 'app/src/models/resolvers/contextResolverModel';
+import { NodeResolver } from "../resolvers/node.resolver";
+import { questionnaireResolverModel } from 'app/src/models/resolvers/questionnaireModel';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
+
+  updateNode() {
+    this.httpService.updateNodeResource(this.nodeResolver.dataModel).subscribe();
+  }
 
   str2Uint8Array(str: string) {
     let result = new Uint8Array(str.length);
@@ -164,14 +170,14 @@ export class UtilsService {
     event.stopPropagation()
   }
 
-   openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
+  openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
     scope = !scope ? this : scope;
 
     const modalRef = this.modalService.open(DeleteConfirmationComponent);
     modalRef.componentInstance.arg = arg;
     modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = () => {
-        return this.runAdminOperation("reset_submissions",{},true);
+      return this.runAdminOperation("reset_submissions", {}, true);
     };
     return modalRef.result;
   }
@@ -376,19 +382,19 @@ export class UtilsService {
     });
 
     this.http.get(url, { responseType: 'blob', headers: headers }).subscribe(
-        response => {
-          const blob = new Blob([response], { type: 'application/octet-stream' });
-          const blobUrl = URL.createObjectURL(blob);
+      response => {
+        const blob = new Blob([response], { type: 'application/octet-stream' });
+        const blobUrl = URL.createObjectURL(blob);
 
-          const a = document.createElement('a');
-          a.href = blobUrl;
-          a.download = filename;
-          a.click();
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename;
+        a.click();
 
-          setTimeout(() => {
-            URL.revokeObjectURL(blobUrl);
-          }, 1000);
-        }
+        setTimeout(() => {
+          URL.revokeObjectURL(blobUrl);
+        }, 1000);
+      }
     );
   }
   getPostponeDate(ttl: any): Date {
@@ -413,8 +419,8 @@ export class UtilsService {
   runAdminOperation(operation: any, args: any, refresh: any) {
     return this.runOperation("api/admin/config", operation, args, refresh);
   }
-  deleteDialog(){
-    return this.openConfirmableModalDialog("","")
+  deleteDialog() {
+    return this.openConfirmableModalDialog("", "")
   }
   runOperation(api: string, operation: string, args?: any, refresh?: boolean): Promise<void> {
     const deferred = new Subject<void>();
@@ -445,7 +451,7 @@ export class UtilsService {
         }, { headers }).toPromise().then(
           (response: any) => {
             if (refresh) {
-              this.reloadCurrentRoute()
+              this.reloadCurrentRoute();
             }
             deferred.next(response);
           },
@@ -461,7 +467,7 @@ export class UtilsService {
       }).toPromise().then(
         (response: any) => {
           if (refresh) {
-            this.reloadCurrentRoute()
+            this.reloadCurrentRoute();
           }
           deferred.next(response);
         },
@@ -490,18 +496,18 @@ export class UtilsService {
   deleteFile(url: string): Observable<void> {
     return this.http.delete<void>(url);
   }
-  deleteAdminUser(user_id:any){
+  deleteAdminUser(user_id: any) {
     return this.httpService.requestDeleteAdminUser(user_id)
   }
-  deleteAdminContext(user_id:any){
+  deleteAdminContext(user_id: any) {
     return this.httpService.requestDeleteAdminContext(user_id)
   }
-  deleteStatus(user_id:any){
+  deleteStatus(user_id: any) {
     return this.httpService.requestDeleteStatus(user_id)
   }
 
-  deleteSubStatus(url:string){
-    return this.httpService.requestDeleteSubStatus(url)
+  deleteSubStatus(url: string) {
+    return this.httpService.requestDeleteStatus(url)
   }
   new_context(): contextResolverModel {
     const context = new contextResolverModel();
@@ -533,15 +539,14 @@ export class UtilsService {
     return context;
   }
 
-  // new_questionnaire(): AdminQuestionnaireResource {
-  //   const questionnaire = new AdminQuestionnaireResource();
-  //   questionnaire.id = '';
-  //   questionnaire.key = '';
-  //   // ... set other properties ...
-  //   return questionnaire;
-  // }
-
-  // Implement other new_* functions here...
+  new_questionnaire(): questionnaireResolverModel {
+    const questionnaire = new questionnaireResolverModel();
+    questionnaire.id = "";
+    questionnaire.key = "";
+    questionnaire.name = "";
+    questionnaire.steps = [];
+    return questionnaire;
+  }
 
   new_user(): userResolverModel {
     const user = new userResolverModel();
@@ -569,7 +574,75 @@ export class UtilsService {
     user.can_postpone_expiration = true;
     return user;
   }
-
+  new_step(questionnaire_id: any) {
+    // var step = new AdminStepResource();
+    var step: any = {}
+    step.id = "";
+    step.label = "";
+    step.description = "";
+    step.order = 0;
+    step.children = [];
+    step.questionnaire_id = questionnaire_id;
+    step.triggered_by_score = 0;
+    step.triggered_by_options = [];
+    return step;
+  }
+  new_field(step_id: any, fieldgroup_id: any) {
+    // var field = new AdminFieldResource();
+    var field: any = {}
+    field.id = "";
+    field.key = "";
+    field.instance = "instance";
+    field.descriptor_id = "";
+    field.label = "";
+    field.type = "inputbox";
+    field.description = "";
+    field.hint = "";
+    field.placeholder = "";
+    field.multi_entry = false;
+    field.required = false;
+    field.preview = false;
+    field.attrs = {};
+    field.options = [];
+    field.x = 0;
+    field.y = 0;
+    field.width = 0;
+    field.children = [];
+    field.fieldgroup_id = fieldgroup_id;
+    field.step_id = step_id;
+    field.template_id = "";
+    field.template_override_id = "";
+    field.triggered_by_score = 0;
+    field.triggered_by_options = [];
+    return field;
+  }
+  new_field_template(fieldgroup_id: any) {
+    // var field = new AdminFieldTemplateResource();
+    var field: any = {}
+    field.id = "";
+    field.instance = "template";
+    field.label = "";
+    field.type = "inputbox";
+    field.description = "";
+    field.placeholder = "";
+    field.hint = "";
+    field.multi_entry = false;
+    field.required = false;
+    field.preview = false;
+    field.attrs = {};
+    field.options = [];
+    field.x = 0;
+    field.y = 0;
+    field.width = 0;
+    field.children = [];
+    field.fieldgroup_id = fieldgroup_id;
+    field.step_id = "";
+    field.template_id = "";
+    field.template_override_id = "";
+    field.triggered_by_score = 0;
+    field.triggered_by_options = [];
+    return field;
+  }
   // new_redirect(): AdminRedirectResource {
   //   return new AdminRedirectResource();
   // }
@@ -584,19 +657,83 @@ export class UtilsService {
   addAdminUser(user: any) {
     return this.httpService.requestAddAdminUser(user)
   }
-  updateAdminUser(id:any,user: any) {
-    return this.httpService.requestUpdateAdminUser(id,user)
+  updateAdminUser(id: any, user: any) {
+    return this.httpService.requestUpdateAdminUser(id, user)
   }
   addAdminContext(context: any) {
     return this.httpService.requestAddAdminContext(context)
   }
-  updateAdminContext(context: any,id:any) {
-    return this.httpService.requestUpdateAdminContext(context,id)
+  updateAdminContext(context: any, id: any) {
+    return this.httpService.requestUpdateAdminContext(context, id)
   }
   updateAdminNotification(notification: any) {
     return this.httpService.requestUpdateAdminNotification(notification)
   }
+  readFileAsText(file: File): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        if (event.target) {
+          resolve(event.target.result as string);
+        } else {
+          reject(new Error("Event target is null."));
+        }
+      };
+
+      reader.onerror = (error) => {
+        reject(error);
+      };
+
+      reader.readAsText(file);
+    });
+  }
+  moveUp(elem: any): void {
+    elem[this.getYOrderProperty(elem)] -= 1;
+  }
+  
+  moveDown(elem: any): void {
+    elem[this.getYOrderProperty(elem)] += 1;
+  }
+  
+  moveLeft(elem: any): void {
+    elem[this.getXOrderProperty(elem)] -= 1;
+  }
+  
+  moveRight(elem: any): void {
+    elem[this.getXOrderProperty(elem)] += 1;
+  }
+  
+  getXOrderProperty(elem:any): string {
+    return "x";
+  }
+  getYOrderProperty(elem: any): string {
+    let key = "order";
+    if (typeof elem[key] === "undefined") {
+      key = "y";
+    }
+    return key;
+  }
+  
+  assignUniqueOrderIndex(elements: any[]): void {
+    if (elements.length <= 0) {
+      return;
+    }
+  
+    const key = this.getYOrderProperty(elements[0]);
+    if (elements.length) {
+      let i = 0;
+      elements = elements.sort((a, b) => a[key] - b[key]);
+      elements.forEach((element) => {
+        element[key] = i;
+        i += 1;
+      });
+    }
+  }
+  
+
   constructor(
+    private nodeResolver: NodeResolver,
     private http: HttpClient,
     public translateService: TranslateService,
     public appConfigService: AppConfigService,

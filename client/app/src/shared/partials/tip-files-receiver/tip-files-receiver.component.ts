@@ -47,7 +47,6 @@ export class TipFilesReceiverComponent implements OnInit{
             window.open("api/rfile/" + file.id + "?token=" + token.id + ":" + ans);
           },
           error: (error: any) => {
-            alert(JSON.stringify(error))
           }
         }
     );

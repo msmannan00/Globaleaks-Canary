@@ -46,7 +46,7 @@ export class WbtipService {
     (
         {
           next: response => {
-            this.utilsService.reloadCurrentRoute()
+            this.utilsService.reloadCurrentRoute();
           },
           error: (error: any) => {
           }
@@ -60,7 +60,7 @@ export class WbtipService {
     (
         {
           next: response => {
-            this.utilsService.reloadCurrentRoute()
+            this.utilsService.reloadCurrentRoute();
           },
           error: (error: any) => {
           }

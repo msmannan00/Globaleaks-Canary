@@ -20,7 +20,7 @@ export class Enable2faComponent {
             this.activeModal.dismiss()
           },
           error: (error: any) => {
-            this.utilsService.reloadCurrentRoute()
+            this.utilsService.reloadCurrentRoute();
           }
         }
     );

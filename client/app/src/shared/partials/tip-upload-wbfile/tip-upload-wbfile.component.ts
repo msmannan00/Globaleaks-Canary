@@ -42,7 +42,7 @@ export class TipUploadWbfileComponent implements AfterViewInit{
     this.flowAdvanced.events$.subscribe((event: any) => {
       if (event.type === 'fileSuccess') {
         // File uploaded successfully, reload the page
-        this.utilsService.reloadCurrentRoute()
+        this.utilsService.reloadCurrentRoute();
       }
     });
   }

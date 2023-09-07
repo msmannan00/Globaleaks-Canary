@@ -46,7 +46,6 @@ export class SignupComponent {
                     this.step +=1
                 },
                 error: (error: any) => {
-                    alert(JSON.stringify(error))
                 }
             }
         );

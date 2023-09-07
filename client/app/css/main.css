@@ -340,6 +340,14 @@ table tr td {
 	vertical-align: middle !important;
 }
 
+.badge.bg-primary {
+	background-color: #205282 !important;
+}
+
+.badge.bg-primary:hover {
+	background-color: #c2d9f0 !important;
+}
+
 .page-link{
 	color:#205282;
 }
@@ -798,7 +806,6 @@ p:last-child {
 #TitleBox {
 	font-size: 1.6rem;
 	font-weight: bold;
-	white-space: pre-wrap;
 }
 
 #LoginStatusBox {

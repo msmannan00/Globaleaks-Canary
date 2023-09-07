@@ -26,7 +26,6 @@ export class RtipsResolver implements Resolve<boolean> {
                 this.dataModel=response;
               },
             error: (error: any) => {
-              alert(JSON.stringify(error))
             }
         }
     );

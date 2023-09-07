@@ -111,9 +111,7 @@ export class SubstatusmanagerComponent {
   saveSubmissionsStatus(submissions_status: any): void {
     this.openConfirmableModalDialog(submissions_status, "saveSubmissionsStatus")
       .then(result => {
-        alert(JSON.stringify(result))
         if (result) {
-          alert(JSON.stringify(result))
         }
     });
   }

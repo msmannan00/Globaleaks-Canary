@@ -32,7 +32,6 @@ export class PreferenceResolver implements Resolve<boolean> {
                   }
               },
               error: (error: any) => {
-                alert(JSON.stringify(error))
               }
           }
       );

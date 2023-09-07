@@ -32,7 +32,7 @@
     -->
     <div *ngIf="utilsService.isWhistleblowerPage() && !appDataService.public.node.disable_privacy_badge">
       <src-privacybadge></src-privacybadge>
-      
+
     </div>
 
     <views-header></views-header>
@@ -46,7 +46,7 @@
             <src-admin-sidebar *ngIf="appConfig.sidebar=='admin-sidebar'"></src-admin-sidebar>
           </nav>
           <main [ngClass]="{'col-lg-10 col-md-8 col-sm-12': appConfig.sidebar && showSidebar , 'col-md-12': !appConfig.sidebar}">
-            
+
           <router-outlet></router-outlet>
         </main>
         </div>

@@ -32,7 +32,7 @@
                 <i class="fa-solid fa-arrow-circle-left"></i>
                 <span>{{'Previous'|translate}}</span>
             </button>
-            &nbsp;<button class="ButtonNext btn btn-primary" (click)="(validation.step2=true) && !wizardFormStep2.invalid && (step = 4)">
+            <button class="ButtonNext btn btn-primary" (click)="(validation.step2=true) && !wizardFormStep2.invalid && (step = 4)">
             <span>{{'Next'|translate}}</span>
             <i class="fa-solid fa-arrow-circle-right"></i>
         </button>
@@ -50,7 +50,7 @@
                 <i class="fa-solid fa-arrow-circle-left"></i>
                 <span>{{'Previous'|translate}}</span>
             </button>
-            &nbsp;<button class="ButtonNext btn btn-primary" (click)="(validation.step3=true) && !wizardFormStep3.invalid && (step = 5)">
+            <button class="ButtonNext btn btn-primary" (click)="(validation.step3=true) && !wizardFormStep3.invalid && (step = 5)">
             <span>{{'Next'|translate}}</span>
             <i class="fa-solid fa-arrow-circle-right"></i>
         </button>
@@ -130,7 +130,7 @@
                 <i class="fa-solid fa-arrow-circle-left"></i>
                 <span>{{'Previous'|translate}}</span>
             </button>
-            &nbsp;<button class="ButtonNext btn btn-primary" (click)="(validation.step4=true) && !(wizardFormStep4.invalid || (wizard.admin_password !== admin_check_password)) && (step = 5)">
+            <button class="ButtonNext btn btn-primary" (click)="(validation.step4=true) && !(wizardFormStep4.invalid || (wizard.admin_password !== admin_check_password)) && (step = 5)">
             <span>{{'Next'|translate}}</span>
             <i class="fa-solid fa-arrow-circle-right"></i>
         </button>
@@ -214,7 +214,7 @@
                 <i class="fa-solid fa-arrow-circle-left"></i>
                 <span>{{'Previous'|translate}}</span>
             </button>
-            &nbsp;<button class="ButtonNext btn btn-primary" (click)="(validation.step5 = true) && !(wizardFormStep5.invalid || (wizard.receiver_username === wizard.admin_username)) && (step = 6)">
+            <button class="ButtonNext btn btn-primary" (click)="(validation.step5 = true) && !(wizardFormStep5.invalid || (wizard.receiver_username === wizard.admin_username)) && (step = 6)">
             <span>{{'Next'|translate}}</span>
             <i class="fa-solid fa-arrow-circle-right"></i>
         </button>
@@ -243,7 +243,7 @@
                 <i class="fa-solid fa-arrow-circle-left"></i>
                 <span>{{'Previous'|translate}}</span>
             </button>
-            &nbsp;<button class="ButtonNext btn btn-primary" (click)="(validation.step6 = true) && !wizardFormStep6.invalid &&  complete()">
+            <button class="ButtonNext btn btn-primary" (click)="(validation.step6 = true) && !wizardFormStep6.invalid &&  complete()">
             <span>{{'Next'|translate}}</span>
             <i class="fa-solid fa-arrow-circle-right"></i>
         </button>

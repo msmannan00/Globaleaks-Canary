@@ -23,7 +23,7 @@
 			(click)="authentication.login(0, authentication.loginData.loginUsername, authentication.loginData.loginPassword)"
 			type="submit">
 			<i class="fa-solid fa-sign-in-alt"></i>
-			<span>&nbsp;{{'Log in'| translate}}</span>
+			<span>{{'Log in'| translate}}</span>
 		</button>
 
 		<span id="forgot-button">
@@ -47,7 +47,7 @@
 					(click)="authentication.login(0, authentication.loginData.loginUsername, authentication.loginData.loginPassword, authentication.loginData.loginAuthCode)"
 					type="submit">
 					<i class="fa-solid fa-sign-in-alt"></i>
-					&nbsp;<span>{{'Log in'|translate}}</span>
+					<span>{{'Log in'|translate}}</span>
 				</button>
 
 				<a class="btn" (click)="utils.openSupportModal()" data-toggle="tooltip" title="{{'Request support' | translate}}"><i class="fa-solid fa-life-ring"></i></a>

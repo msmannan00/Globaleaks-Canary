@@ -8,6 +8,9 @@ export interface Root {
 
 export interface Node {
 viewer: any
+    acme: boolean
+    timezone: number
+    allow_indexing: boolean
     adminonly: boolean
     pgp:any
     custom_support_url: string

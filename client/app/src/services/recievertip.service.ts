@@ -45,7 +45,7 @@ export class RecieverTipService {
     (
         {
           next: response => {
-            this.utilsService.reloadCurrentRoute()
+            this.utilsService.reloadCurrentRoute();
           },
           error: (error: any) => {
           }
@@ -66,10 +66,9 @@ export class RecieverTipService {
     (
         {
           next: response => {
-            this.utilsService.reloadCurrentRoute()
+            this.utilsService.reloadCurrentRoute();
           },
           error: (error: any) => {
-            alert(JSON.stringify(error))
           }
         }
     );

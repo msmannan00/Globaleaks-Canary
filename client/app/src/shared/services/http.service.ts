@@ -34,6 +34,16 @@ export class HttpService {
     return this.httpClient.delete("api/session", { 'headers': headers })
   }
 
+  requestDeleteTenant(url: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.delete(url, { 'headers': headers })
+  }
+
+  requestUpdateTenant(url: any, data: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.put(url, data, { 'headers': headers })
+  }
+
   deleteDBFile(id: string): Observable<any> {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.delete("api/wbfile/" + id, { 'headers': headers })
@@ -83,6 +93,11 @@ export class HttpService {
     return this.httpClient.get("api/signup/" + token, { 'headers': headers })
   }
 
+  requestTenantSwitch(url: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.get(url, { 'headers': headers })
+  }
+
   requestReportSubmission(param: string): Observable<any> {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.post("api/submission", param, { 'headers': headers })
@@ -111,6 +126,12 @@ export class HttpService {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.get("api/admin/node", { 'headers': headers })
   }
+
+  updateNodeResource(data: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.put("api/admin/node", data, { headers })
+  }
+
   requestUsersResource(param: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.get("api/admin/users", { 'headers': headers })
@@ -138,6 +159,61 @@ export class HttpService {
   requestSubmissionStatusResource(param: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.get("api/admin/submission_statuses", { 'headers': headers, params: param })
+  }
+  requestNetworkResource(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.get("api/admin/network", { 'headers': headers })
+  }
+  requestUpdateNetworkResource(param: any): Observable<any> {
+    return this.httpClient.put("api/admin/network", param)
+  }
+  requestTlsConfigResource(): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.get("api/admin/config/tls", { 'headers': headers });
+  }
+  requestDeleteTlsConfigResource(): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.delete("api/admin/config/tls", { 'headers': headers });
+  }
+  requestRedirectsResource(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.get("api/admin/redirects", { 'headers': headers })
+  }
+  requestPostRedirectsResource(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.post("api/admin/redirects", param, { 'headers': headers })
+  }
+  requestDeleteRedirectsResource(id: any): Observable<any> {
+    return this.httpClient.delete("api/admin/redirects/" + id)
+  }
+  requestUpdateTlsConfigFilesResource(name: any, data: any): Observable<any> {
+    return this.httpClient.put("api/admin/config/tls/files/" + name, data)
+  }
+  requestDeleteTlsConfigFilesResource(name: string): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.delete("api/admin/config/tls/files/" + name, { 'headers': headers })
+  }
+  requestAdminAcmeResource(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.post("api/admin/config/acme/run", param, { 'headers': headers })
+  }
+  requestCSRContentResource(name: any, param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.post("api/admin/config/tls/files/" + name, param, { 'headers': headers })
+  }
+  downloadCSRFile(): Observable<Blob> {
+    const url = "api/admin/config/tls/files/csr";
+    return this.httpClient.get(url, { responseType: 'blob' });
+  }
+  disableTLSConfig(): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    const url = "api/admin/config/tls/disable";
+    return this.httpClient.post(url, { 'headers': headers });
+  }
+  enableTLSConfig(): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    const url = "api/admin/config/tls/enable";
+    return this.httpClient.post(url, { 'headers': headers });
   }
 
   whistleBlowerTip(param: any): Observable<any> {
@@ -178,7 +254,7 @@ export class HttpService {
   }
   requestAdminFieldTemplateResource(param: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/fieldtemplates", { 'headers': headers, params: param })
+    return this.httpClient.get("api/admin/fieldtemplates", { 'headers': headers })
   }
 
   requestAdminContextResource(param: any): Observable<any> {
@@ -208,7 +284,7 @@ export class HttpService {
   }
   requestAdminAuditLogResource(param: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/auditlog", { 'headers': headers, params: param })
+    return this.httpClient.get("api/admin/auditlog", { 'headers': headers })
   }
   requestAuditlogResource(param: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
@@ -226,7 +302,16 @@ export class HttpService {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.get("api/admin/questionnaires", { 'headers': headers, params: param })
   }
-
+  addQuestionare(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.post(`api/admin/questionnaires`, param, { 'headers': headers })
+  }
+  requestDeleteAdminQuestionare(id: any): Observable<any> {
+    return this.httpClient.delete("api/admin/questionnaires/" + id);
+  }
+  requestUpdateAdminQuestionare(id: any, param: any): Observable<any> {
+    return this.httpClient.put("api/admin/questionnaires/" + id, param);
+  }
   requestJobResource(param: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.get("api/admin/auditlog/jobs", { 'headers': headers })
@@ -255,6 +340,15 @@ export class HttpService {
     return this.httpClient.post(`api/admin/submission_statuses`, param, { 'headers': headers })
   }
 
+  fetchTenant(): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.get(`api/admin/tenants`, { 'headers': headers })
+  }
+
+  addTenant(param: any): Observable<any> {
+    return this.httpClient.post("api/admin/tenants", param)
+  }
+
   accessIdentity(id: any): Observable<any> {
     return this.httpClient.post(`api/rtips/${id}/iars`, { "request_motivation": "" });
   }
@@ -272,6 +366,30 @@ export class HttpService {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.post("api/admin/contexts", param, { 'headers': headers })
   }
+  requestAddAdminQuestionnaireStep(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.post("api/admin/steps", param, { 'headers': headers })
+  }
+  requestUpdateAdminQuestionnaireStep(id: any, param: any): Observable<any> {
+    return this.httpClient.put("api/admin/steps/" + id, param);
+  }
+  requestDeleteAdminQuestionareStep(id: any): Observable<any> {
+    return this.httpClient.delete("api/admin/steps/" + id);
+  }
+  requestAddAdminQuestionnaireField(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.post("api/admin/fields", param, { 'headers': headers })
+  }
+  requestAddAdminQuestionnaireFieldTemplate(param: any): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.httpClient.post("api/admin/fieldtemplates", param, { 'headers': headers })
+  }
+  requestUpdateAdminQuestionnaireField(id: any, param: any): Observable<any> {
+    return this.httpClient.put("api/admin/fields/" + id, param);
+  }
+  requestDeleteAdminQuestionareField(id: any): Observable<any> {
+    return this.httpClient.delete("api/admin/fields/" + id);
+  }
   requestUpdateAdminContext(param: any, id: any): Observable<any> {
     return this.httpClient.put("api/admin/contexts/" + id, param);
   }
@@ -279,22 +397,17 @@ export class HttpService {
     return this.httpClient.delete("api/admin/contexts/" + id);
   }
 
-  requestDeleteStatus(id: any): Observable<any> {
+  requestDeleteStatus(id: string): Observable<any> {
     return this.httpClient.delete("api/admin/submission_statuses/" + id);
   }
-
-  requestDeleteSubStatus(url:string): Observable<any> {
-    return this.httpClient.delete(url);
-  }
-
-  requestUpdateStatus(url:string, param:any): Observable<any> {
+  requestUpdateStatus(url: string, param: any): Observable<any> {
     const headers = { 'content-type': 'application/json' }
     return this.httpClient.put(url, param, { headers })
   }
   requestUpdateAdminNotification(notification: any): Observable<any> {
     return this.httpClient.put("api/admin/notification", notification);
   }
-  
+
   runOperation(url: string, operation: string, args: any, refresh: boolean) {
 
     const data = {

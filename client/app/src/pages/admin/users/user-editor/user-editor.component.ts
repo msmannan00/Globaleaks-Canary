@@ -103,7 +103,7 @@ export class UserEditorComponent implements OnInit {
     modalRef.componentInstance.confirmFunction = () => {
         return  this.utilsService.deleteAdminUser(arg.id).subscribe(res=>{
           this.sendDataToParent()
-          this.utilsService.reloadCurrentRoute()
+          this.utilsService.reloadCurrentRoute();
         });
     };
     return modalRef.result;
