@@ -17,7 +17,7 @@ export class MainComponent implements OnInit {
   selectedEditingIndex: any
   showAddQuestionnaire: boolean = false;
 
-  constructor(private http: HttpClient,private httpService: HttpService, private utilsService: UtilsService, private cdr: ChangeDetectorRef, public questionnaires: QuestionnairesResolver) { }
+  constructor(private http: HttpClient, private httpService: HttpService, private utilsService: UtilsService, private cdr: ChangeDetectorRef, public questionnaires: QuestionnairesResolver) { }
   ngOnInit(): void {
     this.questionnairesData = this.questionnaires.dataModel
     this.cdr.detectChanges();
@@ -28,17 +28,21 @@ export class MainComponent implements OnInit {
     questionnaire.name = this.new_questionnaire.name
     this.httpService.addQuestionare(questionnaire).subscribe(res => {
       this.questionnairesData.push(res);
+      console.log(this.questionnairesData,"this.questionnairesData");
+      
       this.new_questionnaire = { name: '' };
-      this.cdr.detectChanges();
+      this.cdr.markForCheck();
+      this.utilsService.reloadCurrentRoute()
+
     })
   }
   toggleAddQuestionnaire(): void {
     this.showAddQuestionnaire = !this.showAddQuestionnaire;
   }
- 
+
   importQuestionnaire(file: any) {
     this.utilsService.readFileAsText(file[0]).then((txt) => {
-      return this.http.post('api/admin/questionnaires?multilang=1', txt).subscribe(()=>{
+      return this.http.post('api/admin/questionnaires?multilang=1', txt).subscribe(() => {
         this.utilsService.reloadCurrentRoute()
       });
     })
@@ -49,4 +53,15 @@ export class MainComponent implements OnInit {
     //   this.Utils.displayErrorMsg(error);
     // });
   }
+  // saveRequestData() { }
+  deleteRequest(questionnaire: any) {
+    if (questionnaire) {
+      this.questionnairesData.splice(this.questionnairesData.indexOf(questionnaire), 1);
+    }
+    this.cdr.markForCheck();
+    this.utilsService.reloadCurrentRoute()
+  }
+  trackByFn(index: number, item: questionnaireResolverModel) {
+    return item.id; // Use a unique identifier for your items
+}
 }

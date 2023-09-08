@@ -37,10 +37,10 @@
             </form>
         </div>
         <ng-container *ngIf="questionnairesData.length > 0">
-            <div *ngFor="let questionnaire of questionnairesData | orderBy:'name'; let index = index">
-                <form id="questionnaire-{{ index }}" class="configItem" #editQuestionnaire="ngForm" novalidate>
-                    <src-questionnaires-list [questionnaire]="questionnaire"
-                        [editQuestionnaire]="editQuestionnaire"></src-questionnaires-list>
+            <div *ngFor="let questionnaire of questionnairesData | orderBy:'name'; let index = index;trackBy: trackByFn">
+                <form id=" questionnaire-{{ index }}" class="configItem" #editQuestionnaire="ngForm" novalidate>
+                <src-questionnaires-list [questionnaire]="questionnaire" [editQuestionnaire]="editQuestionnaire"
+                    (deleteRequestData)="deleteRequest($event)"></src-questionnaires-list>
                 </form>
             </div>
         </ng-container>

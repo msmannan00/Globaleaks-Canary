@@ -11,7 +11,7 @@ import { UtilsService } from 'app/src/shared/services/utils.service';
 })
 export class Tab3Component implements OnInit {
   @Input() contentForm: NgForm;
-  constructor( public utilsService: UtilsService,public node: NodeResolver, config: NgbTooltipConfig) {
+  constructor(public utilsService: UtilsService, public node: NodeResolver, config: NgbTooltipConfig) {
     config.placement = 'top';
   }
   showLangSelect = false;
@@ -43,11 +43,16 @@ export class Tab3Component implements OnInit {
     this.showLangSelect = !this.showLangSelect;
   }
   langNotEnabledFilter(language: any) {
-    console.log(language, "language");
     return this.node.dataModel.languages_enabled.indexOf(language.code) === -1;
   }
+  // langNotEnabledFilter = (language: any) => {
+  //   console.log(language, "language");
+  //   return this.node.dataModel.languages_enabled.indexOf(language.code) === -1;
+  // };
   enableLanguage(language: any) {
-    this.node.dataModel.languages_enabled.push(language.code);
+    if (language && (this.node.dataModel.languages_enabled.indexOf(language.code) === -1)) {
+      this.node.dataModel.languages_enabled.push(language.code);
+    }
   }
   removeLang(index: number, lang_code: string) {
     if (lang_code === this.node.dataModel.default_language) { return; }
@@ -55,9 +60,9 @@ export class Tab3Component implements OnInit {
   }
 
   updateNode() {
-    this.utilsService.update(this.node.dataModel).subscribe(res=>{
+    this.utilsService.update(this.node.dataModel).subscribe(res => {
       this.utilsService.reloadCurrentRoute();
     })
   }
-  
+
 }

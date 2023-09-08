@@ -29,6 +29,7 @@ export class Tab5Component {
   protected readonly Constants = Constants;
   ngOnInit(): void {
     this.userData = this.users.dataModel
+    this.userData = this.userData.filter((user: { escrow: boolean; }) => user.escrow === true);
     this.questionnaireData = this.questionnaires.dataModel
 
   }
