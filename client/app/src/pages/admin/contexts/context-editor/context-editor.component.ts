@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppDataService } from 'app/src/app-data.service';
@@ -32,7 +32,7 @@ export class ContextEditorComponent implements OnInit {
   nodeData: any = []
   selected = { value: null };
   admin_receivers_by_id: any
-  constructor(private http: HttpClient, public modalService: NgbModal, public appDataService: AppDataService, public preference: PreferenceResolver, public httpService: HttpService, public authenticationService: AuthenticationService, public node: NodeResolver, public users: UsersResolver, public questionnaires: QuestionnairesResolver, public utilsService: UtilsService) {
+  constructor(private cdr: ChangeDetectorRef,private http: HttpClient, public modalService: NgbModal, public appDataService: AppDataService, public preference: PreferenceResolver, public httpService: HttpService, public authenticationService: AuthenticationService, public node: NodeResolver, public users: UsersResolver, public questionnaires: QuestionnairesResolver, public utilsService: UtilsService) {
   }
 
   ngOnInit(): void {
@@ -40,8 +40,8 @@ export class ContextEditorComponent implements OnInit {
     this.questionnairesData = this.questionnaires.dataModel
     this.usersData = this.users.dataModel
     this.nodeData = this.node.dataModel
-
-    this.admin_receivers_by_id = this.utilsService.array_to_map(this.usersData);
+    
+    this.admin_receivers_by_id = this.utilsService.array_to_map(this.users.dataModel);
 
     // if (this.contexts.dataModel) {
     //   this.contextsData = this.contexts.dataModel
@@ -119,14 +119,30 @@ export class ContextEditorComponent implements OnInit {
   }
 
   moveReceiver(rec: any): void {
-    if (rec) {
+    if (rec && this.context.receivers.indexOf(rec.id) === -1) {
       this.context.receivers.push(rec.id);
       this.showSelect = false;
     }
   }
+  // moveReceiver(rec: any): void {
+  //   if (rec) {
+  //     const indexToRemove = this.usersData.indexOf(rec);
+  //     if (indexToRemove !== -1) {
+  //       this.context.receivers.push(rec.id);
+  //       this.showSelect = false;
+  //       this.usersData.splice(indexToRemove, 1);
+  //     }
+  //     console.log(this.usersData, "this.usersData");
 
-  receiverNotSelectedFilter(item: any): boolean {
-    return this.context.receivers.indexOf(item.id) === -1;
+  //   }
+  // }
+
+  receiverNotSelectedFilter(item: any) {
+    // this.usersData.push(item)
+    // console.log(this.usersData, "this.usersData remove");
+    // this.cdr.detectChanges();
+
+    // return this.context.receivers.indexOf(item.id) === -1;
   }
 
   deleteContext(context: any): void {

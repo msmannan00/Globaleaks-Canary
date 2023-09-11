@@ -21,6 +21,8 @@ export class QuestionsComponent {
     this.questionnairesData = this.questionnaires.dataModel
     // this.step = this.questionnairesData.steps[0]
     this.fields = this.fieldtemplates.dataModel
+    this.fields = this.fields.filter((field: { editable: boolean; }) => field.editable === true);
+
   }
   toggleAddQuestion() {
     this.showAddQuestion = !this.showAddQuestion;

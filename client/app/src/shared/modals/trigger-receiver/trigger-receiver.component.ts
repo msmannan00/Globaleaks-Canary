@@ -29,8 +29,11 @@ export class TriggerReceiverComponent {
     this.modalService.dismissAll();
   }
   addReceiver(item: any) {
-    this.arg.trigger_receiver.push(item.id);
+    if (item && this.arg.trigger_receiver.indexOf(item.id) === -1) {
+      this.arg.trigger_receiver.push(item.id);
+    }
   }
+  
 
   removeReceiver(index: number) {
     this.arg.trigger_receiver.splice(index, 1);

@@ -48,13 +48,6 @@ export class ImageUploadComponent implements AfterViewInit, OnDestroy{
     this.autoUploadSubscription.unsubscribe();
   }
 
- 
-
-
-
-
-
-
   deletePicture() {
     this.http
       .delete("api/admin/files/" + this.imageUploadId)
@@ -62,7 +55,7 @@ export class ImageUploadComponent implements AfterViewInit, OnDestroy{
         if (this.imageUploadModel) {
           this.imageUploadModel[this.imageUploadModelAttr] = "";
         }
-        this.imageUploadObj.flow.files = [];
+        this.imageUploadObj.files = [];
       });
   }
 }

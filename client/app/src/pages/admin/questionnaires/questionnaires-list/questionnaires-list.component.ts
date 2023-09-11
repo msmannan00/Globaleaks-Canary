@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppDataService } from 'app/src/app-data.service';
@@ -19,7 +19,8 @@ export class QuestionnairesListComponent {
   @Input() editQuestionnaire: NgForm;
   showAddQuestion: boolean = false;
   editing: boolean = false;
-
+  @Output() deleteRequestData = new EventEmitter<string>();
+  // @Output() saveRequestData = new EventEmitter<string>();
   constructor(private http: HttpClient, public appConfigService: AppConfigService, public appDataService: AppDataService, public modalService: NgbModal, private httpService: HttpService, private utilsService: UtilsService) { }
 
   toggleAddQuestion(): void {
@@ -32,6 +33,7 @@ export class QuestionnairesListComponent {
   saveQuestionnaire(questionnaire: any) {
     console.log(questionnaire, "questionnaire");
     this.httpService.requestUpdateAdminQuestionare(questionnaire.id, questionnaire).subscribe(res => {
+      // this.saveRequestData.emit(res);
       this.editing = false;
     })
   }
@@ -57,10 +59,10 @@ export class QuestionnairesListComponent {
     modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = () => {
       return this.httpService.requestDeleteAdminQuestionare(arg.id).subscribe(res => {
-        this.appConfigService.reinit()
-        // this.utilsService.reloadCurrentRoute()
+        this.deleteRequestData.emit(this.questionnaire);
       });
     };
     return modalRef.result;
   }
+  
 }
