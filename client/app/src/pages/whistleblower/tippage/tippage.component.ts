@@ -163,7 +163,7 @@ export class TippageComponent {
 
   ngOnInit() {
 
-    let requestObservable:Observable<any> = this.httpService.whistleBlowerTip({})
+    let requestObservable:Observable<any> = this.httpService.whistleBlowerTip()
     requestObservable.subscribe(
         {
           next: (response:WBTipData) => {

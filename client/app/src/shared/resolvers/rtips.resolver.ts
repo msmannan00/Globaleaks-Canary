@@ -1,38 +1,36 @@
 import { Injectable } from '@angular/core';
 import {
-    Resolve,
-    RouterStateSnapshot,
-    ActivatedRouteSnapshot, Router
+  Resolve
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import {HttpService} from "../services/http.service";
 import {rtipsResolverModel} from "../../models/resolvers/rtipsResolverModel";
 import { AuthenticationService } from 'app/src/services/authentication.service';
+import {catchError, map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RtipsResolver implements Resolve<boolean> {
+  dataModel: rtipsResolverModel = new rtipsResolverModel();
 
-  dataModel:rtipsResolverModel
-  
+  constructor(
+    private httpService: HttpService,
+    private authenticationService: AuthenticationService
+  ) {}
 
-  resolve(route: ActivatedRouteSnapshot, c: RouterStateSnapshot): Observable<boolean> {
-    if(this.authenticationService.isSessionActive()){
-    let requestObservable = this.httpService.recieverTipResource({"update": {method: "PUT"}})
-    requestObservable.subscribe(
-        {
-            next: (response:rtipsResolverModel) => {
-                this.dataModel=response;
-              },
-            error: (error: any) => {
-            }
-        }
-    );
+  resolve(): Observable<boolean> {
+    if (this.authenticationService.session.role === 'admin') {
+      return this.httpService.recieverTipResource().pipe(
+        map((response: rtipsResolverModel) => {
+          this.dataModel = response;
+          return true;
+        }),
+        catchError(() => {
+          return of(true);
+        })
+      );
+    }
+    return of(true);
   }
-  return of(true);
-  }
-
-  constructor(public httpService: HttpService, private router: Router, public authenticationService:AuthenticationService) {
-}
 }

@@ -993,12 +993,7 @@ module.exports = function (grunt) {
   grunt.registerTask("updateTranslations", ["fetchTranslations", "makeAppData", "verifyAppData"]);
 
   // Run this to build your app. You should have run updateTranslations before you do so, if you have changed something in your translations.
-  grunt.registerTask("build", ["clean", "copy:sources", "shell", "copy:build", "concat", "cssmin", "string-replace", "terser", "copy:package", "clean:tmp"]);
+  //grunt.registerTask("build", ["clean", "copy:sources", "shell", "copy:build", "concat", "cssmin", "string-replace", "terser", "copy:package", "clean:tmp"]);
+  grunt.registerTask("build", ["clean", "copy:sources", "shell", "copy:build"]);
 
-  grunt.registerTask("instrument-client", [
-    "clean",
-    "copy:sources",
-    "copy:coverage",
-    "instrument"
-  ]);
 };

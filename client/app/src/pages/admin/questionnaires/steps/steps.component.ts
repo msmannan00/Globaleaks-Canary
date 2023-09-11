@@ -4,6 +4,7 @@ import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
 import { FieldUtilitiesService } from 'app/src/shared/services/field-utilities.service';
 import { HttpService } from 'app/src/shared/services/http.service';
 import { UtilsService } from 'app/src/shared/services/utils.service';
+import {new_step} from "../../../../models/admin/new_step";
 
 @Component({
   selector: 'src-steps',
@@ -37,7 +38,8 @@ export class StepsComponent implements OnInit {
   add_step() {
     console.log(this.questionnaire, "this.questionnaire");
 
-    const step = this.utilsService.new_step(this.questionnaire.id);
+    const step = new new_step()
+    step.questionnaire_id = this.questionnaire.id
     step.label = this.new_step.label,
     step.order = this.utilsService.newItemOrder(this.questionnaire.steps, "order")
     this.httpService.requestAddAdminQuestionnaireStep(step).subscribe((new_step: any) => {

@@ -4,16 +4,29 @@ import {
   HttpEvent,
   HttpRequest,
   HttpHandler,
-  HttpClient, HttpErrorResponse, HttpResponse,
+  HttpClient, HttpErrorResponse,
 } from '@angular/common/http';
-import {catchError, finalize, from, map, Observable, switchMap, throwError} from 'rxjs';
+import {catchError, finalize, from, Observable, switchMap, throwError} from 'rxjs';
 import {tokenResponse} from "../models/authentication/token-response";
 import {CryptoService} from "../crypto.service";
 import {AuthenticationService} from "./authentication.service";
 import {AppDataService} from "../app-data.service";
 
+const protectedUrls = [
+  'api/wizard',
+  'api/signup',
+  'api/submission',
+  'api/receiptauth',
+  'api/tokenauth',
+  'api/authentication',
+  'api/reset/password',
+];
+
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
+
+  constructor(public authenticationService: AuthenticationService, private httpClient: HttpClient, private cryptoService: CryptoService) {
+  }
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let authHeader = this.authenticationService.getHeader();
     let authRequest = httpRequest
@@ -23,8 +36,7 @@ export class RequestInterceptor implements HttpInterceptor {
           .set(key, value)
       });
     }
-    if (httpRequest.url.toString()=="api/wizard" || httpRequest.url.toString()=="api/signup" || httpRequest.url.toString()=="api/submission" ||  httpRequest.url.toString()=="api/receiptauth" || httpRequest.url.toString()=="api/tokenauth" || httpRequest.url.toString()=="api/authentication" || httpRequest.url.toString()=="api/reset/password") {
-
+    if (protectedUrls.includes(httpRequest.url)) {
       return this.httpClient.post('api/token', {user: 123}).pipe(switchMap((response) => {
         let token = Object.assign(new tokenResponse(), response)
         return from(this.cryptoService.proofOfWork(token.id))
@@ -42,13 +54,13 @@ export class RequestInterceptor implements HttpInterceptor {
       return next.handle(authRequest);
     }
   }
-
-  constructor(private appDataService:AppDataService, public authenticationService: AuthenticationService, private httpClient: HttpClient, private cryptoService: CryptoService) {
-  }
 }
 
 @Injectable()
 export class ErrorCatchingInterceptor implements HttpInterceptor {
+
+  constructor(private authenticationService:AuthenticationService) {
+  }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -70,16 +82,14 @@ export class ErrorCatchingInterceptor implements HttpInterceptor {
         })
       )
   }
-
-  constructor(private authenticationService:AuthenticationService) {
-  }
-
 }
 
 @Injectable()
 export class CompletedInterceptor implements HttpInterceptor {
 
   count=0
+  constructor(private appDataService:AppDataService) {
+  }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.count === 0) {
       this.appDataService.showLoadingPanel = true
@@ -93,8 +103,4 @@ export class CompletedInterceptor implements HttpInterceptor {
       }
     }));
   }
-
-  constructor(private appDataService:AppDataService) {
-  }
-
 }

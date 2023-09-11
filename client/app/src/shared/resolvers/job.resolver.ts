@@ -1,37 +1,36 @@
 import { Injectable } from '@angular/core';
 import {
-  Router, Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
+  Resolve,
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import {auditlogResolverModel} from "../../models/resolvers/auditlogResolverModel";
-import {HttpService} from "../services/http.service";
-import {AuthenticationService} from "../../services/authentication.service";
-import {jobResolverModel} from "../../models/resolvers/jobResolverModel";
+import { catchError, map } from 'rxjs/operators';
+import { HttpService } from '../services/http.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { jobResolverModel } from '../../models/resolvers/jobResolverModel';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JobResolver implements Resolve<boolean> {
-  dataModel:jobResolverModel = new jobResolverModel()
+  dataModel: jobResolverModel = new jobResolverModel();
 
-  resolve(route: ActivatedRouteSnapshot, c: RouterStateSnapshot): Observable<boolean> {
-    if(this.authenticationService.session.role ==='admin'){
-      let requestObservable = this.httpService.requestJobResource({"update": {method: "PUT"}})
-      requestObservable.subscribe(
-          {
-            next: (response:jobResolverModel) => {
-              this.dataModel = response
-            },
-            error: (error: any) => {
-            }
-          }
+  constructor(
+    private httpService: HttpService,
+    private authenticationService: AuthenticationService
+  ) {}
+
+  resolve(): Observable<boolean> {
+    if (this.authenticationService.session.role === 'admin') {
+      return this.httpService.requestJobResource().pipe(
+        map((response: jobResolverModel) => {
+          this.dataModel = response;
+          return true;
+        }),
+        catchError(() => {
+          return of(true);
+        })
       );
     }
     return of(true);
-  }
-
-  constructor(public httpService: HttpService, private router: Router, public authenticationService:AuthenticationService) {
   }
 }

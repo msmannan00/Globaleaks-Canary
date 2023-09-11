@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
+import {AuthenticationService} from "../../../services/authentication.service";
 @Component({
   selector: 'src-settings',
   templateUrl: './settings.component.html',
@@ -14,7 +15,7 @@ export class SettingsComponent implements AfterViewInit ,OnInit {
   tabs: any[];
   nodeData: any
   active:string
-  constructor(public node: NodeResolver) { }
+  constructor(public node: NodeResolver, public authenticationService:AuthenticationService) { }
   ngOnInit() { }
 
   ngAfterViewInit(): void {
@@ -27,7 +28,7 @@ export class SettingsComponent implements AfterViewInit ,OnInit {
         component: this.tab1
       },
     ];
-    if (this.node.authenticationService.session.role === "admin") {
+    if (this.authenticationService.session.role === "admin") {
       this.tabs = this.tabs.concat([
         {
           title: 'Theme customization',

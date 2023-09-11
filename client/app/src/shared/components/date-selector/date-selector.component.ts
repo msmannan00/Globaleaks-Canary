@@ -15,16 +15,13 @@ export class DateRangeSelectorComponent {
   @Input() currentDates: any;
   fromDate: NgbDate | null = null;
   toDate: NgbDate | null = null;
-
-  constructor(calendar: NgbCalendar) {}
-
+  constructor() {}
   ngOnInit() {
     if (this.currentDates) {
       this.fromDate = this.currentDates.fromDate;
       this.toDate = this.currentDates.toDate;
     }
   }
-
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;

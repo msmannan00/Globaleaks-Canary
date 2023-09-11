@@ -1,5 +1,6 @@
 import {Component, TemplateRef, ViewChild} from '@angular/core';
 import {NodeResolver} from "../../../shared/resolvers/node.resolver";
+import {AuthenticationService} from "../../../services/authentication.service";
 
 @Component({
   selector: 'src-sites',
@@ -12,7 +13,7 @@ export class SitesComponent {
   nodeData: any
   active:string
 
-  constructor(public node: NodeResolver) { }
+  constructor(public node: NodeResolver, public authenticationService:AuthenticationService) { }
 
   ngOnInit() { }
 
@@ -26,7 +27,7 @@ export class SitesComponent {
         component: this.tab1
       },
     ];
-    if (this.node.authenticationService.session.role === "admin") {
+    if (this.authenticationService.session.role === "admin") {
       this.tabs = this.tabs.concat([
         {
           title: 'Options',

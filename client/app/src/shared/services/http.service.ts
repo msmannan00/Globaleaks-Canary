@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Observable } from 'rxjs';
 import { password_recovery_response_model } from "../../models/authentication/password_recovery_response_model";
 import { Router } from "@angular/router";
@@ -15,173 +15,132 @@ export class HttpService {
   }
 
   requestAuthTokenLogin(param: string): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/tokenauth", param, { 'headers': headers })
+    return this.httpClient.post("api/tokenauth", param)
   }
 
   requestGeneralLogin(param: string): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/authentication", param, { 'headers': headers })
+    return this.httpClient.post("api/authentication", param)
   }
 
   requestWhistleBlowerLogin(param: string): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/receiptauth", param, { 'headers': headers })
+    return this.httpClient.post("api/receiptauth", param)
   }
 
   requestDeleteSession(): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.delete("api/session", { 'headers': headers })
+    return this.httpClient.delete("api/session")
   }
 
   requestDeleteTenant(url: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.delete(url, { 'headers': headers })
+    return this.httpClient.delete(url)
   }
 
   requestUpdateTenant(url: any, data: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.put(url, data, { 'headers': headers })
+    return this.httpClient.put(url, data)
   }
 
   deleteDBFile(id: string): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.delete("api/wbfile/" + id, { 'headers': headers })
+    return this.httpClient.delete("api/wbfile/" + id)
   }
 
   requestOperations(data: any, header?: any): Observable<any> {
-    let headers = { 'content-type': 'application/json' }
-    if (header) {
-      headers = header
-    }
-
-    return this.httpClient.put("api/user/operations", data, { headers })
+    return this.httpClient.put("api/user/operations", data, header)
   }
 
-  updatePreferenceResource(data: any, header?: any): Observable<any> {
-    let headers = { 'content-type': 'application/json' }
-    return this.httpClient.put("api/preferences", data, { headers })
+  updatePreferenceResource(data: any): Observable<any> {
+    return this.httpClient.put("api/preferences", data)
   }
 
   requestChangePassword(param: string): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.put<password_recovery_response_model>("api/reset/password", param, { 'headers': headers })
+    return this.httpClient.put<password_recovery_response_model>("api/reset/password", param)
   }
 
   requestToken(param: string): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/token", param, { 'headers': headers })
+    return this.httpClient.post("api/token", param)
   }
 
   requestResetLogin(param: string): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/reset/password", param, { 'headers': headers })
+    return this.httpClient.post("api/reset/password", param)
   }
 
   requestSignup(param: string): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/signup", param, { 'headers': headers })
+    return this.httpClient.post("api/signup", param)
   }
 
   requestWizard(param: string): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/wizard", param, { 'headers': headers })
+    return this.httpClient.post("api/wizard", param)
   }
 
   requestSignupToken(token: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/signup/" + token, { 'headers': headers })
+    return this.httpClient.get("api/signup/" + token)
   }
 
   requestTenantSwitch(url: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get(url, { 'headers': headers })
+    return this.httpClient.get(url)
   }
 
   requestReportSubmission(param: string): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/submission", param, { 'headers': headers })
+    return this.httpClient.post("api/submission", param)
   }
 
   requestSuppor(param: string): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/support", param, { 'headers': headers })
+    return this.httpClient.post("api/support", param)
   }
   requestNewComment(param: string): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/wbtip/comments", param, { 'headers': headers })
+    return this.httpClient.post("api/wbtip/comments", param)
   }
 
   requestNewMessage(param: string, suburl: string): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/wbtip/messages/" + suburl, param, { 'headers': headers })
+    return this.httpClient.post("api/wbtip/messages/" + suburl, param)
   }
 
-  requestPreferenceResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/preferences", { 'headers': headers })
+  requestPreferenceResource(): Observable<any> {
+    return this.httpClient.get("api/preferences")
   }
 
-  requestNodeResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/node", { 'headers': headers })
+  requestNodeResource(): Observable<any> {
+    return this.httpClient.get("api/admin/node")
   }
 
   updateNodeResource(data: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.put("api/admin/node", data, { headers })
+    return this.httpClient.put("api/admin/node", data)
   }
 
-  requestUsersResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/users", { 'headers': headers })
+  requestUsersResource(): Observable<any> {
+    return this.httpClient.get("api/admin/users")
   }
-  requestContextsResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/contexts", { 'headers': headers })
+  requestContextsResource(): Observable<any> {
+    return this.httpClient.get("api/admin/contexts")
   }
-  requestTenantsResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/tenants", { 'headers': headers })
+  requestTenantsResource(): Observable<any> {
+    return this.httpClient.get("api/admin/tenants")
   }
-  requestQuestionnairesResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/questionnaires", { 'headers': headers })
+  requestQuestionnairesResource(): Observable<any> {
+    return this.httpClient.get("api/admin/questionnaires")
   }
-  requestTipResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/auditlog/tips", { 'headers': headers })
+  requestTipResource(): Observable<any> {
+    return this.httpClient.get("api/admin/auditlog/tips")
   }
-  requestNotificationsResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/notification", { 'headers': headers })
+  requestNotificationsResource(): Observable<any> {
+    return this.httpClient.get("api/admin/notification")
   }
-  requestSubmissionStatusResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/submission_statuses", { 'headers': headers, params: param })
-  }
-  requestNetworkResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/network", { 'headers': headers })
+
+  requestNetworkResource(): Observable<any> {
+    return this.httpClient.get("api/admin/network")
   }
   requestUpdateNetworkResource(param: any): Observable<any> {
     return this.httpClient.put("api/admin/network", param)
   }
   requestTlsConfigResource(): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/config/tls", { 'headers': headers });
+    return this.httpClient.get("api/admin/config/tls");
   }
   requestDeleteTlsConfigResource(): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.delete("api/admin/config/tls", { 'headers': headers });
+    return this.httpClient.delete("api/admin/config/tls");
   }
-  requestRedirectsResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/redirects", { 'headers': headers })
+  requestRedirectsResource(): Observable<any> {
+    return this.httpClient.get("api/admin/redirects")
   }
   requestPostRedirectsResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/admin/redirects", param, { 'headers': headers })
+    return this.httpClient.post("api/admin/redirects", param)
   }
   requestDeleteRedirectsResource(id: any): Observable<any> {
     return this.httpClient.delete("api/admin/redirects/" + id)
@@ -190,121 +149,61 @@ export class HttpService {
     return this.httpClient.put("api/admin/config/tls/files/" + name, data)
   }
   requestDeleteTlsConfigFilesResource(name: string): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.delete("api/admin/config/tls/files/" + name, { 'headers': headers })
+    return this.httpClient.delete("api/admin/config/tls/files/" + name)
   }
   requestAdminAcmeResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/admin/config/acme/run", param, { 'headers': headers })
+    return this.httpClient.post("api/admin/config/acme/run", param)
   }
   requestCSRContentResource(name: any, param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/admin/config/tls/files/" + name, param, { 'headers': headers })
+    return this.httpClient.post("api/admin/config/tls/files/" + name, param)
   }
   downloadCSRFile(): Observable<Blob> {
     const url = "api/admin/config/tls/files/csr";
     return this.httpClient.get(url, { responseType: 'blob' });
   }
   disableTLSConfig(): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
     const url = "api/admin/config/tls/disable";
-    return this.httpClient.post(url, { 'headers': headers });
+    return this.httpClient.post(url, {});
   }
   enableTLSConfig(): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
     const url = "api/admin/config/tls/enable";
-    return this.httpClient.post(url, { 'headers': headers });
+    return this.httpClient.post(url, {});
   }
 
-  whistleBlowerTip(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/wbtip", { 'headers': headers, params: param })
+  whistleBlowerTip(): Observable<any> {
+    return this.httpClient.get("api/wbtip")
   }
 
   whistleBlowerTipUpdate(param: any, tipid: string): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/wbtip/" + tipid + "/update", param, { 'headers': headers })
+    return this.httpClient.post("api/wbtip/" + tipid + "/update", param)
   }
 
   whistleBlowerIdentityUpdate(param: any, tipid: string): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/wbtip/" + tipid + "/provideidentityinformation", param, { 'headers': headers })
+    return this.httpClient.post("api/wbtip/" + tipid + "/provideidentityinformation", param)
   }
 
-  requestAdminTenantResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/tenants", { 'headers': headers, params: param })
-  }
-  requestAdminRedirectResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/redirects", { 'headers': headers, params: param })
-  }
-  requestAdminNotificationResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/notification", { 'headers': headers, params: param })
-  }
-  requestAdminNetworkResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/network", { 'headers': headers, params: param })
+  requestAdminFieldTemplateResource(): Observable<any> {
+    return this.httpClient.get("api/admin/fieldtemplates")
   }
 
-  requestAdminUserResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/users", { 'headers': headers, params: param })
-  }
-  requestAdminFieldTemplateResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/fieldtemplates", { 'headers': headers })
-  }
-
-  requestAdminContextResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/contexts", { 'headers': headers, params: param })
-  }
-
-  requestAdminNodeResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/node", { 'headers': headers, params: param })
-  }
   requestUpdateAdminNodeResource(data: any): Observable<any> {
-    // const headers = { 'content-type': 'application/json'}
     return this.httpClient.put("api/admin/node", data)
   }
   requestAdminL10NResource(lang: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/l10n/" + lang, { 'headers': headers },)
+    return this.httpClient.get("api/admin/l10n/" + lang)
   }
   requestUpdateAdminL10NResource(data: any, lang: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.put("api/admin/l10n/" + lang, data,)
+    return this.httpClient.put("api/admin/l10n/" + lang, data)
   }
   requestDefaultL10NResource(lang: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("/data/l10n/" + lang + ".json", { 'headers': headers },)
+    return this.httpClient.get("/data/l10n/" + lang + ".json")
   }
-  requestAdminAuditLogResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/auditlog", { 'headers': headers })
+  requestAdminAuditLogResource(): Observable<any> {
+    return this.httpClient.get("api/admin/auditlog")
   }
-  requestAuditlogResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/auditlog", { 'headers': headers })
-  }
-  requestlogs(url: string): Observable<any> {
-    const headers = {
-      'content-type': 'application/octet-stream',
-      'Accept': 'application/octet-stream',
-      'TE': 'trailers' // Add this line to include TE header
-    };
-    return this.httpClient.get(url, { 'headers': headers })
-  }
-  requestQuestionareResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/questionnaires", { 'headers': headers, params: param })
-  }
+
   addQuestionare(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post(`api/admin/questionnaires`, param, { 'headers': headers })
+    return this.httpClient.post(`api/admin/questionnaires`, param)
   }
   requestDeleteAdminQuestionare(id: any): Observable<any> {
     return this.httpClient.delete("api/admin/questionnaires/" + id);
@@ -312,37 +211,30 @@ export class HttpService {
   requestUpdateAdminQuestionare(id: any, param: any): Observable<any> {
     return this.httpClient.put("api/admin/questionnaires/" + id, param);
   }
-  requestJobResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/admin/auditlog/jobs", { 'headers': headers })
+  requestJobResource(): Observable<any> {
+    return this.httpClient.get("api/admin/auditlog/jobs")
   }
 
-  recieverTipResource(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/rtips", { 'headers': headers })
+  recieverTipResource(): Observable<any> {
+    return this.httpClient.get("api/rtips")
   }
-  recieverTip(param: any, id: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get("api/rtips/" + id, { 'headers': headers })
+  recieverTip(id: any): Observable<any> {
+    return this.httpClient.get("api/rtips/" + id)
   }
 
   rtipsRequestNewComment(param: any, id: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post(`api/rtips/${id}/comments`, param, { 'headers': headers })
+    return this.httpClient.post(`api/rtips/${id}/comments`, param)
   }
   retipRequestNewMessage(param: any, id: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post(`api/rtips/${id}/messages`, param, { 'headers': headers })
+    return this.httpClient.post(`api/rtips/${id}/messages`, param)
   }
 
   addSubmissionStatus(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post(`api/admin/submission_statuses`, param, { 'headers': headers })
+    return this.httpClient.post(`api/admin/submission_statuses`, param)
   }
 
   fetchTenant(): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.get(`api/admin/tenants`, { 'headers': headers })
+    return this.httpClient.get(`api/admin/tenants`)
   }
 
   addTenant(param: any): Observable<any> {
@@ -353,8 +245,7 @@ export class HttpService {
     return this.httpClient.post(`api/rtips/${id}/iars`, { "request_motivation": "" });
   }
   requestAddAdminUser(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/admin/users", param, { 'headers': headers })
+    return this.httpClient.post("api/admin/users", param)
   }
   requestUpdateAdminUser(id: any, param: any): Observable<any> {
     return this.httpClient.put("api/admin/users/" + id, param);
@@ -363,12 +254,10 @@ export class HttpService {
     return this.httpClient.delete("api/admin/users/" + id);
   }
   requestAddAdminContext(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/admin/contexts", param, { 'headers': headers })
+    return this.httpClient.post("api/admin/contexts", param)
   }
   requestAddAdminQuestionnaireStep(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/admin/steps", param, { 'headers': headers })
+    return this.httpClient.post("api/admin/steps", param)
   }
   requestUpdateAdminQuestionnaireStep(id: any, param: any): Observable<any> {
     return this.httpClient.put("api/admin/steps/" + id, param);
@@ -377,12 +266,10 @@ export class HttpService {
     return this.httpClient.delete("api/admin/steps/" + id);
   }
   requestAddAdminQuestionnaireField(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/admin/fields", param, { 'headers': headers })
+    return this.httpClient.post("api/admin/fields", param)
   }
   requestAddAdminQuestionnaireFieldTemplate(param: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
-    return this.httpClient.post("api/admin/fieldtemplates", param, { 'headers': headers })
+    return this.httpClient.post("api/admin/fieldtemplates", param)
   }
   requestUpdateAdminQuestionnaireField(id: any, param: any): Observable<any> {
     return this.httpClient.put("api/admin/fields/" + id, param);

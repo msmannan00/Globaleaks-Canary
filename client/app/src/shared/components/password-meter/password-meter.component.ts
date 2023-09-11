@@ -1,10 +1,8 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {LoginDataRef} from "../../../pages/auth/login/model/login-model";
 
 @Component({
   selector: 'src-password-meter',
-  templateUrl: './password-meter.component.html',
-  styleUrls: ['./password-meter.component.css']
+  templateUrl: './password-meter.component.html'
 })
 export class PasswordMeterComponent implements OnChanges{
 

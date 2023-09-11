@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
+import {AuthenticationService} from "../../../services/authentication.service";
 
 @Component({
   selector: 'src-admin-sidebar',
@@ -8,6 +9,6 @@ import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
 })
 export class SidebarComponent  {
 
-  constructor(public node : NodeResolver) {
+  constructor(public node : NodeResolver, public authenticationService:AuthenticationService) {
   }
 }

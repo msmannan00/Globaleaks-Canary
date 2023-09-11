@@ -18,5 +18,4 @@ export class TipMessageComponent {
   }
   ngOnInit(): void {
   }
-  protected readonly JSON = JSON;
 }

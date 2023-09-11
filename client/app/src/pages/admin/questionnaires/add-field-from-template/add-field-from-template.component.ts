@@ -4,6 +4,7 @@ import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
 import { FieldUtilitiesService } from 'app/src/shared/services/field-utilities.service';
 import { HttpService } from 'app/src/shared/services/http.service';
 import { UtilsService } from 'app/src/shared/services/utils.service';
+import {new_field} from "../../../../models/admin/new_field";
 
 @Component({
   selector: 'src-add-field-from-template',
@@ -16,7 +17,7 @@ export class AddFieldFromTemplateComponent {
   @Input() type: any;
   fields: any = []
   new_field: any = {};
-  constructor(public node: NodeResolver, private httpService: HttpService, private utilsService: UtilsService, public fieldtemplates: FieldtemplatesResolver, private fieldUtilities: FieldUtilitiesService,) {
+  constructor(public node: NodeResolver, private httpService: HttpService, private utilsService: UtilsService, public fieldtemplates: FieldtemplatesResolver) {
     this.new_field = {
       template_id: ''
     }
@@ -28,7 +29,8 @@ export class AddFieldFromTemplateComponent {
   }
   add_field_from_template(): void {
     if (this.type === "step") {
-      const field = this.utilsService.new_field(this.step.id, "");
+      const field = new new_field()
+      field.step_id = this.step.id
       field.template_id = this.new_field.template_id;
       field.instance = "reference";
       field.y = this.utilsService.newItemOrder(this.fields, "y");
@@ -40,7 +42,8 @@ export class AddFieldFromTemplateComponent {
       });
     }
     if (this.type === "field") {
-      const field = this.utilsService.new_field("", this.step.id);
+      const field = new new_field()
+      field.step_id = this.step.id
       field.template_id = this.new_field.template_id;
       field.instance = "reference";
       field.y = this.utilsService.newItemOrder(this.step.children, "y");

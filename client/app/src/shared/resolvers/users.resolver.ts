@@ -1,42 +1,37 @@
 import { Injectable } from '@angular/core';
 import {
-    Resolve,
-    RouterStateSnapshot,
-    ActivatedRouteSnapshot, Router
+  Resolve
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import {HttpService} from "../services/http.service";
 import {userResolverModel} from "../../models/resolvers/userResolverModel";
 import { AuthenticationService } from 'app/src/services/authentication.service';
+import {catchError, map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersResolver implements Resolve<boolean> {
+  dataModel: userResolverModel = new userResolverModel();
 
-  dataModel:userResolverModel = new userResolverModel()
+  constructor(
+    private httpService: HttpService,
+    private authenticationService: AuthenticationService
+  ) {}
 
-  resolve(route: ActivatedRouteSnapshot, c: RouterStateSnapshot): Observable<boolean> {
-    if(this.authenticationService.session.role ==='admin'){
-    let requestObservable = this.httpService.requestUsersResource({"update": {method: "PUT"}})
-    requestObservable.subscribe(
-        {
-            next: (response:userResolverModel) => {
-                this.dataModel = response
-                // if (this.dataModel.password_change_needed) {
-                //     this.router.navigate(["/action/forcedpasswordchange"]);
-                // } else if (this.dataModel.require_two_factor) {
-                //     this.router.navigate(["/action/forcedtwofactor"]);
-                // }
-            },
-            error: (error: any) => {
-            }
-        }
-    );
-  }
-  return of(true);
+  resolve(): Observable<boolean> {
+    if (this.authenticationService.session.role === 'admin') {
+      return this.httpService.requestUsersResource().pipe(
+        map((response: userResolverModel) => {
+          this.dataModel = response;
+          return true;
+        }),
+        catchError(() => {
+          return of(true);
+        })
+      );
+    }
+    return of(true);
   }
 
-  constructor(public httpService: HttpService, private router: Router, public authenticationService:AuthenticationService) {
-  }
 }

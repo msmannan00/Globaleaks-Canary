@@ -1,17 +1,17 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpService} from "../shared/services/http.service";
 import {TranslateService} from "@ngx-translate/core";
 import {UtilsService} from "../shared/services/utils.service";
 import {AppDataService} from "../app-data.service";
 import {FieldUtilitiesService} from "../shared/services/field-utilities.service";
 import {TranslationService} from "./translation.service";
-import {Route, Router,NavigationEnd, ActivatedRoute} from "@angular/router";
+import {Router,NavigationEnd, ActivatedRoute} from "@angular/router";
 import {PreferenceResolver} from "../shared/resolvers/preference.resolver";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AppConfigService implements OnInit{
+export class AppConfigService{
   public sidebar: string= '';
   initTranslation(){
     this.translateService.setDefaultLang('en');
@@ -26,20 +26,11 @@ export class AppConfigService implements OnInit{
     this.rootDataService.page = page
   }
 
-  hello(){
-
-  }
-
   private localInitialization(callback?: () => void){
 
     this.appServices.getPublicResource().subscribe({
       next: data => {
         this.rootDataService.public = data.body;
-
-        //this.translateService.setDefaultLang(this.rootDataService.public.node.default_language);
-        //this.translateService.use(this.rootDataService.public.node.default_language);
-        //this.utilsService.routeCheck()
-
         let elem
         if (window.location.pathname === "/") {
           if (this.rootDataService.public.node.css) {
@@ -75,18 +66,16 @@ export class AppConfigService implements OnInit{
         this.rootDataService.contexts_by_id = this.utilsService.array_to_map(this.rootDataService.public.contexts);
         this.rootDataService.receivers_by_id = this.utilsService.array_to_map(this.rootDataService.public.receivers);
         this.rootDataService.questionnaires_by_id = this.utilsService.array_to_map(this.rootDataService.public.questionnaires);
-
-
         this.rootDataService.submission_statuses = this.rootDataService.public.submission_statuses;
         this.rootDataService.submission_statuses_by_id = this.utilsService.array_to_map(this.rootDataService.public.submission_statuses);
 
 
-        for (let [key, element] of Object.entries(this.rootDataService.questionnaires_by_id)) {
+        for (let [key] of Object.entries(this.rootDataService.questionnaires_by_id)) {
           this.fieldUtilitiesService.parseQuestionnaire(this.rootDataService.questionnaires_by_id[key], {})
           this.rootDataService.questionnaires_by_id[key].steps = this.rootDataService.questionnaires_by_id[key].steps.sort((a:any,b:any)=>a.order > b.order)
         }
 
-        for (let [key, element] of Object.entries(this.rootDataService.contexts_by_id)) {
+        for (let [key] of Object.entries(this.rootDataService.contexts_by_id)) {
           this.rootDataService.contexts_by_id[key].questionnaire = this.rootDataService.questionnaires_by_id[this.rootDataService.contexts_by_id[key].questionnaire_id];
           if (this.rootDataService.contexts_by_id[key].additional_questionnaire_id) {
             this.rootDataService.contexts_by_id[key].additional_questionnaire = this.rootDataService.questionnaires_by_id[this.rootDataService.contexts_by_id[key].additional_questionnaire_id];
@@ -98,9 +87,7 @@ export class AppConfigService implements OnInit{
         };
 
         this.rootDataService.privacy_badge_open = !this.rootDataService.connection.tor;
-
         this.utilsService.routeCheck();
-
         this.rootDataService.languages_enabled = new Map<number, string>();
         this.rootDataService.languages_enabled_selector = [];
         this.rootDataService.languages_supported = new Map<number, string>();
@@ -131,38 +118,36 @@ export class AppConfigService implements OnInit{
       }
     });
   }
-  setTitle(){
-    if (!this.rootDataService.public) {
+  setTitle() {
+    const { public: rootData } = this.rootDataService;
+
+    if (!rootData) {
       return;
     }
 
-    let projectTitle = this.rootDataService.public.node.name, pageTitle = this.rootDataService.public.node.header_title_homepage;
-
-
+    let projectTitle = rootData.node.name;
+    let pageTitle = rootData.node.header_title_homepage;
 
     if (location.pathname !== "/") {
       pageTitle = "Globaleaks";
     }
 
-    if(pageTitle.length>0){
+    if (pageTitle.length > 0) {
       pageTitle = this.translateService.instant(pageTitle);
     }
 
     this.rootDataService.projectTitle = projectTitle !== "GLOBALEAKS" ? projectTitle : "";
     this.rootDataService.pageTitle = pageTitle !== projectTitle ? pageTitle : "";
 
-    if (pageTitle && pageTitle.length>0) {
-      pageTitle = this.translateService.instant("wow");
-      window.document.title = projectTitle + " - " + pageTitle;
-    } else {
-      window.document.title = projectTitle;
-    }
+    const finalPageTitle = pageTitle.length > 0 ? this.translateService.instant("wow") : projectTitle;
+    window.document.title = `${projectTitle} - ${finalPageTitle}`;
 
-    let element = window.document.getElementsByName("description")[0]
+    const element = window.document.querySelector('meta[name="description"]');
     if (element instanceof HTMLMetaElement) {
-      element.content = this.rootDataService.public.node.description;
+      element.content = rootData.node.description;
     }
   }
+
   onRouteChange(){
     this.router.events.subscribe(() => {
       if(this.rootDataService.public.node){
@@ -176,7 +161,7 @@ export class AppConfigService implements OnInit{
     });
   }
 
-  reloadRoute(newPath: string) {
+  loadAdminRoute(newPath: string) {
     const promise = () => {
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
       this.router.navigated = false;
@@ -189,8 +174,6 @@ export class AppConfigService implements OnInit{
     this.localInitialization(promise)
   }
 
-
-  
   routeChangeListener() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -210,8 +193,5 @@ export class AppConfigService implements OnInit{
   constructor(private preferenceResolver:PreferenceResolver, private router: Router,private activatedRoute: ActivatedRoute, public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public rootDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService)  {
     this.localInitialization()
     this.onRouteChange();
-  }
-
-  ngOnInit(): void {
   }
 }

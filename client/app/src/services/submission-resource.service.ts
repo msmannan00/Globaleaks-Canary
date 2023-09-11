@@ -15,11 +15,4 @@ export class SubmissionResourceService {
   init(context_id:any){
     this.context_id = context_id
   }
-
-  save(){
-
-  }
-
-  constructor() {
-  }
 }

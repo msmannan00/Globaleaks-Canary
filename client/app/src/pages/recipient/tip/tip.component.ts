@@ -50,7 +50,7 @@ export class TipComponent {
   }
   loadTipDate() {
     this.tip_id = this.activatedRoute.snapshot.paramMap.get('tip_id');
-    let requestObservable: Observable<any> = this.httpService.recieverTip({}, this.tip_id)
+    let requestObservable: Observable<any> = this.httpService.recieverTip( this.tip_id)
     requestObservable.subscribe(
       {
         next: (response: any) => {

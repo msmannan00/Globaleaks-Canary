@@ -1,30 +1,38 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AuthenticationService } from "../../services/authentication.service";
 import { AppDataService } from "../../app-data.service";
 import { TranslateService } from "@ngx-translate/core";
-import { NavigationExtras, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { RequestSupportComponent } from "../modals/request-support/request-support.component";
 import { HttpService } from "./http.service";
-// import {Transfer} from "@flowjs/ngx-flow";
-import { AppConfigService } from "../../services/app-config.service";
 import { TokenResource } from './token-resource.service';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable, map, catchError, throwError, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ConfirmationWithPasswordComponent } from '../modals/confirmation-with-password/confirmation-with-password.component';
 import { ConfirmationWith2faComponent } from '../modals/confirmation-with2fa/confirmation-with2fa.component';
 import { PreferenceResolver } from '../resolvers/preference.resolver';
 import { DeleteConfirmationComponent } from '../modals/delete-confirmation/delete-confirmation.component';
-import { userResolverModel } from 'app/src/models/resolvers/userResolverModel';
-import { contextResolverModel } from 'app/src/models/resolvers/contextResolverModel';
 import { NodeResolver } from "../resolvers/node.resolver";
-import { questionnaireResolverModel } from 'app/src/models/resolvers/questionnaireModel';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
 
+  constructor(
+    private nodeResolver: NodeResolver,
+    private http: HttpClient,
+    public translateService: TranslateService,
+    public httpService: HttpService,
+    public modalService: NgbModal,
+    public authenticationService: AuthenticationService,
+    public appDataService: AppDataService,
+    public preferenceResolver: PreferenceResolver,
+    public tokenResourceService: TokenResource,
+    private router: Router) {
+
+  }
   updateNode() {
     this.httpService.updateNodeResource(this.nodeResolver.dataModel).subscribe();
   }
@@ -64,18 +72,12 @@ export class UtilsService {
   }
 
   download(url: string): void {
-    // this.tokenResourceService.getWithProofOfWork().then((token) => {
-    //   this.windowRef.nativeWindow.open(
-    //     url + '?token=' + token.id + ':' + token.answer
-    //   );
-    // });
     this.tokenResourceService.getWithProofOfWork().then((token: any) => {
       window.open(`${url}?token=${token.id}:${token.answer}`);
     });
   }
 
   isUploading(uploads?: any) {
-
     if (uploads) {
       for (let key in uploads) {
         if (uploads[key].flowFile && uploads[key].flowFile.isUploading()) {
@@ -123,16 +125,6 @@ export class UtilsService {
     }
   }
 
-  windowScrolled = false
-  onWindowScroll() {
-    if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
-      this.windowScrolled = true;
-    }
-    else if (this.windowScrolled && window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop < 10) {
-      this.windowScrolled = false;
-    }
-  }
-
   scrollToTop() {
     document.documentElement.scrollTop = 0;
   }
@@ -140,13 +132,6 @@ export class UtilsService {
   reloadCurrentRoute() {
     const currentUrl = this.router.url;
     this.router.navigateByUrl('routing', { skipLocationChange: true, replaceUrl: true }).then(() => {
-      this.router.navigate([currentUrl]);
-    });
-  }
-
-  reloadRoute(): void {
-    const currentUrl = this.router.url;
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate([currentUrl]);
     });
   }
@@ -207,38 +192,6 @@ export class UtilsService {
     }
   }
 
-  setTitle() {
-    if (!this.appDataService.public) {
-      return;
-    }
-
-    let projectTitle = this.appDataService.public.node.name, pageTitle = this.appDataService.public.node.header_title_homepage;
-
-
-
-    if (location.pathname !== "/") {
-      pageTitle = "Globaleaks";
-    }
-
-    if (pageTitle.length > 0) {
-      pageTitle = this.translateService.instant(pageTitle);
-    }
-
-    this.appDataService.projectTitle = projectTitle !== "GLOBALEAKS" ? projectTitle : "";
-    this.appDataService.pageTitle = pageTitle !== projectTitle ? pageTitle : "";
-
-    if (pageTitle && pageTitle.length > 0) {
-      pageTitle = this.translateService.instant("wow");
-      window.document.title = projectTitle + " - " + pageTitle;
-    } else {
-      window.document.title = projectTitle;
-    }
-
-    let element = window.document.getElementsByName("description")[0]
-    if (element instanceof HTMLMetaElement) {
-      element.content = this.appDataService.public.node.description;
-    }
-  }
   array_to_map(receivers: any) {
     let ret: any = {};
 
@@ -308,6 +261,7 @@ export class UtilsService {
   runRecipientOperation(operation: string, args: any, refresh: boolean) {
     return this.httpService.runOperation("api/recipient/operations", operation, args, refresh);
   }
+
   go(path: string): void {
     this.router.navigateByUrl(path);
   }
@@ -321,10 +275,6 @@ export class UtilsService {
     } else {
       return this.translateService.instant('None');
     }
-  }
-  getTimestampFromDate(dateObj: { year: number; month: number; day: number | undefined; }) {
-    const date = new Date(dateObj.year, dateObj.month - 1, dateObj.day);
-    return date.getTime();
   }
 
   getStaticFilter(data: any[], model: any[], key: string): any[] {
@@ -361,9 +311,9 @@ export class UtilsService {
       const m_row_edate = new Date(rows.expiration_date).getTime();
 
       if (
-        (report_date_filter === null || (report_date_filter !== null && (report_date_filter[0] === 0 || report_date_filter[0] === report_date_filter[1] || (m_row_rdate > report_date_filter[0] && m_row_rdate < report_date_filter[1])))) &&
-        (update_date_filter === null || (update_date_filter !== null && (update_date_filter[0] === 0 || update_date_filter[0] === update_date_filter[1] || (m_row_udate > update_date_filter[0] && m_row_udate < update_date_filter[1])))) &&
-        (expiry_date_filter === null || (expiry_date_filter !== null && (expiry_date_filter[0] === 0 || expiry_date_filter[0] === expiry_date_filter[1] || (m_row_edate > expiry_date_filter[0] && m_row_edate < expiry_date_filter[1]))))
+        (report_date_filter === null || (report_date_filter[0] === 0 || (m_row_rdate > report_date_filter[0] && m_row_rdate < report_date_filter[1]))) &&
+        (update_date_filter === null || (update_date_filter[0] === 0 || (m_row_udate > update_date_filter[0] && m_row_udate < update_date_filter[1]))) &&
+        (expiry_date_filter === null || (expiry_date_filter[0] === 0 || (m_row_edate > expiry_date_filter[0] && m_row_edate < expiry_date_filter[1])))
       ) {
         filteredTips.push(rows);
       }
@@ -509,151 +459,7 @@ export class UtilsService {
   deleteSubStatus(url: string) {
     return this.httpService.requestDeleteStatus(url)
   }
-  new_context(): contextResolverModel {
-    const context = new contextResolverModel();
-    context.id = "";
-    context.hidden = true;
-    context.name = "";
-    context.description = "";
-    context.order = 0;
-    context.tip_timetolive = 90;
-    context.tip_reminder_hard = 80;
-    context.tip_reminder_soft = 5;
-    context.show_recipients_details = false;
-    context.allow_recipients_selection = false;
-    context.show_receivers_in_alphabetical_order = true;
-    context.show_steps_navigation_interface = true;
-    context.select_all_receivers = true;
-    context.maximum_selectable_receivers = 0;
-    context.enable_comments = true;
-    context.enable_messages = false;
-    context.enable_two_way_comments = true;
-    context.enable_two_way_messages = true;
-    context.enable_attachments = true;
-    context.questionnaire_id = "";
-    context.additional_questionnaire_id = "";
-    context.score_threshold_medium = 0;
-    context.score_threshold_high = 0;
-    context.tip_reminder = 0;
-    context.receivers = [];
-    return context;
-  }
 
-  new_questionnaire(): questionnaireResolverModel {
-    const questionnaire = new questionnaireResolverModel();
-    questionnaire.id = "";
-    questionnaire.key = "";
-    questionnaire.name = "";
-    questionnaire.steps = [];
-    return questionnaire;
-  }
-
-  new_user(): userResolverModel {
-    const user = new userResolverModel();
-    user.id = '';
-    user.username = '';
-    user.role = "receiver";
-    user.enabled = true;
-    user.password_change_needed = true;
-    user.name = "";
-    user.description = "";
-    user.public_name = "";
-    user.mail_address = "";
-    user.pgp_key_fingerprint = "";
-    user.pgp_key_remove = false;
-    user.pgp_key_public = "";
-    user.pgp_key_expiration = "";
-    user.language = "en";
-    user.notification = true;
-    user.forcefully_selected = false;
-    user.can_edit_general_settings = false;
-    user.can_privilege_mask_information = false;
-    user.can_privilege_delete_mask_information = false;
-    user.can_grant_access_to_reports = false;
-    user.can_delete_submission = false;
-    user.can_postpone_expiration = true;
-    return user;
-  }
-  new_step(questionnaire_id: any) {
-    // var step = new AdminStepResource();
-    var step: any = {}
-    step.id = "";
-    step.label = "";
-    step.description = "";
-    step.order = 0;
-    step.children = [];
-    step.questionnaire_id = questionnaire_id;
-    step.triggered_by_score = 0;
-    step.triggered_by_options = [];
-    return step;
-  }
-  new_field(step_id: any, fieldgroup_id: any) {
-    // var field = new AdminFieldResource();
-    var field: any = {}
-    field.id = "";
-    field.key = "";
-    field.instance = "instance";
-    field.descriptor_id = "";
-    field.label = "";
-    field.type = "inputbox";
-    field.description = "";
-    field.hint = "";
-    field.placeholder = "";
-    field.multi_entry = false;
-    field.required = false;
-    field.preview = false;
-    field.attrs = {};
-    field.options = [];
-    field.x = 0;
-    field.y = 0;
-    field.width = 0;
-    field.children = [];
-    field.fieldgroup_id = fieldgroup_id;
-    field.step_id = step_id;
-    field.template_id = "";
-    field.template_override_id = "";
-    field.triggered_by_score = 0;
-    field.triggered_by_options = [];
-    return field;
-  }
-  new_field_template(fieldgroup_id: any) {
-    // var field = new AdminFieldTemplateResource();
-    var field: any = {}
-    field.id = "";
-    field.instance = "template";
-    field.label = "";
-    field.type = "inputbox";
-    field.description = "";
-    field.placeholder = "";
-    field.hint = "";
-    field.multi_entry = false;
-    field.required = false;
-    field.preview = false;
-    field.attrs = {};
-    field.options = [];
-    field.x = 0;
-    field.y = 0;
-    field.width = 0;
-    field.children = [];
-    field.fieldgroup_id = fieldgroup_id;
-    field.step_id = "";
-    field.template_id = "";
-    field.template_override_id = "";
-    field.triggered_by_score = 0;
-    field.triggered_by_options = [];
-    return field;
-  }
-  // new_redirect(): AdminRedirectResource {
-  //   return new AdminRedirectResource();
-  // }
-
-  // new_tenant(): AdminTenantResource {
-  //   const tenant = new AdminTenantResource();
-  //   tenant.active = true;
-  //   tenant.name = '';
-  //   // ... set other properties ...
-  //   return tenant;
-  // }
   addAdminUser(user: any) {
     return this.httpService.requestAddAdminUser(user)
   }
@@ -719,7 +525,7 @@ export class UtilsService {
     if (elements.length <= 0) {
       return;
     }
-  
+
     const key = this.getYOrderProperty(elements[0]);
     if (elements.length) {
       let i = 0;
@@ -730,21 +536,4 @@ export class UtilsService {
       });
     }
   }
-  
-
-  constructor(
-    private nodeResolver: NodeResolver,
-    private http: HttpClient,
-    public translateService: TranslateService,
-    public appConfigService: AppConfigService,
-    public httpService: HttpService,
-    public modalService: NgbModal,
-    public authenticationService: AuthenticationService,
-    public appDataService: AppDataService,
-    public preferenceResolver: PreferenceResolver,
-    public tokenResourceService: TokenResource,
-    private router: Router) {
-
-  }
-
 }

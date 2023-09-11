@@ -46,7 +46,7 @@ export class UsersComponent implements OnInit{
     this.utilsService.reloadCurrentRoute();
   }
   add_user(): void {
-    var user: userResolverModel = this.utilsService.new_user();
+    var user: userResolverModel = new userResolverModel();
 
     user.username = typeof this.new_user.username !== 'undefined' ? this.new_user.username : '';
     user.role = this.new_user.role;

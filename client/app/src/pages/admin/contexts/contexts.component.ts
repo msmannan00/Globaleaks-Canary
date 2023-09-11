@@ -31,7 +31,7 @@ export class ContextsComponent implements OnInit {
     }
   }
   add_context() {
-    var context: contextResolverModel = this.utilsService.new_context();
+    var context: contextResolverModel = new contextResolverModel();
     context.name = this.new_context.name;
     context.questionnaire_id = this.node.dataModel.default_questionnaire;
     context.order = this.newItemOrder(this.contextsData, "order");

@@ -115,7 +115,7 @@ export class AppModule {
           window.location.replace("about:blank");
         } else {
           this.authentication.deleteSession();
-          this.authentication.loginRedirect(false)
+          this.authentication.loginRedirect()
         }
       }
     });

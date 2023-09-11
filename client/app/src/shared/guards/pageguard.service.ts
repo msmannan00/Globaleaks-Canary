@@ -7,6 +7,8 @@ import {AppDataService} from "../../app-data.service";
   providedIn: 'root'
 })
 export class Pageguard implements CanActivate {
+  constructor(private router: Router, private appDataService:AppDataService) {
+  }
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
@@ -17,8 +19,4 @@ export class Pageguard implements CanActivate {
 
     return true;
   }
-
-  constructor(private router: Router, private appDataService:AppDataService) {
-  }
-
 }

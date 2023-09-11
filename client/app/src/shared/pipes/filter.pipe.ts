@@ -20,6 +20,5 @@ export class FilterPipe implements PipeTransform {
       }
       return false;
     });
-    // return items.filter(item => item[field] === value);
   }
 }

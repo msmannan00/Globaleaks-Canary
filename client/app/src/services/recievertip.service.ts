@@ -1,79 +1,65 @@
-import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
-import {HttpService} from "../shared/services/http.service";
-import {AppDataService} from "../app-data.service";
-import {UtilsService} from "../shared/services/utils.service";
-import { RecieverTipData } from '../models/reciever/RecieverTipData';
+import {Injectable} from '@angular/core';
+import {HttpService} from '../shared/services/http.service';
+import {AppDataService} from '../app-data.service';
+import {UtilsService} from '../shared/services/utils.service';
+import {RecieverTipData} from '../models/reciever/RecieverTipData';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecieverTipService {
+  tip: RecieverTipData = new RecieverTipData();
 
-  fields:any
-  tip:RecieverTipData = new RecieverTipData()
-  score: number;
+  constructor(
+    private httpService: HttpService,
+    public appDataService: AppDataService,
+    public utilsService: UtilsService
+  ) {
+  }
 
-  initialize(response:RecieverTipData) {
+  initialize(response: RecieverTipData) {
     this.tip = response;
     this.tip.context = this.appDataService.contexts_by_id[this.tip.context_id];
     this.tip.questionnaire = this.appDataService.questionnaires_by_id[this.tip.context['questionnaire_id']];
-
-    // this.tip.additional_questionnaire = this.appDataService.questionnaires_by_id[this.tip.context['additional_questionnaire_id']];
     this.tip.msg_receiver_selected = null;
-    this.tip.msg_receivers_selector = [];
+    this.tip.msg_receivers_selector = this.getMsgReceiversSelector();
+  }
 
-    let self = this
-    this.tip.receivers.forEach(function(r:any){
-      if(self.appDataService.receivers_by_id[r.id]) {
-        r = self.appDataService.receivers_by_id[r.id];
-        self.tip.msg_receivers_selector.push({
-          key: r.id,
-          value: r.name
-        });
+  newMessages(content: string) {
+    const param = JSON.stringify({"id": this.tip.msg_receiver_selected, "content": content});
+    this.httpService.retipRequestNewMessage(param, this.tip.id).subscribe({
+      next: () => {
+        this.utilsService.reloadCurrentRoute();
       }
     });
   }
 
-  newCommentContent(){
-
+  operation(url: string, operation: string, args: any) {
+    return this.httpService.runOperation(url, operation, args, false).subscribe({});
   }
 
-  newMessages(content:string){
-    const param=JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content});
-    this.httpService.retipRequestNewMessage(JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content}), this.tip.id).subscribe
-    (
-        {
-          next: response => {
-            this.utilsService.reloadCurrentRoute();
-          },
-          error: (error: any) => {
-          }
-        }
-    );
+  newComment(content: string) {
+    const param = JSON.stringify({"id": this.tip.msg_receiver_selected, "content": content});
+    this.httpService.rtipsRequestNewComment(param, this.tip.id).subscribe({
+      next: () => {
+        this.utilsService.reloadCurrentRoute();
+      }
+    });
   }
 
-    operation(url:string, operation:string, args:any) {
-        return this.httpService.runOperation(url, operation, args, false).subscribe({
-            next: response => {
-            }
+  private getMsgReceiversSelector() {
+    const msgReceiversSelector = [];
+
+    for (const receiver of this.tip.receivers) {
+      if (this.appDataService.receivers_by_id[receiver.id]) {
+        const r = this.appDataService.receivers_by_id[receiver.id];
+        msgReceiversSelector.push({
+          key: r.id,
+          value: r.name
         });
-   };
+      }
+    }
 
-    newComment(content:string) {
-    const param=JSON.stringify({"id":this.tip.msg_receiver_selected, "content":content});
-    this.httpService.rtipsRequestNewComment(param,this.tip.id).subscribe
-    (
-        {
-          next: response => {
-            this.utilsService.reloadCurrentRoute();
-          },
-          error: (error: any) => {
-          }
-        }
-    );
-  }
-
-  constructor(private httpService:HttpService, public appDataService:AppDataService, public utilsService:UtilsService) {
+    return msgReceiversSelector;
   }
 }

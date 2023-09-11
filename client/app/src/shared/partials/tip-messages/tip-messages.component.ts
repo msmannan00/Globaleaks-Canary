@@ -1,10 +1,6 @@
 import { Component, Input } from '@angular/core';
 import {UtilsService} from "../../services/utils.service";
-import {WbtipService} from "../../../services/wbtip.service";
 import {AuthenticationService} from "../../../services/authentication.service";
-import { RecieverTipService } from 'app/src/services/recievertip.service';
-import {auditlogResolverModel} from "../../../models/resolvers/auditlogResolverModel";
-import {NodeResolver} from "../../resolvers/node.resolver";
 
 @Component({
   selector: 'src-tip-messages',
@@ -12,7 +8,7 @@ import {NodeResolver} from "../../resolvers/node.resolver";
   styleUrls: ['./tip-messages.component.css']
 })
 export class TipMessagesComponent {
-  @Input() tipService: RecieverTipService | WbtipService  ;
+  @Input() tipService: any  ;
 
   collapsed = false;
   newMessageContent = ""
@@ -30,6 +26,4 @@ export class TipMessagesComponent {
     this.tipService.newMessages(this.newMessageContent);
     this.newMessageContent = "";
   }
-
-  protected readonly JSON = JSON;
 }

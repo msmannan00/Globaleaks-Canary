@@ -134,7 +134,7 @@ export class PreferenceTab1Component implements OnInit{
     if (this.preferenceResolver.dataModel.pgp_key_remove) {
       this.preferenceResolver.dataModel.pgp_key_public = "";
     }
-    let requestObservable = this.httpService.updatePreferenceResource(JSON.stringify(this.preferenceResolver.dataModel), {});
+    let requestObservable = this.httpService.updatePreferenceResource(JSON.stringify(this.preferenceResolver.dataModel));
     requestObservable.subscribe(
         {
             next: response => {
