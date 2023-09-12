@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "untitled": {
+    "Globaleaks": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -20,12 +20,12 @@
             "optimization": {
               "scripts": true,
               "styles": {
-                "minify": true, // Enable CSS minification
+                "minify": true,
                 "inlineCritical": false
               },
               "fonts": true
             },
-            "outputPath": "dist/GLeaks",
+            "outputPath": "dist",
             "index": "app/index.html",
             "main": "app/main.ts",
             "polyfills": [
@@ -56,20 +56,29 @@
             ]
           },
           "configurations": {
+            "production": {
+              "sourceMap": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "5mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "5mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "extractLicenses": false
+            },
             "development": {
+              "aot": false,
               "buildOptimizer": false,
-              "optimization": true, // Enable JS minification
+              "optimization": false,
               "vendorChunk": false,
               "extractLicenses": false,
-              "sourceMap": true, // Enable source mapping
-              "namedChunks": false
-            },
-            "production": {
-              "buildOptimizer": true, // Enable build optimization
-              "optimization": true, // Enable JS minification
-              "vendorChunk": true, // Create a separate vendor chunk
-              "extractLicenses": false,
-              "sourceMap": true, // Enable source mapping
+              "sourceMap": true,
               "namedChunks": false
             }
           },
@@ -78,8 +87,11 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
+            "production": {
+              "browserTarget": "Globaleaks:build:production"
+            },
             "development": {
-              "browserTarget": "untitled:build:development"
+              "browserTarget": "Globaleaks:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -87,7 +99,24 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "untitled:build"
+            "browserTarget": "Globaleaks:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "tsconfig.spec.json",
+            "assets": [
+              "app/assets"
+            ],
+            "styles": [
+              "app/styles.css"
+            ],
+            "scripts": []
           }
         }
       }

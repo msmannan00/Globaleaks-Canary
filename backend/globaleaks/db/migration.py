@@ -5,6 +5,7 @@ import shutil
 import sys
 from collections import OrderedDict
 
+from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -13,21 +14,9 @@ from globaleaks import __version__, models, \
 from globaleaks.db.appdata import load_appdata, db_load_defaults
 from globaleaks.orm import db_log
 
-from globaleaks.db.migrations.update_40 import \
-    FieldAnswer_v_39, FieldAnswerGroup_v_39
-from globaleaks.db.migrations.update_41 import InternalFile_v_40, \
-    InternalTip_v_40, ReceiverFile_v_40, ReceiverTip_v_40, \
-    User_v_40, WhistleblowerFile_v_40
-from globaleaks.db.migrations.update_42 import InternalTip_v_41
-from globaleaks.db.migrations.update_43 import InternalTip_v_42, \
-    User_v_42
-from globaleaks.db.migrations.update_45 import Context_v_44, Field_v_44, \
-    InternalTip_v_44, Receiver_v_44, ReceiverFile_v_44, \
-    ReceiverTip_v_44, Step_v_44, User_v_44, WhistleblowerFile_v_44, \
-    WhistleblowerTip_v_44
 from globaleaks.db.migrations.update_46 import Config_v_45, ConfigL10N_v_45, \
     Context_v_45, Field_v_45, FieldOption_v_45, InternalFile_v_45, \
-    InternalTip_v_45, Receiver_v_45, User_v_45, WhistleblowerFile_v_45
+    InternalTip_v_45, Receiver_v_45, User_v_45, ReceiverFile_v_45
 from globaleaks.db.migrations.update_47 import Context_v_46, FieldOption_v_46, \
     InternalTip_v_46, SubmissionStatus_v_46, SubmissionSubStatus_v_46
 from globaleaks.db.migrations.update_48 import Field_v_47, FieldOption_v_47
@@ -39,7 +28,7 @@ from globaleaks.db.migrations.update_51 import Field_v_50, InternalFile_v_50, \
 from globaleaks.db.migrations.update_52 import Context_v_51, \
     Field_v_51, FieldAttr_v_51, FieldOption_v_51, \
     InternalTip_v_51, InternalTipData_v_51, \
-    Message_v_51, ReceiverFile_v_51, Step_v_51, \
+    Message_v_51, WhistleblowerFile_v_51, Step_v_51, \
     ReceiverContext_v_51, \
     SubmissionStatus_v_51, SubmissionSubStatus_v_51, User_v_51
 from globaleaks.db.migrations.update_53 import InternalTip_v_52, \
@@ -49,12 +38,19 @@ from globaleaks.db.migrations.update_54 import ContextImg_v_53, File_v_53, UserI
 from globaleaks.db.migrations.update_55 import SubmissionStatusChange_v_54, User_v_54
 from globaleaks.db.migrations.update_57 import User_v_56
 from globaleaks.db.migrations.update_58 import InternalTip_v_57, \
-    ReceiverFile_v_57, ReceiverTip_v_57, WhistleblowerFile_v_57
+    WhistleblowerFile_v_57, ReceiverTip_v_57, ReceiverFile_v_57
 from globaleaks.db.migrations.update_59 import ReceiverTip_v_58
 from globaleaks.db.migrations.update_60 import InternalTip_v_59, ReceiverTip_v_59, WhistleblowerTip_v_59
 from globaleaks.db.migrations.update_62 import AuditLog_v_61, Context_v_61, ReceiverTip_v_61, User_v_61
 from globaleaks.db.migrations.update_63 import Subscriber_v_62
 from globaleaks.db.migrations.update_64 import Context_v_63, InternalTip_v_63
+from globaleaks.db.migrations.update_65 import Comment_v_64, \
+    IdentityAccessRequest_v_64, InternalFile_v_64, InternalTip_v_64, \
+    Message_v_64, ReceiverTip_v_64, \
+    SubmissionStatus_v_64, SubmissionSubStatus_v_64, \
+    User_v_64, ReceiverFile_v_64
+from globaleaks.db.migrations.update_66 import ReceiverFile_v_65, \
+    SubmissionStatus_v_65, SubmissionSubStatus_v_65, WhistleblowerFile_v_65
 
 from globaleaks.orm import get_engine, get_session, make_db_uri
 from globaleaks.models import config, Base
@@ -65,46 +61,47 @@ from globaleaks.utils.utility import datetime_now
 
 
 migration_mapping = OrderedDict([
-    ('ArchivedSchema', [models._ArchivedSchema, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('AuditLog', [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, AuditLog_v_61, 0, 0, 0, 0, 0, 0, 0, models._AuditLog, 0, 0]),
-    ('Comment', [models._Comment, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('Config', [Config_v_45, 0, 0, 0, 0, 0, 0, models._Config, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('ConfigL10N', [ConfigL10N_v_45, 0, 0, 0, 0, 0, 0, models._ConfigL10N, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('Context', [Context_v_44, 0, 0, 0, 0, 0, Context_v_45, Context_v_46, Context_v_51, 0, 0, 0, 0, Context_v_61, 0, 0, 0, 0, 0, 0, 0, 0, 0, Context_v_63, 0, models._Context]),
-    ('ContextImg', [ContextImg_v_53, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]),
-    ('CustomTexts', [models._CustomTexts, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('EnabledLanguage', [models._EnabledLanguage, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('Field', [Field_v_44, 0, 0, 0, 0, 0, Field_v_45, Field_v_47, 0, Field_v_50, 0, 0, Field_v_51, models._Field, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('FieldAnswer', [FieldAnswer_v_39, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]),
-    ('FieldAnswerGroup', [FieldAnswerGroup_v_39, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]),
-    ('FieldAttr', [FieldAttr_v_51, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, models._FieldAttr, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('FieldOption', [FieldOption_v_45, 0, 0, 0, 0, 0, 0, FieldOption_v_46, FieldOption_v_47, FieldOption_v_51, 0, 0, 0, models._FieldOption, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('FieldOptionTriggerField', [-1, -1, -1, -1, -1, -1, -1, -1, models._FieldOptionTriggerField, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('FieldOptionTriggerStep', [-1, -1, -1, -1, -1, -1, -1, -1, models._FieldOptionTriggerStep, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('File', [File_v_53, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, models._File, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('IdentityAccessRequest', [models._IdentityAccessRequest, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('InternalFile', [InternalFile_v_40, 0, InternalFile_v_45, 0, 0, 0, 0, InternalFile_v_50, 0, 0, 0, InternalFile_v_50, models._InternalFile, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('InternalTip', [InternalTip_v_40, 0, InternalTip_v_41, InternalTip_v_42, InternalTip_v_44, 0, InternalTip_v_45, InternalTip_v_46, InternalTip_v_48, 0, InternalTip_v_51, 0, 0, InternalTip_v_52, InternalTip_v_57, 0, 0, 0, 0, InternalTip_v_59, 0, InternalTip_v_63, 0, 0, 0, models._InternalTip]),
-    ('InternalTipAnswers', [-1, -1, -1, -1, -1, -1, models._InternalTipAnswers, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('InternalTipData', [-1, -1, -1, -1, -1, -1, InternalTipData_v_51, 0, 0, 0, 0, 0, 0, models._InternalTipData, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('Mail', [models._Mail, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('Message', [Message_v_51, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, models._Message, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('Questionnaire', [models._Questionnaire, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('Receiver', [Receiver_v_44, 0, 0, 0, 0, 0, Receiver_v_45, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]),
-    ('ReceiverContext', [ReceiverContext_v_51, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, models._ReceiverContext, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('ReceiverFile', [ReceiverFile_v_40, 0, ReceiverFile_v_44, 0, 0, 0, ReceiverFile_v_51, 0, 0, 0, 0, 0, 0, ReceiverFile_v_57, 0, 0, 0, 0, 0, models._ReceiverFile, 0, 0, 0, 0, 0, 0]),
-    ('ReceiverTip', [ReceiverTip_v_40, 0, ReceiverTip_v_44, 0, 0, 0, ReceiverTip_v_52, 0, 0, 0, 0, 0, 0, 0, ReceiverTip_v_57, 0, 0, 0, 0, ReceiverTip_v_58, ReceiverTip_v_59, ReceiverTip_v_61, 0, models._ReceiverTip, 0, 0]),
-    ('Redirect', [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, models._Redirect, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('SubmissionStatus', [-1, -1, -1, SubmissionStatus_v_46, 0, 0, 0, 0, SubmissionStatus_v_49, 0, 0, SubmissionStatus_v_51, 0, models._SubmissionStatus, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('SubmissionSubStatus', [-1, -1, -1, SubmissionSubStatus_v_46, 0, 0, 0, 0, SubmissionSubStatus_v_49, 0, 0, SubmissionSubStatus_v_51, 0, models._SubmissionSubStatus, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('SubmissionStatusChange', [-1, -1, -1, SubmissionStatusChange_v_54, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]),
-    ('Step', [Step_v_44, 0, 0, 0, 0, 0, Step_v_51, 0, 0, 0, 0, 0, 0, models._Step, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -0]),
-    ('Subscriber', [-1, -1, -1, -1, -1, Subscriber_v_52, 0, 0, 0, 0, 0, 0, 0, 0, Subscriber_v_62, 0, 0, 0, 0, 0, 0, 0, 0, 0, models._Subscriber, 0]),
-    ('Tenant', [Tenant_v_52, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, models._Tenant, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-    ('User', [User_v_40, 0, User_v_42, 0, User_v_44, 0, User_v_45, User_v_49, 0, 0, 0, User_v_50, User_v_51, User_v_52, User_v_54, 0, User_v_56, 0, User_v_61, 0, 0, 0, 0, models._User, 0, 0]),
-    ('UserImg', [UserImg_v_53, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]),
-    ('WhistleblowerFile', [WhistleblowerFile_v_40, 0, WhistleblowerFile_v_44, 0, 0, 0, WhistleblowerFile_v_45, WhistleblowerFile_v_57, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, models._WhistleblowerFile, 0, 0, 0, 0, 0, 0]),
-    ('WhistleblowerTip', [-1, -1, -1, WhistleblowerTip_v_44, 0, 0, WhistleblowerTip_v_59, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1])
+    ('ArchivedSchema', [models._ArchivedSchema, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    ('AuditLog', [-1, -1, -1, -1, -1, -1, -1, -1, -1, AuditLog_v_61, 0, 0, 0, 0, 0, 0, 0, models._AuditLog, 0, 0, 0, 0]),
+    ('Comment', [Comment_v_64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, models._Comment, 0]),
+    ('Config', [Config_v_45, models._Config, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    ('ConfigL10N', [ConfigL10N_v_45, models._ConfigL10N, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    ('Context', [Context_v_45, Context_v_46, Context_v_51, 0, 0, 0, 0, Context_v_61, 0, 0, 0, 0, 0, 0, 0, 0, 0, Context_v_63, 0, models._Context, 0, 0]),
+    ('ContextImg', [ContextImg_v_53, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]),
+    ('CustomTexts', [models._CustomTexts, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    ('EnabledLanguage', [models._EnabledLanguage, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    ('Field', [Field_v_47, 0, 0, Field_v_50, 0, 0, Field_v_51, models._Field, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    ('FieldAttr', [FieldAttr_v_51, 0, 0, 0, 0, 0, 0, 0, models._FieldAttr, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    ('FieldOption', [FieldOption_v_45, FieldOption_v_46, FieldOption_v_47, FieldOption_v_51, 0, 0, 0, models._FieldOption, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    ('FieldOptionTriggerField', [-1, -1, models._FieldOptionTriggerField, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    ('FieldOptionTriggerStep', [-1, -1, models._FieldOptionTriggerStep, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    ('File', [File_v_53, 0, 0, 0, 0, 0, 0, 0, 0, models._File, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    ('IdentityAccessRequest', [IdentityAccessRequest_v_64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, models._IdentityAccessRequest, 0]),
+    ('IdentityAccessRequestCustodian', [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, models._IdentityAccessRequestCustodian, 0]),
+    ('InternalFile', [InternalFile_v_45, InternalFile_v_50, 0, 0, 0, 0, InternalFile_v_64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, models._InternalFile, 0]),
+    ('InternalTip', [InternalTip_v_45, InternalTip_v_46, InternalTip_v_48, 0, InternalTip_v_51, 0, 0, InternalTip_v_52, InternalTip_v_57, 0, 0, 0, 0, InternalTip_v_59, 0, InternalTip_v_63, 0, 0, 0, InternalTip_v_64, models._InternalTip, 0]),
+    ('InternalTipAnswers', [models._InternalTipAnswers, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    ('InternalTipData', [InternalTipData_v_51, 0, 0, 0, 0, 0, 0, models._InternalTipData, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    ('Mail', [models._Mail, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    ('Message', [Message_v_51, 0, 0, 0, 0, 0, 0, Message_v_64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1]),
+    ('Questionnaire', [models._Questionnaire, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    ('Receiver', [Receiver_v_45, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]),
+    ('ReceiverContext', [ReceiverContext_v_51, 0, 0, 0, 0, 0, 0, models._ReceiverContext, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    ('ReceiverFile', [ReceiverFile_v_45, ReceiverFile_v_57, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ReceiverFile_v_64, 0, 0, 0, 0, 0, 0, ReceiverFile_v_65, models._ReceiverFile]),
+    ('ReceiverTip', [ReceiverTip_v_52, 0, 0, 0, 0, 0, 0, 0, ReceiverTip_v_57, 0, 0, 0, 0, ReceiverTip_v_58, ReceiverTip_v_59, ReceiverTip_v_61, 0, ReceiverTip_v_64, 0, 0, models._ReceiverTip, 0]),
+    ('Redaction', [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, models._Redaction, 0]),
+    ('Redirect', [-1, -1, -1, -1, models._Redirect, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    ('SubmissionStatus', [SubmissionStatus_v_46, 0, SubmissionStatus_v_49, 0, 0, SubmissionStatus_v_51, 0, SubmissionStatus_v_64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, SubmissionStatus_v_65, models._SubmissionStatus]),
+    ('SubmissionSubStatus', [SubmissionSubStatus_v_46, 0, SubmissionSubStatus_v_49, 0, 0, SubmissionSubStatus_v_51, 0, SubmissionSubStatus_v_64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, SubmissionSubStatus_v_65, models._SubmissionSubStatus]),
+    ('SubmissionStatusChange', [SubmissionStatusChange_v_54, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]),
+    ('Step', [Step_v_51, 0, 0, 0, 0, 0, 0, models._Step, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -0, 0, 0]),
+    ('Subscriber', [Subscriber_v_52, 0, 0, 0, 0, 0, 0, 0, Subscriber_v_62, 0, 0, 0, 0, 0, 0, 0, 0, 0, models._Subscriber, 0, 0, 0]),
+    ('Tenant', [Tenant_v_52, 0, 0, 0, 0, 0, 0, 0, models._Tenant, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    ('User', [User_v_45, User_v_49, 0, 0, 0, User_v_50, User_v_51, User_v_52, User_v_54, 0, User_v_56, 0, User_v_61, 0, 0, 0, 0, User_v_64, 0, 0, models._User, 0]),
+    ('UserImg', [UserImg_v_53, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]),
+    ('WhistleblowerFile', [WhistleblowerFile_v_51, 0, 0, 0, 0, 0, 0, WhistleblowerFile_v_57, 0, 0, 0, 0, 0, WhistleblowerFile_v_65, 0, 0, 0, 0, 0, 0, 0, models._WhistleblowerFile]),
+
+    ('WhistleblowerTip', [WhistleblowerTip_v_59, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1])
 ])
 
 
@@ -186,41 +183,39 @@ def perform_migration(version):
         sys.exit(1)
 
     tmpdir = os.path.abspath(os.path.join(Settings.tmp_path, 'tmp'))
-    if version < 41:
-        orig_db_file = os.path.abspath(os.path.join(Settings.working_path, 'db', 'glbackend-%d.db' % version))
-    else:
-        orig_db_file = os.path.abspath(os.path.join(Settings.working_path, 'globaleaks.db'))
-
-    final_db_file = os.path.abspath(os.path.join(Settings.working_path, 'globaleaks.db'))
+    db_file = os.path.abspath(os.path.join(Settings.working_path, 'globaleaks.db'))
 
     shutil.rmtree(tmpdir, True)
     os.mkdir(tmpdir)
-    shutil.copy(orig_db_file, os.path.join(tmpdir, 'old.db'))
+    shutil.copy(db_file, os.path.join(tmpdir, 'old.db'))
 
-    new_db_file = None
+    old_db_file = os.path.abspath(os.path.join(tmpdir, 'old.db'))
+    session_old = get_session(make_db_uri(old_db_file))
+
+    new_db_file = os.path.abspath(os.path.join(tmpdir, 'new.db'))
+    session_new = None
+
+    Settings.enable_input_length_checks = False
 
     try:
         while version < DATABASE_VERSION:
-            old_db_file = os.path.abspath(os.path.join(tmpdir, 'old.db'))
-            new_db_file = os.path.abspath(os.path.join(tmpdir, 'new.db'))
-
-            if os.path.exists(new_db_file):
-                shutil.move(new_db_file, old_db_file)
-
-            Settings.db_file = new_db_file
-            Settings.enable_input_length_checks = False
-
             log.info("Updating DB from version %d to version %d" %
                      (version, version + 1))
 
             j = version - FIRST_DATABASE_VERSION_SUPPORTED
-            session_old = get_session(make_db_uri(old_db_file))
 
-            engine = get_engine(make_db_uri(new_db_file), foreign_keys=False, orm_lockdown=False)
+            if version == DATABASE_VERSION - 1:
+                engine = get_engine(make_db_uri(new_db_file), foreign_keys=False, orm_lockdown=False)
+            else:
+                engine = create_engine("sqlite:///:memory:")
+
             if FIRST_DATABASE_VERSION_SUPPORTED + j + 1 == DATABASE_VERSION:
                 Base.metadata.create_all(engine)
             else:
                 Bases[j+1].metadata.create_all(engine)
+
+            if session_new:
+                session_old = session_new
 
             session_new = sessionmaker(bind=engine)()
 
@@ -260,14 +255,13 @@ def perform_migration(version):
                 # in order to not keep leaking journal files.
                 migration_script.close()
 
-            log.info("Migration stats:")
+            log.info("Migration completed with success.")
 
-            # we open a new db in order to verify integrity of the generated file
-            session_verify = get_session(make_db_uri(new_db_file))
+            log.info("Migration stats:")
 
             for model_name, _ in migration_mapping.items():
                 if migration_script.model_from[model_name] is not None and migration_script.model_to[model_name] is not None:
-                    count = session_verify.query(migration_script.model_to[model_name]).count()
+                    count = session_new.query(migration_script.model_to[model_name]).count()
                     if migration_script.entries_count[model_name] != count:
                         if migration_script.skip_count_check.get(model_name, False):
                             log.info(" * %s table migrated (entries count changed from %d to %d)" %
@@ -281,21 +275,12 @@ def perform_migration(version):
 
             version += 1
 
-            session_verify.close()
-
         perform_data_update(new_db_file)
     except:
         raise
     else:
         # in case of success first copy the new migrated db, then as last action delete the original db file
-        shutil.copy(new_db_file, final_db_file)
-
-        if orig_db_file != final_db_file:
-            srm(orig_db_file)
-
-        path = os.path.join(Settings.working_path, 'db')
-        if os.path.exists(path):
-            shutil.rmtree(path)
+        shutil.move(new_db_file, db_file)
     finally:
         # Always cleanup the temporary directory used for the migration
         for f in os.listdir(tmpdir):

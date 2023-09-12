@@ -19,24 +19,10 @@ from globaleaks.tests import helpers
 
 class TestMigrationRoutines(unittest.TestCase):
     def _test(self, path, version):
-        f = 'glbackend-%d.db' % version
-
         helpers.init_state()
-        self.db_path = os.path.join(Settings.working_path, 'db')
-        self.final_db_file = os.path.abspath(os.path.join(Settings.working_path, 'globaleaks.db'))
-
-        set_db_uri('sqlite:' + self.final_db_file)
-
-        shutil.rmtree(self.db_path, True)
-        os.mkdir(self.db_path)
-        dbpath = os.path.join(path, f)
-        if version < 41:
-            dbfile = os.path.join(self.db_path, f)
-            Settings.db_file_path = os.path.join(Settings.working_path, 'db', 'glbackend-%d.db' % version)
-        else:
-            dbfile = os.path.join(Settings.working_path, 'globaleaks.db')
-
-        shutil.copyfile(dbpath, dbfile)
+        srcpath = os.path.join(path, 'globaleaks-%d.db' % version)
+        dstpath = os.path.join(Settings.working_path, 'globaleaks.db')
+        shutil.copyfile(srcpath, dstpath)
 
         # TESTS PRECONDITIONS
         preconditions = getattr(self, 'preconditions_%d' % version, None)
@@ -58,5 +44,7 @@ def test(path, version):
 
 
 path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'db', 'populated')
-for i in range(FIRST_DATABASE_VERSION_SUPPORTED, DATABASE_VERSION):
+
+
+for i in range(FIRST_DATABASE_VERSION_SUPPORTED, DATABASE_VERSION + 1):
     setattr(TestMigrationRoutines, "test_db_migration_%d" % i, test(path, i))

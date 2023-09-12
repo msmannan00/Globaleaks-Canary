@@ -7,7 +7,7 @@ from globaleaks.db.appdata import load_appdata
 from globaleaks.handlers.admin.node import db_admin_serialize_node
 from globaleaks.handlers.admin.notification import db_get_notification
 from globaleaks.handlers.operation import OperationHandler
-from globaleaks.handlers.password_reset import db_generate_password_reset_token
+from globaleaks.handlers.user.reset_password import db_generate_password_reset_token
 from globaleaks.handlers.user import get_user
 from globaleaks.handlers.user.operation import disable_2fa
 from globaleaks.models import Config, InternalTip, User
@@ -147,6 +147,30 @@ def toggle_user_escrow(session, tid, user_session, user_id):
         user.crypto_escrow_prv_key = ''
 
 
+@transact
+def enable_user_permission_file_upload(session, tid, user_session):
+    """
+    Transaction to enable file upload permission for the current user session
+
+    :param session: An ORM session
+    :param tid: A tenant ID
+    :param user_session: The current user session
+    """
+    user_session.permissions['can_upload_files'] = True
+
+
+@transact
+def disable_user_permission_file_upload(session, tid, user_session):
+    """
+    Transaction to disable file upload permission for the current user session
+
+    :param session: An ORM session
+    :param tid: A tenant ID
+    :param user_session: The current user session
+    """
+    user_session.permissions['can_upload_files'] = False
+
+
 def db_reset_smtp_settings(session, tid):
     config = ConfigFactory(session, tid)
     config.set_val('smtp_server', 'mail.globaleaks.org')
@@ -183,15 +207,15 @@ def db_set_user_password(session, tid, user_session, user_id, password):
 
             user.crypto_prv_key = Base64Encoder.encode(GCE.symmetric_encrypt(enc_key, user_cc))
 
-        if user.hash_alg != 'ARGON2':
-            user.hash_alg = 'ARGON2'
+        if len(user.hash) != 44:
             user.salt = GCE.generate_salt()
 
-        user.password = GCE.hash_password(password, user.salt)
+        user.hash = GCE.hash_password(password, user.salt)
         user.password_change_date = datetime_now()
         user.password_change_needed = True
 
         db_log(session, tid=tid, type='change_password', user_id=user_session.user_id, object_id=user_id)
+
 
 @transact
 def set_user_password(session, tid, user_session, user_id, password):
@@ -228,6 +252,8 @@ def generate_password_reset_token(session, tid, user_session, user_id):
     if user_session.ek and user.crypto_pub_key:
         set_tmp_key(user_session, user, token)
 
+    db_log(session, tid=tid, type='send_password_reset_email', user_id=user_session.user_id, object_id=user_id)
+
 
 class AdminOperationHandler(OperationHandler):
     """
@@ -241,6 +267,7 @@ class AdminOperationHandler(OperationHandler):
         'disable_2fa',
         'toggle_escrow',
         'toggle_user_escrow',
+        'enable_user_permission_file_upload',
         'reset_submissions'
     ]
 
@@ -274,12 +301,12 @@ class AdminOperationHandler(OperationHandler):
     def reset_onion_private_key(self, req_args, *args, **kargs):
         self.check_root_or_management_session()
 
-        self.state.onion_service.unload_onion_service(self.request.tid)
+        self.state.tor.unload_onion_service(self.request.tid)
 
         hostname, key = generate_onion_service_v3()
         yield set_onion_service_info(self.request.tid, hostname, key)
 
-        yield self.state.onion_service.load_onion_service(self.request.tid, hostname, key)
+        yield self.state.tor.load_onion_service(self.request.tid, hostname, key)
 
         returnValue({
             'onionservice': hostname
@@ -322,6 +349,12 @@ class AdminOperationHandler(OperationHandler):
     def toggle_user_escrow(self, req_args, *args, **kwargs):
         return toggle_user_escrow(self.request.tid, self.session, req_args['value'])
 
+    def enable_user_permission_file_upload(self, req_args, *args, **kwargs):
+        return enable_user_permission_file_upload(self.request.tid, self.session)
+
+    def disable_user_permission_file_upload(self, req_args, *args, **kwargs):
+        return disable_user_permission_file_upload(self.request.tid, self.session)
+
     def reset_templates(self, req_args):
         return reset_templates(self.request.tid)
 
@@ -338,5 +371,7 @@ class AdminOperationHandler(OperationHandler):
             'test_mail': AdminOperationHandler.test_mail,
             'toggle_escrow': AdminOperationHandler.toggle_escrow,
             'toggle_user_escrow': AdminOperationHandler.toggle_user_escrow,
+            'enable_user_permission_file_upload': AdminOperationHandler.enable_user_permission_file_upload,
+            'disable_user_permission_file_upload': AdminOperationHandler.disable_user_permission_file_upload,
             'reset_templates': AdminOperationHandler.reset_templates
         }

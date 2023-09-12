@@ -12,6 +12,8 @@ from globaleaks.utils.crypto import generateRandomKey
 from globaleaks.utils.pgp import PGPContext
 from globaleaks.utils.utility import datetime_now, datetime_null
 
+import globaleaks.handlers.user.validate_email
+
 
 def parse_pgp_options(user, request):
     """
@@ -78,9 +80,12 @@ def user_serialize_user(session, user, language):
         'can_postpone_expiration': user.can_postpone_expiration,
         'can_delete_submission': user.can_delete_submission,
         'can_grant_access_to_reports': user.can_grant_access_to_reports,
+        'can_transfer_access_to_reports': user.can_transfer_access_to_reports,
         'can_edit_general_settings': user.can_edit_general_settings,
         'clicked_recovery_key': user.clicked_recovery_key,
+        'accepted_privacy_policy': user.accepted_privacy_policy,
         'contexts': contexts
+
     }
 
     if State.tenants[user.tid].cache.two_factor and \
@@ -126,6 +131,7 @@ def db_user_update_user(session, tid, user_session, request):
     user.language = request.get('language', State.tenants[tid].cache.default_language)
     user.name = request['name']
     user.public_name = request['public_name'] if request['public_name'] else request['name']
+    user.notification = request['notification']
 
     # If the email address changed, send a validation email
     if request['mail_address'] != user.mail_address:

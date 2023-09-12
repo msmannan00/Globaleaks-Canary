@@ -13,7 +13,7 @@ var isBrowserCompatible = function() {
     "ia_archiver"
   ];
 
-  for (var i=0; i < crawlers.length; crawlers++) {
+  for (var i = 0; i < crawlers.length; i++) { // Corrected the loop declaration
     if (navigator.userAgent.indexOf(crawlers[i]) !== -1) {
       return true;
     }
@@ -45,11 +45,15 @@ if (!isBrowserCompatible()) {
   elem = document.createElement("link");
   elem.setAttribute("rel", "stylesheet");
   elem.setAttribute("type", "text/css");
-  elem.setAttribute("href", "css/styles.min.css");
+  elem.setAttribute("href", "css/styles.css");
   document.getElementsByTagName("head")[0].appendChild(elem);
 
-  elem = document.createElement("script");
-  elem.setAttribute("type", "text/javascript");
-  elem.setAttribute("src", "js/script.js");
-  document.getElementsByTagName("body")[0].appendChild(elem);
+  // Create and append multiple script elements
+  var scriptFiles = ["js/scripts.js", "js/polyfills.js", "js/runtime.js", "js/main.js"];
+  for (var i = 0; i < scriptFiles.length; i++) {
+    elem = document.createElement("script");
+    elem.setAttribute("type", "text/javascript");
+    elem.setAttribute("src", scriptFiles[i]);
+    document.getElementsByTagName("body")[0].appendChild(elem);
+  }
 }

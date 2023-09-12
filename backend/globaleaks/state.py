@@ -65,6 +65,7 @@ class TenantState(object):
 
 class StateClass(ObjectDict, metaclass=Singleton):
     def __init__(self):
+        self.start_time = datetime_now()
         self.settings = Settings
 
         self.tor_exit_set = TorExitSet()
@@ -77,7 +78,7 @@ class StateClass(ObjectDict, metaclass=Singleton):
         self.jobs = []
         self.jobs_monitor = None
         self.services = []
-        self.onion_service = None
+        self.tor = None
 
         self.exceptions = {}
         self.exceptions_email_count = 0
@@ -112,7 +113,7 @@ class StateClass(ObjectDict, metaclass=Singleton):
 
     def get_agent(self):
         if 1 not in self.tenants or self.tenants[1].cache.anonymize_outgoing_connections:
-            return get_tor_agent(self.settings.socks_host, self.settings.socks_port)
+            return get_tor_agent(self.settings.socks_port)
 
         return get_web_agent()
 
@@ -137,36 +138,17 @@ class StateClass(ObjectDict, metaclass=Singleton):
 
     def create_directories(self):
         """
-        Execute some consistency checks on command provided GlobaLeaks paths
-
-        if one of working_path or static path is created we copy
-        here the static files (default logs, and in the future pot files for localization)
-        because here stay all the files needed by the application except the python scripts
+        Creates directories tree for the software data dir
         """
         for dirpath in [self.settings.working_path,
                         self.settings.files_path,
-                        self.settings.scripts_path,
                         self.settings.attachments_path,
                         self.settings.ramdisk_path,
                         self.settings.tmp_path,
                         self.settings.log_path]:
             self.create_directory(dirpath)
 
-
     def bind_tcp_ports(self):
-        # Allocate remote ports
-        for port in self.settings.bind_remote_ports:
-            sock, fail = reserve_tcp_socket(self.settings.bind_address, port)
-            if fail is not None:
-                log.err("Could not reserve socket for %s (error: %s)",
-                        fail.args[0], fail.args[1])
-                continue
-
-            if port == 80:
-                self.http_socks += [sock]
-            elif port == 443:
-                self.https_socks += [sock]
-
         # Allocate local ports
         for port in self.settings.bind_local_ports:
             sock, fail = reserve_tcp_socket('127.0.0.1', port)
@@ -176,7 +158,20 @@ class StateClass(ObjectDict, metaclass=Singleton):
                 continue
 
             if port == 8443:
+                self.https_socks += [sock]
+            else:
                 self.http_socks += [sock]
+
+        # Allocate remote ports
+        for port in self.settings.bind_remote_ports:
+            sock, fail = reserve_tcp_socket(self.settings.bind_address, port)
+            if fail is not None:
+                log.err("Could not reserve socket for %s (error: %s)",
+                        fail.args[0], fail.args[1])
+                continue
+
+            if port == 8443:
+                self.https_socks += [sock]
             else:
                 self.http_socks += [sock]
 
@@ -209,7 +204,6 @@ class StateClass(ObjectDict, metaclass=Singleton):
                         self.tenants[tid].cache.name + ' - ' + subject,
                         body,
                         self.tenants[1].cache.anonymize_outgoing_connections,
-                        self.settings.socks_host,
                         self.settings.socks_port)
 
     def schedule_support_email(self, tid, text):

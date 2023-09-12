@@ -35,10 +35,6 @@ from twisted.scripts._twistd_unix import UnixApplicationRunner as TwistedApplica
 from globaleaks import __version__, DATABASE_VERSION
 from globaleaks.settings import Settings
 from globaleaks.state import State, mail_exception_handler
-from globaleaks.utils.process import drop_privileges, set_proc_title
-
-
-set_proc_title("globaleaks")
 
 
 parser = OptionParser()
@@ -51,18 +47,6 @@ parser.add_option("-i", "--ip", type="string",
     help="IP address used for listening [default: %default]",
     dest="ip", default=Settings.bind_address)
 
-parser.add_option("-s", "--socks-host", type="string",
-    help="set Socks host to use for Tor [default: %default]",
-    dest="socks_host", default=Settings.socks_host)
-
-parser.add_option("-r", "--socks-port", type="int",
-    help="set Socks port to use for Tor [default: %default]",
-    dest="socks_port", default=Settings.socks_port)
-
-parser.add_option("-u", "--user", type="string",
-    help="set the user to run as [default: current_user]",
-    dest="user", default=None)
-
 parser.add_option("-w", "--working-path", type="string",
     help="set the backend working directory",
     dest="working_path", default=None)
@@ -74,6 +58,10 @@ parser.add_option("-d", "--disable-csp", action='store_true',
 parser.add_option("-z", "--devel-mode", action='store_true',
     help="set development mode [default: False]",
     dest="devel_mode", default=False)
+
+parser.add_option("-m", "--migrate-only", action='store_true',
+    help="run only db and data migration scripts [default: False]",
+    dest="migrate_only", default=False)
 
 parser.add_option("-o", "--orm-debug", action='store_true',
     help="enable ORM debugging [default: False]",
@@ -97,18 +85,17 @@ Settings.load_cmdline_options(options)
 State.bind_tcp_ports()
 
 
-drop_privileges(Settings.user, Settings.uid, Settings.gid)
-
-
 State.init_environment()
 
 
 args = ['-y', Settings.backend_script]
-if Settings.nodaemon:
-    print("Going in background; log available at %s" % Settings.logfile)
-    args += ['-n']
 
-args +=['--pidfile', Settings.pidfile_path]
+if Settings.nodaemon:
+    args += ['-n']
+else:
+    print("Going in background; log available at %s" % Settings.logfile)
+
+args += ['--pidfile', Settings.pidfile_path]
 
 sys.argv[1:] = args
 

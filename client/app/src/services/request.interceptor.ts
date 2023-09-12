@@ -37,7 +37,7 @@ export class RequestInterceptor implements HttpInterceptor {
       });
     }
     if (protectedUrls.includes(httpRequest.url)) {
-      return this.httpClient.post('api/token', {user: 123}).pipe(switchMap((response) => {
+      return this.httpClient.post('api/token', {}).pipe(switchMap((response) => {
         let token = Object.assign(new tokenResponse(), response)
         return from(this.cryptoService.proofOfWork(token.id))
           .pipe(

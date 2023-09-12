@@ -220,9 +220,9 @@ class _AuditLog(Model):
     date = Column(DateTime, default=datetime_now, nullable=False)
     type = Column(UnicodeText(24), default='', nullable=False)
     severity = Column(Integer, default=0, nullable=False)
-    user_id = Column(UnicodeText(36), nullable=True)
-    object_id = Column(UnicodeText(36), nullable=True)
-    data = Column(JSON, nullable=True)
+    user_id = Column(UnicodeText(36))
+    object_id = Column(UnicodeText(36))
+    data = Column(JSON)
 
 
 class _Comment(Model):
@@ -236,7 +236,7 @@ class _Comment(Model):
     internaltip_id = Column(UnicodeText(36), nullable=False, index=True)
     author_id = Column(UnicodeText(36))
     content = Column(UnicodeText, nullable=False)
-    type = Column(UnicodeText, nullable=False)
+    visibility = Column(Enum(EnumVisibility), default='public', nullable=False)
     new = Column(Boolean, default=True, nullable=False)
 
     @declared_attr
@@ -327,10 +327,7 @@ class _Context(Model):
     allow_recipients_selection = Column(Boolean, default=False, nullable=False)
     maximum_selectable_receivers = Column(Integer, default=0, nullable=False)
     select_all_receivers = Column(Boolean, default=True, nullable=False)
-    enable_comments = Column(Boolean, default=True, nullable=False)
-    enable_messages = Column(Boolean, default=False, nullable=False)
     enable_two_way_comments = Column(Boolean, default=True, nullable=False)
-    enable_two_way_messages = Column(Boolean, default=True, nullable=False)
     enable_attachments = Column(Boolean, default=True, nullable=False)
     tip_timetolive = Column(Integer, default=90, nullable=False)
     tip_reminder = Column(Integer, default=0, nullable=False)
@@ -339,8 +336,8 @@ class _Context(Model):
     show_receivers_in_alphabetical_order = Column(Boolean, default=True, nullable=False)
     score_threshold_high = Column(Integer, default=0, nullable=False)
     score_threshold_medium = Column(Integer, default=0, nullable=False)
-    questionnaire_id = Column(UnicodeText(36), default='default', nullable=False)
-    additional_questionnaire_id = Column(UnicodeText(36))
+    questionnaire_id = Column(UnicodeText(36), default='default', nullable=False, index=True)
+    additional_questionnaire_id = Column(UnicodeText(36), index=True)
     hidden = Column(Boolean, default=False, nullable=False)
     order = Column(Integer, default=0, nullable=False)
 
@@ -371,10 +368,7 @@ class _Context(Model):
         'show_receivers_in_alphabetical_order',
         'show_steps_navigation_interface',
         'allow_recipients_selection',
-        'enable_comments',
-        'enable_messages',
         'enable_two_way_comments',
-        'enable_two_way_messages',
         'enable_attachments'
     ]
 
@@ -430,29 +424,28 @@ class _Field(Model):
     hint = Column(JSON, default=dict, nullable=False)
     placeholder = Column(JSON, default=dict, nullable=False)
     required = Column(Boolean, default=False, nullable=False)
-    preview = Column(Boolean, default=False, nullable=False)
     multi_entry = Column(Boolean, default=False, nullable=False)
     triggered_by_score = Column(Integer, default=0, nullable=False)
     step_id = Column(UnicodeText(36), index=True)
     fieldgroup_id = Column(UnicodeText(36), index=True)
     type = Column(UnicodeText, default='inputbox', nullable=False)
     instance = Column(Enum(EnumFieldInstance), default='instance', nullable=False)
-    template_id = Column(UnicodeText(36))
-    template_override_id = Column(UnicodeText(36), nullable=True)
+    template_id = Column(UnicodeText(36), index=True)
+    template_override_id = Column(UnicodeText(36), index=True)
 
     @declared_attr
     def __table_args__(self):
         return (ForeignKeyConstraint(['tid'], ['tenant.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'),
                 ForeignKeyConstraint(['step_id'], ['step.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'),
                 ForeignKeyConstraint(['fieldgroup_id'], ['field.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'),
-                ForeignKeyConstraint(['template_id'], ['field.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'),
+                ForeignKeyConstraint(['template_id'], ['field.id'], deferrable=True, initially='DEFERRED'),
                 ForeignKeyConstraint(['template_override_id'], ['field.id'], ondelete='SET NULL', deferrable=True, initially='DEFERRED'),
                 CheckConstraint(self.instance.in_(EnumFieldInstance.keys())))
 
     unicode_keys = ['type', 'instance', 'key']
     int_keys = ['x', 'y', 'width', 'triggered_by_score']
     localized_keys = ['label', 'description', 'hint', 'placeholder']
-    bool_keys = ['multi_entry', 'preview', 'required']
+    bool_keys = ['multi_entry', 'required']
     optional_references = ['template_id', 'step_id', 'fieldgroup_id', 'template_override_id']
 
 
@@ -567,17 +560,36 @@ class _IdentityAccessRequest(Model):
     __tablename__ = 'identityaccessrequest'
 
     id = Column(UnicodeText(36), primary_key=True, default=uuid4)
-    receivertip_id = Column(UnicodeText(36), nullable=False, index=True)
+    internaltip_id = Column(UnicodeText(36), nullable=False, index=True)
     request_date = Column(DateTime, default=datetime_now, nullable=False)
+    request_user_id = Column(UnicodeText(36), nullable=False)
     request_motivation = Column(UnicodeText, default='')
     reply_date = Column(DateTime, default=datetime_null, nullable=False)
-    reply_user_id = Column(UnicodeText(36), default='', nullable=False)
+    reply_user_id = Column(UnicodeText(36))
     reply_motivation = Column(UnicodeText, default='', nullable=False)
     reply = Column(UnicodeText, default='pending', nullable=False)
 
     @declared_attr
     def __table_args__(self):
-        return ForeignKeyConstraint(['receivertip_id'], ['receivertip.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'),
+        return (ForeignKeyConstraint(['internaltip_id'], ['internaltip.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'),
+                ForeignKeyConstraint(['request_user_id'], ['user.id'], deferrable=True, initially='DEFERRED'),
+                ForeignKeyConstraint(['reply_user_id'], ['user.id'], deferrable=True, initially='DEFERRED'))
+
+
+class _IdentityAccessRequestCustodian(Model):
+    """
+    Class used to implement references between Receivers and Contexts
+    """
+    __tablename__ = 'identityaccessrequest_custodian'
+
+    identityaccessrequest_id = Column(UnicodeText(36), primary_key=True)
+    custodian_id = Column(UnicodeText(36), primary_key=True)
+    crypto_tip_prv_key = Column(UnicodeText(84), default='', nullable=False)
+
+    @declared_attr
+    def __table_args__(self):
+        return (ForeignKeyConstraint(['identityaccessrequest_id'], ['identityaccessrequest.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'),
+                ForeignKeyConstraint(['custodian_id'], ['user.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'))
 
 
 class _InternalFile(Model):
@@ -590,12 +602,11 @@ class _InternalFile(Model):
     creation_date = Column(DateTime, default=datetime_now, nullable=False)
     internaltip_id = Column(UnicodeText(36), nullable=False, index=True)
     name = Column(UnicodeText, nullable=False)
-    filename = Column(UnicodeText, default='', nullable=False)
     content_type = Column(JSON, default='', nullable=False)
     size = Column(JSON, default='', nullable=False)
     new = Column(Boolean, default=True, nullable=False)
-    submission = Column(Integer, default=False, nullable=False)
-    reference = Column(UnicodeText(36), nullable=True, index=True)
+    reference_id = Column(UnicodeText(36), default='', nullable=False)
+
     @declared_attr
     def __table_args__(self):
         return ForeignKeyConstraint(['internaltip_id'], ['internaltip.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'),
@@ -619,26 +630,26 @@ class _InternalTip(Model):
     expiration_date = Column(DateTime, default=datetime_never, nullable=False)
     reminder_date = Column(DateTime, default=datetime_never, nullable=False)
     enable_two_way_comments = Column(Boolean, default=True, nullable=False)
-    enable_two_way_messages = Column(Boolean, default=True, nullable=False)
     enable_attachments = Column(Boolean, default=True, nullable=False)
     enable_whistleblower_identity = Column(Boolean, default=False, nullable=False)
     important = Column(Boolean, default=False, nullable=False)
     label = Column(UnicodeText, default='', nullable=False)
     last_access = Column(DateTime, default=datetime_now, nullable=False)
-    status = Column(UnicodeText(36), nullable=True)
-    substatus = Column(UnicodeText(36), nullable=True)
-    receipt_hash = Column(UnicodeText(128), nullable=False)
+    status = Column(UnicodeText(36))
+    substatus = Column(UnicodeText(36))
+    receipt_hash = Column(UnicodeText(44), nullable=False)
     crypto_prv_key = Column(UnicodeText(84), default='', nullable=False)
     crypto_pub_key = Column(UnicodeText(56), default='', nullable=False)
     crypto_tip_pub_key = Column(UnicodeText(56), default='', nullable=False)
     crypto_tip_prv_key = Column(UnicodeText(84), default='', nullable=False)
-    crypto_files_pub_key = Column(UnicodeText(56), default='', nullable=False)
+    deprecated_crypto_files_pub_key = Column(UnicodeText(56), default='', nullable=False)
 
     @declared_attr
     def __table_args__(self):
         return (UniqueConstraint('tid', 'progressive'),
                 UniqueConstraint('tid', 'receipt_hash'),
-                ForeignKeyConstraint(['tid'], ['tenant.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'))
+                ForeignKeyConstraint(['tid'], ['tenant.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'),
+                ForeignKeyConstraint(['context_id'], ['context.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'))
 
 
 class _InternalTipAnswers(Model):
@@ -691,26 +702,6 @@ class _Mail(Model):
         return ForeignKeyConstraint(['tid'], ['tenant.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'),
 
 
-class _Message(Model):
-    """
-    This table handle the direct messages between whistleblower and one
-    Receiver.
-    """
-    __tablename__ = 'message'
-
-    id = Column(UnicodeText(36), primary_key=True, default=uuid4)
-    creation_date = Column(DateTime, default=datetime_now, nullable=False)
-    receivertip_id = Column(UnicodeText(36), nullable=False, index=True)
-    content = Column(UnicodeText, nullable=False)
-    type = Column(Enum(EnumMessageType), nullable=False)
-    new = Column(Boolean, default=True, nullable=False)
-
-    @declared_attr
-    def __table_args__(self):
-        return (ForeignKeyConstraint(['receivertip_id'], ['receivertip.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'),
-                CheckConstraint(self.type.in_(EnumMessageType.keys())))
-
-
 class _Questionnaire(Model):
     __tablename__ = 'questionnaire'
 
@@ -745,16 +736,15 @@ class _ReceiverContext(Model):
                 ForeignKeyConstraint(['receiver_id'], ['user.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'))
 
 
-class _ReceiverFile(Model):
+class _WhistleblowerFile(Model):
     """
     This model keeps track of files destinated to a specific receiver
     """
     __tablename__ = 'receiverfile'
 
     id = Column(UnicodeText(36), primary_key=True, default=uuid4)
-    internalfile_id = Column(UnicodeText(36), nullable=False)
+    internalfile_id = Column(UnicodeText(36), nullable=False, index=True)
     receivertip_id = Column(UnicodeText(36), nullable=False, index=True)
-    filename = Column(UnicodeText(255), nullable=False)
     access_date = Column(DateTime, default=datetime_null, nullable=False)
     new = Column(Boolean, default=True, nullable=False)
 
@@ -773,7 +763,7 @@ class _ReceiverTip(Model):
     __tablename__ = 'receivertip'
 
     id = Column(UnicodeText(36), primary_key=True, default=uuid4)
-    internaltip_id = Column(UnicodeText(36), nullable=False)
+    internaltip_id = Column(UnicodeText(36), nullable=False, index=True)
     receiver_id = Column(UnicodeText(36), nullable=False, index=True)
     access_date = Column(DateTime, default=datetime_null, nullable=False)
     last_access = Column(DateTime, default=datetime_null, nullable=False)
@@ -781,51 +771,29 @@ class _ReceiverTip(Model):
     new = Column(Boolean, default=True, nullable=False)
     enable_notifications = Column(Boolean, default=True, nullable=False)
     crypto_tip_prv_key = Column(UnicodeText(84), default='', nullable=False)
-    crypto_files_prv_key = Column(UnicodeText(84), default='', nullable=False)
+    deprecated_crypto_files_prv_key = Column(UnicodeText(84), default='', nullable=False)
 
     @declared_attr
     def __table_args__(self):
         return (ForeignKeyConstraint(['receiver_id'], ['user.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'),
                 ForeignKeyConstraint(['internaltip_id'], ['internaltip.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'))
 
+class _Redaction(Model):
+    """
+    This models keep track of data redactions applied on internaltips and related objects
+    """
+    __tablename__ = 'redaction'
 
-class _Subscriber(Model):
-    __tablename__ = 'subscriber'
-
-    tid = Column(Integer, primary_key=True)
-    subdomain = Column(UnicodeText, unique=True, nullable=False)
-    language = Column(UnicodeText(12), nullable=False)
-    name = Column(UnicodeText, nullable=False)
-    surname = Column(UnicodeText, nullable=False)
-    role = Column(UnicodeText, default='', nullable=False)
-    phone = Column(UnicodeText, default='', nullable=False)
-    email = Column(UnicodeText, nullable=False)
-    organization_name = Column(UnicodeText, default='', nullable=False)
-    organization_type = Column(UnicodeText, default='', nullable=False)
-    organization_tax_code = Column(UnicodeText, default='', nullable=False)
-    organization_vat_code = Column(UnicodeText, default='', nullable=False)
-    organization_location = Column(UnicodeText, default='', nullable=False)
-    activation_token = Column(UnicodeText, unique=True, nullable=True)
-    client_ip_address = Column(UnicodeText, nullable=False)
-    client_user_agent = Column(UnicodeText, nullable=False)
-    registration_date = Column(DateTime, default=datetime_now, nullable=False)
-    tos1 = Column(UnicodeText, default='', nullable=False)
-    tos2 = Column(UnicodeText, default='', nullable=False)
-
-    unicode_keys = ['subdomain', 'language', 'name', 'surname', 'role', 'phone', 'email',
-                    'tax_code', 'vat_code',
-                    'organization_name', 'organization_type',
-                    'organization_tax_code', 'organization_vat_code',
-                    'organization_location',
-                    'client_ip_address', 'client_user_agent']
-
-    bool_keys = ['tos1', 'tos2']
-
-    optional_references = ['activation_token']
+    id = Column(UnicodeText(36), primary_key=True, default=uuid4)
+    update_date = Column(DateTime, default=datetime_now, nullable=False)
+    reference_id = Column(UnicodeText(36), nullable=False, index=True)
+    internaltip_id = Column(UnicodeText(36), nullable=False, index=True)
+    temporary_redaction = Column(JSON, default=dict, nullable=False)
+    permanent_redaction = Column(JSON, default=dict, nullable=False)
 
     @declared_attr
     def __table_args__(self):
-        return ForeignKeyConstraint(['tid'], ['tenant.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'),
+        return ForeignKeyConstraint(['internaltip_id'], ['internaltip.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'),
 
 
 class _Redirect(Model):
@@ -874,11 +842,11 @@ class _SubmissionStatus(Model):
     id = Column(UnicodeText(36), primary_key=True, default=uuid4)
     tid = Column(Integer, primary_key=True, default=1)
     label = Column(JSON, default=dict, nullable=False)
-    receivers = Column(JSON, default=list, nullable=False)
     order = Column(Integer, default=0, nullable=False)
+    tip_timetolive = Column(Integer, default=0, nullable=False)
 
     localized_keys = ['label']
-    int_keys = ['order']
+    int_keys = ['order', 'tip_timetolive']
     json_keys = ['receivers']
 
     @declared_attr
@@ -897,13 +865,52 @@ class _SubmissionSubStatus(Model):
     submissionstatus_id = Column(UnicodeText(36), nullable=False)
     label = Column(JSON, default=dict, nullable=False)
     order = Column(Integer, default=0, nullable=False)
+    tip_timetolive = Column(Integer, default=0, nullable=False)
 
     localized_keys = ['label']
-    int_keys = ['order']
+    int_keys = ['order', 'tip_timetolive']
 
     @declared_attr
     def __table_args__(self):
         return ForeignKeyConstraint(['tid', 'submissionstatus_id'], ['submissionstatus.tid', 'submissionstatus.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'),
+
+
+class _Subscriber(Model):
+    __tablename__ = 'subscriber'
+
+    tid = Column(Integer, primary_key=True)
+    subdomain = Column(UnicodeText, unique=True, nullable=False)
+    language = Column(UnicodeText(12), nullable=False)
+    name = Column(UnicodeText, nullable=False)
+    surname = Column(UnicodeText, nullable=False)
+    role = Column(UnicodeText, default='', nullable=False)
+    phone = Column(UnicodeText, default='', nullable=False)
+    email = Column(UnicodeText, nullable=False)
+    organization_name = Column(UnicodeText, default='', nullable=False)
+    organization_tax_code = Column(UnicodeText, default='', nullable=False)
+    organization_vat_code = Column(UnicodeText, default='', nullable=False)
+    organization_location = Column(UnicodeText, default='', nullable=False)
+    activation_token = Column(UnicodeText, unique=True)
+    client_ip_address = Column(UnicodeText, nullable=False)
+    client_user_agent = Column(UnicodeText, nullable=False)
+    registration_date = Column(DateTime, default=datetime_now, nullable=False)
+    tos1 = Column(UnicodeText, default='', nullable=False)
+    tos2 = Column(UnicodeText, default='', nullable=False)
+
+    unicode_keys = ['subdomain', 'language', 'name', 'surname', 'role', 'phone', 'email',
+                    'tax_code', 'vat_code',
+                    'organization_name',  'organization_tax_code',
+                    'organization_vat_code', 'organization_location',
+                    'client_ip_address', 'client_user_agent']
+
+    bool_keys = ['tos1', 'tos2']
+
+    optional_references = ['activation_token']
+
+    @declared_attr
+    def __table_args__(self):
+        return ForeignKeyConstraint(['tid'], ['tenant.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'),
+
 
 
 class _Tenant(Model):
@@ -911,12 +918,12 @@ class _Tenant(Model):
     Class used to implement tenants
     """
     __tablename__ = 'tenant'
+    __table_args__ = {'sqlite_autoincrement': True}
+
 
     id = Column(Integer, primary_key=True)
     creation_date = Column(DateTime, default=datetime_now, nullable=False)
     active = Column(Boolean, default=False, nullable=False)
-
-    __table_args__ = {'sqlite_autoincrement': True}
 
     bool_keys = ['active']
 
@@ -932,8 +939,7 @@ class _User(Model):
     creation_date = Column(DateTime, default=datetime_now, nullable=False)
     username = Column(UnicodeText, default='', nullable=False)
     salt = Column(UnicodeText(24), default='', nullable=False)
-    hash_alg = Column(UnicodeText, default='ARGON2', nullable=False)
-    password = Column(UnicodeText, default='', nullable=False)
+    hash = Column(UnicodeText(44), default='', nullable=False)
     name = Column(UnicodeText, default='', nullable=False)
     description = Column(JSON, default=dict, nullable=False)
     public_name = Column(UnicodeText, default='', nullable=False)
@@ -952,13 +958,16 @@ class _User(Model):
     crypto_escrow_bkp1_key = Column(UnicodeText(84), default='', nullable=False)
     crypto_escrow_bkp2_key = Column(UnicodeText(84), default='', nullable=False)
     change_email_address = Column(UnicodeText, default='', nullable=False)
-    change_email_token = Column(UnicodeText, unique=True, nullable=True)
+    change_email_token = Column(UnicodeText, unique=True)
     change_email_date = Column(DateTime, default=datetime_null, nullable=False)
     notification = Column(Boolean, default=True, nullable=False)
     forcefully_selected = Column(Boolean, default=False, nullable=False)
     can_delete_submission = Column(Boolean, default=False, nullable=False)
     can_postpone_expiration = Column(Boolean, default=True, nullable=False)
     can_grant_access_to_reports = Column(Boolean, default=False, nullable=False)
+    can_transfer_access_to_reports = Column(Boolean, default=False, nullable=False)
+    can_mask_information = Column(Boolean, default=False, nullable=False)
+    can_redact_information = Column(Boolean, default=False, nullable=False)
     can_edit_general_settings = Column(Boolean, default=False, nullable=False)
     readonly = Column(Boolean, default=False, nullable=False)
     two_factor_secret = Column(UnicodeText(32), default='', nullable=False)
@@ -970,6 +979,7 @@ class _User(Model):
     pgp_key_expiration = Column(DateTime, default=datetime_null, nullable=False)
     # END of PGP key fields
 
+    accepted_privacy_policy = Column(DateTime, default=datetime_null, nullable=False)
     clicked_recovery_key = Column(Boolean, default=False, nullable=False)
 
     unicode_keys = ['username', 'role',
@@ -987,12 +997,18 @@ class _User(Model):
                  'can_delete_submission',
                  'can_postpone_expiration',
                  'can_grant_access_to_reports',
+                 'can_transfer_access_to_reports',
                  'can_edit_general_settings',
                  'forcefully_selected',
                  'readonly',
                  'clicked_recovery_key']
 
-    date_keys = ['creation_date', 'reminder_date', 'last_login', 'password_change_date', 'pgp_key_expiration']
+    date_keys = ['accepted_privacy_policy',
+                 'creation_date',
+                 'reminder_date',
+                 'last_login',
+                 'password_change_date',
+                 'pgp_key_expiration']
 
     @declared_attr
     def __table_args__(self):
@@ -1001,7 +1017,7 @@ class _User(Model):
                 CheckConstraint(self.role.in_(EnumUserRole.keys())))
 
 
-class _WhistleblowerFile(Model):
+class _ReceiverFile(Model):
     """
     This models stores metadata of files uploaded by recipients intended to be
     delivered to the whistleblower. This file is not encrypted and nor is it
@@ -1010,19 +1026,21 @@ class _WhistleblowerFile(Model):
     __tablename__ = 'whistleblowerfile'
 
     id = Column(UnicodeText(36), primary_key=True, default=uuid4)
-    receivertip_id = Column(UnicodeText(36), nullable=False, index=True)
+    internaltip_id = Column(UnicodeText(36), nullable=False, index=True)
+    author_id = Column(UnicodeText(36))
     name = Column(UnicodeText, nullable=False)
-    filename = Column(UnicodeText(255), unique=True, nullable=False)
     size = Column(Integer, nullable=False)
     content_type = Column(UnicodeText, nullable=False)
     creation_date = Column(DateTime, default=datetime_now, nullable=False)
     access_date = Column(DateTime, default=datetime_null, nullable=False)
-    description = Column(UnicodeText, nullable=False)
+    description = Column(UnicodeText, default="", nullable=False)
+    visibility = Column(Enum(EnumVisibility), default='public', nullable=False)
     new = Column(Boolean, default=True, nullable=False)
 
     @declared_attr
     def __table_args__(self):
-        return ForeignKeyConstraint(['receivertip_id'], ['receivertip.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'),
+        return (ForeignKeyConstraint(['internaltip_id'], ['internaltip.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'),
+                CheckConstraint(self.visibility.in_(EnumVisibility.keys())))
 
 
 class ArchivedSchema(_ArchivedSchema, Base):
@@ -1085,6 +1103,10 @@ class IdentityAccessRequest(_IdentityAccessRequest, Base):
     pass
 
 
+class IdentityAccessRequestCustodian(_IdentityAccessRequestCustodian, Base):
+    pass
+
+
 class InternalFile(_InternalFile, Base):
     pass
 
@@ -1105,10 +1127,6 @@ class Mail(_Mail, Base):
     pass
 
 
-class Message(_Message, Base):
-    pass
-
-
 class Questionnaire(_Questionnaire, Base):
     pass
 
@@ -1117,11 +1135,15 @@ class ReceiverContext(_ReceiverContext, Base):
     pass
 
 
-class ReceiverFile(_ReceiverFile, Base):
+class WhistleblowerFile(_WhistleblowerFile, Base):
     pass
 
 
 class ReceiverTip(_ReceiverTip, Base):
+    pass
+
+
+class Redaction(_Redaction, Base):
     pass
 
 
@@ -1153,5 +1175,5 @@ class User(_User, Base):
     pass
 
 
-class WhistleblowerFile(_WhistleblowerFile, Base):
+class ReceiverFile(_ReceiverFile, Base):
     pass

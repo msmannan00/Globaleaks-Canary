@@ -25,7 +25,9 @@ module.exports = function (grunt) {
       tmp: ["tmp", "dist"]
     },
     shell: {
-      command: 'cd app && npx ng build --configuration production'
+      build: {
+        command: 'npx ng build --configuration=production && echo "Build completed"'
+      }
     },
     copy: {
       sources: {
@@ -40,7 +42,23 @@ module.exports = function (grunt) {
         ]
       },
       build: {
-        files: [{ dest: "tmp/", cwd: "dist/GLeaks", src: ["**"], expand: true }]
+        files: [
+          { dest: "tmp/", cwd: "dist", src: ["**"], expand: true },
+          {dest: "tmp/css/styles.css", cwd: ".", src: ["dist/styles.css"], expand: false, flatten: true},
+          {dest: "tmp/css/styles.css.map", cwd: ".", src: ["dist/styles.css.map"], expand: false, flatten: true},
+
+          {dest: "tmp/js/main.js", cwd: ".", src: ["dist/main.js"], expand: false, flatten: true},
+          {dest: "tmp/js/main.js.map", cwd: ".", src: ["dist/main.js.map"], expand: false, flatten: true},
+
+          {dest: "tmp/js/polyfills.js", cwd: ".", src: ["dist/polyfills.js"], expand: false, flatten: true},
+          {dest: "tmp/js/polyfills.js.map", cwd: ".", src: ["dist/polyfills.js.map"], expand: false, flatten: true},
+
+          {dest: "tmp/js/runtime.js", cwd: ".", src: ["dist/runtime.js"], expand: false, flatten: true},
+          {dest: "tmp/js/runtime.js.map", cwd: ".", src: ["dist/runtime.js.map"], expand: false, flatten: true},
+
+          {dest: "tmp/js/scripts.js", cwd: ".", src: ["dist/scripts.js"], expand: false, flatten: true},
+          {dest: "tmp/js/scripts.js.map", cwd: ".", src: ["dist/scripts.js.map"], expand: false, flatten: true}
+        ]
       },
       package: {
         files: [
@@ -67,30 +85,6 @@ module.exports = function (grunt) {
           ],
           expand: true
         }]
-      }
-    },
-
-    concat: {
-      options: {
-        separator: ';',
-        expand: true
-      },
-      js: {
-        src: ['tmp/main.js', 'tmp/polyfills.js', 'tmp/runtime.js', 'tmp/scripts.js'],
-        dest: 'tmp/js/script.js',
-      },
-      css: {
-        src: ['tmp/styles.css'],
-        dest: 'tmp/css/styles.css',
-      }
-    },
-
-    usemin: {
-      html: [
-        "tmp/index.html"
-      ],
-      options: {
-        dirs: ["tmp"]
       }
     },
 
@@ -340,17 +334,6 @@ module.exports = function (grunt) {
       }
     },
 
-    cssmin: {
-      options: {
-        sourceMap: true
-      },
-      minify: {
-        files: {
-          "tmp/css/styles.min.css": ["tmp/css/styles.css"]
-        }
-      }
-    },
-
     stylelint: {
       options: {
         configFile: ".stylelintrc.json",
@@ -365,29 +348,15 @@ module.exports = function (grunt) {
       all: ["app/css/**/*.css"]
     },
 
-    terser: {
-      options: {
-        sourceMap: true
-      },
-      minify: {
-        files: {
-          "tmp/js/script.min.js": ["tmp/js/script.js"]
-        }
-      }
-    }
   });
 
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks("grunt-angular-templates");
   grunt.loadNpmTasks("grunt-confirm");
   grunt.loadNpmTasks("grunt-contrib-clean");
-  grunt.loadNpmTasks("grunt-contrib-concat");
   grunt.loadNpmTasks("grunt-contrib-copy");
-  grunt.loadNpmTasks("grunt-contrib-cssmin");
   grunt.loadNpmTasks("grunt-stylelint");
   grunt.loadNpmTasks("grunt-string-replace");
-  grunt.loadNpmTasks("grunt-terser");
-  grunt.loadNpmTasks("grunt-usemin");
   grunt.loadNpmTasks("gruntify-eslint");
 
   let readNoTranslateStrings = function () {
@@ -723,15 +692,15 @@ module.exports = function (grunt) {
     ["app/translations.html",
       "app/data_src/appdata.json",
       "app/data/field_attrs.json"].forEach(function (file) {
-        extractStringsFromFile(file);
-      });
+      extractStringsFromFile(file);
+    });
 
     ["app/views",
       "app/data_src/questionnaires",
       "app/data_src/questions",
       "app/data_src/txt"].forEach(function (dir) {
-        extractStringsFromDir(dir);
-      });
+      extractStringsFromDir(dir);
+    });
 
     grunt.file.mkdir("pot");
 
@@ -993,7 +962,6 @@ module.exports = function (grunt) {
   grunt.registerTask("updateTranslations", ["fetchTranslations", "makeAppData", "verifyAppData"]);
 
   // Run this to build your app. You should have run updateTranslations before you do so, if you have changed something in your translations.
-  //grunt.registerTask("build", ["clean", "copy:sources", "shell", "copy:build", "concat", "cssmin", "string-replace", "terser", "copy:package", "clean:tmp"]);
-  grunt.registerTask("build", ["clean", "copy:sources", "shell", "copy:build"]);
+  grunt.registerTask("build", ["clean", "copy:sources", "shell:build", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
 
 };

@@ -105,9 +105,10 @@ def db_wizard(session, tid, hostname, request):
         return
 
     # Secondary tenants initialization starts here
-
-    if node.get_val('subdomain') and root_tenant_node.get_val('rootdomain'):
-        node.set_val('hostname', node.get_val('subdomain') + '.' + root_tenant_node.get_val('rootdomain'))
+    subdomain = node.get_val('subdomain')
+    rootdomain = root_tenant_node.get_val('rootdomain')
+    if subdomain and rootdomain:
+        node.set_val('hostname', subdomain + "." + rootdomain)
 
     mode = node.get_val('mode')
 
@@ -124,8 +125,8 @@ def db_wizard(session, tid, hostname, request):
 
         context.questionnaire_id = root_tenant_node.get_val('default_questionnaire')
 
-        # Set data retention policy to 18 months
-        context.tip_timetolive = 540
+        # Set data retention policy to 12 months
+        context.tip_timetolive = 365
 
         # Delete the admin user
         request['admin_password'] = ''

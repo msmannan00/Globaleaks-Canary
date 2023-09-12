@@ -41,15 +41,6 @@ def db_create_questionnaire(session, tid, user_session, questionnaire_dict, lang
 
     steps = questionnaire_dict.get('steps', [])
 
-    if not steps:
-        steps.append({
-            'label': '',
-            'description': '',
-            'order': 0,
-            'triggered_by_score': 0,
-            'children': []
-        })
-
     for step in questionnaire_dict.get('steps', []):
         step['questionnaire_id'] = q.id
         db_create_step(session, tid, step, language)
@@ -128,7 +119,6 @@ def duplicate_questionnaire(session, tid, user_session, questionnaire_id, new_na
 
         # Tweak the field in order to make a raw copy
         field['instance'] = 'instance'
-        field['template_id'] = field['template_override_id'] = ''
 
         # Rewrite the option ID if it exists
         for option in field['options']:

@@ -18,7 +18,7 @@ class ViewerHandler(StaticFileHandler):
             if filename == 'viewer/index.html':
                 self.request.setHeader(b'Content-Security-Policy',
                                        b"base-uri 'none';"
-                                       b"default-src 'self';"
+                                       b"default-src 'none';"
                                        b"connect-src blob:;"
                                        b"form-action 'none';"
                                        b"frame-ancestors 'self';"

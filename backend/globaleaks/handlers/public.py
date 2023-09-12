@@ -7,7 +7,6 @@ import os
 from sqlalchemy import or_
 
 from globaleaks import models, LANGUAGES_SUPPORTED, LANGUAGES_SUPPORTED_CODES
-from globaleaks.handlers.admin.file import special_files
 from globaleaks.handlers.base import BaseHandler
 from globaleaks.models import get_localized_values
 from globaleaks.models.config import ConfigFactory, ConfigL10NFactory
@@ -17,6 +16,7 @@ from globaleaks.state import State
 default_questionnaires = ['default']
 default_questions = ['whistleblower_identity']
 
+special_files = ['css', 'favicon', 'logo', 'script']
 
 trigger_map = {
     'field': models.FieldOptionTriggerField,
@@ -257,6 +257,7 @@ def db_serialize_node(session, tid, language):
     ret = ConfigFactory(session, tid).serialize('public_node')
     ret.update(ConfigL10NFactory(session, tid,).serialize('public_node', language))
 
+    ret['start_time'] = State.start_time
     ret['root_tenant'] = tid == 1
     ret['languages_enabled'] = languages if ret['wizard_done'] else list(LANGUAGES_SUPPORTED_CODES)
     ret['languages_supported'] = LANGUAGES_SUPPORTED
@@ -311,10 +312,7 @@ def serialize_context(session, context, language, data=None):
         'maximum_selectable_receivers': context.maximum_selectable_receivers,
         'show_recipients_details': context.show_recipients_details,
         'allow_recipients_selection': context.allow_recipients_selection,
-        'enable_comments': context.enable_comments,
-        'enable_messages': context.enable_messages,
         'enable_two_way_comments': context.enable_two_way_comments,
-        'enable_two_way_messages': context.enable_two_way_messages,
         'enable_attachments': context.enable_attachments,
         'score_threshold_medium': context.score_threshold_medium,
         'score_threshold_high': context.score_threshold_high,
@@ -367,10 +365,6 @@ def serialize_field_attr(attr, language):
         ret['value'] = '0'
     elif ret['name'] == 'max_len' and ret['value'] <= '-1':
         ret['value'] = '4096'
-    elif ret['name'] == 'min_time' and ret['value'] <= '-1':
-        ret['value'] = '10'
-    elif ret['name'] == 'max_time' and ret['value'] <= '-1':
-        ret['value'] = '60'
 
     if attr.type == 'localized':
         get_localized_values(ret, ret, ['value'], language)
@@ -412,6 +406,10 @@ def serialize_field(session, tid, field, language, data=None, serialize_template
         children = [serialize_field(session, tid, f, language, data, serialize_templates=serialize_templates) for f in data['fields'].get(f_to_serialize.id, [])]
         children.sort(key=lambda f: (f['y'], f['x']))
 
+    # Enable voice features if questions of type voice are enabled
+    if tid in State.tenants and field.type == 'voice':
+        State.tenants[tid].microphone = True
+
     ret = {
         'id': field.id,
         'instance': field.instance,
@@ -423,7 +421,6 @@ def serialize_field(session, tid, field, language, data=None, serialize_template
         'fieldgroup_id': field.fieldgroup_id if field.fieldgroup_id else '',
         'multi_entry': field.multi_entry,
         'required': field.required,
-        'preview': field.preview,
         'attrs': attrs,
         'x': field.x,
         'y': field.y,
@@ -526,6 +523,9 @@ def db_get_questionnaires(session, tid, language, serialize_templates=False):
     :param serialize_templates: A boolean to require template serialization
     :return: A list of contexts descriptors
     """
+    if tid in State.tenants:
+        State.tenants[tid].microphone = False
+
     questionnaires = session.query(models.Questionnaire) \
                             .filter(models.Questionnaire.tid.in_({1, tid}),
                                     or_(models.Context.questionnaire_id == models.Questionnaire.id,
@@ -562,7 +562,6 @@ def db_get_receivers(session, tid, language):
     """
     receivers = session.query(models.User).filter(models.User.role == models.EnumUserRole.receiver.value,
                                                   models.User.tid == tid)
-
     data = db_prepare_receivers_serialization(session, receivers)
 
     return [serialize_receiver(session, receiver, language, data) for receiver in receivers]
@@ -578,6 +577,7 @@ def get_public_resources(session, tid, language):
     :param language: The language to be used for serialization
     :return: The public API descriptor
     """
+
     return {
         'node': db_serialize_node(session, tid, language),
         'questionnaires': db_get_questionnaires(session, tid, language, True),
