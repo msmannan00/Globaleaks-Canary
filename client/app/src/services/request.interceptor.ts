@@ -18,7 +18,7 @@ const protectedUrls = [
   'api/submission',
   'api/receiptauth',
   'api/tokenauth',
-  'api/authentication',
+  'api/auth/authentication',
   'api/reset/password',
 ];
 
@@ -28,6 +28,10 @@ export class RequestInterceptor implements HttpInterceptor {
   constructor(public authenticationService: AuthenticationService, private httpClient: HttpClient, private cryptoService: CryptoService) {
   }
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (httpRequest.url.endsWith('/data/i18n/.json')) {
+      return new Observable<HttpEvent<any>>();
+    }
+
     let authHeader = this.authenticationService.getHeader();
     let authRequest = httpRequest
     for (let [key, value] of authHeader) {
@@ -37,7 +41,7 @@ export class RequestInterceptor implements HttpInterceptor {
       });
     }
     if (protectedUrls.includes(httpRequest.url)) {
-      return this.httpClient.post('api/token', {}).pipe(switchMap((response) => {
+      return this.httpClient.post('api/auth/token', {}).pipe(switchMap((response) => {
         let token = Object.assign(new tokenResponse(), response)
         return from(this.cryptoService.proofOfWork(token.id))
           .pipe(

@@ -57,7 +57,7 @@
         </div>
     </div>
     <div *ngIf="step == 4" ngForm #wizardFormStep4="ngForm" [ngClass]="{'was-validated': validation.step4}" class="clearfix">
-        <div class="row wizard-block">
+         <div class="row wizard-block">
             <div class="col-md-12 title">{{'Admin'|translate}}</div>
             <div class="col-md-6">
                 <div class="row form-group">
@@ -66,7 +66,7 @@
                         <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
                     </label>
                     <div class="col-md-8">
-                        <input name="admin_name" class="form-control" [(ngModel)]="wizard.admin_username" type="text" placeholder="{{'Username' | translate}}" required>
+                        <input name="admin_name" class="form-control" [(ngModel)]="wizard.admin_username" type="text" placeholder="{{'Username' | translate}}" autocomplete="off" required>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -147,8 +147,8 @@
                             <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
                         </label>
                         <div class="col-md-8">
-                            <input name="admin_name" class="form-control" [(ngModel)]="wizard.receiver_username" type="text" placeholder="{{'Username' | translate}}"  [ngClass]="{'is-invalid': wizard.receiver_username === wizard.admin_username}" required>
-                            <div class="text-danger" *ngIf="wizard.receiver_username === wizard.admin_username">
+                            <input name="receiver_username" class="form-control" [(ngModel)]="wizard.receiver_username" autocomplete="off" type="text" placeholder="{{'Username' | translate}}"  [ngClass]="{'is-invalid': recipientDuplicate}" required>
+                            <div class="text-danger" *ngIf="recipientDuplicate && wizard.receiver_username === wizard.admin_username">
                                 <span>{{'Please choose a different username.'|translate}}</span>
                             </div>
                         </div>
@@ -214,7 +214,7 @@
                 <i class="fa-solid fa-arrow-circle-left"></i>
                 <span>{{'Previous'|translate}}</span>
             </button>
-            <button class="ButtonNext btn btn-primary" (click)="(validation.step5 = true) && !(wizardFormStep5.invalid || (wizard.receiver_username === wizard.admin_username)) && (step = 6)">
+            <button class="ButtonNext btn btn-primary" (click)="(validation.step5 = true) && !(wizardFormStep5.invalid || (validateDuplicateRecipient())) && (step = 6)">
             <span>{{'Next'|translate}}</span>
             <i class="fa-solid fa-arrow-circle-right"></i>
         </button>

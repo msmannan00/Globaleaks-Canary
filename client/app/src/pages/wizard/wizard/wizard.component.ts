@@ -19,6 +19,7 @@ export class WizardComponent implements OnInit{
   emailRegexp = Constants.email_regexp;
   password_score = 0
   admin_check_password = ""
+  recipientDuplicate = false
   recipient_check_password = "";
   tosAccept: any;
   license = ""
@@ -61,6 +62,7 @@ export class WizardComponent implements OnInit{
   };
 
   complete() {
+
     if (this.completed) {
       return;
     }
@@ -79,6 +81,11 @@ export class WizardComponent implements OnInit{
     );
   }
 
+  validateDuplicateRecipient(){
+    this.recipientDuplicate = this.wizard.receiver_username === this.wizard.admin_username;
+    return this.recipientDuplicate
+  }
+
   goToAdminInterface(){
     const promise = () => {
       this.appConfigService.loadAdminRoute('/admin/home')
@@ -90,6 +97,10 @@ export class WizardComponent implements OnInit{
     this.http.get('license.txt', { responseType: 'text' }).subscribe((data: string) => {
       this.license = data;
     });
+  }
+
+  resetReciipientUsername(){
+    this.wizard.receiver_username = ""
   }
 
   ngOnInit(){

@@ -19,7 +19,7 @@ export class HttpService {
   }
 
   requestGeneralLogin(param: string): Observable<any> {
-    return this.httpClient.post("api/authentication", param)
+    return this.httpClient.post("api/auth/authentication", param)
   }
 
   requestWhistleBlowerLogin(param: string): Observable<any> {
@@ -55,7 +55,7 @@ export class HttpService {
   }
 
   requestToken(param: string): Observable<any> {
-    return this.httpClient.post("api/token", param)
+    return this.httpClient.post("api/auth/token", param)
   }
 
   requestResetLogin(param: string): Observable<any> {

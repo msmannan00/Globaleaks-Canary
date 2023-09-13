@@ -88,6 +88,30 @@ module.exports = function (grunt) {
       }
     },
 
+    concat: {
+      options: {
+        separator: ';',
+        expand: true
+      },
+      js: {
+        src: ['tmp/main.js', 'tmp/polyfills.js', 'tmp/runtime.js', 'tmp/scripts.js'],
+        dest: 'tmp/js/scripts.js',
+      },
+      css: {
+        src: ['tmp/styles.css'],
+        dest: 'tmp/css/styles.css',
+      }
+    },
+
+    usemin: {
+      html: [
+        "tmp/index.html"
+      ],
+      options: {
+        dirs: ["tmp"]
+      }
+    },
+
     "string-replace": {
       pass1: {
         src: './tmp/css/*.css',
@@ -334,6 +358,17 @@ module.exports = function (grunt) {
       }
     },
 
+    cssmin: {
+      options: {
+        sourceMap: true
+      },
+      minify: {
+        files: {
+          "tmp/css/styles.min.css": ["tmp/css/styles.css"]
+        }
+      }
+    },
+
     stylelint: {
       options: {
         configFile: ".stylelintrc.json",
@@ -348,15 +383,29 @@ module.exports = function (grunt) {
       all: ["app/css/**/*.css"]
     },
 
+    terser: {
+      options: {
+        sourceMap: true
+      },
+      minify: {
+        files: {
+          "tmp/js/scripts.min.js": ["tmp/js/scripts.js"]
+        }
+      }
+    }
   });
 
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks("grunt-angular-templates");
   grunt.loadNpmTasks("grunt-confirm");
   grunt.loadNpmTasks("grunt-contrib-clean");
+  grunt.loadNpmTasks("grunt-contrib-concat");
   grunt.loadNpmTasks("grunt-contrib-copy");
+  grunt.loadNpmTasks("grunt-contrib-cssmin");
   grunt.loadNpmTasks("grunt-stylelint");
   grunt.loadNpmTasks("grunt-string-replace");
+  grunt.loadNpmTasks("grunt-terser");
+  grunt.loadNpmTasks("grunt-usemin");
   grunt.loadNpmTasks("gruntify-eslint");
 
   let readNoTranslateStrings = function () {
@@ -964,4 +1013,10 @@ module.exports = function (grunt) {
   // Run this to build your app. You should have run updateTranslations before you do so, if you have changed something in your translations.
   grunt.registerTask("build", ["clean", "copy:sources", "shell:build", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
 
+  grunt.registerTask("instrument-client", [
+    "clean",
+    "copy:sources",
+    "copy:coverage",
+    "instrument"
+  ]);
 };
