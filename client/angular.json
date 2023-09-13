@@ -116,7 +116,9 @@
             "styles": [
               "app/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "codeCoverage": true,
+            "codeCoverageExclude": ["**/*.spec.ts"]
           }
         }
       }
