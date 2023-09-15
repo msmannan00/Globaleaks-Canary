@@ -111,7 +111,9 @@ export class AuthenticationService {
                 this.router.navigate(['/']).then();
               }
             } else {
-              this.router.navigate([this.session.homepage]).then();
+              if(!callback){
+                this.router.navigate([this.session.homepage]).then();
+              }
             }
           }
           if (callback) {

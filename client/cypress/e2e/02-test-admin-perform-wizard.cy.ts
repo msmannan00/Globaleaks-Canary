@@ -36,14 +36,10 @@ describe("globaLeaks setup wizard", () => {
 
     cy.get(".ButtonNext").click();
 
-    cy.contains("div", "Congratulations!").should("exist");
-
-    cy.get(".ButtonNext").click();
-
     cy.takeScreenshot("wizard/6");
+    cy.get('button[name="proceed"]').click();
 
     cy.url().should('include', '/admin/home');
-
     cy.logout();
   });
 });

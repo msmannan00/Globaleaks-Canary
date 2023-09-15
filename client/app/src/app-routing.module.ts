@@ -82,7 +82,6 @@ const routes: Routes = [
     canActivate: [SessionGuard],
     resolve: {
       NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver, ContextsResolver, AuditlogResolver, JobResolver, TipsResolver,NotificationsResolver,NetworkResolver,RedirectsResolver,FieldtemplatesResolver
-      // NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver, ContextsResolver, AuditlogResolver, JobResolver, TipsResolver,NotificationsResolver,NetworkResolver,RedirectsResolver,FieldtemplatesResolver
     },
     loadChildren: () => AdminRoutingModule,
     data:{

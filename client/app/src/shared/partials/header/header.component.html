@@ -8,8 +8,7 @@
 			<div id="TitleBox" *ngIf="appDataService.projectTitle || appDataService.pageTitle">
 				<h1>
 					<span id="ProjectTitle" (click)="appConfig.setHomepage()">{{appDataService.projectTitle}}</span>
-					<span class="TitleSeparator" *ngIf="appDataService.projectTitle && appDataService.pageTitle"> -
-					</span>
+					<span class="TitleSeparator" *ngIf="appDataService.projectTitle && appDataService.pageTitle"> - </span>
 					<span id="PageTitle">{{appDataService.pageTitle | translate}}</span>
 				</h1>
 			</div>

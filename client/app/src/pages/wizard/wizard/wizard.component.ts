@@ -103,7 +103,7 @@ export class WizardComponent implements OnInit{
 
   goToAdminInterface(){
     const promise = () => {
-      this.appConfigService.loadAdminRoute('/admin')
+      this.appConfigService.loadAdminRoute('/admin/home')
     };
     this.authenticationService.login(0, this.wizard.admin_username, this.wizard.admin_password, "", "",promise)
   }

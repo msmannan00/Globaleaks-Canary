@@ -19,7 +19,6 @@ export class AppConfigService{
 
   constructor(private appConfigService: AppConfigService, private titleService: Title, private preferenceResolver:PreferenceResolver, private router: Router, private activatedRoute: ActivatedRoute, public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public authenticationService:AuthenticationService, public appDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService)  {
     this.localInitialization()
-    this.onRouteChange();
   }
 
   initTranslation(){
@@ -160,11 +159,6 @@ export class AppConfigService{
       }
     }
   }
-  onRouteChange(){
-    this.router.events.subscribe(() => {
-      this.onValidateInitialConfiguration();
-    });
-  }
   onValidateInitialConfiguration(){
     if(this.appDataService.public.node){
       if (!this.appDataService.public.node.wizard_done) {
@@ -181,8 +175,12 @@ export class AppConfigService{
 
   loadAdminRoute(newPath: string) {
     this.appDataService.public.node.wizard_done = true
+    this.appDataService.public.node.languages_enabled = []
+    this.appDataService.public.node.name = "Globaleaks"
+
     this.router.navigateByUrl(newPath).then(() => {
       this.appConfigService.sidebar='admin-sidebar'
+      this.setTitle()
     });
   }
 
@@ -190,6 +188,7 @@ export class AppConfigService{
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         setTimeout(() => {
+          this.onValidateInitialConfiguration();
           const currentRoute = this.activatedRoute.firstChild?.snapshot;
           if (currentRoute?.data) {
             this.header_title = currentRoute.data['pageTitle'];
@@ -203,6 +202,5 @@ export class AppConfigService{
 
   reinit(){
     this.localInitialization()
-    this.onRouteChange();
   }
 }
