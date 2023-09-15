@@ -6,9 +6,7 @@ import {AuthenticationService} from "../../../services/authentication.service";
 import {HttpService} from "../../../shared/services/http.service";
 import {AppDataService} from "../../../app-data.service";
 import {TranslationService} from "../../../services/translation.service";
-import {UtilsService} from "../../../shared/services/utils.service";
 import {AppConfigService} from "../../../services/app-config.service";
-import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'src-wizard',
@@ -51,7 +49,7 @@ export class WizardComponent implements OnInit{
     }
   ];
 
-  constructor(private titleService: Title, public appConfigService: AppConfigService, private translationService: TranslationService, private router: Router, private http: HttpClient, private authenticationService: AuthenticationService, public appDataService: AppDataService , public httpService: HttpService )
+  constructor(public appConfigService: AppConfigService, private translationService: TranslationService, private router: Router, private http: HttpClient, private authenticationService: AuthenticationService, public appDataService: AppDataService , public httpService: HttpService )
   {
   }
 
