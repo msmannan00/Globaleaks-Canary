@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { AppDataService } from '../app-data.service';
 import { errorCodes } from '../models/app/error-code';
+import {AppConfigService} from "./app-config.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AuthenticationService {
   requireAuthCode: boolean = false;
   loginData: LoginDataRef = new LoginDataRef();
 
-  constructor(public httpService: HttpService, public rootDataService: AppDataService, private router: Router) {
+  constructor(public httpService: HttpService, public rootDataService: AppDataService,public appConfigService:AppConfigService, private router: Router) {
     let json = window.sessionStorage.getItem("session")
     if (json != null) {
       this.session = JSON.parse(json);
@@ -45,7 +46,6 @@ export class AuthenticationService {
 
   setSession(response: any) {
     this.session = response;
-
     if (this.session.role !== "whistleblower") {
       let role = this.session.role === "receiver" ? "recipient" : this.session.role;
 
@@ -148,7 +148,7 @@ export class AuthenticationService {
   }
 
   logout() {
-    let requestObservable = this.httpService.requestDeleteSession();
+    let requestObservable = this.httpService.requestDeleteUserSession();
     requestObservable.subscribe(
       {
         next: () => {
@@ -168,8 +168,7 @@ export class AuthenticationService {
     let source_path = location.pathname;
 
     if (source_path !== "/login") {
-      location.replace("/login");
-      window.location.reload();
+      this.router.navigateByUrl("/login").then(response => {})
     }
   };
 }

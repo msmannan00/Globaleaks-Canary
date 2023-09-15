@@ -21,15 +21,13 @@ export class QuestionnairesResolver implements Resolve<boolean> {
 
   resolve(): Observable<boolean> {
     if (this.authenticationService.session.role === 'admin') {
-      return this.httpService.requestQuestionnairesResource().pipe(
+      this.httpService.requestQuestionnairesResource().pipe(
         map((response: questionnaireResolverModel) => {
           this.dataModel = response;
           return true;
-        }),
-        catchError(() => {
-          return of(true);
         })
       );
+      return of(true);
     }
     return of(true);
   }

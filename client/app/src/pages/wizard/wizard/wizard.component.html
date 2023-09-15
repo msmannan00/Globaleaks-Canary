@@ -66,7 +66,7 @@
                         <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
                     </label>
                     <div class="col-md-8">
-                        <input name="admin_name" class="form-control" [(ngModel)]="wizard.admin_username" type="text" placeholder="{{'Username' | translate}}" autocomplete="off" required>
+                        <input name="admin_username" class="form-control" [(ngModel)]="wizard.admin_username" type="text" placeholder="{{'Username' | translate}}" autocomplete="off" required>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -84,7 +84,7 @@
                         <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
                     </label>
                     <div class="col-md-8">
-                        <input name="admin_email" class="form-control" #admin_email="ngModel" [(ngModel)]="wizard.admin_mail_address" placeholder="{{'Email address' | translate}}" [pattern]="emailRegexp" type="text" [ngClass]="{'is-invalid': wizardFormStep4.valid && (admin_email?.errors?.['required'] || wizardFormStep4?.errors?.['pattern'])}" required>
+                        <input name="admin_mail_address" class="form-control" #admin_email="ngModel" [(ngModel)]="wizard.admin_mail_address" placeholder="{{'Email address' | translate}}" [pattern]="emailRegexp" type="text" [ngClass]="{'is-invalid': wizardFormStep4.valid && (admin_email?.errors?.['required'] || wizardFormStep4?.errors?.['pattern'])}" required>
                         <div class="text-danger" *ngIf="admin_email?.errors?.['pattern']">
                             <span>{{'Invalid email address'|translate}}</span>
                         </div>
@@ -96,7 +96,7 @@
                         <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
                     </label>
                     <div class="col-md-8">
-                        <input name="password" #password_admin="ngModel"  class="form-control" [(ngModel)]="wizard.admin_password" type="password" placeholder="{{'Password' | translate}}" autocomplete="off" [ngClass]="{'is-invalid': wizardFormStep4.valid && (password_admin?.errors?.['required'] || (password_admin.errors?.['passwordStrengthValidator']))}" (passwordStrengthChange)="onPasswordStrengthChange($event)" required passwordStrengthValidator/>
+                        <input name="admin_password" #password_admin="ngModel"  class="form-control" [(ngModel)]="wizard.admin_password" type="password" placeholder="{{'Password' | translate}}" autocomplete="off" [ngClass]="{'is-invalid': wizardFormStep4.valid && (password_admin?.errors?.['required'] || (password_admin.errors?.['passwordStrengthValidator']))}" (passwordStrengthChange)="onPasswordStrengthChange($event)" required passwordStrengthValidator/>
                         <src-password-meter *ngIf="password_score>0" [passwordStrengthScore]='password_score'></src-password-meter>
 
                         <div class="text-danger" *ngIf="!password_admin?.errors?.['required'] && password_admin.errors?.['passwordStrengthValidator']">
@@ -180,7 +180,8 @@
                             <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}" >*</span>
                         </label>
                         <div class="col-md-8">
-                            <input name="password" class="form-control" [(ngModel)]="wizard.receiver_password" #password_receiver="ngModel" type="password" placeholder="{{'Password' | translate}}" autocomplete="off" passwordStrengthValidator [ngClass]="{'is-invalid': validation.step4 && wizardFormStep5.valid && (password_receiver?.errors?.['required'] || (password_receiver?.errors?.['passwordStrengthValidator']))}" (passwordStrengthChange)="onPasswordStrengthChange($event)" required passwordStrengthValidator/>
+                            <input name="password" class="form-control" [(ngModel)]="wizard.receiver_password" #password_receiver="ngModel" type="password" placeholder="{{'Password' | translate}}" autocomplete="off"
+                                   [ngClass]="{'is-invalid': validation.step4 && wizardFormStep5.valid && (password_receiver?.errors?.['required'] || (password_receiver?.errors?.['passwordStrengthValidator']))}" (passwordStrengthChange)="onPasswordStrengthChange($event)" required passwordStrengthValidator/>
                             <src-password-meter *ngIf="password_score>0" [passwordStrengthScore]='password_score'></src-password-meter>
 
                             <div class="text-danger" *ngIf="!password_receiver?.errors?.['required'] && password_receiver?.errors?.['passwordStrengthValidator']">
@@ -202,7 +203,7 @@
                 <div class="row form-group">
                     <div class="col-md-12">
                         <div class="form-check">
-                            <input class="form-check-input inputelem" type="checkbox" [(ngModel)]="wizard.skip_recipient_account_creation">
+                            <input name="skip_recipient_account_creation" class="form-check-input inputelem" type="checkbox" [(ngModel)]="wizard.skip_recipient_account_creation">
                             <span class="form-check-label">{{'Skip the recipient account creation.'|translate}}</span>
                         </div>
                     </div>
@@ -214,7 +215,7 @@
                 <i class="fa-solid fa-arrow-circle-left"></i>
                 <span>{{'Previous'|translate}}</span>
             </button>
-            <button class="ButtonNext btn btn-primary" (click)="(validation.step5 = true) && !(wizardFormStep5.invalid || (validateDuplicateRecipient())) && (step = 6)">
+            <button class="ButtonNext btn btn-primary" (click)="(validation.step5 = true) && (wizard.skip_recipient_account_creation || !(wizardFormStep5.invalid || (validateDuplicateRecipient()))) && (step = 6)">
             <span>{{'Next'|translate}}</span>
             <i class="fa-solid fa-arrow-circle-right"></i>
         </button>

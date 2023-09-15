@@ -25,6 +25,7 @@ import { NotificationsResolver } from './shared/resolvers/notifications.resolver
 import { NetworkResolver } from './shared/resolvers/network.resolver';
 import { RedirectsResolver } from './shared/resolvers/redirects.resolver';
 import { FieldtemplatesResolver } from './shared/resolvers/fieldtemplates.resolver';
+import {TitleResolver} from "./shared/resolvers/title-resolver.resolver";
 
 
 const routes: Routes = [
@@ -36,6 +37,7 @@ const routes: Routes = [
     path: '',
     canActivate: [Pageguard],
     component: HomeComponent,
+    data: { pageTitle: ''},
     resolve: {
     },
     pathMatch: 'full',
@@ -45,7 +47,7 @@ const routes: Routes = [
     path: 'login',
     
     resolve: {
-      PreferenceResolver
+
     },
     loadChildren: () => AuthRoutingModule,
   },
@@ -79,11 +81,12 @@ const routes: Routes = [
     path: 'admin',
     canActivate: [SessionGuard],
     resolve: {
-      NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver, ContextsResolver,AuditlogResolver, JobResolver, TipsResolver,NotificationsResolver,NetworkResolver,RedirectsResolver,FieldtemplatesResolver
+      NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver, ContextsResolver, AuditlogResolver, JobResolver, TipsResolver,NotificationsResolver,NetworkResolver,RedirectsResolver,FieldtemplatesResolver
+      // NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver, ContextsResolver, AuditlogResolver, JobResolver, TipsResolver,NotificationsResolver,NetworkResolver,RedirectsResolver,FieldtemplatesResolver
     },
     loadChildren: () => AdminRoutingModule,
     data:{
-      sidebar: 'admin-sidebar'
+      sidebar: 'admin-sidebar', pageTitle: 'Home'
     }
   },
   {
@@ -96,8 +99,10 @@ const routes: Routes = [
   },
   {
     path: 'wizard',
+    data: { pageTitle: 'Platform wizard' },
     resolve: {
-      PreferenceResolver
+      PreferenceResolver,
+      title: TitleResolver
     },
     loadChildren: () => WizardRoutingModule,
   },

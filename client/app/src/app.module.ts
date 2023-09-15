@@ -79,7 +79,8 @@ export function createTranslateLoader(http: HttpClient) {
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: CompletedInterceptor, multi: true},
-    { provide: FlowInjectionToken, useValue: Flow}
+    { provide: FlowInjectionToken, useValue: Flow},
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

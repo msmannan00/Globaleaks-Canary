@@ -41,7 +41,7 @@
     <div id="PageContent">
       <div id="ContentBox">
         <div class="row">
-          <nav *ngIf="appConfig.sidebar && showSidebar" id="Sidebar" class="col-md-2 flex-column" data-ng-include="appConfig.sidebar">
+          <nav *ngIf="appConfig.sidebar && showSidebar" id="Sidebar" class="col-md-2 flex-column">
             <src-receipt-sidebar *ngIf="appConfig.sidebar=='recipient-sidebar'"></src-receipt-sidebar>
             <src-admin-sidebar *ngIf="appConfig.sidebar=='admin-sidebar'"></src-admin-sidebar>
           </nav>

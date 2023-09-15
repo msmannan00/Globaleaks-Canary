@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from "./home/home.component";
+import { adminHomeComponent } from "./home/admin-home.component";
 import { SettingsModule } from './settings/settings.module';
 import { UsersModule } from './users/users.module';
 import { ContextsModule } from './contexts/contexts.module';
@@ -13,9 +13,16 @@ import { QuestionnairesModule } from './questionnaires/questionnaires.module';
 
 const routes: Routes = [
   {
-    path: 'home',
-    component: HomeComponent,
+    path: '',
+    component: adminHomeComponent,
     pathMatch: 'full',
+    data: { sidebar: 'admin-sidebar', pageTitle: 'Home'}
+  },
+  {
+    path: 'home',
+    component: adminHomeComponent,
+    pathMatch: 'full',
+    data: { sidebar: 'admin-sidebar' , pageTitle: 'Home'}
   },
   {
     path: 'settings',

@@ -8,11 +8,11 @@ import {AppDataService} from "../../../app-data.service";
 import {TranslationService} from "../../../services/translation.service";
 import {UtilsService} from "../../../shared/services/utils.service";
 import {AppConfigService} from "../../../services/app-config.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'src-wizard',
-  templateUrl: './wizard.component.html',
-  styleUrls: ['./wizard.component.css']
+  templateUrl: './wizard.component.html'
 })
 export class WizardComponent implements OnInit{
   step: number = 1;
@@ -51,6 +51,23 @@ export class WizardComponent implements OnInit{
     }
   ];
 
+  constructor(private titleService: Title, public appConfigService: AppConfigService, private translationService: TranslationService, private router: Router, private http: HttpClient, private authenticationService: AuthenticationService, public appDataService: AppDataService , public httpService: HttpService )
+  {
+  }
+
+  ngOnInit(){
+    if (this.appDataService.public.node.wizard_done) {
+      this.router.navigate(['/']).then(r => {});
+      return;
+    }
+    this.loadLicense();
+    this.wizard.node_language = this.translationService.language
+
+    if(this.appDataService.pageTitle == ""){
+      this.appConfigService.setTitle()
+    }
+  }
+
   selectProfile(name:any) {
     let self = this
     this.config_profiles.forEach(function(profile:any){
@@ -71,13 +88,11 @@ export class WizardComponent implements OnInit{
     const param=JSON.stringify(this.wizard);
     this.httpService.requestWizard(param).subscribe
     (
-        {
-          next: response => {
-            this.step +=1
-          },
-          error: (error: any) => {
-          }
+      {
+        next: response => {
+          this.step +=1
         }
+      }
     );
   }
 
@@ -88,7 +103,7 @@ export class WizardComponent implements OnInit{
 
   goToAdminInterface(){
     const promise = () => {
-      this.appConfigService.loadAdminRoute('/admin/home')
+      this.appConfigService.loadAdminRoute('/admin')
     };
     this.authenticationService.login(0, this.wizard.admin_username, this.wizard.admin_password, "", "",promise)
   }
@@ -97,23 +112,6 @@ export class WizardComponent implements OnInit{
     this.http.get('license.txt', { responseType: 'text' }).subscribe((data: string) => {
       this.license = data;
     });
-  }
-
-  resetReciipientUsername(){
-    this.wizard.receiver_username = ""
-  }
-
-  ngOnInit(){
-    if (this.appDataService.public.node.wizard_done) {
-      this.router.navigate(['/']).then(r => {});
-      return;
-    }
-    this.loadLicense();
-    this.wizard.node_language = this.translationService.language
-  }
-
-  constructor(public appConfigService: AppConfigService, private utilsService: UtilsService, private translationService: TranslationService, private router: Router, private http: HttpClient, private authenticationService: AuthenticationService, public appDataService: AppDataService , public httpService: HttpService )
-  {
   }
 
   onPasswordStrengthChange(score: number) {

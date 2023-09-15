@@ -626,6 +626,10 @@ p:last-child {
 	font-size: 1.2rem;
 }
 
+.languageBox {
+	width: 300px;
+}
+
 #NodePresentation,
 #WhistleblowerSubmitBox {
 	margin-bottom: 2em;

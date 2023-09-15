@@ -19,15 +19,13 @@ export class FieldtemplatesResolver implements Resolve<boolean> {
 
   resolve(): Observable<boolean> {
     if (this.authenticationService.session.role === 'admin') {
-      return this.httpService.requestAdminFieldTemplateResource().pipe(
+      this.httpService.requestAdminFieldTemplateResource().pipe(
         map((response: fieldtemplatesResolverModel) => {
           this.dataModel = response;
           return true;
-        }),
-        catchError(() => {
-          return of(true);
         })
       );
+      return of(true);
     }
     return of(true);
   }

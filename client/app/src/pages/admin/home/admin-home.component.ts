@@ -5,10 +5,10 @@ import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
 
 @Component({
   selector: 'src-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  templateUrl: './admin-home.component.html',
+  styleUrls: ['./admin-home.component.css']
 })
-export class HomeComponent {
+export class adminHomeComponent {
   active:any=0
   constructor(public node : NodeResolver,private translateService: TranslateService,private router: Router){
 

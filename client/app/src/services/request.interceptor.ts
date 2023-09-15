@@ -16,7 +16,7 @@ const protectedUrls = [
   'api/wizard',
   'api/signup',
   'api/submission',
-  'api/receiptauth',
+  'api/auth/receiptauth',
   'api/tokenauth',
   'api/auth/authentication',
   'api/reset/password',

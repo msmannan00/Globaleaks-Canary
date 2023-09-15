@@ -24,15 +24,13 @@ export class NodeResolver implements Resolve<boolean> {
 
   resolve(): Observable<boolean> {
     if (this.authenticationService.session.role === 'admin') {
-      return this.httpService.requestNodeResource().pipe(
+      this.httpService.requestNodeResource().pipe(
         map((response: nodeResolverModel) => {
           this.dataModel = response;
           return true;
-        }),
-        catchError(() => {
-          return of(true);
         })
       );
+      return of(true);
     }
     return of(true);
   }

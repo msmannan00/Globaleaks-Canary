@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/morgan-freeman/Workspace/GlobaLeaks/backend/env"
+set -gx VIRTUAL_ENV "/home/morgan-freeman/Workspace/globaleaks-angular-fork/backend/env"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

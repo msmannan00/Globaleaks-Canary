@@ -21,15 +21,13 @@ export class NetworkResolver implements Resolve<boolean> {
 
   resolve(): Observable<boolean> {
     if (this.authenticationService.session.role === 'admin') {
-      return this.httpService.requestNetworkResource().pipe(
+      this.httpService.requestNetworkResource().pipe(
         map((response: networkResolverModel) => {
           this.dataModel = response;
           return true;
-        }),
-        catchError(() => {
-          return of(true);
         })
       );
+      return of(true);
     }
     return of(true);
   }

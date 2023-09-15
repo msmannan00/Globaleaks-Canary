@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { AppDataService } from "../app-data.service";
 import { PreferenceResolver } from "../shared/resolvers/preference.resolver";
+import {UtilsService} from "../shared/services/utils.service";
 
 @Injectable({
   providedIn: "root",
@@ -13,7 +14,8 @@ export class TranslationService {
   constructor(
     public preferenceResolver: PreferenceResolver,
     public translateService: TranslateService,
-    public appDataService: AppDataService
+    public appDataService: AppDataService,
+    public utilsService:UtilsService
   ) {
     this.onInit(this.language);
   }
@@ -28,6 +30,7 @@ export class TranslationService {
     this.language = changedLanguage;
     this.translateService.use(this.language).subscribe(() => {
       this.translateService.getTranslation(this.language).subscribe();
+      this.utilsService.reloadCurrentRoute()
     });
   }
 }

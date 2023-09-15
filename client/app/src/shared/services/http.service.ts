@@ -23,11 +23,11 @@ export class HttpService {
   }
 
   requestWhistleBlowerLogin(param: string): Observable<any> {
-    return this.httpClient.post("api/receiptauth", param)
+    return this.httpClient.post("api/auth/receiptauth", param)
   }
 
-  requestDeleteSession(): Observable<any> {
-    return this.httpClient.delete("api/session")
+  requestDeleteUserSession(): Observable<any> {
+    return this.httpClient.delete("api/auth/session")
   }
 
   requestDeleteTenant(url: any): Observable<any> {
@@ -94,7 +94,11 @@ export class HttpService {
   }
 
   requestPreferenceResource(): Observable<any> {
-    return this.httpClient.get("api/preferences")
+    return this.httpClient.get("api/admin/preferences")
+  }
+
+  requestUserPreferenceResource(): Observable<any> {
+    return this.httpClient.get("api/user/preferences")
   }
 
   requestNodeResource(): Observable<any> {

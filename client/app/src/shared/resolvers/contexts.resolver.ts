@@ -19,15 +19,13 @@ export class ContextsResolver implements Resolve<boolean> {
 
   resolve(): Observable<boolean> {
     if (this.authenticationService.session.role === 'admin') {
-      return this.httpService.requestContextsResource().pipe(
+      this.httpService.requestContextsResource().pipe(
         switchMap((response: contextResolverModel) => {
           this.dataModel = response;
           return of(true);
-        }),
-        catchError(() => {
-          return of(true);
         })
       );
+      return of(true);
     }
 
     return of(true);

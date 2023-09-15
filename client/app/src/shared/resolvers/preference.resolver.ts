@@ -23,7 +23,7 @@ export class PreferenceResolver implements Resolve<boolean> {
 
   resolve(): Observable<boolean> {
     if (this.authenticationService.isSessionActive()) {
-      return this.httpService.requestPreferenceResource().pipe(
+      this.httpService.requestUserPreferenceResource().pipe(
         map((response: preferenceResolverModel) => {
           this.dataModel = response;
           if (this.dataModel.password_change_needed) {
@@ -32,11 +32,9 @@ export class PreferenceResolver implements Resolve<boolean> {
             this.router.navigate(["/action/forcedtwofactor"]);
           }
           return true;
-        }),
-        catchError(() => {
-          return of(true);
         })
       );
+      return of(true);
     }
     return of(true);
   }

@@ -14,12 +14,7 @@ export class SessionGuard implements CanActivate {
 
     this.appDataService.page = this.router.url
 
-    if(this.authentication.session === undefined){
-      this.router.navigate(['/login']).then(r => {});
-      return false;
-    }else {
-      return true;
-    }
+    return true;
 
   }
   constructor(public authentication: AuthenticationService, private router: Router, private appDataService:AppDataService) {
