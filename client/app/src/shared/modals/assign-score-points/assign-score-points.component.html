@@ -6,18 +6,16 @@
 </div>
 <div class="modal-body">
     <span class="alert alert-default">
-        <div>
-            <span>{{ 'Type' | translate }}</span>
-            <select class="form-control" [(ngModel)]="arg.score_type">
-                <option value="none">{{ 'None' | translate }}</option>
-                <option value="addition">{{ 'Addition' | translate }}</option>
-                <option value="multiplier">{{ 'Multiplier' | translate }}</option>
-            </select>
-        </div>
-        <div *ngIf="arg.score_type !== 0">
+        <span>{{ 'Type' | translate }}</span>
+        <select class="form-control" [(ngModel)]="arg.score_type">
+            <option value="none">{{ 'None' | translate }}</option>
+            <option value="addition">{{ 'Addition' | translate }}</option>
+            <option value="multiplier">{{ 'Multiplier' | translate }}</option>
+        </select>
+        <ng-template *ngIf="arg.score_type !== 0">
             <span>{{ 'Value' | translate }}</span>
             <input id="score_points" class="form-control" [(ngModel)]="arg.score_points" type="number" />
-        </div>
+        </ng-template>
     </span>
 </div>
 <div class="modal-footer">

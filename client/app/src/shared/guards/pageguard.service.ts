@@ -14,7 +14,7 @@ export class Pageguard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     if(this.appDataService.page == "signuppage"){
-      this.router.navigate(["/signup"]);
+      this.router.navigate(["/signup"]).then();
     }
 
     return true;

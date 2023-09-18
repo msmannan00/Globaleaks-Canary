@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import sha256, {  } from "fast-sha256";
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import sha256, {} from "fast-sha256";
 
 @Injectable({
   providedIn: 'root'
 })
-export class TokenResource{
+export class TokenResource {
 
   private baseUrl = 'api/token/:id';
-  deferred:Promise<any>
-  data:any
-  counter:number = 0
-  resolver:any
+  deferred: Promise<any>
+  data: any
+  counter: number = 0
+  resolver: any
 
   constructor(private http: HttpClient) {
   }
@@ -31,7 +31,7 @@ export class TokenResource{
           });
       });
   }
- 
+
 
   getWebCrypto() {
     if (typeof window === "undefined" || !window.isSecureContext) {
@@ -40,26 +40,26 @@ export class TokenResource{
     return window.crypto.subtle;
   };
 
-  calculateHash(hash:any, resolve:any) {
+  calculateHash(hash: any, resolve: any) {
     hash = new Uint8Array(hash);
     if (hash[31] === 0) {
       resolve(this.counter)
     } else {
-      this.counter+=1
+      this.counter += 1
       this.work(resolve);
     }
   };
 
-  work(resolve:any){
+  work(resolve: any) {
     let webCrypto = this.getWebCrypto();
-    let toHash = this.str2Uint8Array(this.data+this.counter);
+    let toHash = this.str2Uint8Array(this.data + this.counter);
     let digestPremise;
 
     if (webCrypto) {
       digestPremise = webCrypto.digest({name: "SHA-256"}, toHash);
     } else {
       digestPremise = new Promise((resolve, reject) => {
-        if(sha256(toHash)) {
+        if (sha256(toHash)) {
           resolve('ok');
         } else {
           reject('error');
@@ -79,6 +79,7 @@ export class TokenResource{
 
     return digestPremise;
   }
+
   proofOfWork(data: any): Promise<any> {
 
     this.deferred = new Promise((resolve) => {
@@ -89,7 +90,8 @@ export class TokenResource{
 
     return this.deferred;
   }
-  str2Uint8Array(str:string){
+
+  str2Uint8Array(str: string) {
     let result = new Uint8Array(str.length);
     for (let i = 0; i < str.length; i++) {
       result[i] = str.charCodeAt(i);

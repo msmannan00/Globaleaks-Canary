@@ -1,19 +1,21 @@
-import { Injectable } from '@angular/core';
-import { AuthenticationService } from "../../services/authentication.service";
-import { AppDataService } from "../../app-data.service";
-import { TranslateService } from "@ngx-translate/core";
-import { Router } from "@angular/router";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { RequestSupportComponent } from "../modals/request-support/request-support.component";
-import { HttpService } from "./http.service";
-import { TokenResource } from './token-resource.service';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable, Subject } from 'rxjs';
-import { ConfirmationWithPasswordComponent } from '../modals/confirmation-with-password/confirmation-with-password.component';
-import { ConfirmationWith2faComponent } from '../modals/confirmation-with2fa/confirmation-with2fa.component';
-import { PreferenceResolver } from '../resolvers/preference.resolver';
-import { DeleteConfirmationComponent } from '../modals/delete-confirmation/delete-confirmation.component';
-import { NodeResolver } from "../resolvers/node.resolver";
+import {Injectable} from '@angular/core';
+import {AuthenticationService} from "../../services/authentication.service";
+import {AppDataService} from "../../app-data.service";
+import {TranslateService} from "@ngx-translate/core";
+import {Router} from "@angular/router";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {RequestSupportComponent} from "../modals/request-support/request-support.component";
+import {HttpService} from "./http.service";
+import {TokenResource} from './token-resource.service';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Observable, Subject} from 'rxjs';
+import {
+  ConfirmationWithPasswordComponent
+} from '../modals/confirmation-with-password/confirmation-with-password.component';
+import {ConfirmationWith2faComponent} from '../modals/confirmation-with2fa/confirmation-with2fa.component';
+import {PreferenceResolver} from '../resolvers/preference.resolver';
+import {DeleteConfirmationComponent} from '../modals/delete-confirmation/delete-confirmation.component';
+import {NodeResolver} from "../resolvers/node.resolver";
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +36,7 @@ export class UtilsService {
     private router: Router) {
 
   }
+
   updateNode() {
     this.httpService.updateNodeResource(this.nodeResolver.dataModel).subscribe();
   }
@@ -132,7 +135,7 @@ export class UtilsService {
 
   reloadCurrentRoute() {
     const currentUrl = this.router.url;
-    this.router.navigateByUrl('routing', { skipLocationChange: true, replaceUrl: true }).then(() => {
+    this.router.navigateByUrl('routing', {skipLocationChange: true, replaceUrl: true}).then(() => {
       this.router.navigate([currentUrl]);
     });
   }
@@ -140,6 +143,7 @@ export class UtilsService {
   showWBLoginBox() {
     return location.pathname === "/submission";
   }
+
   showUserStatusBox() {
     return this.appDataService.public.node.wizard_done &&
       this.appDataService.page !== "homepage" &&
@@ -155,9 +159,10 @@ export class UtilsService {
   stopPropagation(event: Event) {
     event.stopPropagation()
   }
+
   encodeString(string: string): string {
     const codeUnits = Uint16Array.from(
-      { length: string.length },
+      {length: string.length},
       (element, index) => string.charCodeAt(index)
     );
 
@@ -170,6 +175,7 @@ export class UtilsService {
 
     return btoa(result);
   }
+
   openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
     scope = !scope ? this : scope;
 
@@ -267,13 +273,14 @@ export class UtilsService {
   }
 
   submitSupportRequest(arg: any) {
-    const param = JSON.stringify({ "mail_address": arg.mail_address, "text": arg.text, "url": location.pathname });
+    const param = JSON.stringify({"mail_address": arg.mail_address, "text": arg.text, "url": location.pathname});
     this.httpService.requestSuppor(param).subscribe();
   }
 
   runUserOperation(operation: string, args: any, refresh: boolean) {
     return this.httpService.runOperation("api/user/operations", operation, args, refresh);
   }
+
   runRecipientOperation(operation: string, args: any, refresh: boolean) {
     return this.httpService.runOperation("api/recipient/operations", operation, args, refresh);
   }
@@ -281,6 +288,7 @@ export class UtilsService {
   go(path: string): void {
     this.router.navigateByUrl(path);
   }
+
   maskScore(score: number) {
     if (score === 1) {
       return this.translateService.instant('Low');
@@ -319,6 +327,7 @@ export class UtilsService {
       return rows;
     }
   }
+
   getDateFilter(Tips: any[], report_date_filter: number[], update_date_filter: number[], expiry_date_filter: number[]): any[] {
     const filteredTips: any[] = [];
     Tips.forEach(rows => {
@@ -337,6 +346,7 @@ export class UtilsService {
 
     return filteredTips;
   }
+
   print() {
     window.print();
   }
@@ -347,9 +357,9 @@ export class UtilsService {
       'X-Session': this.authenticationService.session.id
     });
 
-    this.http.get(url, { responseType: 'blob', headers: headers }).subscribe(
+    this.http.get(url, {responseType: 'blob', headers: headers}).subscribe(
       response => {
-        const blob = new Blob([response], { type: 'application/octet-stream' });
+        const blob = new Blob([response], {type: 'application/octet-stream'});
         const blobUrl = URL.createObjectURL(blob);
 
         const a = document.createElement('a');
@@ -363,21 +373,26 @@ export class UtilsService {
       }
     );
   }
+
   getPostponeDate(ttl: any): Date {
     const date = new Date();
     date.setDate(date.getDate() + ttl + 1);
     date.setUTCHours(0, 0, 0, 0);
     return date;
   }
+
   update(node: any) {
     return this.httpService.requestUpdateAdminNodeResource(node)
   }
+
   AdminL10NResource(lang: any) {
     return this.httpService.requestAdminL10NResource(lang)
   }
+
   updateAdminL10NResource(data: any, lang: any) {
     return this.httpService.requestUpdateAdminL10NResource(data, lang)
   }
+
   DefaultL10NResource(lang: any) {
     return this.httpService.requestDefaultL10NResource(lang)
   }
@@ -385,9 +400,11 @@ export class UtilsService {
   runAdminOperation(operation: any, args: any, refresh: any) {
     return this.runOperation("api/admin/config", operation, args, refresh);
   }
+
   deleteDialog() {
     return this.openConfirmableModalDialog("", "")
   }
+
   runOperation(api: string, operation: string, args?: any, refresh?: boolean): Promise<void> {
     const deferred = new Subject<void>();
 
@@ -410,18 +427,20 @@ export class UtilsService {
 
     if (requireConfirmation.indexOf(operation) !== -1) {
       const confirm = (secret: string) => {
-        const headers =  new HttpHeaders({ "X-Confirmation": secret });
+        const headers = new HttpHeaders({"X-Confirmation": secret});
         return this.http.put(api, {
           "operation": operation,
           "args": args
-        }, { headers }).toPromise().then(
+        }, {headers}).toPromise().then(
           (response: any) => {
             if (refresh) {
               this.reloadCurrentRoute();
             }
             deferred.next(response);
           },
-          () => { this.getConfirmation(confirm); }
+          () => {
+            this.getConfirmation(confirm);
+          }
         );
       };
 
@@ -437,12 +456,14 @@ export class UtilsService {
           }
           deferred.next(response);
         },
-        () => { }
+        () => {
+        }
       );
     }
 
     return deferred.toPromise();
   }
+
   getConfirmation(confirmFun: (secret: string) => Promise<void>): void {
     var modalRef = this.modalService.open(ConfirmationWithPasswordComponent, {});
     if (this.preferenceResolver.dataModel.two_factor) {
@@ -451,23 +472,31 @@ export class UtilsService {
 
     modalRef.componentInstance.confirmFunction = (secret: string) => {
       confirmFun(secret).then(
-        () => { },
-        () => { this.getConfirmation(confirmFun); }
+        () => {
+        },
+        () => {
+          this.getConfirmation(confirmFun);
+        }
       );
     };
   }
+
   getFiles(): Observable<any[]> {
     return this.http.get<any[]>("api/admin/files");
   }
+
   deleteFile(url: string): Observable<void> {
     return this.http.delete<void>(url);
   }
+
   deleteAdminUser(user_id: any) {
     return this.httpService.requestDeleteAdminUser(user_id)
   }
+
   deleteAdminContext(user_id: any) {
     return this.httpService.requestDeleteAdminContext(user_id)
   }
+
   deleteStatus(user_id: any) {
     return this.httpService.requestDeleteStatus(user_id)
   }
@@ -479,18 +508,23 @@ export class UtilsService {
   addAdminUser(user: any) {
     return this.httpService.requestAddAdminUser(user)
   }
+
   updateAdminUser(id: any, user: any) {
     return this.httpService.requestUpdateAdminUser(id, user)
   }
+
   addAdminContext(context: any) {
     return this.httpService.requestAddAdminContext(context)
   }
+
   updateAdminContext(context: any, id: any) {
     return this.httpService.requestUpdateAdminContext(context, id)
   }
+
   updateAdminNotification(notification: any) {
     return this.httpService.requestUpdateAdminNotification(notification)
   }
+
   readFileAsText(file: File): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       const reader = new FileReader();
@@ -510,25 +544,27 @@ export class UtilsService {
       reader.readAsText(file);
     });
   }
+
   moveUp(elem: any): void {
     elem[this.getYOrderProperty(elem)] -= 1;
   }
-  
+
   moveDown(elem: any): void {
     elem[this.getYOrderProperty(elem)] += 1;
   }
-  
+
   moveLeft(elem: any): void {
     elem[this.getXOrderProperty(elem)] -= 1;
   }
-  
+
   moveRight(elem: any): void {
     elem[this.getXOrderProperty(elem)] += 1;
   }
-  
-  getXOrderProperty(elem:any): string {
+
+  getXOrderProperty(elem: any): string {
     return "x";
   }
+
   getYOrderProperty(elem: any): string {
     let key = "order";
     if (typeof elem[key] === "undefined") {
@@ -536,7 +572,7 @@ export class UtilsService {
     }
     return key;
   }
-  
+
   assignUniqueOrderIndex(elements: any[]): void {
     if (elements.length <= 0) {
       return;

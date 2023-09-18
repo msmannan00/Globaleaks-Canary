@@ -9,8 +9,7 @@
 			[class.range]="isRange(date)"
 			[class.faded]="isHovered(date) || isInside(date)"
 			(mouseenter)="hoveredDate = date"
-			(mouseleave)="hoveredDate = null"
-		>
+			(mouseleave)="hoveredDate = null">
 			{{ date.day }}
 		</span>
 	</ng-template>

@@ -5,8 +5,7 @@ import { UtilsService } from '../../services/utils.service';
 
 @Component({
   selector: 'src-questionnaire-duplication',
-  templateUrl: './questionnaire-duplication.component.html',
-  styleUrls: ['./questionnaire-duplication.component.css']
+  templateUrl: './questionnaire-duplication.component.html'
 })
 export class QuestionnaireDuplicationComponent {
   @Input() questionnaire: any;

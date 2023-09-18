@@ -1,39 +1,38 @@
 import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {NgForm} from "@angular/forms";
-import {WbtipService} from "../../services/wbtip.service";
-import {FieldUtilitiesService} from "../../shared/services/field-utilities.service";
-import {UtilsService} from "../../shared/services/utils.service";
-import {AppDataService} from "../../app-data.service";
-import {SubmissionService} from "../../services/submission.service";
-import {HttpService} from "../../shared/services/http.service";
-import {Router} from "@angular/router";
+import {WbtipService} from "../../../services/wbtip.service";
+import {FieldUtilitiesService} from "../../services/field-utilities.service";
+import {UtilsService} from "../../services/utils.service";
+import {HttpService} from "../../services/http.service";
 
 @Component({
   selector: 'src-tip-additional-questionnaire-form',
-  templateUrl: './tip-additional-questionnaire-form.component.html',
-  styleUrls: ['./tip-additional-questionnaire-form.component.css']
+  templateUrl: './tip-additional-questionnaire-form.component.html'
 })
-export class TipAdditionalQuestionnaireFormComponent implements OnInit{
+export class TipAdditionalQuestionnaireFormComponent implements OnInit {
 
   @ViewChild('submissionForm') public submissionForm: NgForm;
   @ViewChildren('stepform') stepforms: QueryList<NgForm>;
 
-  validate:any = {};
+  validate: any = {};
   navigation = 0;
   score = 0;
-  questionnaire:any
-  answers:any = {};
-  field_id_map:any
-  done:boolean = false;
-  uploads:any = {}
-  fileupload_url ="api/whistleblower/wbtip/rfile"
+  questionnaire: any
+  answers: any = {};
+  field_id_map: any
+  done: boolean = false;
+  uploads: any = {}
+  file_upload_url = "api/whistleblower/wbtip/rfile"
+
+  constructor(private httpService: HttpService, private fieldUtilitiesService: FieldUtilitiesService, private utilsService: UtilsService, public wbtipService: WbtipService, public activeModal: NgbActiveModal) {
+  }
 
   singleStepForm() {
     return this.firstStepIndex() === this.lastStepIndex();
   };
 
-  goToStep(step:number){
+  goToStep(step: number) {
     this.navigation = step;
     this.utilsService.scrollToTop();
   }
@@ -42,7 +41,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
     return 0;
   };
 
-  lastStepIndex(){
+  lastStepIndex() {
     let last_enabled = 0;
 
     for (var i = 0; i < this.questionnaire.steps.length; i++) {
@@ -54,9 +53,9 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
     return last_enabled;
   };
 
-  uploading(){
+  uploading() {
     let uploading = false
-    if(this.uploads && this.done){
+    if (this.uploads && this.done) {
       for (let key in this.uploads) {
         if (this.uploads[key].flowJs && this.uploads[key].flowJs.isUploading()) {
           uploading = true
@@ -67,9 +66,9 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
     return uploading
   }
 
-  calculateEstimatedTime(){
+  calculateEstimatedTime() {
     let timeRemaining = 0
-    if(this.uploads && this.done){
+    if (this.uploads && this.done) {
       for (let key in this.uploads) {
         if (this.uploads[key] && this.uploads[key].flowJs) {
           timeRemaining += this.uploads[key].flowJs.timeRemaining()
@@ -80,9 +79,9 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
     return timeRemaining
   }
 
-  calculateProgress(){
+  calculateProgress() {
     let progress = 0
-    if(this.uploads && this.done){
+    if (this.uploads && this.done) {
       for (let key in this.uploads) {
         if (this.uploads[key] && this.uploads[key].flowJs) {
           progress += this.uploads[key].flowJs.progress()
@@ -102,7 +101,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
   };
 
   checkForInvalidFields() {
-    for(let counter = 0; counter <= this.navigation; counter++) {
+    for (let counter = 0; counter <= this.navigation; counter++) {
       this.validate[counter] = true
       if (this.questionnaire.steps[counter].enabled) {
         if (this.stepforms.get(counter)?.invalid) {
@@ -125,7 +124,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
     return true;
   };
 
-  incrementStep(){
+  incrementStep() {
     if (!this.runValidation()) {
       return;
     }
@@ -170,7 +169,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
     this.field_id_map = this.fieldUtilitiesService.build_field_id_map(this.questionnaire);
   };
 
-  completeSubmission(){
+  completeSubmission() {
     this.fieldUtilitiesService.onAnswersUpdate(this);
 
     if (!this.runValidation()) {
@@ -182,29 +181,30 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
     this.utilsService.resumeFileUploads(this.uploads);
 
     let intervalId = setInterval(() => {
-      if(this.uploads){
+      if (this.uploads) {
         for (let key in this.uploads) {
 
-          if(this.uploads[key].flowFile && this.uploads[key].flowFile.isUploading()){
+          if (this.uploads[key].flowFile && this.uploads[key].flowFile.isUploading()) {
             return
           }
         }
       }
       this.fieldUtilitiesService.onAnswersUpdate(this);
 
-      if(this.uploading()){
+      if (this.uploading()) {
         return;
       }
 
-      this.httpService.whistleBlowerTipUpdate({"cmd": "additional_questionnaire", "answers": this.answers}, this.wbtipService.tip.id).subscribe
+      this.httpService.whistleBlowerTipUpdate({
+        "cmd": "additional_questionnaire",
+        "answers": this.answers
+      }, this.wbtipService.tip.id).subscribe
       (
-          {
-            next: response => {
-              this.utilsService.reloadCurrentRoute();
-            },
-            error: (error: any) => {
-            }
+        {
+          next: response => {
+            this.utilsService.reloadCurrentRoute();
           }
+        }
       );
 
       clearInterval(intervalId);
@@ -212,18 +212,18 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
     }, 1000);
   }
 
-  stepForm(index:any):any {
+  stepForm(index: any): any {
     if (this.stepforms && index !== -1) {
       return this.stepforms.get(index)
     }
   };
 
-  displayStepErrors(index:number):any {
+  displayStepErrors(index: number): any {
     if (index !== -1) {
       let response = this.stepForm(index)
-      if(response){
+      if (response) {
         return response?.invalid
-      }else {
+      } else {
         return false
       }
     }
@@ -241,8 +241,8 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
     this.fieldUtilitiesService.onAnswersUpdate(this);
   }
 
-  onFileUpload(upload:any) {
-    if(upload){
+  onFileUpload(upload: any) {
+    if (upload) {
       this.uploads = upload
       this.fieldUtilitiesService.onAnswersUpdate(this);
     }
@@ -252,8 +252,4 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
     this.prepareSubmission();
   }
 
-  constructor(public httpService: HttpService, public rootDataService:AppDataService, private router: Router, public submissionService:SubmissionService, public appDataService:AppDataService, public wbtipService:WbtipService,public activeModal: NgbActiveModal, public fieldUtilitiesService:FieldUtilitiesService, public utilsService:UtilsService) {
-  }
-
-  protected readonly JSON = JSON;
 }

@@ -1,30 +1,30 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Constants} from "../constants/constants";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FieldUtilitiesService {
-  parseQuestionnaire(questionnaire:any, parsedFields:any){
+  parseQuestionnaire(questionnaire: any, parsedFields: any) {
     let self = this;
 
-    questionnaire.steps.forEach(function(step:any){
+    questionnaire.steps.forEach(function (step: any) {
       parsedFields = self.parseFields(step.children, parsedFields);
     });
 
     return parsedFields;
   }
 
-  underscore(s:any) {
+  underscore(s: any) {
     return s.replace(new RegExp("-", "g"), "_");
   }
 
-  fieldFormName(id:any){
+  fieldFormName(id: any) {
     return "fieldForm_" + this.underscore(id);
   }
 
-  getValidator(field:any){
-    let validators:any = {
+  getValidator(field: any) {
+    let validators: any = {
       "custom": field.attrs.regexp ? field.attrs.regexp.value : "",
       "none": "",
       "email": Constants.email_regexp,
@@ -39,7 +39,7 @@ export class FieldUtilitiesService {
     }
   }
 
-  getClass(field:any, row_length:number){
+  getClass(field: any, row_length: number) {
     if (field.width !== 0) {
       return "col-md-" + field.width;
     }
@@ -57,13 +57,13 @@ export class FieldUtilitiesService {
     }
   };
 
-  build_field_id_map(questionnaire:any){
+  build_field_id_map(questionnaire: any) {
     return questionnaire.steps.reduce((id_map: any, cur_step: any) => {
       return cur_step.children.reduce(this.flatten_field, id_map);
     }, {});
   }
 
-  findField(answers_obj:any, field_id:any): any {
+  findField(answers_obj: any, field_id: any): any {
     let r;
 
     for (let key in answers_obj) {
@@ -81,12 +81,12 @@ export class FieldUtilitiesService {
     return r;
   }
 
-  splitRows(fields:any) {
-    let rows:any = [];
-    let y:any = null;
+  splitRows(fields: any) {
+    let rows: any = [];
+    let y: any = null;
 
-    fields.forEach(function(f:any){
-      if(y !== f.y) {
+    fields.forEach(function (f: any) {
+      if (y !== f.y) {
         y = f.y;
         rows.push([]);
       }
@@ -96,12 +96,12 @@ export class FieldUtilitiesService {
     return rows;
   }
 
-  calculateScore(scope:any, field:any, entry:any) {
+  calculateScore(scope: any, field: any, entry: any) {
     let self = this;
     let score, i;
 
     if (["selectbox", "multichoice"].indexOf(field.type) > -1) {
-      for(i=0; i<field.options.length; i++) {
+      for (i = 0; i < field.options.length; i++) {
         if (entry["value"] === field.options[i].id) {
           if (field.options[i].score_type === "addition") {
             scope.points_to_sum += field.options[i].score_points;
@@ -111,7 +111,7 @@ export class FieldUtilitiesService {
         }
       }
     } else if (field.type === "checkbox") {
-      for(i=0; i<field.options.length; i++) {
+      for (i = 0; i < field.options.length; i++) {
         if (entry[field.options[i].id]) {
           if (field.options[i].score_type === "addition") {
             scope.points_to_sum += field.options[i].score_points;
@@ -121,8 +121,8 @@ export class FieldUtilitiesService {
         }
       }
     } else if (field.type === "fieldgroup") {
-      field.children.forEach(function(field:any){
-        entry[field.id].forEach(function(entry:any){
+      field.children.forEach(function (field: any) {
+        entry[field.id].forEach(function (entry: any) {
           self.calculateScore(scope, field, entry);
         });
       });
@@ -141,13 +141,13 @@ export class FieldUtilitiesService {
     }
   }
 
-  updateAnswers(scope:any, parent:any, list:any, answers:any) {
+  updateAnswers(scope: any, parent: any, list: any, answers: any) {
     let entry, option, i, j;
     let self = this;
 
     let localscope = this;
 
-    list.forEach(function(field:any){
+    list.forEach(function (field: any) {
       if (self.isFieldTriggered(parent, field, scope.answers, scope.score)) {
         if (!(field.id in answers)) {
           answers[field.id] = [{}];
@@ -159,7 +159,7 @@ export class FieldUtilitiesService {
       }
 
       if (field.id in answers) {
-        for (i=0; i<answers[field.id].length; i++) {
+        for (i = 0; i < answers[field.id].length; i++) {
           self.updateAnswers(scope, field, field.children, answers[field.id][i]);
         }
       } else {
@@ -171,12 +171,12 @@ export class FieldUtilitiesService {
       }
 
       if (scope.appDataService.public.node.enable_scoring_system) {
-        scope.answers[field.id].forEach(function(entry:any){
+        scope.answers[field.id].forEach(function (entry: any) {
           localscope.calculateScore(scope, field, entry);
         });
       }
 
-      for(i=0; i<answers[field.id].length; i++) {
+      for (i = 0; i < answers[field.id].length; i++) {
         entry = answers[field.id][i];
 
         /* Block related to updating required status */
@@ -187,7 +187,7 @@ export class FieldUtilitiesService {
             entry.required_status = false;
           } else {
             entry.required_status = true;
-            for (j=0; j<field.options.length; j++) {
+            for (j = 0; j < field.options.length; j++) {
               if (entry[field.options[j].id]) {
                 entry.required_status = false;
                 break;
@@ -202,11 +202,11 @@ export class FieldUtilitiesService {
 
         /* Block related to evaluate options */
         if (["checkbox", "selectbox", "multichoice"].indexOf(field.type) > -1) {
-          for (j=0; j<field.options.length; j++) {
+          for (j = 0; j < field.options.length; j++) {
             option = field.options[j];
             option.set = false;
-            if(field.type === "checkbox") {
-              if(entry[option.id]) {
+            if (field.type === "checkbox") {
+              if (entry[option.id]) {
                 option.set = true;
               }
             } else {
@@ -230,14 +230,14 @@ export class FieldUtilitiesService {
     });
   }
 
-  onAnswersUpdate(scope:any) {
+  onAnswersUpdate(scope: any) {
     let self = this;
     scope.block_submission = false;
     scope.score = 0;
     scope.points_to_sum = 0;
     scope.points_to_mul = 1;
 
-    if(!scope.questionnaire) {
+    if (!scope.questionnaire) {
       return;
     }
 
@@ -247,7 +247,7 @@ export class FieldUtilitiesService {
 
     let localscope = this
 
-    scope.questionnaire.steps.forEach(function(step:any){
+    scope.questionnaire.steps.forEach(function (step: any) {
       step.enabled = self.isFieldTriggered(null, step, scope.answers, scope.score);
       localscope.updateAnswers(scope, step, step.children, scope.answers);
     });
@@ -259,7 +259,7 @@ export class FieldUtilitiesService {
   }
 
 
-  isFieldTriggered(parent:any, field:any, answers:any, score:any){
+  isFieldTriggered(parent: any, field: any, answers: any, score: any) {
     let count = 0;
     let i;
 
@@ -278,7 +278,7 @@ export class FieldUtilitiesService {
       return true;
     }
 
-    for (i=0; i < field.triggered_by_options.length; i++) {
+    for (i = 0; i < field.triggered_by_options.length; i++) {
       let trigger = field.triggered_by_options[i];
       let answers_field = this.findField(answers, trigger.field);
       if (typeof answers_field === "undefined") {
@@ -287,7 +287,7 @@ export class FieldUtilitiesService {
 
       // Check if triggering field is in answers object
       if (trigger.option === answers_field.value ||
-          (answers_field.hasOwnProperty(trigger.option) && answers_field[trigger.option])) {
+        (answers_field.hasOwnProperty(trigger.option) && answers_field[trigger.option])) {
         if (trigger.sufficient) {
           field.enabled = true;
           return true;
@@ -305,17 +305,17 @@ export class FieldUtilitiesService {
     return false;
   }
 
-  parseFields(fields:any, parsedFields:any){
+  parseFields(fields: any, parsedFields: any) {
     let self = this;
 
-    fields.forEach(function(field:any){
+    fields.forEach(function (field: any) {
       parsedFields = self.parseField(field, parsedFields);
     });
 
     return parsedFields;
   }
 
-  parseField(field:any, parsedFields:any){
+  parseField(field: any, parsedFields: any) {
     let self = this;
 
     if (!Object.keys(parsedFields).length) {
@@ -327,12 +327,12 @@ export class FieldUtilitiesService {
     if (["checkbox", "selectbox", "multichoice"].indexOf(field.type) > -1) {
       parsedFields.fields_by_id[field.id] = field;
       parsedFields.fields.push(field);
-      field.options.forEach(function(option:any) {
+      field.options.forEach(function (option: any) {
         parsedFields.options_by_id[option.id] = option;
       });
 
     } else if (field.type === "fieldgroup") {
-      field.children.forEach(function(field:any) {
+      field.children.forEach(function (field: any) {
         self.parseField(field, parsedFields);
       });
     }

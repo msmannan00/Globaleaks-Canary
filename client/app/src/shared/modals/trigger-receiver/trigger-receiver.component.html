@@ -12,9 +12,8 @@
         <ng-template ng-label-tmp let-item="item">
             {{ item.name }}
         </ng-template>
-        <ng-template ng-option-tmp let-item="item" let-index="index">
+        <ng-template ng-option-tmp let-item="item">
             <span [innerHTML]="item.name"></span>
-            <!-- <span [innerHTML]="item.name | highlight: selected.search"></span> -->
         </ng-template>
     </ng-select>
     <div *ngIf="arg.trigger_receiver">

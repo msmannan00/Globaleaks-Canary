@@ -1,19 +1,23 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'src-confirmation-with2fa',
-  templateUrl: './confirmation-with2fa.component.html',
-  styleUrls: ['./confirmation-with2fa.component.css']
+  templateUrl: './confirmation-with2fa.component.html'
 })
 export class ConfirmationWith2faComponent {
-    secret: any;
+  secret: any;
 
-    confirm(){
-        this.activeModal.close(this.secret);
-    }
+  constructor(private activeModal: NgbActiveModal) {
 
-    constructor(public activeModal: NgbActiveModal) {
+  }
 
-    }
+  dismiss() {
+    this.activeModal.dismiss()
+  }
+
+  confirm() {
+    this.activeModal.close(this.secret);
+  }
+
 }
