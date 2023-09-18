@@ -12,7 +12,7 @@
 	<div id="LoginStatusBox" *ngIf="utils.showUserStatusBox()" class="">
 
 		<span id="UsernameBox" *ngIf="authentication.session.role !== 'whistleblower'">
-			<label>{{preferences.dataModel.name}}</label>
+			<label>{{preferences.dataModel.username}}</label>
 			<span class="text-separator"> |</span>
 		</span>
 
