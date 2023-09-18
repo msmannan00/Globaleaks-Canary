@@ -27,7 +27,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit{
   field_id_map:any
   done:boolean = false;
   uploads:any = {}
-  fileupload_url ="api/wbtip/rfile"
+  fileupload_url ="api/whistleblower/wbtip/rfile"
 
   singleStepForm() {
     return this.firstStepIndex() === this.lastStepIndex();

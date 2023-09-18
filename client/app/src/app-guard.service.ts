@@ -17,7 +17,7 @@ export class SessionGuard implements CanActivate {
     return true;
 
   }
-  constructor(public authentication: AuthenticationService, private router: Router, private appDataService:AppDataService) {
+  constructor(private router: Router, private appDataService:AppDataService, public authentication: AuthenticationService) {
   }
 
 }

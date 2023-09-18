@@ -1,22 +1,17 @@
 import {Component} from '@angular/core';
-import {AppConfigService} from "./services/app-config.service";
-import {AppDataService} from "./app-data.service";
-import {TranslationService} from "./services/translation.service";
-import {UtilsService} from "./shared/services/utils.service";
+import {AppConfigService} from "../../services/app-config.service";
+import {AppDataService} from "../../app-data.service";
+import {UtilsService} from "../../shared/services/utils.service";
 import {TranslateService} from "@ngx-translate/core";
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  templateUrl: './app.component.html'
 })
 export class AppComponent{
 
   showSidebar:boolean= true;
-  changeLang(lang: string) {
-    this.translate.use(lang);
-  }
   checkToShowSidebar(){
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -33,12 +28,10 @@ export class AppComponent{
     this.checkToShowSidebar()
   }
   constructor(
-    public translate: TranslateService, 
+    private router : Router,
+    public translate: TranslateService,
     public appConfig: AppConfigService, 
-    public appDataService:AppDataService, 
-    public translateService:TranslationService,
-    public utilsService:UtilsService,
-    public router : Router) {
-    
+    public appDataService:AppDataService,
+    public utilsService:UtilsService) {
   }
 }

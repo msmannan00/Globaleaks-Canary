@@ -6,11 +6,13 @@ import { SharedModule } from 'app/src/shared.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AdminPreferencesComponent } from './admin-preferences/admin-preferences.component';
 
 @NgModule({
   declarations: [
     adminHomeComponent,
     SidebarComponent,
+    AdminPreferencesComponent,
   ],
   imports: [
     CommonModule,SharedModule,NgbNavModule,NgbModule,RouterModule,FormsModule

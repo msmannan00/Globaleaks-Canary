@@ -42,9 +42,9 @@ export class WbfilesComponent implements OnInit{
               next: async token => {
                   const ans = await this.cryptoService.proofOfWork(token.id);
                   if(this.authenticationService.session.role == "receiver"){
-                      window.open("api/wbfile/" + wbfile.id + "?token=" + token.id + ":" + ans);
+                      window.open("api/whistleblower/wbfile/" + wbfile.id + "?token=" + token.id + ":" + ans);
                   }else {
-                      window.open("api/wbtip/wbfile/" + wbfile.id + "?token=" + token.id + ":" + ans);
+                      window.open("api/whistleblower/wbtip/wbfile/" + wbfile.id + "?token=" + token.id + ":" + ans);
                   }
               },
               error: (error: any) => {

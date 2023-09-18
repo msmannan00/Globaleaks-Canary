@@ -49,7 +49,7 @@ export class WizardComponent implements OnInit{
     }
   ];
 
-  constructor(public appConfigService: AppConfigService, private translationService: TranslationService, private router: Router, private http: HttpClient, private authenticationService: AuthenticationService, public appDataService: AppDataService , public httpService: HttpService )
+  constructor(private translationService: TranslationService, private router: Router, private http: HttpClient, private authenticationService: AuthenticationService,  private httpService: HttpService , public appDataService: AppDataService, public appConfigService: AppConfigService)
   {
   }
 

@@ -43,7 +43,13 @@ export class HttpService {
   }
 
   requestOperations(data: any, header?: any): Observable<any> {
+    alert(JSON.stringify(header))
     return this.httpClient.put("api/user/operations", data, header)
+  }
+
+  requestOperationsRecovery(data: any, confirmation: any): Observable<any> {
+    const headers = { 'X-Confirmation': confirmation }
+    return this.httpClient.put("api/user/operations", data, { headers })
   }
 
   updatePreferenceResource(data: any): Observable<any> {
@@ -59,7 +65,7 @@ export class HttpService {
   }
 
   requestResetLogin(param: string): Observable<any> {
-    return this.httpClient.post("api/reset/password", param)
+    return this.httpClient.post("api/user/reset/password", param)
   }
 
   requestSignup(param: string): Observable<any> {
@@ -79,18 +85,18 @@ export class HttpService {
   }
 
   requestReportSubmission(param: string): Observable<any> {
-    return this.httpClient.post("api/submission", param)
+    return this.httpClient.post("api/whistleblower/submission", param)
   }
 
   requestSuppor(param: string): Observable<any> {
     return this.httpClient.post("api/support", param)
   }
   requestNewComment(param: string): Observable<any> {
-    return this.httpClient.post("api/wbtip/comments", param)
+    return this.httpClient.post("api/whistleblower/wbtip/comments", param)
   }
 
   requestNewMessage(param: string, suburl: string): Observable<any> {
-    return this.httpClient.post("api/wbtip/messages/" + suburl, param)
+    return this.httpClient.post("api/whistleblower/wbtip/messages/" + suburl, param)
   }
 
   requestPreferenceResource(): Observable<any> {
@@ -175,15 +181,15 @@ export class HttpService {
   }
 
   whistleBlowerTip(): Observable<any> {
-    return this.httpClient.get("api/wbtip")
+    return this.httpClient.get("api/whistleblower/wbtip")
   }
 
   whistleBlowerTipUpdate(param: any, tipid: string): Observable<any> {
-    return this.httpClient.post("api/wbtip/" + tipid + "/update", param)
+    return this.httpClient.post("api/whistleblower/wbtip/" + tipid + "/update", param)
   }
 
   whistleBlowerIdentityUpdate(param: any, tipid: string): Observable<any> {
-    return this.httpClient.post("api/wbtip/" + tipid + "/provideidentityinformation", param)
+    return this.httpClient.post("api/whistleblower/wbtip/" + tipid + "/provideidentityinformation", param)
   }
 
   requestAdminFieldTemplateResource(): Observable<any> {

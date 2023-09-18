@@ -3,18 +3,19 @@ import {AppConfigService} from "../../../services/app-config.service";
 import {AuthenticationService} from "../../../services/authentication.service";
 import {LoginDataRef} from "./model/login-model";
 import {ActivatedRoute, Router} from "@angular/router";
-import {FormBuilder} from "@angular/forms";
 import {AppDataService} from "../../../app-data.service";
 
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit{
 
   loginData = new LoginDataRef();
+
+  constructor(private authentication: AuthenticationService, private router: Router,private route: ActivatedRoute, public appConfig: AppConfigService, public appDataService:AppDataService) {
+  }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -28,7 +29,4 @@ export class LoginComponent implements OnInit{
       }
     });
   };
-
-  constructor(public appConfig: AppConfigService, public authentication: AuthenticationService, private router: Router,private route: ActivatedRoute, private builder: FormBuilder, public appDataService:AppDataService) {
-  }
 }

@@ -1,4 +1,4 @@
-describe('playground.cy.ts', () => {
+describe('00-playground.cy.ts', () => {
   it('playground', () => {
     // cy.mount()
   })

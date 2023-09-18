@@ -1,7 +1,7 @@
 import {HostListener, NgModule,CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent } from './pages/app/app.component';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import { AuthModule } from './pages/auth/auth.module';
 import {
@@ -90,7 +90,7 @@ export class AppModule {
   timedOut = false;
   title = 'angular-idle-timeout';
 
-  constructor(public appConfigService: AppConfigService, private idle: Idle, private keepalive: Keepalive, public authentication: AuthenticationService) {
+  constructor(private idle: Idle, private keepalive: Keepalive, public appConfigService: AppConfigService, public authentication: AuthenticationService) {
     this.globalInitializations();
     this.initIdleState();
   }

@@ -3,15 +3,18 @@ import {password_recovery_model} from "../../../models/authentication/password_r
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {HttpService} from "../../../shared/services/http.service";
+import {UtilsService} from "../../../shared/services/utils.service";
 
 @Component({
   selector: 'src-password-reset-response',
-  templateUrl: './password-reset-response.component.html',
-  styleUrls: ['./password-reset-response.component.css']
+  templateUrl: './password-reset-response.component.html'
 })
 export class PasswordResetResponseComponent implements OnInit{
   state = "start";
   request = new password_recovery_model()
+
+  constructor(private route: ActivatedRoute, private httpService: HttpService, private router:Router, public utilsService:UtilsService) {
+  }
 
   submit() {
     let requestObservable:Observable<any>
@@ -30,8 +33,6 @@ export class PasswordResetResponseComponent implements OnInit{
             this.request.auth_code = "";
             this.state = response.status;
           }
-        },
-        error: (error: any) => {
         }
       }
     );
@@ -46,8 +47,4 @@ export class PasswordResetResponseComponent implements OnInit{
       this.submit()
     }
   }
-
-  constructor(private route: ActivatedRoute, public httpService: HttpService, private router:Router) {
-  }
-
 }

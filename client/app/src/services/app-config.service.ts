@@ -17,7 +17,7 @@ export class AppConfigService{
   public sidebar: string= '';
   public header_title: string= '';
 
-  constructor(private appConfigService: AppConfigService, private titleService: Title, private preferenceResolver:PreferenceResolver, private router: Router, private activatedRoute: ActivatedRoute, public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public authenticationService:AuthenticationService, public appDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService)  {
+  constructor(private appConfigService: AppConfigService, private preferenceResolver:PreferenceResolver, private router: Router, private activatedRoute: ActivatedRoute, public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public authenticationService:AuthenticationService, public appDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService)  {
     this.localInitialization()
   }
 
@@ -76,7 +76,6 @@ export class AppConfigService{
         this.appDataService.questionnaires_by_id = this.utilsService.array_to_map(this.appDataService.public.questionnaires);
         this.appDataService.submission_statuses = this.appDataService.public.submission_statuses;
         this.appDataService.submission_statuses_by_id = this.utilsService.array_to_map(this.appDataService.public.submission_statuses);
-
 
         for (let [key] of Object.entries(this.appDataService.questionnaires_by_id)) {
           this.fieldUtilitiesService.parseQuestionnaire(this.appDataService.questionnaires_by_id[key], {})

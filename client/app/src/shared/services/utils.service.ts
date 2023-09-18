@@ -22,6 +22,7 @@ export class UtilsService {
 
   constructor(
     private nodeResolver: NodeResolver,
+    private utilsService: UtilsService,
     private http: HttpClient,
     public translateService: TranslateService,
     public httpService: HttpService,
@@ -154,7 +155,21 @@ export class UtilsService {
   stopPropagation(event: Event) {
     event.stopPropagation()
   }
+  encodeString(string: string): string {
+    const codeUnits = Uint16Array.from(
+      { length: string.length },
+      (element, index) => string.charCodeAt(index)
+    );
 
+    const charCodes = new Uint8Array(codeUnits.buffer);
+
+    let result = "";
+    charCodes.forEach((char) => {
+      result += String.fromCharCode(char);
+    });
+
+    return btoa(result);
+  }
   openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
     scope = !scope ? this : scope;
 
@@ -198,6 +213,7 @@ export class UtilsService {
     receivers.forEach(function (element: any) {
       ret[element.id] = element
     });
+
     return ret;
   }
 
@@ -394,7 +410,7 @@ export class UtilsService {
 
     if (requireConfirmation.indexOf(operation) !== -1) {
       const confirm = (secret: string) => {
-        const headers = new HttpHeaders({ "X-Confirmation": secret });
+        const headers =  new HttpHeaders({ "X-Confirmation": secret });
         return this.http.put(api, {
           "operation": operation,
           "args": args

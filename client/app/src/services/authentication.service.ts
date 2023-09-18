@@ -25,6 +25,7 @@ export class AuthenticationService {
       this.session = undefined
     }
   }
+
   public reset() {
     this.loginInProgress = false;
     this.requireAuthCode = false;
@@ -74,9 +75,8 @@ export class AuthenticationService {
       authcode = "";
     }
 
-    this.loginInProgress = true;
-
     let requestObservable: Observable<any>;
+    this.loginInProgress = true;
     this.rootDataService.showLoadingPanel = true;
     if (authtoken) {
       requestObservable = this.httpService.requestAuthTokenLogin(JSON.stringify({ "authtoken": authtoken }));
@@ -170,7 +170,7 @@ export class AuthenticationService {
     let source_path = location.pathname;
 
     if (source_path !== "/login") {
-      this.router.navigateByUrl("/login").then(response => {})
+      this.router.navigateByUrl("/login").then()
     }
   };
 }

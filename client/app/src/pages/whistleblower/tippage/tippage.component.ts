@@ -174,7 +174,7 @@ export class TippageComponent {
               this.tip.tip_id = params['tip_id']
             });
 
-            this.fileupload_url = "api/wbtip/rfile";
+            this.fileupload_url = "api/whistleblower/wbtip/rfile";
             this.tip.context = this.appDataService.contexts_by_id[this.tip.context_id];
 
             this.tip.receivers_by_id = this.utilsService.array_to_map(this.tip.receivers);

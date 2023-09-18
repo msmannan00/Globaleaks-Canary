@@ -3,8 +3,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'src-confirmation-with-password',
-  templateUrl: './confirmation-with-password.component.html',
-  styleUrls: ['./confirmation-with-password.component.css']
+  templateUrl: './confirmation-with-password.component.html'
 })
 export class ConfirmationWithPasswordComponent {
   confirmFunction: (secret: string) => void;

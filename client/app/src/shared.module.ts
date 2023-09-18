@@ -227,6 +227,7 @@ import { AssignScorePointsComponent } from './shared/modals/assign-score-points/
     QuestionnaireDuplicationComponent,
     AddOptionHintComponent,
     TriggerReceiverComponent,
-    AssignScorePointsComponent
+    AssignScorePointsComponent,
+    PreferencesComponent
   ]})
 export class SharedModule { }

@@ -10,6 +10,7 @@ import { NotificationsModule } from './notifications/notifications.module';
 import { SitesModule } from "./sites/sites.module";
 import { NetworkModule } from './network/network.module';
 import { QuestionnairesModule } from './questionnaires/questionnaires.module';
+import {AdminPreferencesComponent} from "./admin-preferences/admin-preferences.component";
 
 const routes: Routes = [
   {
@@ -23,6 +24,12 @@ const routes: Routes = [
     component: adminHomeComponent,
     pathMatch: 'full',
     data: { sidebar: 'admin-sidebar' , pageTitle: 'Home'}
+  },
+  {
+    path: 'preferences',
+    component: AdminPreferencesComponent,
+    pathMatch: 'full',
+    data: { pageTitle: 'Preferences'}
   },
   {
     path: 'settings',

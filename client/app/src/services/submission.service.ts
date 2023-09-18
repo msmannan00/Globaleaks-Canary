@@ -60,9 +60,9 @@ export class SubmissionService {
     return Object.keys(this.selected_receivers).length;
   }
 
-  create(context_id: any) {
+  create(context_id: number) {
     this.setContextReceivers(context_id);
-    this.submissionResourceService.init(context_id);
+    this.submissionResourceService.context_id = context_id;
     this.authenticationService.login(0, 'whistleblower', '');
     this._submission = this.submissionResourceService;
   }

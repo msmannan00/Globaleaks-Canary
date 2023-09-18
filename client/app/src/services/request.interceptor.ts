@@ -15,11 +15,11 @@ import {AppDataService} from "../app-data.service";
 const protectedUrls = [
   'api/wizard',
   'api/signup',
-  'api/submission',
+  'api/whistleblower//submission',
   'api/auth/receiptauth',
   'api/tokenauth',
   'api/auth/authentication',
-  'api/reset/password',
+  'api/user/reset/password',
 ];
 
 @Injectable()
