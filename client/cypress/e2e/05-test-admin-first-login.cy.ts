@@ -6,7 +6,8 @@ describe("admin login", () => {
     cy.contains("button", "Account recovery key").click();
     cy.get("[name='secret']").type(Cypress.env("user_password"));
     cy.contains("button", "Confirm").click();
-    cy.contains("button", "Close").click();
+    cy.get('src-encryption-recovery-key').should('exist');
+    cy.contains("button", "Close").should("be.visible").click();
 
     cy.logout();
   });
