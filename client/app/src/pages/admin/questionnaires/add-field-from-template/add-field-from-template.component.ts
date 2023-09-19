@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FieldtemplatesResolver } from 'app/src/shared/resolvers/fieldtemplates.resolver';
 import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
-import { FieldUtilitiesService } from 'app/src/shared/services/field-utilities.service';
 import { HttpService } from 'app/src/shared/services/http.service';
 import { UtilsService } from 'app/src/shared/services/utils.service';
 import {new_field} from "../../../../models/admin/new_field";
@@ -29,8 +28,10 @@ export class AddFieldFromTemplateComponent {
   }
   add_field_from_template(): void {
     if (this.type === "step") {
-      const field = new new_field()
+      let field = new new_field()
       field.step_id = this.step.id
+      field.template_id = ""
+
       field.template_id = this.new_field.template_id;
       field.instance = "reference";
       field.y = this.utilsService.newItemOrder(this.fields, "y");
@@ -42,8 +43,10 @@ export class AddFieldFromTemplateComponent {
       });
     }
     if (this.type === "field") {
-      const field = new new_field()
+      let field = new new_field()
       field.step_id = this.step.id
+      field.template_id = ""
+
       field.template_id = this.new_field.template_id;
       field.instance = "reference";
       field.y = this.utilsService.newItemOrder(this.step.children, "y");

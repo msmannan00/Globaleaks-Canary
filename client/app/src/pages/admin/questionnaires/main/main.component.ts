@@ -4,7 +4,7 @@ import { questionnaireResolverModel } from 'app/src/models/resolvers/questionnai
 import { QuestionnairesResolver } from 'app/src/shared/resolvers/questionnaires.resolver';
 import { HttpService } from 'app/src/shared/services/http.service';
 import { UtilsService } from 'app/src/shared/services/utils.service';
-import {contextResolverModel} from "../../../../models/resolvers/contextResolverModel";
+import {new_questionare} from "../../../../models/admin/new_questionare";
 
 @Component({
   selector: 'src-main',
@@ -25,7 +25,7 @@ export class MainComponent implements OnInit {
   }
 
   add_questionnaire() {
-    const questionnaire: questionnaireResolverModel = new questionnaireResolverModel();
+    const questionnaire: new_questionare = new new_questionare();
     questionnaire.name = this.new_questionnaire.name
     this.httpService.addQuestionare(questionnaire).subscribe(res => {
       this.questionnairesData.push(res);

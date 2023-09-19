@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HttpService } from 'app/src/shared/services/http.service';
 import { UtilsService } from 'app/src/shared/services/utils.service';
-import {new_step} from "../../../../models/admin/fieldTemplate";
+import {new_field} from "../../../../models/admin/new_field";
+import {field_template} from "../../../../models/admin/fieldTemplate";
 
 @Component({
   selector: 'src-add-field',
@@ -29,9 +30,9 @@ export class AddFieldComponent implements OnInit {
   }
   add_field() {
     if (this.type === "step") {
-      let field = new new_step()
+      let field = new new_field()
       field.step_id = this.step.id
-      field.fieldgroup_id = ""
+      field.template_id = ""
 
       field.label = this.new_field.label,
       field.type = this.new_field.type,
@@ -48,9 +49,8 @@ export class AddFieldComponent implements OnInit {
       });
     }
     if (this.type === "template") {
-      let fieldid = this.fields ? this.fields.id : ""
-      let field:new_step = new new_step();
-      field.fieldgroup_id = fieldid
+      var field = new field_template()
+      field.fieldgroup_id = this.fields ? this.fields.id : ""
       field.instance = "template";
       field.label = this.new_field.label;
       field.type = this.new_field.type;
@@ -63,9 +63,10 @@ export class AddFieldComponent implements OnInit {
       });
     }
     if (this.type === "field") {
-      let field = new new_step()
+      let field = new new_field()
       field.step_id = this.step.id
-      field.fieldgroup_id = ""
+      field.template_id = ""
+
       field.label = this.new_field.label,
       field.type = this.new_field.type,
       field.y = this.utilsService.newItemOrder(this.step.children, "y");

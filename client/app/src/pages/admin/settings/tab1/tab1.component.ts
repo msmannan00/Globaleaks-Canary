@@ -12,7 +12,7 @@ import {AuthenticationService} from "../../../../services/authentication.service
 export class Tab1Component {
   // @Input() node: NodeResolver;
   @Input() contentForm: NgForm;
-  constructor(public node:NodeResolver,public utilsService: UtilsService, public authenticationService:AuthenticationService) { }
+  constructor(public node:NodeResolver, public authenticationService:AuthenticationService,public utilsService: UtilsService) { }
 
   ngOnInit(): void {}
   updateNode() {

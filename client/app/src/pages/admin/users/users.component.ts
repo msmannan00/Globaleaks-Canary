@@ -8,6 +8,7 @@ import { Constants } from 'app/src/shared/constants/constants';
 import { UsersResolver } from 'app/src/shared/resolvers/users.resolver';
 import { AuthenticationService } from 'app/src/services/authentication.service';
 import { PreferenceResolver } from 'app/src/shared/resolvers/preference.resolver';
+import {new_user} from "../../../models/admin/new_user";
 @Component({
   selector: 'src-users',
   templateUrl: './users.component.html',
@@ -46,7 +47,7 @@ export class UsersComponent implements OnInit{
     this.utilsService.reloadCurrentRoute();
   }
   add_user(): void {
-    var user: userResolverModel = new userResolverModel();
+    var user: new_user = new new_user();
 
     user.username = typeof this.new_user.username !== 'undefined' ? this.new_user.username : '';
     user.role = this.new_user.role;

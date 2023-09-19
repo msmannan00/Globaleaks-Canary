@@ -75,8 +75,7 @@ const routes: Routes = [
     path: 'network',
     loadChildren: () => NetworkModule,
     pathMatch: 'full',
-  },
-
+  }
 ];
 
 @NgModule({
