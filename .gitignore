@@ -1,0 +1,12 @@
+backend/env
+client/node_modules
+client/.angular/cache
+scripts/
+client/build
+client/app/lib
+backend/workingdir
+client/app/license.txt
+client/app/viewer/pdf.min.js
+client/app/viewer/pdf.worker.min.js
+client/npm-shrinkwrap.json
+client/tmp

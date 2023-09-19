@@ -432,10 +432,9 @@ table tr td {
 	margin: 1em;
 }
 
-/* #WhistleblowerLoginForm input {
-	width: 14rem;
-	text-align: center;
-} */
+.loginForm {
+	min-width: 300px;
+}
 
 .recoverykeyinput {
 	width: 64rem;
