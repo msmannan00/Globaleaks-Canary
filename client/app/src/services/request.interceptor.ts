@@ -123,6 +123,7 @@ export class CompletedInterceptor implements HttpInterceptor {
     if (this.count === 0) {
       this.appDataService.showLoadingPanel = true
     }
+
     this.count++;
     return next.handle(req).pipe(
     finalize(() => {
