@@ -4,13 +4,16 @@ import {UtilsService} from "../../services/utils.service";
 
 @Component({
   selector: 'src-encryption-recovery-key',
-  templateUrl: './encryption-recovery-key.component.html',
-  styleUrls: ['./encryption-recovery-key.component.css']
+  templateUrl: './encryption-recovery-key.component.html'
 })
 export class EncryptionRecoveryKeyComponent {
 
-  @Input() erk:any
+  @Input() erk: any
 
-  constructor(public activeModal: NgbActiveModal, public utilsService:UtilsService) {
+  constructor(private activeModal: NgbActiveModal, public utilsService: UtilsService) {
+  }
+
+  dismiss() {
+    this.activeModal.dismiss()
   }
 }

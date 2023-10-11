@@ -24,7 +24,6 @@ class InternalTip_v_52(Model):
     total_score = Column(Integer, default=0, nullable=False)
     expiration_date = Column(DateTime, default=datetime_never, nullable=False)
     enable_two_way_comments = Column(Boolean, default=True, nullable=False)
-    enable_two_way_messages = Column(Boolean, default=True, nullable=False)
     enable_attachments = Column(Boolean, default=True, nullable=False)
     enable_whistleblower_identity = Column(Boolean, default=False, nullable=False)
     label = Column(UnicodeText, default='', nullable=False)
@@ -90,7 +89,6 @@ class User_v_52(Model):
     creation_date = Column(DateTime, default=datetime_now, nullable=False)
     username = Column(UnicodeText, default='', nullable=False)
     salt = Column(UnicodeText(24), default='', nullable=False)
-    hash_alg = Column(UnicodeText, default='ARGON2', nullable=False)
     password = Column(UnicodeText, default='', nullable=False)
     name = Column(UnicodeText, default='', nullable=False)
     description = Column(JSON, default=dict, nullable=False)
@@ -185,20 +183,6 @@ class MigrationScript(MigrationBase):
                                    .filter(m.var_name == 'smtp_port',
                                            m.value == 9267):
             db_reset_smtp_settings(self.session_new, tid[0])
-
-        for c in self.session_new.query(m).filter(m.var_name == 'onionservice'):
-            if len(c.value) != 22:
-                continue
-
-            self.session_new.query(m) \
-                            .filter(m.tid == c.tid,
-                                    m.var_name == 'onionservice') \
-                            .update({'value': ''})
-
-            self.session_new.query(m) \
-                            .filter(m.tid == c.tid,
-                                    m.var_name == 'tor_onion_key') \
-                            .update({'value': ''})
 
         m = self.model_to['ConfigL10N']
 

@@ -69,8 +69,8 @@ class MailGenerator(object):
 
     @transact
     def generate(self, session):
-        mailcount = 0
         now = datetime_now()
+
         rtips_ids = {}
         silent_tids = []
 
@@ -94,33 +94,21 @@ class MailGenerator(object):
                                          models.Comment.new.is_(True)) \
                                  .order_by(models.Comment.creation_date)
 
-        results3 = session.query(models.User, models.ReceiverTip, models.InternalTip, models.Message) \
-                            .filter(models.User.id == models.ReceiverTip.receiver_id,
-                                    models.ReceiverTip.id == models.Message.receivertip_id,
-                                    models.InternalTip.id == models.ReceiverTip.internaltip_id,
-                                    models.Message.new.is_(True)) \
-                            .order_by(models.Message.creation_date)
-
-        results4 = session.query(models.User, models.ReceiverTip, models.InternalTip, models.ReceiverFile) \
+        results3 = session.query(models.User, models.ReceiverTip, models.InternalTip, models.WhistleblowerFile) \
                           .filter(models.User.id == models.ReceiverTip.receiver_id,
-                                    models.ReceiverTip.id == models.ReceiverFile.receivertip_id,
+                                    models.ReceiverTip.id == models.WhistleblowerFile.receivertip_id,
                                     models.InternalTip.id == models.ReceiverTip.internaltip_id,
-                                    models.InternalFile.id == models.ReceiverFile.internalfile_id,
-                                    models.InternalFile.submission.is_(False),
-                                    models.ReceiverFile.new.is_(True)) \
+                                    models.InternalFile.id == models.WhistleblowerFile.internalfile_id,
+                                    models.WhistleblowerFile.new.is_(True)) \
                           .order_by(models.InternalFile.creation_date)
 
-        for user, rtip, itip, obj in itertools.chain(results1, results2, results3, results4):
+        for user, rtip, itip, obj in itertools.chain(results1, results2, results3):
             tid = user.tid
 
             if (rtips_ids.get(rtip.id, False) or tid in silent_tids) or \
-               (isinstance(obj, models.Comment) and obj.type != 'whistleblower' and obj.author_id == user.id) or \
-               (isinstance(obj, models.Message) and obj.type == 'receiver') or \
+               (isinstance(obj, models.Comment) and obj.author_id == user.id) or \
                (rtip.last_notification > rtip.last_access):
                 obj.new = False
-                continue
-
-            elif mailcount >= 20:
                 continue
 
             obj.new = False
@@ -141,8 +129,6 @@ class MailGenerator(object):
             except:
                 pass
 
-            mailcount += 1
-
         for user in session.query(models.User).filter(models.User.reminder_date < now - timedelta(reminder_time),
                                                       models.User.id == models.ReceiverTip.receiver_id,
                                                       models.ReceiverTip.last_access < models.InternalTip.update_date,
@@ -153,9 +139,6 @@ class MailGenerator(object):
             if tid in silent_tids:
                 continue
 
-            elif mailcount >= 20:
-                return
-
             user.reminder_date = now
             data = {'type': 'unread_tips'}
 
@@ -165,7 +148,27 @@ class MailGenerator(object):
             except:
                 pass
 
-            mailcount += 1
+        if now < Notification.next_daily_run:
+            return
+
+        Notification.next_daily_run = now + timedelta(1)
+
+        for user in session.query(models.User).filter(models.User.id == models.ReceiverTip.receiver_id,
+                                                      models.ReceiverTip.internaltip_id == models.InternalTip.id,
+                                                      models.InternalTip.reminder_date < now).distinct():
+            tid = user.tid
+
+            if tid in silent_tids:
+                continue
+
+            data = {'type': 'tip_reminder'}
+
+            try:
+                data['user'] = user_serialize_user(session, user, user.language)
+                self.process_mail_creation(session, tid, data)
+            except:
+                pass
+
 
 
 @transact
@@ -190,6 +193,7 @@ def get_mails_from_the_pool(session):
 class Notification(LoopingJob):
     interval = 10
     monitor_interval = 3 * 60
+    next_daily_run = datetime_now()
 
     def generate_emails(self):
         return MailGenerator(self.state).generate()

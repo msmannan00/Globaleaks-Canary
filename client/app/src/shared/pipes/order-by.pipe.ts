@@ -5,7 +5,6 @@ import { OrderPipe } from 'ngx-order-pipe';
   name: 'orderBy'
 })
 export class OrderByPipe implements PipeTransform {
-
   constructor(private orderPipe: OrderPipe) {
   }
   transform(value: any, expression:any, reverse:any = false): any[] {

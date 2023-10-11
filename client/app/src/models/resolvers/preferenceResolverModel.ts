@@ -31,6 +31,7 @@ export class preferenceResolverModel {
   can_delete_submission: boolean
   can_grant_access_to_reports: boolean
   can_edit_general_settings: boolean
+  can_transfer_access_to_reports: boolean
   clicked_recovery_key: boolean
   contexts: any[]
 }

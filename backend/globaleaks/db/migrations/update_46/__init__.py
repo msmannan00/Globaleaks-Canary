@@ -1,6 +1,6 @@
 # -*- coding: UTF-8
 from globaleaks.db.migrations.update import MigrationBase
-from globaleaks.handlers.submission import db_assign_submission_progressive
+from globaleaks.handlers.whistleblower.submission import db_assign_submission_progressive
 from globaleaks.models import Model
 from globaleaks.models.properties import *
 from globaleaks.utils.utility import datetime_never, datetime_now, datetime_null
@@ -36,10 +36,7 @@ class Context_v_45(Model):
     allow_recipients_selection = Column(Boolean, default=False, nullable=False)
     maximum_selectable_receivers = Column(Integer, default=0, nullable=False)
     select_all_receivers = Column(Boolean, default=True, nullable=False)
-    enable_comments = Column(Boolean, default=True, nullable=False)
-    enable_messages = Column(Boolean, default=False, nullable=False)
     enable_two_way_comments = Column(Boolean, default=True, nullable=False)
-    enable_two_way_messages = Column(Boolean, default=True, nullable=False)
     enable_attachments = Column(Boolean, default=True, nullable=False)
     tip_timetolive = Column(Integer, default=30, nullable=False)
     name = Column(JSON, default=dict, nullable=False)
@@ -71,7 +68,6 @@ class Field_v_45(Model):
     description = Column(JSON, nullable=False)
     hint = Column(JSON, nullable=False)
     required = Column(Boolean, default=False, nullable=False)
-    preview = Column(Boolean, default=False, nullable=False)
     multi_entry = Column(Boolean, default=False, nullable=False)
     triggered_by_score = Column(Integer, default=0, nullable=False)
     step_id = Column(UnicodeText(36))
@@ -107,7 +103,6 @@ class InternalTip_v_45(Model):
     total_score = Column(Integer, default=0, nullable=False)
     expiration_date = Column(DateTime, nullable=False)
     enable_two_way_comments = Column(Boolean, default=True, nullable=False)
-    enable_two_way_messages = Column(Boolean, default=True, nullable=False)
     enable_attachments = Column(Boolean, default=True, nullable=False)
     enable_whistleblower_identity = Column(Boolean, default=False, nullable=False)
     wb_last_access = Column(DateTime, default=datetime_now, nullable=False)
@@ -130,7 +125,6 @@ class User_v_45(Model):
     creation_date = Column(DateTime, default=datetime_now, nullable=False)
     username = Column(UnicodeText, default='', nullable=False)
     salt = Column(UnicodeText(24), nullable=False)
-    hash_alg = Column(UnicodeText, default='SCRYPT', nullable=False)
     password = Column(UnicodeText, default='', nullable=False)
     name = Column(UnicodeText, default='', nullable=False)
     description = Column(JSON, default=dict, nullable=False)
@@ -151,7 +145,7 @@ class User_v_45(Model):
     can_edit_general_settings = Column(Boolean, default=False, nullable=False)
 
 
-class WhistleblowerFile_v_45(Model):
+class ReceiverFile_v_45(Model):
     __tablename__ = 'whistleblowerfile'
     id = Column(UnicodeText(36), primary_key=True, default=uuid4, nullable=False)
     receivertip_id = Column(UnicodeText(36), nullable=False)
@@ -230,8 +224,8 @@ class MigrationScript(MigrationBase):
     def migrate_InternalFile(self):
         self._migrate_File('InternalFile')
 
-    def migrate_WhistleblowerFile(self):
-        self._migrate_File('WhistleblowerFile')
+    def migrate_ReceiverFile(self):
+        self._migrate_File('ReceiverFile')
 
     def migrate_User(self):
         for old_obj in self.session_old.query(self.model_from['User']):

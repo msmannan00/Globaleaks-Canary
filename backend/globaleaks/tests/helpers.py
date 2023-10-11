@@ -25,7 +25,6 @@ from . import TEST_DIR
 from globaleaks import db, models, orm, event, jobs, __version__, DATABASE_VERSION
 from globaleaks.db.appdata import load_appdata
 from globaleaks.orm import transact, tw
-from globaleaks.handlers import rtip, wbtip
 from globaleaks.handlers.base import BaseHandler
 from globaleaks.handlers.admin.context import create_context, get_context
 from globaleaks.handlers.admin.field import db_create_field
@@ -33,8 +32,10 @@ from globaleaks.handlers.admin.questionnaire import db_get_questionnaire
 from globaleaks.handlers.admin.step import db_create_step
 from globaleaks.handlers.admin.tenant import create as create_tenant
 from globaleaks.handlers.admin.user import create_user
+from globaleaks.handlers.recipient import rtip
 from globaleaks.handlers.wizard import db_wizard
-from globaleaks.handlers.submission import create_submission
+from globaleaks.handlers.whistleblower import wbtip
+from globaleaks.handlers.whistleblower.submission import create_submission
 from globaleaks.models import serializers
 from globaleaks.models.config import db_set_config_variable, ConfigFactory
 from globaleaks.rest import decorators
@@ -46,11 +47,10 @@ from globaleaks.utils import tempdict
 from globaleaks.utils.crypto import generateRandomKey, GCE
 from globaleaks.utils.securetempfile import SecureTemporaryFile
 from globaleaks.utils.token import Token
-from globaleaks.utils.utility import datetime_null, datetime_now, sum_dicts, uuid4
+from globaleaks.utils.utility import datetime_now, sum_dicts, uuid4
 from globaleaks.utils.log import log
 
-GCE.ALGORITM_CONFIGURATION['ARGON2']['OPSLIMIT'] = 1
-GCE.ALGORITM_CONFIGURATION['SCRYPT']['N'] = 1 << 1
+GCE.options['OPSLIMIT'] = 1
 
 ################################################################################
 # BEGIN MOCKS NECESSARY FOR DETERMINISTIC ENCRYPTION
@@ -159,7 +159,7 @@ def init_state():
 @transact
 def mock_users_keys(session):
     for user in session.query(models.User):
-        user.password = VALID_HASH1
+        user.hash = VALID_HASH1
         user.salt = VALID_SALT1
         user.crypto_prv_key = USER_PRV_KEY_ENC
         user.crypto_pub_key = USER_PUB_KEY
@@ -191,7 +191,6 @@ def get_dummy_field():
         'label': 'antani',
         'placeholder': '',
         'type': 'checkbox',
-        'preview': False,
         'description': 'field description',
         'hint': 'field hint',
         'multi_entry': False,
@@ -264,6 +263,7 @@ class MockDict:
             'forcefully_selected': True,
             'can_edit_general_settings': False,
             'can_grant_access_to_reports': True,
+            'can_transfer_access_to_reports': True,
             'can_delete_submission': True,
             'can_postpone_expiration': True,
             'contexts': []
@@ -284,10 +284,7 @@ class MockDict:
             'show_context': True,
             'show_recipients_details': True,
             'allow_recipients_selection': False,
-            'enable_comments': True,
-            'enable_messages': True,
             'enable_two_way_comments': True,
-            'enable_two_way_messages': True,
             'enable_attachments': True,
             'show_receivers_in_alphabetical_order': False,
         }
@@ -305,6 +302,9 @@ class MockDict:
             'description': 'Platform description',
             'presentation': 'This is whæt æpp€ærs on top',
             'footer': 'check it out https://www.youtube.com/franksentus ;)',
+            'footer_accessibility_declaration': '',
+            'footer_privacy_policy': '',
+            'footer_whistleblowing_policy': '',
             'disclaimer_text': '',
             'whistleblowing_question': '',
             'whistleblowing_button': '',
@@ -361,7 +361,9 @@ class MockDict:
             'basic_auth_password': '',
             'custom_support_url': '',
             'pgp': False,
-            'viewer': False
+            'viewer': False,
+            'user_privacy_policy_text': '',
+            'user_privacy_policy_url': ''
         }
 
         self.dummyNetwork = {
@@ -439,7 +441,9 @@ def get_dummy_file(content=None):
         'size': len(content),
         'filename': os.path.basename(temporary_file.filepath),
         'type': content_type,
-        'submission': False
+        'submission': False,
+        "reference_id": '',
+        "visibility": 0
     }
 
 
@@ -476,7 +480,10 @@ def forge_request(uri=b'https://www.globaleaks.org/',
         host = x[0]
         port = int(x[1])
     else:
-        port = 80
+        if uri.startswith(b'http://'):
+            port = 8080
+        else:
+            port = 8443
 
     request = DummyRequest([b''])
     request.tid = 1
@@ -493,12 +500,15 @@ def forge_request(uri=b'https://www.globaleaks.org/',
     request.client_ua = b''
     request.client_using_mobile = False
     request.client_using_tor = False
-    request.port = 443
+    request.port = 8443
     request.language = 'en'
     request.multilang = False
 
     def isSecure():
-        return False
+        if request.port == 8443:
+            return True
+        else:
+            return False
 
     request.isSecure = isSecure
     request.client_using_tor = False
@@ -573,7 +583,7 @@ class TestGL(unittest.TestCase):
 
         if self.initialize_test_database_using_archived_db:
             shutil.copy(
-                os.path.join(TEST_DIR, 'db', 'empty', 'glbackend-%d.db' % DATABASE_VERSION),
+                os.path.join(TEST_DIR, 'db', 'empty', 'globaleaks-%d.db' % DATABASE_VERSION),
                 os.path.join(Settings.db_file_path)
             )
         else:
@@ -737,9 +747,9 @@ class TestGL(unittest.TestCase):
         return ret
 
     @transact
-    def get_rfiles(self, session, rtip_id):
-        return [x[0] for x in session.query(models.ReceiverFile.id) \
-                                     .filter(models.ReceiverFile.receivertip_id == rtip_id)]
+    def get_wbfiles(self, session, rtip_id):
+        return [x[0] for x in session.query(models.WhistleblowerFile.id) \
+                                     .filter(models.WhistleblowerFile.receivertip_id == rtip_id)]
 
     @transact
     def get_wbtips(self, session):
@@ -754,12 +764,9 @@ class TestGL(unittest.TestCase):
         return ret
 
     @transact
-    def get_wbfiles(self, session, wbtip_id):
-        return [{'id': wbfile.id} for wbfile in session.query(models.WhistleblowerFile)
-                                                     .filter(models.WhistleblowerFile.receivertip_id == models.ReceiverTip.id,
-                                                             models.ReceiverTip.internaltip_id == wbtip_id,
-                                                             models.InternalTip.id == wbtip_id,
-                                                             models.InternalTip.tid == 1)]
+    def get_rfiles(self, session, wbtip_id):
+        return [{'id': rfile.id} for rfile in session.query(models.ReceiverFile)
+                                                       .filter(models.ReceiverFile.internaltip_id == wbtip_id)]
 
     def db_test_model_count(self, session, model, n):
         self.assertEqual(session.query(model).count(), n)
@@ -865,23 +872,12 @@ class TestGLWithPopulatedDB(TestGL):
                                       rtip_desc['id'],
                                       'comment')
 
-            yield rtip.create_message(1,
-                                      rtip_desc['receiver_id'],
-                                      rtip_desc['id'],
-                                      'message')
-
         self.dummyWBTips = yield self.get_wbtips()
 
         for wbtip_desc in self.dummyWBTips:
             yield wbtip.create_comment(1,
                                        wbtip_desc['id'],
                                        'comment')
-
-            for receiver_id in wbtip_desc['receivers_ids']:
-                yield wbtip.create_message(1,
-                                           wbtip_desc['id'],
-                                           receiver_id,
-                                           'message')
 
     @inlineCallbacks
     def perform_minimal_submission_actions(self):
@@ -891,7 +887,7 @@ class TestGLWithPopulatedDB(TestGL):
 
     @inlineCallbacks
     def perform_full_submission_actions(self):
-        """Populates the DB with tips, comments, messages and files"""
+        """Populates the DB with tips, comments, and files"""
         for x in range(self.population_of_submissions):
             session = self.perform_submission_start()
             self.perform_submission_uploads(session.id)
@@ -901,11 +897,11 @@ class TestGLWithPopulatedDB(TestGL):
 
     @transact
     def force_wbtip_expiration(self, session):
-        session.query(models.InternalTip).update({'last_access': datetime_null()})
+        session.query(models.InternalTip).update({'last_access': datetime_now()})
 
     @transact
     def force_itip_expiration(self, session):
-        session.query(models.InternalTip).update({'expiration_date': datetime_null()})
+        session.query(models.InternalTip).update({'expiration_date': datetime_now()})
 
     @transact
     def set_itips_near_to_expire(self, session):
@@ -988,8 +984,6 @@ class TestHandler(TestGLWithPopulatedDB):
                                 method=b'GET')
 
         x = api.APIResourceWrapper()
-
-        x.preprocess(request)
 
         if not getattr(handler_cls, 'decorated', False):
             for method in ['get', 'post', 'put', 'delete']:

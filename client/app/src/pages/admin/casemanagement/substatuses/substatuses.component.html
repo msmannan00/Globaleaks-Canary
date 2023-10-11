@@ -25,7 +25,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group clearfix">
-                            <button class="float-left btn btn-primary" [disabled]="newSubstatus.invalid"
+                            <button class="float-start btn btn-primary" [disabled]="newSubstatus.invalid"
                                     (click)="addSubmissionSubStatus(); toggleAddSubstatus()">
                                 <i class="fa-solid fa-plus"></i>
                                 <span> Add</span>
@@ -44,7 +44,7 @@
                       <span class="substatusLabel">{{substatus.label}}</span>
                     </span>
                     <span class="col-md-5 clearfix">
-                      <span class="float-right">
+                      <span class="float-end">
                         <button *ngIf="!first" class="btn btn-sm btn-primary" (click)="moveSsUp($event, index)" [ngbTooltip]="'Move up' | translate">
                           <i class="fa-solid fa-chevron-up"></i>
                         </button>
@@ -76,7 +76,7 @@
                         <div class="form-group">
                             <div class="col-md-6">
                                 <label>{{'Label'|translate}}</label>
-                                <input class="form-control" [(ngModel)]="substatus.label" type="text" required/>
+                                <input class="form-control" name="substatus.label" [(ngModel)]="substatus.label" type="text" required/>
                                 <div class="text-danger" *ngIf="!substatus.label || substatus.label==0">
                                     <span>{{'This field is mandatory'|translate}}</span>
                                 </div>

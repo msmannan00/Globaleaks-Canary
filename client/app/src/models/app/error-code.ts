@@ -1,12 +1,14 @@
 export class errorCodes {
   message:string = ""
+  arguments = []
   code:number = -1
-  arguments:[]
 
   constructor(messageParam?:any, codeParam?:any, argumentParam?:any) {
     this.message = messageParam
-    this.code = codeParam
     this.arguments = argumentParam
+    if(codeParam){
+      this.code = codeParam
+    }
   }
 }
 

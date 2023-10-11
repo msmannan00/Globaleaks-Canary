@@ -6,6 +6,7 @@ from globaleaks import models
 from globaleaks.jobs.delivery import Delivery
 from globaleaks.jobs.notification import Notification
 from globaleaks.orm import transact
+from globaleaks.state import State
 from globaleaks.tests import helpers
 from globaleaks.utils.utility import datetime_now, datetime_null
 
@@ -22,6 +23,14 @@ def simulate_unread_tips(session):
         itip.update_date = datetime_now() - timedelta(8)
 
 
+@transact
+def simulate_reminders(session):
+    Notification.next_daily_run = datetime_now()
+
+    for itip in session.query(models.InternalTip):
+        itip.reminder_date = datetime_now() - timedelta(1)
+
+
 class TestNotification(helpers.TestGLWithPopulatedDB):
     @inlineCallbacks
     def test_notification(self):
@@ -30,9 +39,8 @@ class TestNotification(helpers.TestGLWithPopulatedDB):
         yield self.test_model_count(models.InternalTip, 0)
         yield self.test_model_count(models.ReceiverTip, 0)
         yield self.test_model_count(models.InternalFile, 0)
-        yield self.test_model_count(models.WhistleblowerFile, 0)
+        yield self.test_model_count(models.ReceiverFile, 0)
         yield self.test_model_count(models.Comment, 0)
-        yield self.test_model_count(models.Message, 0)
         yield self.test_model_count(models.Mail, 0)
 
         yield self.perform_full_submission_actions()
@@ -40,10 +48,9 @@ class TestNotification(helpers.TestGLWithPopulatedDB):
         yield self.test_model_count(models.InternalTip, 2)
         yield self.test_model_count(models.ReceiverTip, 4)
         yield self.test_model_count(models.InternalFile, 4)
-        yield self.test_model_count(models.ReceiverFile, 0)
         yield self.test_model_count(models.WhistleblowerFile, 0)
+        yield self.test_model_count(models.ReceiverFile, 0)
         yield self.test_model_count(models.Comment, 6)
-        yield self.test_model_count(models.Message, 8)
         yield self.test_model_count(models.Mail, 0)
 
         yield Delivery().run()
@@ -51,10 +58,9 @@ class TestNotification(helpers.TestGLWithPopulatedDB):
         yield self.test_model_count(models.InternalTip, 2)
         yield self.test_model_count(models.ReceiverTip, 4)
         yield self.test_model_count(models.InternalFile, 4)
-        yield self.test_model_count(models.ReceiverFile, 8)
-        yield self.test_model_count(models.WhistleblowerFile, 0)
+        yield self.test_model_count(models.WhistleblowerFile, 8)
+        yield self.test_model_count(models.ReceiverFile, 0)
         yield self.test_model_count(models.Comment, 6)
-        yield self.test_model_count(models.Message, 8)
         yield self.test_model_count(models.Mail, 0)
 
         notification = Notification()
@@ -73,6 +79,20 @@ class TestNotification(helpers.TestGLWithPopulatedDB):
         yield notification.generate_emails()
 
         yield self.test_model_count(models.Mail, 2)
+
+        yield notification.spool_emails()
+
+        yield simulate_reminders()
+
+        yield notification.generate_emails()
+
+        yield self.test_model_count(models.Mail, 2)
+
+        yield notification.spool_emails()
+
+        yield notification.generate_emails()
+
+        yield self.test_model_count(models.Mail, 0)
 
         yield notification.spool_emails()
 

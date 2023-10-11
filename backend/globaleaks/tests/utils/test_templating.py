@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from twisted.internet.defer import inlineCallbacks
-from globaleaks.handlers import admin, public, rtip, user
+from globaleaks.handlers import admin, public, recipient, user
 from globaleaks.jobs.delivery import Delivery
 from globaleaks.orm import tw
 from globaleaks.tests import helpers
@@ -28,12 +28,11 @@ class notifTemplateTest(helpers.TestGLWithPopulatedDB):
                 tip_id = tip['id']
                 break
 
-        data['tip'], _ = yield rtip.get_rtip(1, self.dummyReceiver_1['id'], tip_id, 'en')
+        data['tip'], _ = yield recipient.rtip.get_rtip(1, self.dummyReceiver_1['id'], tip_id, 'en')
 
         data['comments'] = data['tip']['comments']
-        data['messages'] = data['tip']['messages']
 
-        for key in ['tip', 'comment', 'message', 'file']:
+        for key in ['tip', 'comment', 'file']:
             if key == 'tip':
                 data['type'] = 'tip'
             else:

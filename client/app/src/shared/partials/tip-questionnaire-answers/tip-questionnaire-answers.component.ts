@@ -17,7 +17,4 @@ export class TipQuestionnaireAnswersComponent {
   }
   constructor(public utilsService:UtilsService) {
   }
-
-  protected readonly JSON = JSON;
-  protected readonly alert = alert;
 }

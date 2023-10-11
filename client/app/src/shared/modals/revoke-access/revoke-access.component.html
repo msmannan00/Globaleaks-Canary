@@ -7,23 +7,7 @@
   <div class="modal-body">
     <div id="ReceiverContextAdder" class="form-group">
       <div class="input-group">
-          <!-- <ui-select data-ng-model="arg.receiver_id" data-theme="bootstrap">
-          <ui-select-match data-ng-attr-placeholder="{{'Search' | translate}}">
-             <span data-ng-bind="arg.users_names[$select.selected.id]"></span>
-      </ui-select-match>
-          <ui-select-choices data-repeat="receiver in public.receivers | filter: {name: $select.search}">
-             <span data-ng-bind-html="arg.users_names[receiver.id] | highlight: $select.search"></span>
-          </ui-select-choices>
-        </ui-select> -->
-        <!-- <ng-select [(ngModel)]="receiver_id">
-          <ng-option *ngFor="let item of args.users_names | keyvalue " [value]="item.key">
-            <span [innerHTML]="item.value"></span>
-          </ng-option>
-          <ng-template ng-not-found>
-            No results found
-          </ng-template>
-        </ng-select> -->
-        <ng-select [(ngModel)]="receiver_id">
+        <ng-select class="w-25" [(ngModel)]="receiver_id"  placeholder="{{ 'Search' | translate }}" [searchable]="true">
           <ng-container *ngFor="let receiver of receivers_by_id | keyvalue">
             <ng-container *ngFor="let user of args.users_names | keyvalue">
               <ng-option *ngIf="receiver.key === user.key" [value]="user.key">
@@ -31,7 +15,7 @@
               </ng-option>
             </ng-container>
           </ng-container>
-          <ng-template ng-not-found>
+          <ng-template>
             No results found
           </ng-template>
         </ng-select>
@@ -42,7 +26,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button id="modal-action-ok" class="btn btn-primary" (click)="confirm(receiver_id)">
+    <button id="modal-action-ok" class="btn btn-primary" (click)="confirm()">
       <span>{{'Confirm' | translate}}</span>
     </button>
     <a id="modal-action-cancel" class="btn btn-outline-secondary" (click)="cancel()">

@@ -72,6 +72,4 @@ export class FormFieldInputComponent implements OnInit{
   }
   constructor(public fieldUtilitiesService:FieldUtilitiesService) {
   }
-
-    protected readonly alert = alert;
 }

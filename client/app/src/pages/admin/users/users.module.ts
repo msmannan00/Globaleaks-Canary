@@ -9,12 +9,16 @@ import { NgbNavModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from 'app/src/shared.module';
 import { UsersComponent } from './users.component';
+import { UsersTab1Component } from './users-tab1/users-tab1.component';
+import { UsersTab2Component } from './users-tab2/users-tab2.component';
 
 
 @NgModule({
   declarations: [
     UsersComponent,
-    UserEditorComponent
+    UserEditorComponent,
+    UsersTab1Component,
+    UsersTab2Component
   ],
   imports: [
     CommonModule,

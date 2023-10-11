@@ -1,44 +1,40 @@
-import {
-  Injectable,
-} from "@angular/core";
+import { Injectable } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
-import { UtilsService } from "../shared/services/utils.service";
+import { AppDataService } from "../app-data.service";
+import { PreferenceResolver } from "../shared/resolvers/preference.resolver";
+import {UtilsService} from "../shared/services/utils.service";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AppConfigService} from "./app-config.service";
-import {AppDataService} from "../app-data.service";
-import {PreferenceResolver} from "../shared/resolvers/preference.resolver";
+import {ServiceInstanceService} from "../shared/services/service-instance.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class TranslationService {
 
-  language=""
-  onInit(changedLanguage:string) {
-    this.language = changedLanguage
-    if(this.preferenceResolver.dataModel){
-      this.translateService.setDefaultLang(this.preferenceResolver.dataModel.language);
-    }else {
-      this.translateService.setDefaultLang(this.language);
-    }
-  }
+  language = "";
 
-  onChange(changedLanguage:string) {
-    this.language = changedLanguage
-    let page = this.appDataService.page
-
-    this.translateService.use(this.language).subscribe(() => {
-      this.translateService.getTranslation(this.language).subscribe(() => {
-        this.utilsService.reloadCurrentRoute()
-      });
-    });
-  }
+  public utilsService:UtilsService
+  public appConfigService: AppConfigService
 
   constructor(
-      public preferenceResolver: PreferenceResolver,
-      public translateService: TranslateService,
-      public appDataService:AppDataService,
-      public utilsService: UtilsService,
+    private serviceInstanceService:ServiceInstanceService,
+    public preferenceResolver: PreferenceResolver,
+    public translateService: TranslateService,
+    public appDataService: AppDataService,
+    private router: Router,
   ) {
+  }
 
+  init(){
+    this.utilsService = this.serviceInstanceService.utilsService
+    this.appConfigService = this.serviceInstanceService.appConfigService
+  }
+
+  onChange(changedLanguage: string) {
+    this.language = changedLanguage;
+    this.translateService.use(this.language).subscribe(() => {
+      this.translateService.getTranslation(this.language).subscribe();
+    });
   }
 }

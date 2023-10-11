@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import base64
 import json
 import mimetypes
 import os
@@ -23,9 +24,19 @@ from globaleaks.utils.ip import check_ip
 from globaleaks.utils.log import log
 from globaleaks.utils.pgp import PGPContext
 from globaleaks.utils.securetempfile import SecureTemporaryFile
-from globaleaks.utils.utility import datetime_now, deferred_sleep
+from globaleaks.utils.utility import datetime_now
 
 mimetypes.add_type('text/javascript', '.js')
+
+
+def decodeString(string):
+    string = base64.b64decode(string)
+    uint8_array = [c for c in string]
+    uint16_array = []
+    for i in range(len(uint8_array)):
+        if not (i%2):
+             uint16_array.append((uint8_array[i] | (uint8_array[i+1] << 8)))
+    return ''.join(map(chr, uint16_array))
 
 
 def serve_file(request, fo):
@@ -75,7 +86,7 @@ def db_confirmation_check(session, tid, user_id, secret):
     if user.two_factor_secret:
         State.totp_verify(user.two_factor_secret, secret)
     else:
-        if not GCE.check_password(user.hash_alg, secret, user.salt, user.password):
+        if not GCE.check_password(secret, user.salt, user.hash):
             raise errors.InvalidAuthentication
 
 
@@ -87,7 +98,6 @@ def sync_confirmation_check(session, tid, user_id, secret):
 class BaseHandler(object):
     check_roles = 'admin'
     handler_exec_time_threshold = 120
-    uniform_answer_time = False
     cache_resource = False
     invalidate_cache = False
     root_tenant_only = False
@@ -95,7 +105,6 @@ class BaseHandler(object):
     upload_handler = False
     uploaded_file = None
     allowed_mimetypes = []
-    encryption_type = ''
 
     def __init__(self, state, request):
         self.name = type(self).__name__
@@ -288,7 +297,9 @@ class BaseHandler(object):
     def check_confirmation(self):
         tid = self.request.tid
         user_id = self.session.user_id
-        secret = self.request.headers.get(b'x-confirmation', b'').decode('unicode_escape')
+
+        secret = decodeString(self.request.headers.get(b'x-confirmation', b''))
+
         sync_confirmation_check(self.session.user_tid, user_id, secret)
 
     def open_file(self, filepath):
@@ -357,6 +368,7 @@ class BaseHandler(object):
             mime_type = 'application/octet-stream'
 
         filename = os.path.basename(self.request.args[b'flowFilename'][0].decode())
+
         self.uploaded_file = {
             'id': file_id,
             'date': datetime_now(),
@@ -365,13 +377,10 @@ class BaseHandler(object):
             'size': total_file_size,
             'filename': os.path.basename(f.filepath),
             'body': f,
-            'description': self.request.args.get(b'description', [''])[0]
+            'description': self.request.args.get(b'description', [''])[0],
+            'reference_id': self.request.args.get(b'reference_id', [''])[0],
+            'visibility': self.request.args.get(b'visibility', [''])[0]
         }
-
-        if b'encryption_type' in self.request.args:
-            updated_encryption_type = self.request.args[b'encryption_type'][0].decode()
-            self.uploaded_file['reference'] = self.request.args.get( b'reference')[0].decode()
-            setattr(BaseHandler, 'encryption_type', updated_encryption_type)
 
     def write_upload_plaintext_to_disk(self, destination):
         """
@@ -406,8 +415,3 @@ class BaseHandler(object):
             self.state.schedule_exception_email(self.request.tid, *err_tup)
 
         track_handler(self)
-
-        if self.uniform_answer_time:
-            needed_delay = (float(Settings.side_channels_guard) - (float(self.request.execution_time.microseconds) / float(1000))) / float(1000)
-            if needed_delay > 0:
-                return deferred_sleep(needed_delay)

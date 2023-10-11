@@ -1,5 +1,5 @@
 <ng-container *ngIf="tip">
-  <div id="Toolbar" class="row">
+  <div class="row">
     <div class="col-md-12">
       <a id="link-tiplist" routerLink="/recipient/reports" data-toggle="tooltip" title="{{'Reports' | translate}}"
         class="btn btn-outline-secondary">
@@ -37,14 +37,21 @@
         class="btn btn-outline-secondary">
         <i class="fa-solid fa-user-minus"></i>
       </span>
-     <ng-container *ngIf="tip.context">
-      <span id="tip-action-postpone"
-      *ngIf="preferencesService.dataModel.can_postpone_expiration && tip.context.tip_timetolive > 0"
-      (click)="tip_postpone()" data-toggle="tooltip" title="{{'Postpone the expiration date' | translate}}"
-      class="btn btn-outline-secondary">
-      <i class="fa-solid fa-clock"></i>
-    </span>
-     </ng-container>
+
+      <span id="tip-action-transfer-access" *ngIf="preferencesService.dataModel.can_transfer_access_to_reports"
+        (click)="openTipTransferModal()" data-toggle="tooltip" title="{{'Transfer access' | translate}}"
+        class="btn btn-outline-secondary">
+        <i class="fa-solid fa-people-arrows"></i>
+      </span>
+
+      <ng-container *ngIf="tip.context">
+        <span id="tip-action-postpone"
+          *ngIf="preferencesService.dataModel.can_postpone_expiration && tip.context.tip_timetolive > 0"
+          (click)="tip_postpone()" data-toggle="tooltip" title="{{'Postpone the expiration date' | translate}}"
+          class="btn btn-outline-secondary">
+          <i class="fa-solid fa-clock"></i>
+        </span>
+      </ng-container>
 
       <span id="tip-action-delete" *ngIf="preferencesService.dataModel.can_delete_submission" (click)="tipDelete()"
         data-toggle="tooltip" title="{{'Delete' | translate}}" class="btn btn-outline-secondary">
@@ -84,25 +91,52 @@
       <src-tip-questionnaire-answers [tipService]="rtipService"></src-tip-questionnaire-answers>
     </div>
 
-    <div class="col-md-6" *ngIf="tip.enable_whistleblower_identity">
+    <ng-container class="col-md-6" *ngIf="tip.enable_whistleblower_identity">
       <src-whistleblower-identity-reciever></src-whistleblower-identity-reciever>
-    </div>
+    </ng-container>
   </div>
   <div class="row">
     <div class="col-md-12">
-       <src-tip-files-receiver></src-tip-files-receiver>
-       <src-tip-upload-wbfile [tip]="tip"></src-tip-upload-wbfile>
+      <src-tip-files-receiver></src-tip-files-receiver>
     </div>
   </div>
-  <div class="row">
-    <ng-container *ngIf="tip.context">
-      <div class="col-md-6" *ngIf="tip.context.enable_comments || tip.comments.length">
-        <src-tip-comments [tipService]="rtipService"></src-tip-comments>
-      </div>
-      <div class="col-md-6" *ngIf="tip.context.enable_messages || tip.messages.length">
-        <src-tip-messages [tipService]="rtipService"></src-tip-messages>
-      </div>
-    </ng-container>
 
+  <ul ngbNav #nav="ngbNav" class="nav-tabs" [(activeId)]="active">
+    <ng-container *ngFor="let tab of tabs">
+      <li [ngbNavItem]="tab.title">
+        <button ngbNavLink>{{ tab.title | translate }}</button>
+        <ng-template ngbNavContent>
+          <ng-container *ngTemplateOutlet="tab.component"></ng-container>
+        </ng-template>
+      </li>
+    </ng-container>
+  </ul>
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+  <div class="row">
+    <ng-template #tab1>
+      <div class="col-md-12">
+        <src-tip-upload-wbfile [tip]="tip" [key]="'public'"></src-tip-upload-wbfile>
+        <ng-container *ngIf="tip.context">
+          <src-tip-comments [tipService]="rtipService" [key]="'public'"></src-tip-comments>
+        </ng-container>
+      </div>
+    </ng-template>
+    <ng-template #tab2>
+      <div class="col-md-12">
+        <src-tip-upload-wbfile [tip]="tip" [key]="'internal'"></src-tip-upload-wbfile>
+        <ng-container *ngIf="tip.context">
+          <src-tip-comments [tipService]="rtipService" [key]="'internal'"></src-tip-comments>
+        </ng-container>
+      </div>
+    </ng-template>
+    <ng-template #tab3>
+      <div class="col-md-12">
+        <src-tip-upload-wbfile [tip]="tip" [key]="'personal'"></src-tip-upload-wbfile>
+        <ng-container *ngIf="tip.context">
+          <src-tip-comments [tipService]="rtipService" [key]="'personal'"></src-tip-comments>
+        </ng-container>
+      </div>
+    </ng-template>
   </div>
+
 </ng-container>

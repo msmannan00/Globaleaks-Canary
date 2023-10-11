@@ -38,7 +38,7 @@
                             <div [class.hidden]="navigation !== index">
                                 <div id="step-{{index}}" ngForm #stepform="ngForm" ngFormChanges (ngFormChange)="onFormChange()">
                                     <markdown *ngIf="step.description" class="description" [data]="step.description | stripHtml"></markdown>
-                                    <src-form (notifyFileUpload)="notifyFileUpload($event)" [fileupload_url]="'api/submission/attachment'" [identity_provided]=identity_provided [uploads]="uploads" [displayErrors]="displayErrors()" [answers]="answers" [submission]="submission" [step]="step" [index]="index"></src-form>
+                                    <src-form (notifyFileUpload)="notifyFileUpload($event)" [fileupload_url]="'api/whistleblower/submission/attachment'" [identity_provided]=identity_provided [uploads]="uploads" [displayErrors]="displayErrors()" [answers]="answers" [submission]="submission" [step]="step" [index]="index"></src-form>
                                 </div>
                             </div>
                         </span>

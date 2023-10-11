@@ -12,38 +12,38 @@
 
         <div class="form-group">
         <label>{{ 'Project name' | translate }}</label>
-        <input class="form-control" [(ngModel)]="node.dataModel.name" type="text" />
+        <input name="node.dataModel.name" class="form-control" [(ngModel)]="node.dataModel.name" type="text" />
       </div>
   
       <div class="form-group">
         <label>{{ 'Description' | translate }}</label>
         <div>
-          <textarea class="form-control" [(ngModel)]="node.dataModel.description"></textarea>
+          <textarea name="node.dataModel.description" class="form-control" [(ngModel)]="node.dataModel.description"></textarea>
         </div>
       </div>
   
       <div class="form-group">
         <label>{{ 'Homepage title' | translate }}</label>
         <div>
-          <textarea class="form-control" [(ngModel)]="node.dataModel.header_title_homepage"></textarea>
+          <textarea class="form-control" name="node.dataModel.header_title_homepage" [(ngModel)]="node.dataModel.header_title_homepage"></textarea>
         </div>
       </div>
-  
+
       <div class="form-group">
         <label>{{ 'Presentation' | translate }}</label>
         <div>
-          <textarea class="form-control" [(ngModel)]="node.dataModel.presentation"></textarea>
+          <textarea class="form-control" name="node.dataModel.presentation" [(ngModel)]="node.dataModel.presentation"></textarea>
         </div>
       </div>
   
-      <div class="form-group" *ngIf="node.authenticationService.session.role === 'admin'">
+      <div class="form-group" *ngIf="authenticationService.session.role === 'admin'">
         <label>{{ 'Question to solicit possible whistleblowers' | translate }}</label>
         <div>
-          <textarea class="form-control" [(ngModel)]="node.dataModel.whistleblowing_question"></textarea>
+          <textarea name="node.dataModel.whistleblowing_question" class="form-control" [(ngModel)]="node.dataModel.whistleblowing_question"></textarea>
         </div>
       </div>
   
-      <div class="form-group" *ngIf="node.authenticationService.session.role === 'admin'">
+      <div class="form-group" *ngIf="authenticationService.session.role === 'admin'">
         <label>{{ 'Whistleblowing button' | translate }}</label>
         <input class="form-control" [(ngModel)]="node.dataModel.whistleblowing_button" type="text" />
       </div>

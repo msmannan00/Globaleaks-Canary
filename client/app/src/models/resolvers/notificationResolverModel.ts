@@ -28,8 +28,6 @@ export class notificationResolverModel {
     admin_test_mail_title:string;
     email_validation_mail_template:string;
     email_validation_mail_title:string;
-    export_message_recipient:string;
-    export_message_whistleblower:string;
     export_template:string;
     https_certificate_expiration_mail_template:string;
     https_certificate_expiration_mail_title:string;

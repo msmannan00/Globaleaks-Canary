@@ -40,6 +40,7 @@ interface Option {
     id: string;
     editable: boolean;
     name: string;
+    key:string
     steps: Step[];
   }
  

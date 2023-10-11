@@ -133,6 +133,9 @@
                     </label>
                 </div>
             </div>
+            <div id="{{fieldEntry}}" *ngSwitchCase="'voice'">
+                <src-voice-recorder (notifyFileUpload)="notifyFileUpload.emit()" [fileupload_url]="fileupload_url" [uploads]="uploads" [field]="field" [entryIndex]="entryIndex" [fieldEntry]="fieldEntry"></src-voice-recorder>
+            </div>
             <div id="{{fieldEntry}}" *ngSwitchCase="'fileupload'">
                 <src-rfile-upload-button (notifyFileUpload)="notifyFileUpload.emit()" [fileupload_url]="fileupload_url" [uploads]="uploads" [field]="field" [formuploader]="true"></src-rfile-upload-button>
             </div>

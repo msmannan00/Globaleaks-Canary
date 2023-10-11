@@ -32,7 +32,7 @@ export class AuditlogTab3Component {
 
   export_auditlog() {
     new ngxCsv(JSON.stringify(this.tips), 'reports', {
-      headers: ['id','progressive','creation_date','last_update','expiration_date','context_id','status','substatus','tor','comments','messages','files','last_access'],
+      headers: ['id','progressive','creation_date','last_update','expiration_date','context_id','status','substatus','tor','comments','files','last_access'],
     });
   }
 }

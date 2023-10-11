@@ -8,10 +8,11 @@ from globaleaks import models
 from globaleaks.jobs.job import LoopingJob
 from globaleaks.orm import transact
 from globaleaks.settings import Settings
-from globaleaks.utils.crypto import generateRandomKey, GCE
+from globaleaks.utils.crypto import GCE
 from globaleaks.utils.log import log
 from globaleaks.utils.pgp import PGPContext
-from globaleaks.handlers.base import BaseHandler
+from globaleaks.utils.utility import uuid4
+
 
 __all__ = ['Delivery']
 
@@ -21,7 +22,7 @@ def file_delivery(session):
     """
     This function roll over the InternalFile uploaded, extract a path, id and
     receivers associated, one entry for each combination. representing the
-    ReceiverFile that need to be created.
+    WhistleblowerFile that need to be created.
     """
     receiverfiles_maps = {}
     whistleblowerfiles_maps = {}
@@ -32,70 +33,49 @@ def file_delivery(session):
                               .order_by(models.InternalFile.creation_date) \
                               .limit(20):
         ifile.new = False
-        src = ifile.filename
-        filecode = src.split('.')[0]
-
-        if itip.crypto_files_pub_key:
-            ifile.filename = "%s.encrypted" % filecode
-        else:
-            ifile.filename = "%s.plain" % filecode
+        src = ifile.id
 
         for rtip, user in session.query(models.ReceiverTip, models.User) \
                                  .filter(models.ReceiverTip.internaltip_id == ifile.internaltip_id,
                                          models.User.id == models.ReceiverTip.receiver_id):
-            receiverfile = models.ReceiverFile()
+            receiverfile = models.WhistleblowerFile()
             receiverfile.internalfile_id = ifile.id
             receiverfile.receivertip_id = rtip.id
-            receiverfile.filename = ifile.filename
 
             # https://github.com/globaleaks/GlobaLeaks/issues/444
             # avoid to mark the receiverfile as new if it is part of a submission
             # this way we avoid to send unuseful messages
-            receiverfile.new = not ifile.submission
+            receiverfile.new = not ifile.creation_date == itip.creation_date
 
             session.add(receiverfile)
-            if BaseHandler.encryption_type == 'tip':
-                crypto_key = itip.crypto_tip_pub_key
-            else:
-                crypto_key = itip.crypto_files_pub_key
 
             if ifile.id not in receiverfiles_maps:
                 receiverfiles_maps[ifile.id] = {
-                    'key': crypto_key,
+                    'key': itip.crypto_tip_pub_key,
                     'src': src,
-                    'rfiles': []
+                    'wbfiles': []
                 }
 
-            if not itip.crypto_files_pub_key and user.pgp_key_public:
-                receiverfile.filename = "%s.pgp" % generateRandomKey()
-            else:
-                receiverfile.filename = ifile.filename
-
-            receiverfiles_maps[ifile.id]['rfiles'].append({
-                'dst': os.path.abspath(os.path.join(Settings.attachments_path, receiverfile.filename)),
+            receiverfiles_maps[ifile.id]['wbfiles'].append({
+                'dst': os.path.abspath(os.path.join(Settings.attachments_path, receiverfile.internalfile_id)),
                 'pgp_key_public': user.pgp_key_public
             })
 
-    for wbfile, itip in session.query(models.WhistleblowerFile, models.InternalTip)\
-                               .filter(models.WhistleblowerFile.new.is_(True),
-                                       models.ReceiverTip.id == models.WhistleblowerFile.receivertip_id,
-                                       models.InternalTip.id == models.ReceiverTip.internaltip_id) \
-                               .order_by(models.WhistleblowerFile.creation_date) \
+    for rfile, itip in session.query(models.ReceiverFile, models.InternalTip)\
+                               .filter(models.ReceiverFile.new.is_(True),
+                                       models.ReceiverFile.internaltip_id == models.InternalTip.id) \
+                               .order_by(models.ReceiverFile.creation_date) \
                                .limit(20):
-        wbfile.new = False
-        src = wbfile.filename
-        filecode = src.split('.')[0]
+        rfile.new = False
+        src = rfile.id
 
-        if itip.crypto_tip_pub_key:
-            wbfile.filename = "%s.encrypted" % filecode
-        else:
-            wbfile.filename = "%s.plain" % filecode
-
-        whistleblowerfiles_maps[wbfile.id] = {
+        whistleblowerfiles_maps[rfile.id] = {
             'key': itip.crypto_tip_pub_key,
             'src': src,
-            'dst': os.path.abspath(os.path.join(Settings.attachments_path, wbfile.filename)),
+            'dst': os.path.abspath(os.path.join(Settings.attachments_path, rfile.id)),
         }
+
+        rfile.new = False
 
     return receiverfiles_maps, whistleblowerfiles_maps
 
@@ -131,12 +111,12 @@ def process_receiverfiles(state, files_maps):
     Function that process uploaded receiverfiles
 
     :param state: A reference to the application state
-    :param files_maps: descriptos of whistleblower files to be processed
+    :param files_maps: descriptors of whistleblower files to be processed
     """
     for a, m in files_maps.items():
         sf = state.get_tmp_file_by_name(m['src'])
 
-        for rcounter, rf in enumerate(m['rfiles']):
+        for rcounter, rf in enumerate(m['wbfiles']):
             try:
                 if m['key']:
                     write_encrypted_file(m['key'], sf, rf['dst'])
@@ -154,7 +134,7 @@ def process_whistleblowerfiles(state, files_maps):
     Function that process uploaded whistleblowerfiles
 
     :param state: A reference to the application state
-    :param files_maps: descriptos of whistleblower files to be processed
+    :param files_maps: descriptors of whistleblower files to be processed
     """
     for _, m in files_maps.items():
         try:

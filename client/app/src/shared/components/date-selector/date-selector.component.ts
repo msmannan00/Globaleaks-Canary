@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NgbDate, NgbCalendar, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDate, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 
@@ -15,16 +15,13 @@ export class DateRangeSelectorComponent {
   @Input() currentDates: any;
   fromDate: NgbDate | null = null;
   toDate: NgbDate | null = null;
-
-  constructor(calendar: NgbCalendar) {}
-
+  constructor() {}
   ngOnInit() {
     if (this.currentDates) {
       this.fromDate = this.currentDates.fromDate;
       this.toDate = this.currentDates.toDate;
     }
   }
-
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
@@ -59,7 +56,6 @@ export class DateRangeSelectorComponent {
     this.fromDate = null;
     this.toDate = null;
     this.emitDateSelection.emit({ fromDate: null, toDate: null });
-    // alert('Date is reset');
   }
 
   isRange(date: NgbDate) {

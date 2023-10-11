@@ -12,6 +12,14 @@
         </span>
     </div>
 
+    <div *ngSwitchCase="'voice'">
+        <i class="fa-solid fa-file-audio" *ngIf="authenticationService.session.role === 'whistleblower'"></i>
+        <div class="audio-player-wrapper" [ngClass]="{ 'disabled-interface': !audiolist[field.id] }" *ngIf="authenticationService.session.role === 'receiver'">
+            <audio [src]="audiolist[field.id]" controls class="audio-player"></audio>
+        </div>
+    </div>
+    
+
     <div *ngSwitchCase="'selectbox' || 'multichoice'">
         <div *ngFor="let option of field.options">
             <span *ngIf="entry['value'] === option.id">{{option.label}}</span>
@@ -45,7 +53,7 @@
         </div>
     </span>
 
-    <span *ngSwitchDefault class="entry-text preformatted">
+    <span *ngSwitchDefault class="entry-text">
         <span *ngIf="entry['value']">
             {{entry['value']}}
         </span>

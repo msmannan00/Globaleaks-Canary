@@ -18,7 +18,7 @@ from globaleaks.utils.utility import datetime_now, datetime_null, uuid4
 def db_set_user_password(session, tid, user, password):
     config = models.config.ConfigFactory(session, tid)
 
-    user.password = GCE.hash_password(password, user.salt)
+    user.hash = GCE.hash_password(password, user.salt)
     user.password_change_date = datetime_now()
 
     if config.get_val('encryption'):
@@ -90,7 +90,7 @@ def db_delete_user(session, tid, user_session, user_id):
     if user_session.user_id == user_id:
         # Prevent users to delete themeselves
         raise errors.ForbiddenOperation
-    elif user_to_be_deleted.crypto_escrow_prv_key and not user_session.crypto_escro_prv_key:
+    elif user_to_be_deleted.crypto_escrow_prv_key and not user_session.cryptow_escro_prv_key:
         # Prevent users to delete privileged users when escrow keys could be invalidated
         raise errors.ForbiddenOperation
 
@@ -132,6 +132,10 @@ def db_admin_update_user(session, tid, user_session, user_id, request, language)
         user.change_email_token = None
         user.change_email_address = ''
         user.change_email_date = datetime_null()
+
+    # Prevent administrators to reset password change needed status
+    if user.password_change_needed:
+        request['password_change_needed'] = True
 
     # The various options related in manage PGP keys are used here.
     parse_pgp_options(user, request)

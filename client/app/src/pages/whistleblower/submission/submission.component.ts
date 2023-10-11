@@ -1,12 +1,12 @@
-import {Component, Injector, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import {AppDataService} from "../../../app-data.service";
-import {FieldUtilitiesService} from "../../../shared/services/field-utilities.service";
-import {SubmissionService} from "../../../services/submission.service";
-import {UtilsService} from "../../../shared/services/utils.service";
-import {AuthenticationService} from "../../../services/authentication.service";
-import {NgForm} from "@angular/forms";
-import {TranslateService} from "@ngx-translate/core";
-import {Router} from "@angular/router";
+import { Component, Injector, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AppDataService } from "../../../app-data.service";
+import { FieldUtilitiesService } from "../../../shared/services/field-utilities.service";
+import { SubmissionService } from "../../../services/submission.service";
+import { UtilsService } from "../../../shared/services/utils.service";
+import { AuthenticationService } from "../../../services/authentication.service";
+import { NgForm } from "@angular/forms";
+import { TranslateService } from "@ngx-translate/core";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'src-submission',
@@ -14,34 +14,35 @@ import {Router} from "@angular/router";
   styleUrls: ['./submission.component.css'],
   providers: [SubmissionService]
 })
-export class SubmissionComponent implements OnInit{
+export class SubmissionComponent implements OnInit {
   @ViewChild('submissionForm') public submissionForm: NgForm;
   @ViewChildren('stepform') stepforms: QueryList<NgForm>;
 
-  answers:any = {};
-  stepformlist:any = {}
+  answers: any = {};
+  stepformlist: any = {}
   identity_provided = false
   context_id = "";
-  context:any = undefined;
-  receiversOrderPredicate:any
+  context: any = undefined;
+  receiversOrderPredicate: any
   navigation = -1;
-  validate:any = [];
+  validate: any = [];
   score = 0;
-  done:boolean;
-  uploads:any = {}
-  field_id_map:any
-  questionnaire:any
+  done: boolean;
+  uploads: any = {}
+  field_id_map: any
+  questionnaire: any
   receiver_selection_step: number;
   contextsOrderPredicate = this.appDataService.public.node.show_contexts_in_alphabetical_order ? "name" : "order";
-  selectable_contexts :any[]
-  submission:SubmissionService
+  selectable_contexts: any[]
+  submission: SubmissionService
   show_steps_navigation_bar = false
+  receivedData: any;
 
   firstStepIndex() {
     return this.receiver_selection_step ? -1 : 0;
   };
 
-  prepareSubmission(context:any){
+  prepareSubmission(context: any) {
     this.done = false;
     this.answers = {};
     this.uploads = {};
@@ -69,7 +70,7 @@ export class SubmissionComponent implements OnInit{
     return Object.keys(this.submission.selected_receivers).length < this.submission.context.maximum_selectable_receivers;
   };
 
-  switch_selection(receiver:any) {
+  switch_selection(receiver: any) {
     if (receiver.forcefully_selected) {
       return;
     }
@@ -81,7 +82,7 @@ export class SubmissionComponent implements OnInit{
     }
   };
 
-  onFieldUpdated(){
+  onFieldUpdated() {
   }
 
   selectContext(context: any) {
@@ -89,7 +90,7 @@ export class SubmissionComponent implements OnInit{
     this.prepareSubmission(context)
   }
 
-  initializeSubmission(){
+  initializeSubmission() {
     this.submission = this.submissionService
     let context = null;
 
@@ -103,7 +104,7 @@ export class SubmissionComponent implements OnInit{
       this.prepareSubmission(context)
     }
   }
-  goToStep(step:number){
+  goToStep(step: number) {
     this.navigation = step;
     this.utilsService.scrollToTop();
   }
@@ -120,7 +121,7 @@ export class SubmissionComponent implements OnInit{
     return Object.keys(this.submission.selected_receivers).length > 0;
   };
 
-  hasNextStep(){
+  hasNextStep() {
     return this.navigation < this.lastStepIndex();
   }
 
@@ -128,22 +129,22 @@ export class SubmissionComponent implements OnInit{
     return this.firstStepIndex() === this.lastStepIndex();
   };
 
-  initStepForm(form:NgForm, id:any){
+  initStepForm(form: NgForm, id: any) {
     this.stepformlist[id] = form
   }
 
-  stepForm(index:any):any {
+  stepForm(index: any): any {
     if (this.stepforms && index !== -1) {
       return this.stepforms.get(index)
     }
   };
 
-  displayStepErrors(index:number):any {
+  displayStepErrors(index: number): any {
     if (index !== -1) {
       let response = this.stepForm(index)
-      if(response){
+      if (response) {
         return response?.invalid
-      }else {
+      } else {
         return false
       }
     }
@@ -151,7 +152,7 @@ export class SubmissionComponent implements OnInit{
 
   lastStepIndex() {
     let last_enabled = 0;
-    if(this.questionnaire){
+    if (this.questionnaire) {
 
       for (let i = 0; i < this.questionnaire.steps.length; i++) {
         if (this.fieldUtilitiesService.isFieldTriggered(null, this.questionnaire.steps[i], this.answers, this.score)) {
@@ -171,9 +172,9 @@ export class SubmissionComponent implements OnInit{
     return false;
   };
 
-  uploading(){
+  uploading() {
     let uploading = false
-    if(this.uploads && this.done){
+    if (this.uploads && this.done) {
       for (let key in this.uploads) {
         if (this.uploads[key].flowJs && this.uploads[key].flowJs.isUploading()) {
           uploading = true
@@ -184,9 +185,9 @@ export class SubmissionComponent implements OnInit{
     return uploading
   }
 
-  calculateEstimatedTime(){
+  calculateEstimatedTime() {
     let timeRemaining = 0
-    if(this.uploads && this.done){
+    if (this.uploads && this.done) {
       for (let key in this.uploads) {
         if (this.uploads[key] && this.uploads[key].flowJs) {
           timeRemaining += this.uploads[key].flowJs.timeRemaining()
@@ -194,23 +195,23 @@ export class SubmissionComponent implements OnInit{
       }
     }
 
-    if(!isFinite(timeRemaining)){
-      timeRemaining=0
+    if (!isFinite(timeRemaining)) {
+      timeRemaining = 0
     }
     return timeRemaining
   }
 
-  calculateProgress(){
+  calculateProgress() {
     let progress = 0
-    if(this.uploads && this.done){
+    if (this.uploads && this.done) {
       for (let key in this.uploads) {
         if (this.uploads[key] && this.uploads[key].flowJs) {
           progress += this.uploads[key].flowJs.progress()
         }
       }
     }
-    if(!isFinite(progress)){
-      progress=0
+    if (!isFinite(progress)) {
+      progress = 0
     }
     return progress
   }
@@ -227,14 +228,14 @@ export class SubmissionComponent implements OnInit{
     if (!this.hasNextStep() && this.submissionHasErrors()) {
       return true;
     }
-    if(this.displayStepErrors(this.navigation)) {
+    if (this.displayStepErrors(this.navigation)) {
       return true;
     }
     return false;
   };
 
   checkForInvalidFields() {
-    for(let counter = 0; counter <= this.navigation; counter++) {
+    for (let counter = 0; counter <= this.navigation; counter++) {
       this.validate[counter] = true
       if (this.questionnaire.steps[counter].enabled) {
         if (this.stepforms.get(counter)?.invalid) {
@@ -246,7 +247,11 @@ export class SubmissionComponent implements OnInit{
     return true;
   }
 
-  completeSubmission(){
+  completeSubmission() {
+    this.receivedData = this.submissionService.getSharedData();
+    if (this.receivedData !== null && this.receivedData !== undefined) {
+      this.receivedData.upload()
+    }
     this.fieldUtilitiesService.onAnswersUpdate(this);
 
     if (!this.runValidation()) {
@@ -288,7 +293,7 @@ export class SubmissionComponent implements OnInit{
     return true;
   };
 
-  incrementStep(){
+  incrementStep() {
     if (!this.runValidation()) {
       return;
     }
@@ -305,7 +310,7 @@ export class SubmissionComponent implements OnInit{
   }
 
   resetForm() {
-    if(this.submissionForm){
+    if (this.submissionForm) {
       this.submissionForm.reset();
     }
   }
@@ -326,8 +331,8 @@ export class SubmissionComponent implements OnInit{
     this.fieldUtilitiesService.onAnswersUpdate(this);
   }
 
-  notifyFileUpload(uploads:any) {
-    if(uploads){
+  notifyFileUpload(uploads: any) {
+    if (uploads) {
       this.uploads = uploads
       this.fieldUtilitiesService.onAnswersUpdate(this);
     }
@@ -337,8 +342,9 @@ export class SubmissionComponent implements OnInit{
     this.resetForm()
   }
 
-  constructor(private injector: Injector, private router: Router, public translateService:TranslateService, public authenticationService:AuthenticationService, public appDataService:AppDataService,public utilsService:UtilsService ,public fieldUtilitiesService:FieldUtilitiesService, public submissionService:SubmissionService) {
+  constructor(private injector: Injector, private router: Router, public translateService: TranslateService, public authenticationService: AuthenticationService, public appDataService: AppDataService, public utilsService: UtilsService, public fieldUtilitiesService: FieldUtilitiesService, public submissionService: SubmissionService) {
     this.selectable_contexts = []
+    this.receivedData = this.submissionService.getSharedData();
     this.initializeSubmission()
   }
 

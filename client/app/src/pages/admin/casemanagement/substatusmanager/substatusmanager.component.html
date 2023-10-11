@@ -1,10 +1,10 @@
 <div class="submissionStatusList">
     <div ngForm="editsubmissionStatus" #editsubmissionStatus="ngForm">
         <div class="configItem">
-            <div class="editorHeader row" data-ng-click="toggleEditing(); $event.stopPropagation();">
-                <span class="col-md-7">{{submissions_status.label | translate}}</span>
+            <div class="editorHeader row">
+                <span class="col-md-7" (click)="toggleEditing(submissions_status); $event.stopPropagation();">{{submissions_status.label | translate}}</span>
                 <span class="col-md-5 clearfix">
-                        <span class="float-right">
+                        <span class="float-end">
                           <button *ngIf="!first" class="btn btn-sm btn-primary" (click)="moveUp($event, index)" [ngbTooltip]="'Move up' | translate">
                             <i class="fa-solid fa-chevron-up"></i>
                           </button>

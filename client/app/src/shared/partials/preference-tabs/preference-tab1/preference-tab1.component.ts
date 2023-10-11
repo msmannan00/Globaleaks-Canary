@@ -63,18 +63,14 @@ export class PreferenceTab1Component implements OnInit{
                   }
               }
 
-              const headers = new HttpHeaders()
-                  .set('Content-Type', 'application/json')
-                  .set('X-Confirmation', result);
-
-              this.httpService.requestOperations(data, headers).subscribe(
+              this.httpService.requestOperationsRecovery(data, this.utilsService.encodeString(result)).subscribe(
                   {
                       next: response => {
                           this.preferenceResolver.dataModel.two_factor = !this.preferenceResolver.dataModel.two_factor
-                          this.utilsService.reloadCurrentRoute()
+                          this.utilsService.reloadCurrentRoute();
                       },
                       error: (error: any) => {
-                          this.utilsService.reloadCurrentRoute()
+                          this.utilsService.reloadCurrentRoute();
                       }
                   }
               )
@@ -91,50 +87,44 @@ export class PreferenceTab1Component implements OnInit{
   getEncryptionRecoveryKey() {
 
     let modalRef = this.modalService.open(ConfirmationWithPasswordComponent);
+    modalRef.componentInstance.confirmFunction = (result:any) => {
+      let data = {
+        "operation": "get_recovery_key",
+        "args": {
+          "secret": this.twofactorauthData.totp.secret,
+          "token": this.twofactorauthData.totp.token
+        }
+      }
 
-    modalRef.result.then(
-        (result) => {
-          let data = {
-            "operation": "get_recovery_key",
-            "args": {
-              "secret": this.twofactorauthData.totp.secret,
-              "token": this.twofactorauthData.totp.token
+      let requestObservable = this.httpService.requestOperationsRecovery(data, this.utilsService.encodeString(result));
+      requestObservable.subscribe(
+        {
+          next: response => {
+            this.preferenceResolver.dataModel.clicked_recovery_key = true;
+            let erk = response.data['text'].match(/.{1,4}/g).join("-");
+            let modalRef = this.modalService.open(EncryptionRecoveryKeyComponent);
+            modalRef.componentInstance.erk = erk;
+          },
+          error: (error: any) => {
+            if(error.error['error_message'] == "Authentication Failed"){
+              this.getEncryptionRecoveryKey()
+            }else {
+              this.preferenceResolver.dataModel.clicked_recovery_key = true;
+              let erk = error.error['text'].match(/.{1,4}/g).join("-");
+              let modalRef = this.modalService.open(EncryptionRecoveryKeyComponent);
+              modalRef.componentInstance.erk = erk;
             }
           }
-
-          const headers = new HttpHeaders()
-             .set('Content-Type', 'application/json')
-             .set('X-Confirmation', result);
-
-          let requestObservable = this.httpService.requestOperations(data, headers);
-          requestObservable.subscribe(
-              {
-                next: response => {
-                  this.preferenceResolver.dataModel.clicked_recovery_key = true;
-                  let erk = response.data['text'].match(/.{1,4}/g).join("-");
-                  let modalRef = this.modalService.open(EncryptionRecoveryKeyComponent);
-                  modalRef.componentInstance.erk = erk;
-                },
-                error: (error: any) => {
-                  this.preferenceResolver.dataModel.clicked_recovery_key = true;
-                  let erk = error.error['text'].match(/.{1,4}/g).join("-");
-                  let modalRef = this.modalService.open(EncryptionRecoveryKeyComponent);
-                  modalRef.componentInstance.erk = erk;
-                }
-              }
-          );
-        },
-        (reason) => {
-          console.log('Modal dismissed:', reason);
         }
-    );
+      );
+    };
   }
 
   save() {
     if (this.preferenceResolver.dataModel.pgp_key_remove) {
       this.preferenceResolver.dataModel.pgp_key_public = "";
     }
-    let requestObservable = this.httpService.updatePreferenceResource(JSON.stringify(this.preferenceResolver.dataModel), {});
+    let requestObservable = this.httpService.updatePreferenceResource(JSON.stringify(this.preferenceResolver.dataModel));
     requestObservable.subscribe(
         {
             next: response => {

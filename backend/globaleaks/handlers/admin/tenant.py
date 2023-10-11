@@ -4,9 +4,11 @@ from globaleaks.db.appdata import load_appdata, db_load_defaults
 from globaleaks.handlers.base import BaseHandler
 from globaleaks.handlers.wizard import db_wizard
 from globaleaks.models import serializers
-from globaleaks.models.config import db_set_config_variable
+from globaleaks.models.config import db_get_config_variable, \
+    db_set_config_variable
 from globaleaks.orm import db_del, db_get, transact, tw
 from globaleaks.rest import requests
+from globaleaks.utils.tls import gen_selfsigned_certificate
 
 
 def db_initialize_tenant_submission_statuses(session, tid):
@@ -16,14 +18,10 @@ def db_initialize_tenant_submission_statuses(session, tid):
     :param session: An ORM session
     :param tid: A tenant ID
     """
-    for s in [{'id': 'new', 'label': {'en': 'New'}},
-              {'id': 'opened', 'label': {'en': 'Opened'}},
-              {'id': 'closed', 'label': {'en': 'Closed'}}]:
-        state = models.SubmissionStatus()
-        state.id = s['id']
-        state.tid = tid
-        state.label = s['label']
-        session.add(state)
+    for s in [{'tid': tid, 'id': 'new', 'label': {'en': 'New'}, 'tip_timetolive': 0},
+              {'tid': tid, 'id': 'opened', 'label': {'en': 'Opened'}, 'tip_timetolive': 0},
+              {'tid': tid, 'id': 'closed', 'label': {'en': 'Closed'}, 'tip_timetolive': 0}]:
+        session.add(models.SubmissionStatus(s))
 
 
 def db_create(session, desc):
@@ -39,14 +37,22 @@ def db_create(session, desc):
     appdata = load_appdata()
 
     if t.id == 1:
+        language = 'en'
         db_load_defaults(session)
+    else:
+        language = db_get_config_variable(session, 1, 'default_language')
 
     models.config.initialize_config(session, t.id, desc['mode'])
+
+    if t.id == 1:
+        key, cert = gen_selfsigned_certificate()
+        db_set_config_variable(session, 1, 'https_selfsigned_key', key)
+        db_set_config_variable(session, 1, 'https_selfsigned_cert', cert)
 
     for var in ['mode', 'name', 'subdomain']:
         db_set_config_variable(session, t.id, var, desc[var])
 
-    models.config.add_new_lang(session, t.id, 'en', appdata)
+    models.config.add_new_lang(session, t.id, language, appdata)
 
     db_initialize_tenant_submission_statuses(session, t.id)
 

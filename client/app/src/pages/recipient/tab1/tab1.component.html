@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>{{ 'Logo' | translate }}</label>
+            <div appImageUpload [imageUploadModel]="node.dataModel" [imageUploadModelAttr]="'logo'"
+                [imageUploadId]="'logo'">
+            </div>
+
+            <!-- <div data-image-upload [data-image-upload-model]="node.dataModel" [data-image-upload-model-attr]="'logo'"
+                [data-image-upload-id]="'logo'"></div> -->
+        </div>
+
+        <div class="form-group">
+        <label>{{ 'Project name' | translate }}</label>
+        <input class="form-control" [(ngModel)]="node.dataModel.name" type="text" />
+      </div>
+  
+      <div class="form-group">
+        <label>{{ 'Description' | translate }}</label>
+        <div>
+          <textarea class="form-control" [(ngModel)]="node.dataModel.description"></textarea>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label>{{ 'Homepage title' | translate }}</label>
+        <div>
+          <textarea class="form-control" [(ngModel)]="node.dataModel.header_title_homepage"></textarea>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label>{{ 'Presentation' | translate }}</label>
+        <div>
+          <textarea class="form-control" [(ngModel)]="node.dataModel.presentation"></textarea>
+        </div>
+      </div>
+  
+      <div class="form-group" *ngIf="authenticationService.session.role === 'admin'">
+        <label>{{ 'Question to solicit possible whistleblowers' | translate }}</label>
+        <div>
+          <textarea class="form-control" [(ngModel)]="node.dataModel.whistleblowing_question"></textarea>
+        </div>
+      </div>
+  
+      <div class="form-group" *ngIf="authenticationService.session.role === 'admin'">
+        <label>{{ 'Whistleblowing button' | translate }}</label>
+        <input class="form-control" [(ngModel)]="node.dataModel.whistleblowing_button" type="text" />
+      </div>
+
+        <div class="form-group" *ngIf="node.dataModel.mode === 'default'">
+        <div class="form-group">
+          <label>{{ 'Disclaimer' | translate }}</label>
+          <div>
+            <textarea class="form-control" [(ngModel)]="node.dataModel.disclaimer_text"></textarea>
+          </div>
+        </div>
+  
+        <div>
+          <label>{{ 'Footer' | translate }}</label>
+          <div>
+            <textarea class="form-control" [(ngModel)]="node.dataModel.footer"></textarea>
+          </div>
+        </div>
+      </div>
+
+        <div class="form-group">
+        <button class="btn btn-primary"
+                [disabled]="contentForm.invalid"
+                (click)="updateNode()" type="submit">
+          <i class="fa-solid fa-check"></i>
+          <span>{{ 'Save' | translate }}</span>
+        </button>
+      </div>
+    </div>
+</div>

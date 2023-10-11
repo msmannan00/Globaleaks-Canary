@@ -56,7 +56,6 @@ export class nodeResolverModel {
   root_tenant: boolean;
   https_possible: boolean;
   encryption_possible: boolean;
-  logo: boolean;
   update_available: boolean;
   contexts_clarification: string;
   custom_privacy_badge_text: string;
@@ -72,4 +71,8 @@ export class nodeResolverModel {
   signup_tos2_title: string;
   whistleblowing_button: string;
   whistleblowing_question: string;
+  css: any;
+  favicon: any;
+  logo: any;
+  script: any;
 }

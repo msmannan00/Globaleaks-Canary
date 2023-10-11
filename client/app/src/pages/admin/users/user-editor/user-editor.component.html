@@ -10,13 +10,13 @@
                 </ng-container>
             </span>
             <span class="badge bg-secondary" *ngIf="!user.enabled">{{ 'Disabled' | translate }}</span>
-            <span class="badge bg-default" *ngIf="nodeData.encryption && !user.encryption"
+            <span class="badge bg-default text-dark" *ngIf="nodeData.encryption && !user.encryption"
                 [ngbTooltip]="'This user has not performed the first login yet.' | translate">
                 <i class="fa-solid fa-exclamation-circle"></i>
             </span>
         </span>
         <span class="col-md-5 clearfix">
-            <span class="float-right">
+            <span class="float-end">
                 <button class="btn btn-sm btn-outline-secondary" *ngIf="!editing" (click)="toggleEditing();">
                     <span>{{ 'Edit' | translate }}</span>
                 </button>
@@ -187,7 +187,7 @@
         <div class="row" *ngIf="user.role === 'admin'">
             <div class="col-md-12">
                 <div class="form-group" *ngIf="nodeData.escrow && user.encryption && preferenceData.escrow">
-                    <input [(ngModel)]="user.escrow" type="checkbox" (ngModelChange)="toggleUserEscrow(user)"
+                    <input [(ngModel)]="user.escrow" name="user.escrow" type="checkbox" (ngModelChange)="toggleUserEscrow(user)"
                         [disabled]="authenticationData.session.user_id === user.id">
                     <label>{{ 'Give this admin ability to change user passwords' | translate }}</label>
                 </div>
@@ -200,16 +200,20 @@
                     <label>{{ 'Forcefully selected' | translate }}</label>
                 </div>
                 <div class="form-group">
-                    <input [(ngModel)]="user.can_delete_submission" type="checkbox" />
+                    <input name="can_delete_submission" [(ngModel)]="user.can_delete_submission" type="checkbox" />
                     <label>{{ 'Allow the recipient to delete reports' | translate }}</label>
                 </div>
-                <div class="form-group" *ngIf="!nodeData.can_postpone_expiration">
+                <div name="can_postpone_expiration" class="form-group" *ngIf="!nodeData.can_postpone_expiration">
                     <input [(ngModel)]="user.can_postpone_expiration" type="checkbox" />
                     <label>{{ 'Allow the recipient to postpone the report expiration date' | translate }}</label>
                 </div>
                 <div class="form-group">
-                    <input [(ngModel)]="user.can_grant_access_to_reports" type="checkbox" />
+                    <input name="can_grant_access_to_reports" [(ngModel)]="user.can_grant_access_to_reports" type="checkbox" />
                     <label>{{ 'Give this recipient ability to grant user access to reports' | translate }}</label>
+                </div>
+                <div class="form-group">
+                    <input name="can_transfer_access_to_reports" [(ngModel)]="user.can_transfer_access_to_reports" type="checkbox" />
+                    <label>{{ 'Give this user ability to transfer reports to other users' | translate }}</label>
                 </div>
             </div>
         </div>

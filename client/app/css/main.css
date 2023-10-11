@@ -340,6 +340,14 @@ table tr td {
 	vertical-align: middle !important;
 }
 
+.badge.bg-primary {
+	background-color: #205282 !important;
+}
+
+.badge.bg-primary:hover {
+	background-color: #c2d9f0 !important;
+}
+
 .page-link{
 	color:#205282;
 }
@@ -424,10 +432,18 @@ table tr td {
 	margin: 1em;
 }
 
-/* #WhistleblowerLoginForm input {
-	width: 14rem;
-	text-align: center;
-} */
+.loginForm {
+	min-width: 320px;
+}
+
+.custom-close-button{
+	font-size: 11px;
+	color:red;
+}
+
+.loginFormContainer {
+	min-width: 350px;
+}
 
 .recoverykeyinput {
 	width: 64rem;
@@ -542,6 +558,14 @@ table tr td {
 	opacity: 0.6;
 }
 
+.audio-player {
+    background: #f5f7fa;
+    border-radius: 50px;
+    width: 80%;
+    margin: 1em;
+    border: 1px solid #1d1f24;
+}
+
 textarea.form-control {
 	resize: vertical;
 }
@@ -616,6 +640,10 @@ p:last-child {
 
 #NodePresentation {
 	font-size: 1.2rem;
+}
+
+.languageBox {
+	width: 300px;
 }
 
 #NodePresentation,
@@ -798,7 +826,6 @@ p:last-child {
 #TitleBox {
 	font-size: 1.6rem;
 	font-weight: bold;
-	white-space: pre-wrap;
 }
 
 #LoginStatusBox {
@@ -851,6 +878,10 @@ p:last-child {
 	width: max-content;
 }
 
+#LanguagePickerBox{
+	width:190px;
+}
+
 #LoginStatusBox,
 #WhistleblowerLoginBox {
 	color: #1d1f2a;
@@ -875,7 +906,7 @@ p:last-child {
 	width: 30rem;
 	min-width: 20rem;
 	z-index: 10;
-	top: 1rem;
+	top: 2.0rem;
 	padding: 0 5em;
 }
 
@@ -945,9 +976,9 @@ text.axis-worktime {
 	left: 1rem;
 }
 
-.imageUpload .changePictureButton {
+/* .imageUpload .changePictureButton {
 	right: 1rem;
-}
+} */
 
 .tip-action-open {
 	cursor: pointer;
@@ -1000,4 +1031,14 @@ html#Receipt {
 .receipt-input {
 	width: 300px;
 	text-align: center;
+}
+
+.container-disabled {
+	pointer-events: none;
+	opacity: 0.4;
+	user-select: none;
+}
+
+.custom-switch .custom-control-label::after {
+	background-color: #fff !important;
 }

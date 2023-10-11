@@ -33,6 +33,7 @@ class EnumFieldOptionScoreType(_Enum):
     multiplier = 2
 
 
-class EnumMessageType(_Enum):
-    whistleblower = 0
-    receiver = 1
+class EnumVisibility(_Enum):
+    public = 0
+    internal = 1
+    personal = 2

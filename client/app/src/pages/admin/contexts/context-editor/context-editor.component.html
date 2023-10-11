@@ -6,7 +6,7 @@
             <span class="badge bg-secondary" *ngIf="context.hidden">{{ 'Hidden' | translate }}</span>
         </span>
         <span class="col-md-5 clearfix">
-            <span class="float-right">
+            <span class="float-end">
                 <button *ngIf="index !== 0 && !node.dataModel.show_contexts_in_alphabetical_order"
                     class="btn btn-sm btn-primary" (click)="moveUp($event, index)" [ngbTooltip]="'Move up' | translate">
                     <i class="fa-solid fa-chevron-up"></i>
@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group">
                     <label>{{ 'Questionnaire' | translate }}</label>
-                    <select class="form-control" [(ngModel)]="context.questionnaire_id">
+                    <select class="form-control" name="context.questionnaire_id" [(ngModel)]="context.questionnaire_id">
                         <option *ngFor="let item of questionnairesData" [value]="item.id">{{ item.name }}</option>
                     </select>
                 </div>
@@ -68,7 +68,7 @@
                     </label>
                     <div id="ReceiverContextAdder" class="row">
                         <div class="col-md-12" *ngIf="showSelect">
-                            <ng-select [(ngModel)]="selected.value" bindLabel="name" [items]="usersData" [searchable]="true" [placeholder]="'Search' | translate"
+                            <ng-select [(ngModel)]="selected.value" name="selected.value" bindLabel="name" [items]="usersData | filter:  'role': 'receiver'" [searchable]="true" [placeholder]="'Search' | translate"
                                 (change)="moveReceiver($event)">
                                 <ng-template ng-option-tmp let-item="item">
                                     {{ item.name }}
@@ -88,7 +88,7 @@
                                     <i class="fa-solid fa-chevron-down"></i>
                                 </span>
                             </span>
-                            <span (click)="context.receivers.splice(index, 1)" [ngbTooltip]="'Remove' | translate">
+                            <span (click)="context.receivers.splice(index, 1);receiverNotSelectedFilter(admin_receivers_by_id[receiver])" [ngbTooltip]="'Remove' | translate">
                                 <i class="fa-solid fa-times"></i>
                             </span>
                             <span>{{admin_receivers_by_id[receiver].name}}</span>
@@ -116,7 +116,7 @@
                     <div>{{ 'Set the value to 0 to disable this feature.' | translate }}</div>
                 </div>
                 <div class="form-group">
-                    <input [(ngModel)]="context.hidden" type="checkbox" />
+                    <input [(ngModel)]="context.hidden" name="context.hidden" type="checkbox" />
                     <label>{{ 'Hidden' | translate }}</label>
                 </div>
             </div>
@@ -134,20 +134,20 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="inline-checkbox">
-                                    <input type="checkbox" [(ngModel)]="context.show_steps_navigation_interface" />
+                                    <input type="checkbox" name="context.show_steps_navigation_interface" [(ngModel)]="context.show_steps_navigation_interface" />
                                     <span>{{ 'Show the questionnaire navigation interface' | translate }}</span>
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label class="inline-checkbox">
-                                    <input type="checkbox" [(ngModel)]="context.allow_recipients_selection" />
+                                    <input type="checkbox" name="context.allow_recipients_selection" [(ngModel)]="context.allow_recipients_selection" />
                                     <span>{{ 'Allow whistleblowers to select their recipients' | translate }}</span>
                                 </label>
                             </div>
                             <div *ngIf="context.allow_recipients_selection" class="form-group well">
                                 <div class="form-group">
                                     <label class="inline-checkbox">
-                                        <input type="checkbox" [(ngModel)]="context.select_all_receivers"
+                                        <input type="checkbox" name="context.select_all_receivers" [(ngModel)]="context.select_all_receivers"
                                             [disabled]="!context.allow_recipients_selection"
                                             (click)="context.maximum_selectable_receivers = 0" />
                                         <span>{{ 'Select all recipients by default' | translate }}</span>
@@ -156,7 +156,7 @@
                                 <div class="form-group">
                                     <label class="inline-checkbox">
                                         <span>{{ 'Maximum number of selectable recipients:' | translate }}</span>
-                                        <input class="form-control" type="number"
+                                        <input class="form-control" type="number" name="context.maximum_selectable_receivers"
                                             [(ngModel)]="context.maximum_selectable_receivers" min="0"
                                             [disabled]="context.select_all_receivers" />
                                         <div>{{ 'Set the value to 0 to disable this feature.' | translate }}</div>
@@ -165,40 +165,28 @@
                                 <div class="form-group">
                                     <label class="inline-checkbox">
                                         <input type="checkbox"
-                                            [(ngModel)]="context.show_receivers_in_alphabetical_order" />
+                                            [(ngModel)]="context.show_receivers_in_alphabetical_order" name="context.show_receivers_in_alphabetical_order" />
                                         <span>{{ 'Show recipients in alphabetical order' | translate }}</span>
                                     </label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="inline-checkbox">
-                                    <input type="checkbox" [(ngModel)]="context.show_recipients_details" />
+                                    <input type="checkbox" [(ngModel)]="context.show_recipients_details" name="context.show_recipients_details" />
                                     <span>{{ 'Show recipient details on the status page of the report' | translate
                                         }}</span>
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label class="inline-checkbox">
-                                    <input type="checkbox" [(ngModel)]="context.enable_comments" />
+                                    <input type="checkbox" [(ngModel)]="context.enable_comments" name="context.enable_comments" />
                                     <span>{{ 'Enable comments' | translate }}</span>
                                 </label>
                             </div>
                             <div class="form-group" *ngIf="context.enable_comments">
                                 <label class="inline-checkbox">
-                                    <input type="checkbox" [(ngModel)]="context.enable_two_way_comments" />
+                                    <input type="checkbox" [(ngModel)]="context.enable_two_way_comments" name="context.enable_two_way_comments" />
                                     <span>{{ 'Allow the whistleblower to write comments' | translate }}</span>
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label class="inline-checkbox">
-                                    <input type="checkbox" [(ngModel)]="context.enable_messages" />
-                                    <span>{{ 'Enable private messages' | translate }}</span>
-                                </label>
-                            </div>
-                            <div class="form-group" *ngIf="context.enable_messages">
-                                <label class="inline-checkbox">
-                                    <input type="checkbox" [(ngModel)]="context.enable_two_way_messages" />
-                                    <span>{{ 'Allow the whistleblower to send messages' | translate }}</span>
                                 </label>
                             </div>
                             <div class="form-group">
@@ -209,7 +197,7 @@
                             </div>
                             <div class="form-group">
                                 <label>{{ 'Additional questionnaire' | translate }}</label>
-                                <select class="form-control" [(ngModel)]="context.additional_questionnaire_id">
+                                <select class="form-control" [(ngModel)]="context.additional_questionnaire_id" name="context.additional_questionnaire_id">
                                     <option *ngIf="context.additional_questionnaire_id" [value]="null"></option>
                                     <option [value]="item.id" *ngFor="let item of questionnairesData">{{ item.name }}
                                     </option>
@@ -228,11 +216,11 @@
                                         <tbody>
                                             <tr>
                                                 <td>{{ 'Medium' | translate }}</td>
-                                                <td><input class="form-control" type="number" [(ngModel)]="context.score_threshold_medium" /></td>
+                                                <td><input class="form-control" type="number" [(ngModel)]="context.score_threshold_medium" name="context.score_threshold_medium" /></td>
                                             </tr>
                                             <tr>
                                                 <td>{{ 'High' | translate }}</td>
-                                                <td><input class="form-control" type="number" [(ngModel)]="context.score_threshold_high" /></td>
+                                                <td><input class="form-control" type="number" [(ngModel)]="context.score_threshold_high" name="context.score_threshold_high" /></td>
                                             </tr>
                                         </tbody>
                                     </table>

@@ -7,10 +7,11 @@ import traceback
 from twisted.application import service
 from twisted.internet import reactor, defer
 from twisted.python.log import ILogObserver
+from twisted.python.log import addObserver
 from twisted.web import resource, server
 
 from globaleaks.jobs import job, jobs_list
-from globaleaks.services import onion
+from globaleaks.services import tor
 
 from globaleaks.db import create_db, init_db, update_db, \
     sync_refresh_tenant_cache, sync_clean_untracked_files, sync_initialize_snimap
@@ -50,11 +51,7 @@ class Service(service.Service):
     def __init__(self):
         self.state = State
         self.arw = resource.EncodingResourceWrapper(APIResourceWrapper(), [server.GzipEncoderFactory()])
-
-        if Settings.nodaemon:
-            self.api_factory = Site(self.arw, logFormatter=logFormatter)
-        else:
-            self.api_factory = Site(self.arw, logPath=Settings.accesslogfile, logFormatter=logFormatter)
+        self.api_factory = Site(self.arw, logPath=Settings.accesslogfile, logFormatter=logFormatter)
 
         self.api_factory.displayTracebacks = False
 
@@ -82,8 +79,8 @@ class Service(service.Service):
         for j in jobs_list:
             self.state.jobs.append(j())
 
-        self.state.onion_service = onion.OnionService()
-        self.state.services.append(self.state.onion_service)
+        self.state.tor = tor.Tor()
+        self.state.services.append(self.state.tor)
 
         self.state.jobs_monitor = job.JobsMonitor(self.state.jobs)
 
@@ -111,6 +108,11 @@ class Service(service.Service):
             init_db()
 
         sync_clean_untracked_files()
+
+        if self.state.settings.migrate_only:
+            reactor.stop()
+            return
+
         sync_refresh_tenant_cache()
         sync_initialize_snimap()
 
@@ -144,24 +146,25 @@ class Service(service.Service):
         tenant_cache = self.state.tenants[1].cache
 
         if self.state.settings.devel_mode:
-            print("- [HTTP]\t--> http://127.0.0.1:8082")
+            print("- [HTTPS]: https://127.0.0.1:8443")
 
         elif tenant_cache.reachable_via_web:
             hostname = tenant_cache.hostname if tenant_cache.hostname else '0.0.0.0'
-            print("- [HTTP]\t--> http://%s" % hostname)
-            if tenant_cache.https_enabled:
-                print("- [HTTPS]\t--> https://%s" % hostname)
+            print("- [HTTPS]: https://%s" % hostname)
 
         if tenant_cache.onionservice:
-            print("- [Tor]:\t--> http://%s" % tenant_cache.onionservice)
+            print("- [Tor]:  http://%s" % tenant_cache.onionservice)
 
 
 try:
     application = service.Application('GlobaLeaks')
 
-    if not Settings.nodaemon:
-        logfile = openLogFile(Settings.logfile, Settings.log_file_size, Settings.num_log_files)
-        application.setComponent(ILogObserver, LogObserver(logfile).emit)
+    logfile = openLogFile(Settings.logfile, Settings.log_file_size, Settings.num_log_files)
+    if Settings.nodaemon:
+        addObserver(LogObserver(logfile).emit)
+    else:
+         application.setComponent(ILogObserver, LogObserver(logfile).emit)
+
 
     Service().setServiceParent(application)
 except Exception as excep:

@@ -19,10 +19,8 @@ export class ActivationComponent implements OnInit{
               (
                   {
                       next: response => {
-                          alert(JSON.stringify(response))
                       },
                       error: (error: any) => {
-                          alert(JSON.stringify(error))
                       }
                   }
               );

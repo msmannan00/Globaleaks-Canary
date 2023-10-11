@@ -9,6 +9,8 @@ import { QuestionnairesResolver } from 'app/src/shared/resolvers/questionnaires.
 import { UsersResolver } from 'app/src/shared/resolvers/users.resolver';
 import { WbtipResolver } from 'app/src/shared/resolvers/wbtip.resolver';
 import { UtilsService } from 'app/src/shared/services/utils.service';
+import { AppConfigService } from "../../../../services/app-config.service";
+import { AuthenticationService } from 'app/src/services/authentication.service';
 // import {Constants} from "../../constants/constants";
 
 @Component({
@@ -18,46 +20,40 @@ import { UtilsService } from 'app/src/shared/services/utils.service';
 })
 export class Tab5Component {
   @Input() contentForm: NgForm;
-  userData :any={}
-  questionnaireData :any={}
-  constructor(private modalService: NgbModal,public utilsService: UtilsService, public node: NodeResolver ,public preference:PreferenceResolver,public users:UsersResolver ,public questionnaires:QuestionnairesResolver) { 
-    // console.log(this.node,"node");
-    // console.log(this.utilsService,"utilsService");
-    // console.log(this.preference,"preference");
-    // console.log(this.users,"users");
+  userData: any = {}
+  questionnaireData: any = {}
+  constructor(public authenticationService: AuthenticationService, private modalService: NgbModal, private appConfigService: AppConfigService, public utilsService: UtilsService, public node: NodeResolver, public preference: PreferenceResolver, public users: UsersResolver, public questionnaires: QuestionnairesResolver) {
+
   }
   protected readonly Constants = Constants;
   ngOnInit(): void {
     this.userData = this.users.dataModel
+    this.userData = this.userData.filter((user: { escrow: boolean; }) => user.escrow === true);
     this.questionnaireData = this.questionnaires.dataModel
 
   }
   enableEncryption() {
-    // Do not toggle till confirmation
     const node = this.node.dataModel;
     node.encryption = false;
 
     if (!node.encryption) {
-      const modalRef = this.modalService.open(EnableEncryptionComponent, {
-        // Configure your modal options here
-      });
-
-      // modalRef.result.then(
-      //   () => {
-      //     this.runAdminOperation("enable_encryption").then(
-      //       () => {
-      //         this.authenticationService.logout();
-      //       },
-      //       () => { }
-      //     );
-      //   },
-      //   () => { }
-      // );
+      const modalRef = this.modalService.open(EnableEncryptionComponent, {});
+      modalRef.result.then(
+        () => {
+          this.utilsService.runAdminOperation("enable_encryption", {}, false).subscribe(
+            () => {
+              this.authenticationService.logout();
+            },
+            () => { }
+          );
+        },
+        () => { }
+      );
     }
   }
   toggleEscrow() {
     this.node.dataModel.escrow = !this.node.dataModel.escrow;
-    this.utilsService.runAdminOperation("toggle_escrow", {},true).then(
+    this.utilsService.runAdminOperation("toggle_escrow", {}, true).subscribe(
       () => {
         this.preference.dataModel.escrow = !this.preference.dataModel.escrow;
       },
@@ -66,7 +62,8 @@ export class Tab5Component {
   }
 
   updateNode() {
-    this.utilsService.update(this.node.dataModel).subscribe(res=>{
+    this.utilsService.update(this.node.dataModel).subscribe(res => {
+      this.appConfigService.reinit()
       this.utilsService.reloadCurrentRoute();
     })
   }

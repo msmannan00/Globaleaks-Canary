@@ -29,10 +29,7 @@ class Context_v_61(Model):
     allow_recipients_selection = Column(Boolean, default=False, nullable=False)
     maximum_selectable_receivers = Column(Integer, default=0, nullable=False)
     select_all_receivers = Column(Boolean, default=True, nullable=False)
-    enable_comments = Column(Boolean, default=True, nullable=False)
-    enable_messages = Column(Boolean, default=False, nullable=False)
     enable_two_way_comments = Column(Boolean, default=True, nullable=False)
-    enable_two_way_messages = Column(Boolean, default=True, nullable=False)
     enable_attachments = Column(Boolean, default=True, nullable=False)
     tip_timetolive = Column(Integer, default=90, nullable=False)
     name = Column(JSON, default=dict, nullable=False)
@@ -67,7 +64,6 @@ class User_v_61(Model):
     creation_date = Column(DateTime, default=datetime_now, nullable=False)
     username = Column(UnicodeText, default='', nullable=False)
     salt = Column(UnicodeText(24), default='', nullable=False)
-    hash_alg = Column(UnicodeText, default='ARGON2', nullable=False)
     password = Column(UnicodeText, default='', nullable=False)
     name = Column(UnicodeText, default='', nullable=False)
     description = Column(JSON, default=dict, nullable=False)
@@ -119,7 +115,7 @@ class MigrationScript(MigrationBase):
             new_obj = self.model_to['Context']()
             for key in new_obj.__mapper__.column_attrs.keys():
                 if key == 'hidden':
-                    setattr(new_obj, key, getattr(old_obj, 'status') != 1)
+                    setattr(new_obj, key, getattr(old_obj, 'status') != 'enabled')
                 else:
                     setattr(new_obj, key, getattr(old_obj, key))
 

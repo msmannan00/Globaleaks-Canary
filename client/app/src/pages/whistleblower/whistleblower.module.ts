@@ -21,7 +21,7 @@ import { WhistleblowerIdentityFieldComponent } from './fields/whistleblower-iden
 import {NgSelectModule} from "@ng-select/ng-select";
 import {NgbInputDatepicker} from "@ng-bootstrap/ng-bootstrap";
 import { ReceiptComponent } from './receipt/receipt.component';
-import { TipAdditionalQuestionnaireFormComponent } from '../../modals/tip-additional-questionnaire-form/tip-additional-questionnaire-form.component';
+import { TipAdditionalQuestionnaireFormComponent } from '../../shared/modals/tip-additional-questionnaire-form/tip-additional-questionnaire-form.component';
 
 
 

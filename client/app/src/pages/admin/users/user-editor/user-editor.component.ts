@@ -64,14 +64,10 @@ export class UserEditorComponent implements OnInit {
     this.passwordStrengthScore = score
   }
   disable2FA(user: any) {
-    this.utilsService.runAdminOperation("disable_2fa", { "value": user.user.id }, true);
+    this.utilsService.runAdminOperation("disable_2fa", { "value": user.user.id }, true).subscribe();
   }
   setPassword(setPasswordArgs: any) {
-    this.utilsService.runAdminOperation("set_user_password", setPasswordArgs, true)
-    // then(function() {
-    //   // this.user.newpassword = false;
-    //   // $scope.setPasswordArgs.password = "";
-    // });
+    this.utilsService.runAdminOperation("set_user_password", setPasswordArgs, true).subscribe()
     this.user.newpassword = false;
     this.setPasswordArgs.password = "";
   }
@@ -85,7 +81,6 @@ export class UserEditorComponent implements OnInit {
     }
     return this.utilsService.updateAdminUser(userData.id, userData).subscribe(res => {
       this.sendDataToParent()
-      // this.utilsService.reloadCurrentRoute()
      })
   }
   sendDataToParent() {
@@ -103,16 +98,16 @@ export class UserEditorComponent implements OnInit {
     modalRef.componentInstance.confirmFunction = () => {
         return  this.utilsService.deleteAdminUser(arg.id).subscribe(res=>{
           this.sendDataToParent()
-          this.utilsService.reloadCurrentRoute()
+          this.utilsService.reloadCurrentRoute();
         });
     };
     return modalRef.result;
   }
   resetUserPassword(user: any) {
-    this.utilsService.runAdminOperation("send_password_reset_email", { "value": user.id }, true);
+    this.utilsService.runAdminOperation("send_password_reset_email", { "value": user.id }, true).subscribe();
   }
   toggleUserEscrow(user: any) {
     this.user.escrow = !this.user.escrow;
-    this.utilsService.runAdminOperation("toggle_user_escrow", { "value": user.id }, true);
+    this.utilsService.runAdminOperation("toggle_user_escrow", { "value": user.id }, true).subscribe();
   }
 }

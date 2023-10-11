@@ -3,7 +3,7 @@ import {UtilsService} from "../../services/utils.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {
   TipAdditionalQuestionnaireFormComponent
-} from "../../../modals/tip-additional-questionnaire-form/tip-additional-questionnaire-form.component";
+} from "../../modals/tip-additional-questionnaire-form/tip-additional-questionnaire-form.component";
 
 @Component({
   selector: 'src-tip-additional-questionnaire-invite',

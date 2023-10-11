@@ -1,27 +1,25 @@
-import {Component, Input, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
+import {Component, Input, ViewChild, ElementRef} from '@angular/core';
 import { UtilsService } from "../../services/utils.service";
-import { FlowFile } from "@flowjs/flow.js";
 import { AppDataService } from "../../../app-data.service";
 import {AuthenticationService} from "../../../services/authentication.service";
-import {FlowDirective} from "@flowjs/ngx-flow";
+import {AppConfigService} from "../../../services/app-config.service";
+import * as Flow from "@flowjs/flow.js";
 
 @Component({
   selector: 'src-tip-upload-wbfile',
-  templateUrl: './tip-upload-wbfile.component.html',
-  styleUrls: ['./tip-upload-wbfile.component.css']
+  templateUrl: './tip-upload-wbfile.component.html'
 })
-export class TipUploadWbfileComponent implements AfterViewInit{
-  collapsed = false;
-  @Input() tip: any = {};
-  file_upload_description: string="";
-  fileinput: any = "saddsasasd";
-
+export class TipUploadWbfileComponent{
   @ViewChild('uploader') uploaderElementRef!: ElementRef<HTMLInputElement>;
-  @ViewChild('flowAdvanced') flowAdvanced: FlowDirective;
+  @Input() tip: any = {};
+  @Input() key: any;
 
-  flowConfig: any = {}; // Add this declaration for flowConfig
+  collapsed = false;
+  file_upload_description: string="";
+  fileinput: any = "fileinput";
 
-  constructor(public authenticationService:AuthenticationService, public utilsService: UtilsService, public appDataService: AppDataService) {
+  constructor(public appConfigService:AppConfigService, public authenticationService:AuthenticationService, public utilsService: UtilsService, public appDataService: AppDataService) {
+
   }
 
   public toggleCollapse() {
@@ -30,23 +28,26 @@ export class TipUploadWbfileComponent implements AfterViewInit{
 
   onFileSelected(files: FileList | null) {
     if (files && files.length > 0) {
-      const file = files[0]; // Assuming you only handle a single file at a time
+      const file = files[0];
 
-      const flowJsInstance = this.flowAdvanced.flowJs;
-      flowJsInstance.addFile(file);
+      const flowJsInstance = new Flow({target: 'api/recipient/rtips/' + this.tip.id + '/rfiles', speedSmoothingFactor:0.01, singleFile:true, query: { description: this.file_upload_description,visibility : this.key,fileSizeLimit: this.appDataService.public.node.maximum_filesize*1024*1024 }, allowDuplicateUploads:false, testChunks:false, permanentErrors : [ 500, 501 ], headers : {'X-Session':this.authenticationService.session.id}});
+      flowJsInstance.on('fileSuccess', (file, message) => {
+        this.appConfigService.reinit(false)
+        this.utilsService.reloadCurrentRoute()
+      });
+
+      const fileNameParts = file.name.split('.');
+      const fileExtension = fileNameParts.pop();
+      const fileNameWithoutExtension = fileNameParts.join('.');
+      const timestamp = new Date().getTime();
+      const fileNameWithTimestamp = `${fileNameWithoutExtension}_${timestamp}.${fileExtension}`;
+      const modifiedFile = new File([file], fileNameWithTimestamp, { type: file.type });
+
+      flowJsInstance.addFile(modifiedFile);
       flowJsInstance.upload();
     }
   }
 
-  ngAfterViewInit() {
-    this.flowAdvanced.events$.subscribe((event: any) => {
-      if (event.type === 'fileSuccess') {
-        // File uploaded successfully, reload the page
-        this.utilsService.reloadCurrentRoute()
-      }
-    });
-  }
-
+  protected readonly console = console;
   protected readonly alert = alert;
-  protected readonly JSON = JSON;
 }

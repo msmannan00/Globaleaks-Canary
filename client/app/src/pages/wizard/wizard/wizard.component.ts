@@ -6,19 +6,18 @@ import {AuthenticationService} from "../../../services/authentication.service";
 import {HttpService} from "../../../shared/services/http.service";
 import {AppDataService} from "../../../app-data.service";
 import {TranslationService} from "../../../services/translation.service";
-import {UtilsService} from "../../../shared/services/utils.service";
 import {AppConfigService} from "../../../services/app-config.service";
 
 @Component({
   selector: 'src-wizard',
-  templateUrl: './wizard.component.html',
-  styleUrls: ['./wizard.component.css']
+  templateUrl: './wizard.component.html'
 })
 export class WizardComponent implements OnInit{
   step: number = 1;
   emailRegexp = Constants.email_regexp;
   password_score = 0
   admin_check_password = ""
+  recipientDuplicate = false
   recipient_check_password = "";
   tosAccept: any;
   license = ""
@@ -50,6 +49,23 @@ export class WizardComponent implements OnInit{
     }
   ];
 
+  constructor(private translationService: TranslationService, private router: Router, private http: HttpClient, private authenticationService: AuthenticationService,  private httpService: HttpService , public appDataService: AppDataService, public appConfigService: AppConfigService)
+  {
+  }
+
+  ngOnInit(){
+    if (this.appDataService.public.node.wizard_done) {
+      this.router.navigate(['/']).then(r => {});
+      return;
+    }
+    this.loadLicense();
+    this.wizard.node_language = this.translationService.language
+
+    if(this.appDataService.pageTitle == ""){
+      this.appConfigService.setTitle()
+    }
+  }
+
   selectProfile(name:any) {
     let self = this
     this.config_profiles.forEach(function(profile:any){
@@ -61,6 +77,7 @@ export class WizardComponent implements OnInit{
   };
 
   complete() {
+
     if (this.completed) {
       return;
     }
@@ -69,19 +86,22 @@ export class WizardComponent implements OnInit{
     const param=JSON.stringify(this.wizard);
     this.httpService.requestWizard(param).subscribe
     (
-        {
-          next: response => {
-            this.step +=1
-          },
-          error: (error: any) => {
-          }
+      {
+        next: response => {
+          this.step +=1
         }
+      }
     );
+  }
+
+  validateDuplicateRecipient(){
+    this.recipientDuplicate = this.wizard.receiver_username === this.wizard.admin_username;
+    return this.recipientDuplicate
   }
 
   goToAdminInterface(){
     const promise = () => {
-      this.appConfigService.reloadRoute('/admin/home')
+      this.appConfigService.loadAdminRoute('/admin/home')
     };
     this.authenticationService.login(0, this.wizard.admin_username, this.wizard.admin_password, "", "",promise)
   }
@@ -90,19 +110,6 @@ export class WizardComponent implements OnInit{
     this.http.get('license.txt', { responseType: 'text' }).subscribe((data: string) => {
       this.license = data;
     });
-  }
-
-  ngOnInit(){
-    if (this.appDataService.public.node.wizard_done) {
-      this.router.navigate(['/']).then(r => {});
-      return;
-    }
-    this.loadLicense();
-    this.wizard.node_language = this.translationService.language
-  }
-
-  constructor(public appConfigService: AppConfigService, private utilsService: UtilsService, private translationService: TranslationService, private router: Router, private http: HttpClient, private authenticationService: AuthenticationService, public appDataService: AppDataService , public httpService: HttpService )
-  {
   }
 
   onPasswordStrengthChange(score: number) {

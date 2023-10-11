@@ -13,7 +13,6 @@ class User_v_56(Model):
     creation_date = Column(DateTime, default=datetime_now, nullable=False)
     username = Column(UnicodeText, default='', nullable=False)
     salt = Column(UnicodeText(24), default='', nullable=False)
-    hash_alg = Column(UnicodeText, default='ARGON2', nullable=False)
     password = Column(UnicodeText, default='', nullable=False)
     name = Column(UnicodeText, default='', nullable=False)
     description = Column(JSON, default=dict, nullable=False)
@@ -56,6 +55,11 @@ class MigrationScript(MigrationBase):
         for old_obj in self.session_old.query(self.model_from['User']):
             new_obj = self.model_to['User']()
             for key in new_obj.__mapper__.column_attrs.keys():
+                if key == 'state':
+                    if old_obj.state == 'disabled':
+                        new_obj.state = 0
+                    else:
+                        old_obj.state = 1
                 setattr(new_obj, key, getattr(old_obj, key))
 
             if not old_obj.two_factor_enable:

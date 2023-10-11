@@ -7,9 +7,9 @@
     </span>
     </div>
     <div class="card-body" *ngIf="!collapsed">
-        <div *ngFor="let wbfile of tip.wbfiles | orderBy: 'creation_date' as index">
+        <div *ngFor="let rfile of tip.rfiles | orderBy: 'creation_date' as index">
             <div id="wbfile-{{index}}" data-wbfile data-ctx="'rtip'">
-                <src-wbfiles [ctx]="'rtip'" [receivers_by_id]="''" [wbfile]="wbfile"></src-wbfiles>
+                <src-wbfiles [ctx]="'rtip'" [receivers_by_id]="''" [wbfile]="rfile"></src-wbfiles>
             </div>
         </div>
 
@@ -21,11 +21,10 @@
                         <input type="text" class="form-control" [(ngModel)]="file_upload_description" />
                         <span class="input-group-append" [ngClass]="{'disabled': !file_upload_description}">
 
-                        <ng-container #flowAdvanced="flow" [flowConfig]="{target: 'api/rtips/' + tip.id + '/wbfile', speedSmoothingFactor:0.01, singleFile:true, query: { description: file_upload_description, fileSizeLimit: appDataService.public.node.maximum_filesize*1024*1024 }, allowDuplicateUploads:false, testChunks:false, permanentErrors : [ 500, 501 ], headers : {'X-Session':authenticationService.session.id}}"></ng-container>
-                        <input #uploader [attr.id]="fileinput" id="customFile-{{fileinput}}" type="file" flowButton [flow]="flowAdvanced.flowJs" [style.display]="'none'" class="custom-file-input inputelem" (change)="onFileSelected(uploader.files)" />
+                        <input #uploader [attr.id]="fileinput" id="customFile-{{fileinput}}" type="file" flowButton [style.display]="'none'" class="custom-file-input inputelem" (change)="onFileSelected(uploader.files)" />
                         <label [attr.for]="fileinput" class="btn btn-primary">
                             <i class="fa-solid fa-upload "></i>
-                            <span>&nbsp; {{'Upload'|translate}}</span>
+                            <span>{{'Upload'|translate}}</span>
                         </label>
                   </span>
                 </div>

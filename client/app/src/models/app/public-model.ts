@@ -8,6 +8,9 @@ export interface Root {
 
 export interface Node {
 viewer: any
+    acme: boolean
+    timezone: number
+    allow_indexing: boolean
     adminonly: boolean
     pgp:any
     custom_support_url: string
@@ -187,9 +190,7 @@ export interface Context {
     show_recipients_details: boolean
     allow_recipients_selection: boolean
     enable_comments: boolean
-    enable_messages: boolean
     enable_two_way_comments: boolean
-    enable_two_way_messages: boolean
     enable_attachments: boolean
     score_threshold_medium: number
     score_threshold_high: number

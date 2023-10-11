@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { contextResolverModel } from 'app/src/models/resolvers/contextResolverModel';
+import { new_context } from 'app/src/models/admin/new_context';
 import { AuthenticationService } from 'app/src/services/authentication.service';
 import { ContextsResolver } from 'app/src/shared/resolvers/contexts.resolver';
 import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
@@ -31,7 +31,7 @@ export class ContextsComponent implements OnInit {
     }
   }
   add_context() {
-    var context: contextResolverModel = this.utilsService.new_context();
+    var context: new_context = new new_context();
     context.name = this.new_context.name;
     context.questionnaire_id = this.node.dataModel.default_questionnaire;
     context.order = this.newItemOrder(this.contextsData, "order");

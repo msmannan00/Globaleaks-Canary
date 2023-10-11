@@ -15,24 +15,23 @@ import {WizardRoutingModule} from "./pages/wizard/wizard-routing.module";
 import { NodeResolver } from './shared/resolvers/node.resolver';
 import { RtipsResolver } from './shared/resolvers/rtips.resolver';
 import { TipComponent } from './pages/recipient/tip/tip.component';
-import { UsersResolver } from './shared/resolvers/users.resolver';
-import { QuestionnairesResolver } from './shared/resolvers/questionnaires.resolver';
-import {AuditlogResolver} from "./shared/resolvers/auditlog.resolver";
-import {JobResolver} from "./shared/resolvers/job.resolver";
-import {TipsResolver} from "./shared/resolvers/tips.resolver";
-import { ContextsResolver } from './shared/resolvers/contexts.resolver';
-import { NotificationsResolver } from './shared/resolvers/notifications.resolver';
+import {TitleResolver} from "./shared/resolvers/title-resolver.resolver";
+import {CustodianRoutingModule} from "./pages/custodian/custodian-routing.module";
+import {IarsResolver} from "./shared/resolvers/iars.resolver";
+import {BlankComponent} from "./shared/blank/blank.component";
 
 
 const routes: Routes = [
   {
-    path: 'routing',
+    path: 'blank',
     pathMatch: 'full',
+    component:BlankComponent
   },
   {
     path: '',
     canActivate: [Pageguard],
     component: HomeComponent,
+    data: { pageTitle: ''},
     resolve: {
     },
     pathMatch: 'full',
@@ -42,7 +41,7 @@ const routes: Routes = [
     path: 'login',
     
     resolve: {
-      PreferenceResolver
+
     },
     loadChildren: () => AuthRoutingModule,
   },
@@ -57,7 +56,6 @@ const routes: Routes = [
   {
     path: 'action',
     resolve: {
-      PreferenceResolver
     },
     loadChildren: () => ActionRoutingModule,
   },
@@ -65,7 +63,7 @@ const routes: Routes = [
     path: 'recipient',
     canActivate: [SessionGuard],
     resolve: {
-       PreferenceResolver,NodeResolver,RtipsResolver
+      PreferenceResolver,NodeResolver,RtipsResolver
     },
     loadChildren: () => RecipientRoutingModule,
     data:{
@@ -73,14 +71,22 @@ const routes: Routes = [
     }
   },
   {
-    path: 'admin',
+    path: 'custodian',
     canActivate: [SessionGuard],
     resolve: {
-      NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver, ContextsResolver,AuditlogResolver, JobResolver, TipsResolver,NotificationsResolver
+      PreferenceResolver,NodeResolver, RtipsResolver, IarsResolver
     },
+    loadChildren: () => CustodianRoutingModule,
+    data:{
+      sidebar: 'custodian-sidebar'
+    }
+  },
+  {
+    path: 'admin',
+    canActivate: [SessionGuard],
     loadChildren: () => AdminRoutingModule,
     data:{
-      sidebar: 'admin-sidebar'
+      sidebar: 'admin-sidebar', pageTitle: 'Home'
     }
   },
   {
@@ -93,8 +99,10 @@ const routes: Routes = [
   },
   {
     path: 'wizard',
+    data: { pageTitle: 'Platform wizard' },
     resolve: {
-      PreferenceResolver
+      PreferenceResolver,
+      title: TitleResolver
     },
     loadChildren: () => WizardRoutingModule,
   },

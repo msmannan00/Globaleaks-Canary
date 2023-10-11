@@ -9,7 +9,6 @@ export class tipsResolverModel {
   substatus: string
   tor: boolean
   comments: number
-  messages: number
   files: number
   last_access: string
 }

@@ -16,20 +16,13 @@ export class ImageUploadDirective {
   ) {}
 
   ngOnInit() {
-    // Create the component factory
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ImageUploadComponent);
-
-    // Create the component instance
     const componentRef = this.viewContainerRef.createComponent(componentFactory);
-
-    // You can interact with the component instance if needed
     const dynamicComponentInstance = componentRef.instance;
 
-    // Optionally, you can set input properties or subscribe to component events
     dynamicComponentInstance.imageUploadModel = this.imageUploadModel;
     dynamicComponentInstance.imageUploadModelAttr = this.imageUploadModelAttr;
     dynamicComponentInstance.imageUploadId = this.imageUploadId;
-    // dynamicComponentInstance.someEvent.subscribe(event => { /* handle event */ });
-   
+
   }
 }

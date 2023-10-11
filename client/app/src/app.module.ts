@@ -1,7 +1,7 @@
 import {HostListener, NgModule,CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent } from './pages/app/app.component';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import { AuthModule } from './pages/auth/auth.module';
 import {
@@ -35,9 +35,14 @@ import {SignupModule} from "./pages/signup/signup.module";
 import { WizardModule } from './pages/wizard/wizard.module';
 import { RecipientModule } from './pages/recipient/recipient.module';
 import { AdminModule } from './pages/admin/admin.module';
+import {CustodianModule} from "./pages/custodian/custodian.module";
+import {ServiceInstanceService} from "./shared/services/service-instance.service";
+import {UtilsService} from "./shared/services/utils.service";
+import {TranslationService} from "./services/translation.service";
+import {SubmissionService} from "./services/submission.service";
 
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './data/i18n/', '.json');
+  return new TranslateHttpLoader(http, 'l10n/', '');
 }
 
 @NgModule({
@@ -60,7 +65,6 @@ export function createTranslateLoader(http: HttpClient) {
     RecipientModule,
     SharedModule,
     TranslateModule.forRoot({
-      defaultLanguage: 'en',
       loader: {
         provide: TranslateLoader,
         useFactory: createTranslateLoader,
@@ -70,6 +74,7 @@ export function createTranslateLoader(http: HttpClient) {
     NgSelectModule,
     FormsModule,
     WhistleblowerModule,
+    CustodianModule,
   ],
   providers: [
     ReceiptvalidatorDirective,
@@ -79,7 +84,8 @@ export function createTranslateLoader(http: HttpClient) {
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: CompletedInterceptor, multi: true},
-    { provide: FlowInjectionToken, useValue: Flow}
+    { provide: FlowInjectionToken, useValue: Flow},
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -89,7 +95,20 @@ export class AppModule {
   timedOut = false;
   title = 'angular-idle-timeout';
 
-  constructor(public appConfigService: AppConfigService, private idle: Idle, private keepalive: Keepalive, public authentication: AuthenticationService) {
+  constructor(private serviceInstanceService:ServiceInstanceService, private submissionService: SubmissionService, private authenticationService: AuthenticationService, private translationService:TranslationService, private utilsService:UtilsService, private appConfigService: AppConfigService, private idle: Idle, private keepalive: Keepalive) {
+    serviceInstanceService.setUtilsService(utilsService)
+    serviceInstanceService.setAuthenticationService(authenticationService)
+    serviceInstanceService.setTranslationService(translationService)
+    serviceInstanceService.setSubmissionService(submissionService)
+    serviceInstanceService.setAppConfigService(appConfigService)
+
+    this.appConfigService.init()
+    this.utilsService.init()
+    this.authenticationService.init()
+    this.translationService.init()
+    this.submissionService.init()
+
+
     this.globalInitializations();
     this.initIdleState();
   }
@@ -100,7 +119,6 @@ export class AppModule {
   }
 
   globalInitializations() {
-    this.appConfigService.initTranslation();
   }
 
   initIdleState(){
@@ -110,12 +128,12 @@ export class AppModule {
     this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
     this.idle.onTimeout.subscribe(() => {
-      if (this.authentication && this.authentication.session) {
-        if (this.authentication.session.role === "whistleblower") {
+      if (this.authenticationService && this.authenticationService.session) {
+        if (this.authenticationService.session.role === "whistleblower") {
           window.location.replace("about:blank");
         } else {
-          this.authentication.deleteSession();
-          this.authentication.loginRedirect(false)
+          this.authenticationService.deleteSession();
+          this.authenticationService.loginRedirect()
         }
       }
     });
@@ -126,7 +144,7 @@ export class AppModule {
   reset() {
     this.idle.watch();
     this.timedOut = false;
-    this.authentication.reset()
+    this.authenticationService.reset()
   }
 }
 

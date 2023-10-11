@@ -10,7 +10,6 @@ export class RecieverTipData {
     mobile: boolean;
     reminder_date: string;
     enable_two_way_comments: boolean;
-    enable_two_way_messages: boolean;
     enable_attachments: boolean;
     enable_whistleblower_identity: boolean;
     last_access: string;
@@ -18,7 +17,6 @@ export class RecieverTipData {
     status: string;
     substatus: any;
     receivers: Receiver[];
-    messages: any[];
     comments: any[];
     rfiles: any[];
     wbfiles: any[];
@@ -165,9 +163,7 @@ whistleblower_identity_field: any;
     show_recipients_details: boolean;
     allow_recipients_selection: boolean;
     enable_comments: boolean;
-    enable_messages: boolean;
     enable_two_way_comments: boolean;
-    enable_two_way_messages: boolean;
     enable_attachments: boolean;
     score_threshold_medium: number;
     score_threshold_high: number;

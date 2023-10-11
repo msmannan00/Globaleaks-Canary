@@ -29,6 +29,7 @@ url_regexp = r'^https?:\/\/([0-9a-z\-]+)\.([^\n])*$'
 url_regexp_or_empty = r'^https?:\/\/([0-9a-z\-]+)\.([^\n])*$|^$'
 tip_operation_regexp = r'^(postpone|set)$'
 short_text_regexp = r'^.{1,255}$'
+short_text_regexp_or_empty = r'^.{0,255}$'
 languages_list_regexp = r'^([a-zA-Z-]+)?(,\s*[a-zA-Z-]+)*$'
 
 field_instance_regexp = (r'^('
@@ -44,11 +45,11 @@ field_type_regexp = (r'^('
                      'checkbox|'
                      'tos|'
                      'fileupload|'
-                     'audioUpload|'
                      'number|'
                      'email|'
                      'date|'
                      'daterange|'
+                     'voice|'
                      'fieldgroup)$')
 
 field_attr_type_regexp = (r'^('
@@ -91,8 +92,10 @@ FileDesc = {
     'description': str,
     'size': int,
     'type': ContentType,
-    'date': DateType
+    'date': DateType,
+    'visibility': str
 }
+
 
 AuthDesc = {
     'tid': int,
@@ -140,6 +143,7 @@ AdminUserDesc = {
     'can_delete_submission': bool,
     'can_postpone_expiration': bool,
     'can_grant_access_to_reports': bool,
+    'can_transfer_access_to_reports': bool,
     'forcefully_selected': bool
 }
 
@@ -160,7 +164,8 @@ UserUserDesc = {
 }
 
 CommentDesc = {
-    'content': str
+    'content': str,
+    'visibility': str
 }
 
 OpsDesc = {
@@ -188,6 +193,9 @@ AdminNodeDesc = {
     'description': str,
     'presentation': str,
     'footer': str,
+    'footer_accessibility_declaration': str,
+    'footer_privacy_policy': str,
+    'footer_whistleblowing_policy': str,
     'disclaimer_text': str,
     'rootdomain': hostname_regexp_or_empty,
     'whistleblowing_question': str,
@@ -234,7 +242,9 @@ AdminNodeDesc = {
     'adminonly': bool,
     'custom_support_url': url_regexp_or_empty,
     'pgp': bool,
-    'viewer': bool
+    'viewer': bool,
+    'user_privacy_policy_text': str,
+    'user_privacy_policy_url': str
 }
 
 AdminNetworkDesc = {
@@ -307,7 +317,6 @@ AdminFieldDesc = {
     'y': int,
     'width': int,
     'required': bool,
-    'preview': bool,
     'type': field_type_regexp,
     'attrs': dict,
     'options': [AdminFieldOptionDesc],
@@ -356,10 +365,7 @@ AdminContextDesc = {
     'select_all_receivers': bool,
     'show_recipients_details': bool,
     'allow_recipients_selection': bool,
-    'enable_comments': bool,
-    'enable_messages': bool,
     'enable_two_way_comments': bool,
-    'enable_two_way_messages': bool,
     'enable_attachments': bool,
     'score_threshold_medium': int,
     'score_threshold_high': int,
@@ -381,15 +387,12 @@ AdminTLSCfgFileResourceDesc = {
     'content': str,
 }
 
-AdminCSRFileDesc = {
-    'name': short_text_regexp,
-    'content': {
-        'country': r'[A-Za-z]{2}',
-        'province': short_text_regexp,
-        'city': short_text_regexp,
-        'company': short_text_regexp,
-        'email': email_regexp
-    }
+AdminCSRDesc = {
+    'country': r'^[A-Za-z]{2}$|^$',
+    'province': short_text_regexp_or_empty,
+    'city': short_text_regexp_or_empty,
+    'company': short_text_regexp_or_empty,
+    'email': email_regexp_or_empty
 }
 
 AdminRedirectDesc = {
@@ -410,6 +413,9 @@ NodeDesc = {
     'enable_scoring_system': bool,
     'enable_signup': bool,
     'footer': str,
+    'footer_accessibility_declaration': str,
+    'footer_privacy_policy': str,
+    'footer_whistleblowing_policy': str,
     'header_title_homepage': str,
     'https_whistleblower': bool,
     'languages_enabled': [str],
@@ -428,23 +434,11 @@ NodeDesc = {
     'signup_tos2_text': str,
     'signup_tos2_title': str,
     'simplified_login': bool,
+    'start_time': DateType,
     'whistleblowing_button': str,
-    'whistleblowing_question': str
-}
-
-TipOverviewDesc = {
-    'id': uuid_regexp,
-    'context_id': uuid_regexp,
-    'creation_date': DateType,
-    'expiration_date': DateType
-}
-
-TipsOverviewDesc = [TipOverviewDesc]
-
-FileOverviewDesc = {
-    'id': uuid_regexp,
-    'itip': uuid_regexp,
-    'path': str
+    'whistleblowing_question': str,
+    'user_privacy_policy_text': str,
+    'user_privacy_policy_url': str
 }
 
 ReceiverIdentityAccessRequestDesc = {
@@ -455,25 +449,6 @@ CustodianIdentityAccessRequestDesc = {
     'reply': identityaccessreply_regexp,
     'reply_motivation': str
 }
-
-FilesOverviewDesc = [FileOverviewDesc]
-
-StatsDesc = {
-    'file_uploaded': int,
-    'new_submission': int,
-    'finalized_submission': int,
-    'anon_requests': int,
-    'creation_date': DateType
-}
-
-StatsCollectionDesc = [StatsDesc]
-
-AnomalyDesc = {
-    'message': str,
-    'creation_date': DateType
-}
-
-AnomalyCollectionDesc = [AnomalyDesc]
 
 ReceiverDesc = {
     'name': str,
@@ -494,9 +469,6 @@ ContextDesc = {
     'show_recipients_details': bool,
     'allow_recipients_selection': bool,
     'maximum_selectable_receivers': int,
-    'enable_comments': bool,
-    'enable_messages': bool,
-    'enable_two_way_messages': bool,
     'enable_attachments': bool,
     'show_receivers_in_alphabetical_order': bool,
     'picture': bool
@@ -547,10 +519,10 @@ SignupDesc = {
     'role': alphanumeric_str_regexp,
     'phone': numeric_str_regexp,
     'email': email_regexp,
-    'organization_name': alphanumeric_str_regexp,
+    'organization_name': str,
     'organization_tax_code': alphanumeric_str_regexp,
     'organization_vat_code': alphanumeric_str_regexp,
-    'organization_location': alphanumeric_str_regexp,
+    'organization_location': str,
     'tos1': bool,
     'tos2': bool
 }
@@ -572,10 +544,14 @@ PasswordReset2Desc = {
 }
 
 SiteSettingsDesc = {
-    'name': str,
+    'disclaimer_text': str,
     'header_title_homepage': str,
+    'footer': str,
+    'footer_accessibility_declaration': str,
+    'footer_privacy_policy': str,
+    'footer_whistleblowing_policy': str,
+    'name': str,
     'presentation': str,
-    'footer': str
 }
 
 QuestionnaireDuplicationDesc = {

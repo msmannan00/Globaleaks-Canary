@@ -1,8 +1,11 @@
 # -*- coding: utf-8
 import copy
+import os
+
 from globaleaks import models
 from globaleaks.models.config import ConfigFactory
 from globaleaks.state import State
+from sqlalchemy import or_, and_
 
 
 def serialize_archived_field_recursively(field, language):
@@ -41,19 +44,18 @@ def serialize_archived_questionnaire_schema(questionnaire_schema, language):
 
 
 def serialize_identityaccessrequest(session, identityaccessrequest):
-    itip, user = session.query(models.InternalTip, models.User) \
-                      .filter(models.InternalTip.id == models.ReceiverTip.internaltip_id,
-                              models.ReceiverTip.id == identityaccessrequest.receivertip_id,
-                              models.User.id == models.ReceiverTip.receiver_id).one()
+    itip, request_user = session.query(models.InternalTip, models.User) \
+                                .filter(models.InternalTip.id == identityaccessrequest.internaltip_id,
+                                        models.User.id == identityaccessrequest.request_user_id).one()
 
     reply_user = session.query(models.User) \
                         .filter(models.User.id == identityaccessrequest.reply_user_id).one_or_none()
 
     return {
         'id': identityaccessrequest.id,
-        'receivertip_id': identityaccessrequest.receivertip_id,
+        'internaltip_id': identityaccessrequest.internaltip_id,
         'request_date': identityaccessrequest.request_date,
-        'request_user_name': user.name,
+        'request_user_name': request_user.name,
         'request_motivation': identityaccessrequest.request_motivation,
         'reply_date': identityaccessrequest.reply_date,
         'reply_user_name': reply_user.id if reply_user is not None else '',
@@ -73,31 +75,10 @@ def serialize_comment(session, comment):
     """
     return {
         'id': comment.id,
-        'type': comment.type,
         'creation_date': comment.creation_date,
         'content': comment.content,
-        'author': comment.author_id
-    }
-
-
-def serialize_message(session, message):
-    """
-    Transaction returning a serialized descriptor of a message
-
-    :param session: An ORM session
-    :param message: A model to be serialized
-    :return: A serialized description of the model specified
-    """
-    receiver_involved_id = session.query(models.ReceiverTip.receiver_id) \
-                                  .filter(models.ReceiverTip.id == models.Message.receivertip_id,
-                                          models.Message.id == message.id).one()
-
-    return {
-        'id': message.id,
-        'type': message.type,
-        'creation_date': message.creation_date,
-        'content': message.content,
-        'receiver_involved_id': receiver_involved_id
+        'author_id': comment.author_id,
+        'visibility': comment.visibility
     }
 
 
@@ -115,47 +96,53 @@ def serialize_ifile(session, ifile):
         'name': ifile.name,
         'size': ifile.size,
         'type': ifile.content_type,
-        'filename': ifile.filename,
-        'reference':ifile.reference
+        'reference_id': ifile.reference_id
     }
 
 
-def serialize_rfile(session, ifile, rfile):
-    """
-    Transaction for serializing rfile
-
-    :param session: An ORM session
-    :param ifile: The ifile to be serialized
-    :param rfile: The rfile to be serialized
-    :return: The serialized rfile
-    """
-    return {
-        'id': rfile.id,
-        'creation_date': ifile.creation_date,
-        'name': ifile.name,
-        'size': ifile.size,
-        'type': ifile.content_type,
-        'filename': rfile.filename,
-        'reference':ifile.reference
-    }
-
-
-def serialize_wbfile(session, wbfile):
+def serialize_wbfile(session, ifile, wbfile):
     """
     Transaction for serializing wbfile
 
     :param session: An ORM session
+    :param ifile: The ifile to be serialized
     :param wbfile: The wbfile to be serialized
     :return: The serialized wbfile
     """
+    error = not os.path.exists(os.path.join(State.settings.attachments_path, ifile.id)) and \
+        not os.path.exists(os.path.join(State.settings.attachments_path, wbfile.id))
+
     return {
         'id': wbfile.id,
-        'creation_date': wbfile.creation_date,
-        'name': wbfile.name,
-        'size': wbfile.size,
-        'type': wbfile.content_type,
-        'description': wbfile.description,
-        'filename': wbfile.filename
+        'ifile_id': ifile.id,
+        'creation_date': ifile.creation_date,
+        'name': ifile.name,
+        'size': ifile.size,
+        'type': ifile.content_type,
+        'reference_id': ifile.reference_id,
+        'error': error
+    }
+
+
+def serialize_rfile(session, rfile):
+    """
+    Transaction for serializing rfile
+
+    :param session: An ORM session
+    :param rfile: The rfile to be serialized
+    :return: The serialized rfile
+    """
+    error = not os.path.exists(os.path.join(State.settings.attachments_path, rfile.id))
+
+    return {
+        'id': rfile.id,
+        'creation_date': rfile.creation_date,
+        'name': rfile.name,
+        'size': rfile.size,
+        'type': rfile.content_type,
+        'description': rfile.description,
+        'visibility': rfile.visibility,
+        'error': error
     }
 
 
@@ -163,7 +150,7 @@ def serialize_itip(session, internaltip, language):
     x = session.query(models.InternalTipAnswers, models.ArchivedSchema) \
                .filter(models.ArchivedSchema.hash == models.InternalTipAnswers.questionnaire_hash,
                        models.InternalTipAnswers.internaltip_id == internaltip.id) \
-               .order_by(models.InternalTipAnswers.creation_date.desc())
+               .order_by(models.InternalTipAnswers.creation_date.asc())
 
     questionnaires = []
     for ita, aqs in x:
@@ -177,14 +164,12 @@ def serialize_itip(session, internaltip, language):
         'creation_date': internaltip.creation_date,
         'update_date': internaltip.update_date,
         'expiration_date': internaltip.expiration_date,
-        'progressive': internaltip.progressive,
         'context_id': internaltip.context_id,
         'questionnaires': questionnaires,
         'tor': internaltip.tor,
         'mobile': internaltip.mobile,
         'reminder_date' : internaltip.reminder_date,
         'enable_two_way_comments': internaltip.enable_two_way_comments,
-        'enable_two_way_messages': internaltip.enable_two_way_messages,
         'enable_attachments': internaltip.enable_attachments,
         'enable_whistleblower_identity': internaltip.enable_whistleblower_identity,
         'last_access': internaltip.last_access,
@@ -192,24 +177,15 @@ def serialize_itip(session, internaltip, language):
         'status': internaltip.status,
         'substatus': internaltip.substatus,
         'receivers': [],
-        'messages': [],
         'comments': [],
-        'rfiles': [],
         'wbfiles': [],
+        'rfiles': [],
         'data': {}
     }
 
-    for comment in session.query(models.Comment) \
-                          .filter(models.Comment.internaltip_id == internaltip.id):
-        ret['comments'].append(serialize_comment(session, comment))
-
-    for wbfile in session.query(models.WhistleblowerFile) \
-                         .filter(models.WhistleblowerFile.receivertip_id == models.ReceiverTip.id,
-                                 models.ReceiverTip.internaltip_id == internaltip.id):
-        ret['wbfiles'].append(serialize_wbfile(session, wbfile))
-
     for itd in session.query(models.InternalTipData).filter(models.InternalTipData.internaltip_id == internaltip.id):
         ret['data'][itd.key] = itd.value
+        ret['data'][itd.key + "_date"] = itd.creation_date
 
     return ret
 
@@ -231,20 +207,19 @@ def serialize_rtip(session, itip, rtip, language):
 
     ret['id'] = rtip.id
     ret['internaltip_id'] = itip.id
+    ret['progressive'] = itip.progressive
     ret['receiver_id'] = user_id
-    ret['custodian'] = State.tenants[itip.tid].cache['enable_custodian']
+    ret['custodian'] = State.tenants[itip.tid].cache['custodian']
     ret['important'] = itip.important
     ret['label'] = itip.label
     ret['enable_notifications'] = rtip.enable_notifications
 
     iar = session.query(models.IdentityAccessRequest) \
-                 .filter(models.IdentityAccessRequest.receivertip_id == rtip.id) \
+                 .filter(models.IdentityAccessRequest.internaltip_id == itip.id) \
                  .order_by(models.IdentityAccessRequest.request_date.desc()).first()
 
     if iar:
         ret['iar'] = serialize_identityaccessrequest(session, iar)
-    else:
-        ret['iar'] = None
 
     for receiver in session.query(models.User) \
                            .filter(models.User.id == models.ReceiverTip.receiver_id,
@@ -254,20 +229,33 @@ def serialize_rtip(session, itip, rtip, language):
           'name': receiver.name
         })
 
-    for message in session.query(models.Message) \
-                          .filter(models.Message.receivertip_id == rtip.id):
-        ret['messages'].append(serialize_message(session, message))
-
     if 'whistleblower_identity' in ret['data']:
         ret['data']['whistleblower_identity_provided'] = True
 
-        if ret['iar'] is None or ret['iar']['reply'] == 'denied':
+        if 'iar' not in ret or ret['iar']['reply'] == 'denied':
             del ret['data']['whistleblower_identity']
 
-    for ifile, rfile in session.query(models.InternalFile, models.ReceiverFile) \
-                               .filter(models.InternalFile.id == models.ReceiverFile.internalfile_id,
-                                       models.ReceiverFile.receivertip_id == rtip.id):
-        ret['rfiles'].append(serialize_rfile(session, ifile, rfile))
+
+    for ifile, wbfile in session.query(models.InternalFile, models.WhistleblowerFile) \
+                               .filter(models.InternalFile.id == models.WhistleblowerFile.internalfile_id,
+                                       models.WhistleblowerFile.receivertip_id == rtip.id):
+        ret['wbfiles'].append(serialize_wbfile(session, ifile, wbfile))
+
+    for rfile in session.query(models.ReceiverFile) \
+                         .filter(models.ReceiverFile.internaltip_id == itip.id,
+                                 or_(models.ReceiverFile.visibility == 0,
+                                     models.ReceiverFile.visibility == 1,
+                                     and_(models.ReceiverFile.visibility == 2,
+                                          models.ReceiverFile.author_id == user_id))):
+        ret['rfiles'].append(serialize_rfile(session, rfile))
+
+    for comment in session.query(models.Comment) \
+                          .filter(models.Comment.internaltip_id == itip.id,
+                                  or_(models.Comment.visibility == 0,
+                                      models.Comment.visibility == 1,
+                                      and_(models.Comment.visibility == 2,
+                                           models.Comment.author_id == user_id))):
+        ret['comments'].append(serialize_comment(session, comment))
 
     return ret
 
@@ -283,15 +271,20 @@ def serialize_wbtip(session, itip, language):
           'name': receiver.public_name
         })
 
-    for message in session.query(models.Message) \
-                          .filter(models.Message.receivertip_id == models.ReceiverTip.id,
-                                  models.ReceiverTip.internaltip_id == models.InternalTip.id,
-                                  models.InternalTip.id == itip.id):
-        ret['messages'].append(serialize_message(session, message))
-
     for ifile in session.query(models.InternalFile) \
                         .filter(models.InternalFile.internaltip_id == itip.id):
-        ret['rfiles'].append(serialize_ifile(session, ifile))
+        ret['wbfiles'].append(serialize_ifile(session, ifile))
+
+    for rfile in session.query(models.ReceiverFile) \
+                         .filter(models.ReceiverFile.internaltip_id == itip.id,
+                                 models.ReceiverFile.visibility == 0):
+        ret['rfiles'].append(serialize_rfile(session, rfile))
+
+    for comment in session.query(models.Comment) \
+                          .filter(models.Comment.internaltip_id == itip.id,
+                                  models.Comment.visibility == 0):
+        ret['comments'].append(serialize_comment(session, comment))
+
 
     return ret
 
