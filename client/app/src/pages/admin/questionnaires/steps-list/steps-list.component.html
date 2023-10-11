@@ -37,21 +37,21 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label>{{ 'Label' | translate }}</label>
-                <input class="form-control" [(ngModel)]="step.label" type="text" required />
+                <input name="step.label" class="form-control" [(ngModel)]="step.label" type="text" required />
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-6">
                 <label>{{ 'Description' | translate }}</label>
                 <div>
-                    <textarea class="form-control" [(ngModel)]="step.description"></textarea>
+                    <textarea name="step.description" class="form-control" [(ngModel)]="step.description"></textarea>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-12" *ngIf="node.dataModel.enable_scoring_system">
                 <label>{{ 'Triggered by score:' | translate }}</label>
-                <select class="form-control" [(ngModel)]="step.triggered_by_score" convert-to-number>
+                <select name="step.triggered_by_score" class="form-control" [(ngModel)]="step.triggered_by_score" convert-to-number>
                     <option value="0">{{ 'Low' | translate }}</option>
                     <option value="1">{{ 'Medium' | translate }}</option>
                     <option value="2">{{ 'High' | translate }}</option>
@@ -79,7 +79,7 @@
                         </select>
                     </div>
                     <div *ngIf="new_trigger.field" class="form-group">
-                        <input [(ngModel)]="new_trigger.sufficient" type="checkbox">
+                        <input name="new_trigger.sufficient" [(ngModel)]="new_trigger.sufficient" type="checkbox">
                         <label>{{ 'Sufficient' | translate }}</label>
                     </div>
                     <div class="form-group">

@@ -76,7 +76,7 @@
                         <div class="form-group">
                             <div class="col-md-6">
                                 <label>{{'Label'|translate}}</label>
-                                <input class="form-control" [(ngModel)]="substatus.label" type="text" required/>
+                                <input class="form-control" name="substatus.label" [(ngModel)]="substatus.label" type="text" required/>
                                 <div class="text-danger" *ngIf="!substatus.label || substatus.label==0">
                                     <span>{{'This field is mandatory'|translate}}</span>
                                 </div>

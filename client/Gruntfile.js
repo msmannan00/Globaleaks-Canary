@@ -22,11 +22,20 @@ module.exports = function (grunt) {
 
     clean: {
       all: ["build", "tmp", "dist"],
-      tmp: ["tmp", "dist"]
+      tmp: ["tmp", "dist", "instrument"],
     },
     shell: {
       build: {
         command: 'npx ng build --configuration=production && echo "Build completed"'
+      },
+      babel: {
+        command: "npx ng build --configuration=production --source-map && nyc instrument dist instrument"
+      },
+      serve: {
+        command: "ng serve --proxy-config proxy.conf.json"
+      },
+      code_overage: {
+        command: "npm run e2e:ci && npm run e2e:coverage"
       }
     },
     copy: {
@@ -70,7 +79,11 @@ module.exports = function (grunt) {
           { dest: "build/assets/favicon.ico", cwd: ".", src: ["tmp/assets/favicon.ico"], expand: false, flatten: true },
           { dest: "build/license.txt", cwd: ".", src: ["tmp/assets/license.txt"], expand: false, flatten: true },
           { dest: "build/loader.js", cwd: ".", src: ["tmp/assets/loader.js"], expand: false, flatten: true },
-          // { dest: "build", cwd: "tmp/assets", src: ["**"], expand: true },
+        ]
+      },
+      instrument: {
+        files: [
+          { dest: "dist", cwd: "instrument/", src: ["**"], expand: true }
         ]
       },
       coverage: {
@@ -954,12 +967,13 @@ module.exports = function (grunt) {
     }
   });
 
-  // Run this task to push translations on transifex
   grunt.registerTask("pushTranslationsSource", ["confirm", "☠☠☠pushTranslationsSource☠☠☠"]);
 
-  // Run this task to fetch translations from transifex and create application files
   grunt.registerTask("updateTranslations", ["fetchTranslations", "makeAppData", "verifyAppData"]);
 
-  // Run this to build your app. You should have run updateTranslations before you do so, if you have changed something in your translations.
   grunt.registerTask("build", ["clean", "copy:sources", "shell:build", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
+
+  grunt.registerTask("serve", ["shell:serve"]);
+
+  grunt.registerTask("coverage", ["shell:code_overage"]);
 };

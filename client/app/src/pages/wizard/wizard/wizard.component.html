@@ -117,7 +117,7 @@
                 <div class="row form-group">
                     <div class="col-md-12">
                         <div class="form-check">
-                            <input class="form-check-input inputelem" type="checkbox" [(ngModel)]="wizard.admin_escrow">
+                            <input class="form-check-input inputelem" type="checkbox" name="wizard.admin_escrow" [(ngModel)]="wizard.admin_escrow">
                             <span class="form-check-label">{{'Make it possible for this admin to reset user passwords.'|translate}}</span>
                         </div>
                         <div>{{'We advise selecting this option if you would like to protect data from being lost in the situation where recipients lose their passwords. On the other hand, we would not advise using this feature if you want to setup a system where only recipients are able to access submissions.'|translate}}</div>
@@ -232,7 +232,7 @@
                         <span class="tos-agreement-label form-check-label">{{'I have read and agree to the terms of the license.'|translate}}</span>
                     </div>
                     <div class="form-check" *ngIf="appDataService.public.node.root_tenant">
-                        <input class="form-check-input inputelem" [(ngModel)]="wizard.enable_developers_exception_notification" type="checkbox">
+                        <input class="form-check-input inputelem" name="wizard.enable_developers_exception_notification" [(ngModel)]="wizard.enable_developers_exception_notification" type="checkbox">
                         <span>{{'Notify developers of software problems'|translate}}</span>
                         <div>{{'By enabling this feature, you will contribute to the development and security of the platform.'|translate}}</div>
                     </div>

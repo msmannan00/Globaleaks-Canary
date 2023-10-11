@@ -26,7 +26,6 @@ export class PreferenceResolver implements Resolve<boolean> {
       return this.httpService.requestUserPreferenceResource().pipe(
         map((response: preferenceResolverModel) => {
           this.dataModel = response;
-          console.log(response)
           if (this.dataModel.password_change_needed) {
             this.router.navigate(["/action/forcedpasswordchange"]);
           } else if (this.dataModel.require_two_factor) {

@@ -36142,6 +36142,7 @@ var ngCloakDirective = ngDirective({
  *    }
  *
  *    SettingsController1.prototype.greet = function() {
+ *      alert(this.name);
  *    };
  *
  *    SettingsController1.prototype.addContact = function() {

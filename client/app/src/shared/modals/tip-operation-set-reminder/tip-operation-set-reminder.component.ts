@@ -42,7 +42,7 @@ export class TipOperationSetReminderComponent {
         }
       };
 
-      return this.http.put("api/rtips/" + this.args.tip.id, req)
+      return this.http.put("api/recipient/rtips/" + this.args.tip.id, req)
         .subscribe(() => {
           this.reload();
         });
@@ -58,7 +58,7 @@ export class TipOperationSetReminderComponent {
         "value": 32503680000000
       }
     };
-    this.http.put("api/rtips/" + this.args.tip.id, req)
+    this.http.put("api/recipient/rtips/" + this.args.tip.id, req)
       .subscribe(() => {
         this.reload();
       });

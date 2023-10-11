@@ -20,7 +20,6 @@ export class TippageComponent {
   tip_id = null;
   itemsPerPage = 5;
   currentCommentsPage = 1;
-  currentMessagesPage = 1;
   answers = {};
   uploads:any = {};
   showEditLabelInput = false;
@@ -152,9 +151,6 @@ export class TippageComponent {
 
     return (100 - (progress/totalFiles)*100)
   }
-  newMessage() {
-  };
-
   tip_toggle_star() {
   };
 
@@ -174,7 +170,8 @@ export class TippageComponent {
               this.tip.tip_id = params['tip_id']
             });
 
-            this.fileupload_url = "api/whistleblower/wbtip/rfile";
+            console.log(this.tip)
+            this.fileupload_url = "api/whistleblower/wbtip/wbfiles";
             this.tip.context = this.appDataService.contexts_by_id[this.tip.context_id];
 
             this.tip.receivers_by_id = this.utilsService.array_to_map(this.tip.receivers);

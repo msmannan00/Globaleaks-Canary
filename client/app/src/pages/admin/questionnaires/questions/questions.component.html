@@ -16,7 +16,7 @@
     </div>
     <div class="configSection col-md-6" *ngIf="showAddQuestion">
         <ng-container *ngIf="questionnairesData.length > 0">
-            <src-add-field [step]="step" [type]="'template'"></src-add-field>
+            <src-add-field [step]="step" [type]="'template'" (dataToParent)="listenToAddField($event)"></src-add-field>
         </ng-container>
     </div>
     <div class="col-md-12" *ngFor="let field of fields | orderBy:'label' ; let index = index">

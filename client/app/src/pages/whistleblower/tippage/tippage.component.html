@@ -1,4 +1,3 @@
-
 <div id="Toolbar" class="row">
     <div class="col-md-12">
     <span id="link-reload"
@@ -43,14 +42,9 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-6" *ngIf="wbtipService.tip.comments">
-        <div *ngIf="wbtipService.tip.context.enable_comments || wbtipService.tip.comments.length">
-            <src-tip-comments [tipService]="wbtipService"></src-tip-comments>
-        </div>
-    </div>
-    <div class="col-md-6" *ngIf="wbtipService.tip.messages">
-        <div *ngIf="wbtipService.tip.context.enable_messages || wbtipService.tip.messages.length">
-            <src-tip-messages [tipService]="wbtipService"></src-tip-messages>
-        </div>
+    <div class="col-md-12">
+        <ng-container *ngIf="wbtipService">
+            <src-tip-comments [tipService]="wbtipService" [key]="'public'"></src-tip-comments>
+        </ng-container>
     </div>
 </div>

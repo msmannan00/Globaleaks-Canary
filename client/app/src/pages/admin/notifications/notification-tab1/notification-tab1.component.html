@@ -16,17 +16,17 @@
         </div>
         <div class="form-group">
             <label>{{ 'SMTP server address' | translate }}</label>
-            <input class="form-control" [(ngModel)]="notification.dataModel.smtp_server" type="text" />
+            <input class="form-control" name="notification.dataModel.smtp_server" [(ngModel)]="notification.dataModel.smtp_server" type="text" />
           </div>
           
           <div class="form-group">
             <label>{{ 'SMTP server port' | translate }}</label>
-            <input class="form-control" [(ngModel)]="notification.dataModel.smtp_port" type="number" />
+            <input class="form-control" name="notification.dataModel.smtp_port" [(ngModel)]="notification.dataModel.smtp_port" type="number" />
           </div>
           
           <div class="form-group">
             <label>{{ 'Security' | translate }}</label>
-            <select class="form-control" [(ngModel)]="notification.dataModel.smtp_security">
+            <select class="form-control" name="notification.dataModel.smtp_security" [(ngModel)]="notification.dataModel.smtp_security">
               <option value="PLAIN">PLAIN</option>
               <option value="SSL">SMTPS</option>
               <option value="TLS">SMTP/TLS</option>
@@ -34,28 +34,28 @@
           </div>
           
           <div class="form-group">
-            <input [(ngModel)]="notification.dataModel.smtp_authentication" type="checkbox">
+            <input name="notification.dataModel.smtp_authentication" [(ngModel)]="notification.dataModel.smtp_authentication" type="checkbox">
             <label>{{ 'Require authentication' | translate }}</label>
           </div>
           
           <div *ngIf="notification.dataModel.smtp_authentication">
             <div class="form-group">
               <label>{{ 'Username' | translate }}</label>
-              <input class="form-control" [(ngModel)]="notification.dataModel.smtp_username" type="text" />
+              <input class="form-control" name="notification.dataModel.smtp_username" [(ngModel)]="notification.dataModel.smtp_username" type="text" />
             </div>
             <div class="form-group">
               <label>{{ 'Password' | translate }}</label>
-              <input class="form-control" [(ngModel)]="notification.dataModel.smtp_password" type="password" placeholder="*****************" />
+              <input class="form-control" name="notification.dataModel.smtp_password" [(ngModel)]="notification.dataModel.smtp_password" type="password" placeholder="*****************" />
             </div>
           </div>
           
           <div class="form-group">
-            <input [(ngModel)]="notification.dataModel.disable_admin_notification_emails" type="checkbox">
+            <input name="notification.dataModel.disable_admin_notification_emails" [(ngModel)]="notification.dataModel.disable_admin_notification_emails" type="checkbox">
             <label>{{ 'Disable notifications to administrators' | translate }}</label>
           </div>
           
           <div class="form-group">
-            <input [(ngModel)]="notification.dataModel.disable_receiver_notification_emails" type="checkbox">
+            <input name="notification.dataModel.disable_receiver_notification_emails" [(ngModel)]="notification.dataModel.disable_receiver_notification_emails" type="checkbox">
             <label>{{ 'Disable notifications to recipients' | translate }}</label>
             <div *ngIf="notification.dataModel.disable_receiver_notification_emails">
               <span class="badge bg-danger">{{ 'Disabled' | translate }}</span>
@@ -63,7 +63,7 @@
           </div>
           
           <div class="form-group" *ngIf="node.dataModel.enable_custodian">
-            <input [(ngModel)]="notification.dataModel.disable_custodian_notification_emails" type="checkbox">
+            <input name="notification.dataModel.disable_custodian_notification_emails" [(ngModel)]="notification.dataModel.disable_custodian_notification_emails" type="checkbox">
             <label>{{ 'Disable notifications to custodians' | translate }}</label>
             <div *ngIf="notification.dataModel.disable_custodian_notification_emails">
               <span class="badge bg-danger">{{ 'Disabled' | translate }}</span>
@@ -72,7 +72,7 @@
           
           <div class="form-group">
             <label>{{ 'Number of hours before sending a report expiration alert' | translate }}</label>
-            <input class="form-control" [(ngModel)]="notification.dataModel.tip_expiration_threshold" type="number" />
+            <input class="form-control" name="notification.dataModel.tip_expiration_threshold" [(ngModel)]="notification.dataModel.tip_expiration_threshold" type="number" />
           </div>
           
         <div class="form-group">

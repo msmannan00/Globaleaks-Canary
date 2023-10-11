@@ -33,8 +33,8 @@
         </div>
     </div>
 
-    <ng-container *ngIf="confirmButton && !formuploader && !(flowAdvanced.transfers$ | async)?.flow?.isUploading()">
-        <button id="files-action-confirm" class="btn btn-sm btn-outline-secondary" (click)="flowAdvanced.upload()">
+    <ng-container *ngIf="confirmButton && !formuploader">
+        <button id="files-action-confirm" class="btn btn-sm btn-outline-secondary" (click)="onConfirmClick()">
             <i class="fa-solid fa-upload"></i>
             <span>{{'Confirm'|translate}}</span>
         </button>

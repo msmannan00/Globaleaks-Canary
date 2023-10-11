@@ -132,13 +132,13 @@
                         <input name="hint" class="form-control" [(ngModel)]="field.placeholder" type="text">
                     </div>
                     <div class="form-group" *ngIf="field.type !== 'fieldgroup'">
-                        <input [(ngModel)]="field.required" type="checkbox">
+                        <input name="field.required" [(ngModel)]="field.required" type="checkbox">
                         <label>{{ 'Mandatory' | translate }}</label>
                     </div>
                     <div class="form-group" *ngIf="(field.type === 'audioUpload') && field.template_id === ''">
                         <div class="form-group">
                             <label>{{ 'Minimum number of seconds' | translate }}</label>
-                            <input [(ngModel)]="field.attrs.min_time.value" value="10" type="text" class="form-control"
+                            <input name="field.attrs.min_time.value" [(ngModel)]="field.attrs.min_time.value" value="10" type="text" class="form-control"
                                 [disabled]="!field.editable" />
                             <div>{{ 'Set the value to 0 to disable this feature.' | translate }}</div>
                         </div>
@@ -367,7 +367,7 @@
                             </button>
                             <span>{{parsedFields.fields_by_id[trigger.field].label}}</span>:
                             <span>{{parsedFields.options_by_id[trigger.option].label}}</span> <span
-                                *ngIf='trigger.sufficient'>(<span data-translate>Sufficient</span>)</span>
+                                *ngIf='trigger.sufficient'>(<span>{{'Sufficient'|translate}}</span>)</span>
                         </div>
                     </div>
                 </div>
@@ -470,11 +470,11 @@
                         </div>
                         <div class="row" *ngIf="field.editable && field.type === 'fieldgroup'">
                             <div class="col-md-12" *ngIf="showAddQuestion">
-                                <src-add-field [step]="field" [type]="'field'"></src-add-field>
+                                <src-add-field [step]="field" [type]="'field'" (dataToParent)="listenToAddField($event)"></src-add-field>
                             </div>
                             <div class="col-md-12" *ngIf="showAddQuestionFromTemplate">
                                 <src-add-field-from-template [fieldtemplatesData]="fieldtemplatesData" [step]="field"
-                                    [type]="'field'"></src-add-field-from-template>
+                                    [type]="'field'" (dataToParent)="listenToAddFieldFormTemplate($event)"></src-add-field-from-template>
                             </div>
                         </div>
                         <div class="configuredFields">

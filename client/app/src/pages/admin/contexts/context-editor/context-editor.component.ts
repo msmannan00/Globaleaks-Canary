@@ -77,7 +77,7 @@ export class ContextEditorComponent implements OnInit {
     [this.contextsData[index], this.contextsData[target]] =
       [this.contextsData[target], this.contextsData[index]];
 
-    this.http.put("api/admin/contexts", {
+    this.http.put("/api/admin/contexts", {
       operation: "order_elements",
       args: { ids: this.contextsData.map(c => c.id) },
     }).subscribe(

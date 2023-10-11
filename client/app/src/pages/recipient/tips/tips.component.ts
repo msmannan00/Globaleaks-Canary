@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { NgbDate, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppDataService } from 'app/src/app-data.service';
 import { DeleteConfirmationComponent } from 'app/src/shared/modals/delete-confirmation/delete-confirmation.component';
@@ -8,11 +8,11 @@ import { PreferenceResolver } from 'app/src/shared/resolvers/preference.resolver
 import { RtipsResolver } from 'app/src/shared/resolvers/rtips.resolver';
 import { HttpService } from 'app/src/shared/services/http.service';
 import { UtilsService } from 'app/src/shared/services/utils.service';
-import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { TranslateService } from '@ngx-translate/core';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { filter, orderBy } from 'lodash';
 import { TokenResource } from 'app/src/shared/services/token-resource.service';
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -23,21 +23,9 @@ import { TokenResource } from 'app/src/shared/services/token-resource.service';
 export class TipsComponent implements OnInit {
   search: string | undefined;
   selectedTips: any[] = [];
-  //TO DO Filter
   filteredTips: any[];
   currentPage: number = 1;
   itemsPerPage: number = 20;
-  dropdownSettings: IDropdownSettings = {
-    // singleSelection: false,
-    idField: 'id',
-    textField: 'label',
-    // selectAllText: 'Select All',
-    // unSelectAllText: 'Unselect All',
-    itemsShowLimit: 5,
-    allowSearchFilter: true,
-    searchPlaceholderText: this.translateService.instant('Search')
-  };
-  // dropdownSettings = {dynamicTitle: false, showCheckAll: false, showUncheckAll: false, enableSearch: true, displayProp: "label", idProp: "label", itemsShowLimit: 5};
   reportDateFilter: any = null;
   updateDateFilter: any = null;
   expiryDateFilter: any = null;
@@ -53,24 +41,45 @@ export class TipsComponent implements OnInit {
   sortKey: string = 'creation_date';
   sortReverse: boolean = true;
   dropdownVisible = false;
-  //NEED TO CONFIRM FOLLOWING
   index: number;
   date: { year: number; month: number };
-  // submission_statuses: any;
   reportDatePicker: boolean = false;
   lastUpdatePicker: boolean = false;
   expirationDatePicker: boolean = false;
   oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+
   dropdownDefaultText: any = {
     buttonDefaultText: '',
     searchPlaceholder: this.translateService.instant('Search')
   };
+  dropdownSettings: IDropdownSettings = {
+    idField: 'id',
+    textField: 'label',
+    itemsShowLimit: 5,
+    allowSearchFilter: true,
+    searchPlaceholderText: this.translateService.instant('Search')
+  };
+
+  constructor(private router: Router, public httpService: HttpService, public rtips: RtipsResolver, public preference: PreferenceResolver, public modalService: NgbModal, public utils: UtilsService, public appDataService: AppDataService, private elementRef: ElementRef, private translateService: TranslateService, private tokenResourceService:TokenResource) {
+
+  }
+
+  ngOnInit() {
+    if (!this.rtips.dataModel) {
+      this.router.navigate(['/recipient/home']);
+    } else {
+      this.filteredTips = this.rtips.dataModel;
+      this.processTips()
+    }
+  }
+
   selectAll() {
     this.selectedTips = [];
     this.filteredTips.forEach(tip => {
       this.selectedTips.push(tip.id);
     });
   }
+
   deselectAll() {
     this.selectedTips = []
   }
@@ -80,7 +89,6 @@ export class TipsComponent implements OnInit {
       {
         next: response => {
           const modalRef = this.modalService.open(GrantAccessComponent);
-          // modalRef.componentInstance.users_names = response;
           modalRef.componentInstance.args = {
             users_names: response
           };
@@ -91,8 +99,6 @@ export class TipsComponent implements OnInit {
             };
             return this.utils.runRecipientOperation("grant", args, true);
           };
-        },
-        error: (error: any) => {
         }
       }
     );
@@ -114,8 +120,6 @@ export class TipsComponent implements OnInit {
             };
             return this.utils.runRecipientOperation("revoke", args, true);
           };
-        },
-        error: (error: any) => {
         }
       }
     );
@@ -125,29 +129,19 @@ export class TipsComponent implements OnInit {
     modalRef.componentInstance.selected_tips = this.selectedTips;
     modalRef.componentInstance.operation = "delete";
   }
-  // tipsExport() {
-  //   for (let i = 0; i < this.selectedTips.length; i++) {
-  //     (function (i) {
-  //       // this.tokenResourceService.getWithProofOfWork().then((token: any) => {
-  //       //   window.open(`api/rtips/${this.selectedTips[i]}/export?token=${token.id}:${token.answer}`)
-  //       // });
-  //       // this.tokenResource.get().subscribe((token: any) => {
-  //       //   window.open(`api/rtips/${this.selectedTips[i]}/export?token=${token.id}:${token.answer}`);
-  //       // });
-  //     })(i);
-  //   }
-  // }
+
+
   async tipsExport() {
     for (let i = 0; i < this.selectedTips.length; i++) {
       const token: any = await this.tokenResourceService.getWithProofOfWork();
-      window.open(`api/rtips/${this.selectedTips[i]}/export?token=${token.id}:${token.answer}`);
+      window.open(`api/recipient/rtips/${this.selectedTips[i]}/export?token=${token.id}:${token.answer}`);
     }
   }
-
 
   reload() {
     this.utils.reloadCurrentRoute();
   }
+
   tipSwitch(id: number): void {
     this.index = this.selectedTips.indexOf(id);
     if (this.index > -1) {
@@ -156,27 +150,27 @@ export class TipsComponent implements OnInit {
       this.selectedTips.push(id);
     }
   }
+
   isSelected(id: any): boolean {
     return this.selectedTips.indexOf(id) !== -1;
   }
+
   exportTip(tipId: any) {
-    this.utils.download("api/rtips/" + tipId + "/export")
+    this.utils.download("api/recipient/rtips/" + tipId + "/export")
   }
+
   markReportStatus(date: string): boolean {
     const report_date = new Date(date);
     const current_date = new Date();
     return current_date > report_date;
   }
 
-
   processTips() {
     const uniqueKeys: string[] = [];
 
-    for (let tip of this.rtips.dataModel.rtips) {
-      // tip.context = this.utils.array_to_map(tip.context_id);
+    for (let tip of this.rtips.dataModel) {
       tip.context = this.appDataService.contexts_by_id[tip.context_id];
       tip.context_name = tip.context.name;
-      tip.questionnaire = this.rtips.dataModel.questionnaires[tip.questionnaire];
       tip.submissionStatusStr = this.utils.getSubmissionStatusText(tip.status, tip.substatus, this.appDataService.submission_statuses);
       if (!uniqueKeys.includes(tip.submissionStatusStr)) {
         uniqueKeys.push(tip.submissionStatusStr);
@@ -195,6 +189,7 @@ export class TipsComponent implements OnInit {
       }
     }
   }
+
   maskScore(score: number) {
     if (score === 1) {
       return this.translateService.instant('Low');
@@ -221,13 +216,12 @@ export class TipsComponent implements OnInit {
   onSearchChange(value: string | number | undefined) {
     if (typeof value !== 'undefined') {
       this.currentPage = 1;
-      this.filteredTips = this.rtips.dataModel.rtips;
+      this.filteredTips = this.rtips.dataModel;
       this.processTips();
 
       this.filteredTips = orderBy(filter(this.filteredTips, (tip) =>
         Object.values(tip).some((val) => {
           if (typeof val === 'string' || typeof val === 'number') {
-            // Convert both val and value to strings for case-insensitive comparison
             return String(val).toLowerCase().includes(String(value).toLowerCase());
           }
           return false;
@@ -236,8 +230,6 @@ export class TipsComponent implements OnInit {
     }
 
   }
-  //Logic for datepickers
-
 
   onReportFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
     this.processTips()
@@ -251,6 +243,7 @@ export class TipsComponent implements OnInit {
     }
     this.applyFilter();
   }
+
   onUpdateFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
     this.processTips()
     const { fromDate, toDate } = event;
@@ -263,6 +256,7 @@ export class TipsComponent implements OnInit {
     }
     this.applyFilter();
   }
+
   onExpiryFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
     this.processTips()
     const { fromDate, toDate } = event;
@@ -275,19 +269,12 @@ export class TipsComponent implements OnInit {
     }
     this.applyFilter();
   }
+
   applyFilter() {
-    this.filteredTips = this.utils.getStaticFilter(this.rtips.dataModel.rtips, this.dropdownStatusModel, "submissionStatusStr");
+    this.filteredTips = this.utils.getStaticFilter(this.rtips.dataModel, this.dropdownStatusModel, "submissionStatusStr");
     this.filteredTips = this.utils.getStaticFilter(this.filteredTips, this.dropdownContextModel, "context_name");
     this.filteredTips = this.utils.getStaticFilter(this.filteredTips, this.dropdownScoreModel, "score");
     this.filteredTips = this.utils.getDateFilter(this.filteredTips, this.reportDateFilter, this.updateDateFilter, this.expiryDateFilter);
-  }
-  ngOnInit() {
-    if (!this.rtips.dataModel) {
-      this.router.navigate(['/recipient/home']);
-    } else {
-      this.filteredTips = this.rtips.dataModel.rtips;
-      this.processTips()
-    }
   }
 
   // BODY CLICK HANDLER
@@ -301,21 +288,11 @@ export class TipsComponent implements OnInit {
       this.closeAllDatePickers();
     }
   }
+
   closeAllDatePickers() {
     this.reportDatePicker = false;
     this.lastUpdatePicker = false;
     this.expirationDatePicker = false;
   }
-  constructor(public httpService: HttpService,
-    public rtips: RtipsResolver,
-    public preference: PreferenceResolver,
-    public modalService: NgbModal,
-    public utils: UtilsService,
-    private route: ActivatedRoute,
-    private router: Router,
-    public appDataService: AppDataService,
-    private renderer: Renderer2, private elementRef: ElementRef,
-    private translateService: TranslateService,
-    private tokenResourceService:TokenResource
-  ) { }
+
 }

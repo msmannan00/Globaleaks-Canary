@@ -17,12 +17,12 @@
     </div>
     <div class="row configSection" *ngIf="showAddQuestion">
         <div class="col-md-6">
-            <src-add-field [step]="step" [type]="'step'"></src-add-field>
+            <src-add-field [step]="step" [type]="'step'" (dataToParent)="listenToAddField($event)"></src-add-field>
         </div>
     </div>
     <div class="row configSection" *ngIf="showAddQuestionFromTemplate">
         <div class="col-md-6">
-            <src-add-field-from-template  [step]="step" [type]="'step'" [fieldtemplatesData]="fieldtemplatesData"></src-add-field-from-template>
+            <src-add-field-from-template  [step]="step" [type]="'step'" [fieldtemplatesData]="fieldtemplatesData" (dataToParent)="listenToAddFieldFormTemplate($event)"></src-add-field-from-template>
         </div>
     </div>
     <div class="row configuredFields">

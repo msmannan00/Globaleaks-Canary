@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { LoginDataRef } from '../pages/auth/login/model/login-model';
 import { HttpService } from '../shared/services/http.service';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { AppDataService } from '../app-data.service';
 import { errorCodes } from '../models/app/error-code';
 import {AppConfigService} from "./app-config.service";
+import {ServiceInstanceService} from "../shared/services/service-instance.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,14 @@ export class AuthenticationService {
   requireAuthCode: boolean = false;
   loginData: LoginDataRef = new LoginDataRef();
 
-  constructor(public httpService: HttpService, public rootDataService: AppDataService,public appConfigService:AppConfigService, private router: Router) {
+  public appConfigService:AppConfigService
+
+  constructor(private serviceInstanceService:ServiceInstanceService, private activatedRoute: ActivatedRoute, public httpService: HttpService, public rootDataService: AppDataService, private router: Router) {
+  }
+
+  init(){
+    this.appConfigService = this.serviceInstanceService.appConfigService
+
     let json = window.sessionStorage.getItem("session")
     if (json != null) {
       this.session = JSON.parse(json);
@@ -68,6 +76,7 @@ export class AuthenticationService {
   }
 
   login(tid?: any, username?: any, password?: any, authcode?: any, authtoken?: any, callback?: () => void) {
+
     if (authtoken === undefined) {
       authtoken = "";
     }
@@ -112,7 +121,10 @@ export class AuthenticationService {
               }
             } else {
               if(!callback){
-                this.router.navigate([this.session.homepage]).then();
+                this.router.navigate([this.session.homepage], {
+                  queryParams: this.activatedRoute.snapshot.queryParams,
+                  queryParamsHandling: 'merge'
+                });
               }
             }
           }
@@ -130,6 +142,7 @@ export class AuthenticationService {
               this.reset();
             }
           }
+
           this.rootDataService.errorCodes = new errorCodes(error.error.error_message, error.error.error_code, error.error.arguments);
         }
       }
@@ -149,7 +162,7 @@ export class AuthenticationService {
     return header;
   }
 
-  logout() {
+  logout(callback?: () => void) {
     let requestObservable = this.httpService.requestDeleteUserSession();
     requestObservable.subscribe(
       {
@@ -160,6 +173,9 @@ export class AuthenticationService {
           } else {
             this.deleteSession();
             this.loginRedirect();
+          }
+          if(callback){
+            callback();
           }
         }
       }

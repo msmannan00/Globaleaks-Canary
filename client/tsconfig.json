@@ -30,6 +30,8 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "preserveWhitespaces": true,
-    "strictTemplates": true
+    "strictTemplates": true,
+    "enableIvy": false,
+    "generateCodeForLibraries": true,
   }
 }

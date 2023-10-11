@@ -21,16 +21,16 @@ export class AuditlogResolver implements Resolve<boolean> {
     state: RouterStateSnapshot
   ): Observable<boolean> {
     if (this.authenticationService.session.role === 'admin') {
-      this.httpService.requestAdminAuditLogResource().pipe(
+      return this.httpService.requestAdminAuditLogResource().pipe(
         switchMap((response: auditlogResolverModel) => {
           this.handleResponse(response);
           return of(true);
         })
       );
-      return of(true);
     }
     return of(true);
   }
+  
 
   private handleResponse(response: auditlogResolverModel): void {
     this.dataModel = response;

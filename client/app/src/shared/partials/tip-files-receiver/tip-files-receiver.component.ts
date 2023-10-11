@@ -1,13 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UtilsService} from "../../services/utils.service";
-import { RecieverTipService } from 'app/src/services/recievertip.service';
 import { AppDataService } from 'app/src/app-data.service';
 import {AuthenticationService} from "../../../services/authentication.service";
 import {HttpService} from "../../services/http.service";
 import {CryptoService} from "../../../crypto.service";
-import {TipOperationPostponeComponent} from "../../modals/tip-operation-postpone/tip-operation-postpone.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {FileViewComponent} from "../../modals/file-view/file-view.component";
+import { WbtipService } from 'app/src/services/wbtip.service';
+import { RecieverTipService } from 'app/src/services/recievertip.service';
 
 @Component({
   selector: 'src-tip-files-receiver',
@@ -44,7 +44,7 @@ export class TipFilesReceiverComponent implements OnInit{
         {
           next: async token => {
             const ans = await this.cryptoService.proofOfWork(token.id);
-            window.open("api/rfile/" + file.id + "?token=" + token.id + ":" + ans);
+            window.open("/api/recipient/wbfiles/" + file.id + "?token=" + token.id + ":" + ans);
           },
           error: (error: any) => {
           }

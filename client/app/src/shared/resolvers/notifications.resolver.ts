@@ -21,13 +21,12 @@ export class NotificationsResolver implements Resolve<boolean> {
 
   resolve(): Observable<boolean> {
     if (this.authenticationService.session.role === 'admin') {
-      this.httpService.requestNotificationsResource().pipe(
+      return this.httpService.requestNotificationsResource().pipe(
         map((response: notificationResolverModel) => {
           this.dataModel = response;
           return true;
         })
       );
-      return of(true);
     }
     return of(true);
   }

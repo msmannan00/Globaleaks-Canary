@@ -18,7 +18,7 @@ export class FileViewComponent implements OnInit {
   }
 
   viewFile() {
-    this.utilsService.view("api/rfile/" + this.args.file.id, this.args.file.type, (blob: Blob) => {
+    this.utilsService.view("api/recipient/wbfiles/" + this.args.file.id, this.args.file.type, (blob: Blob) => {
       this.args.loaded = true;
       window.addEventListener("message", () => {
         const data = {

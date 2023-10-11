@@ -17,8 +17,8 @@ export class new_field {
   y = 0;
   width = 0;
   children = [];
-  fieldgroup_id = -1;
-  step_id = -1;
+  fieldgroup_id = "";
+  step_id = "";
   template_id = "";
   template_override_id = "";
   triggered_by_score = 0;

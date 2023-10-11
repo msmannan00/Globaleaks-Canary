@@ -27,21 +27,25 @@
 
   <div [dir]="translate.currentLang === 'ar' ? 'rtl' : 'ltr'" *ngIf="appDataService.started">
 
+    <div *ngIf="!appDataService.public.node.root_tenant && appDataService.public.node.mode === 'demo'">
+      <src-demo></src-demo>
+    </div>
     <div *ngIf="utilsService.isWhistleblowerPage() && !appDataService.public.node.disable_privacy_badge">
       <src-privacybadge></src-privacybadge>
-
     </div>
 
     <views-header></views-header>
+    <messageconsole id="MessagesConsoleBox"></messageconsole>
 
     <div id="PageContent">
       <div id="ContentBox">
         <div class="row">
           <nav *ngIf="appConfig.sidebar && showSidebar" id="Sidebar" class="col-md-2 flex-column">
             <src-receipt-sidebar *ngIf="appConfig.sidebar=='recipient-sidebar'"></src-receipt-sidebar>
+            <src-custodian-sidebar *ngIf="appConfig.sidebar=='custodian-sidebar'"></src-custodian-sidebar>
             <src-admin-sidebar *ngIf="appConfig.sidebar=='admin-sidebar'"></src-admin-sidebar>
           </nav>
-          <main [ngClass]="{'col-lg-10 col-md-8 col-sm-12': appConfig.sidebar && showSidebar , 'col-md-12': !appConfig.sidebar}">
+          <main id="Content" [ngClass]="{'col-lg-10 col-md-8 col-sm-12': appConfig.sidebar && showSidebar , 'col-md-12': !appConfig.sidebar}">
 
           <router-outlet></router-outlet>
         </main>

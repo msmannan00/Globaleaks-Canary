@@ -10,11 +10,8 @@ import {
   ViewChild
 } from '@angular/core';
 import {FlowDirective, Transfer} from "@flowjs/ngx-flow";
-import {Subscription} from "rxjs";
 import {AuthenticationService} from "../../../services/authentication.service";
 import {AppDataService} from "../../../app-data.service";
-import {forEach} from "lodash";
-import {FlowFile} from "@flowjs/flow.js";
 import {ControlContainer, NgForm} from "@angular/forms";
 
 @Component({
@@ -84,6 +81,12 @@ export class RfileUploadButtonComponent implements AfterViewInit, OnDestroy, OnI
   }
 
   ngOnDestroy(): void {
+  }
+
+  onConfirmClick() {
+    if(!this.flowAdvanced.flowJs.isUploading()){
+      this.flowAdvanced.upload();
+    }
   }
 
   constructor(public authenticationService:AuthenticationService, public appDataService:AppDataService) {

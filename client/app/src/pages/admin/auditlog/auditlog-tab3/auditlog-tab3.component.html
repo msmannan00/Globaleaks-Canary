@@ -9,7 +9,6 @@
             <th>{{'Status'|translate}}</th>
             <th>{{'Tor'|translate}}</th>
             <th>{{'Comments'|translate}}</th>
-            <th>{{'Messages'|translate}}</th>
             <th>{{'Files'|translate}}</th>
             <th>{{'Whistleblower\'s last access'|translate}}</th>
         </tr>
@@ -24,7 +23,6 @@
             <td>{{utilsService.getSubmissionStatusText(data.status, data.substatus, appDataService.submission_statuses)}}</td>
             <td><i data-ng-if="itip.tor" class="fa-solid fa-check"></i></td>
             <td>{{data.comments}}</td>
-            <td>{{data.messages}}</td>
             <td>{{data.files}}</td>
             <td>{{data.last_access | date:'dd-MM-yyyy HH:mm'}}</td>
         </tr>

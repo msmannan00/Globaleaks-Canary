@@ -18,7 +18,7 @@ export class TipOperationFileIdentityAccessRequestComponent {
 
   confirm() {
     this.modalService.dismissAll();
-    this.http.post("api/rtips/" + this.tipsService.tip.id + "/iars", {"request_motivation": this.request_motivation})
+    this.http.post("api/recipient/rtips/" + this.tipsService.tip.id + "/iars", {"request_motivation": this.request_motivation})
       .subscribe(
         response => {
           this.utils.reloadCurrentRoute();

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
 
 @Component({
@@ -6,50 +6,39 @@ import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.css']
 })
-export class NotificationsComponent  implements AfterViewInit ,OnInit{
+export class NotificationsComponent implements OnInit, AfterViewInit {
   @ViewChild('tab1') tab1!: TemplateRef<any>;
   @ViewChild('tab2') tab2!: TemplateRef<any>;
 
   tabs: any[];
-  nodeData: any
-  active:string
+  nodeData: any;
+  active: string;
 
-  constructor(public node: NodeResolver) { }
+  constructor(
+    public node: NodeResolver,
+    private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
+  ) { }
 
   ngOnInit() { }
 
   ngAfterViewInit(): void {
-    this.active="Settings"
+    setTimeout(() => {
+      this.active = "Settings";
 
-    this.nodeData = this.node
-    this.tabs = [
-      {
-        title: 'Settings',
-        component: this.tab1
-      },
-      {
-        title: 'Templates',
-        component: this.tab2
-      },
-      
+      this.nodeData = this.node;
+      this.tabs = [
+        {
+          title: 'Settings',
+          component: this.tab1
+        },
+        {
+          title: 'Templates',
+          component: this.tab2
+        },
+      ];
 
-    ];
-    // if (this.node.authenticationService.session.role === "admin") {
-    //   this.tabs = this.tabs.concat([
-    //     {
-    //       title: 'Users',
-    //       component: this.tab2
-    //     },
-    //     {
-    //       title: 'Reports',
-    //       component: this.tab3
-    //     },
-    //     {
-    //       title: 'Scheduled jobs',
-    //       component: this.tab4
-    //     }
-    //   ]);
-    // }
+      // Mark the component for a manual change detection run
+      this.cdr.detectChanges();
+    });
   }
 }
-

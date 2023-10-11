@@ -1,31 +1,31 @@
 
 <a routerLink="/admin/home" routerLinkActive="active">
-    <i class="fa fa-home"></i> <span data-translate>Home</span>
+    <i class="fa fa-home"></i> <span>{{'Home'|translate}}</span>
   </a>
   <a routerLink="/admin/settings" routerLinkActive="active">
-    <i class="fa-solid fa-sliders"></i> <span data-translate>Settings</span>
+    <i class="fa-solid fa-sliders"></i> <span>{{'Settings'|translate}}</span>
   </a>
   <a routerLink="/admin/users" routerLinkActive="active">
-    <i class="fa fa-users"></i> <span data-translate>Users</span>
+    <i class="fa fa-users"></i> <span>{{'Users'|translate}}</span>
   </a>
   <a routerLink="/admin/questionnaires" routerLinkActive="active">
-    <i class="fa fa-circle-question"></i> <span data-translate>Questionnaires</span>
+    <i class="fa fa-circle-question"></i> <span>{{'Questionnaires'|translate}}</span>
   </a>
   <a routerLink="/admin/contexts" routerLinkActive="active">
-    <i class="fa fa-inbox"></i> <span data-translate>Channels</span>
+    <i class="fa fa-inbox"></i> <span>{{'Channels'|translate}}</span>
   </a>
   <a routerLink="/admin/casemanagement" routerLinkActive="active">
-    <i class="fa fa-bars-progress"></i> <span data-translate>Case management</span>
+    <i class="fa fa-bars-progress"></i> <span>{{'Case management'|translate}}</span>
   </a>
   <a routerLink="/admin/notifications" routerLinkActive="active">
-    <i class="fa fa-envelope"></i> <span data-translate>Notifications</span>
+    <i class="fa fa-envelope"></i> <span>{{'Notifications'|translate}}</span>
   </a>
-  <a routerLink="/admin/network" routerLinkActive="active" *ngIf="node.dataModel.root_tenant || authenticationService.session.properties.management_session">
-    <i class="fa fa-network-wired"></i> <span data-translate>Network</span>
+  <a routerLink="/admin/network" routerLinkActive="active" *ngIf="node.dataModel.root_tenant">
+    <i class="fa fa-network-wired"></i> <span>{{'Network'|translate}}</span>
   </a>
   <a routerLink="/admin/sites"routerLinkActive="active" *ngIf="node.dataModel.root_tenant">
-    <i class="fa-solid fa-sitemap"></i> <span data-translate>Sites</span>
+    <i class="fa-solid fa-sitemap"></i> <span>{{'Sites'|translate}}</span>
   </a>
   <a routerLink="/admin/auditlog" routerLinkActive="active">
-    <i class="fa fa-clipboard-list"></i> <span data-translate>Audit log</span>
+    <i class="fa fa-clipboard-list"></i> <span>{{'Audit log'|translate}}</span>
   </a>

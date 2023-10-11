@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FieldtemplatesResolver } from 'app/src/shared/resolvers/fieldtemplates.resolver';
 import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
 import { HttpService } from 'app/src/shared/services/http.service';
 import { UtilsService } from 'app/src/shared/services/utils.service';
 import {new_field} from "../../../../models/admin/new_field";
+import { QuestionnariesService } from '../questionnaries.service';
 
 @Component({
   selector: 'src-add-field-from-template',
@@ -14,9 +15,11 @@ export class AddFieldFromTemplateComponent {
   @Input() fieldtemplatesData: any;
   @Input() step: any;
   @Input() type: any;
+  @Output() dataToParent = new EventEmitter<string>();
+
   fields: any = []
   new_field: any = {};
-  constructor(public node: NodeResolver, private httpService: HttpService, private utilsService: UtilsService, public fieldtemplates: FieldtemplatesResolver) {
+  constructor(private questionnariesService: QuestionnariesService,public node: NodeResolver, private httpService: HttpService, private utilsService: UtilsService, public fieldtemplates: FieldtemplatesResolver) {
     this.new_field = {
       template_id: ''
     }
@@ -40,6 +43,8 @@ export class AddFieldFromTemplateComponent {
         this.new_field = {
           template_id: ''
         };
+        this.dataToParent.emit();
+        return this.questionnariesService.sendData()
       });
     }
     if (this.type === "field") {
@@ -55,6 +60,8 @@ export class AddFieldFromTemplateComponent {
         this.new_field = {
           template_id: ''
         };
+        this.dataToParent.emit();
+        return this.questionnariesService.sendData()
       });
     }
   }

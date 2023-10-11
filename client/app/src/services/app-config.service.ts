@@ -6,9 +6,8 @@ import {AppDataService} from "../app-data.service";
 import {FieldUtilitiesService} from "../shared/services/field-utilities.service";
 import {TranslationService} from "./translation.service";
 import {Router,NavigationEnd, ActivatedRoute} from "@angular/router";
-import {PreferenceResolver} from "../shared/resolvers/preference.resolver";
-import {Title} from "@angular/platform-browser";
 import {AuthenticationService} from "./authentication.service";
+import {ServiceInstanceService} from "../shared/services/service-instance.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,13 +16,43 @@ export class AppConfigService{
   public sidebar: string= '';
   public header_title: string= '';
 
-  constructor(private appConfigService: AppConfigService, private preferenceResolver:PreferenceResolver, private router: Router, private activatedRoute: ActivatedRoute, public appServices: HttpService, public translateService: TranslateService, public utilsService:UtilsService, public authenticationService:AuthenticationService, public appDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService, private glTranslationService:TranslationService)  {
-    this.localInitialization()
+  private translationService:TranslationService
+  public authenticationService:AuthenticationService
+  public utilsService:UtilsService
+
+  constructor(private serviceInstanceService:ServiceInstanceService, private router: Router, private activatedRoute: ActivatedRoute, public appServices: HttpService, public translateService: TranslateService, public appDataService:AppDataService, public fieldUtilitiesService:FieldUtilitiesService)  {
   }
 
-  initTranslation(){
-    this.translateService.setDefaultLang('en');
-    this.translateService.use('en');
+  init(){
+    this.translationService = this.serviceInstanceService.translationService
+    this.authenticationService = this.serviceInstanceService.authenticationService
+    this.utilsService = this.serviceInstanceService.utilsService
+
+    this.activatedRoute.paramMap.subscribe(params => {
+      let currentURL = window.location.hash.substring(2).split("?")[0]; // Use window.location for full URL including query parameters
+      this.initRoutes(currentURL)
+      this.localInitialization()
+    });
+  }
+
+  initRoutes(currentURL:string){
+    if (this.authenticationService && this.authenticationService.session && currentURL != "login") {
+      const queryParams = this.activatedRoute.snapshot.queryParams;
+      let param = localStorage.getItem("default_language")
+      if(param){
+        queryParams['lang'] = param
+      }
+
+      if (this.authenticationService.session.role == "admin") {
+        this.router.navigate(["/" + this.authenticationService.session.role], { queryParams }).then();
+      } else if (this.authenticationService.session.role == "receiver") {
+        this.router.navigate(["/recipient"], { queryParams }).then();
+      } else if (this.authenticationService.session.role == "custodian") {
+        this.router.navigate(["/custodian"], { queryParams }).then();
+      }
+    }else {
+      localStorage.removeItem("default_language")
+    }
   }
 
   public setHomepage() {
@@ -34,8 +63,7 @@ export class AppConfigService{
     this.appDataService.page = page
   }
 
-  public localInitialization(callback?: () => void){
-
+  public localInitialization(languageInit = true, callback?: () => void){
     this.appServices.getPublicResource().subscribe({
       next: data => {
         this.appDataService.public = data.body;
@@ -109,14 +137,17 @@ export class AppConfigService{
           }
         });
 
-        if(this.preferenceResolver.dataModel && this.preferenceResolver.dataModel.language){
-          setTimeout(() => {
-            this.glTranslationService.onChange(this.preferenceResolver.dataModel.language)
-          }, 250);
-        }else {
-          this.glTranslationService.onChange(this.appDataService.public.node.default_language)
+        let storageLanguage = localStorage.getItem("default_language")
+        if(languageInit){
+          if(!storageLanguage){
+            storageLanguage = self.appDataService.public.node.default_language
+            localStorage.setItem("default_language", storageLanguage)
+          }
+          this.translationService.onChange(storageLanguage)
         }
 
+
+        this.setTitle()
         this.appDataService.started = true;
         this.onValidateInitialConfiguration();
         if(callback){
@@ -135,7 +166,8 @@ export class AppConfigService{
     let projectTitle = rootData.node.name;
     let pageTitle = rootData.node.header_title_homepage;
 
-    if (location.pathname.substring(1) !== "/") {
+
+    if (this.header_title && this.router.url !== "/") {
       pageTitle = this.header_title;
     } else if (this.appDataService.page === "receiptpage") {
       pageTitle = "Your report was successful.";
@@ -156,6 +188,8 @@ export class AppConfigService{
       if (element instanceof HTMLMetaElement) {
         element.content = rootData.node.description;
       }
+    }else {
+      window.document.title = projectTitle;
     }
   }
   onValidateInitialConfiguration(){
@@ -178,7 +212,7 @@ export class AppConfigService{
     this.appDataService.public.node.name = "Globaleaks"
 
     this.router.navigateByUrl(newPath).then(() => {
-      this.appConfigService.sidebar='admin-sidebar'
+      this.sidebar='admin-sidebar'
       this.setTitle()
     });
   }
@@ -193,13 +227,14 @@ export class AppConfigService{
             this.header_title = currentRoute.data['pageTitle'];
             this.sidebar = currentRoute.data['sidebar'];
           }
-          this.setTitle()
+          this.setTitle();
         });
       }
     });
   }
 
-  reinit(){
-    this.localInitialization()
+  reinit(languageInit = true){
+    //this.utilsService.reloadCurrentRouteFresh()
+    this.localInitialization(languageInit)
   }
 }

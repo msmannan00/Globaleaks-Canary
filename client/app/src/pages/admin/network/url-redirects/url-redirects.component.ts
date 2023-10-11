@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppConfigService } from 'app/src/services/app-config.service';
 import { RedirectsResolver } from 'app/src/shared/resolvers/redirects.resolver';
 import { HttpService } from 'app/src/shared/services/http.service';
 import { UtilsService } from 'app/src/shared/services/utils.service';
@@ -13,8 +14,8 @@ export class UrlRedirectsComponent implements OnInit {
     path1: '',
     path2: ''
   };
-  redirectData: any=[]
-  constructor(public redirects: RedirectsResolver, public httpService: HttpService, public utilsService: UtilsService) { }
+  redirectData: any = []
+  constructor(public appConfigService: AppConfigService, public redirects: RedirectsResolver, public httpService: HttpService, public utilsService: UtilsService) { }
   ngOnInit(): void {
     this.redirectData = this.redirects.dataModel
   }
@@ -27,12 +28,17 @@ export class UrlRedirectsComponent implements OnInit {
       this.redirectData.push(res);
       this.new_redirect.path1 = '';
       this.new_redirect.path2 = '';
-      // this.utilsService.reloadCurrentRoute()
+      this.getResolver() 
+    })
+  }
+  getResolver() {
+    return this.httpService.requestRedirectsResource().subscribe(response => {
+      this.redirectData = response
     })
   }
   deleteRedirect(redirect: any) {
     this.httpService.requestDeleteRedirectsResource(redirect.id).subscribe(() => {
-      // this.utilsService.reloadCurrentRoute()
+      this.getResolver() 
     })
   }
 }

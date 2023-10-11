@@ -2,13 +2,13 @@ import {Injectable} from '@angular/core';
 import {AuthenticationService} from "../../services/authentication.service";
 import {AppDataService} from "../../app-data.service";
 import {TranslateService} from "@ngx-translate/core";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {RequestSupportComponent} from "../modals/request-support/request-support.component";
 import {HttpService} from "./http.service";
 import {TokenResource} from './token-resource.service';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable, Subject} from 'rxjs';
+import {EMPTY, Observable, Subject, catchError, map, of, switchMap} from 'rxjs';
 import {
   ConfirmationWithPasswordComponent
 } from '../modals/confirmation-with-password/confirmation-with-password.component';
@@ -16,25 +16,29 @@ import {ConfirmationWith2faComponent} from '../modals/confirmation-with2fa/confi
 import {PreferenceResolver} from '../resolvers/preference.resolver';
 import {DeleteConfirmationComponent} from '../modals/delete-confirmation/delete-confirmation.component';
 import {NodeResolver} from "../resolvers/node.resolver";
+import {ServiceInstanceService} from "./service-instance.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
 
+  public authenticationService: AuthenticationService
   constructor(
+    private serviceInstanceService:ServiceInstanceService,
     private nodeResolver: NodeResolver,
-    private utilsService: UtilsService,
     private http: HttpClient,
-    public translateService: TranslateService,
     public httpService: HttpService,
     public modalService: NgbModal,
-    public authenticationService: AuthenticationService,
+    public translateService: TranslateService,
     public appDataService: AppDataService,
     public preferenceResolver: PreferenceResolver,
     public tokenResourceService: TokenResource,
     private router: Router) {
+  }
 
+  init(){
+    this.authenticationService = this.serviceInstanceService.authenticationService
   }
 
   updateNode() {
@@ -73,6 +77,11 @@ export class UtilsService {
     }
 
     return ret;
+  }
+
+  async load(url: any): Promise<string> {
+    const token = await this.tokenResourceService.getWithProofOfWork();
+    return url + "?token=" + token.id + ":" + token.answer;
   }
 
   download(url: string): void {
@@ -135,8 +144,20 @@ export class UtilsService {
 
   reloadCurrentRoute() {
     const currentUrl = this.router.url;
-    this.router.navigateByUrl('routing', {skipLocationChange: true, replaceUrl: true}).then(() => {
+    this.router.navigateByUrl('blank', {skipLocationChange: true, replaceUrl: true}).then(() => {
       this.router.navigate([currentUrl]);
+    });
+  }
+
+  reloadCurrentRouteFresh(removeQueryParam=false) {
+
+    let currentUrl = this.router.url;
+    if(removeQueryParam){
+      currentUrl = this.router.url.split('?')[0];
+    }
+
+    this.router.navigateByUrl('/blank', { skipLocationChange: true }).then(() => {
+      this.router.navigateByUrl(currentUrl, { replaceUrl: true });
     });
   }
 
@@ -153,7 +174,7 @@ export class UtilsService {
   }
 
   isWhistleblowerPage() {
-    return ["/", "/submission"].indexOf(this.router.url) !== -1;
+    return ["/", "/submission"].indexOf(this.router.url.split('?')[0]) !== -1;
   }
 
   stopPropagation(event: Event) {
@@ -273,7 +294,7 @@ export class UtilsService {
   }
 
   submitSupportRequest(arg: any) {
-    const param = JSON.stringify({"mail_address": arg.mail_address, "text": arg.text, "url": location.pathname});
+    const param = JSON.stringify({"mail_address": arg.mail_address, "text": arg.text, "url": window.location.href.replace("localhost","127.0.0.1")});
     this.httpService.requestSuppor(param).subscribe();
   }
 
@@ -398,22 +419,23 @@ export class UtilsService {
   }
 
   runAdminOperation(operation: any, args: any, refresh: any) {
-    return this.runOperation("api/admin/config", operation, args, refresh);
+    return this.runOperation("/api/admin/config", operation, args, refresh)
   }
 
   deleteDialog() {
     return this.openConfirmableModalDialog("", "")
   }
 
-  runOperation(api: string, operation: string, args?: any, refresh?: boolean): Promise<void> {
-    const deferred = new Subject<void>();
-
+  
+  runOperation(api: string, operation: string, args?: any, refresh?: boolean): Observable<any> {
+    // alert(operation)
     const requireConfirmation = [
       "enable_encryption",
       "disable_2fa",
       "get_recovery_key",
       "toggle_escrow",
       "toggle_user_escrow",
+      "enable_user_permission_file_upload",
       "reset_submissions"
     ];
 
@@ -426,63 +448,52 @@ export class UtilsService {
     }
 
     if (requireConfirmation.indexOf(operation) !== -1) {
-      const confirm = (secret: string) => {
-        const headers = new HttpHeaders({"X-Confirmation": secret});
-        return this.http.put(api, {
-          "operation": operation,
-          "args": args
-        }, {headers}).toPromise().then(
-          (response: any) => {
-            if (refresh) {
-              this.reloadCurrentRoute();
+      return new Observable((observer) => {
+        this.getConfirmation().subscribe((secret: string) => {
+          const headers = new HttpHeaders({ "X-Confirmation": this.encodeString(secret) });
+          this.http.put(api, { "operation": operation, "args": args }, { headers }).subscribe(
+            (response: any) => {
+              if (refresh) {
+                this.reloadCurrentRoute();
+              }
+              observer.next(response);
+              observer.complete();
+            },
+            (error: any) => {
+              observer.error(error);
             }
-            deferred.next(response);
-          },
-          () => {
-            this.getConfirmation(confirm);
-          }
-        );
-      };
-
-      this.getConfirmation(confirm);
+          );
+        });
+      });
     } else {
-      this.http.put(api, {
-        "operation": operation,
-        "args": args
-      }).toPromise().then(
-        (response: any) => {
+      return this.http.put(api, { "operation": operation, "args": args }).pipe(
+        map((response: any) => {
           if (refresh) {
             this.reloadCurrentRoute();
           }
-          deferred.next(response);
-        },
-        () => {
-        }
+          return response;
+        })
       );
     }
-
-    return deferred.toPromise();
   }
 
-  getConfirmation(confirmFun: (secret: string) => Promise<void>): void {
-    var modalRef = this.modalService.open(ConfirmationWithPasswordComponent, {});
-    if (this.preferenceResolver.dataModel.two_factor) {
-      modalRef = this.modalService.open(ConfirmationWith2faComponent, {});
-    }
+  getConfirmation(): Observable<string> {
+    return new Observable((observer) => {
+      var modalRef = this.modalService.open(ConfirmationWithPasswordComponent, {});
+      if (this.preferenceResolver.dataModel.two_factor) {
+        modalRef = this.modalService.open(ConfirmationWith2faComponent, {});
+      }
 
-    modalRef.componentInstance.confirmFunction = (secret: string) => {
-      confirmFun(secret).then(
-        () => {
-        },
-        () => {
-          this.getConfirmation(confirmFun);
-        }
-      );
-    };
+      modalRef.componentInstance.confirmFunction = (secret: string) => {
+        observer.next(secret);
+        observer.complete();
+      };
+    });
+    
   }
 
   getFiles(): Observable<any[]> {
-    return this.http.get<any[]>("api/admin/files");
+    return this.http.get<any[]>("/api/admin/files");
   }
 
   deleteFile(url: string): Observable<void> {
@@ -497,8 +508,8 @@ export class UtilsService {
     return this.httpService.requestDeleteAdminContext(user_id)
   }
 
-  deleteStatus(user_id: any) {
-    return this.httpService.requestDeleteStatus(user_id)
+  deleteStatus(url: any) {
+    return this.httpService.requestDeleteStatus(url)
   }
 
   deleteSubStatus(url: string) {

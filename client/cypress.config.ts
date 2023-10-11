@@ -10,6 +10,9 @@ export default defineConfig({
   },
   env: {
     "coverage": true,
+    "codeCoverage": {
+      "enabled": true
+    },
     "pgp": false,
     "init_password": "Password12345#",
     "user_password": "ACollectionOfDiplomaticHistorySince_1966_ToThe_Pr esentDay#",
@@ -29,8 +32,9 @@ export default defineConfig({
     "takeScreenshots": true
   },
   e2e: {
-    baseUrl: 'https://localhost:8443',
     setupNodeEvents(on, config) {
+      return require('./cypress/plugin/index.ts').default(on, config)
     },
+    baseUrl: 'http://localhost:4200',
   },
 });

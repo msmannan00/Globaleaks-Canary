@@ -21,15 +21,13 @@ export class UsersResolver implements Resolve<boolean> {
 
   resolve(): Observable<boolean> {
     if (this.authenticationService.session.role === 'admin') {
-      this.httpService.requestUsersResource().pipe(
+      return this.httpService.requestUsersResource().pipe(
         map((response: userResolverModel) => {
           this.dataModel = response;
           return true;
         })
       );
-      return of(true);
     }
     return of(true);
   }
-
 }

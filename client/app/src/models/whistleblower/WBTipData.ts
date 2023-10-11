@@ -10,7 +10,6 @@ export class WBTipData {
     mobile: boolean
     reminder_date: string
     enable_two_way_comments: boolean
-    enable_two_way_messages: boolean
     enable_attachments: boolean
     enable_whistleblower_identity: boolean
     last_access: string
@@ -18,7 +17,6 @@ export class WBTipData {
     status: string
     substatus: any
     receivers: Receiver[]
-    messages: any[]
     comments: any[]
     rfiles: any[]
     wbfiles: any[]
@@ -32,8 +30,6 @@ export class WBTipData {
     receivers_by_id: any;
     submissionStatusStr: any;
     label: any;
-    newMessagesContent: string = "";
-    newMessageContent: string;
     fields: any;
     whistleblower_identity_field: any;
     answers = {}

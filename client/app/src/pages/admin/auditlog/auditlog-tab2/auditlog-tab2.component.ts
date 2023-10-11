@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {auditlogResolverModel} from "../../../../models/resolvers/auditlogResolverModel";
 import {NodeResolver} from "../../../../shared/resolvers/node.resolver";
 import {UtilsService} from "../../../../shared/services/utils.service";
 import {ngxCsv} from "ngx-csv";

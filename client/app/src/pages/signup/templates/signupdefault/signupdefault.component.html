@@ -15,7 +15,7 @@
                 <span class="input-group-append"><span class="input-group-text">.{{appDataService.public.node.rootdomain}}</span></span>
             </div>
         </div>
-    </div><br>
+    </div>
     <div class="row">
         <div class="col-md-6 form-group">
             <label>{{'Name'|translate}}</label>
@@ -27,7 +27,7 @@
             <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
             <input name="surname" class="form-control" [(ngModel)]="signup.surname" type="text" required>
         </div>
-    </div><br>
+    </div>
     <div class="row">
         <div class="col-md-6 form-group">
             <label>
@@ -55,8 +55,8 @@
                 <span>{{'Invalid confirmation'|translate}}</span>
             </div>
         </div>
-    </div><br>
-    <src-tos [signup]="signup" ></src-tos><br>
+    </div>
+    <src-tos [signup]="signup" ></src-tos>
     <div class="row">
         <div class="col-md-12">
             <button class="ButtonNext btn btn-primary" (click)="(validated = true) && !signupform.invalid && complete.emit()">

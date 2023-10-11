@@ -1,8 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
 import { UtilsService } from 'app/src/shared/services/utils.service';
+import {AppConfigService} from "../../../../services/app-config.service";
+import {TranslationService} from "../../../../services/translation.service";
+import {AppDataService} from "../../../../app-data.service";
+import {NgSelectComponent} from "@ng-select/ng-select";
 
 @Component({
   selector: 'src-tab3',
@@ -11,7 +15,8 @@ import { UtilsService } from 'app/src/shared/services/utils.service';
 })
 export class Tab3Component implements OnInit {
   @Input() contentForm: NgForm;
-  constructor(public utilsService: UtilsService, public node: NodeResolver, config: NgbTooltipConfig) {
+  @ViewChild('langSelect') langSelect: NgSelectComponent;
+  constructor(private appDataService:AppDataService, private translationService:TranslationService, public appConfigService: AppConfigService, public utilsService: UtilsService, public node: NodeResolver, config: NgbTooltipConfig) {
     config.placement = 'top';
   }
   showLangSelect = false;
@@ -53,6 +58,7 @@ export class Tab3Component implements OnInit {
     if (language && (this.node.dataModel.languages_enabled.indexOf(language.code) === -1)) {
       this.node.dataModel.languages_enabled.push(language.code);
     }
+    this.langSelect.clearModel()
   }
   removeLang(index: number, lang_code: string) {
     if (lang_code === this.node.dataModel.default_language) { return; }
@@ -61,8 +67,11 @@ export class Tab3Component implements OnInit {
 
   updateNode() {
     this.utilsService.update(this.node.dataModel).subscribe(res => {
-      this.utilsService.reloadCurrentRoute();
+      this.appDataService.public.node.languages_enabled = res['languages_enabled']
+      this.translationService.onChange(res['default_language'])
+      localStorage.removeItem("default_language")
+      console.log(this.appDataService.public.node.languages_enabled)
+      this.appConfigService.reinit(false)
     })
   }
-
 }

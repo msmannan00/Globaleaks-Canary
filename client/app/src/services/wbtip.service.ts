@@ -36,12 +36,10 @@ export class WbtipService {
     });
   }
 
-  sendContent(content: string, isMessage: boolean) {
-    const requestData = JSON.stringify({"id": this.tip.msg_receiver_selected, "content": content});
+  sendContent(content: string,visibility:string) {
+    const requestData = JSON.stringify({"id": this.tip.msg_receiver_selected, "content": content,"visibility":visibility});
 
-    const request = isMessage
-      ? this.httpService.requestNewMessage(requestData, this.tip.msg_receiver_selected)
-      : this.httpService.requestNewComment(requestData);
+    const request = this.httpService.requestNewComment(requestData);
 
     request.subscribe({
       next: () => {
@@ -50,11 +48,8 @@ export class WbtipService {
     });
   }
 
-  newMessage(content: string) {
-    this.sendContent(content, true);
-  }
 
-  newComment(content: string) {
-    this.sendContent(content, false);
+  newComment(content: string,visibility:string) {
+    this.sendContent(content,visibility);
   }
 }

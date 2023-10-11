@@ -3,6 +3,7 @@ import {AppDataService} from '../app-data.service';
 import {AuthenticationService} from './authentication.service';
 import {SubmissionResourceService} from './submission-resource.service';
 import {HttpService} from '../shared/services/http.service';
+import {ServiceInstanceService} from "../shared/services/service-instance.service";
 
 @Injectable({
   providedIn: 'root',
@@ -16,13 +17,19 @@ export class SubmissionService {
   selected_receivers: any = {};
   blocked = false;
   uploads: any = {};
+  private sharedData: any;
 
   constructor(
+    public authenticationService: AuthenticationService,
+    private serviceInstanceService: ServiceInstanceService,
     public httpService: HttpService,
     public appDataService: AppDataService,
-    public authenticationService: AuthenticationService,
     public submissionResourceService: SubmissionResourceService
   ) {
+  }
+
+  init(){
+    this.authenticationService = this.serviceInstanceService.authenticationService
   }
 
   setContextReceivers(context_id: number) {
@@ -93,5 +100,12 @@ export class SubmissionService {
         this.appDataService.page = 'receiptpage';
       }
     });
+  }
+
+  setSharedData(data: any) {
+    this.sharedData = data;
+  }
+  getSharedData(): any {
+    return this.sharedData;
   }
 }

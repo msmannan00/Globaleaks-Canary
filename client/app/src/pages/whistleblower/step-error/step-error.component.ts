@@ -42,7 +42,4 @@ export class StepErrorComponent {
       }
     });
   }
-
-  protected readonly JSON = JSON;
-  protected readonly alert = alert;
 }

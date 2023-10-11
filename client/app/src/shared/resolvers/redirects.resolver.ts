@@ -21,13 +21,12 @@ export class RedirectsResolver implements Resolve<boolean> {
 
   resolve(): Observable<boolean> {
     if (this.authenticationService.session.role === 'admin') {
-      this.httpService.requestRedirectsResource().pipe(
+      return this.httpService.requestRedirectsResource().pipe(
         map((response: redirectResolverModel) => {
           this.dataModel = response;
           return true;
         })
       );
-      return of(true);
     }
     return of(true);
   }

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppConfigService } from 'app/src/services/app-config.service';
 import { DeleteConfirmationComponent } from 'app/src/shared/modals/delete-confirmation/delete-confirmation.component';
@@ -7,6 +7,7 @@ import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
 import { FieldUtilitiesService } from 'app/src/shared/services/field-utilities.service';
 import { HttpService } from 'app/src/shared/services/http.service';
 import { UtilsService } from 'app/src/shared/services/utils.service';
+import { QuestionnariesService } from '../questionnaries.service';
 
 @Component({
   selector: 'src-steps-list',
@@ -26,12 +27,11 @@ export class StepsListComponent {
     option: "",
     sufficient: true,
   };
-  constructor(public modalService: NgbModal, public appConfigService: AppConfigService, private fieldUtilities: FieldUtilitiesService, public node: NodeResolver, private http: HttpClient, public utilsService: UtilsService, private httpService: HttpService) { }
+  constructor(private questionnariesService: QuestionnariesService, public modalService: NgbModal, public appConfigService: AppConfigService, private fieldUtilities: FieldUtilitiesService, public node: NodeResolver, private http: HttpClient, public utilsService: UtilsService, private httpService: HttpService) { }
 
   ngOnInit(): void {
     // this.step = this.questionnaire.steps[0]
     this.parsedFields = this.fieldUtilities.parseQuestionnaire(this.questionnaire, {});
-
   }
 
   swap($event: any, index: number, n: number): void {
@@ -45,7 +45,7 @@ export class StepsListComponent {
     [this.questionnaire.steps[index], this.questionnaire.steps[target]] =
       [this.questionnaire.steps[target], this.questionnaire.steps[index]];
 
-    this.http.put("api/admin/steps", {
+    this.http.put("/api/admin/steps", {
       operation: "order_elements",
       args: {
         ids: this.questionnaire.steps.map((c: { id: any; }) => c.id),
@@ -72,6 +72,7 @@ export class StepsListComponent {
   }
   saveStep(step: any) {
     return this.httpService.requestUpdateAdminQuestionnaireStep(step.id, step).subscribe(res => {
+      return this.questionnariesService.sendData()
     })
   }
   deleteStep(step: any) {
@@ -85,7 +86,8 @@ export class StepsListComponent {
     modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = () => {
       return this.httpService.requestDeleteAdminQuestionareStep(arg.id).subscribe(res => {
-        this.appConfigService.reinit()
+        return this.questionnariesService.sendData()
+        // this.appConfigService.reinit()
         // this.utilsService.reloadCurrentRoute()
       });
     };

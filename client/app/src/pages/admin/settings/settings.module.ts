@@ -23,9 +23,12 @@ import { NgSelectModule } from '@ng-select/ng-select';
     Tab4Component,
     Tab5Component
   ],
+  exports: [
+    Tab1Component
+  ],
   imports: [
     CommonModule,
-    SettingsRoutingModule,SharedModule,NgbNavModule,NgbModule,RouterModule,FormsModule,NgSelectModule
+    SettingsRoutingModule, SharedModule, NgbNavModule, NgbModule, RouterModule, FormsModule, NgSelectModule
   ]
 })
 export class SettingsModule { }

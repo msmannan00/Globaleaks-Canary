@@ -1,4 +1,4 @@
-<form id="tenant-{{index}}" ngForm="editContext" #editContext="ngForm"  novalidate>
+<form id="tenant-{{index}}" novalidate>
     <div class="configItem">
         <div class="editorHeader row" (click)="tenant.id !== 1 && toggleEditing($event)">
             <div class="col-md-6">
@@ -28,7 +28,6 @@
                     </button>
                     <button class="btn btn-sm btn-primary"
                             *ngIf="editing"
-                            [disabled]="editContext.invalid"
                             (click)="saveTenant()">
                         <span>{{'Save'|translate}}</span>
                     </button>

@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpService } from 'app/src/shared/services/http.service';
 import { UtilsService } from 'app/src/shared/services/utils.service';
-import {new_field} from "../../../../models/admin/new_field";
-import {field_template} from "../../../../models/admin/fieldTemplate";
+import { new_field } from "../../../../models/admin/new_field";
+import { field_template } from "../../../../models/admin/fieldTemplate";
+import { QuestionnariesService } from '../questionnaries.service';
 
 @Component({
   selector: 'src-add-field',
@@ -10,12 +11,13 @@ import {field_template} from "../../../../models/admin/fieldTemplate";
   styleUrls: ['./add-field.component.css']
 })
 export class AddFieldComponent implements OnInit {
+  @Output() dataToParent = new EventEmitter<string>();
   @Input() step: any
   @Input() type: any;
   new_field: any = {};
   fields: any
 
-  constructor(private httpService: HttpService, private utilsService: UtilsService) {
+  constructor(private questionnariesService: QuestionnariesService,private httpService: HttpService, private utilsService: UtilsService) {
     this.new_field = {
       label: '',
       type: ''
@@ -25,18 +27,17 @@ export class AddFieldComponent implements OnInit {
     if (this.step) {
       this.fields = this.step.children
     }
-    console.log(this.fields, "this.fields");
-
   }
   add_field() {
     if (this.type === "step") {
+
       let field = new new_field()
       field.step_id = this.step.id
       field.template_id = ""
 
       field.label = this.new_field.label,
-      field.type = this.new_field.type,
-      field.y = this.utilsService.newItemOrder(this.fields, "y");
+        field.type = this.new_field.type,
+        field.y = this.utilsService.newItemOrder(this.fields, "y");
       if (field.type === 'fileupload') {
         field.multi_entry = true;
       }
@@ -46,6 +47,9 @@ export class AddFieldComponent implements OnInit {
           label: '',
           type: ''
         };
+        this.dataToParent.emit();
+       return this.questionnariesService.sendData()
+        // this.utilsService.reloadCurrentRoute()
       });
     }
     if (this.type === "template") {
@@ -60,16 +64,20 @@ export class AddFieldComponent implements OnInit {
           label: '',
           type: ''
         };
+        this.dataToParent.emit();
+        return this.questionnariesService.sendData()
+        // this.utilsService.reloadCurrentRoute()
       });
     }
     if (this.type === "field") {
+
       let field = new new_field()
-      field.step_id = this.step.id
+      field.fieldgroup_id = this.step.id
       field.template_id = ""
 
       field.label = this.new_field.label,
-      field.type = this.new_field.type,
-      field.y = this.utilsService.newItemOrder(this.step.children, "y");
+        field.type = this.new_field.type,
+        field.y = this.utilsService.newItemOrder(this.step.children, "y");
       if (field.type === 'fileupload') {
         field.multi_entry = true;
       }
@@ -80,9 +88,13 @@ export class AddFieldComponent implements OnInit {
           label: '',
           type: ''
         };
+        this.dataToParent.emit();
+        return this.questionnariesService.sendData()
+        // this.utilsService.reloadCurrentRoute()
       });
     }
   }
+
   toggleAddQuestion() {
     // Implement your logic to toggle the "Add Question" form visibility
   }

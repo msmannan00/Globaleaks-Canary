@@ -11,7 +11,7 @@
       "prefix": "src",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "allowedCommonJsDependencies": [
               "fast-sha256",
@@ -28,9 +28,7 @@
             "outputPath": "dist",
             "index": "app/index.html",
             "main": "app/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": "app/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "app/assets"
@@ -57,7 +55,6 @@
           },
           "configurations": {
             "production": {
-              "sourceMap": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -73,13 +70,21 @@
               "extractLicenses": false
             },
             "development": {
-              "aot": false,
               "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": false,
+              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": false
+              "namedChunks": true
+            },
+            "e2e": {
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "vendorChunk": true,
+              "customWebpackConfig": {
+                "path": "./cypress/coverage.webpack.ts"
+              }
             }
           },
           "defaultConfiguration": "production"
@@ -102,23 +107,38 @@
             "browserTarget": "Globaleaks:build"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+        "serve-coverage": {
+          "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
-            "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              "app/assets"
-            ],
-            "styles": [
-              "app/styles.css"
-            ],
-            "scripts": [],
-            "codeCoverage": true,
-            "codeCoverageExclude": ["**/*.spec.ts"]
+            "browserTarget": "Globaleaks:build:e2e",
+            "proxyConfig": "proxy.conf.json"
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "Globaleaks:serve-coverage",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "Globaleaks:serve-coverage:production"
+            }
+          }
+        },
+        "e2e-ci": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "browser": "electron",
+            "devServerTarget": "Globaleaks:serve-coverage",
+            "headless": true,
+            "watch": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "Globaleaks:serve-coverage:production"
+            }
           }
         }
       }

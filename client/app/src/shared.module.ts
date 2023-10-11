@@ -38,8 +38,6 @@ import { ByteFmtPipe } from './shared/pipes/byte-fmt.pipe';
 import { RfileUploadButtonComponent } from './shared/partials/rfile-upload-button/rfile-upload-button.component';
 import { RfileUploadStatusComponent } from './shared/partials/rfile-upload-status/rfile-upload-status.component';
 import { TipCommentsComponent } from './shared/partials/tip-comments/tip-comments.component';
-import { TipMessagesComponent } from './shared/partials/tip-messages/tip-messages.component';
-import { TipMessageComponent } from './shared/partials/tip-message/tip-message.component';
 import { LimitToPipe } from './shared/pipes/limit-to.pipe';
 import { OrderByPipe } from './shared/pipes/order-by.pipe';
 import { ScrollToBottomDirective } from './shared/directive/scroll-to-bottom.directive';
@@ -84,6 +82,15 @@ import { QuestionnaireDuplicationComponent } from './shared/modals/questionnaire
 import { AddOptionHintComponent } from './shared/modals/add-option-hint/add-option-hint.component';
 import { TriggerReceiverComponent } from './shared/modals/trigger-receiver/trigger-receiver.component';
 import { AssignScorePointsComponent } from './shared/modals/assign-score-points/assign-score-points.component';
+import { TipOperationFileIdentityAccessReplyComponent } from './shared/modals/tip-operation-file-identity-access-reply/tip-operation-file-identity-access-reply.component';
+import { DemoComponent } from './shared/partials/demo/demo.component';
+import { MessageconsoleComponent } from './shared/partials/messageconsole/messageconsole.component';
+import { AcceptAgreementComponent } from './shared/modals/accept-agreement/accept-agreement.component';
+import { DisclaimerComponent } from './shared/modals/disclaimer/disclaimer.component';
+import { SecurityAwarenessConfidentialityComponent } from './shared/modals/security-awareness-confidentiality/security-awareness-confidentiality.component';
+import { TransferAccessComponent } from './shared/modals/transfer-access/transfer-access.component';
+import { BlankComponent } from './shared/blank/blank.component';
+import { VoiceRecorderComponent } from './shared/partials/voice-recorder/voice-recorder.component';
 
 @NgModule({
     imports: [
@@ -138,8 +145,6 @@ import { AssignScorePointsComponent } from './shared/modals/assign-score-points/
     RfileUploadButtonComponent,
     RfileUploadStatusComponent,
     TipCommentsComponent,
-    TipMessagesComponent,
-    TipMessageComponent,
     LimitToPipe,
     OrderByPipe,
     ScrollToBottomDirective,
@@ -181,6 +186,16 @@ import { AssignScorePointsComponent } from './shared/modals/assign-score-points/
     AddOptionHintComponent,
     TriggerReceiverComponent,
     AssignScorePointsComponent,
+    TipOperationFileIdentityAccessReplyComponent,
+    DemoComponent,
+    MessageconsoleComponent,
+    MessageconsoleComponent,
+    AcceptAgreementComponent,
+    TransferAccessComponent,
+    SecurityAwarenessConfidentialityComponent,
+    DisclaimerComponent,
+    BlankComponent,
+    VoiceRecorderComponent
   ],
   exports: [
     FooterComponent,
@@ -199,7 +214,6 @@ import { AssignScorePointsComponent } from './shared/modals/assign-score-points/
     TipFilesWhistleblowerComponent,
     WidgetWbfilesComponent,
     TipCommentsComponent,
-    TipMessagesComponent,
     TipReceiverListComponent,
     RfileUploadStatusComponent,
     RfileUploadButtonComponent,
@@ -228,6 +242,13 @@ import { AssignScorePointsComponent } from './shared/modals/assign-score-points/
     AddOptionHintComponent,
     TriggerReceiverComponent,
     AssignScorePointsComponent,
-    PreferencesComponent
+    PreferencesComponent,
+    DemoComponent,
+    MessageconsoleComponent,
+    AcceptAgreementComponent,
+    TransferAccessComponent,
+    SecurityAwarenessConfidentialityComponent,
+    DisclaimerComponent,
+    VoiceRecorderComponent
   ]})
 export class SharedModule { }

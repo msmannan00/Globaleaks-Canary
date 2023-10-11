@@ -4,7 +4,7 @@ export class new_step {
   description = "";
   order = 0;
   children = [];
-  questionnaire_id = -1;
+  questionnaire_id = "";
   triggered_by_score = 0;
   triggered_by_options = [];
 }

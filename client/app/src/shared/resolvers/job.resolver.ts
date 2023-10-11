@@ -21,14 +21,14 @@ export class JobResolver implements Resolve<boolean> {
 
   resolve(): Observable<boolean> {
     if (this.authenticationService.session.role === 'admin') {
-      this.httpService.requestJobResource().pipe(
+      return this.httpService.requestJobResource().pipe(
         map((response: jobResolverModel) => {
           this.dataModel = response;
           return true;
         })
       );
-      return of(true);
     }
     return of(true);
   }
+  
 }

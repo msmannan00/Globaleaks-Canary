@@ -10,7 +10,6 @@
         <label>{{ 'Type' | translate }}</label>
         <select name="type" class="form-control" [(ngModel)]="new_field.type" required>
             <option value="inputbox">{{ 'Single-line text input' | translate }}</option>
-            <option value="audioUpload">{{ 'Audio recording' | translate }}</option>
             <option value="textarea">{{ 'Multi-line text input' | translate }}</option>
             <option value="selectbox">{{ 'Selection box' | translate }}</option>
             <option value="multichoice">{{ 'Multiple choice input' | translate }}</option>
@@ -19,6 +18,7 @@
             <option value="tos">{{ 'Terms of service' | translate }}</option>
             <option value="date">{{ 'Date' | translate }}</option>
             <option value="daterange">{{ 'Date range' | translate }}</option>
+            <option value="voice" data-translate>{{ 'Voice' | translate }}</option>
             <option value="fieldgroup">{{ 'Group of questions' | translate }}</option>
         </select>
         <div class="text-danger" *ngIf="newField.form.get('type')?.errors?.['required']">

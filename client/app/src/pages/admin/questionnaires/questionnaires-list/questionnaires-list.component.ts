@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppDataService } from 'app/src/app-data.service';
@@ -8,21 +8,22 @@ import { DeleteConfirmationComponent } from 'app/src/shared/modals/delete-confir
 import { QuestionnaireDuplicationComponent } from 'app/src/shared/modals/questionnaire-duplication/questionnaire-duplication.component';
 import { HttpService } from 'app/src/shared/services/http.service';
 import { UtilsService } from 'app/src/shared/services/utils.service';
+import { QuestionnariesService } from '../questionnaries.service';
 
 @Component({
   selector: 'src-questionnaires-list',
   templateUrl: './questionnaires-list.component.html',
   styleUrls: ['./questionnaires-list.component.css']
 })
-export class QuestionnairesListComponent {
+export class QuestionnairesListComponent implements OnInit {
   @Input() questionnaire: any;
   @Input() editQuestionnaire: NgForm;
   showAddQuestion: boolean = false;
   editing: boolean = false;
   @Output() deleteRequestData = new EventEmitter<string>();
   // @Output() saveRequestData = new EventEmitter<string>();
-  constructor(private http: HttpClient, public appConfigService: AppConfigService, public appDataService: AppDataService, public modalService: NgbModal, private httpService: HttpService, private utilsService: UtilsService) { }
-
+  constructor(private questionnariesService: QuestionnariesService,private http: HttpClient, public appConfigService: AppConfigService, public appDataService: AppDataService, public modalService: NgbModal, private httpService: HttpService, private utilsService: UtilsService) { }
+  ngOnInit(): void {}
   toggleAddQuestion(): void {
     this.showAddQuestion = !this.showAddQuestion;
   }
@@ -31,10 +32,10 @@ export class QuestionnairesListComponent {
   }
 
   saveQuestionnaire(questionnaire: any) {
-    console.log(questionnaire, "questionnaire");
     this.httpService.requestUpdateAdminQuestionare(questionnaire.id, questionnaire).subscribe(res => {
       // this.saveRequestData.emit(res);
       this.editing = false;
+      return this.questionnariesService.sendData()
     })
   }
 
@@ -59,7 +60,8 @@ export class QuestionnairesListComponent {
     modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = () => {
       return this.httpService.requestDeleteAdminQuestionare(arg.id).subscribe(res => {
-        this.deleteRequestData.emit(this.questionnaire);
+        return this.questionnariesService.sendData()
+        // this.deleteRequestData.emit(this.questionnaire);
       });
     };
     return modalRef.result;

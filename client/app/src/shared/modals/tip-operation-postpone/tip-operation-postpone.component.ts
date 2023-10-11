@@ -44,7 +44,7 @@ export class TipOperationPostponeComponent {
         }
       };
 
-      return this.http.put("api/rtips/" + this.args.tip.id, req)
+      return this.http.put("api/recipient/rtips/" + this.args.tip.id, req)
         .subscribe(() => {
           this.reload();
         });

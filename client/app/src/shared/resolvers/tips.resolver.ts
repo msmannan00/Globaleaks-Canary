@@ -21,14 +21,14 @@ export class TipsResolver implements Resolve<boolean> {
 
   resolve(): Observable<boolean> {
     if (this.authenticationService.session.role === 'admin') {
-      this.httpService.requestTipResource().pipe(
+      return this.httpService.requestTipResource().pipe(
         map((response: tipsResolverModel) => {
           this.dataModel = response;
           return true;
         })
       );
-      return of(true);
     }
     return of(true);
   }
+  
 }

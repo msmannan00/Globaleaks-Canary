@@ -17,7 +17,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from 'app/src/shared.module';
 import { StepsListComponent } from './steps-list/steps-list.component';
 import { QuestionnairesListComponent } from './questionnaires-list/questionnaires-list.component';
-import { DateRangeSelectorComponent } from 'app/src/shared/components/date-selector/date-selector.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MarkdownModule } from 'ngx-markdown';
 

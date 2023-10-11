@@ -23,7 +23,7 @@ export class SiteslistComponent {
     event.stopPropagation();
     this.tenant.active = !this.tenant.active;
 
-    let url = "api/admin/tenants/"+this.tenant.id
+    let url = "/api/admin/tenants/"+this.tenant.id
     this.httpService.requestUpdateTenant(url, this.tenant).subscribe(res => {
       //this.appConfigService.reinit()
     });
@@ -34,7 +34,7 @@ export class SiteslistComponent {
   }
 
   saveTenant(){
-    let url = "api/admin/tenants/"+this.tenant.id
+    let url = "/api/admin/tenants/"+this.tenant.id
     this.httpService.requestUpdateTenant(url, this.tenant).subscribe(res => {
       this.utilsService.reloadCurrentRoute()
     });
@@ -48,7 +48,7 @@ export class SiteslistComponent {
   configureTenant($event: Event, tid: number): void {
     $event.stopPropagation();
 
-    this.httpService.requestTenantSwitch("api/tenantauthswitch/" + tid).subscribe(res => {
+    this.httpService.requestTenantSwitch("api/auth/tenantauthswitch/" + tid).subscribe(res => {
       window.open(res.redirect)
     });
   }
@@ -60,7 +60,7 @@ export class SiteslistComponent {
     modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = () => {
 
-      let url = "api/admin/tenants/"+arg.id
+      let url = "/api/admin/tenants/"+arg.id
       return this.httpService.requestDeleteTenant(url).subscribe(res => {
         this.appConfigService.reinit()
         this.utilsService.reloadCurrentRoute()

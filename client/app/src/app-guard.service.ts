@@ -12,10 +12,13 @@ export class SessionGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    this.appDataService.page = this.router.url
-
-    return true;
-
+    if(!this.authentication.session){
+      this.router.navigateByUrl('/login');
+      return false;
+    }else {
+      this.appDataService.page = this.router.url
+      return true;
+    }
   }
   constructor(private router: Router, private appDataService:AppDataService, public authentication: AuthenticationService) {
   }

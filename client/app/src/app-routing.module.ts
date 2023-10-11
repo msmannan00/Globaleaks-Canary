@@ -15,23 +15,17 @@ import {WizardRoutingModule} from "./pages/wizard/wizard-routing.module";
 import { NodeResolver } from './shared/resolvers/node.resolver';
 import { RtipsResolver } from './shared/resolvers/rtips.resolver';
 import { TipComponent } from './pages/recipient/tip/tip.component';
-import { UsersResolver } from './shared/resolvers/users.resolver';
-import { QuestionnairesResolver } from './shared/resolvers/questionnaires.resolver';
-import {AuditlogResolver} from "./shared/resolvers/auditlog.resolver";
-import {JobResolver} from "./shared/resolvers/job.resolver";
-import {TipsResolver} from "./shared/resolvers/tips.resolver";
-import { ContextsResolver } from './shared/resolvers/contexts.resolver';
-import { NotificationsResolver } from './shared/resolvers/notifications.resolver';
-import { NetworkResolver } from './shared/resolvers/network.resolver';
-import { RedirectsResolver } from './shared/resolvers/redirects.resolver';
-import { FieldtemplatesResolver } from './shared/resolvers/fieldtemplates.resolver';
 import {TitleResolver} from "./shared/resolvers/title-resolver.resolver";
+import {CustodianRoutingModule} from "./pages/custodian/custodian-routing.module";
+import {IarsResolver} from "./shared/resolvers/iars.resolver";
+import {BlankComponent} from "./shared/blank/blank.component";
 
 
 const routes: Routes = [
   {
-    path: 'routing',
+    path: 'blank',
     pathMatch: 'full',
+    component:BlankComponent
   },
   {
     path: '',
@@ -62,7 +56,6 @@ const routes: Routes = [
   {
     path: 'action',
     resolve: {
-      PreferenceResolver
     },
     loadChildren: () => ActionRoutingModule,
   },
@@ -70,7 +63,7 @@ const routes: Routes = [
     path: 'recipient',
     canActivate: [SessionGuard],
     resolve: {
-       PreferenceResolver,NodeResolver,RtipsResolver
+      PreferenceResolver,NodeResolver,RtipsResolver
     },
     loadChildren: () => RecipientRoutingModule,
     data:{
@@ -78,11 +71,19 @@ const routes: Routes = [
     }
   },
   {
-    path: 'admin',
+    path: 'custodian',
     canActivate: [SessionGuard],
     resolve: {
-      NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver, ContextsResolver, AuditlogResolver, JobResolver, TipsResolver,NotificationsResolver,NetworkResolver,RedirectsResolver,FieldtemplatesResolver
+      PreferenceResolver,NodeResolver, RtipsResolver, IarsResolver
     },
+    loadChildren: () => CustodianRoutingModule,
+    data:{
+      sidebar: 'custodian-sidebar'
+    }
+  },
+  {
+    path: 'admin',
+    canActivate: [SessionGuard],
     loadChildren: () => AdminRoutingModule,
     data:{
       sidebar: 'admin-sidebar', pageTitle: 'Home'

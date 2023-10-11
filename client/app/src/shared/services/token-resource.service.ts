@@ -21,7 +21,7 @@ export class TokenResource {
   }
 
   getWithProofOfWork(): Promise<any> {
-    return this.http.post('api/token', {}).toPromise()
+    return this.http.post('api/auth/token', {}).toPromise()
       .then((response: any) => {
         const token = response;
         return this.proofOfWork(token.id)
