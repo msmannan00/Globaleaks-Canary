@@ -524,7 +524,6 @@ table tr td {
 }
 
 @keyframes fade-input {
-
   0%,
   100% {
     opacity: 0;
