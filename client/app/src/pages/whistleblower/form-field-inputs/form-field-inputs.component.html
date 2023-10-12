@@ -11,8 +11,8 @@
     <div class="question-body">
         <markdown *ngIf="field.description" class="description" [data]="field.description | stripHtml"></markdown>
         <div class="form-group">
-            <div class="fieldAnswerEntry" *ngFor="let entry of entries; let entryIndex = index;let first = first;let last = last;" [ngClass]="{'fieldAnswerEntryFirst': first, 'fieldAnswerEntryLast': last}">
-                    <div class="fieldAnswerEntryLabel clearfix" *ngIf="entries.length > 1">
+            <div class="field-answer-entry" *ngFor="let entry of entries; let entryIndex = index;let first = first;let last = last;" [ngClass]="{'fieldAnswerEntryFirst': first, 'fieldAnswerEntryLast': last}">
+                    <div class="field-answer-entry-label clearfix" *ngIf="entries.length > 1">
                         <span class="float-left">
                             <label class="text-muted">
                               <span>#{{entryIndex + 1}}</span>

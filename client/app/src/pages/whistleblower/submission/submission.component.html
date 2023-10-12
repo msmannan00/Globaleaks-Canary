@@ -5,7 +5,7 @@
     <div *ngIf="selectable_contexts.length > 1 || context_id">
         <div class="title">{{submission.context.name}}</div>
         <div class="row">
-            <div class="col-md-2" *ngIf="submission.context.picture"><img class="contextImg" alt="context picture" src="/s/{{submission.context.id}}" /></div>
+            <div class="col-md-2" *ngIf="submission.context.picture"><img class="context-image" alt="context picture" src="/s/{{submission.context.id}}" /></div>
         </div>
     </div>
     <form #submissionForm="ngForm" autocomplete="off" novalidate [ngClass]="{'was-validated': displayErrors()}">
@@ -13,13 +13,13 @@
             <ul id="SubmissionTabsNavigationBox" class="nav nav-tabs" *ngIf="submission.context.show_steps_navigation_interface && submission.context.questionnaire.steps.length > 1">
                 <li *ngIf="submission.context.allow_recipients_selection" class="nav-item">
                     <a href="#" id="receiver-selection-link" [ngClass]="{active: navigation === -1}" class="nav-link nav-link-custom" (click)="goToStep(-1)">
-                        <span class="StepIndex" [ngClass]="{'StepIndexSelected': navigation === -1}">1</span> <span class="StepLabel">{{'Recipient selection'|translate}}</span>
+                        <span class="step-index" [ngClass]="{'StepIndexSelected': navigation === -1}">1</span> <span class="step-label">{{'Recipient selection'|translate}}</span>
                     </a>
                 </li>
                 <li id="context-{{index}}" *ngFor="let step of (submission.context.questionnaire.steps | orderBy:'order');let index = index" class="nav-item">
                 <div *ngIf="step.enabled">
                     <a href="#"  id="step-{{index}}-link" [ngClass]="{active: navigation === index}" class="nav-link nav-link-custom" (click)="goToStep(index)">
-                        <span class="StepIndex" [ngClass]="{'StepIndexSelected': navigation === index}">{{index + (submission.context.allow_recipients_selection ? 2 : 1)}}</span> <span class="StepLabel">{{step.label}}</span>
+                        <span class="step-index" [ngClass]="{'StepIndexSelected': navigation === index}">{{index + (submission.context.allow_recipients_selection ? 2 : 1)}}</span> <span class="step-label">{{step.label}}</span>
                     </a>
                 </div>
             </ul>
@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-        <div id="SubmissionButtons">
+        <div id="submission-buttons">
             <button id="PreviousStepButton" class="btn btn-outline-secondary" *ngIf="hasPreviousStep()" (click)="decrementStep()">
                 <i class="fa-solid fa-arrow-circle-left"></i>
                 <span>{{'Previous'|translate}}</span>

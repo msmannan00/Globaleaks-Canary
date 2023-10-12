@@ -1,4 +1,4 @@
-<div class="configSection">
+<div class="config-section">
     <div>
         <span>{{'Report statuses'|translate}}</span>
         <button class="btn btn-sm btn-primary show-add-user-btn" (click)="toggleAddStatus()">
@@ -6,7 +6,7 @@
             <span>{{'Add'|translate}}</span>
         </button>
     </div>
-    <div class="configSection row" *ngIf="showAddStatus">
+    <div class="config-section row" *ngIf="showAddStatus">
         <div ngForm="newSubmissionStatus" #newSubmissionStatus="ngForm" class="addSubmissionStatus col-md-6">
             <div class="form-group">
                 <label>

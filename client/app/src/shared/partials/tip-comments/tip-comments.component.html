@@ -36,7 +36,7 @@
 			<div id="SubmissionComments"
 				*ngFor="let comment of ((tipService.tip.comments | orderBy:'creation_date': true) | filter : 'visibility' : key  | slice: (currentCommentsPage-1) * itemsPerPage : (currentCommentsPage-1) * itemsPerPage + itemsPerPage); let index = index">
 				<div id="comment-{{index}}" class="mt-2">
-					<div  *ngIf="!comment.author_id" class="messageWB">
+					<div  *ngIf="!comment.author_id" class="message-whistle-blower">
 						<div class="row">
 							<div class="col-md-6">{{'Whistleblower'|translate}}</div>
 							<div class="col-md-6 text-end">{{comment.creation_date | date:'dd-MM-yyyy HH:mm'}}</div>

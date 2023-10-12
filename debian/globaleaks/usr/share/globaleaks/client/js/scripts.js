@@ -72060,7 +72060,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '  <div class="row">\n' +
     '    <div data-ng-repeat="substatus in submissions_status.substatuses" class="col-md-12">\n' +
     '      <div data-ng-views="AdminSubmissionSubStatusEditorCtrl">\n' +
-    '        <div class="configItem">\n' +
+    '        <div class="config-item">\n' +
     '          <div class="editorHeader row" data-ng-click="toggleSubstatusEditing(); $event.stopPropagation();">\n' +
     '            <span class="col-md-7">\n' +
     '              <span class="substatusLabel">{{substatus.label}}</span>\n' +
@@ -72112,7 +72112,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('views/admin/casemanagement/tab1.html',
-    '<div data-ng-views="AdminSubmissionStatusCtrl" class="configSection">\n' +
+    '<div data-ng-views="AdminSubmissionStatusCtrl" class="config-section">\n' +
     '  <div>\n' +
     '    <span data-translate>Report statuses</span>\n' +
     '    <button class="btn btn-sm btn-primary show-add-user-btn" data-ng-click="toggleAddStatus()">\n' +
@@ -72120,7 +72120,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '      <span data-translate>Add</span>\n' +
     '    </button>\n' +
     '  </div>\n' +
-    '  <div class="configSection row" data-ng-views="AdminSubmissionStatusAddCtrl" data-ng-if="showAddStatus">\n' +
+    '  <div class="config-section row" data-ng-views="AdminSubmissionStatusAddCtrl" data-ng-if="showAddStatus">\n' +
     '    <div data-ng-form="newSubmissionStatus" class="addSubmissionStatus col-md-6">\n' +
     '      <div class="form-group">\n' +
     '        <label>\n' +
@@ -72143,7 +72143,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '  <div data-ng-repeat="submissions_status in resources.submission_statuses">\n' +
     '    <div data-ng-views="AdminSubmissionStatusEditorCtrl" class="submissionStatusList">\n' +
     '      <div data-ng-form="submissionStatus-{{$index}}" name="editsubmissionStatus">\n' +
-    '        <div class="configItem">\n' +
+    '        <div class="config-item">\n' +
     '          <div class="editorHeader row" data-ng-click="toggleEditing(); $event.stopPropagation();">\n' +
     '            <span class="col-md-7">{{submissions_status.label | translate}}</span>\n' +
     '            <span class="col-md-5 clearfix">\n' +
@@ -72191,7 +72191,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('views/admin/contexts.html',
-    '<div class="configSection" data-ng-views="AdminContextsCtrl">\n' +
+    '<div class="config-section" data-ng-views="AdminContextsCtrl">\n' +
     '  <div>\n' +
     '    <span data-translate>Channels</span>\n' +
     '    <button class="btn btn-sm btn-primary show-add-context-btn" data-ng-click="toggleAddContext()">\n' +
@@ -72221,7 +72221,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '  </div>\n' +
     '  <div data-ng-repeat="context in resources.contexts">\n' +
     '    <form id="context-{{$index}}" name="editContext" data-ng-views="AdminContextEditorCtrl" novalidate>\n' +
-    '      <div class="configItem">\n' +
+    '      <div class="config-item">\n' +
     '        <div class="editorHeader row" data-ng-click="toggleEditing(); $event.stopPropagation();">\n' +
     '          <span class="col-md-7">\n' +
     '            <span>{{context.name}}</span>\n' +
@@ -72307,7 +72307,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '                    <br/>\n' +
     '                  </div>\n' +
     '                </div>\n' +
-    '                <ol class="selectionList">\n' +
+    '                <ol class="selection-list">\n' +
     '                  <li data-ng-repeat="receiver in context.receivers">\n' +
     '                    <span data-ng-views="AdminContextReceiverSelectorCtrl">\n' +
     '                      <span data-ng-if="!context.show_receivers_in_alphabetical_order">\n' +
@@ -72357,7 +72357,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '                <i data-ng-if="show_advanced_settings" class="fa-solid fa-minus"></i>\n' +
     '                <span data-translate>Advanced</span>\n' +
     '              </button>\n' +
-    '              <div id="ContextAdvancedSettingsBox">\n' +
+    '              <div id="context-advanced-setting-box">\n' +
     '                <div class="row" data-ng-show="show_advanced_settings">\n' +
     '                  <div class="col-md-6">\n' +
     '                    <div class="form-group">\n' +
@@ -73152,7 +73152,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('views/admin/questionnaires/add_field.html',
-    '<div class="addField" data-ng-form="newField">\n' +
+    '<div class="add-field" data-ng-form="newField">\n' +
     '  <div class="form-group">\n' +
     '    <label data-translate>Question</label>\n' +
     '    <input name="label" class="form-control" data-ng-model="new_field.label" type="text" required>\n' +
@@ -73192,7 +73192,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '<div id="field-{{$index}}" class="fieldBox"\n' +
     '  data-ng-init="editing=false" data-ng-views="AdminFieldEditorCtrl">\n' +
     '  <div data-ng-form="editField">\n' +
-    '    <div class="configItem">\n' +
+    '    <div class="config-item">\n' +
     '      <div class="editorHeader" data-ng-click="field.editable && toggleEditing(); $event.stopPropagation();">\n' +
     '        <div class="row">\n' +
     '          <span class="col-md-6">\n' +
@@ -73540,7 +73540,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '                </button>\n' +
     '              </label>\n' +
     '              <div class="col-md-12">\n' +
-    '                <div class="fieldOption" data-ng-repeat="option in field.options">\n' +
+    '                <div class="field-option" data-ng-repeat="option in field.options">\n' +
     '                  <div class="row">\n' +
     '                    <div class="col-md-1">\n' +
     '                      <div class="badge badge-secondary">{{$index + 1}}</div>\n' +
@@ -73631,7 +73631,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('views/admin/questionnaires/main.html',
-    '<div class="configSection row">\n' +
+    '<div class="config-section row">\n' +
     '  <div class="col-md-12">\n' +
     '    <div>\n' +
     '      <span data-translate>Questionnaires</span>\n' +
@@ -73643,7 +73643,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '        <label file-input="importQuestionnaire(file)" file-input-label="Import" class="file-upload btn btn-sm btn-outline-secondary"></label>\n' +
     '      </span>\n' +
     '    </div>\n' +
-    '    <div class="configSection row" data-ng-views="AdminQuestionnaireAddCtrl" data-ng-if="showAddQuestionnaire">\n' +
+    '    <div class="config-section row" data-ng-views="AdminQuestionnaireAddCtrl" data-ng-if="showAddQuestionnaire">\n' +
     '      <form id="newQuestionnaire" class="addQuestionnaire col-md-6" novalidate>\n' +
     '        <div class="form-group">\n' +
     '          <label>\n' +
@@ -73663,7 +73663,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '      </form>\n' +
     '    </div>\n' +
     '    <div data-ng-repeat="questionnaire in resources.questionnaires | orderBy: \'name\'">\n' +
-    '      <form id="questionnaire-{{$index}}" class="configItem" name="editQuestionnaire" data-ng-views="AdminQuestionnaireEditorCtrl" novalidate>\n' +
+    '      <form id="questionnaire-{{$index}}" class="config-item" name="editQuestionnaire" data-ng-views="AdminQuestionnaireEditorCtrl" novalidate>\n' +
     '        <div class="editorHeader row" data-ng-click="toggleEditing(); $event.stopPropagation();">\n' +
     '          <span class="col-md-7">{{questionnaire.name}}</span>\n' +
     '          <span class="col-md-5 clearfix">\n' +
@@ -73730,7 +73730,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('views/admin/questionnaires/questions.html',
     '<div data-ng-views="AdminFieldTemplatesCtrl">\n' +
-    '  <div class="configSection row" data-ng-init="fields = resources.fieldtemplates">\n' +
+    '  <div class="config-section row" data-ng-init="fields = resources.fieldtemplates">\n' +
     '    <div class="col-md-12">\n' +
     '      <div>\n' +
     '        <span data-translate>Question templates</span>\n' +
@@ -73743,8 +73743,8 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '        </span>\n' +
     '      </div>\n' +
     '    </div>\n' +
-    '    <div class="configSection col-md-6" data-ng-if="showAddQuestion">\n' +
-    '      <div data-ng-form="newField" class="addField" novalidate>\n' +
+    '    <div class="config-section col-md-6" data-ng-if="showAddQuestion">\n' +
+    '      <div data-ng-form="newField" class="add-field" novalidate>\n' +
     '        <div data-ng-views="AdminFieldTemplatesAddCtrl" data-ng-include="\'views/admin/questionnaires/add_field.html\'"></div>\n' +
     '      </div>\n' +
     '    </div>\n' +
@@ -73757,7 +73757,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('views/admin/questionnaires/step.html',
-    '            <div id="FieldsEditBox" class="form-group">\n' +
+    '            <div id="field-edit-box" class="form-group">\n' +
     '              <div class="row">\n' +
     '                <span class="col-md-12">\n' +
     '                  <label>\n' +
@@ -73773,12 +73773,12 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '                  </label>\n' +
     '                </span>\n' +
     '              </div>\n' +
-    '              <div class="row configSection" data-ng-if="showAddQuestion">\n' +
+    '              <div class="row config-section" data-ng-if="showAddQuestion">\n' +
     '                <div class="col-md-6">\n' +
     '                  <div data-ng-include="\'views/admin/questionnaires/add_field.html\'"></div>\n' +
     '                </div>\n' +
     '              </div>\n' +
-    '              <div class="row configSection" data-ng-if="showAddQuestionFromTemplate">\n' +
+    '              <div class="row config-section" data-ng-if="showAddQuestionFromTemplate">\n' +
     '                <div class="col-md-6">\n' +
     '                  <div data-ng-include="\'views/admin/questionnaires/add_field_from_template.html\'"></div>\n' +
     '                </div>\n' +
@@ -73793,7 +73793,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('views/admin/questionnaires/steps.html',
-    '<div id="StepsEditBox">\n' +
+    '<div id="step-edit-box">\n' +
     '  <div class="row">\n' +
     '    <span class="col-md-8">\n' +
     '      <span data-translate>Steps</span>\n' +
@@ -73803,7 +73803,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '      </button>\n' +
     '    </span>\n' +
     '  </div>\n' +
-    '  <div id="StepAddBox" data-ng-views="AdminStepAddCtrl" class="row" data-ng-if="showAddStep">\n' +
+    '  <div id="step-add-box" data-ng-views="AdminStepAddCtrl" class="row" data-ng-if="showAddStep">\n' +
     '    <div class="col-md-6">\n' +
     '      <div data-ng-form="newStep">\n' +
     '        <div class="row">\n' +
@@ -73836,7 +73836,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '    </div>\n' +
     '    <div data-ng-if="questionnaire.steps.length > 1" data-ng-repeat="step in questionnaire.steps" class="col-md-12">\n' +
     '      <div data-ng-views="AdminStepEditorCtrl">\n' +
-    '        <div class="configItem">\n' +
+    '        <div class="config-item">\n' +
     '          <div class="editorHeader row" data-ng-click="toggleEditing(); $event.stopPropagation();">\n' +
     '            <span class="col-md-7">\n' +
     '              <span class="badge badge-primary">{{$index + 1}}</span>\n' +
@@ -74107,7 +74107,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '          </div>\n' +
     '        </div>\n' +
     '        <br/>\n' +
-    '        <ul class="selectionList">\n' +
+    '        <ul class="selection-list">\n' +
     '          <li data-ng-repeat="lang_code in resources.node.languages_enabled">\n' +
     '            <span class="action-btns">\n' +
     '              <span data-ng-if="lang_code === resources.node.default_language" class="default-language">\n' +
@@ -74228,7 +74228,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '      </div>\n' +
     '      <div class="form-group" data-ng-if="resources.node.escrow">\n' +
     '        <label data-translate>Administrators authorized to change user passwords:</label>\n' +
-    '        <ol class="selectionList">\n' +
+    '        <ol class="selection-list">\n' +
     '          <li data-ng-repeat="user in resources.users | filter: {escrow: true}">\n' +
     '            <span>{{user.name}}</span>\n' +
     '          </li>\n' +
@@ -74454,7 +74454,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '        <i class="fa-solid fa-plus"></i>\n' +
     '        <span data-translate>Add</span>\n' +
     '      </button>\n' +
-    '      <span id="SearchFilter" class="form-group float-right">\n' +
+    '      <span id="search-filter" class="form-group float-right">\n' +
     '        <input type="text" class="form-control" data-ng-attr-placeholder="{{\'Search\' | translate}}" data-ng-model="search">\n' +
     '      </span>\n' +
     '    </div>\n' +
@@ -74494,7 +74494,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '  <div class="col-md-12">\n' +
     '    <div data-ng-repeat="tenant in resources.tenants | orderBy:\'id\' | filter:{$: search} | limitTo:itemsPerPage:(currentPage - 1) * itemsPerPage">\n' +
     '      <form data-ng-if="tenant.id != 1" id="tenant-{{$index}}" name="editTenant" data-ng-views="TenantEditorCtrl" novalidate>\n' +
-    '        <div class="configItem">\n' +
+    '        <div class="config-item">\n' +
     '          <div class="editorHeader row" data-ng-click="toggleEditing($event)">\n' +
     '            <div class="col-md-6">\n' +
     '              <div>\n' +
@@ -74679,7 +74679,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('views/admin/users.html',
-    '<div class="configSection" data-ng-views="AdminUsersCtrl">\n' +
+    '<div class="config-section" data-ng-views="AdminUsersCtrl">\n' +
     '  <div>\n' +
     '    <span data-translate>Users</span>\n' +
     '    <button class="btn btn-sm btn-primary show-add-user-btn" data-ng-click="toggleAddUser()">\n' +
@@ -74734,7 +74734,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '</div>\n' +
     '<div class="userList" data-ng-repeat="user in resources.users | orderBy:\'name\'">\n' +
     '  <form id="user-{{$index}}" name="editUser" data-ng-views="AdminUserEditorCtrl" novalidate>\n' +
-    '    <div class="configItem">\n' +
+    '    <div class="config-item">\n' +
     '      <div class="editorHeader row" data-ng-click="toggleEditing(); $event.stopPropagation();">\n' +
     '        <span class="col-md-7">\n' +
     '          <span>{{user.name}}</span>\n' +
@@ -75601,7 +75601,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '  </form>\n' +
     '</div>\n' +
     '<div class="modal-footer">\n' +
-    '  <div id="SubmissionButtons">\n' +
+    '  <div id="submission-buttons">\n' +
     '    <button id="PreviousStepButton" class="btn btn-outline-secondary" data-ng-show="hasPreviousStep()" data-ng-click="decrementStep()">\n' +
     '      <i class="fa-solid fa-arrow-circle-left"></i>\n' +
     '      <span data-translate>Previous</span>\n' +
@@ -75727,7 +75727,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '  </ui-select>\n' +
     '  <div data-ng-if="arg.trigger_receiver">\n' +
     '    <br />\n' +
-    '    <ol class="selectionList">\n' +
+    '    <ol class="selection-list">\n' +
     '      <li data-ng-repeat="user in arg.trigger_receiver">\n' +
     '        <span class="action-btns">\n' +
     '          <span data-ng-click="arg.trigger_receiver.splice($index, 1)" data-uib-tooltip="{{\'Remove\' | translate}}">\n' +
@@ -75797,7 +75797,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('views/partials/demo.html',
-    '<div id="DemoBadge" class="bg-secondary text-white" translate>This is a demo platform, please do not use it for real submissions.</div>\n'
+    '<div id="demo-badge" class="bg-secondary text-white" translate>This is a demo platform, please do not use it for real submissions.</div>\n'
   );
 
 
@@ -75822,7 +75822,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '      <div class="qrcode-custom"><qrcode data-ng-if="totp.qrcode_string" data-uib-tooltip="{{\'Copy to clipboard\' | translate}}" data-ng-click="Utils.copyToClipboard(totp.secret);" data="{{totp.qrcode_string}}" version="2" error-correction-level="Q" size="250" color="#1d1f2a" background="#FFF"></qrcode></div>\n' +
     '      <div class="text-center">\n' +
     '        <br>\n' +
-    '        <div id="OTPSecretForm" data-ng-form="OTPSecretForm" class="form-inline">\n' +
+    '        <div id="otp-secret-form" data-ng-form="OTPSecretForm" class="form-inline">\n' +
     '          <div class="form-group d-block mx-auto">\n' +
     '            <div class="input-group">\n' +
     '              <input class="form-control" data-ng-class="{\'is-invalid\': OTPSecretForm.$invalid}" name="secret" data-ng-model="totp.secret" data-ng-disabled="!totp.edit" type="text" data-ng-minlength=32 data-ng-maxlength="32" maxlength="32" size="32" required />\n' +
@@ -75920,22 +75920,22 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('views/partials/image_upload.html',
     '<div id="projectImageLoader"\n' +
-    '     class="imageUpload"\n' +
+    '     class="image-upload"\n' +
     '     data-ng-views="ImageUploadCtrl"\n' +
     '     data-flow-name="imageUploadObj.flow"\n' +
     '     data-flow-init="{target: \'api/admin/files/\' + imageUploadId}"\n' +
     '     data-flow-files-submitted="$flow.upload()"\n' +
     '     data-flow-drop>\n' +
     '  <label for="projectImageLoader"\n' +
-    '         class="changePictureButton text-primary"\n' +
+    '         class="change-picture-button text-primary"\n' +
     '         data-ng-if="!imageUploadModel[imageUploadModelAttr] && !imageUploadObj.flow.files.length"\n' +
     '         data-uib-tooltip="{{\'Edit\' | translate}}" data-flow-btn><i class="fa-solid fa-edit"></i></label>\n' +
     '  <label data-ng-attr-id="projectImageLoader"\n' +
-    '         class="changePictureButton text-danger"\n' +
+    '         class="change-picture-button text-danger"\n' +
     '         data-ng-click="deletePicture()"\n' +
     '         data-ng-if="!imageSrcId && (imageUploadModel[imageUploadModelAttr] || imageUploadObj.flow.files.length)"\n' +
     '         data-uib-tooltip="{{\'Delete\' | translate}}"><i class="fa-solid fa-times"></i></label>\n' +
-    '  <div class="imageUploadThumbnail">\n' +
+    '  <div class="image-upload-thumbnail">\n' +
     '    <img data-ng-if="imageUploadModel[imageUploadModelAttr]" data-ng-app="s/{{imageUploadId}}">\n' +
     '  </div>\n' +
     '  <div errors-upload></div>\n' +
@@ -76056,8 +76056,8 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('views/partials/preferences/tab1.html',
     '<form name="resources.preferences.orm" id="PreferencesForm">\n' +
-    '  <div data-ng-if="resources.preferences.picture" class="imageThumbnail">\n' +
-    '    <img class="receiverImg" alt="user picture" data-ng-app="/s/{{resources.preferences.id}}" /><br />\n' +
+    '  <div data-ng-if="resources.preferences.picture" class="image-thumbnail">\n' +
+    '    <img class="receiver-image" alt="user picture" data-ng-app="/s/{{resources.preferences.id}}" /><br />\n' +
     '  </div>\n' +
     '  <div id="Username"><label><span data-translate>Username</span>:</label> {{resources.preferences.username}}</div>\n' +
     '  <div id="Role"><label><span data-translate>Role</span>:</label> <span>{{Utils.role_l10n(Authentication.session.role)}}</span></div>\n' +
@@ -76269,28 +76269,28 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '      <div class="fileUploadBox mt-2 mb-2">\n' +
     '        <div class="row">\n' +
     '          <div class="col-md-4">\n' +
-    '            <div class="filePreview">\n' +
-    '              <div class="imgPreview">\n' +
+    '            <div class="file-preview">\n' +
+    '              <div class="img-preview">\n' +
     '                <img alt="preview picture" data-flow-img="file" data-ng-if="Utils.showFilePreview(file.file.type)" />\n' +
     '              </div>\n' +
-    '              <div class="fileButtons">\n' +
+    '              <div class="file-buttons">\n' +
     '                <div data-ng-if="page === \'submissionpage\' || !file.isComplete()" class="removeFileButton text-danger">\n' +
     '                  <div class="btn btn-sm btn-danger" data-ng-click="Utils.removeFile(submission, uploads[fileinput].files, file)"><i class="fa-solid fa-times"></i></div>\n' +
     '                </div>\n' +
     '              </div>\n' +
-    '              <div class="fileUpload">\n' +
+    '              <div class="file-upload">\n' +
     '                <div>\n' +
-    '                  <div class="fileUploadIcon" data-ng-show="file.error">\n' +
+    '                  <div class="file-upload-icon" data-ng-show="file.error">\n' +
     '                    <i class="fa-solid fa-ban-circle"></i>\n' +
     '                  </div>\n' +
-    '                  <div class="fileUploadIcon" data-ng-show="!file.error && !file.isComplete()">\n' +
+    '                  <div class="file-upload-icon" data-ng-show="!file.error && !file.isComplete()">\n' +
     '                    <i class="fa-solid fa-file"></i>\n' +
     '                  </div>\n' +
-    '                  <div class="fileUploadIcon" data-ng-show="!file.error && file.isComplete()">\n' +
+    '                  <div class="file-upload-icon" data-ng-show="!file.error && file.isComplete()">\n' +
     '                    <i class="fa-solid fa-check"></i>\n' +
     '                  </div>\n' +
     '                </div>\n' +
-    '		<div class="fileUploadProgress progress progress-striped" data-ng-class="{\'invisible\': file.paused}">\n' +
+    '		<div class="file-upload-progress progress progress-striped" data-ng-class="{\'invisible\': file.paused}">\n' +
     '                  <div class="progress-bar" data-ng-class="{\'progress-bar-complete\': file.progress() === 1 }" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" data-ng-style="{\'width\': (file.progress() * 100) + \'%\'}"></div>\n' +
     '                </div>\n' +
     '              </div>\n' +
@@ -76427,7 +76427,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '      <div id="comment-{{$index}}" data-ng-switch="comment.type" class="mt-2">\n' +
     '\n' +
     '\n' +
-    '        <div data-ng-switch-when="whistleblower" class="messageWB">\n' +
+    '        <div data-ng-switch-when="whistleblower" class="message-whistle-blower">\n' +
     '          <div class="row">\n' +
     '            <div>\n' +
     '              <svg class="profileIcon" width="50" height="50" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.000000 256.000000"  preserveAspectRatio="xMidYMid meet"> <g transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)"  fill="#000000" stroke="none"> <path d="M1143 2550 c-204 -23 -407 -98 -586 -217 -93 -62 -269 -238 -330 -330 -104 -157 -181 -349 -208 -518 -18 -114 -16 -322 5 -429 49 -253 161 -475 333 -657 84 -89 95 -95 130 -72 15 10 121 70 237 133 196 108 211 118 233 159 19 37 23 59 23 132 0 88 0 89 -45 158 -42 65 -105 204 -105 231 0 7 -13 27 -30 46 -36 42 -43 76 -38 202 2 86 6 105 26 131 22 30 23 39 21 199 -1 151 1 173 21 226 57 151 211 229 450 229 181 0 296 -38 382 -125 75 -77 88 -125 88 -329 0 -160 1 -171 23 -200 20 -28 22 -42 22 -158 0 -140 -9 -167 -66 -199 -16 -10 -29 -21 -29 -26 0 -19 -80 -178 -119 -234 -41 -60 -41 -62 -41 -151 0 -97 9 -133 43 -170 12 -13 126 -75 252 -138 127 -63 238 -122 248 -131 17 -15 24 -10 105 74 362 372 465 898 272 1380 -34 85 -94 192 -153 274 -59 82 -222 238 -304 293 -154 102 -351 182 -508 206 -103 15 -270 21 -352 11z"/></g></svg>\n' +
@@ -76515,7 +76515,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('views/partials/tip_field.html',
-    '<div data-ng-if="field.enabled && (!preview || field.preview)" data-ng-class="{\'nested\': !preview}" class="fieldAnswer questionare_container">\n' +
+    '<div data-ng-if="field.enabled && (!preview || field.preview)" data-ng-class="{\'nested\': !preview}" class="field-answer questionare_container">\n' +
     '  <div >\n' +
     '    <span data-ng-if="!$parent.field && !preview">{{$index + 1}})</span>\n' +
     '    <span class="comment_ask">{{field.label}}</span>\n' +
@@ -76737,7 +76737,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('views/partials/tip_message.html',
     '<div id="message-{{$index}}" data-ng-switch="message.type" class="mt-2">\n' +
-    '  <div data-ng-switch-when="whistleblower" class="messageWB">\n' +
+    '  <div data-ng-switch-when="whistleblower" class="message-whistle-blower">\n' +
     '    <div class="row">\n' +
     '      <div class="col-md-6" data-ng-switch="Authentication.session.role">\n' +
     '        <div data-ng-switch-when="whistleblower"><span data-translate>To:</span> {{tip.receivers_by_id[message.receiver_involved_id].name}}</div>\n' +
@@ -76872,7 +76872,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('views/partials/tip_submission_status.html',
     '<span class="form-inline" data-ng-click="$event.stopPropagation();">\n' +
-    '  <span id="AssignSubmissionStatus">\n' +
+    '  <span id="assign-submission-status">\n' +
     '    <span data-translate>Status:</span>\n' +
     '    <select id="assignSubmissionStatus" class="form-control" data-ng-model="tip.status" data-ng-options="state.id as state.label | translate for state in submission_statuses.slice(1)" data-ng-change="updateSubmissionStatus()"></select>\n' +
     '    <select id="assignSubmissionSubStatus" class="form-control" data-ng-model="tip.substatus" data-ng-options="substate.id as substate.label | translate for substate in submission_statuses_by_id[tip.status].substatuses" data-ng-hide="!submission_statuses_by_id[tip.status].substatuses.length" data-ng-change="updateSubmissionStatus()">\n' +
@@ -76991,10 +76991,10 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('views/partials/user.html',
     '<div data-ng-hide="resources.preferences.password_change_needed || resources.preferences.require_two_factor">\n' +
-    '  <div id="LanguagePickerBox" data-ng-if="public.node.languages_enabled.length > 1" class="float-right ml-1 mb-2">\n' +
+    '  <div id="language-picker-box" data-ng-if="public.node.languages_enabled.length > 1" class="float-right ml-1 mb-2">\n' +
     '    <select class="form-control" data-ng-model="GLTranslate.state.language" data-ng-options="item.code as item.native for item in languages_enabled_selector | orderBy:\'native\'"></select>\n' +
     '  </div>\n' +
-    '  <div id="LoginStatusBox" data-ng-if="Utils.showUserStatusBox()" class="float-right ml-1 mb-2">\n' +
+    '  <div id="login-status-box" data-ng-if="Utils.showUserStatusBox()" class="float-right ml-1 mb-2">\n' +
     '    <span id="UsernameBox" data-ng-if="Authentication.session.role !== \'whistleblower\'">\n' +
     '      <label>{{resources.preferences.name}}</label>\n' +
     '      <span class="text-separator">|</span>\n' +
@@ -77018,13 +77018,13 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '      <a id="LogoutLink" href="" data-ng-click="Authentication.logout()" data-uib-tooltip="{{\'Logout\' | translate}}"><i class="fa-solid fa-fw fa-sign-out-alt"></i><span data-ng-if="Authentication.session.role === \'whistleblower\'"><span> </span><span data-translate>Logout</span></span></a>\n' +
     '    </span>\n' +
     '  </div>\n' +
-    '  <div id="WhistleblowerLoginBox" class="ml-1 mb-1" data-ng-if="Utils.showWBLoginBox()" data-ng-include="\'views/partials/receipt.html\'"></div>\n' +
+    '  <div id="whistleblower-login-box" class="ml-1 mb-1" data-ng-if="Utils.showWBLoginBox()" data-ng-include="\'views/partials/receipt.html\'"></div>\n' +
     '</div>\n'
   );
 
 
   $templateCache.put('views/partials/wbfile.html',
-    '<div class="wbfile card card-default">\n' +
+    '<div class="whistle-blower-file card card-default">\n' +
     '  <div class="card-body">\n' +
     '    <div class="top-row clearfix">\n' +
     '      <span class="float-left">\n' +
@@ -77167,7 +77167,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '    <div class="col-md-auto">\n' +
     '      <form name="form" autocomplete="off" novalidate>\n' +
     '        <div class="input-group">\n' +
-    '          <input class="form-control recoverykeyinput" type="text" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX" maxlength="64" size="64" data-ng-model="request.recovery_key" name="recoveryKey" recoverykeyvalidator>\n' +
+    '          <input class="form-control recovery-key-input" type="text" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX" maxlength="64" size="64" data-ng-model="request.recovery_key" name="recoveryKey" recoverykeyvalidator>\n' +
     '          <div class="input-group-btn">\n' +
     '            <button class="btn btn-primary" data-ng-click="submit()" type="submit" data-translate>Submit</button>\n' +
     '            <a class="btn" href="" data-ng-click="Utils.openSupportModal()" data-uib-tooltip="{{\'Request support\' | translate}}"><i class="fa-solid fa-life-ring"></i></a>\n' +
@@ -77219,7 +77219,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('views/recipient/tip.html',
     '<br>\n' +
-    '<div id="Toolbar" class="row">\n' +
+    '<div id="toolbar" class="row">\n' +
     '\n' +
     '  <div class="col-md-12">\n' +
     '    <div class="custom-toolbar">\n' +
@@ -77332,7 +77332,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('views/recipient/tips.html',
     '<section class="section-custom">\n' +
-    '  <div id="Toolbar" class="row">\n' +
+    '  <div id="toolbar" class="row">\n' +
     '   <h2 class="col-md-12"><b>Private Reports</b></h2>\n' +
     '   <p class="text-justify col-md-12"><br>I want you to know that your safety is of utmost importance to us. We understand the importance of keeping your identity confidential and will take all necessary measures to protect your anonymity. We appreciate your willingness to share information and understand the risks involved. We are committed to ensuring that you are not retaliated against in any way for coming forward.</p>\n' +
     '\n' +
@@ -77402,7 +77402,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '         <i class="fa-solid fa-sync"></i>\n' +
     '       </span>\n' +
     '\n' +
-    '       <span id="SearchFilter" class="form-group float-right custom-toolbar-form">\n' +
+    '       <span id="search-filter" class="form-group float-right custom-toolbar-form">\n' +
     '         <div class="input-group custom-toolbar-form-inner">\n' +
     '           <input type="text" class="form-control" data-ng-attr-placeholder="{{\'Search\' | translate}}"\n' +
     '                   data-ng-model="search">\n' +
@@ -77418,7 +77418,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '   </div>\n' +
     '  </div>\n' +
     '\n' +
-    '  <div id="TipList" class="row mt-2">\n' +
+    '  <div id="tip-list" class="row mt-2">\n' +
     '   <div class="col-md-12 table-responsive">\n' +
     '     <table class="table styled-table" id="tipList" data-ng-init="sortKey = \'creation_date\'; sortReverse=true;">\n' +
     '       <thead>\n' +
@@ -77447,7 +77447,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '                 <span data-ng-show="sortReverse" class="fa-solid fa-caret-up"></span>\n' +
     '               </span>\n' +
     '             </span>\n' +
-    '             <span class="DropdownMultiselectContainer">\n' +
+    '             <span class="dropdown-multiselect-container">\n' +
     '               <i class="fa-solid fa-filter" data-ng-class="{filterSelected: checkFilter(dropdownContextModel)}"></i>\n' +
     '               <span translation-texts="dropdownDefaultText" data-ng-dropdown-multiselect="" options="dropdownContextData" selected-model="dropdownContextModel" events="on_changed" extra-settings="dropdownSettings"></span>\n' +
     '             </span>\n' +
@@ -77471,7 +77471,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '                 <span data-ng-show="sortReverse" class="fa-solid fa-caret-up"></span>\n' +
     '               </span>\n' +
     '             </span>\n' +
-    '             <span class="DropdownMultiselectContainer">\n' +
+    '             <span class="dropdown-multiselect-container">\n' +
     '               <i class="fa-solid fa-filter" data-ng-class="{filterSelected: checkFilter(dropdownStatusModel)}"></i>\n' +
     '               <span data-ng-dropdown-multiselect data-options="dropdownStatusData" data-selected-model="dropdownStatusModel" data-events="on_changed" data-extra-settings="dropdownSettings" data-translation-texts="dropdownDefaultText"></span>\n' +
     '             </span>\n' +
@@ -77527,7 +77527,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '                 <span data-ng-show="sortReverse" class="fa-solid fa-caret-up"></span>\n' +
     '               </span>\n' +
     '             </span>\n' +
-    '             <span class="DropdownMultiselectContainer">\n' +
+    '             <span class="dropdown-multiselect-container">\n' +
     '               <i class="fa-solid fa-filter" data-ng-class="{filterSelected: checkFilter(dropdownScoreModel)}"></i>\n' +
     '               <span translation-texts="dropdownDefaultText" data-ng-dropdown-multiselect options="dropdownScoreData" class="dropdown-multiselect-padding" selected-model="dropdownScoreModel" events="on_changed" extra-settings="dropdownSettings"></span>\n' +
     '             </span>\n' +
@@ -77943,12 +77943,12 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '</div>\n' +
     '<div id="SubmissionStepContext" class="row">\n' +
     '  <div data-ng-repeat="context in selectable_contexts | orderBy:contextsOrderPredicate" id="context-{{$index}}" class="{{Utils.getCardSize(selectable_contexts.length)}}" data-ng-click="selectContext(context)">\n' +
-    '    <div class="selectCard">\n' +
+    '    <div class="select-card">\n' +
     '      <div class="row">\n' +
     '        <div class="col-md-12 title">{{context.name}}</div>\n' +
     '      </div>\n' +
     '      <div class="row" data-ng-if="context.picture">\n' +
-    '        <div class="col-md-4"><img class="contextImg" alt="context picture" data-ng-if="context.picture" data-ng-app="/s/{{context.id}}" /></div>\n' +
+    '        <div class="col-md-4"><img class="context-image" alt="context picture" data-ng-if="context.picture" data-ng-app="/s/{{context.id}}" /></div>\n' +
     '      </div>\n' +
     '      <div class="row" data-ng-if="context.description">\n' +
     '        <div class="col-md-12 description">{{context.description}}</div>\n' +
@@ -78186,9 +78186,9 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('views/whistleblower/form_field_inputs.html',
-    '<div class="fieldAnswerEntry" data-ng-repeat="entry in entries" data-ng-class="{\'fieldAnswerEntryFirst\': $first, \'fieldAnswerEntryLast\': $last}" data-ng-init="entryIndex=$index">\n' +
+    '<div class="field-answer-entry" data-ng-repeat="entry in entries" data-ng-class="{\'fieldAnswerEntryFirst\': $first, \'fieldAnswerEntryLast\': $last}" data-ng-init="entryIndex=$index">\n' +
     '  <div data-ng-views="SubmissionFieldEntryCtrl">\n' +
-    '    <div class="fieldAnswerEntryLabel clearfix" data-ng-if="entries.length > 1">\n' +
+    '    <div class="field-answer-entry-label clearfix" data-ng-if="entries.length > 1">\n' +
     '      <span class="float-left">\n' +
     '        <label class="text-muted">\n' +
     '          <span>#{{entryIndex + 1}}</span>\n' +
@@ -78247,7 +78247,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '                  <div class="mb-12">\n' +
     '                     <img app="data/wrapper/common/logo.png"  alt="">\n' +
     '                  </div><br><br>\n' +
-    '                  <div id="HomePageBox">\n' +
+    '                  <div id="homepage-box">\n' +
     '                    <div id="Presentation" class="mb-4" data-ng-if="public.node.presentation" data-markdown-to-html="public.node.presentation | stripHtml"></div>\n' +
     '                    <div id="WhistleblowerBox" class="d-block mx-auto mb-4">\n' +
     '                      <div id="WhistleblowerSubmitBoxButtonDisabled" class="col-12" data-ng-show="public.node.disable_submissions || (!public.node.https_whistleblower && !connection.tor)">\n' +
@@ -78259,8 +78259,8 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '                      <div class="mb-4" data-ng-show="!public.node.https_whistleblower && !connection.tor">\n' +
     '                        <p class="text-danger-custom" data-translate>You are connecting to the server without anonymity and this server supports only anonymous submissions</p>\n' +
     '                      </div>\n' +
-    '                      <div id="WhistleblowerSubmitBox" class="mb-4" data-ng-show="!public.node.disable_submissions && (public.node.https_whistleblower || connection.tor)">\n' +
-    '                        <div id="WhistleblowingQuestion" data-ng-show="public.node.whistleblowing_question" data-markdown-to-html="public.node.whistleblowing_question | stripHtml"></div>\n' +
+    '                      <div id="whistle-blower-submit-box" class="mb-4" data-ng-show="!public.node.disable_submissions && (public.node.https_whistleblower || connection.tor)">\n' +
+    '                        <div id="whistle-blowing-question" data-ng-show="public.node.whistleblowing_question" data-markdown-to-html="public.node.whistleblowing_question | stripHtml"></div>\n' +
     '                        <button id="WhistleblowingButton" data-ng-click="openSubmission()" class="col-12 btn btn-outline-light btn-custom btn-hover">{{public.node.whistleblowing_button}}</button>\n' +
     '                      </div>\n' +
     '                      <div data-ng-show="public.node.https_whistleblower || connection.tor" data-ng-include="\'views/partials/receipt.html\'"></div>\n' +
@@ -78298,8 +78298,8 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '                      <div class="row reciept-container">\n' +
     '                        <div class="col-md-12">\n' +
     '                            <br><br>\n' +
-    '                             <span id="Receipt" data-translate><b>Remember</b> your receipt for this report.</span>\n' +
-    '                             <div id="Receipt"><div class="btn btn-light receipt-number" data-uib-tooltip="{{\'Copy to clipboard\' | translate}}" data-ng-click="Utils.copyToClipboard(Authentication.session.receipt)">{{formatted_receipt}}</div></div>\n' +
+    '                             <span id="receipt" data-translate><b>Remember</b> your receipt for this report.</span>\n' +
+    '                             <div id="receipt"><div class="btn btn-light receipt-number" data-uib-tooltip="{{\'Copy to clipboard\' | translate}}" data-ng-click="Utils.copyToClipboard(Authentication.session.receipt)">{{formatted_receipt}}</div></div>\n' +
     '                               <br><span data-translate>Use the <b>16 digit receipt</b> to <b>log in</b>. It will allow you to view any messages we sent you, and also to add extra info.</span><br>\n' +
     '                             <div class="mt-md-3 clearfix">\n' +
     '                               <button id="ReceiptButton" class="btn btn-outline-light btn-custom btn-hover btn-custom-full-width" data-ng-click="Authentication.login(0, \'whistleblower\', Authentication.session.receipt)" data-translate>View your report</button>\n' +
@@ -78318,7 +78318,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('views/whistleblower/receiver_card.html',
     '777777\n' +
-    '<div class="selectCard" data-ng-class="{\'selected\': submission.selected_receivers[receiver.id] || receiver.forcefully_selected}">\n' +
+    '<div class="select-card" data-ng-class="{\'selected\': submission.selected_receivers[receiver.id] || receiver.forcefully_selected}">\n' +
     '  <div class="row mb-1">\n' +
     '    <div class="col-md-1">\n' +
     '      <div data-ng-if="submission.selected_receivers[receiver.id]">\n' +
@@ -78332,7 +78332,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '    </div>\n' +
     '  </div>\n' +
     '  <div class="row">\n' +
-    '    <div class="col-md-4" data-ng-if="receiver.picture"><img class="receiverImg" alt="receiver picture" data-ng-app="/s/{{receiver.id}}" /></div>\n' +
+    '    <div class="col-md-4" data-ng-if="receiver.picture"><img class="receiver-image" alt="receiver picture" data-ng-app="/s/{{receiver.id}}" /></div>\n' +
     '  </div>\n' +
     '  <div class="row">\n' +
     '    <div class="col-md-12 title">{{receiver.name}}</div>\n' +
@@ -78350,7 +78350,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '  <div id="title" data-ng-if="!show_steps_navigation_bar" data-translate>Recipient selection</div>\n' +
     '  <div data-ng-if="submission.optional_receivers">\n' +
     '    <div class="description" data-translate>Select the recipients of your report:</div>\n' +
-    '    <div data-ng-if="submission.context.maximum_selectable_receivers !== 0 && !submission.context.select_all_receivers" id="MaxSelectableReceiverBox">\n' +
+    '    <div data-ng-if="submission.context.maximum_selectable_receivers !== 0 && !submission.context.select_all_receivers" id="max-selectable-receiver-box">\n' +
     '      <div><span data-translate>Recipients selected:</span> {{submission.countSelectedReceivers()}}/{{submission.context.maximum_selectable_receivers}}</div>\n' +
     '      <div class="text-danger" data-ng-if="submission.countSelectedReceivers() === submission.context.maximum_selectable_receivers" data-translate>You have reached the maximum number of selectable recipients.</div>\n' +
     '    </div>\n' +
@@ -78383,7 +78383,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('views/whistleblower/submission_error.html',
-    '<div id="SubmissionErrors" class="alert alert-secondary mb-2">\n' +
+    '<div id="submission-errors" class="alert alert-secondary mb-2">\n' +
     '  <div data-ng-if="!hasPreviousStep()">\n' +
     '    <div data-ng-if="!areReceiversSelected()">\n' +
     '      <p data-translate>You must select at least one recipient.</p>\n' +
@@ -78415,7 +78415,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '  <div data-ng-if="selectable_contexts.length > 1 || context_id">\n' +
     '    <div class="title">{{submission.context.name}}</div>\n' +
     '    <div class="row">\n' +
-    '      <div class="col-md-2" data-ng-if="submission.context.picture"><img class="contextImg" alt="context picture" data-ng-app="/s/{{submission.context.id}}" /></div>\n' +
+    '      <div class="col-md-2" data-ng-if="submission.context.picture"><img class="context-image" alt="context picture" data-ng-app="/s/{{submission.context.id}}" /></div>\n' +
     '    </div>\n' +
     '  </div>\n' +
     '\n' +
@@ -78429,12 +78429,12 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '      <ul id="SubmissionTabsNavigationBox" class="nav nav-tabs" data-ng-if="submission.context.show_steps_navigation_interface && submission.context.questionnaire.steps.length > 1">\n' +
     '        <li data-ng-if="submission.context.allow_recipients_selection" class="nav-item">\n' +
     '          <a id="receiver-selection-link" data-ng-class="{active: navigation === -1}" class="nav-link" data-ng-click="goToStep(-1)">\n' +
-    '            <span class="StepIndex" data-ng-class="{\'StepIndexSelected\': navigation === -1}">1</span> <span class="StepLabel" data-translate>Recipient selection</span>\n' +
+    '            <span class="step-index" data-ng-class="{\'StepIndexSelected\': navigation === -1}">1</span> <span class="step-label" data-translate>Recipient selection</span>\n' +
     '          </a>\n' +
     '        </li>\n' +
     '        <li data-ng-repeat="step in submission.context.questionnaire.steps | orderBy:\'order\'" data-ng-if="step.enabled" class="nav-item">\n' +
     '          <a id="step-{{$index}}-link" data-ng-class="{active: navigation === $index}" class="nav-link" data-ng-click="goToStep($index)">\n' +
-    '            <span class="StepIndex" data-ng-class="{\'StepIndexSelected\': navigation === $index}">{{$index + (submission.context.allow_recipients_selection ? 2 : 1)}}</span> <span class="StepLabel">{{step.label}}</span>\n' +
+    '            <span class="step-index" data-ng-class="{\'StepIndexSelected\': navigation === $index}">{{$index + (submission.context.allow_recipients_selection ? 2 : 1)}}</span> <span class="step-label">{{step.label}}</span>\n' +
     '          </a>\n' +
     '        </li>\n' +
     '      </ul>\n' +
@@ -78452,7 +78452,7 @@ angular.module('GL').run(['$templateCache', function($templateCache) {
     '      </div>\n' +
     '    </div>\n' +
     '    <br>\n' +
-    '    <div id="SubmissionButtons">\n' +
+    '    <div id="submission-buttons">\n' +
     '      <button id="PreviousStepButton" class="btn btn-outline-light btn-custom btn-hover" data-ng-show="hasPreviousStep()" data-ng-click="decrementStep()">\n' +
     '        <i class="fa-solid fa-arrow-circle-left"></i>\n' +
     '        <span data-translate>Previous</span>\n' +

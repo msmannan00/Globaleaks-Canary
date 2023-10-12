@@ -1,7 +1,7 @@
 @media print {
-  #HeaderBox,
-  #FooterBox,
-  #Toolbar,
+  #header-box,
+  #footer-box,
+  #toolbar,
   #TipInfoBox .panel-heading,
   .popover *,
   .popover .arrow,

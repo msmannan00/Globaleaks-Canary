@@ -51,7 +51,7 @@ function isBrowserCompatible() {
 }
 
 if (!isBrowserCompatible()) {
-  document.getElementById("BrowserNotSupported").style.display = "block";
+  document.getElementById("browser-not-supported").style.display = "block";
 } else {
   createAndAppendLink("css/styles.css");
   createAndAppendLink("lib/css/solid.css");

@@ -25,7 +25,7 @@
             </div>
             <div class="form-group" *ngIf="node.dataModel.escrow">
                 <label>{{'Administrators authorized to change user passwords' | translate}}:</label>
-                <ol class="selectionList">
+                <ol class="selection-list">
                     <li *ngFor="let user of userData">
                         <span>{{user.name}}</span>
                     </li>

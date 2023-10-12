@@ -1,5 +1,5 @@
 <div *ngIf="!appDataService.connection.tor">
-	<div id="PrivacyBadge">
+	<div id="privacy-badge">
 		<div *ngIf="!appDataService.public.node.enable_custom_privacy_badge">
 			<div id="PrivacyBadgeTextBox">
 				<span class="badge badge text-bg-warning">
@@ -29,7 +29,7 @@
 						{{'Then, copy and paste the following address into the Tor Browser:'|translate}}
 					</span>
 					<span (click)="utilsService.copyToClipboard(appDataService.public.node.onionservice); utilsService.stopPropagation($event)"
-						class="onionaddress"
+						class="onion-address"
 						data-toggle="tooltip"
 						title="{{'Copy to clipboard' | translate}}">
 						{{appDataService.public.node.onionservice}}

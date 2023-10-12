@@ -38,7 +38,7 @@
     </div>
     <div class="row">
         <div *ngFor="let substatus of submissions_status.substatuses; let index = index;let first = first; let last = last;" class="col-md-12">
-            <div class="configItem">
+            <div class="config-item">
                 <div class="editorHeader row" (click)="toggleSubstatusEditing(index); $event.stopPropagation();">
                     <span class="col-md-7">
                       <span class="substatusLabel">{{substatus.label}}</span>

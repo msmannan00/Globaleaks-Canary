@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=yes" />
 
     <style>
-      .ng-cloak, #BrowserNotSupported { display:none }
+      .ng-cloak, #browser-not-supported { display:none }
     </style>
 
     
@@ -26,7 +26,7 @@
       <div id="PageContent" class="ng-cloak" data-ng-if="started" data-ng-cloak>
         <div data-ng-if="!public.node.root_tenant && public.node.mode === 'demo'" data-ng-include="'views/partials/demo.html'"></div>
         <div data-ng-if="Utils.isWhistleblowerPage() && !public.node.disable_privacy_badge" data-ng-include="'views/partials/privacybadge.html'"></div>
-        <div id="MessagesConsoleBox" data-ng-include="'views/partials/messageconsole.html'"></div>
+        <div id="messages-console-box" data-ng-include="'views/partials/messageconsole.html'"></div>
             <nav data-ng-if="sidebar" id="Sidebar" class="col-md-2 flex-column" data-ng-include="sidebar"></nav>
             <main id="Content" data-ng-class="{'col-md-10': sidebar, 'col-md-12': !sidebar}" data-ng-view=""></main>
       </div>
@@ -61,8 +61,8 @@
       <div data-ng-if="!public.node.root_tenant && public.node.mode === 'demo'" data-ng-include="'views/partials/demo.html'"></div>
       <div data-ng-if="Utils.isWhistleblowerPage() && !public.node.disable_privacy_badge" data-ng-include="'views/partials/privacybadge.html'"></div>
       <div data-ng-include="'views/partials/header.html'"></div>
-      <div id="MessagesConsoleBox" data-ng-include="'views/partials/messageconsole.html'"></div>
-      <div id="ContentBox">
+      <div id="messages-console-box" data-ng-include="'views/partials/messageconsole.html'"></div>
+      <div id="content-box">
         <div class="row">
           <nav data-ng-if="sidebar" id="Sidebar" class="col-md-2 flex-column" data-ng-include="sidebar"></nav>
           <main data-ng-class="{'col-md-10': sidebar, 'col-md-12': !sidebar}" data-ng-view=""></main>
@@ -70,7 +70,7 @@
       </div>
     </div>
 
-    <footer id="FooterBox" class="ng-cloak" data-ng-if="started" data-ng-include="'views/partials/footer.html'" data-ng-cloak></footer>
+    <footer id="footer-box" class="ng-cloak" data-ng-if="started" data-ng-include="'views/partials/footer.html'" data-ng-cloak></footer>
 
     <div id="BrowserNotSupported">
       <h1>Error!</h1><br /><br />
@@ -137,7 +137,7 @@
   };
 
   if (!isBrowserCompatible()) {
-    document.getElementById("BrowserNotSupported").style.display = "block";
+    document.getElementById("browser-not-supported").style.display = "block";
   } else {
     elem = document.createElement("link");
     elem.setAttribute("rel", "stylesheet");

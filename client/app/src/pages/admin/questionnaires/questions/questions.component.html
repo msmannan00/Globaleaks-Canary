@@ -1,4 +1,4 @@
-<div class="configSection row">
+<div class="config-section row">
     <div class="col-md-12">
         <div>
             <span>{{ 'Question templates' | translate }}</span>
@@ -14,7 +14,7 @@
             </span>
         </div>
     </div>
-    <div class="configSection col-md-6" *ngIf="showAddQuestion">
+    <div class="config-section col-md-6" *ngIf="showAddQuestion">
         <ng-container *ngIf="questionnairesData.length > 0">
             <src-add-field [step]="step" [type]="'template'" (dataToParent)="listenToAddField($event)"></src-add-field>
         </ng-container>

@@ -1,4 +1,4 @@
-<div class="container" id="BrowserNotSupported" *ngIf="!appDataService.started || appDataService.showLoadingPanel">
+<div class="container" id="browser-not-supported" *ngIf="!appDataService.started || appDataService.showLoadingPanel">
     <h1>Error!</h1><br /><br />
     <div>
       You are running an unsupported and potentially vulnerable browser.<br /><br />
@@ -35,10 +35,10 @@
     </div>
 
     <views-header></views-header>
-    <messageconsole id="MessagesConsoleBox"></messageconsole>
+    <messageconsole id="messages-console-box"></messageconsole>
 
     <div id="PageContent">
-      <div id="ContentBox">
+      <div id="content-box">
         <div class="row">
           <nav *ngIf="appConfig.sidebar && showSidebar" id="Sidebar" class="col-md-2 flex-column">
             <src-receipt-sidebar *ngIf="appConfig.sidebar=='recipient-sidebar'"></src-receipt-sidebar>

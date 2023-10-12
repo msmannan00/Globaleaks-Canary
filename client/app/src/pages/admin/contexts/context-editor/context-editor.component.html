@@ -1,4 +1,4 @@
-<div class="configItem">
+<div class="config-item">
 
     <div class="editorHeader row" >
         <span class="col-md-7" (click)="toggleEditing()">
@@ -77,7 +77,7 @@
                             <br />
                         </div>
                     </div>
-                    <ol class="selectionList">
+                    <ol class="selection-list">
                         <li *ngFor="let receiver of context.receivers; let index = index">
                             <span *ngIf="!context.show_receivers_in_alphabetical_order">
                                 <span *ngIf="index !== 0" (click)="moveUpReceiver(index)" [ngbTooltip]="'Move up' | translate">
@@ -129,7 +129,7 @@
                     <i *ngIf="showAdvancedSettings" class="fa-solid fa-minus"></i>
                     <span>{{ 'Advanced' | translate }}</span>
                 </button>
-                <div id="ContextAdvancedSettingsBox">
+                <div id="context-advanced-setting-box">
                     <div class="row" *ngIf="showAdvancedSettings">
                         <div class="col-md-6">
                             <div class="form-group">

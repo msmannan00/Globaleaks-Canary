@@ -1,5 +1,5 @@
 <span class="form-inline" (click)="utilsService.stopPropagation($event);">
-  <span id="AssignSubmissionStatus" class="status-container">
+  <span id="assign-submission-status" class="status-container">
     <div class="status-label">{{ 'Status:' | translate }}</div>
     <ng-select class="select-size" [clearable]="false" [ngModelOptions]="{standalone: true}" [(ngModel)]="tipService.tip.status" (ngModelChange)="updateSubmissionStatus()">
       <ng-option *ngFor="let item of  appDataService.submission_statuses.slice(1)" [value]="item.id">

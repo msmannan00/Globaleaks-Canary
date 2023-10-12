@@ -1,4 +1,4 @@
-<div id="FieldsEditBox" class="form-group">
+<div id="field-edit-box" class="form-group">
     <div class="row">
         <span class="col-md-12">
             <label>
@@ -15,12 +15,12 @@
             </label>
         </span>
     </div>
-    <div class="row configSection" *ngIf="showAddQuestion">
+    <div class="row config-section" *ngIf="showAddQuestion">
         <div class="col-md-6">
             <src-add-field [step]="step" [type]="'step'" (dataToParent)="listenToAddField($event)"></src-add-field>
         </div>
     </div>
-    <div class="row configSection" *ngIf="showAddQuestionFromTemplate">
+    <div class="row config-section" *ngIf="showAddQuestionFromTemplate">
         <div class="col-md-6">
             <src-add-field-from-template  [step]="step" [type]="'step'" [fieldtemplatesData]="fieldtemplatesData" (dataToParent)="listenToAddFieldFormTemplate($event)"></src-add-field-from-template>
         </div>
