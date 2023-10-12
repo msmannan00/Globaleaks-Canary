@@ -192,11 +192,6 @@ h6 {
   border-top: 0;
 }
 
-.table thead th:not(:nth-child(1), :nth-child(10), :nth-child(11)) {
-  border-top: 0;
-  cursor: pointer;
-}
-
 table thead th:nth-child(1),
 .table thead th:nth-child(9),
 .table thead th:nth-child(10) {
@@ -480,7 +475,7 @@ textarea.form-control {
   font-size: smaller;
 }
 
-@media (min-width: 768px) {
+@media screen and (min-width: 768px) {
   .modal-lg .modal-dialog {
     width: 600px;
   }
