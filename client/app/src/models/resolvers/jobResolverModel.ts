@@ -1,4 +1,4 @@
 export class jobResolverModel {
-  name: string
-  timings: number[][]
+  name: string;
+  timings: number[][];
 }
