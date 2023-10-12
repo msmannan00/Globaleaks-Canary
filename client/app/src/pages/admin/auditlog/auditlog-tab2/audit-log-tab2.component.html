@@ -17,7 +17,7 @@
             <td>{{data.username}}</td>
             <td>{{data.role}}</td>
             <td>{{data.name}}</td>
-            <td><i class="fa" ng-class="{'fa-check': user.two_factor, 'fa-times': !user.two_factor}"></i></td>
+            <td><i class="fa" [ngClass]="{'fa-check': usersResolver.dataModel.two_factor, 'fa-times': !usersResolver.dataModel.two_factor}"></i></td>
             <td>{{data.creation_date | date:'dd-MM-yyyy HH:mm'}}</td>
             <td>{{data.last_login | date:'dd-MM-yyyy HH:mm'}}</td>
         </tr>
@@ -40,7 +40,7 @@
         </ngb-pagination>
     </div>
 
-    <button class="btn btn-sm btn-link" type="button" (click)="export_auditlog()">
+    <button class="btn btn-sm btn-link" type="button" (click)="exportAuditLog()">
         <i class="fa-solid fa-download"></i> Export
     </button>
 </ng-container>

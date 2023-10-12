@@ -4,8 +4,8 @@ import { adminHomeComponent } from "./home/admin-home.component";
 import { SettingsModule } from './settings/settings.module';
 import { UsersModule } from './users/users.module';
 import { ContextsModule } from './contexts/contexts.module';
-import { CasemanagementModule } from "./casemanagement/casemanagement.module";
-import { AuditlogModule } from './auditlog/auditlog.module';
+import { CaseManagementModule } from "./casemanagement/case-management.module";
+import { AuditLogModule } from './auditlog/audit-log.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { SitesModule } from "./sites/sites.module";
 import { NetworkModule } from './network/network.module';
@@ -95,7 +95,7 @@ const routes: Routes = [
   },
   {
     path: 'casemanagement',
-    loadChildren: () => CasemanagementModule,
+    loadChildren: () => CaseManagementModule,
     resolve: {
       NodeResolver,PreferenceResolver ,StatuseResolver
     },
@@ -106,7 +106,7 @@ const routes: Routes = [
     resolve: {
       NodeResolver,PreferenceResolver,UsersResolver, AuditlogResolver, JobResolver, TipsResolver
     },
-    loadChildren: () => AuditlogModule,
+    loadChildren: () => AuditLogModule,
     pathMatch: 'full',
   },
   {

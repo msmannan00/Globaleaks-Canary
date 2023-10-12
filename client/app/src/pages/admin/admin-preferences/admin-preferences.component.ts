@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import {Component} from "@angular/core";
 
 @Component({
-  selector: 'src-admin-preferences',
-  templateUrl: './admin-preferences.component.html'
+  selector: "src-admin-preferences",
+  templateUrl: "./admin-preferences.component.html"
 })
 export class AdminPreferencesComponent {
 

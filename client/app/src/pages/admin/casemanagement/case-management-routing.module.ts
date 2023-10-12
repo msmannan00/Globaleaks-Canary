@@ -1,11 +1,11 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
-import {AuditLogComponent} from "./audit-log.component";
+import {CaseManagementComponent} from "./case-management.component";
 
 const routes: Routes = [
   {
     path: "",
-    component: AuditLogComponent,
+    component: CaseManagementComponent,
     pathMatch: "full",
   }
 ];
@@ -14,5 +14,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AuditLogRoutingModule {
+export class CaseManagementRoutingModule {
 }

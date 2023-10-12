@@ -31,7 +31,7 @@ export class AppDataService {
   score: number;
 
   receivers_by_id:any = {}
-  submission_statuses: any;
+  submissionStatuses: any;
   submission_statuses_by_id: any;
   contexts_by_id:any = {}
   questionnaires_by_id:any = {}

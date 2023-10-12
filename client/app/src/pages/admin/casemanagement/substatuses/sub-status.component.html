@@ -2,21 +2,21 @@
     <div class="row">
     <span class="col-md-8">
       <span>{{'Substatuses'|translate}}</span>
-      <button class="btn btn-sm btn-primary" (click)="toggleAddSubstatus()">
+      <button class="btn btn-sm btn-primary" (click)="toggleAddSubStatus()">
         <i class="fa-solid fa-plus"></i>
         <span>{{'Add'|translate}}</span>
       </button>
     </span>
     </div>
-    <div id="SubstatusAddBox" class="row" *ngIf="showAddSubstatus">
+    <div id="SubstatusAddBox" class="row" *ngIf="showAddSubStatus">
         <div class="col-md-6">
-            <div ngForm="newSubstatus" #newSubstatus="ngForm">
+            <div ngForm="newSubstatus" #newSubStatusList="ngForm">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>{{'Label'|translate}}</label>
-                            <input name="label" class="form-control" [(ngModel)]="new_substatus" type="text" required>
-                            <div class="text-danger" *ngIf="!new_substatus || new_substatus.length==0">
+                            <input name="label" class="form-control" [(ngModel)]="newSubStatus" type="text" required>
+                            <div class="text-danger" *ngIf="!newSubStatus || newSubStatus.length==0">
                                 <span>{{'This field is mandatory'|translate}}</span>
                             </div>
                         </div>
@@ -25,8 +25,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group clearfix">
-                            <button class="float-start btn btn-primary" [disabled]="newSubstatus.invalid"
-                                    (click)="addSubmissionSubStatus(); toggleAddSubstatus()">
+                            <button class="float-start btn btn-primary" [disabled]="newSubStatusList.invalid"
+                                    (click)="addSubmissionSubStatus(); toggleAddSubStatus()">
                                 <i class="fa-solid fa-plus"></i>
                                 <span> Add</span>
                             </button>
@@ -37,7 +37,7 @@
         </div>
     </div>
     <div class="row">
-        <div *ngFor="let substatus of submissions_status.substatuses; let index = index;let first = first; let last = last;" class="col-md-12">
+        <div *ngFor="let substatus of submissionsStatus.substatuses; let index = index;let first = first; let last = last;" class="col-md-12">
             <div class="config-item">
                 <div class="editorHeader row" (click)="toggleSubstatusEditing(index); $event.stopPropagation();">
                     <span class="col-md-7">
@@ -51,15 +51,15 @@
                         <button *ngIf="!last" class="btn btn-sm btn-primary" (click)="moveSsDown($event, index)" [ngbTooltip]="'Move down' | translate">
                           <i class="fa-solid fa-chevron-down"></i>
                         </button>
-                        <button class="btn btn-sm btn-outline-secondary" *ngIf="!this.substatus_editing[index]"
+                        <button class="btn btn-sm btn-outline-secondary" *ngIf="!this.subStatusEditing[index]"
                                 (click)="toggleSubstatusEditing(index); $event.stopPropagation();">
                           <span>{{'Edit'|translate}}</span>
                         </button>
-                        <button class="btn btn-sm btn-primary" *ngIf="this.substatus_editing[index]"
-                                (click)="save_submissions_substatuses(substatus);" [disabled]="substatus && substatus.label.length==0">
+                        <button class="btn btn-sm btn-primary" *ngIf="this.subStatusEditing[index]"
+                                (click)="saveSubmissionsSubStatus(substatus);" [disabled]="substatus && substatus.label.length==0">
                           <span>{{'Save'|translate}}</span>
                         </button>
-                        <button class="btn btn-sm btn-outline-secondary" *ngIf="this.substatus_editing[index]"
+                        <button class="btn btn-sm btn-outline-secondary" *ngIf="this.subStatusEditing[index]"
                                 (click)="toggleSubstatusEditing(index); $event.stopPropagation();">
                           <span>{{'Cancel'|translate}}</span>
                         </button>
@@ -70,7 +70,7 @@
                       </span>
                     </span>
                 </div>
-                <div ngForm="editStep" #editStep="ngForm" *ngIf="this.substatus_editing[index]">
+                <div ngForm="editStep" *ngIf="this.subStatusEditing[index]">
                     <hr/>
                     <div class="row">
                         <div class="form-group">

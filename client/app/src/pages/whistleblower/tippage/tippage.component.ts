@@ -179,7 +179,7 @@ export class TippageComponent {
             this.ctx = "wbtip";
             this.preprocessTipAnswers(this.tip);
 
-            this.tip.submissionStatusStr = this.utilsService.getSubmissionStatusText(this.tip.status, this.tip.substatus, this.appDataService.submission_statuses)
+            this.tip.submissionStatusStr = this.utilsService.getSubmissionStatusText(this.tip.status, this.tip.substatus, this.appDataService.submissionStatuses)
             this.submission = {};
             this.submission._submission = this.tip;
             if (this.tip.receivers.length === 1 && this.tip.msg_receiver_selected === null) {

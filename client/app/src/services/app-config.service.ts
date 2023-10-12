@@ -102,7 +102,7 @@ export class AppConfigService{
         this.appDataService.contexts_by_id = this.utilsService.array_to_map(this.appDataService.public.contexts);
         this.appDataService.receivers_by_id = this.utilsService.array_to_map(this.appDataService.public.receivers);
         this.appDataService.questionnaires_by_id = this.utilsService.array_to_map(this.appDataService.public.questionnaires);
-        this.appDataService.submission_statuses = this.appDataService.public.submission_statuses;
+        this.appDataService.submissionStatuses = this.appDataService.public.submission_statuses;
         this.appDataService.submission_statuses_by_id = this.utilsService.array_to_map(this.appDataService.public.submission_statuses);
 
         for (let [key] of Object.entries(this.appDataService.questionnaires_by_id)) {
