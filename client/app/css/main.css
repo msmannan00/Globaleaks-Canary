@@ -58,12 +58,6 @@ th .fa-solid, .fa-chevron-up, .fa-chevron-down {
   margin-right: 10px;
 }
 
-.select-status, .select-sub-status {
-  flex: 1;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
 .select-size {
   width: 100px;
 }
@@ -84,14 +78,6 @@ th .fa-solid, .fa-chevron-up, .fa-chevron-down {
 
 .invisible {
   opacity: 0;
-}
-
-.visible-on-over {
-  opacity: 0.2;
-}
-
-.visible-on-over:hover {
-  opacity: 1;
 }
 
 .uib-datepicker-popup {
@@ -118,20 +104,8 @@ th .fa-solid, .fa-chevron-up, .fa-chevron-down {
   padding: 2px;
 }
 
-.filterSelected {
+.filter-selected {
   color: #377abc;
-}
-
-.dropdown-multiselect button::after {
-  border: 0;
-  content: "";
-  vertical-align: 0;
-}
-
-.dropdown-multiselect button {
-  padding: 0;
-  width: 18px;
-  height: 20px;
 }
 
 .uib-datepicker button {
@@ -158,45 +132,11 @@ th .fa-solid, .fa-chevron-up, .fa-chevron-down {
   overflow: inherit;
 }
 
-.dropdown-multiselect {
-  position: absolute;
-  left: 0;
-}
-
 .dropdown-multi-select-container {
   position: relative;
 }
 
-.dropdown-multiselect .dropdown-menu .divider {
-  height: 1px;
-  margin: 9px 0;
-  overflow: hidden;
-  background-color: #f5f7fa;
-}
-
-.dropdown-multiselect-padding .dropdown-menu {
-  right: 0;
-  left: auto;
-}
-
-.dropdown-multiselect .dropdown-menu > li > a {
-  display: block;
-  padding: 3px 20px;
-  clear: both;
-  font-weight: 400;
-  color: #1d1f24;
-  line-height: 2;
-  white-space: nowrap;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.dropdown-multiselect .dropdown-menu > li > a:hover {
-  background: #f5f7fa;
-}
-
-.form-control,
-.custom-select {
+.form-control {
   background-color: #f5f7fa;
 }
 
@@ -277,7 +217,7 @@ table thead th:nth-child(1),
   margin-bottom: 1em;
 }
 
-#Sidebar a {
+#sidebar a {
   display: block;
   margin-bottom: 0.5em;
 }
@@ -290,15 +230,15 @@ table thead th:nth-child(1),
   margin-bottom: auto;
 }
 
-#Sidebar a.active,
-#Sidebar a:active.active,
-#Sidebar a:hover.active,
-#Sidebar a:focus.active {
+#sidebar a.active,
+#sidebar a:active.active,
+#sidebar a:hover.active,
+#sidebar a:focus.active {
   border-bottom: 1px solid #c8d1e0;
   width: max-content;
 }
 
-#ContentBox {
+#content-box {
   padding: 1em;
 }
 
@@ -308,16 +248,16 @@ table thead th:nth-child(1),
 }
 
 .nav-link:hover {
-  color: #103253; /* Replace with your desired hover color */
+  color: #103253;
 }
 
 .nav-item.active .nav-link {
-  color: #103253; /* Replace with your desired active text color */
+  color: #103253;
 }
 
 #footer-box,
-#DemoBadge,
-#PrivacyBadge {
+#demo-badge,
+#privacy-badge {
   padding: 1em;
 }
 
@@ -346,13 +286,8 @@ table tr td {
   text-decoration: none;
 }
 
-.default-logo {
-  height: 3.2rem;
-  width: 3.2rem;
-}
-
 .context-image,
-.receiverImg {
+.receiver-image {
   height: 10rem;
   max-width: 20rem;
 }
@@ -361,11 +296,7 @@ table tr td {
   font-weight: bold;
 }
 
-.receipt {
-  text-align: center;
-}
-
-#PrivacyBadge {
+#privacy-badge {
   background-color: #1d1f24;
   color: #fff;
 }
@@ -376,14 +307,6 @@ table tr td {
 
 .preformatted {
   white-space: pre-wrap;
-}
-
-#wizardLicense {
-  max-height: 20rem;
-  overflow-y: scroll;
-  background-color: #f5f7fa;
-  border: 1px solid #c8d1e0;
-  padding: 1em;
 }
 
 .image-upload {
@@ -416,7 +339,6 @@ table tr td {
   z-index: 1;
 }
 
-.login-error-box,
 .login-error-box-homepage {
   display: inline-block;
   margin: 1em;
@@ -429,10 +351,6 @@ table tr td {
 .custom-close-button {
   font-size: 11px;
   color: red;
-}
-
-.login-form-container {
-  min-width: 350px;
 }
 
 .recovery-key-input {
@@ -474,13 +392,6 @@ table tr td {
   border: 1px solid #c8d1e0;
 }
 
-.file-upload-icon-small {
-  position: absolute;
-  font-size: 10rem;
-  top: 0;
-  right: 0;
-}
-
 .file-upload-icon {
   font-size: 2rem;
 }
@@ -495,12 +406,11 @@ table tr td {
   border: 1px solid #c8d1e0;
 }
 
-
 .table {
   --bs-table-striped-bg: #f5f7fa;
 }
 
-#LogoBox img {
+#logo-box img {
   max-height: 10rem;
   max-width: 20rem;
 }
@@ -513,16 +423,16 @@ table tr td {
   font-size: 1.4rem;
 }
 
-#TipList table {
+#tip-list table {
   table-layout: auto;
 }
 
-#TipList th,
-#TipList td {
+#tip-list th,
+#tip-list td {
   white-space: nowrap;
 }
 
-@keyframes fadeinout {
+@keyframes fade-inout {
 
   0%,
   100% {
@@ -538,7 +448,7 @@ table tr td {
   margin-top: 1em;
 }
 
-.wbfile .top-row {
+.whistle-blower-file .top-row {
   min-height: 30px;
 }
 
@@ -559,13 +469,6 @@ table tr td {
 textarea.form-control {
   resize: vertical;
 }
-
-/* input[type="file"] {
-	position: absolute;
-	visibility: hidden;
-	width: 1px;
-	height: 1px;
-} */
 
 .fa-none::before {
   content: "\2122";
@@ -602,20 +505,8 @@ textarea.form-control {
   border-style: dashed;
 }
 
-.drag-over {
-  border-style: solid;
-}
-
 .custom-file {
   width: auto;
-}
-
-.custom-file-label::after {
-  opacity: 0;
-}
-
-#creditCard {
-  width: 20rem;
 }
 
 label,
@@ -623,32 +514,25 @@ p:last-child {
   margin: 0;
 }
 
-#HomePageBox {
+#homepage-box {
   text-align: center;
   margin: 0 auto;
-}
-
-#NodePresentation {
-  font-size: 1.2rem;
 }
 
 .language-box {
   width: 300px;
 }
 
-#NodePresentation,
-#WhistleblowerSubmitBox {
+#whistleblower-submit-box {
   margin-bottom: 2em;
 }
 
-#NodePresentation,
-#WhistleblowingQuestion,
-#WhistleblowerLoginPrompt {
+#whistle-blowing-question {
   white-space: pre-wrap;
 }
 
-#WhistleblowerSubmitBox,
-#WhistleblowerLoginBox {
+#whistleblower-submit-box,
+#whistle-blower-login-box {
   text-align: center;
 }
 
@@ -683,15 +567,7 @@ p:last-child {
   margin-top: 1em;
 }
 
-.field-answer-entry-first {
-  margin-top: 0;
-}
-
-.field-answer-entry-last {
-  margin-bottom: 1em;
-}
-
-#OTPSecretForm input {
+#otp-secret-form input {
   width: 26rem;
   text-align: center;
 }
@@ -702,7 +578,7 @@ p:last-child {
   clear: both;
 }
 
-#MaxSelectableReceiverBox {
+#max-selectable-receiver-box {
   margin-bottom: 1em;
 }
 
@@ -714,16 +590,6 @@ p:last-child {
   border-color: inherit;
   box-shadow: inherit;
   background-image: none;
-}
-
-.code {
-  color: #1d1f24;
-  background: #f5f7fa;
-}
-
-#Receipt {
-  margin: 1em auto;
-  width: max-content;
 }
 
 .step-index {
@@ -740,37 +606,22 @@ p:last-child {
 }
 
 .step-index,
-#SubmissionButtons button {
-  margin-right: 1em;
+#submission-buttons button {
   margin-right: 10px;
 }
 
-.StepIndexSelected {
+.step-index-selected {
   color: #fff;
   background-color: #377abc;
   border-color: #377abc;
 }
 
-#SubmissionErrors {
+#submission-errors {
   margin-top: 1em;
 }
 
 .question-body {
   padding-bottom: 0.5em;
-}
-
-.question .question {
-  padding-left: 1em;
-}
-
-.question .question {
-  padding-right: 1em;
-}
-
-.map-outline {
-  fill: #f5f7fa;
-  stroke: #121f24;
-  stroke-width: 2px;
 }
 
 .file-buttons {
@@ -799,17 +650,17 @@ p:last-child {
   font-weight: bold;
 }
 
-#LogoBox,
-#TitleBox {
+#logo-box,
+#title-box {
   margin: 1em 0;
 }
 
-#TitleBox {
+#title-box {
   font-size: 1.6rem;
   font-weight: bold;
 }
 
-#LoginStatusBox {
+#login-status-box {
   font-weight: bold;
 }
 
@@ -837,7 +688,7 @@ p:last-child {
   border-radius: 5px 0 0 5px;
 }
 
-#LanguagePickerBox .form-control {
+#language-picker-box .form-control {
   width: auto;
 }
 
@@ -851,20 +702,20 @@ p:last-child {
   border-bottom-left-radius: 0;
 }
 
-#LoginStatusBox,
-#LanguagePickerBox .form-control {
+#login-status-box,
+#language-picker-box .form-control {
   height: 2.2rem;
   line-height: 2.2rem;
   padding: 0 1em;
   width: max-content;
 }
 
-#LanguagePickerBox {
+#language-picker-box {
   width: 190px;
 }
 
-#LoginStatusBox,
-#WhistleblowerLoginBox {
+#login-status-box,
+#whistle-blower-login-box {
   color: #1d1f2a;
   background-color: #fff;
   border-radius: 5px;
@@ -877,12 +728,12 @@ p:last-child {
 
 #footer-box a,
 #footer-box a:hover,
-#Footerbox a:active,
+#footer-box a:active,
 #footer-box a:focus {
   font-weight: bold;
 }
 
-#MessagesConsoleBox {
+#messages-console-box {
   position: fixed;
   width: 30rem;
   min-width: 20rem;
@@ -891,11 +742,10 @@ p:last-child {
   padding: 0 5em;
 }
 
-#StepAddBox,
-#StepsEditBox,
-#FieldsEditBox,
-#ContextAdvancedSettingsBox,
-#SubstateEditBox {
+#step-add-box,
+#steps-edit-box,
+#fields-edit-box,
+#context-advanced-settings-box {
   margin-top: 0.5em;
 }
 
@@ -969,24 +819,16 @@ text.axis-worktime {
   margin-bottom: 1em;
 }
 
-.tip-label {
-  color: #377abc;
-}
-
 .step-label {
   text-transform: capitalize;
 }
 
-#SearchFilter {
+#search-filter {
   margin: 0 0.5em;
 }
 
 htmlinput[type="email"],
-htmlinput[type="email"],
-html#creditCard,
-html#creditCard,
-html#Receipt,
-html#Receipt {
+htmlinput[type="email"] {
   direction: ltr;
 }
 
@@ -994,7 +836,6 @@ html#Receipt {
 .fas {
   transform: scaleX(-1);
 }
-
 
 .input-group-append span {
   border-top-left-radius: 0;
@@ -1014,8 +855,4 @@ html#Receipt {
   pointer-events: none;
   opacity: 0.4;
   user-select: none;
-}
-
-.custom-switch .custom-control-label::after {
-  background-color: #fff;
 }
