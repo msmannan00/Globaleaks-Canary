@@ -226,10 +226,11 @@ input[readonly] {
   height: 17px;
 }
 
-@-webkit-keyframes load8 {
+@keyframes load8 {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -239,6 +240,7 @@ input[readonly] {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }

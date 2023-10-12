@@ -193,6 +193,7 @@ h6 {
 }
 
 .table thead th:not(:nth-child(1), :nth-child(10), :nth-child(11)) {
+  border-top: 0;
   cursor: pointer;
 }
 
