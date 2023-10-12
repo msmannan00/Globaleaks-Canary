@@ -19,7 +19,7 @@
     <span data-ng-if="Utils.isUpdatedUIPage()">
       <a class="skip-link d-none data-ng-cloak" href="#ContentBox"></a>
 
-      <div id="PageOverlay" class="ng-cloak" data-ng-hide="!showLoadingPanel">
+      <div id="page-overlay" class="ng-cloak" data-ng-hide="!showLoadingPanel">
           <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
       </div>
 
@@ -53,8 +53,8 @@
     <span data-ng-if="!Utils.isUpdatedUIPage()">
     <a class="skip-link d-none ng-cloak" href="#ContentBox"></a>
 
-    <div id="PageOverlay" class="ng-cloak" data-ng-hide="!showLoadingPanel">
-      <div id="Loader"></div>
+    <div id="page-overlay" class="ng-cloak" data-ng-hide="!showLoadingPanel">
+      <div id="loader"></div>
     </div>
 
     <div id="PageContent" class="ng-cloak" data-ng-if="started" data-ng-cloak>

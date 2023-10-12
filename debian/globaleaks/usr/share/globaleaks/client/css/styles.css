@@ -20287,7 +20287,7 @@ ng\:form {
   border-color: #5797d5;
 }
 
-#PageOverlay {
+#page-overlay {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -21091,11 +21091,11 @@ input[type="file"] {
 }
 
 #login-box,
-#title-Box {
+#title-box {
   margin: 1em 0;
 }
 
-#title-Box {
+#title-box {
   font-size: 1.6rem;
   font-weight: bold;
   white-space: pre-wrap;

@@ -322,19 +322,19 @@ table thead th:nth-child(1),
 }
 
 table tr {
-  height: 50px !important;
+  height: 50px;
 }
 
 table tr td {
-  vertical-align: middle !important;
+  vertical-align: middle;
 }
 
 .badge.bg-primary {
-  background-color: #205282 !important;
+  background-color: #205282;
 }
 
 .badge.bg-primary:hover {
-  background-color: #c2d9f0 !important;
+  background-color: #c2d9f0;
 }
 
 .page-link {
@@ -495,9 +495,8 @@ table tr td {
   border: 1px solid #c8d1e0;
 }
 
-
 .table {
-  --bs-table-striped-bg: #f5f7fa !important;
+  --bs-table-striped-bg: #f5f7fa;
 }
 
 #login-box img {
@@ -791,11 +790,11 @@ p:last-child {
 }
 
 #login-box,
-#title-Box {
+#title-box {
   margin: 1em 0;
 }
 
-#title-Box {
+#title-box {
   font-size: 1.6rem;
   font-weight: bold;
 }
@@ -805,7 +804,7 @@ p:last-child {
 }
 
 .col-auto {
-  min-width: 20vw !important;
+  min-width: 20vw;
 }
 
 .form-group {
@@ -817,7 +816,7 @@ p:last-child {
 }
 
 [dir='rtl'] .form-group > .input-group > .left-radius {
-  border-radius: 0 5px 5px 0 !important;
+  border-radius: 0 5px 5px 0;
 }
 
 [dir='ltr'] .form-group > .input-group > .right-radius {
@@ -825,7 +824,7 @@ p:last-child {
 }
 
 [dir='rtl'] .form-group > .input-group > .right-radius {
-  border-radius: 5px 0 0 5px !important;
+  border-radius: 5px 0 0 5px;
 }
 
 #language-picker-box .form-control {
@@ -986,10 +985,9 @@ html#receipt {
   transform: scaleX(-1);
 }
 
-
 .input-group-append span {
-  border-top-left-radius: 0 !important;
-  border-bottom-left-radius: 0 !important;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .calendar-active {
@@ -1008,5 +1006,5 @@ html#receipt {
 }
 
 .custom-switch .custom-control-label::after {
-  background-color: #fff !important;
+  background-color: #fff;
 }

@@ -21,8 +21,8 @@
   </div>
 
 
-  <div id="PageOverlay" *ngIf="appDataService.showLoadingPanel">
-    <div id="Loader"></div>
+  <div id="page-overlay" *ngIf="appDataService.showLoadingPanel">
+    <div id="loader"></div>
   </div>
 
   <div [dir]="translate.currentLang === 'ar' ? 'rtl' : 'ltr'" *ngIf="appDataService.started">
