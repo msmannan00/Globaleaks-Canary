@@ -82,7 +82,7 @@
 .ng-select-container,
 .ng-value-container,
 .ng-input,
-input::-ms-clear {
+> input::-ms-clear {
   display: none;
 }
 
@@ -90,7 +90,7 @@ input::-ms-clear {
 .ng-select-container,
 .ng-value-container,
 .ng-input,
-input[readonly] {
+> input[readonly] {
   user-select: none;
   width: 0;
   padding: 0;
@@ -104,7 +104,7 @@ input[readonly] {
 }
 
 .visually-hidden {
-  display: none;
+  display: none !important;
 }
 
 .ng-select.ng-select-single .ng-select-container .ng-value-container {
@@ -134,7 +134,7 @@ input[readonly] {
 }
 
 .ng-select.ng-select-multiple.ng-select-disabled,
-.ng-select-container,
+> .ng-select-container,
 .ng-value-container,
 .ng-value,
 .ng-value-icon {
@@ -212,15 +212,15 @@ input[readonly] {
   font-size: 10px;
   position: relative;
   text-indent: -9999em;
-  border-top: 2px solid #424242;
-  border-right: 2px solid #424242;
-  border-bottom: 2px solid #424242;
+  border-top: 2px solid rgba(66, 66, 66, 0.2);
+  border-right: 2px solid rgba(66, 66, 66, 0.2);
+  border-bottom: 2px solid rgba(66, 66, 66, 0.2);
   border-left: 2px solid #424242;
   transform: translateZ(0);
   animation: load8 0.8s infinite linear;
 }
 
-.ng-select .ng-spinner-loader::after {
+.ng-select .ng-spinner-loader:after {
   border-radius: 50%;
   width: 17px;
   height: 17px;
@@ -294,7 +294,7 @@ input[readonly] {
 .ng-dropdown-panel,
 .ng-dropdown-panel-items,
 .ng-option,
-.ng-option-label:empty::before {
+.ng-option-label:empty:before {
   content: "​";
 }
 

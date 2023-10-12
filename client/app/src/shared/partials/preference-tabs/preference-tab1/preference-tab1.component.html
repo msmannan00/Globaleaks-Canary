@@ -1,6 +1,6 @@
 <form name="preferenceResolver.dataModel.orm" #preferenceForm="ngForm">
     <div *ngIf="preferenceResolver.dataModel.picture" class="image-thumbnail">
-        <img class="receiver-image" alt="user picture" src="/s/{{preferenceResolver.dataModel.id}}" /><br />
+        <img class="receiverImg" alt="user picture" src="/s/{{preferenceResolver.dataModel.id}}" /><br />
     </div>
     <div id="Username"><label><span>{{'Username'|translate}}</span>:</label> {{preferenceResolver.dataModel.username}}</div>
     <div id="Role"><label><span>{{'Role'|translate}}</span>:</label> <span>{{role}}</span></div>

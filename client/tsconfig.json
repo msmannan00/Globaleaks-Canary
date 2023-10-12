@@ -1,3 +1,4 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
@@ -24,7 +25,7 @@
       "dom"
     ],
     "paths": {
-      "@app/*": ["app/src/*"]
+      "@app/*": ["src/app/*"]
     }
   },
   "angularCompilerOptions": {

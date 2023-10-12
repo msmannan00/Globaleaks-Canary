@@ -118,7 +118,7 @@ th .fa-solid, .fa-chevron-up, .fa-chevron-down {
   padding: 2px;
 }
 
-.filter-selected {
+.filterSelected {
   color: #377abc;
 }
 
@@ -163,7 +163,7 @@ th .fa-solid, .fa-chevron-up, .fa-chevron-down {
   left: 0;
 }
 
-.dropdown-multiselect-container {
+.dropdown-multi-select-container {
   position: relative;
 }
 
@@ -277,7 +277,7 @@ table thead th:nth-child(1),
   margin-bottom: 1em;
 }
 
-#sidebar a {
+#Sidebar a {
   display: block;
   margin-bottom: 0.5em;
 }
@@ -290,15 +290,15 @@ table thead th:nth-child(1),
   margin-bottom: auto;
 }
 
-#sidebar a.active,
-#sidebar a:active.active,
-#sidebar a:hover.active,
-#sidebar a:focus.active {
+#Sidebar a.active,
+#Sidebar a:active.active,
+#Sidebar a:hover.active,
+#Sidebar a:focus.active {
   border-bottom: 1px solid #c8d1e0;
   width: max-content;
 }
 
-#content-box {
+#ContentBox {
   padding: 1em;
 }
 
@@ -308,16 +308,16 @@ table thead th:nth-child(1),
 }
 
 .nav-link:hover {
-  color: #103253;
+  color: #103253; /* Replace with your desired hover color */
 }
 
 .nav-item.active .nav-link {
-  color: #103253;
+  color: #103253; /* Replace with your desired active text color */
 }
 
 #footer-box,
-#demo-badge,
-#privacy-badge {
+#DemoBadge,
+#PrivacyBadge {
   padding: 1em;
 }
 
@@ -352,7 +352,7 @@ table tr td {
 }
 
 .context-image,
-.receiver-image {
+.receiverImg {
   height: 10rem;
   max-width: 20rem;
 }
@@ -365,7 +365,7 @@ table tr td {
   text-align: center;
 }
 
-#privacy-badge {
+#PrivacyBadge {
   background-color: #1d1f24;
   color: #fff;
 }
@@ -378,7 +378,7 @@ table tr td {
   white-space: pre-wrap;
 }
 
-#wizard-license {
+#wizardLicense {
   max-height: 20rem;
   overflow-y: scroll;
   background-color: #f5f7fa;
@@ -495,11 +495,12 @@ table tr td {
   border: 1px solid #c8d1e0;
 }
 
+
 .table {
   --bs-table-striped-bg: #f5f7fa;
 }
 
-#login-box img {
+#LogoBox img {
   max-height: 10rem;
   max-width: 20rem;
 }
@@ -512,16 +513,17 @@ table tr td {
   font-size: 1.4rem;
 }
 
-#tip-list table {
+#TipList table {
   table-layout: auto;
 }
 
-#tip-list th,
-#tip-list td {
+#TipList th,
+#TipList td {
   white-space: nowrap;
 }
 
-@keyframes fade-input {
+@keyframes fadeinout {
+
   0%,
   100% {
     opacity: 0;
@@ -536,7 +538,7 @@ table tr td {
   margin-top: 1em;
 }
 
-.whistle-blower-file .top-row {
+.wbfile .top-row {
   min-height: 30px;
 }
 
@@ -557,6 +559,13 @@ table tr td {
 textarea.form-control {
   resize: vertical;
 }
+
+/* input[type="file"] {
+	position: absolute;
+	visibility: hidden;
+	width: 1px;
+	height: 1px;
+} */
 
 .fa-none::before {
   content: "\2122";
@@ -605,7 +614,7 @@ textarea.form-control {
   opacity: 0;
 }
 
-#credit-card {
+#creditCard {
   width: 20rem;
 }
 
@@ -614,12 +623,12 @@ p:last-child {
   margin: 0;
 }
 
-#homepage-box {
+#HomePageBox {
   text-align: center;
   margin: 0 auto;
 }
 
-#node-presentation {
+#NodePresentation {
   font-size: 1.2rem;
 }
 
@@ -627,19 +636,19 @@ p:last-child {
   width: 300px;
 }
 
-#node-presentation,
-#whistle-blower-submit-box {
+#NodePresentation,
+#WhistleblowerSubmitBox {
   margin-bottom: 2em;
 }
 
-#node-presentation,
-#whistle-blowing-question,
-#whistle-blower-login-prompt {
+#NodePresentation,
+#WhistleblowingQuestion,
+#WhistleblowerLoginPrompt {
   white-space: pre-wrap;
 }
 
-#whistle-blower-submit-box,
-#whistleblower-login-box {
+#WhistleblowerSubmitBox,
+#WhistleblowerLoginBox {
   text-align: center;
 }
 
@@ -682,7 +691,7 @@ p:last-child {
   margin-bottom: 1em;
 }
 
-#otp-secret-form input {
+#OTPSecretForm input {
   width: 26rem;
   text-align: center;
 }
@@ -693,7 +702,7 @@ p:last-child {
   clear: both;
 }
 
-#max-selectable-receiver-box {
+#MaxSelectableReceiverBox {
   margin-bottom: 1em;
 }
 
@@ -712,7 +721,7 @@ p:last-child {
   background: #f5f7fa;
 }
 
-#receipt {
+#Receipt {
   margin: 1em auto;
   width: max-content;
 }
@@ -731,17 +740,18 @@ p:last-child {
 }
 
 .step-index,
-#submission-buttons button {
+#SubmissionButtons button {
+  margin-right: 1em;
   margin-right: 10px;
 }
 
-.step-index-selected {
+.StepIndexSelected {
   color: #fff;
   background-color: #377abc;
   border-color: #377abc;
 }
 
-#submission-errors {
+#SubmissionErrors {
   margin-top: 1em;
 }
 
@@ -789,17 +799,17 @@ p:last-child {
   font-weight: bold;
 }
 
-#login-box,
-#title-box {
+#LogoBox,
+#TitleBox {
   margin: 1em 0;
 }
 
-#title-box {
+#TitleBox {
   font-size: 1.6rem;
   font-weight: bold;
 }
 
-#login-status-box {
+#LoginStatusBox {
   font-weight: bold;
 }
 
@@ -827,7 +837,7 @@ p:last-child {
   border-radius: 5px 0 0 5px;
 }
 
-#language-picker-box .form-control {
+#LanguagePickerBox .form-control {
   width: auto;
 }
 
@@ -841,20 +851,20 @@ p:last-child {
   border-bottom-left-radius: 0;
 }
 
-#login-status-box,
-#language-picker-box .form-control {
+#LoginStatusBox,
+#LanguagePickerBox .form-control {
   height: 2.2rem;
   line-height: 2.2rem;
   padding: 0 1em;
   width: max-content;
 }
 
-#language-picker-box {
+#LanguagePickerBox {
   width: 190px;
 }
 
-#login-status-box,
-#whistleblower-login-box {
+#LoginStatusBox,
+#WhistleblowerLoginBox {
   color: #1d1f2a;
   background-color: #fff;
   border-radius: 5px;
@@ -867,12 +877,12 @@ p:last-child {
 
 #footer-box a,
 #footer-box a:hover,
-#footer-box a:active,
+#Footerbox a:active,
 #footer-box a:focus {
   font-weight: bold;
 }
 
-#messages-console-box {
+#MessagesConsoleBox {
   position: fixed;
   width: 30rem;
   min-width: 20rem;
@@ -881,16 +891,16 @@ p:last-child {
   padding: 0 5em;
 }
 
-#step-add-box,
-#step-edit-box,
-#field-edit-box,
-#context-advanced-setting-box,
-#sub-state-edit-box {
+#StepAddBox,
+#StepsEditBox,
+#FieldsEditBox,
+#ContextAdvancedSettingsBox,
+#SubstateEditBox {
   margin-top: 0.5em;
 }
 
 .add-field,
-.addFieldFromTemplate {
+.add-field-from-template {
   clear: both;
   margin-bottom: 0.5em;
 }
@@ -916,7 +926,7 @@ p:last-child {
 }
 
 text.axis-workweek,
-text.axis-work-time {
+text.axis-worktime {
   fill: #1d1f24;
 }
 
@@ -967,16 +977,16 @@ text.axis-work-time {
   text-transform: capitalize;
 }
 
-#search-filter {
+#SearchFilter {
   margin: 0 0.5em;
 }
 
 htmlinput[type="email"],
 htmlinput[type="email"],
-html#credit-card,
-html#credit-card,
-html#receipt,
-html#receipt {
+html#creditCard,
+html#creditCard,
+html#Receipt,
+html#Receipt {
   direction: ltr;
 }
 
@@ -984,6 +994,7 @@ html#receipt {
 .fas {
   transform: scaleX(-1);
 }
+
 
 .input-group-append span {
   border-top-left-radius: 0;
