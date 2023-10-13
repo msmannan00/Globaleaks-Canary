@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from "@angular/core";
-import {UtilsService} from "@app//shared/services/utils.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 import {HttpClient} from "@angular/common/http";
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";

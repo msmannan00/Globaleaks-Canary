@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from "@angular/core";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-import {UtilsService} from "../../services/utils.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({
   selector: "src-file-view",

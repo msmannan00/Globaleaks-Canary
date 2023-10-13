@@ -1,8 +1,8 @@
 import {Component, OnInit} from "@angular/core";
-import {Constants} from "app/src/shared/constants/constants";
-import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
-import {HttpService} from "app/src/shared/services/http.service";
-import {UtilsService} from "app/src/shared/services/utils.service";
+import {Constants} from "@app/shared/constants/constants";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {HttpService} from "@app/shared/services/http.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({
   selector: "src-https",

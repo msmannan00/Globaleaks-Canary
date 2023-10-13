@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {NgForm} from "@angular/forms";
-import {NotificationsResolver} from "app/src/shared/resolvers/notifications.resolver";
-import {UtilsService} from "app/src/shared/services/utils.service";
+import {NotificationsResolver} from "@app/shared/resolvers/notifications.resolver";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({
   selector: "src-notification-tab2",

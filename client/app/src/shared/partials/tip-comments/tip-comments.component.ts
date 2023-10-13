@@ -1,8 +1,8 @@
 import {Component, Input, ViewChild} from "@angular/core";
 import {WbtipService} from "@app/services/wbtip.service";
 import {AuthenticationService} from "@app/services/authentication.service";
-import {UtilsService} from "../../services/utils.service";
-import {ScrollToBottomDirective} from "../../directive/scroll-to-bottom.directive";
+import {UtilsService} from "@app/shared/services/utils.service";
+import {ScrollToBottomDirective} from "@app/shared/directive/scroll-to-bottom.directive";
 import {ReceiverTipService} from "@app/services/receiver-tip.service";
 
 @Component({

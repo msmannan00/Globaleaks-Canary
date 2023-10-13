@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
-import {ContextsComponent} from "./contexts.component";
+import {ContextsComponent} from "@app/pages/admin/contexts/contexts.component";
 
 const routes: Routes = [
   {

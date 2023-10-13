@@ -1,8 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {UtilsService} from "../../services/utils.service";
-import {PreferenceResolver} from "../../resolvers/preference.resolver";
-import {Constants} from "../../constants/constants";
+import {UtilsService} from "@app/shared/services/utils.service";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
+import {Constants} from "@app/shared/constants/constants";
 
 @Component({
   selector: "src-request-support",

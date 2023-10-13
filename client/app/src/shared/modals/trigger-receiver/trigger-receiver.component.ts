@@ -1,7 +1,7 @@
 import {Component, Input} from "@angular/core";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {UsersResolver} from "../../resolvers/users.resolver";
-import {UtilsService} from "../../services/utils.service";
+import {UsersResolver} from "@app/shared/resolvers/users.resolver";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({
   selector: "src-trigger-receiver",

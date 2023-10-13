@@ -1,12 +1,12 @@
 import {Component, OnInit} from "@angular/core";
-import {new_context} from "app/src/models/admin/new_context";
-import {AuthenticationService} from "app/src/services/authentication.service";
-import {ContextsResolver} from "app/src/shared/resolvers/contexts.resolver";
-import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
-import {PreferenceResolver} from "app/src/shared/resolvers/preference.resolver";
-import {UsersResolver} from "app/src/shared/resolvers/users.resolver";
-import {HttpService} from "app/src/shared/services/http.service";
-import {UtilsService} from "app/src/shared/services/utils.service";
+import {new_context} from "@app/models/admin/new_context";
+import {AuthenticationService} from "@app/services/authentication.service";
+import {ContextsResolver} from "@app/shared/resolvers/contexts.resolver";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
+import {UsersResolver} from "@app/shared/resolvers/users.resolver";
+import {HttpService} from "@app/shared/services/http.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({
   selector: "src-contexts",

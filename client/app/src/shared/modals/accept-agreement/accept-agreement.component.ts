@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {NodeResolver} from "../../resolvers/node.resolver";
-import {PreferenceResolver} from "../../resolvers/preference.resolver";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 
 @Component({
   selector: "src-accept-agreement",

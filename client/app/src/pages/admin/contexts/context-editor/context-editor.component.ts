@@ -2,11 +2,11 @@ import {HttpClient} from "@angular/common/http";
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {NgForm} from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {DeleteConfirmationComponent} from "app/src/shared/modals/delete-confirmation/delete-confirmation.component";
-import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
-import {QuestionnairesResolver} from "app/src/shared/resolvers/questionnaires.resolver";
-import {UsersResolver} from "app/src/shared/resolvers/users.resolver";
-import {UtilsService} from "app/src/shared/services/utils.service";
+import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {QuestionnairesResolver} from "@app/shared/resolvers/questionnaires.resolver";
+import {UsersResolver} from "@app/shared/resolvers/users.resolver";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({
   selector: "src-context-editor",

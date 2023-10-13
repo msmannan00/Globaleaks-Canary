@@ -1,8 +1,8 @@
 import {Component, OnInit} from "@angular/core";
-import {NetworkResolver} from "app/src/shared/resolvers/network.resolver";
-import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
-import {HttpService} from "app/src/shared/services/http.service";
-import {UtilsService} from "app/src/shared/services/utils.service";
+import {NetworkResolver} from "@app/shared/resolvers/network.resolver";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {HttpService} from "@app/shared/services/http.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({
   selector: "src-tor",

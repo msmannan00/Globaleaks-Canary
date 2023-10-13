@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {AppConfigService} from "./app-config.service";
+import {AppConfigService} from "@app/services/app-config.service";
 import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
 
 @Injectable({

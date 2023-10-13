@@ -1,11 +1,11 @@
 import {Component, OnInit} from "@angular/core";
-import {new_user} from "app/src/models/admin/new_user";
-import {Constants} from "app/src/shared/constants/constants";
-import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
-import {TenantsResolver} from "app/src/shared/resolvers/tenants.resolver";
-import {UsersResolver} from "app/src/shared/resolvers/users.resolver";
-import {HttpService} from "app/src/shared/services/http.service";
-import {UtilsService} from "app/src/shared/services/utils.service";
+import {new_user} from "@app/models/admin/new_user";
+import {Constants} from "@app/shared/constants/constants";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {TenantsResolver} from "@app/shared/resolvers/tenants.resolver";
+import {UsersResolver} from "@app/shared/resolvers/users.resolver";
+import {HttpService} from "@app/shared/services/http.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({
   selector: "src-users-tab1",

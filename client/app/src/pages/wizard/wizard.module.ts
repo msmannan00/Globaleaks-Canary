@@ -4,7 +4,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {SharedModule} from "@app/shared.module";
-import {WizardComponent} from "./wizard/wizard.component";
+import {WizardComponent} from "@app/pages/wizard/wizard/wizard.component";
 import {ProfileComponent} from "./wizard/template/profile/profile.component";
 
 

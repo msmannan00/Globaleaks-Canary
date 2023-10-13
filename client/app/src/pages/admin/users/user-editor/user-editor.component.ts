@@ -1,13 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {NgForm} from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {AppDataService} from "app/src/app-data.service";
-import {AuthenticationService} from "app/src/services/authentication.service";
-import {Constants} from "app/src/shared/constants/constants";
-import {DeleteConfirmationComponent} from "app/src/shared/modals/delete-confirmation/delete-confirmation.component";
-import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
-import {PreferenceResolver} from "app/src/shared/resolvers/preference.resolver";
-import {UtilsService} from "app/src/shared/services/utils.service";
+import {AppDataService} from "@app/app-data.service";
+import {AuthenticationService} from "@app/services/authentication.service";
+import {Constants} from "@app/shared/constants/constants";
+import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({
   selector: "src-user-editor",

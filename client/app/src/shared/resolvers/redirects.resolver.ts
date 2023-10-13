@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import {
-  Resolve,
-} from '@angular/router';
+import {Resolve,} from '@angular/router';
 import { Observable, of } from 'rxjs';
-import {HttpService} from "../services/http.service";
+import {HttpService} from "@app/shared/services/http.service";
 import { AuthenticationService } from 'app/src/services/authentication.service';
 import { redirectResolverModel } from 'app/src/models/resolvers/redirectResolverModel';
-import {catchError, map} from "rxjs/operators";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'

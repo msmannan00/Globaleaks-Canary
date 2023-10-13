@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
-import {PreferenceTab1Component} from "../preference-tabs/preference-tab1/preference-tab1.component";
-import {PreferenceTab2Component} from "../preference-tabs/preference-tab2/preference-tab2.component";
+import {PreferenceTab1Component} from "@app/shared/partials/preference-tabs/preference-tab1/preference-tab1.component";
+import {PreferenceTab2Component} from "@app/shared/partials/preference-tabs/preference-tab2/preference-tab2.component";
 
 @Component({
   selector: "src-preferences",

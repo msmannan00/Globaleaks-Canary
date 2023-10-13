@@ -4,9 +4,9 @@ import {TranslateService} from "@ngx-translate/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppDataService} from "@app/app-data.service";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
-import {TranslationService} from "./translation.service";
+import {TranslationService} from "@app/services/translation.service";
 import {Router, NavigationEnd, ActivatedRoute} from "@angular/router";
-import {AuthenticationService} from "./authentication.service";
+import {AuthenticationService} from "@app/services/authentication.service";
 import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
 
 @Injectable({

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {Constants} from "app/src/shared/constants/constants";
-import {HttpService} from "app/src/shared/services/http.service";
+import {Constants} from "@app/shared/constants/constants";
+import {HttpService} from "@app/shared/services/http.service";
 
 @Component({
   selector: "src-https-csr-gen",

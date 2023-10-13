@@ -1,8 +1,8 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
-import {HomeComponent} from "./home/home.component";
-import {TipsComponent} from "./tips/tips.component";
-import {SettingsComponent} from "./settings/settings.component";
+import {HomeComponent} from "@app/pages/recipient/home/home.component";
+import {TipsComponent} from "@app/pages/recipient/tips/tips.component";
+import {SettingsComponent} from "@app/pages/recipient/settings/settings.component";
 import {PreferencesComponent} from "@app/shared/partials/preferences/preferences.component";
 
 const routes: Routes = [

@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
-import {QuestionnairesComponent} from "./questionnaires.component";
+import {QuestionnairesComponent} from "@app/pages/admin/questionnaires/questionnaires.component";
 
 const routes: Routes = [
   {

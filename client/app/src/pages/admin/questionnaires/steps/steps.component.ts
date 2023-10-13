@@ -1,11 +1,11 @@
 import {HttpClient} from "@angular/common/http";
 import {Component, Input, OnInit} from "@angular/core";
-import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
-import {FieldUtilitiesService} from "app/src/shared/services/field-utilities.service";
-import {HttpService} from "app/src/shared/services/http.service";
-import {UtilsService} from "app/src/shared/services/utils.service";
-import {new_step} from "@app//models/admin/new_step";
-import {QuestionnaireService} from "../questionnaire.service";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
+import {HttpService} from "@app/shared/services/http.service";
+import {UtilsService} from "@app/shared/services/utils.service";
+import {new_step} from "@app/models/admin/new_step";
+import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 
 @Component({
   selector: "src-steps",

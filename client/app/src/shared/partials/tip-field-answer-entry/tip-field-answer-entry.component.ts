@@ -1,5 +1,5 @@
 import {Component, Input} from "@angular/core";
-import {AuthenticationService} from "app/src/services/authentication.service";
+import {AuthenticationService} from "@app/services/authentication.service";
 
 @Component({
   selector: "src-tip-field-answer-entry",

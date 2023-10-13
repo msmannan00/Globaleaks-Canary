@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output} from "@angular/core";
-import {HttpService} from "app/src/shared/services/http.service";
+import {HttpService} from "@app/shared/services/http.service";
 
 @Component({
   selector: "src-https-setup",

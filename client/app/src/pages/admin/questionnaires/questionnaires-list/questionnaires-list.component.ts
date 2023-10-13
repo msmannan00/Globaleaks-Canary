@@ -1,13 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {NgForm} from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {DeleteConfirmationComponent} from "app/src/shared/modals/delete-confirmation/delete-confirmation.component";
-import {
-  QuestionnaireDuplicationComponent
-} from "app/src/shared/modals/questionnaire-duplication/questionnaire-duplication.component";
-import {HttpService} from "app/src/shared/services/http.service";
-import {UtilsService} from "app/src/shared/services/utils.service";
-import {QuestionnaireService} from "../questionnaire.service";
+import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
+import {QuestionnaireDuplicationComponent} from "@app/shared/modals/questionnaire-duplication/questionnaire-duplication.component";
+import {HttpService} from "@app/shared/services/http.service";
+import {UtilsService} from "@app/shared/services/utils.service";
+import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 
 @Component({
   selector: "src-questionnaires-list",

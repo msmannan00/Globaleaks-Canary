@@ -1,9 +1,9 @@
 import {Component, Input} from "@angular/core";
-import {UtilsService} from "../../services/utils.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 import {WbtipService} from "@app/services/wbtip.service";
 import {AppDataService} from "@app/app-data.service";
 import {ReceiverTipService} from "@app/services/receiver-tip.service";
-import {HttpService} from "../../services/http.service";
+import {HttpService} from "@app/shared/services/http.service";
 
 @Component({
   selector: "src-tip-submission-status",

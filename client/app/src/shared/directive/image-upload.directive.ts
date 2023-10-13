@@ -1,5 +1,5 @@
 import {ComponentFactoryResolver, Directive, Input, ViewContainerRef} from "@angular/core";
-import {ImageUploadComponent} from "../partials/image-upload/image-upload.component";
+import {ImageUploadComponent} from "@app/shared/partials/image-upload/image-upload.component";
 
 @Directive({
   selector: "[appImageUpload]",

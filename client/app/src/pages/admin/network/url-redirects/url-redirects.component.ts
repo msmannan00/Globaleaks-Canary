@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
-import {RedirectsResolver} from "app/src/shared/resolvers/redirects.resolver";
-import {HttpService} from "app/src/shared/services/http.service";
+import {RedirectsResolver} from "@app/shared/resolvers/redirects.resolver";
+import {HttpService} from "@app/shared/services/http.service";
 
 @Component({
   selector: "src-url-redirects",

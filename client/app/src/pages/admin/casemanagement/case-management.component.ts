@@ -1,4 +1,4 @@
-import {Component, TemplateRef, ViewChild, OnInit, AfterViewInit, ChangeDetectorRef} from "@angular/core";
+import {Component, TemplateRef, ViewChild, AfterViewInit, ChangeDetectorRef} from "@angular/core";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 
 @Component({

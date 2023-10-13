@@ -1,10 +1,8 @@
 import {Injectable} from "@angular/core";
-import {
-  Resolve
-} from "@angular/router";
+import {Resolve} from "@angular/router";
 import {Observable, of} from "rxjs";
 import {WBTipData} from "@app/models/whistleblower/WBTipData";
-import {HttpService} from "../services/http.service";
+import {HttpService} from "@app/shared/services/http.service";
 import {AppDataService} from "@app/app-data.service";
 import {WbtipService} from "@app/services/wbtip.service";
 

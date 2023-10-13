@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {HttpService} from "@app/shared/services/http.service";
-import {AppConfigService} from "app/src/services/app-config.service";
+import {AppConfigService} from "@app/services/app-config.service";
 
 @Component({
   selector: "src-signup",

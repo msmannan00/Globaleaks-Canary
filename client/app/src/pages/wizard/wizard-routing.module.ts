@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
-import {WizardComponent} from "./wizard/wizard.component";
+import {WizardComponent} from "@app/pages/wizard/wizard/wizard.component";
 
 const routes: Routes = [
   {

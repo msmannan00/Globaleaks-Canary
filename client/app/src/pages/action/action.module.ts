@@ -1,9 +1,9 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {ForcedTwoFactorComponent} from "./forced-two-factor/forced-two-factor.component";
+import {ForcedTwoFactorComponent} from "@app/pages/action/forced-two-factor/forced-two-factor.component";
 import {SharedModule} from "@app/shared.module";
 import {TranslateModule} from "@ngx-translate/core";
-import {ForcePasswordChangeComponent} from "./force-password-change/force-password-change.component";
+import {ForcePasswordChangeComponent} from "@app/pages/action/force-password-change/force-password-change.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 

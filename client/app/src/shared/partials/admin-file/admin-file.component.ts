@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnDestroy, ViewChild} from "@angular/core";
-import {NodeResolver} from "../../resolvers/node.resolver";
-import {UtilsService} from "../../services/utils.service";
-import {AuthenticationService} from "app/src/services/authentication.service";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {UtilsService} from "@app/shared/services/utils.service";
+import {AuthenticationService} from "@app/services/authentication.service";
 import * as Flow from "@flowjs/flow.js";
 import {AppConfigService} from "@app/services/app-config.service";
 import {AppDataService} from "@app/app-data.service";

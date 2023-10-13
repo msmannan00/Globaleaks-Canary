@@ -1,11 +1,11 @@
 import {HttpClient} from "@angular/common/http";
 import {Component, Input} from "@angular/core";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {DeleteConfirmationComponent} from "app/src/shared/modals/delete-confirmation/delete-confirmation.component";
-import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
-import {FieldUtilitiesService} from "app/src/shared/services/field-utilities.service";
-import {HttpService} from "app/src/shared/services/http.service";
-import {QuestionnaireService} from "../questionnaire.service";
+import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
+import {HttpService} from "@app/shared/services/http.service";
+import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 
 @Component({
   selector: "src-steps-list",

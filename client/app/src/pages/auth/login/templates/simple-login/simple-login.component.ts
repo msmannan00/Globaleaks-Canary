@@ -1,6 +1,6 @@
 import {Component, Input} from "@angular/core";
 import {AuthenticationService} from "@app/services/authentication.service";
-import {LoginDataRef} from "../../model/login-model";
+import {LoginDataRef} from "@app/pages/auth/login/model/login-model";
 import {NgForm} from "@angular/forms";
 import {AppDataService} from "@app/app-data.service";
 

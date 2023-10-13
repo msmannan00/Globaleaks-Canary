@@ -1,15 +1,15 @@
 import {Component, Input} from "@angular/core";
 import {NgForm} from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Constants} from "app/src/shared/constants/constants";
-import {EnableEncryptionComponent} from "app/src/shared/modals/enable-encryption/enable-encryption.component";
-import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
-import {PreferenceResolver} from "app/src/shared/resolvers/preference.resolver";
-import {QuestionnairesResolver} from "app/src/shared/resolvers/questionnaires.resolver";
-import {UsersResolver} from "app/src/shared/resolvers/users.resolver";
-import {UtilsService} from "app/src/shared/services/utils.service";
+import {Constants} from "@app/shared/constants/constants";
+import {EnableEncryptionComponent} from "@app/shared/modals/enable-encryption/enable-encryption.component";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
+import {QuestionnairesResolver} from "@app/shared/resolvers/questionnaires.resolver";
+import {UsersResolver} from "@app/shared/resolvers/users.resolver";
+import {UtilsService} from "@app/shared/services/utils.service";
 import {AppConfigService} from "@app/services/app-config.service";
-import {AuthenticationService} from "app/src/services/authentication.service";
+import {AuthenticationService} from "@app/services/authentication.service";
 
 @Component({
   selector: "src-tab5",

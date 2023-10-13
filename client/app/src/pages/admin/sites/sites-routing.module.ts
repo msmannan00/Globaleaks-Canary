@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
-import {SitesComponent} from "./sites.component";
+import {SitesComponent} from "@app/pages/admin/sites/sites.component";
 
 const routes: Routes = [
   {

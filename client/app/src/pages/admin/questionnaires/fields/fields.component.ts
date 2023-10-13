@@ -1,16 +1,16 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {NgForm} from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {AddOptionHintComponent} from "app/src/shared/modals/add-option-hint/add-option-hint.component";
-import {AssignScorePointsComponent} from "app/src/shared/modals/assign-score-points/assign-score-points.component";
-import {DeleteConfirmationComponent} from "app/src/shared/modals/delete-confirmation/delete-confirmation.component";
-import {TriggerReceiverComponent} from "app/src/shared/modals/trigger-receiver/trigger-receiver.component";
+import {AddOptionHintComponent} from "@app/shared/modals/add-option-hint/add-option-hint.component";
+import {AssignScorePointsComponent} from "@app/shared/modals/assign-score-points/assign-score-points.component";
+import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
+import {TriggerReceiverComponent} from "@app/shared/modals/trigger-receiver/trigger-receiver.component";
 import {FieldTemplatesResolver} from "@app/shared/resolvers/field-templates-resolver.service";
-import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
-import {FieldUtilitiesService} from "app/src/shared/services/field-utilities.service";
-import {HttpService} from "app/src/shared/services/http.service";
-import {UtilsService} from "app/src/shared/services/utils.service";
-import {QuestionnaireService} from "../questionnaire.service";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
+import {HttpService} from "@app/shared/services/http.service";
+import {UtilsService} from "@app/shared/services/utils.service";
+import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 
 @Component({
   selector: "src-fields",

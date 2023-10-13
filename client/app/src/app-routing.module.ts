@@ -1,24 +1,24 @@
 import {NgModule} from "@angular/core";
-import {AuthRoutingModule} from "./pages/auth/auth-routing.module";
-import {AdminRoutingModule} from "./pages/admin/admin-routing.module";
+import {AuthRoutingModule} from "@app/pages/auth/auth-routing.module";
+import {AdminRoutingModule} from "@app/pages/admin/admin-routing.module";
 import {RouterModule, Routes} from "@angular/router";
-import {SessionGuard} from "./app-guard.service";
-import {HomeComponent} from "./pages/dashboard/home/home.component";
-import {PasswordResetResponseComponent} from "./pages/auth/password-reset-response/password-reset-response.component";
-import {RecipientRoutingModule} from "./pages/recipient/recipient-routing.module";
-import {PreferenceResolver} from "./shared/resolvers/preference.resolver";
-import {ActionRoutingModule} from "./pages/action/action-routing.module";
-import {SignupRoutingModule} from "./pages/signup/signup-routing.module";
-import {Pageguard} from "./shared/guards/pageguard.service";
-import {ActivationComponent} from "./pages/signup/templates/activation/activation.component";
-import {WizardRoutingModule} from "./pages/wizard/wizard-routing.module";
-import {NodeResolver} from "./shared/resolvers/node.resolver";
-import {RTipsResolver} from "app/src/shared/resolvers/r-tips-resolver.service";
-import {TipComponent} from "./pages/recipient/tip/tip.component";
-import {TitleResolver} from "./shared/resolvers/title-resolver.resolver";
-import {CustodianRoutingModule} from "./pages/custodian/custodian-routing.module";
-import {IarResolver} from "app/src/shared/resolvers/iar-resolver.service";
-import {BlankComponent} from "./shared/blank/blank.component";
+import {SessionGuard} from "@app/app-guard.service";
+import {HomeComponent} from "@app/pages/dashboard/home/home.component";
+import {PasswordResetResponseComponent} from "@app/pages/auth/password-reset-response/password-reset-response.component";
+import {RecipientRoutingModule} from "@app/pages/recipient/recipient-routing.module";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
+import {ActionRoutingModule} from "@app/pages/action/action-routing.module";
+import {SignupRoutingModule} from "@app/pages/signup/signup-routing.module";
+import {Pageguard} from "@app/shared/guards/pageguard.service";
+import {ActivationComponent} from "@app/pages/signup/templates/activation/activation.component";
+import {WizardRoutingModule} from "@app/pages/wizard/wizard-routing.module";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {RTipsResolver} from "@app/shared/resolvers/r-tips-resolver.service";
+import {TipComponent} from "@app/pages/recipient/tip/tip.component";
+import {TitleResolver} from "@app/shared/resolvers/title-resolver.resolver";
+import {CustodianRoutingModule} from "@app/pages/custodian/custodian-routing.module";
+import {IarResolver} from "@app/shared/resolvers/iar-resolver.service";
+import {BlankComponent} from "@app/shared/blank/blank.component";
 
 
 const routes: Routes = [

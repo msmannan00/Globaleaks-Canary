@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
-import * as Constants from "../../../../shared/constants/constants";
+import * as Constants from "@app/shared/constants/constants";
 
 @Component({
   selector: "src-signupdefault",

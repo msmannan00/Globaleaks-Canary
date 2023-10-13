@@ -1,11 +1,11 @@
 import {ChangeDetectorRef, Component} from "@angular/core";
 import {AuthenticationService} from "@app/services/authentication.service";
-import {PreferenceResolver} from "../../../../resolvers/preference.resolver";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {AppConfigService} from "@app/services/app-config.service";
-import {UtilsService} from "../../../../services/utils.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 import {AppDataService} from "@app/app-data.service";
 import {TranslationService} from "@app/services/translation.service";
-import {HttpService} from "../../../../services/http.service";
+import {HttpService} from "@app/shared/services/http.service";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
@@ -14,7 +14,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class UserComponent {
 
-  constructor(protected activatedRoute: ActivatedRoute, protected httpService: HttpService, protected appConfigService: AppConfigService, private cdr: ChangeDetectorRef, protected translateService: TranslationService, protected authentication: AuthenticationService, protected preferences: PreferenceResolver, protected appConfig: AppConfigService, protected utils: UtilsService, protected appDataService: AppDataService, protected translationService: TranslationService) {
+  constructor(protected activatedRoute: ActivatedRoute, protected httpService: HttpService, protected appConfigService: AppConfigService, private cdr: ChangeDetectorRef, protected authentication: AuthenticationService, protected preferences: PreferenceResolver, protected utils: UtilsService, protected appDataService: AppDataService, protected translationService: TranslationService) {
     this.onQueryParameterChangeListener();
   }
 

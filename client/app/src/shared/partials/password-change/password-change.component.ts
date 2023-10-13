@@ -1,9 +1,9 @@
 import {Component} from "@angular/core";
 import {AuthenticationService} from "@app/services/authentication.service";
-import {PreferenceResolver} from "../../resolvers/preference.resolver";
-import {UtilsService} from "../../services/utils.service";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
+import {UtilsService} from "@app/shared/services/utils.service";
 import {AppDataService} from "@app/app-data.service";
-import {HttpService} from "../../services/http.service";
+import {HttpService} from "@app/shared/services/http.service";
 import {Router} from "@angular/router";
 import {errorCodes} from "@app/models/app/error-code";
 

@@ -1,11 +1,9 @@
 import {Injectable} from "@angular/core";
-import {
-  Resolve,
-} from "@angular/router";
+import {Resolve,} from "@angular/router";
 import {Observable, of} from "rxjs";
-import {HttpService} from "../services/http.service";
-import {AuthenticationService} from "app/src/services/authentication.service";
-import {networkResolverModel} from "app/src/models/resolvers/networkResolverModel";
+import {HttpService} from "@app/shared/services/http.service";
+import {AuthenticationService} from "@app/services/authentication.service";
+import {networkResolverModel} from "@app/models/resolvers/networkResolverModel";
 import {map} from "rxjs/operators";
 
 @Injectable({

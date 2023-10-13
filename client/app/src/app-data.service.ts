@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
-import {errorCodes} from "./models/app/error-code";
-import {Root} from "./models/app/public-model";
+import {errorCodes} from "@app/models/app/error-code";
+import {Root} from "@app/models/app/public-model";
 
 @Injectable({
   providedIn: "root"

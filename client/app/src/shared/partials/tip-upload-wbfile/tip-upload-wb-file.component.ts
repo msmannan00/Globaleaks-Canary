@@ -1,5 +1,5 @@
 import {Component, Input, ViewChild, ElementRef} from "@angular/core";
-import {UtilsService} from "../../services/utils.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 import {AppDataService} from "@app/app-data.service";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {AppConfigService} from "@app/services/app-config.service";

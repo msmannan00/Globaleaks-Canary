@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
-import {CaseManagementComponent} from "./case-management.component";
+import {CaseManagementComponent} from "@app/pages/admin/casemanagement/case-management.component";
 
 const routes: Routes = [
   {

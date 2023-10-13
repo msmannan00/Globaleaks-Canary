@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component} from "@angular/core";
-import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 
 @Component({
   selector: "src-admin-sidebar",

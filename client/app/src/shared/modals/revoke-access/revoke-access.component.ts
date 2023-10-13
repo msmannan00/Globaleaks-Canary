@@ -1,7 +1,7 @@
 import {Component, Input} from "@angular/core";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {UtilsService} from "../../services/utils.service";
-import {AppDataService} from "app/src/app-data.service";
+import {UtilsService} from "@app/shared/services/utils.service";
+import {AppDataService} from "@app/app-data.service";
 
 
 @Component({

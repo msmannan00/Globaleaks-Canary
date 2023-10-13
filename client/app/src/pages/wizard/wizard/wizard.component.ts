@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {Constants} from "app/src/shared/constants/constants";
+import {Constants} from "@app/shared/constants/constants";
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {AuthenticationService} from "@app/services/authentication.service";

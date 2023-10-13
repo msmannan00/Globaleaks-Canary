@@ -2,9 +2,9 @@ import {Component, OnInit, QueryList, ViewChild, ViewChildren} from "@angular/co
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {NgForm} from "@angular/forms";
 import {WbtipService} from "@app/services/wbtip.service";
-import {FieldUtilitiesService} from "../../services/field-utilities.service";
-import {UtilsService} from "../../services/utils.service";
-import {HttpService} from "../../services/http.service";
+import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
+import {UtilsService} from "@app/shared/services/utils.service";
+import {HttpService} from "@app/shared/services/http.service";
 
 @Component({
   selector: "src-tip-additional-questionnaire-form",

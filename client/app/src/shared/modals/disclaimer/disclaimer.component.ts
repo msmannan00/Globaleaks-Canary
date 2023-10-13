@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {NodeResolver} from "../../resolvers/node.resolver";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 
 @Component({
   selector: "src-disclaimer",

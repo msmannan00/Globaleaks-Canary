@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
-import {UtilsService} from "../../services/utils.service";
-import {PreferenceResolver} from "../../resolvers/preference.resolver";
+import {UtilsService} from "@app/shared/services/utils.service";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {TwoFactorAuthData} from "@app/services/2fa.data.service";
 

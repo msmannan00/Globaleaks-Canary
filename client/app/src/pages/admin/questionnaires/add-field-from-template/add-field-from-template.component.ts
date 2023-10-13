@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {HttpService} from "app/src/shared/services/http.service";
-import {UtilsService} from "app/src/shared/services/utils.service";
+import {HttpService} from "@app/shared/services/http.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 import {new_field} from "@app/models/admin/new_field";
-import {QuestionnaireService} from "../questionnaire.service";
+import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 
 @Component({
   selector: "src-add-field-from-template",

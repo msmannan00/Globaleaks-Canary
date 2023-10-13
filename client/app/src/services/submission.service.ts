@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
-import {AuthenticationService} from "./authentication.service";
-import {SubmissionResourceService} from "./submission-resource.service";
+import {AuthenticationService} from "@app/services/authentication.service";
+import {SubmissionResourceService} from "@app/services/submission-resource.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
 

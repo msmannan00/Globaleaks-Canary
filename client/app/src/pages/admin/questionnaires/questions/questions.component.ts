@@ -1,10 +1,10 @@
 import {HttpClient} from "@angular/common/http";
 import {Component, OnDestroy, OnInit} from "@angular/core";
 import {FieldTemplatesResolver} from "@app/shared/resolvers/field-templates-resolver.service";
-import {QuestionnairesResolver} from "app/src/shared/resolvers/questionnaires.resolver";
-import {HttpService} from "app/src/shared/services/http.service";
-import {UtilsService} from "app/src/shared/services/utils.service";
-import {QuestionnaireService} from "../questionnaire.service";
+import {QuestionnairesResolver} from "@app/shared/resolvers/questionnaires.resolver";
+import {HttpService} from "@app/shared/services/http.service";
+import {UtilsService} from "@app/shared/services/utils.service";
+import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 import {Subject, takeUntil} from "rxjs";
 
 @Component({

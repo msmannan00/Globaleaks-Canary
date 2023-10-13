@@ -1,10 +1,8 @@
 import {Injectable} from "@angular/core";
-import {
-  Resolve
-} from "@angular/router";
+import {Resolve} from "@angular/router";
 import {Observable, of} from "rxjs";
-import {HttpService} from "../services/http.service";
-import {AuthenticationService} from "app/src/services/authentication.service";
+import {HttpService} from "@app/shared/services/http.service";
+import {AuthenticationService} from "@app/services/authentication.service";
 import {map} from "rxjs/operators";
 import {rtipResolverModel} from "@app/models/resolvers/rtipsResolverModel";
 

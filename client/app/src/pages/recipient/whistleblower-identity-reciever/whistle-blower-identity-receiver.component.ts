@@ -1,11 +1,9 @@
 import {Component} from "@angular/core";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ReceiverTipService} from "@app/services/receiver-tip.service";
-import {
-  TipOperationFileIdentityAccessRequestComponent
-} from "app/src/shared/modals/tip-operation-file-identity-access-request/tip-operation-file-identity-access-request.ompoent";
-import {HttpService} from "app/src/shared/services/http.service";
-import {UtilsService} from "app/src/shared/services/utils.service";
+import {TipOperationFileIdentityAccessRequestComponent} from "@app/shared/modals/tip-operation-file-identity-access-request/tip-operation-file-identity-access-request.ompoent";
+import {HttpService} from "@app/shared/services/http.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 
 @Component({

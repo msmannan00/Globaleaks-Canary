@@ -2,9 +2,9 @@ import {Component, Input} from "@angular/core";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {WbtipService} from "@app/services/wbtip.service";
 import {AppDataService} from "@app/app-data.service";
-import {UtilsService} from "../../services/utils.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 import {ReceiverTipService} from "@app/services/receiver-tip.service";
-import {HttpService} from "app/src/shared/services/http.service";
+import {HttpService} from "@app/shared/services/http.service";
 
 @Component({
   selector: "src-tip-info",

@@ -6,11 +6,11 @@ import {SharedModule} from "@app/shared.module";
 import {FormsModule} from "@angular/forms";
 import {NgbDatepickerModule, NgbDropdownModule, NgbModule, NgbNavModule} from "@ng-bootstrap/ng-bootstrap";
 import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
-import {HomeComponent} from "./home/home.component";
-import {SettingsComponent} from "./settings/settings.component";
-import {SidebarComponent} from "./sidebar/sidebar.component";
-import {IdentityAccessRequestsComponent} from "./identity-access-requests/identity-access-requests.component";
-import {SettingsModule} from "../admin/settings/settings.module";
+import {HomeComponent} from "@app/pages/custodian/home/home.component";
+import {SettingsComponent} from "@app/pages/custodian/settings/settings.component";
+import {SidebarComponent} from "@app/pages/custodian/sidebar/sidebar.component";
+import {IdentityAccessRequestsComponent} from "@app/pages/custodian/identity-access-requests/identity-access-requests.component";
+import {SettingsModule} from "@app/pages/admin/settings/settings.module";
 
 
 @NgModule({

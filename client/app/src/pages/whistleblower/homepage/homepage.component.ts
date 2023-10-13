@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
-import {DisclaimerComponent} from "app/src/shared/modals/disclaimer/disclaimer.component";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {DisclaimerComponent} from "@app/shared/modals/disclaimer/disclaimer.component";
 
 @Component({
   selector: "src-homepage",

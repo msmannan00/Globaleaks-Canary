@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {ConfirmationComponent} from "app/src/shared/modals/confirmation/confirmation.component";
-import {NetworkResolver} from "app/src/shared/resolvers/network.resolver";
-import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
-import {HttpService} from "app/src/shared/services/http.service";
+import {ConfirmationComponent} from "@app/shared/modals/confirmation/confirmation.component";
+import {NetworkResolver} from "@app/shared/resolvers/network.resolver";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {HttpService} from "@app/shared/services/http.service";
 
 @Component({
   selector: "src-https-status",

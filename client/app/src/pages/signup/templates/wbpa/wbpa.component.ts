@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
-import * as Constants from "../../../../shared/constants/constants";
+import * as Constants from "@app/shared/constants/constants";
 import {AppDataService} from "@app/app-data.service";
 
 @Component({

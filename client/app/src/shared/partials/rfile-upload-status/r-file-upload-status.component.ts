@@ -1,5 +1,5 @@
 import {Component, Input} from "@angular/core";
-import {UtilsService} from "../../services/utils.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 import {AppDataService} from "@app/app-data.service";
 import {Transfer} from "@flowjs/ngx-flow";
 

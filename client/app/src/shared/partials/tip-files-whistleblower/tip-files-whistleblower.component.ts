@@ -1,5 +1,5 @@
 import {Component, Input} from "@angular/core";
-import {UtilsService} from "../../services/utils.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 import {WbtipService} from "@app/services/wbtip.service";
 
 @Component({

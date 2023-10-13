@@ -1,11 +1,9 @@
 import {Injectable} from "@angular/core";
-import {
-  Resolve,
-} from "@angular/router";
+import {Resolve,} from "@angular/router";
 import {Observable, map, of} from "rxjs";
-import {HttpService} from "../services/http.service";
-import {AuthenticationService} from "app/src/services/authentication.service";
-import {statuseResolverModel} from "app/src/models/resolvers/statuseResolverModel";
+import {HttpService} from "@app/shared/services/http.service";
+import {AuthenticationService} from "@app/services/authentication.service";
+import {statuseResolverModel} from "@app/models/resolvers/statuseResolverModel";
 
 @Injectable({
   providedIn: "root"

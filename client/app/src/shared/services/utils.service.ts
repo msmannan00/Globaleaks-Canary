@@ -4,19 +4,17 @@ import {AppDataService} from "@app/app-data.service";
 import {TranslateService} from "@ngx-translate/core";
 import {Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {RequestSupportComponent} from "../modals/request-support/request-support.component";
-import {HttpService} from "./http.service";
-import {TokenResource} from "./token-resource.service";
+import {RequestSupportComponent} from "@app/shared/modals/request-support/request-support.component";
+import {HttpService} from "@app/shared/services/http.service";
+import {TokenResource} from "@app/shared/services/token-resource.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, map} from "rxjs";
-import {
-  ConfirmationWithPasswordComponent
-} from "../modals/confirmation-with-password/confirmation-with-password.component";
-import {ConfirmationWith2faComponent} from "../modals/confirmation-with2fa/confirmation-with2fa.component";
-import {PreferenceResolver} from "../resolvers/preference.resolver";
-import {DeleteConfirmationComponent} from "../modals/delete-confirmation/delete-confirmation.component";
-import {NodeResolver} from "../resolvers/node.resolver";
-import {ServiceInstanceService} from "./service-instance.service";
+import {ConfirmationWithPasswordComponent} from "@app/shared/modals/confirmation-with-password/confirmation-with-password.component";
+import {ConfirmationWith2faComponent} from "@app/shared/modals/confirmation-with2fa/confirmation-with2fa.component";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
+import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
 
 @Injectable({
   providedIn: "root"

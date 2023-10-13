@@ -1,21 +1,17 @@
 import {Component, OnInit} from "@angular/core";
-import {PreferenceResolver} from "../../../resolvers/preference.resolver";
-import {UtilsService} from "../../../services/utils.service";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
+import {UtilsService} from "@app/shared/services/utils.service";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {AppDataService} from "@app/app-data.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Enable2faComponent} from "../../../modals/enable2fa/enable2fa.component";
+import {Enable2faComponent} from "@app/shared/modals/enable2fa/enable2fa.component";
 import {TwoFactorAuthData} from "@app/services/2fa.data.service";
-import {HttpService} from "../../../services/http.service";
-import {
-  ConfirmationWithPasswordComponent
-} from "../../../modals/confirmation-with-password/confirmation-with-password.component";
-import {
-  EncryptionRecoveryKeyComponent
-} from "../../../modals/encryption-recovery-key/encryption-recovery-key.component";
+import {HttpService} from "@app/shared/services/http.service";
+import {ConfirmationWithPasswordComponent} from "@app/shared/modals/confirmation-with-password/confirmation-with-password.component";
+import {EncryptionRecoveryKeyComponent} from "@app/shared/modals/encryption-recovery-key/encryption-recovery-key.component";
 import {TranslationService} from "@app/services/translation.service";
 import {TranslateService} from "@ngx-translate/core";
-import {ConfirmationWith2faComponent} from "../../../modals/confirmation-with2fa/confirmation-with2fa.component";
+import {ConfirmationWith2faComponent} from "@app/shared/modals/confirmation-with2fa/confirmation-with2fa.component";
 
 @Component({
   selector: "src-preference-tab1",

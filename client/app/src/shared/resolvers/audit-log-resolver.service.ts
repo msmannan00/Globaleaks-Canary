@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {Resolve, RouterStateSnapshot, ActivatedRouteSnapshot} from "@angular/router";
 import {Observable, of} from "rxjs";
 import {switchMap} from "rxjs/operators";
-import {HttpService} from "../services/http.service";
+import {HttpService} from "@app/shared/services/http.service";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {auditlogResolverModel} from "@app/models/resolvers/auditlogResolverModel";
 

@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {AuthenticationService} from "@app/services/authentication.service";
-import {UtilsService} from "../../services/utils.service";
-import {HttpService} from "../../services/http.service";
+import {UtilsService} from "@app/shared/services/utils.service";
+import {HttpService} from "@app/shared/services/http.service";
 import {CryptoService} from "@app/crypto.service";
 
 @Component({

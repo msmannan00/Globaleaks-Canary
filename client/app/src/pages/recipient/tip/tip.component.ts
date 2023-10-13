@@ -1,22 +1,22 @@
 import {AfterViewInit, ChangeDetectorRef, Component, TemplateRef, ViewChild} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {AppDataService} from "app/src/app-data.service";
+import {AppDataService} from "@app/app-data.service";
 import {ReceiverTipService} from "@app/services/receiver-tip.service";
-import {GrantAccessComponent} from "app/src/shared/modals/grant-access/grant-access.component";
-import {RevokeAccessComponent} from "app/src/shared/modals/revoke-access/revoke-access.component";
-import {PreferenceResolver} from "app/src/shared/resolvers/preference.resolver";
-import {HttpService} from "app/src/shared/services/http.service";
-import {UtilsService} from "app/src/shared/services/utils.service";
+import {GrantAccessComponent} from "@app/shared/modals/grant-access/grant-access.component";
+import {RevokeAccessComponent} from "@app/shared/modals/revoke-access/revoke-access.component";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
+import {HttpService} from "@app/shared/services/http.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 import {Observable} from "rxjs";
-import {FieldUtilitiesService} from "app/src/shared/services/field-utilities.service";
-import {TipOperationSetReminderComponent} from "app/src/shared/modals/tip-operation-set-reminder/tip-operation-set-reminder.component";
-import {DeleteConfirmationComponent} from "app/src/shared/modals/delete-confirmation/delete-confirmation.component";
+import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
+import {TipOperationSetReminderComponent} from "@app/shared/modals/tip-operation-set-reminder/tip-operation-set-reminder.component";
+import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {HttpClient} from "@angular/common/http";
-import {TipOperationPostponeComponent} from "app/src/shared/modals/tip-operation-postpone/tip-operation-postpone.component";
+import {TipOperationPostponeComponent} from "@app/shared/modals/tip-operation-postpone/tip-operation-postpone.component";
 import {CryptoService} from "@app/crypto.service";
-import {TransferAccessComponent} from "app/src/shared/modals/transfer-access/transfer-access.component";
-import {AuthenticationService} from "app/src/services/authentication.service";
+import {TransferAccessComponent} from "@app/shared/modals/transfer-access/transfer-access.component";
+import {AuthenticationService} from "@app/services/authentication.service";
 
 
 @Component({

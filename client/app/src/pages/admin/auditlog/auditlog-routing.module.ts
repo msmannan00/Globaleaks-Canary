@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
-import {AuditLogComponent} from "./audit-log.component";
+import {AuditLogComponent} from "@app/pages/admin/auditlog/audit-log.component";
 
 const routes: Routes = [
   {

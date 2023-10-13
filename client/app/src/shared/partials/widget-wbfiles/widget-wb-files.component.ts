@@ -1,6 +1,6 @@
 import {Component, Input} from "@angular/core";
 import {WbtipService} from "@app/services/wbtip.service";
-import {UtilsService} from "../../services/utils.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({
   selector: "src-widget-wbfiles",

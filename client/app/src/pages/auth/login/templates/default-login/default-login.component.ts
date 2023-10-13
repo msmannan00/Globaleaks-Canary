@@ -1,7 +1,7 @@
 import {Component, Input} from "@angular/core";
-import {AuthenticationService} from "@app//services/authentication.service";
-import {LoginDataRef} from "../../model/login-model";
-import {UtilsService} from "@app//shared/services/utils.service";
+import {AuthenticationService} from "@app/services/authentication.service";
+import {LoginDataRef} from "@app/pages/auth/login/model/login-model";
+import {UtilsService} from "@app/shared/services/utils.service";
 import {ControlContainer, NgForm} from "@angular/forms";
 
 @Component({

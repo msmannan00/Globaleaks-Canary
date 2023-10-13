@@ -3,10 +3,10 @@ import {NgForm} from "@angular/forms";
 import * as Flow from "@flowjs/flow.js";
 import {FlowFile} from "@flowjs/flow.js";
 import {FlowDirective} from "@flowjs/ngx-flow";
-import {AuthenticationService} from "app/src/services/authentication.service";
-import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
-import {PreferenceResolver} from "app/src/shared/resolvers/preference.resolver";
-import {UtilsService} from "app/src/shared/services/utils.service";
+import {AuthenticationService} from "@app/services/authentication.service";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
+import {UtilsService} from "@app/shared/services/utils.service";
 import {Subscription} from "rxjs";
 import {AppConfigService} from "@app/services/app-config.service";
 

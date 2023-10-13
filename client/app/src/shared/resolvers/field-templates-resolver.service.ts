@@ -2,9 +2,9 @@ import {Injectable} from "@angular/core";
 import {Resolve} from "@angular/router";
 import {Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
-import {HttpService} from "../services/http.service";
-import {AuthenticationService} from "app/src/services/authentication.service";
-import {fieldtemplatesResolverModel} from "app/src/models/resolvers/fieldtemplateModel";
+import {HttpService} from "@app/shared/services/http.service";
+import {AuthenticationService} from "@app/services/authentication.service";
+import {fieldtemplatesResolverModel} from "@app/models/resolvers/fieldtemplateModel";
 
 @Injectable({
   providedIn: "root"

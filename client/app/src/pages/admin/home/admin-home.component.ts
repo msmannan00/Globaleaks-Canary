@@ -2,9 +2,9 @@ import {HttpClient} from "@angular/common/http";
 import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {AcceptAgreementComponent} from "app/src/shared/modals/accept-agreement/accept-agreement.component";
-import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
-import {PreferenceResolver} from "app/src/shared/resolvers/preference.resolver";
+import {AcceptAgreementComponent} from "@app/shared/modals/accept-agreement/accept-agreement.component";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 
 @Component({
   selector: "src-home",

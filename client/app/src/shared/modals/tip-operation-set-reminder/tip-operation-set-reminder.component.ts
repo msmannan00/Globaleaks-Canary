@@ -1,7 +1,7 @@
 import {HttpClient} from "@angular/common/http";
 import {Component, Input} from "@angular/core";
 import {NgbDateStruct, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {UtilsService} from "../../services/utils.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 
 @Component({

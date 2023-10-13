@@ -1,11 +1,11 @@
 import {HttpClient} from "@angular/common/http";
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from "@angular/core";
-import {questionnaireResolverModel} from "app/src/models/resolvers/questionnaireModel";
-import {QuestionnairesResolver} from "app/src/shared/resolvers/questionnaires.resolver";
-import {HttpService} from "app/src/shared/services/http.service";
-import {UtilsService} from "app/src/shared/services/utils.service";
+import {questionnaireResolverModel} from "@app/models/resolvers/questionnaireModel";
+import {QuestionnairesResolver} from "@app/shared/resolvers/questionnaires.resolver";
+import {HttpService} from "@app/shared/services/http.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 import {new_questionare} from "@app/models/admin/new_questionare";
-import {QuestionnaireService} from "../questionnaire.service";
+import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 import {Subject, takeUntil} from "rxjs";
 
 @Component({

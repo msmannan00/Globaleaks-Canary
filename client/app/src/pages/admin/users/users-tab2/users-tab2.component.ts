@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
-import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
-import {UtilsService} from "app/src/shared/services/utils.service";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({
   selector: "src-users-tab2",

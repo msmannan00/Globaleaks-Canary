@@ -1,9 +1,9 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
 import {PreferencesComponent} from "@app/shared/partials/preferences/preferences.component";
-import {HomeComponent} from "./home/home.component";
-import {SettingsComponent} from "./settings/settings.component";
-import {IdentityAccessRequestsComponent} from "./identity-access-requests/identity-access-requests.component";
+import {HomeComponent} from "@app/pages/custodian/home/home.component";
+import {SettingsComponent} from "@app/pages/custodian/settings/settings.component";
+import {IdentityAccessRequestsComponent} from "@app/pages/custodian/identity-access-requests/identity-access-requests.component";
 
 const routes: Routes = [
   {

@@ -2,9 +2,9 @@ import {Injectable} from "@angular/core";
 import {Resolve} from "@angular/router";
 import {Observable, of} from "rxjs";
 import {switchMap} from "rxjs/operators";
-import {HttpService} from "../services/http.service";
-import {AuthenticationService} from "app/src/services/authentication.service";
-import {contextResolverModel} from "app/src/models/resolvers/contextResolverModel";
+import {HttpService} from "@app/shared/services/http.service";
+import {AuthenticationService} from "@app/services/authentication.service";
+import {contextResolverModel} from "@app/models/resolvers/contextResolverModel";
 
 @Injectable({
   providedIn: "root"
