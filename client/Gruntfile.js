@@ -1,4 +1,3 @@
-/* eslint no-console: 0 */
 module.exports = function (grunt) {
   let fs = require("fs"),
     path = require("path"),
@@ -7,10 +6,9 @@ module.exports = function (grunt) {
     Gettext = require("node-gettext");
 
 
-  require('load-grunt-tasks')(grunt);
+  require("load-grunt-tasks")(grunt);
   grunt.initConfig({
 
-    /*ESLINT WORKS ON TYPESCRIPT NEED TO UPDATE LIBRARIES*/
     eslint: {
       options: {
         configFile: "../.eslintrc.json"
@@ -26,7 +24,7 @@ module.exports = function (grunt) {
     },
     shell: {
       build: {
-        command: 'npx ng build --configuration=production && echo "Build completed"'
+        command: "npx ng build --configuration=production && echo \"Build completed\""
       },
       babel: {
         command: "npx ng build --configuration=production --source-map && nyc instrument dist instrument"
@@ -41,18 +39,42 @@ module.exports = function (grunt) {
     copy: {
       sources: {
         files: [
-          { dest: "build/index.html", cwd: ".", src: ["app/index.html"], expand: false, flatten: true },
-          { dest: "build/viewer/", cwd: ".", src: ["app/viewer/*"], expand: true, flatten: true },
-          { dest: "app/assets/license.txt", cwd: ".", src: ["../LICENSE"], expand: false, flatten: true },
-          { dest: "app/assets/lib/css/", cwd: ".", src: ["node_modules/@fortawesome/fontawesome-free/css/solid.css"], expand: true, flatten: true },
-          { dest: "app/assets/lib/webfonts", cwd: ".", src: ["node_modules/font-awesome/fonts/*"], expand: true, flatten: true },
-          { dest: "app/assets/lib/webfonts", cwd: ".", src: ["node_modules/@fortawesome/fontawesome-free/webfonts/*"], expand: true, flatten: true },
-          { dest: "app/assets/lib/bootstrap", cwd: ".", src: ["node_modules/bootstrap/dist/css/*"], expand: true, flatten: true },
+          {dest: "build/index.html", cwd: ".", src: ["app/index.html"], expand: false, flatten: true},
+          {dest: "build/viewer/", cwd: ".", src: ["app/viewer/*"], expand: true, flatten: true},
+          {dest: "app/assets/license.txt", cwd: ".", src: ["../LICENSE"], expand: false, flatten: true},
+          {
+            dest: "app/assets/lib/css/",
+            cwd: ".",
+            src: ["node_modules/@fortawesome/fontawesome-free/css/solid.css"],
+            expand: true,
+            flatten: true
+          },
+          {
+            dest: "app/assets/lib/webfonts",
+            cwd: ".",
+            src: ["node_modules/font-awesome/fonts/*"],
+            expand: true,
+            flatten: true
+          },
+          {
+            dest: "app/assets/lib/webfonts",
+            cwd: ".",
+            src: ["node_modules/@fortawesome/fontawesome-free/webfonts/*"],
+            expand: true,
+            flatten: true
+          },
+          {
+            dest: "app/assets/lib/bootstrap",
+            cwd: ".",
+            src: ["node_modules/bootstrap/dist/css/*"],
+            expand: true,
+            flatten: true
+          },
         ]
       },
       build: {
         files: [
-          { dest: "tmp/", cwd: "dist", src: ["**"], expand: true },
+          {dest: "tmp/", cwd: "dist", src: ["**"], expand: true},
           {dest: "tmp/css/styles.css", cwd: ".", src: ["dist/styles.css"], expand: false, flatten: true},
           {dest: "tmp/css/styles.css.map", cwd: ".", src: ["dist/styles.css.map"], expand: false, flatten: true},
 
@@ -71,19 +93,19 @@ module.exports = function (grunt) {
       },
       package: {
         files: [
-          { dest: "build/css", cwd: "tmp/css", src: ["**"], expand: true },
-          { dest: "build/js", cwd: "tmp/js", src: ["**"], expand: true },
-          { dest: "build/data", cwd: "tmp/assets/data", src: ["**"], expand: true },
-          { dest: "build/lib", cwd: "tmp/assets/lib", src: ["**"], expand: true },
-          { dest: "build/index.html", cwd: ".", src: ["tmp/index.html"], expand: false, flatten: true },
-          { dest: "build/assets/favicon.ico", cwd: ".", src: ["tmp/assets/favicon.ico"], expand: false, flatten: true },
-          { dest: "build/license.txt", cwd: ".", src: ["tmp/assets/license.txt"], expand: false, flatten: true },
-          { dest: "build/loader.js", cwd: ".", src: ["tmp/assets/loader.js"], expand: false, flatten: true },
+          {dest: "build/css", cwd: "tmp/css", src: ["**"], expand: true},
+          {dest: "build/js", cwd: "tmp/js", src: ["**"], expand: true},
+          {dest: "build/data", cwd: "tmp/assets/data", src: ["**"], expand: true},
+          {dest: "build/lib", cwd: "tmp/assets/lib", src: ["**"], expand: true},
+          {dest: "build/index.html", cwd: ".", src: ["tmp/index.html"], expand: false, flatten: true},
+          {dest: "build/assets/favicon.ico", cwd: ".", src: ["tmp/assets/favicon.ico"], expand: false, flatten: true},
+          {dest: "build/license.txt", cwd: ".", src: ["tmp/assets/license.txt"], expand: false, flatten: true},
+          {dest: "build/loader.js", cwd: ".", src: ["tmp/assets/loader.js"], expand: false, flatten: true},
         ]
       },
       instrument: {
         files: [
-          { dest: "dist", cwd: "instrument/", src: ["**"], expand: true }
+          {dest: "dist", cwd: "instrument/", src: ["**"], expand: true}
         ]
       },
       coverage: {
@@ -103,168 +125,168 @@ module.exports = function (grunt) {
 
     "string-replace": {
       pass1: {
-        src: './tmp/css/*.css',
-        dest: './tmp/css/',
+        src: "./tmp/css/*.css",
+        dest: "./tmp/css/",
         options: {
           replacements: [
             {
-              pattern: /'fa-solid-/ig,
+              pattern: /'fa-solid-/gi,
               replacement: function () {
                 return "'../lib/webfonts/fa-solid-";
               }
             },
             {
-              pattern: /\.\.\/webfonts/ig,
+              pattern: /\.\.\/webfonts/gi,
               replacement: function () {
                 return "../lib/webfonts";
               }
             },
             {
-              pattern: /_-webfonts-/ig,
+              pattern: /_-webfonts-/gi,
               replacement: function () {
                 return "../lib/webfonts/";
               }
             },
             {
-              pattern: /(0056b3|007bff|17a2b8|28a745|34ce57)/ig,
+              pattern: /(0056b3|007bff|17a2b8|28a745|34ce57)/gi,
               replacement: function () {
                 return "2866a2";
               }
             },
             {
-              pattern: /40, 167, 69/ig,
+              pattern: /40, 167, 69/gi,
               replacement: function () {
                 return "56,119,188";
               }
             },
             {
-              pattern: /0069d9/ig,
+              pattern: /0069d9/gi,
               replacement: function () {
                 return "377abc";
               }
             },
             {
-              pattern: /cce5ff/ig,
+              pattern: /cce5ff/gi,
               replacement: function () {
                 return "eef5fc";
               }
             },
             {
-              pattern: /005cbf/ig,
+              pattern: /005cbf/gi,
               replacement: function () {
                 return "79b0e6";
               }
             },
             {
-              pattern: /0062cc/ig,
+              pattern: /0062cc/gi,
               replacement: function () {
                 return "9fc9f1";
               }
             },
             {
-              pattern: /6c757d/ig,
+              pattern: /6c757d/gi,
               replacement: function () {
                 return "58606e";
               }
             },
             {
-              pattern: /5a6268/ig,
+              pattern: /5a6268/gi,
               replacement: function () {
                 return "707a8a";
               }
             },
             {
-              pattern: /4e555b/ig,
+              pattern: /4e555b/gi,
               replacement: function () {
                 return "8e99aB";
               }
             },
             {
-              pattern: /(545b62)/ig,
+              pattern: /(545b62)/gi,
               replacement: function () {
                 return "afbacc";
               }
             },
             {
-              pattern: /(28a745|20c997)/ig,
+              pattern: /(28a745|20c997)/gi,
               replacement: function () {
                 return "2a854e";
               }
             },
             {
-              pattern: /218838/ig,
+              pattern: /218838/gi,
               replacement: function () {
                 return "3ba164";
               }
             },
             {
-              pattern: /1e7e34/ig,
+              pattern: /1e7e34/gi,
               replacement: function () {
                 return "57c282";
               }
             },
             {
-              pattern: /dc3545/ig,
+              pattern: /dc3545/gi,
               replacement: function () {
                 return "b80d0d";
               }
             },
             {
-              pattern: /c82333/ig,
+              pattern: /c82333/gi,
               replacement: function () {
                 return "de1b1b";
               }
             },
             {
-              pattern: /b21f2d/ig,
+              pattern: /b21f2d/gi,
               replacement: function () {
                 return "fa8e8e";
               }
             },
             {
-              pattern: /0.375rem/ig,
+              pattern: /0.375rem/gi,
               replacement: function () {
                 return "0.3rem";
               }
             },
             {
-              pattern: /bd2130/ig,
+              pattern: /bd2130/gi,
               replacement: function () {
                 return "fab6b6";
               }
             },
             {
-              pattern: /(e9ecef|f8f9fa)/ig,
+              pattern: /(e9ecef|f8f9fa)/gi,
               replacement: function () {
                 return "f5f7fa";
               }
             },
             {
-              pattern: /(212529|343a40)/ig,
+              pattern: /(212529|343a40)/gi,
               replacement: function () {
                 return "1d1f24";
               }
             },
             {
-              pattern: /(#CED4DA|#DEE2E6|rgba\(0, 0, 0, \.125\))/ig,
+              pattern: /(#CED4DA|#DEE2E6|rgba\(0, 0, 0, \.125\))/gi,
               replacement: function () {
                 return "#c8d1e0";
               }
             },
             {
-              pattern: /(b8daff|d6d8db|c3e6cb|f5c6cb|ffeeba)/ig,
+              pattern: /(b8daff|d6d8db|c3e6cb|f5c6cb|ffeeba)/gi,
               replacement: function () {
                 return "c8d1e0";
               }
             },
             {
-              pattern: /155724|#383d41|721c24|856404/ig,
+              pattern: /155724|#383d41|721c24|856404/gi,
               replacement: function () {
                 return "1d1f24";
               }
             },
             {
-              pattern: /(#e2e3e5|rgba\(0, 0, 0, \.03\)|rgba\(0, 0, 0, \.05\))/ig,
+              pattern: /(#e2e3e5|rgba\(0, 0, 0, \.03\)|rgba\(0, 0, 0, \.05\))/gi,
               replacement: function () {
                 return "#f5f7fa";
               }
@@ -273,16 +295,16 @@ module.exports = function (grunt) {
         }
       },
       pass2: {
-        src: './tmp/*.js',
-        dest: './tmp/',
+        src: "./tmp/*.js",
+        dest: "./tmp/",
         options: {
           replacements: [
             {
-              pattern: /glyphicon glyphicon-ok/ig,
+              pattern: /glyphicon glyphicon-ok/gi,
               replacement: "fa fa-check"
             },
             {
-              pattern: /glyphicon glyphicon-remove/ig,
+              pattern: /glyphicon glyphicon-remove/gi,
               replacement: "fa fa-xmark"
             },
             {
@@ -362,7 +384,7 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks("grunt-shell");
   grunt.loadNpmTasks("grunt-angular-templates");
   grunt.loadNpmTasks("grunt-confirm");
   grunt.loadNpmTasks("grunt-contrib-clean");
@@ -432,17 +454,13 @@ module.exports = function (grunt) {
     };
 
     agent.post(url)
-      .set({ "Content-Type": "application/vnd.api+json", "Authorization": "Bearer " + transifexApiKey })
+      .set({"Content-Type": "application/vnd.api+json", "Authorization": "Bearer " + transifexApiKey})
       .send(content)
       .end(function (err, res) {
         if (res) {
           if (res.ok) {
             cb();
-          } else {
-            console.log("Error: " + res.text);
           }
-        } else {
-          console.log("Error: failed to fetch resource " + url);
         }
       });
   }
@@ -451,17 +469,13 @@ module.exports = function (grunt) {
     let url = baseurl + "/projects/o:otf:p:globaleaks/languages";
 
     agent.get(url)
-      .set({ "Authorization": "Bearer " + transifexApiKey })
+      .set({"Authorization": "Bearer " + transifexApiKey})
       .end(function (err, res) {
         if (res) {
           if (res.ok) {
             let result = JSON.parse(res.text);
             cb(result);
-          } else {
-            console.log("Error: " + res.text);
           }
-        } else {
-          console.log("Error: failed to fetch resource");
         }
       });
   }
@@ -470,7 +484,7 @@ module.exports = function (grunt) {
     let url = baseurl + "/resource_translations_async_downloads";
 
     agent.post(url)
-      .set({ "Authorization": "Bearer " + transifexApiKey, "Content-Type": "application/vnd.api+json" })
+      .set({"Authorization": "Bearer " + transifexApiKey, "Content-Type": "application/vnd.api+json"})
       .send({
         "data": {
           "attributes": {
@@ -501,7 +515,7 @@ module.exports = function (grunt) {
 
           let fetchPO = function (url) {
             agent.get(url)
-              .set({ "Authorization": "Bearer " + transifexApiKey })
+              .set({"Authorization": "Bearer " + transifexApiKey})
               .end(function (err, res) {
                 if (res && res.ok) {
                   if (res.redirects.length) {
@@ -512,14 +526,13 @@ module.exports = function (grunt) {
                     });
 
                     agent.get(res.redirects[0])
-                      .set({ "Authorization": "Bearer " + transifexApiKey })
+                      .set({"Authorization": "Bearer " + transifexApiKey})
                       .pipe(stream);
 
                   } else {
                     fetchPO(url);
                   }
                 } else {
-                  console.log("Error: failed to fetch resource");
                   cb(false);
                 }
               });
@@ -527,7 +540,6 @@ module.exports = function (grunt) {
 
           fetchPO(url);
         } else {
-          console.log("Error: failed to fetch resource");
           cb(false);
         }
       });
@@ -537,7 +549,7 @@ module.exports = function (grunt) {
     let url = baseurl + "/resource_language_stats/o:otf:p:globaleaks:r:master:l:" + langCode;
 
     agent.get(url)
-      .set({ "Authorization": "Bearer " + transifexApiKey })
+      .set({"Authorization": "Bearer " + transifexApiKey})
       .end(function (err, res) {
         if (res && res.ok) {
           let content = JSON.parse(res.text);
@@ -549,7 +561,6 @@ module.exports = function (grunt) {
             cb(false);
           }
         } else {
-          console.log("Error: failed to fetch resource");
           cb(false);
         }
       });
@@ -578,22 +589,12 @@ module.exports = function (grunt) {
       let fetchLanguage = function (language) {
         fetchTxTranslationsForLanguage(language.attributes.code, function (ret) {
           if (ret) {
-            console.log("Fetched " + language.attributes.code);
             supported_languages[language.attributes.code] = language.attributes.name;
           }
 
           fetched_languages += 1;
 
           if (total_languages === fetched_languages) {
-            let sorted_keys = Object.keys(supported_languages).sort();
-
-            console.log("List of available translations:");
-
-            for (let i in sorted_keys) {
-              console.log(" { \"code\": \"" + sorted_keys[i] +
-                "\", \"name\": \"" + supported_languages[sorted_keys[i]] + "\" },");
-            }
-
             cb(supported_languages);
           } else {
             fetchLanguage(result.data[fetched_languages]);
@@ -618,8 +619,7 @@ module.exports = function (grunt) {
         "plural-forms": "nplurals=2; plural=(n != 1);"
       },
       "translations": {
-        "": {
-        }
+        "": {}
       }
     };
 
@@ -715,10 +715,7 @@ module.exports = function (grunt) {
     });
 
     grunt.file.mkdir("pot");
-
     fs.writeFileSync("pot/en.po", gettextParser.po.compile(data), "utf8");
-
-    console.log("Written " + Object.keys(data["translations"][""]).length + " string to pot/en.po.");
   });
 
   grunt.registerTask("☠☠☠pushTranslationsSource☠☠☠", function () {
@@ -957,13 +954,7 @@ module.exports = function (grunt) {
     }
 
     if (failures.length !== 0) {
-      failures.forEach(function (failure) {
-        console.log(failure);
-      });
-
       grunt.fail.warn("verifyAppData task failure");
-    } else {
-      console.log("Successfully verified");
     }
   });
 
