@@ -4,8 +4,7 @@ import { AuthenticationService } from "@app/services/authentication.service";
 
 @Component({
   selector: 'src-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css']
+  templateUrl: './settings.component.html'
 })
 export class SettingsComponent implements AfterViewInit {
   @ViewChild('tab1') tab1!: TemplateRef<any>;

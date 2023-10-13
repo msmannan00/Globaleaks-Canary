@@ -3,7 +3,7 @@ import {UtilsService} from "../../services/utils.service";
 import {HttpService} from "../../services/http.service";
 import {PreferenceResolver} from "../../resolvers/preference.resolver";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {TwofactorauthData} from "../../../services/2fa.data.service";
+import {TwoFactorAuthData} from "../../../services/2fa.data.service";
 
 @Component({
   selector: 'src-enable-2fa',
@@ -32,7 +32,7 @@ export class Enable2fa{
     })
   };
 
-  constructor(public utils: UtilsService, public preferenceResolver:PreferenceResolver, private builder: FormBuilder, public twofactorauthData:TwofactorauthData) {
+  constructor(public utils: UtilsService, public preferenceResolver:PreferenceResolver, private builder: FormBuilder, public twofactorauthData:TwoFactorAuthData) {
     this.initialization()
   }
 

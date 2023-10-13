@@ -1,18 +1,8 @@
-import { Component } from '@angular/core';
-import {AppDataService} from "../../../app-data.service";
-import { HttpService } from 'app/src/shared/services/http.service';
-
+import {Component} from "@angular/core";
 
 @Component({
-  selector: 'src-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: "src-home",
+  templateUrl: "./home.component.html"
 })
 export class HomeComponent {
-  constructor(public appDataService:AppDataService, ) {
-  }
-
-  ngOnInit(){
- 
-  }
 }

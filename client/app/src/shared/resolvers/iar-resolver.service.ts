@@ -13,7 +13,7 @@ import {IarData} from "../../models/reciever/IarData";
 @Injectable({
   providedIn: 'root'
 })
-export class IarsResolver implements Resolve<boolean> {
+export class IarResolver implements Resolve<boolean> {
   dataModel: IarData[] = []
 
   constructor(

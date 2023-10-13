@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
-export class TwofactorauthData {
+export class TwoFactorAuthData {
 
   totp = {
     qrcode_string: "",

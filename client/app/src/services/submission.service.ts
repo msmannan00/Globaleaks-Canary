@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
-import {AppDataService} from '../app-data.service';
-import {AuthenticationService} from './authentication.service';
-import {SubmissionResourceService} from './submission-resource.service';
-import {HttpService} from '../shared/services/http.service';
+import {Injectable} from "@angular/core";
+import {AppDataService} from "../app-data.service";
+import {AuthenticationService} from "./authentication.service";
+import {SubmissionResourceService} from "./submission-resource.service";
+import {HttpService} from "../shared/services/http.service";
 import {ServiceInstanceService} from "../shared/services/service-instance.service";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class SubmissionService {
   _submission: any;
@@ -19,17 +19,11 @@ export class SubmissionService {
   uploads: any = {};
   private sharedData: any;
 
-  constructor(
-    public authenticationService: AuthenticationService,
-    private serviceInstanceService: ServiceInstanceService,
-    public httpService: HttpService,
-    public appDataService: AppDataService,
-    public submissionResourceService: SubmissionResourceService
-  ) {
+  constructor(public authenticationService: AuthenticationService, private serviceInstanceService: ServiceInstanceService, private httpService: HttpService, private appDataService: AppDataService, private submissionResourceService: SubmissionResourceService) {
   }
 
-  init(){
-    this.authenticationService = this.serviceInstanceService.authenticationService
+  init() {
+    this.authenticationService = this.serviceInstanceService.authenticationService;
   }
 
   setContextReceivers(context_id: number) {
@@ -70,7 +64,7 @@ export class SubmissionService {
   create(context_id: number) {
     this.setContextReceivers(context_id);
     this.submissionResourceService.context_id = context_id;
-    this.authenticationService.login(0, 'whistleblower', '');
+    this.authenticationService.login(0, "whistleblower", "");
     this._submission = this.submissionResourceService;
   }
 
@@ -95,9 +89,9 @@ export class SubmissionService {
     const param = JSON.stringify(_submission_data);
     this.httpService.requestReportSubmission(param).subscribe({
       next: (response) => {
-        location.pathname = '/';
+        location.pathname = "/";
         this.authenticationService.session.receipt = response.receipt;
-        this.appDataService.page = 'receiptpage';
+        this.appDataService.page = "receiptpage";
       }
     });
   }
@@ -105,6 +99,7 @@ export class SubmissionService {
   setSharedData(data: any) {
     this.sharedData = data;
   }
+
   getSharedData(): any {
     return this.sharedData;
   }

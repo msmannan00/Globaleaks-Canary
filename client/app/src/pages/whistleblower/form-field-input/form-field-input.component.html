@@ -20,7 +20,7 @@
                           dynamic-textarea></textarea>
 
                 <div class="clearfix">
-                    <div *ngIf="entryvalue.length && field.attrs.max_len.value > 0 && (field.attrs.max_len.value - entryvalue.length) <= 50" class="float-right">{{entryvalue.length}}/{{field.attrs.max_len.value}}</div>
+                    <div *ngIf="entryValue.length && field.attrs.max_len.value > 0 && (field.attrs.max_len.value - entryValue.length) <= 50" class="float-right">{{entryValue.length}}/{{field.attrs.max_len.value}}</div>
                 </div>
                 <div *ngIf="displayErrors" class="text-danger">
                     <span *ngIf="textarea?.errors?.['required']">{{'This field is mandatory'|translate}}</span>
@@ -85,7 +85,7 @@
                                type="text"
                                [readOnly]="true"
                                [attr.aria-label]="field.label"
-                               [(ngModel)]="daterange.start"
+                               [(ngModel)]="dateRange.start"
                                [required]="entry.required_status"
                                [placeholder]="field.placeholder"
                                #datepickerstart="ngbDatepicker"
@@ -94,7 +94,7 @@
                         <span class="input-group-append" (click)="datepickerstart.toggle()"><i class="input-group-text fa-solid fa-calendar"></i></span>
                     </div>
                 </span>
-                <span class="form-group mx-1" *ngIf="daterange.start">
+                <span class="form-group mx-1" *ngIf="dateRange.start">
                     <label>{{'To'|translate}}</label>
                     <div class="input-group mx-1">
                         <input id="{{fieldEntry}}"
@@ -102,7 +102,7 @@
                                type="text"
                                [readonly]="true"
                                [attr.aria-label]="field.label"
-                               [(ngModel)]="daterange.end"
+                               [(ngModel)]="dateRange.end"
                                [required]="entry.required_status"
                                [placeholder]="field.placeholder"
                                #datepickerend="ngbDatepicker"
@@ -134,10 +134,10 @@
                 </div>
             </div>
             <div id="{{fieldEntry}}" *ngSwitchCase="'voice'">
-                <src-voice-recorder (notifyFileUpload)="notifyFileUpload.emit()" [fileupload_url]="fileupload_url" [uploads]="uploads" [field]="field" [entryIndex]="entryIndex" [fieldEntry]="fieldEntry"></src-voice-recorder>
+                <src-voice-recorder (notifyFileUpload)="notifyFileUpload.emit()" [fileupload_url]="fileUploadUrl" [uploads]="uploads" [field]="field" [entryIndex]="entryIndex" [fieldEntry]="fieldEntry"></src-voice-recorder>
             </div>
             <div id="{{fieldEntry}}" *ngSwitchCase="'fileupload'">
-                <src-rfile-upload-button (notifyFileUpload)="notifyFileUpload.emit()" [fileupload_url]="fileupload_url" [uploads]="uploads" [field]="field" [formuploader]="true"></src-rfile-upload-button>
+                <src-rfile-upload-button (notifyFileUpload)="notifyFileUpload.emit()" [fileupload_url]="fileUploadUrl" [uploads]="uploads" [field]="field" [formuploader]="true"></src-rfile-upload-button>
             </div>
             <div *ngSwitchCase="'fieldgroup'">
                 <div *ngIf="field.attrs.multimedia.value">

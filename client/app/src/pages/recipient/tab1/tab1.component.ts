@@ -1,23 +1,22 @@
-import { Component, Input } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
-import { UtilsService } from 'app/src/shared/services/utils.service';
-import {AuthenticationService} from "../../../services/authentication.service";
+import {Component, Input} from "@angular/core";
+import {NgForm} from "@angular/forms";
+import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
+import {UtilsService} from "app/src/shared/services/utils.service";
+import {AuthenticationService} from "@app/services/authentication.service";
 
 @Component({
-  selector: 'src-tab1',
-  templateUrl: './tab1.component.html',
-  styleUrls: ['./tab1.component.css']
+  selector: "src-tab1",
+  templateUrl: "./tab1.component.html"
 })
 export class Tab1Component {
-  // @Input() node: NodeResolver;
   @Input() contentForm: NgForm;
-  constructor(public node:NodeResolver,public utilsService: UtilsService, public authenticationService:AuthenticationService) { }
 
-  ngOnInit(): void {}
+  constructor(public nodeResolver: NodeResolver, private utilsService: UtilsService, public authenticationService: AuthenticationService) {
+  }
+
   updateNode() {
-    this.utilsService.update(this.node.dataModel).subscribe(res=>{
+    this.utilsService.update(this.nodeResolver.dataModel).subscribe(_ => {
       this.utilsService.reloadCurrentRoute();
-    })
+    });
   }
 }

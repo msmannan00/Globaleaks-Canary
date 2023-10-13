@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { AuthRoutingModule } from './pages/auth/auth-routing.module';
+import {NgModule} from "@angular/core";
+import {AuthRoutingModule} from "./pages/auth/auth-routing.module";
 import {AdminRoutingModule} from "./pages/admin/admin-routing.module";
 import {RouterModule, Routes} from "@angular/router";
 import {SessionGuard} from "./app-guard.service";
-import { HomeComponent } from './pages/dashboard/home/home.component';
+import {HomeComponent} from "./pages/dashboard/home/home.component";
 import {PasswordResetResponseComponent} from "./pages/auth/password-reset-response/password-reset-response.component";
 import {RecipientRoutingModule} from "./pages/recipient/recipient-routing.module";
 import {PreferenceResolver} from "./shared/resolvers/preference.resolver";
@@ -12,94 +12,90 @@ import {SignupRoutingModule} from "./pages/signup/signup-routing.module";
 import {Pageguard} from "./shared/guards/pageguard.service";
 import {ActivationComponent} from "./pages/signup/templates/activation/activation.component";
 import {WizardRoutingModule} from "./pages/wizard/wizard-routing.module";
-import { NodeResolver } from './shared/resolvers/node.resolver';
-import { RtipsResolver } from './shared/resolvers/rtips.resolver';
-import { TipComponent } from './pages/recipient/tip/tip.component';
+import {NodeResolver} from "./shared/resolvers/node.resolver";
+import {RtipsResolver} from "./shared/resolvers/rtips.resolver";
+import {TipComponent} from "./pages/recipient/tip/tip.component";
 import {TitleResolver} from "./shared/resolvers/title-resolver.resolver";
 import {CustodianRoutingModule} from "./pages/custodian/custodian-routing.module";
-import {IarsResolver} from "./shared/resolvers/iars.resolver";
+import {IarResolver} from "app/src/shared/resolvers/iar-resolver.service";
 import {BlankComponent} from "./shared/blank/blank.component";
 
 
 const routes: Routes = [
   {
-    path: 'blank',
-    pathMatch: 'full',
-    component:BlankComponent
+    path: "blank",
+    pathMatch: "full",
+    component: BlankComponent
   },
   {
-    path: '',
+    path: "",
     canActivate: [Pageguard],
     component: HomeComponent,
-    data: { pageTitle: ''},
-    resolve: {
-    },
-    pathMatch: 'full',
-   
+    data: {pageTitle: ""},
+    resolve: {},
+    pathMatch: "full",
+
   },
   {
-    path: 'login',
-    
-    resolve: {
+    path: "login",
 
-    },
+    resolve: {},
     loadChildren: () => AuthRoutingModule,
   },
   {
-    path: 'signup',
+    path: "signup",
     resolve: {
       PreferenceResolver
     },
     loadChildren: () => SignupRoutingModule,
-   
+
   },
   {
-    path: 'action',
-    resolve: {
-    },
+    path: "action",
+    resolve: {},
     loadChildren: () => ActionRoutingModule,
   },
   {
-    path: 'recipient',
+    path: "recipient",
     canActivate: [SessionGuard],
     resolve: {
-      PreferenceResolver,NodeResolver,RtipsResolver
+      PreferenceResolver, NodeResolver, RtipsResolver
     },
     loadChildren: () => RecipientRoutingModule,
-    data:{
-      sidebar: 'recipient-sidebar'
+    data: {
+      sidebar: "recipient-sidebar"
     }
   },
   {
-    path: 'custodian',
+    path: "custodian",
     canActivate: [SessionGuard],
     resolve: {
-      PreferenceResolver,NodeResolver, RtipsResolver, IarsResolver
+      PreferenceResolver, NodeResolver, RtipsResolver, IarsResolver: IarResolver
     },
     loadChildren: () => CustodianRoutingModule,
-    data:{
-      sidebar: 'custodian-sidebar'
+    data: {
+      sidebar: "custodian-sidebar"
     }
   },
   {
-    path: 'admin',
+    path: "admin",
     canActivate: [SessionGuard],
     loadChildren: () => AdminRoutingModule,
-    data:{
-      sidebar: 'admin-sidebar', pageTitle: 'Home'
+    data: {
+      sidebar: "admin-sidebar", pageTitle: "Home"
     }
   },
   {
-    path: 'password/reset',
+    path: "password/reset",
     component: PasswordResetResponseComponent,
   },
   {
-    path: 'activation',
+    path: "activation",
     component: ActivationComponent,
   },
   {
-    path: 'wizard',
-    data: { pageTitle: 'Platform wizard' },
+    path: "wizard",
+    data: {pageTitle: "Platform wizard"},
     resolve: {
       PreferenceResolver,
       title: TitleResolver
@@ -107,12 +103,12 @@ const routes: Routes = [
     loadChildren: () => WizardRoutingModule,
   },
   {
-    path: 'status/:tip_id',
+    path: "status/:tip_id",
     component: TipComponent,
-    pathMatch: 'full',
+    pathMatch: "full",
     resolve: {
-      PreferenceResolver,NodeResolver,RtipsResolver
-   },
+      PreferenceResolver, NodeResolver, RtipsResolver
+    },
   }
 ];
 
@@ -120,6 +116,6 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule{
+export class AppRoutingModule {
 
 }

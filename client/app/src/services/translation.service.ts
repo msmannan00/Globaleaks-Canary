@@ -1,9 +1,6 @@
-import { Injectable } from "@angular/core";
-import { TranslateService } from "@ngx-translate/core";
-import { AppDataService } from "../app-data.service";
-import { PreferenceResolver } from "../shared/resolvers/preference.resolver";
+import {Injectable} from "@angular/core";
+import {TranslateService} from "@ngx-translate/core";
 import {UtilsService} from "../shared/services/utils.service";
-import {ActivatedRoute, Router} from "@angular/router";
 import {AppConfigService} from "./app-config.service";
 import {ServiceInstanceService} from "../shared/services/service-instance.service";
 
@@ -14,21 +11,15 @@ export class TranslationService {
 
   language = "";
 
-  public utilsService:UtilsService
-  public appConfigService: AppConfigService
+  public utilsService: UtilsService;
+  public appConfigService: AppConfigService;
 
-  constructor(
-    private serviceInstanceService:ServiceInstanceService,
-    public preferenceResolver: PreferenceResolver,
-    public translateService: TranslateService,
-    public appDataService: AppDataService,
-    private router: Router,
-  ) {
+  constructor(private serviceInstanceService: ServiceInstanceService, private translateService: TranslateService) {
   }
 
-  init(){
-    this.utilsService = this.serviceInstanceService.utilsService
-    this.appConfigService = this.serviceInstanceService.appConfigService
+  init() {
+    this.utilsService = this.serviceInstanceService.utilsService;
+    this.appConfigService = this.serviceInstanceService.appConfigService;
   }
 
   onChange(changedLanguage: string) {

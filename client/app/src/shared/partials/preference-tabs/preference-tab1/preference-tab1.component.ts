@@ -5,7 +5,7 @@ import {AuthenticationService} from "../../../../services/authentication.service
 import {AppDataService} from "../../../../app-data.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Enable2faComponent} from "../../../modals/enable2fa/enable2fa.component";
-import {TwofactorauthData} from "../../../../services/2fa.data.service";
+import {TwoFactorAuthData} from "../../../../services/2fa.data.service";
 import {HttpService} from "../../../services/http.service";
 import {ConfirmationWithPasswordComponent} from "../../../modals/confirmation-with-password/confirmation-with-password.component";
 import {HttpHeaders} from "@angular/common/http";
@@ -152,7 +152,7 @@ export class PreferenceTab1Component implements OnInit{
       $event.preventDefault();
   }
 
-  constructor(public translationService:TranslationService, public translateService:TranslateService, public httpService: HttpService, private twofactorauthData:TwofactorauthData, public modalService: NgbModal, public appDataService:AppDataService, public preferenceResolver:PreferenceResolver, public utilsService:UtilsService, public authenticationService:AuthenticationService) {
+  constructor(public translationService:TranslationService, public translateService:TranslateService, public httpService: HttpService, private twofactorauthData:TwoFactorAuthData, public modalService: NgbModal, public appDataService:AppDataService, public preferenceResolver:PreferenceResolver, public utilsService:UtilsService, public authenticationService:AuthenticationService) {
   }
 
 }

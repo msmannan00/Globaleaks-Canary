@@ -1,12 +1,10 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {SubmissionComponent} from "../submission/submission.component";
-import {SubmissionService} from "../../../services/submission.service";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {SubmissionService} from "@app/services/submission.service";
 import {FormArray, FormGroup, NgForm} from "@angular/forms";
 
 @Component({
-  selector: 'src-step-error',
-  templateUrl: './step-error.component.html',
-  styleUrls: ['./step-error.component.css']
+  selector: "src-step-error",
+  templateUrl: "./step-error.component.html"
 })
 export class StepErrorComponent {
   @Input() navigation: number;
@@ -14,9 +12,8 @@ export class StepErrorComponent {
   @Input() displayStepErrors: Function;
   @Input() stepForm: Function;
   @Input() submission: SubmissionService;
-  @Input() stepforms: any;
+  @Input() stepForms: any;
   @Input() field_id_map: any;
-
   @Output() goToStep: EventEmitter<any> = new EventEmitter();
 
   getInnerGroupErrors(form: NgForm): string[] {
@@ -25,7 +22,7 @@ export class StepErrorComponent {
     return errors;
   }
 
-  private processFormGroup(formGroup: FormGroup, errors: string[], parentControlName = ''): void {
+  private processFormGroup(formGroup: FormGroup, errors: string[], parentControlName = ""): void {
     Object.keys(formGroup.controls).forEach(controlName => {
       const control = formGroup.controls[controlName];
 

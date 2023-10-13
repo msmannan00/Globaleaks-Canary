@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from "@angular/core";
+import {RouterModule, Routes} from "@angular/router";
 import {WizardComponent} from "./wizard/wizard.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: WizardComponent,
-    pathMatch: 'full',
+    pathMatch: "full",
   }
 
 ];
@@ -15,4 +15,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class WizardRoutingModule {}
+export class WizardRoutingModule {
+}

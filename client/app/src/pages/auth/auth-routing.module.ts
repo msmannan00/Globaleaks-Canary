@@ -1,24 +1,24 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from "@angular/core";
+import {RouterModule, Routes} from "@angular/router";
 import {LoginComponent} from "./login/login.component";
 import {PasswordResetComponent} from "./password-reset/password-reset.component";
 import {PasswordreqestedComponent} from "./passwordreqested/passwordreqested.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: LoginComponent,
-    pathMatch: 'full',
+    pathMatch: "full",
   },
   {
-    path: 'passwordreset',
+    path: "passwordreset",
     component: PasswordResetComponent,
-    pathMatch: 'full',
+    pathMatch: "full",
   },
   {
-    path: 'passwordreset/requested',
+    path: "passwordreset/requested",
     component: PasswordreqestedComponent,
-    pathMatch: 'full',
+    pathMatch: "full",
   }
 
 ];
@@ -27,4 +27,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AuthRoutingModule {}
+export class AuthRoutingModule {
+}

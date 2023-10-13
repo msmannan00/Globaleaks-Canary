@@ -1,20 +1,17 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {AppDataService} from "../../../app-data.service";
-import {UtilsService} from "../../../shared/services/utils.service";
-import {orderBy} from "lodash";
-import {TranslateService} from "@ngx-translate/core";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {AppDataService} from "@app/app-data.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({
-  selector: 'src-context-selection',
-  templateUrl: './context-selection.component.html',
-  styleUrls: ['./context-selection.component.css']
+  selector: "src-context-selection",
+  templateUrl: "./context-selection.component.html"
 })
 export class ContextSelectionComponent {
 
-  @Input() selectable_contexts:any
-  @Input() contextsOrderPredicate:any
+  @Input() selectable_contexts: any;
+  @Input() contextsOrderPredicate: any;
   @Output() selectContext: EventEmitter<any> = new EventEmitter();
 
-  constructor(public appDataService:AppDataService,public utilsService:UtilsService) {
+  constructor(public appDataService: AppDataService, public utilsService: UtilsService) {
   }
 }

@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {UtilsService} from "../../services/utils.service";
 import {PreferenceResolver} from "../../resolvers/preference.resolver";
-import {TwofactorauthData} from "../../../services/2fa.data.service";
+import {TwoFactorAuthData} from "../../../services/2fa.data.service";
 
 @Component({
   selector: 'src-enable2fa',
@@ -10,7 +10,7 @@ import {TwofactorauthData} from "../../../services/2fa.data.service";
 })
 export class Enable2faComponent {
 
-  constructor(private preferenceResolver: PreferenceResolver, private activeModal: NgbActiveModal, private utilsService: UtilsService, public twoFactorAuthData: TwofactorauthData) {
+  constructor(private preferenceResolver: PreferenceResolver, private activeModal: NgbActiveModal, private utilsService: UtilsService, public twoFactorAuthData: TwoFactorAuthData) {
   }
 
   dismiss() {

@@ -11,7 +11,7 @@
                 <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
             </label>
             <div class="input-group">
-                <input name="subdomain" class="form-control" [(ngModel)]="signup.subdomain" type="text" [pattern]="domainpattern" subdomainvalidators required >
+                <input name="subdomain" class="form-control" [(ngModel)]="signup.subdomain" type="text" [pattern]="domainPattern" subdomainvalidators required >
                 <span class="input-group-append"><span class="input-group-text">.{{appDataService.public.node.rootdomain}}</span></span>
             </div>
         </div>
@@ -37,7 +37,7 @@
 
             <input #mail_address="ngModel" name="mail_address" class="form-control" [(ngModel)]="signup.email"
                    type="email"
-                   [ngClass]="{'is-invalid': validated && mail_address.invalid}" [pattern]="emailregex">
+                   [ngClass]="{'is-invalid': validated && mail_address.invalid}" [pattern]="emailRegex">
             <div class="text-danger" *ngIf="validated && mail_address?.errors?.['pattern']">
                 <span>{{'Invalid email address'|translate}}</span>
             </div>
