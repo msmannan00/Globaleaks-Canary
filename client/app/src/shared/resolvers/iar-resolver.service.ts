@@ -1,28 +1,29 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from "@angular/core";
 import {
-  Router, Resolve,
+  Resolve,
   RouterStateSnapshot,
   ActivatedRouteSnapshot
-} from '@angular/router';
-import { Observable, of } from 'rxjs';
+} from "@angular/router";
+import {Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
 import {HttpService} from "../services/http.service";
-import {AuthenticationService} from "../../services/authentication.service";
-import {IarData} from "../../models/reciever/IarData";
+import {AuthenticationService} from "@app/services/authentication.service";
+import {IarData} from "@app/models/reciever/IarData";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class IarResolver implements Resolve<boolean> {
-  dataModel: IarData[] = []
+  dataModel: IarData[] = [];
 
   constructor(
     private httpService: HttpService,
     private authenticationService: AuthenticationService
-  ) {}
+  ) {
+  }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    if (this.authenticationService.session.role === 'custodian') {
+    if (this.authenticationService.session.role === "custodian") {
       return this.httpService.iarResource().pipe(
         map((response: IarData[]) => {
           this.dataModel = response;

@@ -1,26 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from "@angular/core";
 import {
   Resolve
-} from '@angular/router';
-import { Observable, of } from 'rxjs';
+} from "@angular/router";
+import {Observable, of} from "rxjs";
 import {HttpService} from "../services/http.service";
-import {AuthenticationService} from "../../services/authentication.service";
-import {tipsResolverModel} from "../../models/resolvers/tipsResolverModel";
-import {catchError, map} from "rxjs/operators";
+import {AuthenticationService} from "@app/services/authentication.service";
+import {tipsResolverModel} from "@app/models/resolvers/tipsResolverModel";
+import {map} from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class TipsResolver implements Resolve<boolean> {
   dataModel: tipsResolverModel = new tipsResolverModel();
 
-  constructor(
-    private httpService: HttpService,
-    private authenticationService: AuthenticationService
-  ) {}
+  constructor(private httpService: HttpService, private authenticationService: AuthenticationService) {
+  }
 
   resolve(): Observable<boolean> {
-    if (this.authenticationService.session.role === 'admin') {
+    if (this.authenticationService.session.role === "admin") {
       return this.httpService.requestTipResource().pipe(
         map((response: tipsResolverModel) => {
           this.dataModel = response;
@@ -30,5 +28,5 @@ export class TipsResolver implements Resolve<boolean> {
     }
     return of(true);
   }
-  
+
 }

@@ -14,7 +14,7 @@ import {AppConfigService} from "@app/services/app-config.service";
 })
 export class WizardComponent implements OnInit {
   step: number = 1;
-  emailRegexp = Constants.email_regexp;
+  emailRegexp = Constants.emailRegexp;
   password_score = 0;
   admin_check_password = "";
   recipientDuplicate = false;

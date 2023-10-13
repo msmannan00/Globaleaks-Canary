@@ -32,12 +32,12 @@
         <src-tip-questionnaire-answers [tipService]="wbtipService"></src-tip-questionnaire-answers>
     </div>
     <div class="col-md-6" *ngIf="wbtipService.tip.enable_whistleblower_identity">
-        <src-whistleblower-identity [uploadEstimateTime]="calculateEstimatedTime()" [uploadprogress]="calculateProgress()" [isuploading]="uploading()" (onFormUpdate)="onFormChange()" (provideIdentityInformation)=provideIdentityInformation($event) [answers]="answers" [step]="wbtipService.tip.whistleblower_identity_field" [field]="wbtipService.tip.whistleblower_identity_field"></src-whistleblower-identity>
+        <src-whistleblower-identity [uploadEstimateTime]="calculateEstimatedTime()" [uploadProgress]="calculateProgress()" [isUploading]="uploading()" (onFormUpdate)="onFormChange()" (provideIdentityInformation)=provideIdentityInformation($event) [answers]="answers" [step]="wbtipService.tip.whistleblower_identity_field" [field]="wbtipService.tip.whistleblower_identity_field"></src-whistleblower-identity>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        <src-tip-files-whistleblower [fileupload_url]="fileUploadUrl" *ngIf="wbtipService.tip.enable_attachments"></src-tip-files-whistleblower>
+        <src-tip-files-whistleblower [fileUploadUrl]="fileUploadUrl" *ngIf="wbtipService.tip.enable_attachments"></src-tip-files-whistleblower>
         <src-widget-wbfiles [receivers_by_id]="tip.receivers_by_id" [ctx]="ctx"  *ngIf="wbtipService.tip.wbfiles && wbtipService.tip.wbfiles.length"></src-widget-wbfiles>
     </div>
 </div>

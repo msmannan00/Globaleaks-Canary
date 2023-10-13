@@ -1,6 +1,6 @@
 import {HttpClient} from "@angular/common/http";
 import {Component, OnDestroy, OnInit} from "@angular/core";
-import {FieldtemplatesResolver} from "app/src/shared/resolvers/fieldtemplates.resolver";
+import {FieldTemplatesResolver} from "@app/shared/resolvers/field-templates-resolver.service";
 import {QuestionnairesResolver} from "app/src/shared/resolvers/questionnaires.resolver";
 import {HttpService} from "app/src/shared/services/http.service";
 import {UtilsService} from "app/src/shared/services/utils.service";
@@ -19,7 +19,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private questionnariesService: QuestionnaireService, private httpClient: HttpClient, private httpService: HttpService, private utilsService: UtilsService, private fieldTemplates: FieldtemplatesResolver, private questionnairesResolver: QuestionnairesResolver
+  constructor(private questionnariesService: QuestionnaireService, private httpClient: HttpClient, private httpService: HttpService, private utilsService: UtilsService, private fieldTemplates: FieldTemplatesResolver, private questionnairesResolver: QuestionnairesResolver
   ) {
   }
 

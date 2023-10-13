@@ -1,13 +1,13 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NgbDate, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
-import { JsonPipe } from '@angular/common';
+import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {NgbDate, NgbDatepickerModule} from "@ng-bootstrap/ng-bootstrap";
+import {FormsModule} from "@angular/forms";
+import {JsonPipe} from "@angular/common";
 
 @Component({
-  selector: 'ngbd-datepicker-range',
+  selector: "ngbd-datepicker-range",
   standalone: true,
   imports: [NgbDatepickerModule, FormsModule, JsonPipe],
-  templateUrl: './date-selector.component.html',
+  templateUrl: "./date-selector.component.html",
 })
 export class DateRangeSelectorComponent {
   hoveredDate: NgbDate | null = null;
@@ -15,13 +15,14 @@ export class DateRangeSelectorComponent {
   @Input() currentDates: any;
   fromDate: NgbDate | null = null;
   toDate: NgbDate | null = null;
-  constructor() {}
+
   ngOnInit() {
     if (this.currentDates) {
       this.fromDate = this.currentDates.fromDate;
       this.toDate = this.currentDates.toDate;
     }
   }
+
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
@@ -34,7 +35,7 @@ export class DateRangeSelectorComponent {
     if (this.fromDate && this.toDate) {
       const formattedFromDate = this.formatDate(this.fromDate);
       const formattedToDate = this.formatDate(this.toDate);
-      this.emitDateSelection.emit({ fromDate: formattedFromDate, toDate: formattedToDate });
+      this.emitDateSelection.emit({fromDate: formattedFromDate, toDate: formattedToDate});
     }
   }
 
@@ -55,7 +56,7 @@ export class DateRangeSelectorComponent {
   resetDatepicker() {
     this.fromDate = null;
     this.toDate = null;
-    this.emitDateSelection.emit({ fromDate: null, toDate: null });
+    this.emitDateSelection.emit({fromDate: null, toDate: null});
   }
 
   isRange(date: NgbDate) {

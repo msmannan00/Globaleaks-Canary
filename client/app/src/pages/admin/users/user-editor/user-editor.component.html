@@ -71,7 +71,7 @@
                 <div class="form-group">
                     <label>{{ 'Email address' | translate }}</label>
                     <input class="form-control" name="email" [(ngModel)]="user.mail_address" type="email"
-                        [pattern]="Constants.email_regexp" required />
+                           [pattern]="Constants.emailRegexp" required />
 
                     <div class="text-danger" *ngIf="editUser.form.get('email')?.errors?.['required']">
                         {{ 'This field is mandatory' | translate }}

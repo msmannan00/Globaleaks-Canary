@@ -1,12 +1,12 @@
-import {Component, Input} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {UtilsService} from '../../services/utils.service';
-import {AppDataService} from 'app/src/app-data.service';
+import {Component, Input} from "@angular/core";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {UtilsService} from "../../services/utils.service";
+import {AppDataService} from "app/src/app-data.service";
 
 
 @Component({
-  selector: 'src-grant-access',
-  templateUrl: './grant-access.component.html'
+  selector: "src-grant-access",
+  templateUrl: "./grant-access.component.html"
 })
 export class GrantAccessComponent {
 
@@ -14,21 +14,17 @@ export class GrantAccessComponent {
   @Input() confirmFun: Function;
   @Input() cancelFun: Function;
   receiver_id: any;
-  receivers_by_id: any = {}
+  receivers_by_id: any = {};
 
-  constructor(
-    private modalService: NgbModal,
-    private utils: UtilsService,
-    private appDataService: AppDataService,
-  ) {
+  constructor(private modalService: NgbModal, private utils: UtilsService, private appDataService: AppDataService) {
   }
 
   ngOnInit() {
-    this.receivers_by_id = this.appDataService.receivers_by_id
+    this.receivers_by_id = this.appDataService.receivers_by_id;
   }
 
   confirm() {
-    this.cancel()
+    this.cancel();
     if (this.confirmFun) {
       this.confirmFun(this.receiver_id);
     }

@@ -21,6 +21,6 @@ export class SignupdefaultComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.emailRegex = Constants.Constants.email_regexp;
+    this.emailRegex = Constants.Constants.emailRegexp;
   }
 }

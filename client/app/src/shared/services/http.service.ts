@@ -1,150 +1,150 @@
-import {Injectable} from '@angular/core';
+import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from 'rxjs';
-import {password_recovery_response_model} from "../../models/authentication/password_recovery_response_model";
+import {Observable} from "rxjs";
+import {password_recovery_response_model} from "@app/models/authentication/password_recovery_response_model";
 import {Router} from "@angular/router";
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class HttpService {
 
   getPublicResource(): Observable<any> {
-    return this.httpClient.get<any>("/api/public", {observe: 'response'});
+    return this.httpClient.get<any>("/api/public", {observe: "response"});
   }
 
   requestAuthTokenLogin(param: string): Observable<any> {
-    return this.httpClient.post("api/auth/tokenauth", param)
+    return this.httpClient.post("api/auth/tokenauth", param);
   }
 
   requestGeneralLogin(param: string): Observable<any> {
-    return this.httpClient.post("api/auth/authentication", param)
+    return this.httpClient.post("api/auth/authentication", param);
   }
 
   requestWhistleBlowerLogin(param: string): Observable<any> {
-    return this.httpClient.post("api/auth/receiptauth", param)
+    return this.httpClient.post("api/auth/receiptauth", param);
   }
 
   requestDeleteUserSession(): Observable<any> {
-    return this.httpClient.delete("api/auth/session")
+    return this.httpClient.delete("api/auth/session");
   }
 
   requestDeleteTenant(url: any): Observable<any> {
-    return this.httpClient.delete(url)
+    return this.httpClient.delete(url);
   }
 
   requestUpdateTenant(url: any, data: any): Observable<any> {
-    return this.httpClient.put(url, data)
+    return this.httpClient.put(url, data);
   }
-  
+
   authorizeIdentity(url: any, data: any): Observable<any> {
-    return this.httpClient.put(url, data)
+    return this.httpClient.put(url, data);
   }
 
   deleteDBFile(id: string): Observable<any> {
-    return this.httpClient.delete("api/recipient/rfiles/" + id)
+    return this.httpClient.delete("api/recipient/rfiles/" + id);
   }
 
   requestOperations(data: any, header?: any): Observable<any> {
-    return this.httpClient.put("api/user/operations", data, header)
+    return this.httpClient.put("api/user/operations", data, header);
   }
 
   requestOperationsRecovery(data: any, confirmation: any): Observable<any> {
-    const headers = {'X-Confirmation': confirmation}
-    return this.httpClient.put("api/user/operations", data, {headers})
+    const headers = {"X-Confirmation": confirmation};
+    return this.httpClient.put("api/user/operations", data, {headers});
   }
 
   updatePreferenceResource(data: any): Observable<any> {
-    return this.httpClient.put("api/preferences", data)
+    return this.httpClient.put("api/preferences", data);
   }
 
   requestChangePassword(param: string): Observable<any> {
-    return this.httpClient.put<password_recovery_response_model>("api/reset/password", param)
+    return this.httpClient.put<password_recovery_response_model>("api/reset/password", param);
   }
 
   requestToken(param: string): Observable<any> {
-    return this.httpClient.post("api/auth/token", param)
+    return this.httpClient.post("api/auth/token", param);
   }
 
   requestResetLogin(param: string): Observable<any> {
-    return this.httpClient.post("api/user/reset/password", param)
+    return this.httpClient.post("api/user/reset/password", param);
   }
 
   requestSignup(param: string): Observable<any> {
-    return this.httpClient.post("api/signup", param)
+    return this.httpClient.post("api/signup", param);
   }
 
   requestWizard(param: string): Observable<any> {
-    return this.httpClient.post("api/wizard", param)
+    return this.httpClient.post("api/wizard", param);
   }
 
   requestSignupToken(token: any): Observable<any> {
-    return this.httpClient.get("api/signup/" + token)
+    return this.httpClient.get("api/signup/" + token);
   }
 
   requestTenantSwitch(url: any): Observable<any> {
-    return this.httpClient.get(url)
+    return this.httpClient.get(url);
   }
 
   requestReportSubmission(param: string): Observable<any> {
-    return this.httpClient.post("api/whistleblower/submission", param)
+    return this.httpClient.post("api/whistleblower/submission", param);
   }
 
   requestSuppor(param: string): Observable<any> {
-    return this.httpClient.post("api/support", param)
+    return this.httpClient.post("api/support", param);
   }
 
   requestNewComment(param: string): Observable<any> {
-    return this.httpClient.post("api/whistleblower/wbtip/comments", param)
+    return this.httpClient.post("api/whistleblower/wbtip/comments", param);
   }
 
   requestPreferenceResource(): Observable<any> {
-    return this.httpClient.get("/api/admin/preferences")
+    return this.httpClient.get("/api/admin/preferences");
   }
 
   requestUserPreferenceResource(): Observable<any> {
-    return this.httpClient.get("api/user/preferences")
+    return this.httpClient.get("api/user/preferences");
   }
 
   requestNodeResource(): Observable<any> {
-    return this.httpClient.get("/api/admin/node")
+    return this.httpClient.get("/api/admin/node");
   }
 
   updateNodeResource(data: any): Observable<any> {
-    return this.httpClient.put("/api/admin/node", data)
+    return this.httpClient.put("/api/admin/node", data);
   }
 
   requestUsersResource(): Observable<any> {
-    return this.httpClient.get("/api/admin/users")
+    return this.httpClient.get("/api/admin/users");
   }
 
   requestContextsResource(): Observable<any> {
-    return this.httpClient.get("/api/admin/contexts")
+    return this.httpClient.get("/api/admin/contexts");
   }
 
   requestTenantsResource(): Observable<any> {
-    return this.httpClient.get("/api/admin/tenants")
+    return this.httpClient.get("/api/admin/tenants");
   }
 
   requestQuestionnairesResource(): Observable<any> {
-    return this.httpClient.get("/api/admin/questionnaires")
+    return this.httpClient.get("/api/admin/questionnaires");
   }
 
   requestTipResource(): Observable<any> {
-    return this.httpClient.get("/api/admin/auditlog/tips")
+    return this.httpClient.get("/api/admin/auditlog/tips");
   }
 
   requestNotificationsResource(): Observable<any> {
-    return this.httpClient.get("/api/admin/notification")
+    return this.httpClient.get("/api/admin/notification");
   }
 
   requestNetworkResource(): Observable<any> {
-    return this.httpClient.get("/api/admin/network")
+    return this.httpClient.get("/api/admin/network");
   }
 
   requestUpdateNetworkResource(param: any): Observable<any> {
-    return this.httpClient.put("/api/admin/network", param)
+    return this.httpClient.put("/api/admin/network", param);
   }
 
   requestTlsConfigResource(): Observable<any> {
@@ -156,36 +156,36 @@ export class HttpService {
   }
 
   requestRedirectsResource(): Observable<any> {
-    return this.httpClient.get("/api/admin/redirects")
+    return this.httpClient.get("/api/admin/redirects");
   }
 
   requestPostRedirectsResource(param: any): Observable<any> {
-    return this.httpClient.post("/api/admin/redirects", param)
+    return this.httpClient.post("/api/admin/redirects", param);
   }
 
   requestDeleteRedirectsResource(id: any): Observable<any> {
-    return this.httpClient.delete("/api/admin/redirects/" + id)
+    return this.httpClient.delete("/api/admin/redirects/" + id);
   }
 
   requestUpdateTlsConfigFilesResource(name: any, data: any): Observable<any> {
-    return this.httpClient.put("/api/admin/config/tls/files/" + name, data)
+    return this.httpClient.put("/api/admin/config/tls/files/" + name, data);
   }
 
   requestDeleteTlsConfigFilesResource(name: string): Observable<any> {
-    return this.httpClient.delete("/api/admin/config/tls/files/" + name)
+    return this.httpClient.delete("/api/admin/config/tls/files/" + name);
   }
 
   requestAdminAcmeResource(param: any): Observable<any> {
-    return this.httpClient.post("/api/admin/config/acme/run", param)
+    return this.httpClient.post("/api/admin/config/acme/run", param);
   }
 
   requestCSRContentResource(name: any, param: any): Observable<any> {
-    return this.httpClient.post("/api/admin/config/tls/files/" + name, param)
+    return this.httpClient.post("/api/admin/config/tls/files/" + name, param);
   }
 
   downloadCSRFile(): Observable<Blob> {
     const url = "/api/admin/config/tls/files/csr";
-    return this.httpClient.get(url, {responseType: 'blob'});
+    return this.httpClient.get(url, {responseType: "blob"});
   }
 
   disableTLSConfig(): Observable<any> {
@@ -199,43 +199,43 @@ export class HttpService {
   }
 
   whistleBlowerTip(): Observable<any> {
-    return this.httpClient.get("api/whistleblower/wbtip")
+    return this.httpClient.get("api/whistleblower/wbtip");
   }
 
   whistleBlowerTipUpdate(param: any, tipid: string): Observable<any> {
-    return this.httpClient.post("api/whistleblower/wbtip/" + tipid + "/update", param)
+    return this.httpClient.post("api/whistleblower/wbtip/" + tipid + "/update", param);
   }
 
   whistleBlowerIdentityUpdate(param: any, tipid: string): Observable<any> {
-    return this.httpClient.post("api/whistleblower/wbtip/" + tipid + "/provideidentityinformation", param)
+    return this.httpClient.post("api/whistleblower/wbtip/" + tipid + "/provideidentityinformation", param);
   }
 
   requestAdminFieldTemplateResource(): Observable<any> {
-    return this.httpClient.get("/api/admin/fieldtemplates")
+    return this.httpClient.get("/api/admin/fieldtemplates");
   }
 
   requestUpdateAdminNodeResource(data: any): Observable<any> {
-    return this.httpClient.put("/api/admin/node", data)
+    return this.httpClient.put("/api/admin/node", data);
   }
 
   requestAdminL10NResource(lang: any): Observable<any> {
-    return this.httpClient.get("/api/admin/l10n/" + lang)
+    return this.httpClient.get("/api/admin/l10n/" + lang);
   }
 
   requestUpdateAdminL10NResource(data: any, lang: any): Observable<any> {
-    return this.httpClient.put("/api/admin/l10n/" + lang, data)
+    return this.httpClient.put("/api/admin/l10n/" + lang, data);
   }
 
   requestDefaultL10NResource(lang: any): Observable<any> {
-    return this.httpClient.get("/data/l10n/" + lang + ".json")
+    return this.httpClient.get("/data/l10n/" + lang + ".json");
   }
 
   requestAdminAuditLogResource(): Observable<any> {
-    return this.httpClient.get("/api/admin/auditlog")
+    return this.httpClient.get("/api/admin/auditlog");
   }
 
   addQuestionare(param: any): Observable<any> {
-    return this.httpClient.post(`api/admin/questionnaires`, param)
+    return this.httpClient.post(`api/admin/questionnaires`, param);
   }
 
   requestDeleteAdminQuestionare(id: any): Observable<any> {
@@ -247,39 +247,39 @@ export class HttpService {
   }
 
   requestJobResource(): Observable<any> {
-    return this.httpClient.get("/api/admin/auditlog/jobs")
+    return this.httpClient.get("/api/admin/auditlog/jobs");
   }
 
   recieverTipResource(): Observable<any> {
-    return this.httpClient.get("api/recipient/rtips")
+    return this.httpClient.get("api/recipient/rtips");
   }
 
   iarResource(): Observable<any> {
-    return this.httpClient.get("api/custodian/iars")
+    return this.httpClient.get("api/custodian/iars");
   }
 
   recieverTip(id: any): Observable<any> {
-    return this.httpClient.get("api/recipient/rtips/" + id)
+    return this.httpClient.get("api/recipient/rtips/" + id);
   }
 
   rtipsRequestNewComment(param: any, id: any): Observable<any> {
-    return this.httpClient.post(`api/recipient/rtips/${id}/comments`, param)
+    return this.httpClient.post(`api/recipient/rtips/${id}/comments`, param);
   }
 
   requestStatusesResource(): Observable<any> {
-    return this.httpClient.get(`api/admin/statuses`)
+    return this.httpClient.get(`api/admin/statuses`);
   }
-  
+
   addSubmissionStatus(param: any): Observable<any> {
-    return this.httpClient.post(`api/admin/statuses`, param)
+    return this.httpClient.post(`api/admin/statuses`, param);
   }
 
   fetchTenant(): Observable<any> {
-    return this.httpClient.get(`api/admin/tenants`)
+    return this.httpClient.get(`api/admin/tenants`);
   }
 
   addTenant(param: any): Observable<any> {
-    return this.httpClient.post("/api/admin/tenants", param)
+    return this.httpClient.post("/api/admin/tenants", param);
   }
 
   accessIdentity(id: any): Observable<any> {
@@ -287,7 +287,7 @@ export class HttpService {
   }
 
   requestAddAdminUser(param: any): Observable<any> {
-    return this.httpClient.post("/api/admin/users", param)
+    return this.httpClient.post("/api/admin/users", param);
   }
 
   requestUpdateAdminUser(id: any, param: any): Observable<any> {
@@ -299,11 +299,11 @@ export class HttpService {
   }
 
   requestAddAdminContext(param: any): Observable<any> {
-    return this.httpClient.post("/api/admin/contexts", param)
+    return this.httpClient.post("/api/admin/contexts", param);
   }
 
   requestAddAdminQuestionnaireStep(param: any): Observable<any> {
-    return this.httpClient.post("/api/admin/steps", param)
+    return this.httpClient.post("/api/admin/steps", param);
   }
 
   requestUpdateAdminQuestionnaireStep(id: any, param: any): Observable<any> {
@@ -315,11 +315,11 @@ export class HttpService {
   }
 
   requestAddAdminQuestionnaireField(param: any): Observable<any> {
-    return this.httpClient.post("/api/admin/fields", param)
+    return this.httpClient.post("/api/admin/fields", param);
   }
 
   requestAddAdminQuestionnaireFieldTemplate(param: any): Observable<any> {
-    return this.httpClient.post("/api/admin/fieldtemplates", param)
+    return this.httpClient.post("/api/admin/fieldtemplates", param);
   }
 
   requestUpdateAdminQuestionnaireField(id: any, param: any): Observable<any> {
@@ -343,8 +343,8 @@ export class HttpService {
   }
 
   requestUpdateStatus(url: string, param: any): Observable<any> {
-    const headers = {'content-type': 'application/json'}
-    return this.httpClient.put(url, param, {headers})
+    const headers = {"content-type": "application/json"};
+    return this.httpClient.put(url, param, {headers});
   }
 
   requestUpdateAdminNotification(notification: any): Observable<any> {
@@ -361,13 +361,13 @@ export class HttpService {
     if (refresh) {
       setTimeout(() => {
         const currentUrl = this.router.url;
-        this.router.navigateByUrl('routing', {skipLocationChange: true, replaceUrl: true}).then(() => {
+        this.router.navigateByUrl("routing", {skipLocationChange: true, replaceUrl: true}).then(() => {
           this.router.navigate([currentUrl]);
         });
       }, 150);
     }
 
-    return this.httpClient.put(url, data)
+    return this.httpClient.put(url, data);
   }
 
   tipOperation = (operation: string, args: any, tipId: any) => {

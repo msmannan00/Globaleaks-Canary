@@ -27,7 +27,7 @@ import {FormsModule} from "@angular/forms";
 import {ActionModule} from "./pages/action/action.module";
 import {WhistleblowerModule} from "./pages/whistleblower/whistleblower.module";
 import {MarkdownModule} from "ngx-markdown";
-import {ReceiptvalidatorDirective} from "./shared/directive/receiptvalidator.directive";
+import {ReceiptValidatorDirective} from "app/src/shared/directive/receipt-validator.directive";
 import {NgxFlowModule, FlowInjectionToken} from "@flowjs/ngx-flow";
 import * as Flow from "@flowjs/flow.js";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
@@ -77,7 +77,7 @@ export function createTranslateLoader(http: HttpClient) {
     CustodianModule,
   ],
   providers: [
-    ReceiptvalidatorDirective,
+    ReceiptValidatorDirective,
     TranslatorPipe, TranslateService,
     {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true},
     {provide: APP_BASE_HREF, useValue: "/"},

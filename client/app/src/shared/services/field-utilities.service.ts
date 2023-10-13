@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
+import {Injectable} from "@angular/core";
 import {Constants} from "../constants/constants";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class FieldUtilitiesService {
   parseQuestionnaire(questionnaire: any, parsedFields: any) {
@@ -27,9 +27,9 @@ export class FieldUtilitiesService {
     let validators: any = {
       "custom": field.attrs.regexp ? field.attrs.regexp.value : "",
       "none": "",
-      "email": Constants.email_regexp,
-      "number": Constants.number_regexp,
-      "phonenumber": Constants.phonenumber_regexp,
+      "email": Constants.emailRegexp,
+      "number": Constants.numberRegexp,
+      "phonenumber": Constants.phoneNumberRegexp,
     };
 
     if (field.attrs.input_validation) {
@@ -245,7 +245,7 @@ export class FieldUtilitiesService {
       scope.submission.setContextReceivers(scope.context.id);
     }
 
-    let localscope = this
+    let localscope = this;
 
     scope.questionnaire.steps.forEach(function (step: any) {
       step.enabled = self.isFieldTriggered(null, step, scope.answers, scope.score);

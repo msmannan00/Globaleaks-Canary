@@ -1,26 +1,22 @@
-import { Injectable } from '@angular/core';
-import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { HttpService } from '../services/http.service';
-import { AuthenticationService } from '../../services/authentication.service';
-import { auditlogResolverModel } from '../../models/resolvers/auditlogResolverModel';
+import {Injectable} from "@angular/core";
+import {Resolve, RouterStateSnapshot, ActivatedRouteSnapshot} from "@angular/router";
+import {Observable, of} from "rxjs";
+import {switchMap} from "rxjs/operators";
+import {HttpService} from "../services/http.service";
+import {AuthenticationService} from "@app/services/authentication.service";
+import {auditlogResolverModel} from "@app/models/resolvers/auditlogResolverModel";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AuditlogResolver implements Resolve<boolean> {
-  dataModel:auditlogResolverModel = new auditlogResolverModel()
-  constructor(
-    private httpService: HttpService,
-    private authenticationService: AuthenticationService
-  ) {}
+  dataModel: auditlogResolverModel = new auditlogResolverModel();
 
-  resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean> {
-    if (this.authenticationService.session.role === 'admin') {
+  constructor(private httpService: HttpService, private authenticationService: AuthenticationService) {
+  }
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    if (this.authenticationService.session.role === "admin") {
       return this.httpService.requestAdminAuditLogResource().pipe(
         switchMap((response: auditlogResolverModel) => {
           this.handleResponse(response);
@@ -30,7 +26,7 @@ export class AuditlogResolver implements Resolve<boolean> {
     }
     return of(true);
   }
-  
+
 
   private handleResponse(response: auditlogResolverModel): void {
     this.dataModel = response;

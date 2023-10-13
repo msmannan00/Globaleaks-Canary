@@ -1,31 +1,44 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {PreferenceResolver} from "../../../resolvers/preference.resolver";
 import {UtilsService} from "../../../services/utils.service";
-import {AuthenticationService} from "../../../../services/authentication.service";
-import {AppDataService} from "../../../../app-data.service";
+import {AuthenticationService} from "@app/services/authentication.service";
+import {AppDataService} from "@app/app-data.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Enable2faComponent} from "../../../modals/enable2fa/enable2fa.component";
-import {TwoFactorAuthData} from "../../../../services/2fa.data.service";
+import {TwoFactorAuthData} from "@app/services/2fa.data.service";
 import {HttpService} from "../../../services/http.service";
-import {ConfirmationWithPasswordComponent} from "../../../modals/confirmation-with-password/confirmation-with-password.component";
-import {HttpHeaders} from "@angular/common/http";
-import {EncryptionRecoveryKeyComponent} from "../../../modals/encryption-recovery-key/encryption-recovery-key.component";
-import {TranslationService} from "../../../../services/translation.service";
+import {
+  ConfirmationWithPasswordComponent
+} from "../../../modals/confirmation-with-password/confirmation-with-password.component";
+import {
+  EncryptionRecoveryKeyComponent
+} from "../../../modals/encryption-recovery-key/encryption-recovery-key.component";
+import {TranslationService} from "@app/services/translation.service";
 import {TranslateService} from "@ngx-translate/core";
 import {ConfirmationWith2faComponent} from "../../../modals/confirmation-with2fa/confirmation-with2fa.component";
 
 @Component({
-  selector: 'src-preference-tab1',
-  templateUrl: './preference-tab1.component.html',
-  styleUrls: ['./preference-tab1.component.css']
+  selector: "src-preference-tab1",
+  templateUrl: "./preference-tab1.component.html"
 })
-export class PreferenceTab1Component implements OnInit{
+export class PreferenceTab1Component implements OnInit {
 
-  editingName:boolean
-  editingPublicName:boolean
-  editingEmailAddress:boolean
-  languageModel = ""
-  role=""
+  editingName: boolean;
+  editingPublicName: boolean;
+  editingEmailAddress: boolean;
+  languageModel = "";
+  role = "";
+
+  constructor(private translationService: TranslationService, private translateService: TranslateService, private httpService: HttpService, private twoFactorAuthData: TwoFactorAuthData, private modalService: NgbModal, public appDataService: AppDataService, public preferenceResolver: PreferenceResolver, private utilsService: UtilsService, public authenticationService: AuthenticationService) {
+  }
+
+  ngOnInit(): void {
+    this.role = this.utilsService.role_l10n(this.authenticationService.session.role);
+    this.role = this.translateService.instant(this.role);
+    setTimeout(() => {
+      this.languageModel = this.preferenceResolver.dataModel.language;
+    }, 150);
+  }
 
   toggleNameEditing() {
     this.editingName = !this.editingName;
@@ -39,44 +52,44 @@ export class PreferenceTab1Component implements OnInit{
     this.editingEmailAddress = !this.editingEmailAddress;
   };
 
-  toggle2FA(event: Event){
+  toggle2FA(event: Event) {
     if (!this.preferenceResolver.dataModel.two_factor) {
       let array = new Uint32Array(32);
 
       window.crypto.getRandomValues(array);
 
-      this.twofactorauthData.totp.secret = ""
-      this.twofactorauthData.totp.qrcode_string = ""
-      this.twofactorauthData.totp.edit = false
+      this.twoFactorAuthData.totp.secret = "";
+      this.twoFactorAuthData.totp.qrcode_string = "";
+      this.twoFactorAuthData.totp.edit = false;
 
       this.modalService.open(Enable2faComponent);
 
     } else {
       let modalRef = this.modalService.open(ConfirmationWith2faComponent);
-       modalRef.result.then(
-          (result) => {
-              let data = {
-                  "operation": "disable_2fa",
-                  "args": {
-                      "secret": result,
-                      "token": this.twofactorauthData.totp.token
-                  }
-              }
+      modalRef.result.then(
+        (result) => {
+          let data = {
+            "operation": "disable_2fa",
+            "args": {
+              "secret": result,
+              "token": this.twoFactorAuthData.totp.token
+            }
+          };
 
-              this.httpService.requestOperationsRecovery(data, this.utilsService.encodeString(result)).subscribe(
-                  {
-                      next: response => {
-                          this.preferenceResolver.dataModel.two_factor = !this.preferenceResolver.dataModel.two_factor
-                          this.utilsService.reloadCurrentRoute();
-                      },
-                      error: (error: any) => {
-                          this.utilsService.reloadCurrentRoute();
-                      }
-                  }
-              )
-          },
-          (reason) => {
-          }
+          this.httpService.requestOperationsRecovery(data, this.utilsService.encodeString(result)).subscribe(
+            {
+              next: _ => {
+                this.preferenceResolver.dataModel.two_factor = !this.preferenceResolver.dataModel.two_factor;
+                this.utilsService.reloadCurrentRoute();
+              },
+              error: (_: any) => {
+                this.utilsService.reloadCurrentRoute();
+              }
+            }
+          );
+        },
+        (_) => {
+        }
       );
     }
 
@@ -87,30 +100,30 @@ export class PreferenceTab1Component implements OnInit{
   getEncryptionRecoveryKey() {
 
     let modalRef = this.modalService.open(ConfirmationWithPasswordComponent);
-    modalRef.componentInstance.confirmFunction = (result:any) => {
+    modalRef.componentInstance.confirmFunction = (result: any) => {
       let data = {
         "operation": "get_recovery_key",
         "args": {
-          "secret": this.twofactorauthData.totp.secret,
-          "token": this.twofactorauthData.totp.token
+          "secret": this.twoFactorAuthData.totp.secret,
+          "token": this.twoFactorAuthData.totp.token
         }
-      }
+      };
 
       let requestObservable = this.httpService.requestOperationsRecovery(data, this.utilsService.encodeString(result));
       requestObservable.subscribe(
         {
           next: response => {
             this.preferenceResolver.dataModel.clicked_recovery_key = true;
-            let erk = response.data['text'].match(/.{1,4}/g).join("-");
+            let erk = response.data["text"].match(/.{1,4}/g).join("-");
             let modalRef = this.modalService.open(EncryptionRecoveryKeyComponent);
             modalRef.componentInstance.erk = erk;
           },
           error: (error: any) => {
-            if(error.error['error_message'] == "Authentication Failed"){
-              this.getEncryptionRecoveryKey()
-            }else {
+            if (error.error["error_message"] == "Authentication Failed") {
+              this.getEncryptionRecoveryKey();
+            } else {
               this.preferenceResolver.dataModel.clicked_recovery_key = true;
-              let erk = error.error['text'].match(/.{1,4}/g).join("-");
+              let erk = error.error["text"].match(/.{1,4}/g).join("-");
               let modalRef = this.modalService.open(EncryptionRecoveryKeyComponent);
               modalRef.componentInstance.erk = erk;
             }
@@ -126,33 +139,16 @@ export class PreferenceTab1Component implements OnInit{
     }
     let requestObservable = this.httpService.updatePreferenceResource(JSON.stringify(this.preferenceResolver.dataModel));
     requestObservable.subscribe(
-        {
-            next: response => {
-                this.translationService.onChange(this.preferenceResolver.dataModel.language)
-            },
-            error: (error: any) => {
-            }
+      {
+        next: _ => {
+          this.translationService.onChange(this.preferenceResolver.dataModel.language);
         }
+      }
     );
   };
 
-  onlanguagechange(){
-      this.preferenceResolver.dataModel.language = this.languageModel
-  }
-
-  ngOnInit(): void {
-      this.role = this.utilsService.role_l10n(this.authenticationService.session.role)
-      this.role = this.translateService.instant(this.role)
-      setTimeout(() => {
-          this.languageModel = this.preferenceResolver.dataModel.language
-      }, 150);
-  }
-
-  onCheckboxChange($event: Event) {
-      $event.preventDefault();
-  }
-
-  constructor(public translationService:TranslationService, public translateService:TranslateService, public httpService: HttpService, private twofactorauthData:TwoFactorAuthData, public modalService: NgbModal, public appDataService:AppDataService, public preferenceResolver:PreferenceResolver, public utilsService:UtilsService, public authenticationService:AuthenticationService) {
+  onlanguagechange() {
+    this.preferenceResolver.dataModel.language = this.languageModel;
   }
 
 }

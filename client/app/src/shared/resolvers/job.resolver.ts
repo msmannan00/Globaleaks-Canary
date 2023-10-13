@@ -1,26 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from "@angular/core";
 import {
   Resolve,
-} from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { HttpService } from '../services/http.service';
-import { AuthenticationService } from '../../services/authentication.service';
-import { jobResolverModel } from '../../models/resolvers/jobResolverModel';
+} from "@angular/router";
+import {Observable, of} from "rxjs";
+import {map} from "rxjs/operators";
+import {HttpService} from "../services/http.service";
+import {AuthenticationService} from "@app/services/authentication.service";
+import {jobResolverModel} from "@app/models/resolvers/jobResolverModel";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class JobResolver implements Resolve<boolean> {
   dataModel: jobResolverModel = new jobResolverModel();
 
-  constructor(
-    private httpService: HttpService,
-    private authenticationService: AuthenticationService
-  ) {}
+  constructor(private httpService: HttpService, private authenticationService: AuthenticationService) {
+  }
 
   resolve(): Observable<boolean> {
-    if (this.authenticationService.session.role === 'admin') {
+    if (this.authenticationService.session.role === "admin") {
       return this.httpService.requestJobResource().pipe(
         map((response: jobResolverModel) => {
           this.dataModel = response;
@@ -30,5 +28,5 @@ export class JobResolver implements Resolve<boolean> {
     }
     return of(true);
   }
-  
+
 }

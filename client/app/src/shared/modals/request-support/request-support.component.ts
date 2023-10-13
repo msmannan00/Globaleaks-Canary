@@ -1,26 +1,25 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {UtilsService} from "../../services/utils.service";
 import {PreferenceResolver} from "../../resolvers/preference.resolver";
 import {Constants} from "../../constants/constants";
 
 @Component({
-  selector: 'src-request-support',
-  templateUrl: './request-support.component.html'
+  selector: "src-request-support",
+  templateUrl: "./request-support.component.html"
 })
 export class RequestSupportComponent implements OnInit {
   protected readonly Constants = Constants;
-  sent = false
+  sent = false;
   arg = {
     mail_address: "",
     text: ""
   };
 
-  constructor(public activeModal: NgbActiveModal, public utilsService: UtilsService, public preferenceResolver: PreferenceResolver) {
+  constructor(public activeModal: NgbActiveModal, public utilsService: UtilsService, private preferenceResolver: PreferenceResolver) {
   }
 
   ngOnInit(): void {
-    this.arg.mail_address = this.preferenceResolver.dataModel.mail_address
+    this.arg.mail_address = this.preferenceResolver.dataModel.mail_address;
   }
-
 }

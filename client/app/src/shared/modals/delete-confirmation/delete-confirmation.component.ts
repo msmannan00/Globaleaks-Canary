@@ -1,13 +1,13 @@
-import {HttpClient} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {UtilsService} from '../../services/utils.service';
-import {Router} from '@angular/router';
+import {HttpClient} from "@angular/common/http";
+import {Component, Input} from "@angular/core";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {UtilsService} from "../../services/utils.service";
+import {Router} from "@angular/router";
 
 
 @Component({
-  selector: 'src-delete-confirmation',
-  templateUrl: './delete-confirmation.component.html'
+  selector: "src-delete-confirmation",
+  templateUrl: "./delete-confirmation.component.html"
 })
 export class DeleteConfirmationComponent {
 
@@ -16,22 +16,17 @@ export class DeleteConfirmationComponent {
   @Input() operation: any;
   confirmFunction: () => void;
 
-  constructor(
-    private modalService: NgbModal,
-    private http: HttpClient,
-    private utils: UtilsService,
-    private router: Router
-  ) {
+  constructor(private modalService: NgbModal, private http: HttpClient, private utils: UtilsService, private router: Router) {
   }
 
   confirm() {
-    this.cancel()
-    this.confirmFunction()
+    this.cancel();
+    this.confirmFunction();
     if (this.args) {
       if (this.args.operation === "delete") {
         return this.http.delete("api/recipient/rtips/" + this.args.tip.id)
           .subscribe(() => {
-            this.router.navigate(['/recipient/reports']).then();
+            this.router.navigate(["/recipient/reports"]).then();
           });
       }
       return;
@@ -44,12 +39,12 @@ export class DeleteConfirmationComponent {
 
     if (this.selected_tips) {
       return this.utils.runRecipientOperation(this.operation, {"rtips": this.selected_tips}, true).subscribe({
-        next: response => {
+        next: _ => {
           this.utils.reloadCurrentRoute();
         }
       });
     } else {
-      return null
+      return null;
     }
 
   }

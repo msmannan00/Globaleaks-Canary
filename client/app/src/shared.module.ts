@@ -17,10 +17,10 @@ import {
   NgbNav, NgbNavItem, NgbNavLink, NgbNavContent,
   NgbProgressbar, NgbDatepickerModule, NgbDropdownModule, NgbTooltipModule
 } from "@ng-bootstrap/ng-bootstrap";
-import {PrivacybadgeComponent} from "./shared/partials/privacybadge/privacybadge.component";
+import {PrivacyBadgeComponent} from "app/src/shared/partials/privacybadge/privacy-badge.component";
 import {MarkdownModule} from "ngx-markdown";
 import {StripHtmlPipe} from "./shared/pipes/strip-html.pipe";
-import {ReceiptvalidatorDirective} from "./shared/directive/receiptvalidator.directive";
+import {ReceiptValidatorDirective} from "app/src/shared/directive/receipt-validator.directive";
 import {TipInfoComponent} from "./shared/partials/tip-info/tip-info.component";
 import {TipSubmissionStatusComponent} from "./shared/partials/tip-submission-status/tip-submission-status.component";
 import {NgSelectModule} from "@ng-select/ng-select";
@@ -37,9 +37,9 @@ import {SplitPipe} from "./shared/pipes/split.pipe";
 import {
   TipFilesWhistleblowerComponent
 } from "./shared/partials/tip-files-whistleblower/tip-files-whistleblower.component";
-import {WidgetWbfilesComponent} from "./shared/partials/widget-wbfiles/widget-wbfiles.component";
+import {WidgetWbFilesComponent} from "app/src/shared/partials/widget-wbfiles/widget-wb-files.component";
 import {ByteFmtPipe} from "./shared/pipes/byte-fmt.pipe";
-import {RfileUploadButtonComponent} from "./shared/partials/rfile-upload-button/rfile-upload-button.component";
+import {RFileUploadButtonComponent} from "app/src/shared/partials/rfile-upload-button/r-file-upload-button.component";
 import {RfileUploadStatusComponent} from "./shared/partials/rfile-upload-status/rfile-upload-status.component";
 import {TipCommentsComponent} from "./shared/partials/tip-comments/tip-comments.component";
 import {LimitToPipe} from "./shared/pipes/limit-to.pipe";
@@ -52,11 +52,11 @@ import {
   WhistleblowerIdentityFieldComponent
 } from "./pages/field/whistleblower-identity-field/whistleblower-identity-field.component";
 import {NgxFlowModule} from "@flowjs/ngx-flow";
-import {RfilesUploadStatusComponent} from "./shared/partials/rfiles-upload-status/rfiles-upload-status.component";
+import {RFilesUploadStatusComponent} from "app/src/shared/partials/rfiles-upload-status/r-files-upload-status.component";
 import {NgFormChangeDirective} from "./shared/directive/ng-form-change.directive";
-import {WbfilesComponent} from "./shared/partials/wbfiles/wbfiles.component";
+import {WbFilesComponent} from "app/src/shared/partials/wbfiles/wb-files.component";
 import {DisableCcpDirective} from "./shared/directive/disable-ccp.directive";
-import {SubdomainvalidatorDirective} from "./shared/directive/subdomainvalidator.directive";
+import {SubdomainValidatorDirective} from "app/src/shared/directive/subdomain-validator.directive";
 import {PasswordStrengthValidatorDirective} from "./shared/directive/password-strength-validator.directive";
 import {UserHomeComponent} from "./shared/partials/user-home/user-home.component";
 import {UserWarningsComponent} from "./shared/partials/user-warnings/user-warnings.component";
@@ -84,7 +84,7 @@ import {
 } from "./shared/modals/tip-operation-set-reminder/tip-operation-set-reminder.component";
 import {TipOperationPostponeComponent} from "./shared/modals/tip-operation-postpone/tip-operation-postpone.component";
 import {FileViewComponent} from "./shared/modals/file-view/file-view.component";
-import {TipUploadWbfileComponent} from "./shared/partials/tip-upload-wbfile/tip-upload-wbfile.component";
+import {TipUploadWbFileComponent} from "app/src/shared/partials/tip-upload-wbfile/tip-upload-wb-file.component";
 import {ImageUploadDirective} from "./shared/directive/image-upload.directive";
 import {ImageUploadComponent} from "./shared/partials/image-upload/image-upload.component";
 import {EnableEncryptionComponent} from "./shared/modals/enable-encryption/enable-encryption.component";
@@ -145,10 +145,10 @@ import {VoiceRecorderComponent} from "./shared/partials/voice-recorder/voice-rec
     Enable2fa,
     PasswordChangeComponent,
     PasswordMeterComponent,
-    PrivacybadgeComponent,
+    PrivacyBadgeComponent,
     StripHtmlPipe,
     DatePipe,
-    ReceiptvalidatorDirective,
+    ReceiptValidatorDirective,
     TipInfoComponent,
     TipQuestionnaireAnswersComponent,
     TipSubmissionStatusComponent,
@@ -158,9 +158,9 @@ import {VoiceRecorderComponent} from "./shared/partials/voice-recorder/voice-rec
     DatePipe,
     SplitPipe,
     TipFilesWhistleblowerComponent,
-    WidgetWbfilesComponent,
+    WidgetWbFilesComponent,
     ByteFmtPipe,
-    RfileUploadButtonComponent,
+    RFileUploadButtonComponent,
     RfileUploadStatusComponent,
     TipCommentsComponent,
     LimitToPipe,
@@ -170,11 +170,11 @@ import {VoiceRecorderComponent} from "./shared/partials/voice-recorder/voice-rec
     FilterPipe,
     RequestSupportComponent,
     WhistleblowerIdentityFieldComponent,
-    RfilesUploadStatusComponent,
+    RFilesUploadStatusComponent,
     NgFormChangeDirective,
-    WbfilesComponent,
+    WbFilesComponent,
     DisableCcpDirective,
-    SubdomainvalidatorDirective,
+    SubdomainValidatorDirective,
     PasswordStrengthValidatorDirective,
     PasswordStrengthValidatorDirective,
     ImageUploadDirective,
@@ -196,7 +196,7 @@ import {VoiceRecorderComponent} from "./shared/partials/voice-recorder/voice-rec
     TipOperationSetReminderComponent,
     TipOperationPostponeComponent,
     FileViewComponent,
-    TipUploadWbfileComponent,
+    TipUploadWbFileComponent,
     EnableEncryptionComponent,
     AdminFileComponent,
     ConfirmationComponent,
@@ -219,7 +219,7 @@ import {VoiceRecorderComponent} from "./shared/partials/voice-recorder/voice-rec
     FooterComponent,
     ReceiptComponent,
     TranslatorPipe,
-    PrivacybadgeComponent,
+    PrivacyBadgeComponent,
     Enable2fa,
     PasswordChangeComponent,
     StripHtmlPipe,
@@ -230,15 +230,15 @@ import {VoiceRecorderComponent} from "./shared/partials/voice-recorder/voice-rec
     TipAdditionalQuestionnaireInviteComponent,
     TipFieldComponent,
     TipFilesWhistleblowerComponent,
-    WidgetWbfilesComponent,
+    WidgetWbFilesComponent,
     TipCommentsComponent,
     TipReceiverListComponent,
     RfileUploadStatusComponent,
-    RfileUploadButtonComponent,
-    RfilesUploadStatusComponent,
+    RFileUploadButtonComponent,
+    RFilesUploadStatusComponent,
     NgFormChangeDirective,
     DisableCcpDirective,
-    SubdomainvalidatorDirective,
+    SubdomainValidatorDirective,
     PasswordMeterComponent,
     PasswordStrengthValidatorDirective,
     ImageUploadDirective,
@@ -252,7 +252,7 @@ import {VoiceRecorderComponent} from "./shared/partials/voice-recorder/voice-rec
     TipOperationFileIdentityAccessRequestComponent,
     TipFilesReceiverComponent,
     TipOperationSetReminderComponent,
-    TipUploadWbfileComponent,
+    TipUploadWbFileComponent,
     EnableEncryptionComponent,
     AdminFileComponent,
     ConfirmationComponent,

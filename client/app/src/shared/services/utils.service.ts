@@ -1,44 +1,35 @@
-import {Injectable} from '@angular/core';
-import {AuthenticationService} from "../../services/authentication.service";
-import {AppDataService} from "../../app-data.service";
+import {Injectable} from "@angular/core";
+import {AuthenticationService} from "@app/services/authentication.service";
+import {AppDataService} from "@app/app-data.service";
 import {TranslateService} from "@ngx-translate/core";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {RequestSupportComponent} from "../modals/request-support/request-support.component";
 import {HttpService} from "./http.service";
-import {TokenResource} from './token-resource.service';
+import {TokenResource} from "./token-resource.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {EMPTY, Observable, Subject, catchError, map, of, switchMap} from 'rxjs';
+import {Observable, map} from "rxjs";
 import {
   ConfirmationWithPasswordComponent
-} from '../modals/confirmation-with-password/confirmation-with-password.component';
-import {ConfirmationWith2faComponent} from '../modals/confirmation-with2fa/confirmation-with2fa.component';
-import {PreferenceResolver} from '../resolvers/preference.resolver';
-import {DeleteConfirmationComponent} from '../modals/delete-confirmation/delete-confirmation.component';
+} from "../modals/confirmation-with-password/confirmation-with-password.component";
+import {ConfirmationWith2faComponent} from "../modals/confirmation-with2fa/confirmation-with2fa.component";
+import {PreferenceResolver} from "../resolvers/preference.resolver";
+import {DeleteConfirmationComponent} from "../modals/delete-confirmation/delete-confirmation.component";
 import {NodeResolver} from "../resolvers/node.resolver";
 import {ServiceInstanceService} from "./service-instance.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class UtilsService {
 
-  public authenticationService: AuthenticationService
-  constructor(
-    private serviceInstanceService:ServiceInstanceService,
-    private nodeResolver: NodeResolver,
-    private http: HttpClient,
-    public httpService: HttpService,
-    public modalService: NgbModal,
-    public translateService: TranslateService,
-    public appDataService: AppDataService,
-    public preferenceResolver: PreferenceResolver,
-    public tokenResourceService: TokenResource,
-    private router: Router) {
+  public authenticationService: AuthenticationService;
+
+  constructor(private serviceInstanceService: ServiceInstanceService, private nodeResolver: NodeResolver, private http: HttpClient, private httpService: HttpService, private modalService: NgbModal, private translateService: TranslateService, private appDataService: AppDataService, private preferenceResolver: PreferenceResolver, private tokenResourceService: TokenResource, private router: Router) {
   }
 
-  init(){
-    this.authenticationService = this.serviceInstanceService.authenticationService
+  init() {
+    this.authenticationService = this.serviceInstanceService.authenticationService;
   }
 
   updateNode() {
@@ -73,7 +64,7 @@ export class UtilsService {
 
     if (role) {
       ret = role === "receiver" ? "recipient" : role;
-      ret = ret.charAt(0).toUpperCase() + ret.substr(1)
+      ret = ret.charAt(0).toUpperCase() + ret.substr(1);
     }
 
     return ret;
@@ -105,7 +96,7 @@ export class UtilsService {
     if (uploads) {
       for (let key in uploads) {
         if (uploads[key] && uploads[key].flowJs) {
-          uploads[key].flowJs.upload()
+          uploads[key].flowJs.upload();
         }
       }
     }
@@ -113,12 +104,12 @@ export class UtilsService {
 
   view(url: string, mimetype: string, callback: (blob: Blob) => void): void {
     const headers = new HttpHeaders({
-      'x-session': this.authenticationService.session.id
+      "x-session": this.authenticationService.session.id
     });
 
     this.http.get(url, {
       headers: headers,
-      responseType: 'blob'
+      responseType: "blob"
     }).subscribe(
       (response: Blob) => {
         callback(response);
@@ -144,20 +135,20 @@ export class UtilsService {
 
   reloadCurrentRoute() {
     const currentUrl = this.router.url;
-    this.router.navigateByUrl('blank', {skipLocationChange: true, replaceUrl: true}).then(() => {
+    this.router.navigateByUrl("blank", {skipLocationChange: true, replaceUrl: true}).then(() => {
       this.router.navigate([currentUrl]);
     });
   }
 
-  reloadCurrentRouteFresh(removeQueryParam=false) {
+  reloadCurrentRouteFresh(removeQueryParam = false) {
 
     let currentUrl = this.router.url;
-    if(removeQueryParam){
-      currentUrl = this.router.url.split('?')[0];
+    if (removeQueryParam) {
+      currentUrl = this.router.url.split("?")[0];
     }
 
-    this.router.navigateByUrl('/blank', { skipLocationChange: true }).then(() => {
-      this.router.navigateByUrl(currentUrl, { replaceUrl: true });
+    this.router.navigateByUrl("/blank", {skipLocationChange: true}).then(() => {
+      this.router.navigateByUrl(currentUrl, {replaceUrl: true});
     });
   }
 
@@ -174,11 +165,11 @@ export class UtilsService {
   }
 
   isWhistleblowerPage() {
-    return ["/", "/submission"].indexOf(this.router.url.split('?')[0]) !== -1;
+    return ["/", "/submission"].indexOf(this.router.url.split("?")[0]) !== -1;
   }
 
   stopPropagation(event: Event) {
-    event.stopPropagation()
+    event.stopPropagation();
   }
 
   encodeString(string: string): string {
@@ -220,7 +211,7 @@ export class UtilsService {
   routeCheck() {
     let path = location.pathname;
     if (path !== "/") {
-      this.appDataService.page = ""
+      this.appDataService.page = "";
     }
 
     if (!this.appDataService.public) {
@@ -228,7 +219,7 @@ export class UtilsService {
     }
 
     if (path === "/" && this.appDataService.public.node.enable_signup) {
-      this.appDataService.page = "signuppage"
+      this.appDataService.page = "signuppage";
     } else if ((path === "/" || path === "/submission") && this.appDataService.public.node.adminonly && !this.authenticationService.session) {
       location.replace("/admin");
     }
@@ -238,7 +229,7 @@ export class UtilsService {
     let ret: any = {};
 
     receivers.forEach(function (element: any) {
-      ret[element.id] = element
+      ret[element.id] = element;
     });
 
     return ret;
@@ -294,7 +285,11 @@ export class UtilsService {
   }
 
   submitSupportRequest(arg: any) {
-    const param = JSON.stringify({"mail_address": arg.mail_address, "text": arg.text, "url": window.location.href.replace("localhost","127.0.0.1")});
+    const param = JSON.stringify({
+      "mail_address": arg.mail_address,
+      "text": arg.text,
+      "url": window.location.href.replace("localhost", "127.0.0.1")
+    });
     this.httpService.requestSuppor(param).subscribe();
   }
 
@@ -312,13 +307,13 @@ export class UtilsService {
 
   maskScore(score: number) {
     if (score === 1) {
-      return this.translateService.instant('Low');
+      return this.translateService.instant("Low");
     } else if (score === 2) {
-      return this.translateService.instant('Medium');
+      return this.translateService.instant("Medium");
     } else if (score === 3) {
-      return this.translateService.instant('High');
+      return this.translateService.instant("High");
     } else {
-      return this.translateService.instant('None');
+      return this.translateService.instant("None");
     }
   }
 
@@ -329,12 +324,12 @@ export class UtilsService {
       const rows: any[] = [];
       data.forEach(data_row => {
         model.forEach(selected_option => {
-          if (key === 'score') {
+          if (key === "score") {
             const scoreLabel = this.maskScore(data_row[key]);
             if (scoreLabel === selected_option.label) {
               rows.push(data_row);
             }
-          } else if (key === 'status') {
+          } else if (key === "status") {
             if (data_row[key] === selected_option.label) {
               rows.push(data_row);
             }
@@ -375,15 +370,15 @@ export class UtilsService {
   saveAs(filename: string, url: string): void {
 
     const headers = new HttpHeaders({
-      'X-Session': this.authenticationService.session.id
+      "X-Session": this.authenticationService.session.id
     });
 
-    this.http.get(url, {responseType: 'blob', headers: headers}).subscribe(
+    this.http.get(url, {responseType: "blob", headers: headers}).subscribe(
       response => {
-        const blob = new Blob([response], {type: 'application/octet-stream'});
+        const blob = new Blob([response], {type: "application/octet-stream"});
         const blobUrl = URL.createObjectURL(blob);
 
-        const a = document.createElement('a');
+        const a = document.createElement("a");
         a.href = blobUrl;
         a.download = filename;
         a.click();
@@ -403,30 +398,30 @@ export class UtilsService {
   }
 
   update(node: any) {
-    return this.httpService.requestUpdateAdminNodeResource(node)
+    return this.httpService.requestUpdateAdminNodeResource(node);
   }
 
   AdminL10NResource(lang: any) {
-    return this.httpService.requestAdminL10NResource(lang)
+    return this.httpService.requestAdminL10NResource(lang);
   }
 
   updateAdminL10NResource(data: any, lang: any) {
-    return this.httpService.requestUpdateAdminL10NResource(data, lang)
+    return this.httpService.requestUpdateAdminL10NResource(data, lang);
   }
 
   DefaultL10NResource(lang: any) {
-    return this.httpService.requestDefaultL10NResource(lang)
+    return this.httpService.requestDefaultL10NResource(lang);
   }
 
   runAdminOperation(operation: any, args: any, refresh: any) {
-    return this.runOperation("/api/admin/config", operation, args, refresh)
+    return this.runOperation("/api/admin/config", operation, args, refresh);
   }
 
   deleteDialog() {
-    return this.openConfirmableModalDialog("", "")
+    return this.openConfirmableModalDialog("", "");
   }
 
-  
+
   runOperation(api: string, operation: string, args?: any, refresh?: boolean): Observable<any> {
     // alert(operation)
     const requireConfirmation = [
@@ -450,8 +445,8 @@ export class UtilsService {
     if (requireConfirmation.indexOf(operation) !== -1) {
       return new Observable((observer) => {
         this.getConfirmation().subscribe((secret: string) => {
-          const headers = new HttpHeaders({ "X-Confirmation": this.encodeString(secret) });
-          this.http.put(api, { "operation": operation, "args": args }, { headers }).subscribe(
+          const headers = new HttpHeaders({"X-Confirmation": this.encodeString(secret)});
+          this.http.put(api, {"operation": operation, "args": args}, {headers}).subscribe(
             (response: any) => {
               if (refresh) {
                 this.reloadCurrentRoute();
@@ -466,7 +461,7 @@ export class UtilsService {
         });
       });
     } else {
-      return this.http.put(api, { "operation": operation, "args": args }).pipe(
+      return this.http.put(api, {"operation": operation, "args": args}).pipe(
         map((response: any) => {
           if (refresh) {
             this.reloadCurrentRoute();
@@ -489,7 +484,7 @@ export class UtilsService {
         observer.complete();
       };
     });
-    
+
   }
 
   getFiles(): Observable<any[]> {
@@ -501,39 +496,39 @@ export class UtilsService {
   }
 
   deleteAdminUser(user_id: any) {
-    return this.httpService.requestDeleteAdminUser(user_id)
+    return this.httpService.requestDeleteAdminUser(user_id);
   }
 
   deleteAdminContext(user_id: any) {
-    return this.httpService.requestDeleteAdminContext(user_id)
+    return this.httpService.requestDeleteAdminContext(user_id);
   }
 
   deleteStatus(url: any) {
-    return this.httpService.requestDeleteStatus(url)
+    return this.httpService.requestDeleteStatus(url);
   }
 
   deleteSubStatus(url: string) {
-    return this.httpService.requestDeleteStatus(url)
+    return this.httpService.requestDeleteStatus(url);
   }
 
   addAdminUser(user: any) {
-    return this.httpService.requestAddAdminUser(user)
+    return this.httpService.requestAddAdminUser(user);
   }
 
   updateAdminUser(id: any, user: any) {
-    return this.httpService.requestUpdateAdminUser(id, user)
+    return this.httpService.requestUpdateAdminUser(id, user);
   }
 
   addAdminContext(context: any) {
-    return this.httpService.requestAddAdminContext(context)
+    return this.httpService.requestAddAdminContext(context);
   }
 
   updateAdminContext(context: any, id: any) {
-    return this.httpService.requestUpdateAdminContext(context, id)
+    return this.httpService.requestUpdateAdminContext(context, id);
   }
 
   updateAdminNotification(notification: any) {
-    return this.httpService.requestUpdateAdminNotification(notification)
+    return this.httpService.requestUpdateAdminNotification(notification);
   }
 
   readFileAsText(file: File): Promise<string> {
@@ -572,7 +567,7 @@ export class UtilsService {
     elem[this.getXOrderProperty(elem)] += 1;
   }
 
-  getXOrderProperty(elem: any): string {
+  getXOrderProperty(_: any): string {
     return "x";
   }
 

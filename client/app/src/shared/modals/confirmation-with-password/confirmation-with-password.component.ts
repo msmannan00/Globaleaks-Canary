@@ -1,9 +1,9 @@
-import {Component} from '@angular/core';
+import {Component} from "@angular/core";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
-  selector: 'src-confirmation-with-password',
-  templateUrl: './confirmation-with-password.component.html'
+  selector: "src-confirmation-with-password",
+  templateUrl: "./confirmation-with-password.component.html"
 })
 export class ConfirmationWithPasswordComponent {
   confirmFunction: (secret: string) => void;
@@ -13,12 +13,11 @@ export class ConfirmationWithPasswordComponent {
   }
 
   dismiss() {
-    this.activeModal.dismiss()
+    this.activeModal.dismiss();
   }
 
   confirm() {
-    this.confirmFunction(this.secretModel)
+    this.confirmFunction(this.secretModel);
     return this.activeModal.close(this.secretModel);
   }
-
 }

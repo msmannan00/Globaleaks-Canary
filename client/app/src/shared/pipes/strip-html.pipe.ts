@@ -1,11 +1,11 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from "@angular/core";
 
 @Pipe({
-  name: 'stripHtml'
+  name: "stripHtml"
 })
 export class StripHtmlPipe implements PipeTransform {
 
   transform(value: string): string {
-    return value.replace(/<[^>]*>?/gm, '');
+    return value.replace(/<[^>]*>?/gm, "");
   }
 }

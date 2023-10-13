@@ -114,7 +114,7 @@
         <div class="form-group">
             <label>{{ 'Custom support URL' | translate }}</label>
             <input class="form-control" [(ngModel)]="nodeResolver.dataModel.custom_support_url" #customSupportURL="ngModel"
-                   name="customSupportURL" [pattern]="Constants.https_regexp"
+                   name="customSupportURL" [pattern]="Constants.httpsRegexp"
                    [ngClass]="{'is-invalid': customSupportURL?.errors?.['pattern']}" type="text" />
         </div>
 

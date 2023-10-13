@@ -22,8 +22,8 @@ import {TipsResolver} from "@app/shared/resolvers/tips.resolver";
 import {NotificationsResolver} from "@app/shared/resolvers/notifications.resolver";
 import {NetworkResolver} from "@app/shared/resolvers/network.resolver";
 import {RedirectsResolver} from "@app/shared/resolvers/redirects.resolver";
-import {FieldtemplatesResolver} from "@app/shared/resolvers/fieldtemplates.resolver";
-import {StatuseResolver} from "@app/shared/resolvers/statuses.resolver";
+import {FieldTemplatesResolver} from "@app/shared/resolvers/field-templates-resolver.service";
+import {StatusResolver} from "@app/shared/resolvers/statuses.resolver";
 
 const routes: Routes = [
   {
@@ -64,7 +64,7 @@ const routes: Routes = [
   {
     path: "sites",
     resolve: {
-      NodeResolver, PreferenceResolver, UsersResolver, JobResolver, TipsResolver, StatuseResolver
+      NodeResolver, PreferenceResolver, UsersResolver, JobResolver, TipsResolver, StatuseResolver: StatusResolver
     },
     loadChildren: () => SitesModule,
     pathMatch: "full",
@@ -80,7 +80,7 @@ const routes: Routes = [
   {
     path: "questionnaires",
     resolve: {
-      NodeResolver, PreferenceResolver, UsersResolver, QuestionnairesResolver, RedirectsResolver, FieldtemplatesResolver
+      NodeResolver, PreferenceResolver, UsersResolver, QuestionnairesResolver, RedirectsResolver, FieldtemplatesResolver: FieldTemplatesResolver
     },
     loadChildren: () => QuestionnairesModule,
     pathMatch: "full",
@@ -97,7 +97,7 @@ const routes: Routes = [
     path: "casemanagement",
     loadChildren: () => CaseManagementModule,
     resolve: {
-      NodeResolver, PreferenceResolver, StatuseResolver
+      NodeResolver, PreferenceResolver, StatuseResolver: StatusResolver
     },
     pathMatch: "full",
   },

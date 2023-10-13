@@ -1,39 +1,35 @@
-import {Component} from '@angular/core';
+import {Component} from "@angular/core";
 import {UtilsService} from "../../services/utils.service";
-import {HttpService} from "../../services/http.service";
 import {PreferenceResolver} from "../../resolvers/preference.resolver";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {TwoFactorAuthData} from "../../../services/2fa.data.service";
+import {TwoFactorAuthData} from "@app/services/2fa.data.service";
 
 @Component({
-  selector: 'src-enable-2fa',
-  templateUrl: './enable-2fa.html',
-  styleUrls: ['./enable-2fa.css']
+  selector: "src-enable-2fa",
+  templateUrl: "./enable-2fa.html"
 })
-export class Enable2fa{
+export class Enable2fa {
 
   symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
   array = new Uint32Array(32);
   OTPSecretForm: FormGroup;
-  myProperty: any = 'this write in script';
 
-  initialization(){
+  ngOnInit() {
+    this.OTPSecretForm = this.builder.group({});
+  };
+
+  initialization() {
     window.crypto.getRandomValues(this.array);
 
     for (let i = 0; i < this.array.length; i++) {
-      this.twofactorauthData.totp.secret += this.symbols[this.array[i]%this.symbols.length];
+      this.twofactorauthData.totp.secret += this.symbols[this.array[i] % this.symbols.length];
     }
 
     this.onSecretKeyChanged();
   }
 
-  ngOnInit() {
-    this.OTPSecretForm = this.builder.group({
-    })
-  };
-
-  constructor(public utils: UtilsService, public preferenceResolver:PreferenceResolver, private builder: FormBuilder, public twofactorauthData:TwoFactorAuthData) {
-    this.initialization()
+  constructor(public utils: UtilsService, public preferenceResolver: PreferenceResolver, private builder: FormBuilder, public twofactorauthData: TwoFactorAuthData) {
+    this.initialization();
   }
 
   onSecretKeyChanged() {

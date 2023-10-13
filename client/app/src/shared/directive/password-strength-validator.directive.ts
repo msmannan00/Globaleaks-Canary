@@ -1,8 +1,8 @@
-import { Directive, Input, Output, EventEmitter } from '@angular/core';
-import { NG_VALIDATORS, AbstractControl, Validator, ValidationErrors, ValidatorFn } from '@angular/forms';
+import {Directive, Input, Output, EventEmitter} from "@angular/core";
+import {NG_VALIDATORS, AbstractControl, Validator, ValidationErrors} from "@angular/forms";
 
 @Directive({
-  selector: '[passwordStrengthValidator]',
+  selector: "[passwordStrengthValidator]",
   providers: [{
     provide: NG_VALIDATORS,
     useExisting: PasswordStrengthValidatorDirective,
@@ -10,7 +10,7 @@ import { NG_VALIDATORS, AbstractControl, Validator, ValidationErrors, ValidatorF
   }]
 })
 export class PasswordStrengthValidatorDirective implements Validator {
-  @Input('passwordStrengthValidator') passwordStrength: string;
+  @Input("passwordStrengthValidator") passwordStrength: string;
   @Output() passwordStrengthChange = new EventEmitter<number>();
 
   validate(control: AbstractControl): ValidationErrors | null {
@@ -55,6 +55,6 @@ export class PasswordStrengthValidatorDirective implements Validator {
       this.passwordStrengthChange.emit(score);
     }
 
-    return score > 1 ? null : { passwordStrengthValidator: true };
+    return score > 1 ? null : {passwordStrengthValidator: true};
   }
 }

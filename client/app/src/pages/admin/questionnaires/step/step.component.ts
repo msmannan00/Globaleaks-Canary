@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from "@angular/core";
-import {FieldtemplatesResolver} from "app/src/shared/resolvers/fieldtemplates.resolver";
+import {FieldTemplatesResolver} from "@app/shared/resolvers/field-templates-resolver.service";
 
 @Component({
   selector: "src-step",
@@ -11,7 +11,7 @@ export class StepComponent implements OnInit {
   showAddQuestionFromTemplate: boolean = false;
   fieldTemplatesData: any = [];
 
-  constructor(public fieldTemplates: FieldtemplatesResolver) {
+  constructor(public fieldTemplates: FieldTemplatesResolver) {
   }
 
   ngOnInit(): void {

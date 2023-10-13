@@ -5,7 +5,7 @@ import {AddOptionHintComponent} from "app/src/shared/modals/add-option-hint/add-
 import {AssignScorePointsComponent} from "app/src/shared/modals/assign-score-points/assign-score-points.component";
 import {DeleteConfirmationComponent} from "app/src/shared/modals/delete-confirmation/delete-confirmation.component";
 import {TriggerReceiverComponent} from "app/src/shared/modals/trigger-receiver/trigger-receiver.component";
-import {FieldtemplatesResolver} from "app/src/shared/resolvers/fieldtemplates.resolver";
+import {FieldTemplatesResolver} from "@app/shared/resolvers/field-templates-resolver.service";
 import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
 import {FieldUtilitiesService} from "app/src/shared/services/field-utilities.service";
 import {HttpService} from "app/src/shared/services/http.service";
@@ -39,7 +39,7 @@ export class FieldsComponent implements OnInit {
   };
   parsedFields: any;
 
-  constructor(private questionnariesService: QuestionnaireService, private modalService: NgbModal, public nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService, private fieldTemplates: FieldtemplatesResolver, private fieldUtilities: FieldUtilitiesService,) {
+  constructor(private questionnariesService: QuestionnaireService, private modalService: NgbModal, public nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService, private fieldTemplates: FieldTemplatesResolver, private fieldUtilities: FieldUtilitiesService,) {
   }
 
   ngOnInit(): void {

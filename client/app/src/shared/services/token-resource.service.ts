@@ -1,27 +1,27 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {Injectable} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import sha256, {} from "fast-sha256";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class TokenResource {
 
-  private baseUrl = 'api/token/:id';
-  deferred: Promise<any>
-  data: any
-  counter: number = 0
-  resolver: any
+  private baseUrl = "api/token/:id";
+  deferred: Promise<any>;
+  data: any;
+  counter: number = 0;
+  resolver: any;
 
   constructor(private http: HttpClient) {
   }
 
   getToken(id: any) {
-    this.http.post<any>(this.baseUrl.replace(':id', id), {}).subscribe();
+    this.http.post<any>(this.baseUrl.replace(":id", id), {}).subscribe();
   }
 
   getWithProofOfWork(): Promise<any> {
-    return this.http.post('api/auth/token', {}).toPromise()
+    return this.http.post("api/auth/token", {}).toPromise()
       .then((response: any) => {
         const token = response;
         return this.proofOfWork(token.id)
@@ -43,9 +43,9 @@ export class TokenResource {
   calculateHash(hash: any, resolve: any) {
     hash = new Uint8Array(hash);
     if (hash[31] === 0) {
-      resolve(this.counter)
+      resolve(this.counter);
     } else {
-      this.counter += 1
+      this.counter += 1;
       this.work(resolve);
     }
   };
@@ -60,20 +60,20 @@ export class TokenResource {
     } else {
       digestPremise = new Promise((resolve, reject) => {
         if (sha256(toHash)) {
-          resolve('ok');
+          resolve("ok");
         } else {
-          reject('error');
+          reject("error");
         }
-      })
+      });
     }
 
     if (typeof digestPremise.then !== "undefined") {
       digestPremise.then(res => {
-        this.calculateHash(res, resolve)
+        this.calculateHash(res, resolve);
       });
     } else {
       digestPremise.then(res => {
-        return res
+        return res;
       });
     }
 
@@ -83,9 +83,9 @@ export class TokenResource {
   proofOfWork(data: any): Promise<any> {
 
     this.deferred = new Promise((resolve) => {
-      this.data = data
-      this.counter = 0
-      this.work(resolve)
+      this.data = data;
+      this.counter = 0;
+      this.work(resolve);
     });
 
     return this.deferred;

@@ -13,7 +13,7 @@ import {Pageguard} from "./shared/guards/pageguard.service";
 import {ActivationComponent} from "./pages/signup/templates/activation/activation.component";
 import {WizardRoutingModule} from "./pages/wizard/wizard-routing.module";
 import {NodeResolver} from "./shared/resolvers/node.resolver";
-import {RtipsResolver} from "./shared/resolvers/rtips.resolver";
+import {RTipsResolver} from "app/src/shared/resolvers/r-tips-resolver.service";
 import {TipComponent} from "./pages/recipient/tip/tip.component";
 import {TitleResolver} from "./shared/resolvers/title-resolver.resolver";
 import {CustodianRoutingModule} from "./pages/custodian/custodian-routing.module";
@@ -59,7 +59,7 @@ const routes: Routes = [
     path: "recipient",
     canActivate: [SessionGuard],
     resolve: {
-      PreferenceResolver, NodeResolver, RtipsResolver
+      PreferenceResolver, NodeResolver, RtipsResolver: RTipsResolver
     },
     loadChildren: () => RecipientRoutingModule,
     data: {
@@ -70,7 +70,7 @@ const routes: Routes = [
     path: "custodian",
     canActivate: [SessionGuard],
     resolve: {
-      PreferenceResolver, NodeResolver, RtipsResolver, IarsResolver: IarResolver
+      PreferenceResolver, NodeResolver, RtipsResolver: RTipsResolver, IarsResolver: IarResolver
     },
     loadChildren: () => CustodianRoutingModule,
     data: {
@@ -107,7 +107,7 @@ const routes: Routes = [
     component: TipComponent,
     pathMatch: "full",
     resolve: {
-      PreferenceResolver, NodeResolver, RtipsResolver
+      PreferenceResolver, NodeResolver, RtipsResolver: RTipsResolver
     },
   }
 ];

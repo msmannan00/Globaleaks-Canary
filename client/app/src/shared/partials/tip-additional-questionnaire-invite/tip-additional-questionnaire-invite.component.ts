@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from "@angular/core";
 import {UtilsService} from "../../services/utils.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {
@@ -6,21 +6,20 @@ import {
 } from "../../modals/tip-additional-questionnaire-form/tip-additional-questionnaire-form.component";
 
 @Component({
-  selector: 'src-tip-additional-questionnaire-invite',
-  templateUrl: './tip-additional-questionnaire-invite.component.html',
-  styleUrls: ['./tip-additional-questionnaire-invite.component.css']
+  selector: "src-tip-additional-questionnaire-invite",
+  templateUrl: "./tip-additional-questionnaire-invite.component.html"
 })
 export class TipAdditionalQuestionnaireInviteComponent {
   collapsed = false;
 
-  public toggleColapse(){
-    this.collapsed = !this.collapsed
+  public toggleColLapse() {
+    this.collapsed = !this.collapsed;
   }
 
-  constructor(public utilsService:UtilsService, public modalService: NgbModal) {
+  constructor(public utilsService: UtilsService, private modalService: NgbModal) {
   }
 
   tip_open_additional_questionnaire() {
-    this.modalService.open(TipAdditionalQuestionnaireFormComponent, { windowClass: 'custom-modal-width' });
+    this.modalService.open(TipAdditionalQuestionnaireFormComponent, {windowClass: "custom-modal-width"});
   }
 }

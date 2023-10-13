@@ -134,10 +134,10 @@
                 </div>
             </div>
             <div id="{{fieldEntry}}" *ngSwitchCase="'voice'">
-                <src-voice-recorder (notifyFileUpload)="notifyFileUpload.emit()" [fileupload_url]="fileUploadUrl" [uploads]="uploads" [field]="field" [entryIndex]="entryIndex" [fieldEntry]="fieldEntry"></src-voice-recorder>
+                <src-voice-recorder (notifyFileUpload)="notifyFileUpload.emit()" [fileUploadUrl]="fileUploadUrl" [uploads]="uploads" [field]="field" [entryIndex]="entryIndex" [fieldEntry]="fieldEntry"></src-voice-recorder>
             </div>
             <div id="{{fieldEntry}}" *ngSwitchCase="'fileupload'">
-                <src-rfile-upload-button (notifyFileUpload)="notifyFileUpload.emit()" [fileupload_url]="fileUploadUrl" [uploads]="uploads" [field]="field" [formuploader]="true"></src-rfile-upload-button>
+                <src-rfile-upload-button (notifyFileUpload)="notifyFileUpload.emit()" [fileUploadUrl]="fileUploadUrl" [uploads]="uploads" [field]="field" [formUploader]="true"></src-rfile-upload-button>
             </div>
             <div *ngSwitchCase="'fieldgroup'">
                 <div *ngIf="field.attrs.multimedia.value">

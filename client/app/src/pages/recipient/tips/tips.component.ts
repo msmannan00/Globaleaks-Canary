@@ -5,7 +5,7 @@ import {DeleteConfirmationComponent} from "app/src/shared/modals/delete-confirma
 import {GrantAccessComponent} from "app/src/shared/modals/grant-access/grant-access.component";
 import {RevokeAccessComponent} from "app/src/shared/modals/revoke-access/revoke-access.component";
 import {PreferenceResolver} from "app/src/shared/resolvers/preference.resolver";
-import {RtipsResolver} from "app/src/shared/resolvers/rtips.resolver";
+import {RTipsResolver} from "@app/shared/resolvers/r-tips-resolver.service";
 import {UtilsService} from "app/src/shared/services/utils.service";
 import {TranslateService} from "@ngx-translate/core";
 import {IDropdownSettings} from "ng-multiselect-dropdown";
@@ -58,7 +58,7 @@ export class TipsComponent implements OnInit {
     searchPlaceholderText: this.translateService.instant("Search")
   };
 
-  constructor(private router: Router, public rtips: RtipsResolver, public preference: PreferenceResolver, private modalService: NgbModal, public utils: UtilsService, public appDataService: AppDataService, private elementRef: ElementRef, private translateService: TranslateService, private tokenResourceService: TokenResource) {
+  constructor(private router: Router, public rtips: RTipsResolver, public preference: PreferenceResolver, private modalService: NgbModal, public utils: UtilsService, public appDataService: AppDataService, private elementRef: ElementRef, private translateService: TranslateService, private tokenResourceService: TokenResource) {
 
   }
 

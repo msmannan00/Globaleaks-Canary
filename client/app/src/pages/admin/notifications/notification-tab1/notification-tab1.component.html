@@ -9,7 +9,7 @@
         <div class="form-group">
             <label>{{ 'SMTP email address' | translate }}</label>
             <input class="form-control" name="source_email" #source_email="ngModel" [(ngModel)]="notificationResolver.dataModel.smtp_source_email"
-                [pattern]="Constants.email_regexp" type="text" />
+                   [pattern]="Constants.emailRegexp" type="text" />
         </div>
         <div class="text-danger" *ngIf="source_email?.errors?.['pattern']">
             <span>{{ 'Invalid email address' | translate }}</span>

@@ -1,12 +1,12 @@
-import {Component} from '@angular/core';
+import {Component} from "@angular/core";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {UtilsService} from "../../services/utils.service";
 import {PreferenceResolver} from "../../resolvers/preference.resolver";
-import {TwoFactorAuthData} from "../../../services/2fa.data.service";
+import {TwoFactorAuthData} from "@app/services/2fa.data.service";
 
 @Component({
-  selector: 'src-enable2fa',
-  templateUrl: './enable2fa.component.html'
+  selector: "src-enable2fa",
+  templateUrl: "./enable2fa.component.html"
 })
 export class Enable2faComponent {
 
@@ -14,7 +14,7 @@ export class Enable2faComponent {
   }
 
   dismiss() {
-    this.activeModal.dismiss()
+    this.activeModal.dismiss();
   }
 
   confirm() {
@@ -24,11 +24,11 @@ export class Enable2faComponent {
     }, true);
     requestObservable.subscribe(
       {
-        next: response => {
+        next: _ => {
           this.preferenceResolver.dataModel.two_factor = true;
-          this.activeModal.dismiss()
+          this.activeModal.dismiss();
         },
-        error: (error: any) => {
+        error: (_: any) => {
           this.utilsService.reloadCurrentRoute();
         }
       }

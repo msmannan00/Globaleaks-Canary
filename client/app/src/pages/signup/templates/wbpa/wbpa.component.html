@@ -19,7 +19,7 @@
     <div class="row">
         <div class="col-md-6 form-group">
             <label>{{'Phone number'|translate}}</label> <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
-            <input name="phonenumber" #phone="ngModel" class="form-control" [(ngModel)]="signup.phone" type="text" [pattern]="Constants.Constants.phonenumber_regexp" required>
+            <input name="phonenumber" #phone="ngModel" class="form-control" [(ngModel)]="signup.phone" type="text" [pattern]="Constants.Constants.phoneNumberRegexp" required>
             <div class="text-danger" *ngIf="phone?.errors?.['pattern']">
                 <span>{{'Invalid phone number'|translate}}</span>
             </div>
@@ -32,7 +32,7 @@
                 <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
             </label>
             <div>
-                <input name="email" #email="ngModel" class="form-control" [(ngModel)]="signup.email" [pattern]="Constants.Constants.email_regexp" type="email" required>
+                <input name="email" #email="ngModel" class="form-control" [(ngModel)]="signup.email" [pattern]="Constants.Constants.emailRegexp" type="email" required>
                 <div class="text-danger" *ngIf="email?.errors?.['pattern']">
                     <span>{{'Invalid email address'|translate}}</span>
                 </div>

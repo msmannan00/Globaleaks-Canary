@@ -1,25 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NodeResolver } from '../../resolvers/node.resolver';
+import {Component, OnInit} from "@angular/core";
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NodeResolver} from "../../resolvers/node.resolver";
 
 @Component({
-  selector: 'src-disclaimer',
-  templateUrl: './disclaimer.component.html',
+  selector: "src-disclaimer",
+  templateUrl: "./disclaimer.component.html",
 })
 export class DisclaimerComponent implements OnInit {
   confirmFunction: () => void;
-  nodeData: any = []
-  constructor(private activeModal: NgbActiveModal, private modalService: NgbModal,public node: NodeResolver,) {
+  nodeData: any = [];
+
+  constructor(private activeModal: NgbActiveModal, private modalService: NgbModal, public nodeResolver: NodeResolver) {
   }
- 
+
   ngOnInit(): void {
-     if (this.node.dataModel) {
-       this.nodeData = this.node.dataModel
-     }
-   }
+    if (this.nodeResolver.dataModel) {
+      this.nodeData = this.nodeResolver.dataModel;
+    }
+  }
 
   confirm() {
-    this.confirmFunction()
+    this.confirmFunction();
     return this.activeModal.close();
   }
 
