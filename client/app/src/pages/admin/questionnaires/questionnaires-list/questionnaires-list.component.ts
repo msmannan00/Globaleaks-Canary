@@ -13,17 +13,14 @@ import {QuestionnaireService} from "../questionnaire.service";
   selector: "src-questionnaires-list",
   templateUrl: "./questionnaires-list.component.html"
 })
-export class QuestionnairesListComponent implements OnInit {
+export class QuestionnairesListComponent {
   @Input() questionnaire: any;
   @Input() editQuestionnaire: NgForm;
   showAddQuestion: boolean = false;
   editing: boolean = false;
   @Output() deleteRequestData = new EventEmitter<string>();
 
-  constructor(private questionnariesService: QuestionnaireService, private modalService: NgbModal, private httpService: HttpService, private utilsService: UtilsService) {
-  }
-
-  ngOnInit(): void {
+  constructor(private questionnaireService: QuestionnaireService, private modalService: NgbModal, private httpService: HttpService, private utilsService: UtilsService) {
   }
 
   toggleAddQuestion(): void {
@@ -37,7 +34,7 @@ export class QuestionnairesListComponent implements OnInit {
   saveQuestionnaire(questionnaire: any) {
     this.httpService.requestUpdateAdminQuestionare(questionnaire.id, questionnaire).subscribe(_ => {
       this.editing = false;
-      return this.questionnariesService.sendData();
+      return this.questionnaireService.sendData();
     });
   }
 
@@ -63,7 +60,7 @@ export class QuestionnairesListComponent implements OnInit {
     modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = () => {
       return this.httpService.requestDeleteAdminQuestionare(arg.id).subscribe(_ => {
-        return this.questionnariesService.sendData();
+        return this.questionnaireService.sendData();
       });
     };
     return modalRef.result;

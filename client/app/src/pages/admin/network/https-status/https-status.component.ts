@@ -14,7 +14,7 @@ export class HttpsStatusComponent implements OnInit {
   @Input() tlsConfig: any;
   nodeData: any;
 
-  constructor(public networkResolver: NetworkResolver, private nodeResolver: NodeResolver, private httpService: HttpService, private modalService: NgbModal) {
+  constructor(protected networkResolver: NetworkResolver, private nodeResolver: NodeResolver, private httpService: HttpService, private modalService: NgbModal) {
   }
 
   ngOnInit(): void {

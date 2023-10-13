@@ -25,7 +25,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit {
   uploads: any = {};
   file_upload_url = "api/whistleblower/wbtip/rfile";
 
-  constructor(private httpService: HttpService, private fieldUtilitiesService: FieldUtilitiesService, private utilsService: UtilsService, public wbTipService: WbtipService, public activeModal: NgbActiveModal) {
+  constructor(private httpService: HttpService, private fieldUtilitiesService: FieldUtilitiesService, private utilsService: UtilsService, protected wbTipService: WbtipService, protected activeModal: NgbActiveModal) {
   }
 
   ngOnInit(): void {
@@ -44,7 +44,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit {
   lastStepIndex() {
     let last_enabled = 0;
 
-    for (var i = 0; i < this.questionnaire.steps.length; i++) {
+    for (let i = 0; i < this.questionnaire.steps.length; i++) {
       if (this.questionnaire.steps[i].enabled) {
         last_enabled = i;
       }

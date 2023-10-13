@@ -20,7 +20,7 @@ export class Tab4Component {
   languages_enabled_selector: any[] = [];
   languages_supported: any = {};
 
-  constructor(public utilsService: UtilsService, public nodeResolver: NodeResolver) {
+  constructor(protected utilsService: UtilsService, protected nodeResolver: NodeResolver) {
   }
 
   ngOnInit(): void {
@@ -62,7 +62,7 @@ export class Tab4Component {
         if (default_texts.hasOwnProperty(key)) {
           let value = default_texts[key];
           if (value.length > 150) {
-            value = value.substr(0, 150) + "...";
+            value = value.slice(0, 150) + "...";
           }
           list.push({"key": key, "value": value});
         }

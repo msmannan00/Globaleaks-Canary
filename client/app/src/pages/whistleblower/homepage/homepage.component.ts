@@ -10,7 +10,7 @@ import {DisclaimerComponent} from "app/src/shared/modals/disclaimer/disclaimer.c
 })
 export class HomepageComponent {
 
-  constructor(public appDataService: AppDataService, private modalService: NgbModal, private nodeResolver: NodeResolver) {
+  constructor(protected appDataService: AppDataService, private modalService: NgbModal, private nodeResolver: NodeResolver) {
   }
 
   openSubmission() {

@@ -16,7 +16,7 @@ export class RequestSupportComponent implements OnInit {
     text: ""
   };
 
-  constructor(public activeModal: NgbActiveModal, public utilsService: UtilsService, private preferenceResolver: PreferenceResolver) {
+  constructor(protected activeModal: NgbActiveModal, protected utilsService: UtilsService, private preferenceResolver: PreferenceResolver) {
   }
 
   ngOnInit(): void {

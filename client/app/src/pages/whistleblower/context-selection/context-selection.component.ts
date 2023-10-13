@@ -12,6 +12,6 @@ export class ContextSelectionComponent {
   @Input() contextsOrderPredicate: any;
   @Output() selectContext: EventEmitter<any> = new EventEmitter();
 
-  constructor(public appDataService: AppDataService, public utilsService: UtilsService) {
+  constructor(protected appDataService: AppDataService, protected utilsService: UtilsService) {
   }
 }

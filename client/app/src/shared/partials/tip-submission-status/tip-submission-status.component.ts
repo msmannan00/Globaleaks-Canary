@@ -2,7 +2,7 @@ import {Component, Input} from "@angular/core";
 import {UtilsService} from "../../services/utils.service";
 import {WbtipService} from "@app/services/wbtip.service";
 import {AppDataService} from "@app/app-data.service";
-import {RecieverTipService} from "app/src/services/recievertip.service";
+import {ReceiverTipService} from "@app/services/receiver-tip.service";
 import {HttpService} from "../../services/http.service";
 
 @Component({
@@ -10,9 +10,9 @@ import {HttpService} from "../../services/http.service";
   templateUrl: "./tip-submission-status.component.html"
 })
 export class TipSubmissionStatusComponent {
-  @Input() tipService: RecieverTipService | WbtipService;
+  @Input() tipService: ReceiverTipService | WbtipService;
 
-  constructor(public httpService: HttpService, public utilsService: UtilsService, public appDataService: AppDataService) {
+  constructor(protected httpService: HttpService, protected utilsService: UtilsService, protected appDataService: AppDataService) {
   }
 
   updateSubmissionStatus() {

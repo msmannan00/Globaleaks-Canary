@@ -11,7 +11,7 @@ export class StepComponent implements OnInit {
   showAddQuestionFromTemplate: boolean = false;
   fieldTemplatesData: any = [];
 
-  constructor(public fieldTemplates: FieldTemplatesResolver) {
+  constructor(protected fieldTemplates: FieldTemplatesResolver) {
   }
 
   ngOnInit(): void {

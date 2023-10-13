@@ -15,7 +15,7 @@ export class SubmissionComponent implements OnInit {
   @ViewChild("submissionForm") public submissionForm: NgForm;
   @ViewChildren("stepform") stepForms: QueryList<NgForm>;
 
-  constructor(public authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, private submissionService: SubmissionService) {
+  constructor(protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, private submissionService: SubmissionService) {
     this.selectable_contexts = [];
     this.receivedData = this.submissionService.getSharedData();
     this.initializeSubmission();
@@ -321,7 +321,7 @@ export class SubmissionComponent implements OnInit {
 
   decrementStep() {
     if (this.hasPreviousStep()) {
-      for (var i = this.navigation - 1; i >= this.firstStepIndex(); i--) {
+      for (let i = this.navigation - 1; i >= this.firstStepIndex(); i--) {
         if (i === -1 || this.fieldUtilitiesService.isFieldTriggered(null, this.questionnaire.steps[i], this.answers, this.score)) {
           this.navigation = i;
           this.utilsService.scrollToTop();

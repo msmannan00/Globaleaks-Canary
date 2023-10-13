@@ -21,7 +21,7 @@ export class WhistleblowerIdentityComponent {
   @Input() uploadProgress: any;
   identity_provided: boolean = false;
 
-  constructor(public wbTipService: WbtipService, public utilsService: UtilsService) {
+  constructor(protected wbTipService: WbtipService, protected utilsService: UtilsService) {
     this.collapsed = this.wbTipService.tip.data.whistleblower_identity_provided;
   }
 

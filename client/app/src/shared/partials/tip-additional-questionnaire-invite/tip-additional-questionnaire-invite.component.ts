@@ -16,7 +16,7 @@ export class TipAdditionalQuestionnaireInviteComponent {
     this.collapsed = !this.collapsed;
   }
 
-  constructor(public utilsService: UtilsService, private modalService: NgbModal) {
+  constructor(protected utilsService: UtilsService, private modalService: NgbModal) {
   }
 
   tip_open_additional_questionnaire() {

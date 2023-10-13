@@ -18,7 +18,7 @@ export class TipUploadWbFileComponent {
   file_upload_description: string = "";
   fileInput: any = "fileinput";
 
-  constructor(private appConfigService: AppConfigService, private authenticationService: AuthenticationService, public utilsService: UtilsService, private appDataService: AppDataService) {
+  constructor(private appConfigService: AppConfigService, private authenticationService: AuthenticationService, protected utilsService: UtilsService, private appDataService: AppDataService) {
 
   }
 

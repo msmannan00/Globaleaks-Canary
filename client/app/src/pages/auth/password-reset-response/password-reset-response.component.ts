@@ -13,7 +13,7 @@ export class PasswordResetResponseComponent implements OnInit {
   state = "start";
   request = new password_recovery_model();
 
-  constructor(private route: ActivatedRoute, private httpService: HttpService, private router: Router, public utilsService: UtilsService) {
+  constructor(private route: ActivatedRoute, private httpService: HttpService, private router: Router, protected utilsService: UtilsService) {
   }
 
   submit() {

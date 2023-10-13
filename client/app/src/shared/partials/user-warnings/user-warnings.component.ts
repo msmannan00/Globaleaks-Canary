@@ -9,6 +9,6 @@ import {NodeResolver} from "../../resolvers/node.resolver";
 })
 export class UserWarningsComponent {
 
-  constructor(public authentication: AuthenticationService, public preferenceResolver: PreferenceResolver, public nodeResolver: NodeResolver) {
+  constructor(protected authentication: AuthenticationService, protected preferenceResolver: PreferenceResolver, protected nodeResolver: NodeResolver) {
   }
 }

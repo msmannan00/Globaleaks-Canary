@@ -10,6 +10,6 @@ import {ControlContainer, NgForm} from "@angular/forms";
 export class TosComponent {
   @Input() signup: any;
 
-  constructor(public appDataService: AppDataService) {
+  constructor(protected appDataService: AppDataService) {
   }
 }

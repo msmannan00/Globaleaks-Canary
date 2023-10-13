@@ -15,7 +15,7 @@ export class WidgetWbFilesComponent {
   collapsed = false;
   submission = {};
 
-  constructor(public wbTipService: WbtipService, public utilsService: UtilsService) {
+  constructor(protected wbTipService: WbtipService, protected utilsService: UtilsService) {
   }
 
   public toggleCollapse() {

@@ -1,7 +1,7 @@
 import {HttpClient} from "@angular/common/http";
 import {Component} from "@angular/core";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {RecieverTipService} from "app/src/services/recievertip.service";
+import {ReceiverTipService} from "@app/services/receiver-tip.service";
 import {UtilsService} from "../../services/utils.service";
 
 
@@ -13,7 +13,7 @@ export class TipOperationFileIdentityAccessRequestComponent {
   request_motivation: any;
   modal: NgbModalRef;
 
-  constructor(private modalService: NgbModal, private tipsService: RecieverTipService, private http: HttpClient, private utils: UtilsService) {
+  constructor(private modalService: NgbModal, private tipsService: ReceiverTipService, private http: HttpClient, private utils: UtilsService) {
   }
 
   confirm() {

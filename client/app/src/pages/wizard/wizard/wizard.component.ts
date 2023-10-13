@@ -49,7 +49,7 @@ export class WizardComponent implements OnInit {
     }
   ];
 
-  constructor(private translationService: TranslationService, private router: Router, private http: HttpClient, private authenticationService: AuthenticationService, private httpService: HttpService, public appDataService: AppDataService, public appConfigService: AppConfigService) {
+  constructor(private translationService: TranslationService, private router: Router, private http: HttpClient, private authenticationService: AuthenticationService, private httpService: HttpService, protected appDataService: AppDataService, protected appConfigService: AppConfigService) {
   }
 
   ngOnInit() {

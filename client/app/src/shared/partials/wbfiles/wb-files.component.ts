@@ -13,7 +13,7 @@ export class WbFilesComponent implements OnInit {
   @Input() ctx: any;
   @Input() receivers_by_id: any;
 
-  constructor(private cryptoService: CryptoService, private httpService: HttpService, private utilsService: UtilsService, public authenticationService: AuthenticationService) {
+  constructor(private cryptoService: CryptoService, private httpService: HttpService, private utilsService: UtilsService, protected authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {

@@ -9,7 +9,7 @@ import {auditlogResolverModel} from "@app/models/resolvers/auditlogResolverModel
 @Injectable({
   providedIn: "root"
 })
-export class AuditlogResolver implements Resolve<boolean> {
+export class AuditLogResolver implements Resolve<boolean> {
   dataModel: auditlogResolverModel = new auditlogResolverModel();
 
   constructor(private httpService: HttpService, private authenticationService: AuthenticationService) {

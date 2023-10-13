@@ -6,7 +6,7 @@ import {DefaultLoginComponent} from "./login/templates/default-login/default-log
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {PasswordResetComponent} from "./password-reset/password-reset.component";
-import {PasswordreqestedComponent} from "./passwordreqested/passwordreqested.component";
+import {PasswordRequestedComponent} from "@app/pages/auth/passwordreqested/password-requested.component";
 import {PasswordResetResponseComponent} from "./password-reset-response/password-reset-response.component";
 import {TranslateModule} from "@ngx-translate/core";
 import {SharedModule} from "@app/shared.module";
@@ -17,7 +17,7 @@ import {SharedModule} from "@app/shared.module";
     SimpleLoginComponent,
     DefaultLoginComponent,
     PasswordResetComponent,
-    PasswordreqestedComponent,
+    PasswordRequestedComponent,
     PasswordResetResponseComponent,
   ],
   imports: [

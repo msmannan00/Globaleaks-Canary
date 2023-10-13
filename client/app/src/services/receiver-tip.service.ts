@@ -7,7 +7,7 @@ import {RecieverTipData} from "../models/reciever/RecieverTipData";
 @Injectable({
   providedIn: "root"
 })
-export class RecieverTipService {
+export class ReceiverTipService {
   tip: RecieverTipData = new RecieverTipData();
 
   constructor(private httpService: HttpService, private appDataService: AppDataService, private utilsService: UtilsService) {

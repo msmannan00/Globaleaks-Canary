@@ -19,11 +19,11 @@ export class MainComponent implements OnInit, OnDestroy {
   showAddQuestionnaire: boolean = false;
   private destroy$ = new Subject<void>();
 
-  constructor(private http: HttpClient, private questionnariesService: QuestionnaireService, private httpService: HttpService, private utilsService: UtilsService, private cdr: ChangeDetectorRef, public questionnairesResolver: QuestionnairesResolver) {
+  constructor(private http: HttpClient, private questionnaireService: QuestionnaireService, private httpService: HttpService, private utilsService: UtilsService, private cdr: ChangeDetectorRef, protected questionnairesResolver: QuestionnairesResolver) {
   }
 
   ngOnInit(): void {
-    this.questionnariesService.getData().pipe(takeUntil(this.destroy$)).subscribe(() => {
+    this.questionnaireService.getData().pipe(takeUntil(this.destroy$)).subscribe(() => {
       return this.getResolver();
     });
     this.questionnairesData = this.questionnairesResolver.dataModel;
@@ -72,7 +72,7 @@ export class MainComponent implements OnInit, OnDestroy {
     });
   }
 
-  trackByFn(index: number, item: questionnaireResolverModel) {
+  trackByFn(_: number, item: questionnaireResolverModel) {
     return item.id;
   }
 

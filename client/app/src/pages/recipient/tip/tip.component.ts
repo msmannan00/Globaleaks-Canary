@@ -2,7 +2,7 @@ import {AfterViewInit, ChangeDetectorRef, Component, TemplateRef, ViewChild} fro
 import {ActivatedRoute} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AppDataService} from "app/src/app-data.service";
-import {RecieverTipService} from "app/src/services/recievertip.service";
+import {ReceiverTipService} from "@app/services/receiver-tip.service";
 import {GrantAccessComponent} from "app/src/shared/modals/grant-access/grant-access.component";
 import {RevokeAccessComponent} from "app/src/shared/modals/revoke-access/revoke-access.component";
 import {PreferenceResolver} from "app/src/shared/resolvers/preference.resolver";
@@ -10,14 +10,10 @@ import {HttpService} from "app/src/shared/services/http.service";
 import {UtilsService} from "app/src/shared/services/utils.service";
 import {Observable} from "rxjs";
 import {FieldUtilitiesService} from "app/src/shared/services/field-utilities.service";
-import {
-  TipOperationSetReminderComponent
-} from "app/src/shared/modals/tip-operation-set-reminder/tip-operation-set-reminder.component";
+import {TipOperationSetReminderComponent} from "app/src/shared/modals/tip-operation-set-reminder/tip-operation-set-reminder.component";
 import {DeleteConfirmationComponent} from "app/src/shared/modals/delete-confirmation/delete-confirmation.component";
 import {HttpClient} from "@angular/common/http";
-import {
-  TipOperationPostponeComponent
-} from "app/src/shared/modals/tip-operation-postpone/tip-operation-postpone.component";
+import {TipOperationPostponeComponent} from "app/src/shared/modals/tip-operation-postpone/tip-operation-postpone.component";
 import {CryptoService} from "@app/crypto.service";
 import {TransferAccessComponent} from "app/src/shared/modals/transfer-access/transfer-access.component";
 import {AuthenticationService} from "app/src/services/authentication.service";
@@ -33,8 +29,6 @@ export class TipComponent implements AfterViewInit {
   @ViewChild("tab3") tab3!: TemplateRef<any>;
 
   tip_id: string | null;
-  itemsPerPage: number = 5;
-  currentCommentsPage: number = 1;
   answers: any = {};
   uploads: any = {};
   questionnaire: any = {};
@@ -49,20 +43,7 @@ export class TipComponent implements AfterViewInit {
   tabs: any[];
   active: string;
 
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private cryptoService: CryptoService,
-    public utils: UtilsService,
-    public preferencesService: PreferenceResolver,
-    public modalService: NgbModal,
-    private activatedRoute: ActivatedRoute,
-    public httpService: HttpService,
-    public http: HttpClient,
-    public appDataService: AppDataService,
-    public rtipService: RecieverTipService,
-    public fieldUtilities: FieldUtilitiesService,
-    public authenticationService: AuthenticationService,
-  ) {
+  constructor(private cdr: ChangeDetectorRef, private cryptoService: CryptoService, protected utils: UtilsService, protected preferencesService: PreferenceResolver, protected modalService: NgbModal, private activatedRoute: ActivatedRoute, protected httpService: HttpService, protected http: HttpClient, protected appDataService: AppDataService, protected RTipService: ReceiverTipService, protected fieldUtilities: FieldUtilitiesService, protected authenticationService: AuthenticationService) {
     this.loadTipDate();
   }
 
@@ -93,8 +74,8 @@ export class TipComponent implements AfterViewInit {
     requestObservable.subscribe(
       {
         next: (response: any) => {
-          this.rtipService.initialize(response);
-          this.tip = this.rtipService.tip;
+          this.RTipService.initialize(response);
+          this.tip = this.RTipService.tip;
           this.activatedRoute.queryParams.subscribe((params: { [x: string]: any; }) => {
             this.tip.tip_id = params["tip_id"];
           });
@@ -125,7 +106,7 @@ export class TipComponent implements AfterViewInit {
             receiver: receiver_id
           },
         };
-        this.httpService.tipOperation(req.operation, req.args, this.rtipService.tip.id)
+        this.httpService.tipOperation(req.operation, req.args, this.RTipService.tip.id)
           .subscribe(() => {
             this.reload();
           });
@@ -150,7 +131,7 @@ export class TipComponent implements AfterViewInit {
                 receiver: receiver_id
               },
             };
-            this.httpService.tipOperation(req.operation, req.args, this.rtipService.tip.id)
+            this.httpService.tipOperation(req.operation, req.args, this.RTipService.tip.id)
               .subscribe(() => {
                 this.reload();
               });
@@ -255,24 +236,24 @@ export class TipComponent implements AfterViewInit {
   tipToggleStar() {
     this.httpService.tipOperation("set", {
       "key": "important",
-      "value": !this.rtipService.tip.important
-    }, this.rtipService.tip.id)
+      "value": !this.RTipService.tip.important
+    }, this.RTipService.tip.id)
       .subscribe(() => {
-        this.rtipService.tip.important = !this.rtipService.tip.important;
+        this.RTipService.tip.important = !this.RTipService.tip.important;
       });
   }
 
   tipNotify(enable: boolean) {
-    this.httpService.tipOperation("set", {"key": "enable_notifications", "value": enable}, this.rtipService.tip.id)
+    this.httpService.tipOperation("set", {"key": "enable_notifications", "value": enable}, this.RTipService.tip.id)
       .subscribe(() => {
-        this.rtipService.tip.enable_notifications = enable;
+        this.RTipService.tip.enable_notifications = enable;
       });
   }
 
   tipDelete() {
     const modalRef = this.modalService.open(DeleteConfirmationComponent);
     modalRef.componentInstance.args = {
-      tip: this.rtipService.tip,
+      tip: this.RTipService.tip,
       operation: "delete"
     };
   }
@@ -280,7 +261,7 @@ export class TipComponent implements AfterViewInit {
   setReminder() {
     const modalRef = this.modalService.open(TipOperationSetReminderComponent);
     modalRef.componentInstance.args = {
-      tip: this.rtipService.tip,
+      tip: this.RTipService.tip,
       operation: "set_reminder",
       contexts_by_id: this.contexts_by_id,
       reminder_date: this.utils.getPostponeDate(this.appDataService.contexts_by_id[this.tip.context_id].tip_reminder),
@@ -295,7 +276,7 @@ export class TipComponent implements AfterViewInit {
   tip_postpone() {
     const modalRef = this.modalService.open(TipOperationPostponeComponent);
     modalRef.componentInstance.args = {
-      tip: this.rtipService.tip,
+      tip: this.RTipService.tip,
       operation: "postpone",
       contexts_by_id: this.contexts_by_id,
       expiration_date: this.utils.getPostponeDate(this.appDataService.contexts_by_id[this.tip.context_id].tip_timetolive),

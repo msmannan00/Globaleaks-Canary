@@ -25,13 +25,12 @@ export class StepsComponent implements OnInit {
     sufficient: true,
   };
 
-  constructor(private questionnariesService: QuestionnaireService, private fieldUtilities: FieldUtilitiesService, public node: NodeResolver, private http: HttpClient, public utilsService: UtilsService, private httpService: HttpService) {
+  constructor(private questionnaireService: QuestionnaireService, private fieldUtilities: FieldUtilitiesService, protected node: NodeResolver, private http: HttpClient, protected utilsService: UtilsService, private httpService: HttpService) {
   }
 
   ngOnInit(): void {
     this.step = this.questionnaire.steps[0];
     this.parsedFields = this.fieldUtilities.parseQuestionnaire(this.questionnaire, {});
-
   }
 
   toggleAddStep() {
@@ -46,14 +45,13 @@ export class StepsComponent implements OnInit {
 
     this.httpService.requestAddAdminQuestionnaireStep(step).subscribe((_: any) => {
       this.new_step = {label: ""};
-      return this.questionnariesService.sendData();
+      return this.questionnaireService.sendData();
 
     });
   }
 
   swap($event: any, index: number, n: number): void {
     $event.stopPropagation();
-
     const target = index + n;
     if (target < 0 || target >= this.questionnaire.steps.length) {
       return;

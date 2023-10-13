@@ -10,7 +10,7 @@ export class EncryptionRecoveryKeyComponent {
 
   @Input() erk: any;
 
-  constructor(private activeModal: NgbActiveModal, public utilsService: UtilsService) {
+  constructor(private activeModal: NgbActiveModal, protected utilsService: UtilsService) {
   }
 
   dismiss() {

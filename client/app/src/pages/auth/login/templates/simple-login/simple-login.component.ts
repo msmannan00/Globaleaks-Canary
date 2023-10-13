@@ -13,7 +13,7 @@ export class SimpleLoginComponent {
   @Input() loginData: LoginDataRef;
   @Input() loginValidator: NgForm;
 
-  constructor(public authentication: AuthenticationService, public appDataService: AppDataService) {
+  constructor(protected authentication: AuthenticationService, protected appDataService: AppDataService) {
   }
 
 }

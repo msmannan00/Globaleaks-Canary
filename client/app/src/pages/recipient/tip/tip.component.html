@@ -76,19 +76,19 @@
   </div>
   <div class="row mt-2">
     <div class="col-md-12">
-      <src-tip-info [tipService]="rtipService"></src-tip-info>
+      <src-tip-info [tipService]="RTipService"></src-tip-info>
     </div>
   </div>
   <ng-container *ngIf="tip.receivers">
     <div class="row" *ngIf="tip.receivers.length > 1">
       <div class="col-md-12">
-        <src-tip-receiver-list [tipService]="rtipService"></src-tip-receiver-list>
+        <src-tip-receiver-list [tipService]="RTipService"></src-tip-receiver-list>
       </div>
     </div>
   </ng-container>
   <div class="row">
     <div class="col-md-6">
-      <src-tip-questionnaire-answers [tipService]="rtipService"></src-tip-questionnaire-answers>
+      <src-tip-questionnaire-answers [tipService]="RTipService"></src-tip-questionnaire-answers>
     </div>
 
     <ng-container class="col-md-6" *ngIf="tip.enable_whistleblower_identity">
@@ -117,7 +117,7 @@
       <div class="col-md-12">
         <src-tip-upload-wbfile [tip]="tip" [key]="'public'"></src-tip-upload-wbfile>
         <ng-container *ngIf="tip.context">
-          <src-tip-comments [tipService]="rtipService" [key]="'public'"></src-tip-comments>
+          <src-tip-comments [tipService]="RTipService" [key]="'public'"></src-tip-comments>
         </ng-container>
       </div>
     </ng-template>
@@ -125,7 +125,7 @@
       <div class="col-md-12">
         <src-tip-upload-wbfile [tip]="tip" [key]="'internal'"></src-tip-upload-wbfile>
         <ng-container *ngIf="tip.context">
-          <src-tip-comments [tipService]="rtipService" [key]="'internal'"></src-tip-comments>
+          <src-tip-comments [tipService]="RTipService" [key]="'internal'"></src-tip-comments>
         </ng-container>
       </div>
     </ng-template>
@@ -133,7 +133,7 @@
       <div class="col-md-12">
         <src-tip-upload-wbfile [tip]="tip" [key]="'personal'"></src-tip-upload-wbfile>
         <ng-container *ngIf="tip.context">
-          <src-tip-comments [tipService]="rtipService" [key]="'personal'"></src-tip-comments>
+          <src-tip-comments [tipService]="RTipService" [key]="'personal'"></src-tip-comments>
         </ng-container>
       </div>
     </ng-template>

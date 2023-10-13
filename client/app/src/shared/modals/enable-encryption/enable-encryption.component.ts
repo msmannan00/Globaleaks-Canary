@@ -6,7 +6,7 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
   templateUrl: "./enable-encryption.component.html"
 })
 export class EnableEncryptionComponent {
-  constructor(public activeModal: NgbActiveModal) {
+  constructor(protected activeModal: NgbActiveModal) {
   }
 
   confirm() {

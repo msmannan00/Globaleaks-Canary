@@ -58,15 +58,15 @@ export class TipsComponent implements OnInit {
     searchPlaceholderText: this.translateService.instant("Search")
   };
 
-  constructor(private router: Router, public rtips: RTipsResolver, public preference: PreferenceResolver, private modalService: NgbModal, public utils: UtilsService, public appDataService: AppDataService, private elementRef: ElementRef, private translateService: TranslateService, private tokenResourceService: TokenResource) {
+  constructor(private router: Router, protected RTips: RTipsResolver, protected preference: PreferenceResolver, private modalService: NgbModal, protected utils: UtilsService, protected appDataService: AppDataService, private elementRef: ElementRef, private translateService: TranslateService, private tokenResourceService: TokenResource) {
 
   }
 
   ngOnInit() {
-    if (!this.rtips.dataModel) {
+    if (!this.RTips.dataModel) {
       this.router.navigate(["/recipient/home"]);
     } else {
-      this.filteredTips = this.rtips.dataModel;
+      this.filteredTips = this.RTips.dataModel;
       this.processTips();
     }
   }
@@ -167,7 +167,7 @@ export class TipsComponent implements OnInit {
   processTips() {
     const uniqueKeys: string[] = [];
 
-    for (let tip of this.rtips.dataModel) {
+    for (let tip of this.RTips.dataModel) {
       tip.context = this.appDataService.contexts_by_id[tip.context_id];
       tip.context_name = tip.context.name;
       tip.submissionStatusStr = this.utils.getSubmissionStatusText(tip.status, tip.substatus, this.appDataService.submissionStatuses);
@@ -218,7 +218,7 @@ export class TipsComponent implements OnInit {
   onSearchChange(value: string | number | undefined) {
     if (typeof value !== "undefined") {
       this.currentPage = 1;
-      this.filteredTips = this.rtips.dataModel;
+      this.filteredTips = this.RTips.dataModel;
       this.processTips();
 
       this.filteredTips = orderBy(filter(this.filteredTips, (tip) =>
@@ -273,7 +273,7 @@ export class TipsComponent implements OnInit {
   }
 
   applyFilter() {
-    this.filteredTips = this.utils.getStaticFilter(this.rtips.dataModel, this.dropdownStatusModel, "submissionStatusStr");
+    this.filteredTips = this.utils.getStaticFilter(this.RTips.dataModel, this.dropdownStatusModel, "submissionStatusStr");
     this.filteredTips = this.utils.getStaticFilter(this.filteredTips, this.dropdownContextModel, "context_name");
     this.filteredTips = this.utils.getStaticFilter(this.filteredTips, this.dropdownScoreModel, "score");
     this.filteredTips = this.utils.getDateFilter(this.filteredTips, this.reportDateFilter, this.updateDateFilter, this.expiryDateFilter);

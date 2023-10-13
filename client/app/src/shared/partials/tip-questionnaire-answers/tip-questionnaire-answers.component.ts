@@ -1,17 +1,17 @@
 import {Component, Input} from "@angular/core";
 import {UtilsService} from "../../services/utils.service";
 import {WbtipService} from "@app/services/wbtip.service";
-import {RecieverTipService} from "app/src/services/recievertip.service";
+import {ReceiverTipService} from "@app/services/receiver-tip.service";
 
 @Component({
   selector: "src-tip-questionnaire-answers",
   templateUrl: "./tip-questionnaire-answers.component.html"
 })
 export class TipQuestionnaireAnswersComponent {
-  @Input() tipService: RecieverTipService | WbtipService;
+  @Input() tipService: ReceiverTipService | WbtipService;
   collapsed = false;
 
-  constructor(public utilsService: UtilsService) {
+  constructor(protected utilsService: UtilsService) {
   }
 
   public toggleCollapse() {

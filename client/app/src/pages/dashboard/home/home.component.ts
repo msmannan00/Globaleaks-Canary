@@ -7,6 +7,6 @@ import {AppDataService} from "@app/app-data.service";
 })
 export class
 HomeComponent{
-  constructor(public appDataService:AppDataService) {
+  constructor(protected appDataService:AppDataService) {
   }
 }

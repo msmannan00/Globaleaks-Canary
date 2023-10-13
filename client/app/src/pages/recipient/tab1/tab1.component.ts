@@ -11,7 +11,7 @@ import {AuthenticationService} from "@app/services/authentication.service";
 export class Tab1Component {
   @Input() contentForm: NgForm;
 
-  constructor(public nodeResolver: NodeResolver, private utilsService: UtilsService, public authenticationService: AuthenticationService) {
+  constructor(protected nodeResolver: NodeResolver, private utilsService: UtilsService, protected authenticationService: AuthenticationService) {
   }
 
   updateNode() {

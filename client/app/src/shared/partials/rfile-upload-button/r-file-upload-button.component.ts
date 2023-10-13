@@ -24,7 +24,7 @@ export class RFileUploadButtonComponent implements AfterViewInit, OnInit {
   errorFile: Transfer;
   confirmButton = false;
 
-  constructor(public authenticationService: AuthenticationService, public appDataService: AppDataService) {
+  constructor(protected authenticationService: AuthenticationService, protected appDataService: AppDataService) {
   }
 
   ngOnInit(): void {

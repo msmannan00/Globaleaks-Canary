@@ -1,6 +1,5 @@
 import {Component, Input, OnInit, ViewChild} from "@angular/core";
 import {NgForm} from "@angular/forms";
-import {NgbTooltipConfig} from "@ng-bootstrap/ng-bootstrap";
 import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
 import {UtilsService} from "app/src/shared/services/utils.service";
 import {AppConfigService} from "@app/services/app-config.service";
@@ -22,8 +21,7 @@ export class Tab3Component implements OnInit {
   languages_enabled_selector: any[] = [];
   languages_supported: any = {};
 
-  constructor(private appDataService: AppDataService, private translationService: TranslationService, private appConfigService: AppConfigService, private utilsService: UtilsService, public nodeResolver: NodeResolver, private config: NgbTooltipConfig) {
-    config.placement = "top";
+  constructor(private appDataService: AppDataService, private translationService: TranslationService, private appConfigService: AppConfigService, private utilsService: UtilsService, protected nodeResolver: NodeResolver) {
   }
 
   ngOnInit(): void {

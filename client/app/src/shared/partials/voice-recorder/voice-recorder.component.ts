@@ -35,7 +35,7 @@ export class VoiceRecorderComponent implements OnInit {
 
   @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(public authenticationService: AuthenticationService, private submissionService: SubmissionService) {
+  constructor(protected authenticationService: AuthenticationService, private submissionService: SubmissionService) {
   }
 
   ngOnInit(): void {

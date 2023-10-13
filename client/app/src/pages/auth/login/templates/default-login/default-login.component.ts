@@ -15,6 +15,6 @@ export class DefaultLoginComponent {
   @Input() loginValidator: NgForm;
   loginAuthCode: any;
 
-  constructor(public utils: UtilsService, public authentication: AuthenticationService) {
+  constructor(protected utils: UtilsService, protected authentication: AuthenticationService) {
   }
 }

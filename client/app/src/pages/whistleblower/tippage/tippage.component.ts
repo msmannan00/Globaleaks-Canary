@@ -29,9 +29,9 @@ export class TippageComponent {
   identity_provided = false;
 
   private submission: any;
-  public tip: any;
+  protected tip: any;
 
-  constructor(private fieldUtilitiesService: FieldUtilitiesService, public utilsService: UtilsService, public appDataService: AppDataService, private fieldUtilities: FieldUtilitiesService, private activatedRoute: ActivatedRoute, private httpService: HttpService, public wbtipService: WbtipService) {
+  constructor(private fieldUtilitiesService: FieldUtilitiesService, protected utilsService: UtilsService, protected appDataService: AppDataService, private fieldUtilities: FieldUtilitiesService, private activatedRoute: ActivatedRoute, private httpService: HttpService, protected wbTipService: WbtipService) {
   }
 
   ngOnInit() {
@@ -40,8 +40,8 @@ export class TippageComponent {
     requestObservable.subscribe(
       {
         next: (response: WBTipData) => {
-          this.wbtipService.initialize(response);
-          this.tip = this.wbtipService.tip;
+          this.wbTipService.initialize(response);
+          this.tip = this.wbTipService.tip;
 
           this.activatedRoute.queryParams.subscribe(params => {
             this.tip.tip_id = params["tip_id"];
@@ -180,7 +180,7 @@ export class TippageComponent {
       this.httpService.whistleBlowerIdentityUpdate({
         "identity_field_id": this.tip.whistleblower_identity_field.id,
         "identity_field_answers": this.answers
-      }, this.wbtipService.tip.id).subscribe
+      }, this.wbTipService.tip.id).subscribe
       (
         {
           next: _ => {

@@ -27,7 +27,7 @@ export class SubmissionErrorComponent {
 
   @Output() goToStep: EventEmitter<any> = new EventEmitter();
 
-  constructor(public utilsService: UtilsService) {
+  constructor(protected utilsService: UtilsService) {
   }
 
 }

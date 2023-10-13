@@ -19,12 +19,11 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private questionnariesService: QuestionnaireService, private httpClient: HttpClient, private httpService: HttpService, private utilsService: UtilsService, private fieldTemplates: FieldTemplatesResolver, private questionnairesResolver: QuestionnairesResolver
-  ) {
+  constructor(private questionnaireService: QuestionnaireService, private httpClient: HttpClient, private httpService: HttpService, private utilsService: UtilsService, private fieldTemplates: FieldTemplatesResolver, private questionnairesResolver: QuestionnairesResolver) {
   }
 
   ngOnInit(): void {
-    this.questionnariesService.getQuestionnairesData().pipe(takeUntil(this.destroy$)).subscribe(() => {
+    this.questionnaireService.getQuestionnairesData().pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.getResolver();
       return this.getQuestionnairesResolver();
     });

@@ -13,6 +13,6 @@ export class TipFieldAnswerEntryComponent {
   format = "dd/MM/yyyy";
   locale = "en-US";
 
-  constructor(public authenticationService: AuthenticationService) {
+  constructor(protected authenticationService: AuthenticationService) {
   }
 }

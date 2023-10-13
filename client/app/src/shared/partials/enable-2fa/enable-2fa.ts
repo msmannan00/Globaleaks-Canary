@@ -14,6 +14,10 @@ export class Enable2fa {
   array = new Uint32Array(32);
   OTPSecretForm: FormGroup;
 
+  constructor(protected utils: UtilsService, protected preferenceResolver: PreferenceResolver, private builder: FormBuilder, protected twoFactorAuthData: TwoFactorAuthData) {
+    this.initialization();
+  }
+
   ngOnInit() {
     this.OTPSecretForm = this.builder.group({});
   };
@@ -22,17 +26,13 @@ export class Enable2fa {
     window.crypto.getRandomValues(this.array);
 
     for (let i = 0; i < this.array.length; i++) {
-      this.twofactorauthData.totp.secret += this.symbols[this.array[i] % this.symbols.length];
+      this.twoFactorAuthData.totp.secret += this.symbols[this.array[i] % this.symbols.length];
     }
 
     this.onSecretKeyChanged();
   }
 
-  constructor(public utils: UtilsService, public preferenceResolver: PreferenceResolver, private builder: FormBuilder, public twofactorauthData: TwoFactorAuthData) {
-    this.initialization();
-  }
-
   onSecretKeyChanged() {
-    this.twofactorauthData.totp.qrcode_string = "otpauth://totp/" + location.host + "%20%28" + this.preferenceResolver.dataModel.username + "%29?secret=" + this.twofactorauthData.totp.secret;
+    this.twoFactorAuthData.totp.qrcode_string = "otpauth://totp/" + location.host + "%20%28" + this.preferenceResolver.dataModel.username + "%29?secret=" + this.twoFactorAuthData.totp.secret;
   }
 }

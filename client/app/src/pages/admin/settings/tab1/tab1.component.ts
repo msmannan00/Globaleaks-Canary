@@ -12,7 +12,7 @@ import {AppConfigService} from "@app/services/app-config.service";
 export class Tab1Component {
   @Input() contentForm: NgForm;
 
-  constructor(private appConfigService: AppConfigService, public nodeResolver: NodeResolver, public authenticationService: AuthenticationService, private utilsService: UtilsService) {
+  constructor(private appConfigService: AppConfigService, protected nodeResolver: NodeResolver, protected authenticationService: AuthenticationService, private utilsService: UtilsService) {
   }
 
   updateNode() {

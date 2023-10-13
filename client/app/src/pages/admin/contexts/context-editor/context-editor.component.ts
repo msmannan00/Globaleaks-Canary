@@ -27,7 +27,7 @@ export class ContextEditorComponent implements OnInit {
   selected = {value: null};
   adminReceiversById: any;
 
-  constructor(private http: HttpClient, private modalService: NgbModal, public nodeResolver: NodeResolver, private usersResolver: UsersResolver, private questionnairesResolver: QuestionnairesResolver, private utilsService: UtilsService) {
+  constructor(private http: HttpClient, private modalService: NgbModal, protected nodeResolver: NodeResolver, private usersResolver: UsersResolver, private questionnairesResolver: QuestionnairesResolver, private utilsService: UtilsService) {
   }
 
   ngOnInit(): void {

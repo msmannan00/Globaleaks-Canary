@@ -29,7 +29,7 @@ export class PreferenceTab1Component implements OnInit {
   languageModel = "";
   role = "";
 
-  constructor(private translationService: TranslationService, private translateService: TranslateService, private httpService: HttpService, private twoFactorAuthData: TwoFactorAuthData, private modalService: NgbModal, public appDataService: AppDataService, public preferenceResolver: PreferenceResolver, private utilsService: UtilsService, public authenticationService: AuthenticationService) {
+  constructor(private translationService: TranslationService, private translateService: TranslateService, private httpService: HttpService, private twoFactorAuthData: TwoFactorAuthData, private modalService: NgbModal, public appDataService: AppDataService, protected preferenceResolver: PreferenceResolver, private utilsService: UtilsService, protected authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {

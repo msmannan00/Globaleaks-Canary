@@ -8,7 +8,7 @@ import {PreferenceResolver} from "app/src/shared/resolvers/preference.resolver";
 export class SidebarComponent {
   message: string;
 
-  constructor(public preferenceResolver: PreferenceResolver) {
+  constructor(protected preferenceResolver: PreferenceResolver) {
   }
 
 }

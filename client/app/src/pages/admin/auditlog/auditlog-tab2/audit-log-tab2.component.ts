@@ -12,7 +12,7 @@ export class AuditLogTab2Component {
   pageSize = 20;
   users: any = new userResolverModel();
 
-  constructor(public usersResolver: UsersResolver) {
+  constructor(protected usersResolver: UsersResolver) {
   }
 
   ngOnInit() {

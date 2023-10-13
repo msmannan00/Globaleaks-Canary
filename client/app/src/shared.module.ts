@@ -40,7 +40,7 @@ import {
 import {WidgetWbFilesComponent} from "app/src/shared/partials/widget-wbfiles/widget-wb-files.component";
 import {ByteFmtPipe} from "./shared/pipes/byte-fmt.pipe";
 import {RFileUploadButtonComponent} from "app/src/shared/partials/rfile-upload-button/r-file-upload-button.component";
-import {RfileUploadStatusComponent} from "./shared/partials/rfile-upload-status/rfile-upload-status.component";
+import {RFileUploadStatusComponent} from "app/src/shared/partials/rfile-upload-status/r-file-upload-status.component";
 import {TipCommentsComponent} from "./shared/partials/tip-comments/tip-comments.component";
 import {LimitToPipe} from "./shared/pipes/limit-to.pipe";
 import {OrderByPipe} from "./shared/pipes/order-by.pipe";
@@ -100,7 +100,7 @@ import {
   TipOperationFileIdentityAccessReplyComponent
 } from "./shared/modals/tip-operation-file-identity-access-reply/tip-operation-file-identity-access-reply.component";
 import {DemoComponent} from "./shared/partials/demo/demo.component";
-import {MessageconsoleComponent} from "./shared/partials/messageconsole/messageconsole.component";
+import {MessageConsoleComponent} from "app/src/shared/partials/messageconsole/message-console.component";
 import {AcceptAgreementComponent} from "./shared/modals/accept-agreement/accept-agreement.component";
 import {DisclaimerComponent} from "./shared/modals/disclaimer/disclaimer.component";
 import {
@@ -161,7 +161,7 @@ import {VoiceRecorderComponent} from "./shared/partials/voice-recorder/voice-rec
     WidgetWbFilesComponent,
     ByteFmtPipe,
     RFileUploadButtonComponent,
-    RfileUploadStatusComponent,
+    RFileUploadStatusComponent,
     TipCommentsComponent,
     LimitToPipe,
     OrderByPipe,
@@ -206,8 +206,8 @@ import {VoiceRecorderComponent} from "./shared/partials/voice-recorder/voice-rec
     AssignScorePointsComponent,
     TipOperationFileIdentityAccessReplyComponent,
     DemoComponent,
-    MessageconsoleComponent,
-    MessageconsoleComponent,
+    MessageConsoleComponent,
+    MessageConsoleComponent,
     AcceptAgreementComponent,
     TransferAccessComponent,
     SecurityAwarenessConfidentialityComponent,
@@ -233,7 +233,7 @@ import {VoiceRecorderComponent} from "./shared/partials/voice-recorder/voice-rec
     WidgetWbFilesComponent,
     TipCommentsComponent,
     TipReceiverListComponent,
-    RfileUploadStatusComponent,
+    RFileUploadStatusComponent,
     RFileUploadButtonComponent,
     RFilesUploadStatusComponent,
     NgFormChangeDirective,
@@ -262,7 +262,7 @@ import {VoiceRecorderComponent} from "./shared/partials/voice-recorder/voice-rec
     AssignScorePointsComponent,
     PreferencesComponent,
     DemoComponent,
-    MessageconsoleComponent,
+    MessageConsoleComponent,
     AcceptAgreementComponent,
     TransferAccessComponent,
     SecurityAwarenessConfidentialityComponent,

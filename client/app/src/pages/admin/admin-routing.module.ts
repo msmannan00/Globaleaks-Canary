@@ -16,7 +16,7 @@ import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {UsersResolver} from "@app/shared/resolvers/users.resolver";
 import {QuestionnairesResolver} from "@app/shared/resolvers/questionnaires.resolver";
 import {ContextsResolver} from "@app/shared/resolvers/contexts.resolver";
-import {AuditlogResolver} from "@app/shared/resolvers/auditlog.resolver";
+import {AuditLogResolver} from "@app/shared/resolvers/audit-log-resolver.service";
 import {JobResolver} from "@app/shared/resolvers/job.resolver";
 import {TipsResolver} from "@app/shared/resolvers/tips.resolver";
 import {NotificationsResolver} from "@app/shared/resolvers/notifications.resolver";
@@ -104,7 +104,7 @@ const routes: Routes = [
   {
     path: "auditlog",
     resolve: {
-      NodeResolver, PreferenceResolver, UsersResolver, AuditlogResolver, JobResolver, TipsResolver
+      NodeResolver, PreferenceResolver, UsersResolver, AuditlogResolver: AuditLogResolver, JobResolver, TipsResolver
     },
     loadChildren: () => AuditLogModule,
     pathMatch: "full",

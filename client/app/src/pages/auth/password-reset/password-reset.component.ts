@@ -1,6 +1,5 @@
 import {Component} from "@angular/core";
 import {AuthenticationService} from "@app/services/authentication.service";
-import {AppDataService} from "@app/app-data.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({
@@ -10,7 +9,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
 export class PasswordResetComponent {
   username: any = undefined;
 
-  constructor(private authenticationService: AuthenticationService, public utilsService: UtilsService) {
+  constructor(private authenticationService: AuthenticationService, protected utilsService: UtilsService) {
   }
 
   submitRequest() {

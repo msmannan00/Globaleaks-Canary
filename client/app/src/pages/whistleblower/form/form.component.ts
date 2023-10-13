@@ -24,7 +24,7 @@ export class FormComponent implements OnInit {
   rows: any;
   status: any = {};
 
-  constructor(public fieldUtilitiesService: FieldUtilitiesService) {
+  constructor(protected fieldUtilitiesService: FieldUtilitiesService) {
   }
 
   ngOnInit(): void {

@@ -15,7 +15,7 @@ export class adminHomeComponent implements OnInit {
   nodeData: any = [];
   preferenceData: any = [];
 
-  constructor(private http: HttpClient, private modalService: NgbModal, private preference: PreferenceResolver, public nodeResolver: NodeResolver, private router: Router) {
+  constructor(private http: HttpClient, private modalService: NgbModal, private preference: PreferenceResolver, protected nodeResolver: NodeResolver, private router: Router) {
   }
 
   ngOnInit(): void {

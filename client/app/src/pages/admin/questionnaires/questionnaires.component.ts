@@ -12,10 +12,7 @@ export class QuestionnairesComponent implements AfterViewInit {
   nodeData: any;
   active: string;
 
-  constructor(
-    public node: NodeResolver,
-    private cdr: ChangeDetectorRef
-  ) {
+  constructor(protected node: NodeResolver, private cdr: ChangeDetectorRef) {
   }
 
   ngAfterViewInit(): void {

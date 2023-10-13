@@ -18,7 +18,7 @@ export class ContextsComponent implements OnInit {
   contextsData: any = [];
 
 
-  constructor(public preference: PreferenceResolver, public httpService: HttpService, public authenticationService: AuthenticationService, public node: NodeResolver, public users: UsersResolver, public contexts: ContextsResolver, public utilsService: UtilsService) {
+  constructor(protected preference: PreferenceResolver, protected httpService: HttpService, protected authenticationService: AuthenticationService, protected node: NodeResolver, protected users: UsersResolver, protected contexts: ContextsResolver, protected utilsService: UtilsService) {
   }
 
   toggleAddContext() {
@@ -32,7 +32,7 @@ export class ContextsComponent implements OnInit {
   }
 
   add_context() {
-    var context: new_context = new new_context();
+    let context: new_context = new new_context();
     context.name = this.new_context.name;
     context.questionnaire_id = this.node.dataModel.default_questionnaire;
     context.order = this.newItemOrder(this.contextsData, "order");

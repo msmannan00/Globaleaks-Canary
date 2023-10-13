@@ -16,6 +16,6 @@ export class WbpaComponent {
   confirmation_email: any;
   domainPattern: string = "^[a-z0-9]+$";
 
-  constructor(public appDataService: AppDataService) {
+  constructor(protected appDataService: AppDataService) {
   }
 }

@@ -3,14 +3,14 @@ import {WbtipService} from "@app/services/wbtip.service";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {UtilsService} from "../../services/utils.service";
 import {ScrollToBottomDirective} from "../../directive/scroll-to-bottom.directive";
-import {RecieverTipService} from "app/src/services/recievertip.service";
+import {ReceiverTipService} from "@app/services/receiver-tip.service";
 
 @Component({
   selector: "src-tip-comments",
   templateUrl: "./tip-comments.component.html"
 })
 export class TipCommentsComponent {
-  @Input() tipService: RecieverTipService | WbtipService;
+  @Input() tipService: ReceiverTipService | WbtipService;
   @Input() key: any;
   @ViewChild(ScrollToBottomDirective)
   scroll: ScrollToBottomDirective;
@@ -20,7 +20,7 @@ export class TipCommentsComponent {
   currentCommentsPage: number = 1;
   itemsPerPage = 5;
 
-  constructor(private rTipService: RecieverTipService, public authenticationService: AuthenticationService, public utilsService: UtilsService) {
+  constructor(private rTipService: ReceiverTipService, protected authenticationService: AuthenticationService, protected utilsService: UtilsService) {
 
   }
 

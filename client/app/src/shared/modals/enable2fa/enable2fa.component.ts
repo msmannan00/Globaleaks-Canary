@@ -10,7 +10,7 @@ import {TwoFactorAuthData} from "@app/services/2fa.data.service";
 })
 export class Enable2faComponent {
 
-  constructor(private preferenceResolver: PreferenceResolver, private activeModal: NgbActiveModal, private utilsService: UtilsService, public twoFactorAuthData: TwoFactorAuthData) {
+  constructor(private preferenceResolver: PreferenceResolver, private activeModal: NgbActiveModal, private utilsService: UtilsService, protected twoFactorAuthData: TwoFactorAuthData) {
   }
 
   dismiss() {

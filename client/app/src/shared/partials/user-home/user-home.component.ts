@@ -5,7 +5,4 @@ import {Component} from "@angular/core";
   templateUrl: "./user-home.component.html"
 })
 export class UserHomeComponent {
-
-  constructor() {
-  }
 }

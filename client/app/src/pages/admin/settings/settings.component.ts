@@ -16,11 +16,9 @@ export class SettingsComponent implements AfterViewInit {
   nodeData: any;
   active: string;
 
-  constructor(
-    public node: NodeResolver,
-    public authenticationService: AuthenticationService,
-    private cdr: ChangeDetectorRef
-  ) { }
+  constructor(protected node: NodeResolver, protected authenticationService: AuthenticationService, private cdr: ChangeDetectorRef) {
+
+  }
 
   ngAfterViewInit(): void {
     setTimeout(() => {

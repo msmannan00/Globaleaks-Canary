@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
 import {HttpService} from "app/src/shared/services/http.service";
 import {UtilsService} from "app/src/shared/services/utils.service";
 import {new_field} from "@app/models/admin/new_field";
@@ -18,7 +17,7 @@ export class AddFieldFromTemplateComponent {
   fields: any = [];
   new_field: any = {};
 
-  constructor(private questionnariesService: QuestionnaireService, private nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService) {
+  constructor(private questionnaireService: QuestionnaireService, private httpService: HttpService, private utilsService: UtilsService) {
     this.new_field = {
       template_id: ""
     };
@@ -45,7 +44,7 @@ export class AddFieldFromTemplateComponent {
           template_id: ""
         };
         this.dataToParent.emit();
-        return this.questionnariesService.sendData();
+        return this.questionnaireService.sendData();
       });
     }
     if (this.type === "field") {
@@ -62,7 +61,7 @@ export class AddFieldFromTemplateComponent {
           template_id: ""
         };
         this.dataToParent.emit();
-        return this.questionnariesService.sendData();
+        return this.questionnaireService.sendData();
       });
     }
   }

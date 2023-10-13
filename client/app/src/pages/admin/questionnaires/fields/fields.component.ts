@@ -30,7 +30,7 @@ export class FieldsComponent implements OnInit {
   showAddQuestion: boolean = false;
   fieldIsMarkableSubjectToStats: any;
   fieldIsMarkableSubjectToPreview: any;
-  fieldtemplatesData: any = [];
+  fieldTemplatesData: any = [];
   children: any;
   new_trigger: { field: string; option: string; sufficient: boolean } = {
     field: "",
@@ -39,11 +39,11 @@ export class FieldsComponent implements OnInit {
   };
   parsedFields: any;
 
-  constructor(private questionnariesService: QuestionnaireService, private modalService: NgbModal, public nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService, private fieldTemplates: FieldTemplatesResolver, private fieldUtilities: FieldUtilitiesService,) {
+  constructor(private questionnaireService: QuestionnaireService, private modalService: NgbModal, public nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService, private fieldTemplates: FieldTemplatesResolver, private fieldUtilities: FieldUtilitiesService,) {
   }
 
   ngOnInit(): void {
-    this.fieldtemplatesData = this.fieldTemplates.dataModel;
+    this.fieldTemplatesData = this.fieldTemplates.dataModel;
     this.fieldIsMarkableSubjectToStats = this.isMarkableSubjectToStats(this.field);
     this.fieldIsMarkableSubjectToPreview = this.isMarkableSubjectToPreview(this.field);
     this.parsedFields = this.fieldUtilities.parseFields(this.fieldTemplates.dataModel, {});
@@ -53,7 +53,7 @@ export class FieldsComponent implements OnInit {
   save_field(field: any) {
     this.utilsService.assignUniqueOrderIndex(field.options);
     return this.httpService.requestUpdateAdminQuestionnaireField(field.id, field).subscribe(_ => {
-      return this.questionnariesService.sendData();
+      return this.questionnaireService.sendData();
     });
   }
 
@@ -77,7 +77,7 @@ export class FieldsComponent implements OnInit {
     modalRef.componentInstance.confirmFunction = () => {
       return this.httpService.requestDeleteAdminQuestionareField(arg.id).subscribe(() => {
         this.dataToParent.emit();
-        return this.questionnariesService.sendData();
+        return this.questionnaireService.sendData();
       });
     };
     return modalRef.result;

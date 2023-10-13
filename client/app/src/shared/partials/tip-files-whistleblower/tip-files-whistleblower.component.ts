@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {UtilsService} from "../../services/utils.service";
 import {WbtipService} from "@app/services/wbtip.service";
 
@@ -6,18 +6,14 @@ import {WbtipService} from "@app/services/wbtip.service";
   selector: "src-tip-files-whistleblower",
   templateUrl: "./tip-files-whistleblower.component.html"
 })
-export class TipFilesWhistleblowerComponent implements OnInit {
+export class TipFilesWhistleblowerComponent {
   @Input() fileUploadUrl: any;
   collapsed = false;
 
-  constructor(public utilsService: UtilsService, public wbTipService: WbtipService) {
+  constructor(protected utilsService: UtilsService, protected wbTipService: WbtipService) {
   }
 
   public toggleColLapse() {
     this.collapsed = !this.collapsed;
   }
-
-  ngOnInit(): void {
-  }
-
 }

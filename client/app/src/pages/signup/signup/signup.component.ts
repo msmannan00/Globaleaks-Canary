@@ -27,7 +27,7 @@ export class SignupComponent {
     "tos2": false
   };
 
-  constructor(public appDataService: AppDataService, private httpService: HttpService, private appConfig: AppConfigService) {
+  constructor(protected appDataService: AppDataService, private httpService: HttpService, private appConfig: AppConfigService) {
   }
 
   ngOnInit() {

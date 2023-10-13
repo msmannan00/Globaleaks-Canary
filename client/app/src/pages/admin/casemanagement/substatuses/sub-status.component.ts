@@ -20,7 +20,7 @@ export class SubStatusComponent implements OnInit {
     this.showAddSubStatus = !this.showAddSubStatus;
   }
 
-  constructor(private httpService: HttpService, private appConfigService: AppConfigService, public modalService: NgbModal, public utilsService: UtilsService, private http: HttpClient) {
+  constructor(private httpService: HttpService, private appConfigService: AppConfigService, protected modalService: NgbModal, protected utilsService: UtilsService, private http: HttpClient) {
   }
 
   ngOnInit(): void {

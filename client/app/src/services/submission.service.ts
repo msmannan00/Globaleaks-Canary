@@ -19,7 +19,7 @@ export class SubmissionService {
   uploads: any = {};
   private sharedData: any;
 
-  constructor(public authenticationService: AuthenticationService, private serviceInstanceService: ServiceInstanceService, private httpService: HttpService, private appDataService: AppDataService, private submissionResourceService: SubmissionResourceService) {
+  constructor(protected authenticationService: AuthenticationService, private serviceInstanceService: ServiceInstanceService, private httpService: HttpService, private appDataService: AppDataService, private submissionResourceService: SubmissionResourceService) {
   }
 
   init() {

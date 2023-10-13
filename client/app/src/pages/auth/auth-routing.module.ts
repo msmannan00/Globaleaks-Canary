@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
 import {LoginComponent} from "./login/login.component";
 import {PasswordResetComponent} from "./password-reset/password-reset.component";
-import {PasswordreqestedComponent} from "./passwordreqested/passwordreqested.component";
+import {PasswordRequestedComponent} from "@app/pages/auth/passwordreqested/password-requested.component";
 
 const routes: Routes = [
   {
@@ -17,7 +17,7 @@ const routes: Routes = [
   },
   {
     path: "passwordreset/requested",
-    component: PasswordreqestedComponent,
+    component: PasswordRequestedComponent,
     pathMatch: "full",
   }
 

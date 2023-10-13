@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {RecieverTipService} from "app/src/services/recievertip.service";
+import {ReceiverTipService} from "@app/services/receiver-tip.service";
 import {
   TipOperationFileIdentityAccessRequestComponent
 } from "app/src/shared/modals/tip-operation-file-identity-access-request/tip-operation-file-identity-access-request.ompoent";
@@ -15,7 +15,7 @@ import {UtilsService} from "app/src/shared/services/utils.service";
 export class WhistleBlowerIdentityReceiverComponent {
   collapsed: boolean = true;
 
-  constructor(public tipService: RecieverTipService, public utilsService: UtilsService, private httpService: HttpService, private modalService: NgbModal, private utils: UtilsService) {
+  constructor(protected tipService: ReceiverTipService, protected utilsService: UtilsService, private httpService: HttpService, private modalService: NgbModal, private utils: UtilsService) {
   }
 
   public toggleCollapse() {

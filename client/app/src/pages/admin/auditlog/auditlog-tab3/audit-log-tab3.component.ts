@@ -14,7 +14,7 @@ export class AuditLogTab3Component {
   pageSize = 20;
   tips: any = new tipsResolverModel();
 
-  constructor(private tipsResolver: TipsResolver, public utilsService: UtilsService, public appDataService: AppDataService) {
+  constructor(private tipsResolver: TipsResolver, protected utilsService: UtilsService, protected appDataService: AppDataService) {
   }
 
   ngOnInit() {

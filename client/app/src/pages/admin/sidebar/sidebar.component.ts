@@ -8,7 +8,7 @@ import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
 })
 export class SidebarComponent {
 
-  constructor(public nodeResolver: NodeResolver) {
+  constructor(protected nodeResolver: NodeResolver) {
   }
 
 }

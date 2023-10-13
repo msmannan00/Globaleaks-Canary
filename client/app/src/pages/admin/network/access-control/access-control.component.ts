@@ -1,6 +1,5 @@
 import {Component, OnInit} from "@angular/core";
 import {NetworkResolver} from "app/src/shared/resolvers/network.resolver";
-import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
 import {HttpService} from "app/src/shared/services/http.service";
 import {UtilsService} from "app/src/shared/services/utils.service";
 

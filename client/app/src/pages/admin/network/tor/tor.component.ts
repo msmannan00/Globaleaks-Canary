@@ -12,7 +12,7 @@ export class TorComponent implements OnInit {
   torOnionResetInProgress: boolean = false;
   networkData: any;
 
-  constructor(public nodeResolver: NodeResolver, private networkResolver: NetworkResolver, private httpService: HttpService, private utilsService: UtilsService) {
+  constructor(protected nodeResolver: NodeResolver, private networkResolver: NetworkResolver, private httpService: HttpService, private utilsService: UtilsService) {
   }
 
   ngOnInit(): void {

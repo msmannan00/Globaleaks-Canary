@@ -10,10 +10,7 @@ export class ImageUploadDirective {
   @Input() imageUploadId: string;
   @Input() imageSrcUrl: string;
 
-  constructor(
-    private viewContainerRef: ViewContainerRef,
-    private componentFactoryResolver: ComponentFactoryResolver
-  ) {
+  constructor(private viewContainerRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) {
   }
 
   ngOnInit() {

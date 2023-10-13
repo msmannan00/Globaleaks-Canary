@@ -21,7 +21,7 @@ export class ImageUploadComponent implements AfterViewInit, OnDestroy {
   };
   autoUploadSubscription: Subscription;
 
-  constructor(private http: HttpClient, public authenticationService: AuthenticationService) {
+  constructor(private http: HttpClient, protected authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {

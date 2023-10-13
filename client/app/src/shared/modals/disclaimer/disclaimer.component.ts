@@ -10,7 +10,7 @@ export class DisclaimerComponent implements OnInit {
   confirmFunction: () => void;
   nodeData: any = [];
 
-  constructor(private activeModal: NgbActiveModal, private modalService: NgbModal, public nodeResolver: NodeResolver) {
+  constructor(private activeModal: NgbActiveModal, private modalService: NgbModal, protected nodeResolver: NodeResolver) {
   }
 
   ngOnInit(): void {

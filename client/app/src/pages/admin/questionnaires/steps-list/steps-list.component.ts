@@ -25,7 +25,7 @@ export class StepsListComponent {
     sufficient: true,
   };
 
-  constructor(private questionnariesService: QuestionnaireService, private modalService: NgbModal, private fieldUtilities: FieldUtilitiesService, public nodeResolver: NodeResolver, private httpClient: HttpClient, private httpService: HttpService) {
+  constructor(private questionnaireService: QuestionnaireService, private modalService: NgbModal, private fieldUtilities: FieldUtilitiesService, protected nodeResolver: NodeResolver, private httpClient: HttpClient, private httpService: HttpService) {
   }
 
   ngOnInit(): void {
@@ -70,7 +70,7 @@ export class StepsListComponent {
 
   saveStep(step: any) {
     return this.httpService.requestUpdateAdminQuestionnaireStep(step.id, step).subscribe(_ => {
-      return this.questionnariesService.sendData();
+      return this.questionnaireService.sendData();
     });
   }
 
@@ -86,7 +86,7 @@ export class StepsListComponent {
     modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = () => {
       return this.httpService.requestDeleteAdminQuestionareStep(arg.id).subscribe(_ => {
-        return this.questionnariesService.sendData();
+        return this.questionnaireService.sendData();
       });
     };
     return modalRef.result;

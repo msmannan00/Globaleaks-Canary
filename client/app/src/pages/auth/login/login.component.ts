@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
 
   loginData = new LoginDataRef();
 
-  constructor(private authentication: AuthenticationService, private router: Router, private route: ActivatedRoute, public appDataService: AppDataService) {
+  constructor(private authentication: AuthenticationService, private router: Router, private route: ActivatedRoute, protected appDataService: AppDataService) {
   }
 
   ngOnInit() {
@@ -23,8 +23,7 @@ export class LoginComponent implements OnInit {
         this.authentication.login(0, "", "", "", token);
       } else {
         if (this.authentication.session && this.authentication.session.homepage) {
-          this.router.navigateByUrl(this.authentication.session.homepage).then(response => {
-          });
+          this.router.navigateByUrl(this.authentication.session.homepage);
         }
       }
     });

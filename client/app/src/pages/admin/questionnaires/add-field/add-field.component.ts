@@ -16,7 +16,7 @@ export class AddFieldComponent implements OnInit {
   new_field: any = {};
   fields: any;
 
-  constructor(private questionnariesService: QuestionnaireService, private httpService: HttpService, private utilsService: UtilsService) {
+  constructor(private questionnaireService: QuestionnaireService, private httpService: HttpService, private utilsService: UtilsService) {
     this.new_field = {
       label: "",
       type: ""
@@ -49,7 +49,7 @@ export class AddFieldComponent implements OnInit {
           type: ""
         };
         this.dataToParent.emit();
-        return this.questionnariesService.sendData();
+        return this.questionnaireService.sendData();
       });
     }
     if (this.type === "template") {
@@ -64,7 +64,7 @@ export class AddFieldComponent implements OnInit {
           type: ""
         };
         this.dataToParent.emit();
-        return this.questionnariesService.sendData();
+        return this.questionnaireService.sendData();
       });
     }
     if (this.type === "field") {
@@ -88,7 +88,7 @@ export class AddFieldComponent implements OnInit {
           type: ""
         };
         this.dataToParent.emit();
-        return this.questionnariesService.sendData();
+        return this.questionnaireService.sendData();
       });
     }
   }

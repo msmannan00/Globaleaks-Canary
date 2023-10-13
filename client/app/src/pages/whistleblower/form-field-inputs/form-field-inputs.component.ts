@@ -28,7 +28,7 @@ export class FormFieldInputsComponent implements OnInit {
   entries: any;
   fieldEntry = "";
 
-  constructor(public utilsService: UtilsService) {
+  constructor(protected utilsService: UtilsService) {
   }
 
   ngOnInit(): void {

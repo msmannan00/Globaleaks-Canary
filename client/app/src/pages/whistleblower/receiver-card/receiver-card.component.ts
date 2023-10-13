@@ -9,7 +9,7 @@ export class ReceiverCardComponent {
   @Input() submission: any;
   @Input() receiver: any;
 
-  constructor(public translate: TranslateService) {
+  constructor(protected translate: TranslateService) {
   }
 
 }

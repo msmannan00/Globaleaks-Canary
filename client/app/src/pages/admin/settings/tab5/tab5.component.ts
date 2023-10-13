@@ -20,7 +20,7 @@ export class Tab5Component {
   userData: any = {};
   questionnaireData: any = {};
 
-  constructor(private authenticationService: AuthenticationService, private modalService: NgbModal, private appConfigService: AppConfigService, private utilsService: UtilsService, public nodeResolver: NodeResolver, public preferenceResolver: PreferenceResolver, private usersResolver: UsersResolver, private questionnairesResolver: QuestionnairesResolver) {
+  constructor(private authenticationService: AuthenticationService, private modalService: NgbModal, private appConfigService: AppConfigService, private utilsService: UtilsService, protected nodeResolver: NodeResolver, protected preferenceResolver: PreferenceResolver, private usersResolver: UsersResolver, private questionnairesResolver: QuestionnairesResolver) {
 
   }
 
@@ -44,8 +44,6 @@ export class Tab5Component {
           this.utilsService.runAdminOperation("enable_encryption", {}, false).subscribe(
             () => {
               this.authenticationService.logout();
-            },
-            () => {
             }
           );
         },
@@ -60,8 +58,6 @@ export class Tab5Component {
     this.utilsService.runAdminOperation("toggle_escrow", {}, true).subscribe(
       () => {
         this.preferenceResolver.dataModel.escrow = !this.preferenceResolver.dataModel.escrow;
-      },
-      () => {
       }
     );
   }

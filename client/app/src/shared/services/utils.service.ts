@@ -60,11 +60,11 @@ export class UtilsService {
   }
 
   role_l10n(role: string) {
-    var ret = "";
+    let ret = "";
 
     if (role) {
       ret = role === "receiver" ? "recipient" : role;
-      ret = ret.charAt(0).toUpperCase() + ret.substr(1);
+      ret = ret.charAt(0).toUpperCase() + ret.slice(1);
     }
 
     return ret;
@@ -102,7 +102,7 @@ export class UtilsService {
     }
   }
 
-  view(url: string, mimetype: string, callback: (blob: Blob) => void): void {
+  view(url: string, _: string, callback: (blob: Blob) => void): void {
     const headers = new HttpHeaders({
       "x-session": this.authenticationService.session.id
     });
@@ -474,7 +474,7 @@ export class UtilsService {
 
   getConfirmation(): Observable<string> {
     return new Observable((observer) => {
-      var modalRef = this.modalService.open(ConfirmationWithPasswordComponent, {});
+      let modalRef = this.modalService.open(ConfirmationWithPasswordComponent, {});
       if (this.preferenceResolver.dataModel.two_factor) {
         modalRef = this.modalService.open(ConfirmationWith2faComponent, {});
       }

@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'src-passwordreqested',
-  templateUrl: './passwordreqested.component.html'
+  templateUrl: './password-requested.component.html'
 })
-export class PasswordreqestedComponent {
+export class PasswordRequestedComponent {
 
 }

@@ -15,7 +15,7 @@ export class SiteslistComponent {
   @Input() index: any;
   editing = false;
 
-  constructor(private appConfigService: AppConfigService, public appDataService: AppDataService, private modalService: NgbModal, private httpService: HttpService, private utilsService: UtilsService) {
+  constructor(private appConfigService: AppConfigService, protected appDataService: AppDataService, private modalService: NgbModal, private httpService: HttpService, private utilsService: UtilsService) {
   }
 
   toggleActivation(event: Event): void {

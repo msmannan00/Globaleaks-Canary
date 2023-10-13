@@ -6,7 +6,7 @@ import {HttpService} from "../../services/http.service";
 import {CryptoService} from "@app/crypto.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {FileViewComponent} from "../../modals/file-view/file-view.component";
-import {RecieverTipService} from "app/src/services/recievertip.service";
+import {ReceiverTipService} from "@app/services/receiver-tip.service";
 
 @Component({
   selector: "src-tip-files-receiver",
@@ -17,7 +17,7 @@ export class TipFilesReceiverComponent implements OnInit {
   supportedViewTypes = ["application/pdf", "audio/mpeg", "image/gif", "image/jpeg", "image/png", "text/csv", "text/plain", "video/mp4"];
   collapsed = false;
 
-  constructor(public modalService: NgbModal, private cryptoService: CryptoService, public httpService: HttpService, public authenticationService: AuthenticationService, public utilsService: UtilsService, public tipService: RecieverTipService, public appDataService: AppDataService) {
+  constructor(protected modalService: NgbModal, private cryptoService: CryptoService, protected httpService: HttpService, protected authenticationService: AuthenticationService, protected utilsService: UtilsService, protected tipService: ReceiverTipService, protected appDataService: AppDataService) {
   }
 
   ngOnInit(): void {

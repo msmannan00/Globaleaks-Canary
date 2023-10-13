@@ -13,7 +13,7 @@ import {
 })
 export class IdentityAccessRequestsComponent {
 
-  constructor(private modalService: NgbModal, private httpService: HttpService, public iarResolver: IarResolver, public utilsService: UtilsService) {
+  constructor(private modalService: NgbModal, private httpService: HttpService, protected iarResolver: IarResolver, protected utilsService: UtilsService) {
   }
 
   authorize_identity_access_request(iar_id: string) {

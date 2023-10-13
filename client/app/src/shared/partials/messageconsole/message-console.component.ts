@@ -1,12 +1,12 @@
-import {AfterViewChecked, Component, OnDestroy} from "@angular/core";
+import {AfterViewChecked, Component} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {errorCodes} from "@app/models/app/error-code";
 
 @Component({
   selector: "messageconsole",
-  templateUrl: "./messageconsole.component.html"
+  templateUrl: "./message-console.component.html"
 })
-export class MessageconsoleComponent implements AfterViewChecked {
+export class MessageConsoleComponent implements AfterViewChecked {
   private timeoutId: any;
   private timeoutRunning: boolean = false;
 

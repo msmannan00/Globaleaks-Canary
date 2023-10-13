@@ -15,7 +15,7 @@ export class HttpsComponent implements OnInit {
   menuState = "setup";
   tlsConfig: any;
 
-  constructor(public nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService) {
+  constructor(protected nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService) {
   }
 
   ngOnInit() {

@@ -13,7 +13,7 @@ export class CaseManagementTab1Component {
     label: "",
   };
 
-  constructor(private utilsService: UtilsService, public appDataServices: AppDataService, private appDataService: AppDataService, private httpService: HttpService) {
+  constructor(private utilsService: UtilsService, protected appDataServices: AppDataService, private appDataService: AppDataService, private httpService: HttpService) {
   }
 
   toggleAddStatus() {

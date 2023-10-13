@@ -13,7 +13,7 @@ export class NotificationTab1Component {
   @Input() notificationForm: NgForm;
   protected readonly Constants = Constants;
 
-  constructor(public nodeResolver: NodeResolver, public notificationResolver: NotificationsResolver, private utilsService: UtilsService) {
+  constructor(protected nodeResolver: NodeResolver, protected notificationResolver: NotificationsResolver, private utilsService: UtilsService) {
   }
 
   updateNotification(notification: any) {

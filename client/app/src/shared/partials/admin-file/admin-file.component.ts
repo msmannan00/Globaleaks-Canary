@@ -15,7 +15,7 @@ export class AdminFileComponent implements OnDestroy {
   nodeData: any = [];
   @ViewChild("uploader") uploaderElementRef!: ElementRef<HTMLInputElement>;
 
-  constructor(public node: NodeResolver, public appConfigService: AppConfigService, public appDataService: AppDataService, public utilsService: UtilsService, public authenticationService: AuthenticationService) {
+  constructor(protected node: NodeResolver, protected appConfigService: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService, protected authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
@@ -65,9 +65,6 @@ export class AdminFileComponent implements OnDestroy {
       () => {
         this.appConfigService.reinit(false);
         this.utilsService.reloadCurrentRoute();
-      },
-      (error) => {
-        console.error("Error deleting file:", error);
       }
     );
   }

@@ -9,7 +9,7 @@ import {UtilsService} from "../../services/utils.service";
 export class PrivacyBadgeComponent {
   public markdown: string;
 
-  constructor(public appDataService: AppDataService, public utilsService: UtilsService) {
+  constructor(protected appDataService: AppDataService, protected utilsService: UtilsService) {
     this.markdown = appDataService.public.node.custom_privacy_badge_text;
   }
 

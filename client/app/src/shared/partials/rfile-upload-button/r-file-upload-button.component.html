@@ -26,7 +26,7 @@
             <div [ngClass]="{'col-md-12': (flowAdvanced.transfers$ | async)?.transfers?.length === 1, 'col-md-6 col-sm-12': (flowAdvanced.transfers$ | async)?.transfers?.length !== 1}" *ngFor="let transfer of (flowAdvanced.transfers$ | async)?.transfers">
                 <div class="fileUploadBox mt-2 mb-2">
                     <div *ngIf="appDataService.public.node.maximum_filesize >= (transfer.size/1000000)">
-                        <src-rfile-upload-status [formuploader]="formUploader" [file]="transfer"></src-rfile-upload-status>
+                        <src-rfile-upload-status [formUploader]="formUploader" [file]="transfer"></src-rfile-upload-status>
                     </div>
                 </div>
             </div>

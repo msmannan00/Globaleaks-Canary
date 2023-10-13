@@ -19,7 +19,7 @@ export class UsersTab1Component implements OnInit {
   editing = false;
   protected readonly Constants = Constants;
 
-  constructor(private httpService: HttpService, public nodeResolver: NodeResolver, private usersResolver: UsersResolver, private tenantsResolver: TenantsResolver, private utilsService: UtilsService) {
+  constructor(private httpService: HttpService, protected nodeResolver: NodeResolver, private usersResolver: UsersResolver, private tenantsResolver: TenantsResolver, private utilsService: UtilsService) {
   }
 
   ngOnInit(): void {
