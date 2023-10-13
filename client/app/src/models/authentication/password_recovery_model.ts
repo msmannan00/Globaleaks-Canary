@@ -3,4 +3,3 @@ export class password_recovery_model {
   recovery_key: string = "";
   auth_code: string = "";
 }
-

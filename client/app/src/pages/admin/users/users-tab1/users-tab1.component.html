@@ -15,12 +15,12 @@
                     <select name="role" class="form-control" [(ngModel)]="new_user.role" required>
                         <option value="admin">{{ 'Admin' | translate }}</option>
                         <option value="receiver">{{ 'Recipient' | translate }}</option>
-                        <option *ngIf="node.dataModel.enable_custodian" value="custodian">{{ 'Custodian' | translate }}
+                        <option *ngIf="nodeResolver.dataModel.enable_custodian" value="custodian">{{ 'Custodian' | translate }}
                         </option>
                     </select>
                 </div>
             </div>
-            <div class="form-group" *ngIf="new_user.role !== 'receiver' || !node.dataModel.simplified_login">
+            <div class="form-group" *ngIf="new_user.role !== 'receiver' || !nodeResolver.dataModel.simplified_login">
                 <label>{{ 'Username' | translate }}</label>
                 <span class="text-danger" [ngbTooltip]="'This field is mandatory' | translate">*</span>
                 <div>
@@ -61,7 +61,7 @@
     <div class="userList" *ngFor="let user of usersData | orderBy:'name'; let index = index">
         <form [id]="'user-' + index" name="editUser" #editUser="ngForm" novalidate>
             <src-user-editor [user]="user" [editUser]="editUser" [index]="index"
-                             (dataToParent)="handleDataFromChild($event)"></src-user-editor>
+                             (dataToParent)="handleDataFromChild()"></src-user-editor>
         </form>
     </div>
 </ng-container>

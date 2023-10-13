@@ -34,4 +34,3 @@ export class userResolverModel {
   clicked_recovery_key: boolean;
   contexts: string[];
 }
-  

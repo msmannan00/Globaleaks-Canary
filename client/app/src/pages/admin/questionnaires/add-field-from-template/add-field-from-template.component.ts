@@ -1,39 +1,40 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FieldtemplatesResolver } from 'app/src/shared/resolvers/fieldtemplates.resolver';
-import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
-import { HttpService } from 'app/src/shared/services/http.service';
-import { UtilsService } from 'app/src/shared/services/utils.service';
-import {new_field} from "../../../../models/admin/new_field";
-import { QuestionnariesService } from '../questionnaries.service';
+import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
+import {HttpService} from "app/src/shared/services/http.service";
+import {UtilsService} from "app/src/shared/services/utils.service";
+import {new_field} from "@app/models/admin/new_field";
+import {QuestionnaireService} from "../questionnaire.service";
 
 @Component({
-  selector: 'src-add-field-from-template',
-  templateUrl: './add-field-from-template.component.html',
-  styleUrls: ['./add-field-from-template.component.css']
+  selector: "src-add-field-from-template",
+  templateUrl: "./add-field-from-template.component.html"
 })
 export class AddFieldFromTemplateComponent {
-  @Input() fieldtemplatesData: any;
+  @Input() fieldTemplatesData: any;
   @Input() step: any;
   @Input() type: any;
   @Output() dataToParent = new EventEmitter<string>();
 
-  fields: any = []
+  fields: any = [];
   new_field: any = {};
-  constructor(private questionnariesService: QuestionnariesService,public node: NodeResolver, private httpService: HttpService, private utilsService: UtilsService, public fieldtemplates: FieldtemplatesResolver) {
+
+  constructor(private questionnariesService: QuestionnaireService, private nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService) {
     this.new_field = {
-      template_id: ''
-    }
+      template_id: ""
+    };
   }
+
   ngOnInit(): void {
     if (this.step) {
-      this.fields = this.step.children
+      this.fields = this.step.children;
     }
   }
+
   add_field_from_template(): void {
     if (this.type === "step") {
-      let field = new new_field()
-      field.step_id = this.step.id
-      field.template_id = ""
+      let field = new new_field();
+      field.step_id = this.step.id;
+      field.template_id = "";
 
       field.template_id = this.new_field.template_id;
       field.instance = "reference";
@@ -41,16 +42,16 @@ export class AddFieldFromTemplateComponent {
       this.httpService.requestAddAdminQuestionnaireField(field).subscribe((newField: any) => {
         this.fields.push(newField);
         this.new_field = {
-          template_id: ''
+          template_id: ""
         };
         this.dataToParent.emit();
-        return this.questionnariesService.sendData()
+        return this.questionnariesService.sendData();
       });
     }
     if (this.type === "field") {
-      let field = new new_field()
-      field.step_id = this.step.id
-      field.template_id = ""
+      let field = new new_field();
+      field.step_id = this.step.id;
+      field.template_id = "";
 
       field.template_id = this.new_field.template_id;
       field.instance = "reference";
@@ -58,14 +59,11 @@ export class AddFieldFromTemplateComponent {
       this.httpService.requestAddAdminQuestionnaireField(field).subscribe((newField: any) => {
         this.step.children.push(newField);
         this.new_field = {
-          template_id: ''
+          template_id: ""
         };
         this.dataToParent.emit();
-        return this.questionnariesService.sendData()
+        return this.questionnariesService.sendData();
       });
     }
-  }
-
-  toggleAddFieldFromTemplate() {
   }
 }

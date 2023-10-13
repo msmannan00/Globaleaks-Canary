@@ -23,5 +23,3 @@ export class new_context {
   tip_reminder = 0;
   receivers = [];
 }
-  
-  

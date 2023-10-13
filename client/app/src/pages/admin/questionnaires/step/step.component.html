@@ -8,7 +8,7 @@
                     <span>{{ 'Add new question' | translate }}</span>
                 </button>
                 <button class="btn btn-sm btn-primary show-add-question-from-template-btn"
-                    (click)="toggleAddQuestionFromTemplate()" *ngIf="fieldtemplatesData.length > 0">
+                    (click)="toggleAddQuestionFromTemplate()" *ngIf="fieldTemplatesData.length > 0">
                     <i class="fa-solid fa-plus"></i>
                     <span>{{ 'Add question from template' | translate }}</span>
                 </button>
@@ -17,12 +17,12 @@
     </div>
     <div class="row config-section" *ngIf="showAddQuestion">
         <div class="col-md-6">
-            <src-add-field [step]="step" [type]="'step'" (dataToParent)="listenToAddField($event)"></src-add-field>
+            <src-add-field [step]="step" [type]="'step'" (dataToParent)="listenToAddField()"></src-add-field>
         </div>
     </div>
     <div class="row config-section" *ngIf="showAddQuestionFromTemplate">
         <div class="col-md-6">
-            <src-add-field-from-template  [step]="step" [type]="'step'" [fieldtemplatesData]="fieldtemplatesData" (dataToParent)="listenToAddFieldFormTemplate($event)"></src-add-field-from-template>
+            <src-add-field-from-template [step]="step" [type]="'step'" [fieldTemplatesData]="fieldTemplatesData" (dataToParent)="listenToAddFieldFormTemplate()"></src-add-field-from-template>
         </div>
     </div>
     <div class="row configuredFields">

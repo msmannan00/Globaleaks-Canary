@@ -2,7 +2,7 @@
     <div class="form-group">
         <label>{{ 'Type' | translate }}</label>
         <select name="template_id" class="form-control" [(ngModel)]="new_field.template_id" required>
-            <option *ngFor="let f of fieldtemplatesData" [value]="f.id">{{ f.label | translate }}</option>
+            <option *ngFor="let f of fieldTemplatesData" [value]="f.id">{{ f.label | translate }}</option>
         </select>
         <div class="text-danger" *ngIf="newField.form.get('template_id')?.errors?.['required']">
             <span>{{ 'This field is mandatory' | translate }}</span>
@@ -10,7 +10,7 @@
     </div>
     <div class="form-group">
         <button id="add-field-btn" class="btn btn-primary"
-            (click)="add_field_from_template(); toggleAddFieldFromTemplate()" [disabled]="newField.invalid"
+            (click)="add_field_from_template();" [disabled]="newField.invalid"
             type="button">
             <i class="fa-solid fa-plus"></i>
             <span>{{ 'Add' | translate }}</span>

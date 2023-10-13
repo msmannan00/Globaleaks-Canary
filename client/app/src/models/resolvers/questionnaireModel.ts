@@ -43,5 +43,3 @@ export class questionnaireResolverModel {
   key: string;
   steps: Step[];
 }
- 
-  

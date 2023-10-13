@@ -388,4 +388,3 @@ export interface ReceiversById {
     name: string;
   };
 }
-  

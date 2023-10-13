@@ -17,7 +17,7 @@
         <form #adminNetForm="ngForm">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group" *ngIf="node.dataModel.root_tenant">
+                    <div class="form-group" *ngIf="nodeResolver.dataModel.root_tenant">
                         <input [(ngModel)]="networkData.anonymize_outgoing_connections"
                             name="anonymize_outgoing_connections" type="checkbox">
                         <label>{{ 'Anonymize outgoing connections' | translate }}</label>

@@ -1,68 +1,70 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FieldtemplatesResolver } from 'app/src/shared/resolvers/fieldtemplates.resolver';
-import { QuestionnairesResolver } from 'app/src/shared/resolvers/questionnaires.resolver';
-import { HttpService } from 'app/src/shared/services/http.service';
-import { UtilsService } from 'app/src/shared/services/utils.service';
-import { QuestionnariesService } from '../questionnaries.service';
-import { Subject, pipe, takeUntil } from 'rxjs';
+import {HttpClient} from "@angular/common/http";
+import {Component, OnDestroy, OnInit} from "@angular/core";
+import {FieldtemplatesResolver} from "app/src/shared/resolvers/fieldtemplates.resolver";
+import {QuestionnairesResolver} from "app/src/shared/resolvers/questionnaires.resolver";
+import {HttpService} from "app/src/shared/services/http.service";
+import {UtilsService} from "app/src/shared/services/utils.service";
+import {QuestionnaireService} from "../questionnaire.service";
+import {Subject, takeUntil} from "rxjs";
 
 @Component({
-  selector: 'src-questions',
-  templateUrl: './questions.component.html',
-  styleUrls: ['./questions.component.css']
+  selector: "src-questions",
+  templateUrl: "./questions.component.html"
 })
 export class QuestionsComponent implements OnInit, OnDestroy {
-  showAddQuestion: boolean = false
-  fields: any
-  questionnairesData: any = []
-  step: any
+  showAddQuestion: boolean = false;
+  fields: any;
+  questionnairesData: any = [];
+  step: any;
 
   private destroy$ = new Subject<void>();
 
-  constructor(private questionnariesService: QuestionnariesService, private http: HttpClient, private httpService: HttpService, private utilsService: UtilsService, public fieldtemplates: FieldtemplatesResolver, public questionnaires: QuestionnairesResolver
-  ) { }
+  constructor(private questionnariesService: QuestionnaireService, private httpClient: HttpClient, private httpService: HttpService, private utilsService: UtilsService, private fieldTemplates: FieldtemplatesResolver, private questionnairesResolver: QuestionnairesResolver
+  ) {
+  }
+
   ngOnInit(): void {
     this.questionnariesService.getQuestionnairesData().pipe(takeUntil(this.destroy$)).subscribe(() => {
-      return this.getQuestionnairesResolver(), this.getResolver()
+      this.getResolver();
+      return this.getQuestionnairesResolver();
     });
-    this.questionnairesData = this.questionnaires.dataModel
-    // this.step = this.questionnairesData.steps[0]
-    this.fields = this.fieldtemplates.dataModel
-    this.fields = this.fields.filter((field: { editable: boolean; }) => field.editable === true);
+    this.questionnairesData = this.questionnairesResolver.dataModel;
+    this.fields = this.fieldTemplates.dataModel;
+    this.fields = this.fields.filter((field: { editable: boolean; }) => field.editable);
 
   }
+
   toggleAddQuestion() {
     this.showAddQuestion = !this.showAddQuestion;
   };
 
   importQuestion(file: any): void {
     this.utilsService.readFileAsText(file[0]).then((txt) => {
-      return this.http.post('api/admin/fieldtemplates?multilang=1', txt).subscribe(() => {
-        this.utilsService.reloadCurrentRoute()
+      return this.httpClient.post("api/admin/fieldtemplates?multilang=1", txt).subscribe(() => {
+        this.utilsService.reloadCurrentRoute();
       });
-    })
-    //   .catch(error => {
-    //     this.Utils.displayErrorMsg(error);
-    //   });
+    });
   }
+
   getQuestionnairesResolver() {
     return this.httpService.requestQuestionnairesResource().subscribe(response => {
-      this.questionnaires.dataModel = response
-      this.questionnairesData = response
-    })
+      this.questionnairesResolver.dataModel = response;
+      this.questionnairesData = response;
+    });
   }
+
   getResolver() {
     return this.httpService.requestAdminFieldTemplateResource().subscribe(response => {
-      this.fieldtemplates.dataModel = response
-      this.fields = response
-      this.fields = this.fields.filter((field: { editable: boolean; }) => field.editable === true);
-    })
+      this.fieldTemplates.dataModel = response;
+      this.fields = response;
+      this.fields = this.fields.filter((field: { editable: boolean; }) => field.editable);
+    });
   }
-  listenToAddField(data: any) {
-    this.showAddQuestion = false
-    // this.getResolver()
+
+  listenToAddField() {
+    this.showAddQuestion = false;
   }
+
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();

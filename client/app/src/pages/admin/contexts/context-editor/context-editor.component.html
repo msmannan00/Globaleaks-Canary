@@ -7,12 +7,12 @@
         </span>
         <span class="col-md-5 clearfix">
             <span class="float-end">
-                <button *ngIf="index !== 0 && !node.dataModel.show_contexts_in_alphabetical_order"
+                <button *ngIf="index !== 0 && !nodeResolver.dataModel.show_contexts_in_alphabetical_order"
                     class="btn btn-sm btn-primary" (click)="moveUp($event, index)" [ngbTooltip]="'Move up' | translate">
                     <i class="fa-solid fa-chevron-up"></i>
                 </button>
 
-                <button *ngIf="index !== contextsData.length - 1 && !node.dataModel.show_contexts_in_alphabetical_order"
+                <button *ngIf="index !== contextsData.length - 1 && !nodeResolver.dataModel.show_contexts_in_alphabetical_order"
                     class="btn btn-sm btn-primary" (click)="moveDown($event, index)"
                     [ngbTooltip]="'Move down' | translate">
                     <i class="fa-solid fa-chevron-down"></i>
@@ -45,8 +45,7 @@
                 <div class="form-group">
                     <label>{{ 'Name' | translate }}</label>
                     <input name="name" class="form-control" [(ngModel)]="context.name" type="text" required>
-                    <div class="text-danger" *ngIf="editContext.form.get('name')?.errors?.['required']">{{ 'This field
-                        is mandatory' | translate }}</div>
+                    <div class="text-danger" *ngIf="editContext.form.get('name')?.errors?.['required']">{{ 'This field is mandatory' | translate }}</div>
                 </div>
                 <div class="form-group">
                     <label>{{ 'Description' | translate }}</label>
@@ -88,10 +87,10 @@
                                     <i class="fa-solid fa-chevron-down"></i>
                                 </span>
                             </span>
-                            <span (click)="context.receivers.splice(index, 1);receiverNotSelectedFilter(admin_receivers_by_id[receiver])" [ngbTooltip]="'Remove' | translate">
+                            <span (click)="context.receivers.splice(index, 1);receiverNotSelectedFilter(adminReceiversById[receiver])" [ngbTooltip]="'Remove' | translate">
                                 <i class="fa-solid fa-times"></i>
                             </span>
-                            <span>{{admin_receivers_by_id[receiver].name}}</span>
+                            <span>{{adminReceiversById[receiver].name}}</span>
                         </li>
                     </ol>
                 </div>
@@ -159,8 +158,8 @@
                                         <input class="form-control" type="number" name="context.maximum_selectable_receivers"
                                             [(ngModel)]="context.maximum_selectable_receivers" min="0"
                                             [disabled]="context.select_all_receivers" />
-                                        <div>{{ 'Set the value to 0 to disable this feature.' | translate }}</div>
                                     </label>
+                                    <div>{{ 'Set the value to 0 to disable this feature.' | translate }}</div>
                                 </div>
                                 <div class="form-group">
                                     <label class="inline-checkbox">

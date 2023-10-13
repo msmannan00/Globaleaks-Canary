@@ -1,129 +1,129 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { adminHomeComponent } from "./home/admin-home.component";
-import { SettingsModule } from './settings/settings.module';
-import { UsersModule } from './users/users.module';
-import { ContextsModule } from './contexts/contexts.module';
-import { CaseManagementModule } from "./casemanagement/case-management.module";
-import { AuditLogModule } from './auditlog/audit-log.module';
-import { NotificationsModule } from './notifications/notifications.module';
-import { SitesModule } from "./sites/sites.module";
-import { NetworkModule } from './network/network.module';
-import { QuestionnairesModule } from './questionnaires/questionnaires.module';
+import {NgModule} from "@angular/core";
+import {RouterModule, Routes} from "@angular/router";
+import {adminHomeComponent} from "./home/admin-home.component";
+import {SettingsModule} from "./settings/settings.module";
+import {UsersModule} from "./users/users.module";
+import {ContextsModule} from "./contexts/contexts.module";
+import {CaseManagementModule} from "./casemanagement/case-management.module";
+import {AuditLogModule} from "./auditlog/audit-log.module";
+import {NotificationsModule} from "./notifications/notifications.module";
+import {SitesModule} from "./sites/sites.module";
+import {NetworkModule} from "./network/network.module";
+import {QuestionnairesModule} from "./questionnaires/questionnaires.module";
 import {AdminPreferencesComponent} from "./admin-preferences/admin-preferences.component";
-import {NodeResolver} from "../../shared/resolvers/node.resolver";
-import {PreferenceResolver} from "../../shared/resolvers/preference.resolver";
-import {UsersResolver} from "../../shared/resolvers/users.resolver";
-import {QuestionnairesResolver} from "../../shared/resolvers/questionnaires.resolver";
-import {ContextsResolver} from "../../shared/resolvers/contexts.resolver";
-import {AuditlogResolver} from "../../shared/resolvers/auditlog.resolver";
-import {JobResolver} from "../../shared/resolvers/job.resolver";
-import {TipsResolver} from "../../shared/resolvers/tips.resolver";
-import {NotificationsResolver} from "../../shared/resolvers/notifications.resolver";
-import {NetworkResolver} from "../../shared/resolvers/network.resolver";
-import {RedirectsResolver} from "../../shared/resolvers/redirects.resolver";
-import {FieldtemplatesResolver} from "../../shared/resolvers/fieldtemplates.resolver";
-import {StatuseResolver} from "../../shared/resolvers/statuses.resolver";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
+import {UsersResolver} from "@app/shared/resolvers/users.resolver";
+import {QuestionnairesResolver} from "@app/shared/resolvers/questionnaires.resolver";
+import {ContextsResolver} from "@app/shared/resolvers/contexts.resolver";
+import {AuditlogResolver} from "@app/shared/resolvers/auditlog.resolver";
+import {JobResolver} from "@app/shared/resolvers/job.resolver";
+import {TipsResolver} from "@app/shared/resolvers/tips.resolver";
+import {NotificationsResolver} from "@app/shared/resolvers/notifications.resolver";
+import {NetworkResolver} from "@app/shared/resolvers/network.resolver";
+import {RedirectsResolver} from "@app/shared/resolvers/redirects.resolver";
+import {FieldtemplatesResolver} from "@app/shared/resolvers/fieldtemplates.resolver";
+import {StatuseResolver} from "@app/shared/resolvers/statuses.resolver";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: adminHomeComponent,
     resolve: {
-      NodeResolver,PreferenceResolver,UsersResolver
+      NodeResolver, PreferenceResolver, UsersResolver
     },
-    pathMatch: 'full',
-    data: { sidebar: 'admin-sidebar', pageTitle: 'Home'},
+    pathMatch: "full",
+    data: {sidebar: "admin-sidebar", pageTitle: "Home"},
   },
   {
-    path: 'home',
+    path: "home",
     component: adminHomeComponent,
     resolve: {
-      NodeResolver,PreferenceResolver,UsersResolver
+      NodeResolver, PreferenceResolver, UsersResolver
     },
-    pathMatch: 'full',
-    data: { sidebar: 'admin-sidebar' , pageTitle: 'Home'}
+    pathMatch: "full",
+    data: {sidebar: "admin-sidebar", pageTitle: "Home"}
   },
   {
-    path: 'preferences',
+    path: "preferences",
     component: AdminPreferencesComponent,
     resolve: {
-      NodeResolver,PreferenceResolver
+      NodeResolver, PreferenceResolver
     },
-    pathMatch: 'full',
-    data: { pageTitle: 'Preferences'}
+    pathMatch: "full",
+    data: {pageTitle: "Preferences"}
   },
   {
-    path: 'settings',
+    path: "settings",
     resolve: {
-      NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver
+      NodeResolver, PreferenceResolver, UsersResolver, QuestionnairesResolver
     },
     loadChildren: () => SettingsModule,
-    pathMatch: 'full',
+    pathMatch: "full",
   },
   {
-    path: 'sites',
+    path: "sites",
     resolve: {
-      NodeResolver,PreferenceResolver,UsersResolver, JobResolver, TipsResolver,StatuseResolver
+      NodeResolver, PreferenceResolver, UsersResolver, JobResolver, TipsResolver, StatuseResolver
     },
     loadChildren: () => SitesModule,
-    pathMatch: 'full',
+    pathMatch: "full",
   },
   {
-    path: 'users',
+    path: "users",
     loadChildren: () => UsersModule,
     resolve: {
-      NodeResolver,PreferenceResolver,UsersResolver
+      NodeResolver, PreferenceResolver, UsersResolver
     },
-    pathMatch: 'full',
+    pathMatch: "full",
   },
   {
-    path: 'questionnaires',
+    path: "questionnaires",
     resolve: {
-      NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver, RedirectsResolver,FieldtemplatesResolver
+      NodeResolver, PreferenceResolver, UsersResolver, QuestionnairesResolver, RedirectsResolver, FieldtemplatesResolver
     },
     loadChildren: () => QuestionnairesModule,
-    pathMatch: 'full',
+    pathMatch: "full",
   },
   {
-    path: 'contexts',
+    path: "contexts",
     loadChildren: () => ContextsModule,
     resolve: {
-      NodeResolver,PreferenceResolver,UsersResolver,QuestionnairesResolver, ContextsResolver
+      NodeResolver, PreferenceResolver, UsersResolver, QuestionnairesResolver, ContextsResolver
     },
-    pathMatch: 'full',
+    pathMatch: "full",
   },
   {
-    path: 'casemanagement',
+    path: "casemanagement",
     loadChildren: () => CaseManagementModule,
     resolve: {
-      NodeResolver,PreferenceResolver ,StatuseResolver
+      NodeResolver, PreferenceResolver, StatuseResolver
     },
-    pathMatch: 'full',
+    pathMatch: "full",
   },
   {
-    path: 'auditlog',
+    path: "auditlog",
     resolve: {
-      NodeResolver,PreferenceResolver,UsersResolver, AuditlogResolver, JobResolver, TipsResolver
+      NodeResolver, PreferenceResolver, UsersResolver, AuditlogResolver, JobResolver, TipsResolver
     },
     loadChildren: () => AuditLogModule,
-    pathMatch: 'full',
+    pathMatch: "full",
   },
   {
-    path: 'notifications',
+    path: "notifications",
     resolve: {
-      NodeResolver,PreferenceResolver, NotificationsResolver
+      NodeResolver, PreferenceResolver, NotificationsResolver
     },
     loadChildren: () => NotificationsModule,
-    pathMatch: 'full',
+    pathMatch: "full",
   },
   {
-    path: 'network',
+    path: "network",
     resolve: {
-      NodeResolver,PreferenceResolver,UsersResolver, NetworkResolver,RedirectsResolver
+      NodeResolver, PreferenceResolver, UsersResolver, NetworkResolver, RedirectsResolver
     },
     loadChildren: () => NetworkModule,
-    pathMatch: 'full',
+    pathMatch: "full",
   }
 ];
 
@@ -131,4 +131,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {
+}

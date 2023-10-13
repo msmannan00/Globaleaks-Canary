@@ -14,4 +14,3 @@ export class networkResolverModel {
   onionservice: string;
   reachable_via_web: boolean;
 }
-  

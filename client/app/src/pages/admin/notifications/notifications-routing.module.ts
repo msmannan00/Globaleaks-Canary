@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { NotificationsComponent } from './notifications.component';
+import {NgModule} from "@angular/core";
+import {RouterModule, Routes} from "@angular/router";
+import {NotificationsComponent} from "./notifications.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: NotificationsComponent,
-    pathMatch: 'full',
+    pathMatch: "full",
   }
 ];
 
@@ -14,4 +14,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class NotificationsRoutingModule { }
+export class NotificationsRoutingModule {
+}

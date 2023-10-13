@@ -1,13 +1,13 @@
-import { Component, TemplateRef, ViewChild, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, TemplateRef, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
-import { AuthenticationService } from "../../../services/authentication.service";
+import { AuthenticationService } from "@app/services/authentication.service";
 
 @Component({
   selector: 'src-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
-export class SettingsComponent implements OnInit, AfterViewInit {
+export class SettingsComponent implements AfterViewInit {
   @ViewChild('tab1') tab1!: TemplateRef<any>;
   @ViewChild('tab2') tab2!: TemplateRef<any>;
   @ViewChild('tab3') tab3!: TemplateRef<any>;
@@ -22,8 +22,6 @@ export class SettingsComponent implements OnInit, AfterViewInit {
     public authenticationService: AuthenticationService,
     private cdr: ChangeDetectorRef
   ) { }
-
-  ngOnInit() { }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
