@@ -1,12 +1,12 @@
 import {Injectable} from "@angular/core";
-import {LoginDataRef} from "../pages/auth/login/model/login-model";
-import {HttpService} from "../shared/services/http.service";
+import {LoginDataRef} from "@app/pages/auth/login/model/login-model";
+import {HttpService} from "@app/shared/services/http.service";
 import {Observable} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AppDataService} from "../app-data.service";
-import {errorCodes} from "../models/app/error-code";
+import {AppDataService} from "@app/app-data.service";
+import {errorCodes} from "@app/models/app/error-code";
 import {AppConfigService} from "./app-config.service";
-import {ServiceInstanceService} from "../shared/services/service-instance.service";
+import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
 
 @Injectable({
   providedIn: "root"

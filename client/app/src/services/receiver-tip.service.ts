@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
-import {HttpService} from "../shared/services/http.service";
-import {AppDataService} from "../app-data.service";
-import {UtilsService} from "../shared/services/utils.service";
-import {RecieverTipData} from "../models/reciever/RecieverTipData";
+import {HttpService} from "@app/shared/services/http.service";
+import {AppDataService} from "@app/app-data.service";
+import {UtilsService} from "@app/shared/services/utils.service";
+import {RecieverTipData} from "@app/models/reciever/RecieverTipData";
 
 @Injectable({
   providedIn: "root"

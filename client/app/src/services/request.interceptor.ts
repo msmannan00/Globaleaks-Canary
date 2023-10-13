@@ -7,12 +7,12 @@ import {
   HttpClient, HttpErrorResponse,
 } from "@angular/common/http";
 import {catchError, finalize, from, Observable, switchMap, throwError} from "rxjs";
-import {tokenResponse} from "../models/authentication/token-response";
-import {CryptoService} from "../crypto.service";
+import {tokenResponse} from "@app/models/authentication/token-response";
+import {CryptoService} from "@app/crypto.service";
 import {AuthenticationService} from "./authentication.service";
-import {AppDataService} from "../app-data.service";
+import {AppDataService} from "@app/app-data.service";
 import {TranslationService} from "./translation.service";
-import {errorCodes} from "../models/app/error-code";
+import {errorCodes} from "@app/models/app/error-code";
 
 const protectedUrls = [
   "api/wizard",

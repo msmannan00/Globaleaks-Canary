@@ -1,13 +1,13 @@
 import {Injectable} from "@angular/core";
-import {HttpService} from "../shared/services/http.service";
+import {HttpService} from "@app/shared/services/http.service";
 import {TranslateService} from "@ngx-translate/core";
-import {UtilsService} from "../shared/services/utils.service";
-import {AppDataService} from "../app-data.service";
-import {FieldUtilitiesService} from "../shared/services/field-utilities.service";
+import {UtilsService} from "@app/shared/services/utils.service";
+import {AppDataService} from "@app/app-data.service";
+import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {TranslationService} from "./translation.service";
 import {Router, NavigationEnd, ActivatedRoute} from "@angular/router";
 import {AuthenticationService} from "./authentication.service";
-import {ServiceInstanceService} from "../shared/services/service-instance.service";
+import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
 
 @Injectable({
   providedIn: "root"
@@ -58,10 +58,6 @@ export class AppConfigService {
   public setHomepage() {
     location.replace("/");
   };
-
-  public setPage(page: string) {
-    this.appDataService.page = page;
-  }
 
   public localInitialization(languageInit = true, callback?: () => void) {
     this.appServices.getPublicResource().subscribe({

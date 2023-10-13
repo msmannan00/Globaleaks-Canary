@@ -1,9 +1,9 @@
 import {Injectable} from "@angular/core";
-import {AppDataService} from "../app-data.service";
+import {AppDataService} from "@app/app-data.service";
 import {AuthenticationService} from "./authentication.service";
 import {SubmissionResourceService} from "./submission-resource.service";
-import {HttpService} from "../shared/services/http.service";
-import {ServiceInstanceService} from "../shared/services/service-instance.service";
+import {HttpService} from "@app/shared/services/http.service";
+import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
 
 @Injectable({
   providedIn: "root",

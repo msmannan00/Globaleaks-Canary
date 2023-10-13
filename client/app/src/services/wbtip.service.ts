@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
-import {HttpService} from "../shared/services/http.service";
-import {WBTipData} from "../models/whistleblower/WBTipData";
-import {AppDataService} from "../app-data.service";
-import {UtilsService} from "../shared/services/utils.service";
+import {HttpService} from "@app/shared/services/http.service";
+import {WBTipData} from "@app/models/whistleblower/WBTipData";
+import {AppDataService} from "@app/app-data.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 @Injectable({
   providedIn: "root"
