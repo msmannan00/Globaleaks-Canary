@@ -89,7 +89,7 @@ export class SubStatusManagerComponent {
   }
 
   saveSubmissionsStatus(submissionsStatus: any): void {
-    let url = "/api/admin/statuses/" + submissionsStatus.id;
+    const url = "/api/admin/statuses/" + submissionsStatus.id;
     this.httpService.requestUpdateStatus(url, submissionsStatus).subscribe(_ => {
       this.appConfigService.reinit();
     });

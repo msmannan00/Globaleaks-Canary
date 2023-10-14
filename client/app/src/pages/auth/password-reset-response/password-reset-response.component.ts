@@ -1,7 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {password_recovery_model} from "@app/models/authentication/password_recovery_model";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Observable} from "rxjs";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 
