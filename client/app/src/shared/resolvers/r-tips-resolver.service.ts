@@ -17,7 +17,7 @@ export class RTipsResolver implements Resolve<boolean> {
 
   resolve(): Observable<boolean> {
     if (this.authenticationService.session.role === "receiver") {
-      return this.httpService.recieverTipResource().pipe(
+      return this.httpService.receiverTipResource().pipe(
         map((response: any) => {
           console.log(response);
           this.dataModel = response;

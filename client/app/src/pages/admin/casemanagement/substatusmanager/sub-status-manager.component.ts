@@ -57,7 +57,7 @@ export class SubStatusManagerComponent {
   swap($event: any, index: number, n: number): void {
     $event.stopPropagation();
 
-    let target = index + n;
+    const target = index + n;
 
     if (target < 0 || target >= this.appDataServices.submissionStatuses.length) {
       return;
@@ -66,8 +66,8 @@ export class SubStatusManagerComponent {
     const origIndex = this.ssIdx(this.appDataServices.submissionStatuses[index].id);
     const origTarget = this.ssIdx(this.appDataServices.submissionStatuses[target].id);
 
-    if (origIndex != undefined && origTarget != undefined) {
-      let movingStatus = this.appDataServices.submissionStatuses[origIndex];
+    if (origIndex !== undefined && origTarget !== undefined) {
+      const movingStatus = this.appDataServices.submissionStatuses[origIndex];
       this.appDataServices.submissionStatuses[origIndex] = this.appDataServices.submissionStatuses[origTarget];
       this.appDataServices.submissionStatuses[origTarget] = movingStatus;
 

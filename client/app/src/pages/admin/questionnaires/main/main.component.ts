@@ -33,7 +33,7 @@ export class MainComponent implements OnInit, OnDestroy {
   add_questionnaire() {
     const questionnaire: new_questionare = new new_questionare();
     questionnaire.name = this.new_questionnaire.name;
-    this.httpService.addQuestionare(questionnaire).subscribe(res => {
+    this.httpService.addQuestionnaire(questionnaire).subscribe(res => {
       this.questionnairesData.push(res);
       this.new_questionnaire = {name: ""};
       this.getResolver();

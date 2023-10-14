@@ -24,7 +24,7 @@ export class UserComponent {
       if (params["lang"]) {
         const paramLangValue = params["lang"] && this.appDataService.public.node.languages_enabled.includes(params["lang"]) ? params["lang"] : "";
         if (paramLangValue) {
-          if (storageLanguage != paramLangValue) {
+          if (storageLanguage !== paramLangValue) {
             this.translationService.onChange(paramLangValue);
             this.appConfigService.reinit(false);
             this.utils.reloadCurrentRouteFresh();

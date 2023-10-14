@@ -26,7 +26,7 @@ export class AuthenticationService {
     this.appConfigService = this.serviceInstanceService.appConfigService;
 
     let json = window.sessionStorage.getItem("session");
-    if (json != null) {
+    if (json !== null) {
       this.session = JSON.parse(json);
     } else {
       this.session = undefined;
@@ -167,7 +167,7 @@ export class AuthenticationService {
   }
 
   logout(callback?: () => void) {
-    let requestObservable = this.httpService.requestDeleteUserSession();
+    const requestObservable = this.httpService.requestDeleteUserSession();
     requestObservable.subscribe(
       {
         next: () => {

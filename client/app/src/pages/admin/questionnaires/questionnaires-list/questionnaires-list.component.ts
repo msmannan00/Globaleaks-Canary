@@ -30,7 +30,7 @@ export class QuestionnairesListComponent {
   }
 
   saveQuestionnaire(questionnaire: any) {
-    this.httpService.requestUpdateAdminQuestionare(questionnaire.id, questionnaire).subscribe(_ => {
+    this.httpService.requestUpdateAdminQuestionnaire(questionnaire.id, questionnaire).subscribe(_ => {
       this.editing = false;
       return this.questionnaireService.sendData();
     });
@@ -57,7 +57,7 @@ export class QuestionnairesListComponent {
     modalRef.componentInstance.arg = arg;
     modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = () => {
-      return this.httpService.requestDeleteAdminQuestionare(arg.id).subscribe(_ => {
+      return this.httpService.requestDeleteAdminQuestionnaire(arg.id).subscribe(_ => {
         return this.questionnaireService.sendData();
       });
     };

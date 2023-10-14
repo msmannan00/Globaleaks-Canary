@@ -234,15 +234,15 @@ export class HttpService {
     return this.httpClient.get("/api/admin/auditlog");
   }
 
-  addQuestionare(param: any): Observable<any> {
+  addQuestionnaire(param: any): Observable<any> {
     return this.httpClient.post("api/admin/questionnaires", param);
   }
 
-  requestDeleteAdminQuestionare(id: any): Observable<any> {
+  requestDeleteAdminQuestionnaire(id: any): Observable<any> {
     return this.httpClient.delete("/api/admin/questionnaires/" + id);
   }
 
-  requestUpdateAdminQuestionare(id: any, param: any): Observable<any> {
+  requestUpdateAdminQuestionnaire(id: any, param: any): Observable<any> {
     return this.httpClient.put("/api/admin/questionnaires/" + id, param);
   }
 
@@ -250,7 +250,7 @@ export class HttpService {
     return this.httpClient.get("/api/admin/auditlog/jobs");
   }
 
-  recieverTipResource(): Observable<any> {
+  receiverTipResource(): Observable<any> {
     return this.httpClient.get("api/recipient/rtips");
   }
 
@@ -258,11 +258,11 @@ export class HttpService {
     return this.httpClient.get("api/custodian/iars");
   }
 
-  recieverTip(id: any): Observable<any> {
+  receiverTip(id: any): Observable<any> {
     return this.httpClient.get("api/recipient/rtips/" + id);
   }
 
-  rtipsRequestNewComment(param: any, id: any): Observable<any> {
+  rTipsRequestNewComment(param: any, _: any): Observable<any> {
     return this.httpClient.post("api/recipient/rtips/${id}/comments", param);
   }
 
@@ -282,7 +282,7 @@ export class HttpService {
     return this.httpClient.post("/api/admin/tenants", param);
   }
 
-  accessIdentity(id: any): Observable<any> {
+  accessIdentity(_: any): Observable<any> {
     return this.httpClient.post("api/recipient/rtips/${id}/iars", {"request_motivation": ""});
   }
 
