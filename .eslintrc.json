@@ -1,30 +1,24 @@
 {
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "env": {
-    "browser": true,
-    "commonjs": true,
-    "jasmine": true,
-    "node": true,
-    "protractor": true,
-    "serviceworker": true
+    "node": true
   },
-  "extends": "eslint:recommended",
-  "globals": {
-    "angular": true,
-    "anonymizeSpeaker": true,
-    "console": true,
-    "Flow": true,
-    "GL": true,
-    "onmessage": true,
-    "saveAs": true,
-    "sha256": true,
-    "Uint8Array": true,
-    "Uint16Array": true,
-    "Uint32Array": true
-  },
-  "parserOptions": {
-    "ecmaVersion": 9
-  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
   "rules": {
+    "@typescript-eslint/consistent-type-imports": "error",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "_"
+      }
+    ],
+    "@typescript-eslint/array-type": "error",
     "comma-dangle": 0,
     "eqeqeq": "error",
     "linebreak-style": [
@@ -39,5 +33,12 @@
       "error",
       "always"
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": "*.json",
+      "parser": "jsonc-eslint-parser",
+      "rules": {}
+    }
+  ]
 }
