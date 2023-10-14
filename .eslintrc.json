@@ -11,6 +11,7 @@
     "prettier"
   ],
   "rules": {
+    "@typescript-eslint/no-explicit-any": "off",
     "no-multiple-empty-lines": "error",
     "@typescript-eslint/array-type": "error",
     "comma-dangle": 0,
