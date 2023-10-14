@@ -12,15 +12,8 @@ export class AuditLogTab2Component {
   pageSize = 20;
   users: any = new userResolverModel();
 
-
-
-
-
-      asdsdadsaffffggggggdas=1
-        agadsdsagfffgsdgdas=1
-
-        constructor(protected usersResolver: UsersResolver) {
-       }
+  constructor(protected usersResolver: UsersResolver) {
+  }
 
   ngOnInit() {
     this.loadAuditLogData();

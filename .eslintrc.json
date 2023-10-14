@@ -15,6 +15,12 @@
     "no-multiple-empty-lines": "error",
     "@typescript-eslint/array-type": "error",
     "comma-dangle": 0,
+    "no-unused-vars": [
+      "error",
+      {
+        "varsIgnorePattern": "^_$"
+      }
+    ],
     "eqeqeq": "error",
     "linebreak-style": [
       "error",
