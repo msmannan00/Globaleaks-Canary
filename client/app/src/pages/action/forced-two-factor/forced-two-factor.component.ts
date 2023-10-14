@@ -22,7 +22,7 @@ export class ForcedTwoFactorComponent {
       }
     };
 
-    let requestObservable = this.httpService.requestOperations(data);
+    const requestObservable = this.httpService.requestOperations(data);
     requestObservable.subscribe(
       {
         next: () => {

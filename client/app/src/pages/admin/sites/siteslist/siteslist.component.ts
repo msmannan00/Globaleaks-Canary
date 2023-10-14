@@ -22,7 +22,7 @@ export class SiteslistComponent {
     event.stopPropagation();
     this.tenant.active = !this.tenant.active;
 
-    let url = "/api/admin/tenants/" + this.tenant.id;
+    const url = "/api/admin/tenants/" + this.tenant.id;
     this.httpService.requestUpdateTenant(url, this.tenant).subscribe(_ => {
     });
   }
@@ -32,7 +32,7 @@ export class SiteslistComponent {
   }
 
   saveTenant() {
-    let url = "/api/admin/tenants/" + this.tenant.id;
+    const url = "/api/admin/tenants/" + this.tenant.id;
     this.httpService.requestUpdateTenant(url, this.tenant).subscribe(_ => {
       this.utilsService.reloadCurrentRoute();
     });

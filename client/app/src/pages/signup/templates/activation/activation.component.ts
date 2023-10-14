@@ -14,7 +14,7 @@ export class ActivationComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       if ("token" in params) {
-        let token = params["token"];
+        const token = params["token"];
         this.httpService.requestSignupToken(token).subscribe();
       }
     });

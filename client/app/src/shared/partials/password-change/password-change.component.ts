@@ -25,7 +25,7 @@ export class PasswordChangeComponent {
       "operation": "change_password",
       "args": this.changePasswordArgs
     };
-    let requestObservable = this.httpService.requestOperations(data);
+    const requestObservable = this.httpService.requestOperations(data);
     requestObservable.subscribe(
       {
         next: _ => {

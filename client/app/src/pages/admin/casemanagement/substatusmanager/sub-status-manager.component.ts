@@ -101,7 +101,7 @@ export class SubStatusManagerComponent {
     modalRef.componentInstance.arg = arg;
     modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = () => {
-      let url = "/api/admin/statuses/" + arg.id;
+      const url = "/api/admin/statuses/" + arg.id;
       return this.utilsService.deleteStatus(url).subscribe(_ => {
         this.appConfigService.reinit();
       });

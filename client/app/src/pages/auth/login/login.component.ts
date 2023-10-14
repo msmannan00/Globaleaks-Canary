@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       if ("token" in params) {
-        let token = params["token"];
+        const token = params["token"];
         this.authentication.login(0, "", "", "", token);
       } else {
         if (this.authentication.session && this.authentication.session.homepage) {

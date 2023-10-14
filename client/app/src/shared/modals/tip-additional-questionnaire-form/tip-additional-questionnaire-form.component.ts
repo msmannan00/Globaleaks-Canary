@@ -216,7 +216,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit {
 
   displayStepErrors(index: number): any {
     if (index !== -1) {
-      let response = this.stepForm(index);
+      const response = this.stepForm(index);
       if (response) {
         return response?.invalid;
       } else {
