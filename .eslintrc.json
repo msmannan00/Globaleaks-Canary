@@ -33,6 +33,12 @@
   },
   "overrides": [
     {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "rules": {
+        "no-missing-import": "off"
+      }
+    },
+    {
       "files": "*.json",
       "parser": "jsonc-eslint-parser",
       "rules": {}

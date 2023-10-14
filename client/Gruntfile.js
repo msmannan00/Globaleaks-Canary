@@ -356,7 +356,6 @@ module.exports = function (grunt) {
         }
       }
     },
-
     confirm: {
       "pushTranslationsSource": {
         options: {
@@ -399,11 +398,16 @@ module.exports = function (grunt) {
 
   let notranslate_strings = readNoTranslateStrings();
 
+  /**
+   * Escapes special characters in a string to make it suitable for use as a string literal.
+   *
+   * @param {string} val - The input string to escape.
+   * @returns {string} The escaped string.
+   */
   function str_escape(val) {
     if (typeof (val) !== "string") {
       return val;
     }
-
     return val.replace(/[\n]/g, "\\n").replace(/[\t]/g, "\\r");
   }
 
@@ -659,6 +663,13 @@ module.exports = function (grunt) {
 
     }
 
+    /**
+     * Extracts an array of strings from a JSON file.
+     *
+     * @param {string} filepath - The path to the JSON file.
+     * @returns {string[]} An array of strings extracted from the JSON file.
+     * @throws {Error} If the file does not exist or if there is an error reading it.
+     */
     function extractStringsFromJSONFile(filepath) {
       let filecontent = grunt.file.read(filepath),
         result;
@@ -682,6 +693,13 @@ module.exports = function (grunt) {
       }
     }
 
+    /**
+     * Extracts an array of strings from a file.
+     *
+     * @param {string} filepath - The path to the file.
+     * @returns {string[]} An array of strings extracted from the file.
+     * @throws {Error} If the file does not exist or if there is an error reading it.
+     */
     function extractStringsFromFile(filepath) {
       let ext = filepath.split(".").pop();
 
@@ -694,6 +712,13 @@ module.exports = function (grunt) {
       }
     }
 
+    /**
+     * Extracts an array of strings from files in a directory.
+     *
+     * @param {string} dir - The path to the directory containing files to extract strings from.
+     * @returns {string[]} An array of strings extracted from the files in the directory.
+     * @throws {Error} If the directory does not exist, is not accessible, or if there are errors reading the files.
+     */
     function extractStringsFromDir(dir) {
       grunt.file.recurse(dir, function (absdir, rootdir, subdir, filename) {
         let filepath = path.join(dir, subdir || "", filename || "");
@@ -781,7 +806,7 @@ module.exports = function (grunt) {
 
         supported_languages.forEach(function (lang_code) {
           gt.setLocale(lang_code);
-          let translation = gt.gettext(str_escape(object[keys[k]]["en"]));
+          let translation = gt.gettext(str_escape(sanitizeInput(object[keys[k]]["en"])));
           if (translation !== undefined) {
             object[keys[k]][lang_code] = str_unescape(translation).trim();
           }
@@ -794,15 +819,17 @@ module.exports = function (grunt) {
       translate_object(field, ["label", "description", "hint"]);
 
       for (i in field["attrs"]) {
-        translate_object(field["attrs"][i], ["value"]);
+        let sanitizedField = sanitizeInput(field["attrs"][i]);
+        translate_object(sanitizedField, ["value"]);
       }
 
       for (i in field["options"]) {
-        translate_object(field["options"][i], ["label"]);
-      }
+        let sanitizedField = sanitizeInput(field["options"][i]);
+        translate_object(sanitizedField, ["label"]);      }
 
       for (i in field["children"]) {
-        translate_field(field["children"][i]);
+        let sanitizedField = sanitizeInput(field["children"][i]);
+        translate_field(sanitizedField);
       }
     };
 
