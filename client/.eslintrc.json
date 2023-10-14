@@ -3,7 +3,8 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "env": {
-    "node": true
+    "node": true,
+    "angular2": true
   },
   "extends": [
     "eslint:recommended",

@@ -3,6 +3,7 @@ import {auditlogResolverModel} from "@app/models/resolvers/auditlogResolverModel
 import {AuditLogResolver} from "@app/shared/resolvers/audit-log-resolver.service";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
+import {ngxCsv} from "ngx-csv";
 
 @Component({
   selector: "src-auditlog-tab1",
@@ -31,5 +32,8 @@ export class AuditLogTab1Component implements OnInit {
   }
 
   exportAuditLog() {
+    new ngxCsv(JSON.stringify(this.auditLog), "auditlog", {
+      headers: ["Date", "Type", "Severity", "User", "Object", "data"],
+    });
   }
 }
