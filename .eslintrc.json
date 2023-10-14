@@ -12,6 +12,12 @@
     "prettier"
   ],
   "rules": {
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "_"
+      }
+    ],
     "@typescript-eslint/consistent-type-imports": "error",
     "no-multiple-empty-lines": "error",
     "@typescript-eslint/array-type": "error",
