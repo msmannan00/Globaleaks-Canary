@@ -7,9 +7,10 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier"
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
+
   "rules": {
     "@typescript-eslint/consistent-type-imports": "error",
     "no-multiple-empty-lines": "error",

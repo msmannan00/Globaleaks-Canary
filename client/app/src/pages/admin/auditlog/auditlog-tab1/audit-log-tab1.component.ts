@@ -1,5 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {auditlogResolverModel} from "@app/models/resolvers/auditlogResolverModel";
+import {AppConfigService} from "@app/services/app-config.service";
 import {AuditLogResolver} from "@app/shared/resolvers/audit-log-resolver.service";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -15,19 +16,20 @@ export class AuditLogTab1Component implements OnInit {
   auditLog: any = new auditlogResolverModel();
 
 
-  
-    sadfdfsdfsdsd=1
-   dfdsadfsdfsdsd=1
-  fgdfsdsadfsdsd=1
 
-  xx(_:any){
 
-  }
-  xxx(dfsdfsd:any){
+    saddasfdfsdfsdsd=1
+   dfdsaddafsdfsdsd=1
+  fgdfsdsdsaadfsdsd=1
+
+  xxxx(_:any){
 
   }
+  xxcccx(dfsdfsd:any){
 
-     constructor(private auditLogResolver: AuditLogResolver, protected nodeResolver: NodeResolver, protected utilsService: UtilsService) {
+  }
+
+     constructor(private asdsad: AppConfigService, private auditLogResolver: AuditLogResolver, protected nodeResolver: NodeResolver, protected utilsService: UtilsService) {
    }
 
   ngOnInit() {
