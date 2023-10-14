@@ -36,7 +36,7 @@ export class AppConfigService {
   }
 
   initRoutes(currentURL: string) {
-    if (this.authenticationService && this.authenticationService.session && currentURL != "login") {
+    if (this.authenticationService && this.authenticationService.session && currentURL !== "login") {
       const queryParams = this.activatedRoute.snapshot.queryParams;
       let param = localStorage.getItem("default_language");
       if (param) {
