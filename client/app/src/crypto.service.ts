@@ -30,8 +30,8 @@ export class CryptoService {
   };
 
   work(resolve: any) {
-    let webCrypto = this.getWebCrypto();
-    let toHash = this.utilsService.str2Uint8Array(this.data + this.counter);
+    const webCrypto = this.getWebCrypto();
+    const toHash = this.utilsService.str2Uint8Array(this.data + this.counter);
     let digestPremise;
 
     if (webCrypto) {

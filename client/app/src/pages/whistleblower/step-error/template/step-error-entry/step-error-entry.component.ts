@@ -19,7 +19,7 @@ export class StepErrorEntryComponent implements OnInit {
   }
 
   goToQuestion() {
-    let form = document.getElementById(this.err);
+    const form = document.getElementById(this.err);
 
     if (form) {
       form.scrollIntoView({behavior: "smooth", block: "start"});

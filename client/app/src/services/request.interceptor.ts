@@ -48,7 +48,7 @@ export class RequestInterceptor implements HttpInterceptor {
     let authHeader = this.authenticationService.getHeader();
     let authRequest = httpRequest;
 
-    for (let [key, value] of authHeader) {
+    for (const [key, value] of authHeader) {
       authRequest = authRequest.clone({headers: authRequest.headers.set(key, value)});
     }
 

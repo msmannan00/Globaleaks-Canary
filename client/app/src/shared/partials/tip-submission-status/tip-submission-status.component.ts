@@ -17,7 +17,7 @@ export class TipSubmissionStatusComponent {
 
   updateSubmissionStatus() {
     this.tipService.tip.substatus = "";
-    let args = {"status": this.tipService.tip.status, "substatus": ""};
+    const args = {"status": this.tipService.tip.status, "substatus": ""};
     this.httpService.tipOperation("update_status", args, this.tipService.tip.id)
       .subscribe(
         () => {
@@ -27,7 +27,7 @@ export class TipSubmissionStatusComponent {
   };
 
   updateSubmissionSubStatus() {
-    let args = {
+    const args = {
       "status": this.tipService.tip.status,
       "substatus": this.tipService.tip.substatus ? this.tipService.tip.substatus : ""
     };

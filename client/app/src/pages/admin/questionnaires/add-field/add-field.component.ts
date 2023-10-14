@@ -53,7 +53,7 @@ export class AddFieldComponent implements OnInit {
       });
     }
     if (this.type === "template") {
-      var field = new field_template();
+      const field = new field_template();
       field.fieldgroup_id = this.fields ? this.fields.id : "";
       field.instance = "template";
       field.label = this.new_field.label;

@@ -22,7 +22,6 @@
         "argsIgnorePattern": "_"
       }
     ],
-    "no-this-alias": "off",
     "eqeqeq": "error",
     "linebreak-style": [
       "error",

@@ -57,7 +57,7 @@ export class FormFieldInputComponent implements OnInit {
     this.fieldEntry = this.fieldId + "-input-" + this.index;
     this.rows = this.fieldUtilitiesService.splitRows(this.field.children);
     if (this.field.type === "inputbox") {
-      let validator_regex = this.fieldUtilitiesService.getValidator(this.field);
+      const validator_regex = this.fieldUtilitiesService.getValidator(this.field);
       if (validator_regex.length > 0) {
         this.validator = validator_regex;
       }

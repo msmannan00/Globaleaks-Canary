@@ -51,8 +51,8 @@ export class TokenResource {
   };
 
   work(resolve: any) {
-    let webCrypto = this.getWebCrypto();
-    let toHash = this.str2Uint8Array(this.data + this.counter);
+    const webCrypto = this.getWebCrypto();
+    const toHash = this.str2Uint8Array(this.data + this.counter);
     let digestPremise;
 
     if (webCrypto) {

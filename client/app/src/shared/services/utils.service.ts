@@ -81,7 +81,7 @@ export class UtilsService {
 
   isUploading(uploads?: any) {
     if (uploads) {
-      for (let key in uploads) {
+      for (const key in uploads) {
         if (uploads[key].flowFile && uploads[key].flowFile.isUploading()) {
           return true;
         }
@@ -92,7 +92,7 @@ export class UtilsService {
 
   resumeFileUploads(uploads: any) {
     if (uploads) {
-      for (let key in uploads) {
+      for (const key in uploads) {
         if (uploads[key] && uploads[key].flowJs) {
           uploads[key].flowJs.upload();
         }
@@ -207,7 +207,7 @@ export class UtilsService {
   }
 
   routeCheck() {
-    let path = location.pathname;
+    const path = location.pathname;
     if (path !== "/") {
       this.appDataService.page = "";
     }
@@ -224,7 +224,7 @@ export class UtilsService {
   }
 
   array_to_map(receivers: any) {
-    let ret: any = {};
+    const ret: any = {};
 
     receivers.forEach(function (element: any) {
       ret[element.id] = element;
@@ -246,10 +246,10 @@ export class UtilsService {
         text = submission_statuses[i].label;
 
 
-        let substatuses = submission_statuses[i].substatuses;
-        for (let j = 0; j < substatuses.length; j++) {
-          if (substatuses[j].id === substatus) {
-            text += "(" + substatuses[j].label + ")";
+        const subStatus = submission_statuses[i].substatuses;
+        for (let j = 0; j < subStatus.length; j++) {
+          if (subStatus[j].id === subStatus) {
+            text += "(" + subStatus[j].label + ")";
             break;
           }
         }
@@ -260,19 +260,19 @@ export class UtilsService {
   }
 
   isNever(time: string) {
-    let date = new Date(time);
+    const date = new Date(time);
     return date.getTime() === 32503680000000;
   }
 
   deleteFromList(list: any, elem: any) {
-    let idx = list.indexOf(elem);
+    const idx = list.indexOf(elem);
     if (idx !== -1) {
       list.splice(idx, 1);
     }
   }
 
   showFilePreview(content_type: string) {
-    let content_types = [
+    const content_types = [
       "image/gif",
       "image/jpeg",
       "image/png",
