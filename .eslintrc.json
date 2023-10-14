@@ -12,7 +12,6 @@
     "prettier"
   ],
   "rules": {
-    "no-unused-vars": ["error", { "varsIgnorePattern": "^(constructor)$" }],
     "@typescript-eslint/consistent-type-imports": "error",
     "no-multiple-empty-lines": "error",
     "@typescript-eslint/array-type": "error",
