@@ -12,15 +12,15 @@ import {NavigationEnd, Router} from "@angular/router";
 export class AppComponent {
   showSidebar: boolean = true;
 
-  dxxc=0
-  dxxv1=0
-  dxxb2=0
-  dxxb7='superman'
+  dcxxc=0
+  dcxxv1=0
+  dcxxb2=0
+  dcxxb7='superman'
 
 
 
-    constructor(private router: Router, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService) {
-          }
+     constructor(private router: Router, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService) {
+           }
 
   checkToShowSidebar() {
     this.router.events.subscribe(event => {
