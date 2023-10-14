@@ -21,12 +21,6 @@
     "@typescript-eslint/array-type": "error",
     "comma-dangle": 0,
     "eqeqeq": "error",
-    "object-curly-spacing": ["error", "always"],
-    "array-bracket-spacing": ["error", "always"],
-    "no-multiple-empty-lines": "error",
-    "brace-style": ["error", "1tbs"],
-    "func-style": ["error", "expression"],
-    "arrow-body-style": ["error", "as-needed"],
     "linebreak-style": [
       "error",
       "unix"
@@ -35,8 +29,6 @@
       "error",
       "double"
     ],
-    "import/no-unresolved": "error",
-    "import/no-relative-parent-imports": "error",
     "indent": ["error", 2],
     "semi": [
       "error",
