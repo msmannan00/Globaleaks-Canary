@@ -10,16 +10,11 @@ import {AuthenticationService} from "@app/services/authentication.service";
 })
 export class Tab1Component {
   @Input() contentForm: NgForm;
-  xc=0
-  xv1=0
-  xb2=0
-  xb7='superman'
 
-    constructor(protected nodeResolver: NodeResolver,
-                private utilsService: UtilsService, protected authenticationService: AuthenticationService) {
+  constructor(protected nodeResolver: NodeResolver, private utilsService: UtilsService, protected authenticationService: AuthenticationService) {
   }
 
-        updateNode() {
+  updateNode() {
     this.utilsService.update(this.nodeResolver.dataModel).subscribe(_ => {
       this.utilsService.reloadCurrentRoute();
     });
