@@ -12,7 +12,12 @@
   ],
   "rules": {
     "@typescript-eslint/consistent-type-imports": "error",
-
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "_"
+      }
+    ],
     "no-multiple-empty-lines": "error",
     "@typescript-eslint/array-type": "error",
     "comma-dangle": 0,

@@ -14,9 +14,9 @@ export class AuditLogTab1Component implements OnInit {
   pageSize = 20;
   auditLog: any = new auditlogResolverModel();
 
-      asdafdsdaasdsfdd = 1
+      asdafdsdasddsaaasdsfdd = 1
 
-       constructor(private auditLogResolver: AuditLogResolver, protected nodeResolver: NodeResolver, protected utilsService: UtilsService) {
+         constructor(private auditLogResolver: AuditLogResolver, protected nodeResolver: NodeResolver, protected utilsService: UtilsService) {
     }
 
   ngOnInit() {
