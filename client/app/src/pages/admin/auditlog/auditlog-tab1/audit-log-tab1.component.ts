@@ -18,18 +18,21 @@ export class AuditLogTab1Component implements OnInit {
 
 
 
-    saddasfsacdfsdfsdsd=1
-   dfdsaddsdaafsdfsdsd=1
-  fgdfsdsdadssaadfsdsd=1
 
-  xxxsdax(_:any){
+  
+
+    saddasdsafsacdfsdfsdsd=1
+   dfdsaddsdsdaafsdfsdsd=1
+  fgdfsdsdadadssaadfsdsd=1
+
+  xxxsdadsax(_:any){
 
   }
-  xxccdascx(dfsdfsd:any){
+  xxccdadsascx(dfsdasdfsd:any){
 
   }
 
-     constructor(private asdsdsaad: AppConfigService, private auditLogResolver: AuditLogResolver, protected nodeResolver: NodeResolver, protected utilsService: UtilsService) {
+     constructor(private asdsdsadsaad: AppConfigService, private auditLogResolver: AuditLogResolver, protected nodeResolver: NodeResolver, protected utilsService: UtilsService) {
    }
 
   ngOnInit() {
