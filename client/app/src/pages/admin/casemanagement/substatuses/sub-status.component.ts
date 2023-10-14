@@ -70,7 +70,7 @@ export class SubStatusComponent implements OnInit {
   }
 
   saveSubmissionsSubStatus(subStatusParam: any): void {
-    let url = "/api/admin/statuses/" + this.submissionsStatus.id + "/substatuses/" + subStatusParam.id;
+    const url = "/api/admin/statuses/" + this.submissionsStatus.id + "/substatuses/" + subStatusParam.id;
     this.httpService.requestUpdateStatus(url, subStatusParam).subscribe(_ => {
       this.appConfigService.reinit();
     });

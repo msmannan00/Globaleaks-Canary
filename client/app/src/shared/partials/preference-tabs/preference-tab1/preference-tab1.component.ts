@@ -110,7 +110,7 @@ export class PreferenceTab1Component implements OnInit {
         {
           next: response => {
             this.preferenceResolver.dataModel.clicked_recovery_key = true;
-            let erk = response.data["text"].match(/.{1,4}/g).join("-");
+            const erk = response.data["text"].match(/.{1,4}/g).join("-");
             const modalRef = this.modalService.open(EncryptionRecoveryKeyComponent);
             modalRef.componentInstance.erk = erk;
           },

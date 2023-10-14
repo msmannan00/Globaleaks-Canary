@@ -145,7 +145,7 @@ export class FieldUtilitiesService {
     let entry, option, i, j;
     const self = this;
 
-    let localscope = this;
+    const localscope = this;
 
     list.forEach(function (field: any) {
       if (self.isFieldTriggered(parent, field, scope.answers, scope.score)) {
@@ -245,7 +245,7 @@ export class FieldUtilitiesService {
       scope.submission.setContextReceivers(scope.context.id);
     }
 
-    let localscope = this;
+    const localscope = this;
 
     scope.questionnaire.steps.forEach(function (step: any) {
       step.enabled = self.isFieldTriggered(null, step, scope.answers, scope.score);
