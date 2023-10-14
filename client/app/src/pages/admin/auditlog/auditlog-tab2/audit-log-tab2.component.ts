@@ -14,11 +14,13 @@ export class AuditLogTab2Component {
 
 
 
-    asdffffggggggdas=1
-        aggfffgsdgdas=1
 
-       constructor(protected usersResolver: UsersResolver) {
-      }
+
+      asdsdadsaffffggggggdas=1
+        agadsdsagfffgsdgdas=1
+
+        constructor(protected usersResolver: UsersResolver) {
+       }
 
   ngOnInit() {
     this.loadAuditLogData();
