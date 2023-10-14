@@ -18,14 +18,17 @@ export class AuditLogTab1Component implements OnInit {
 
 
 
-    fsdgfdsd=1
-   ddsfgdd=1
-  fgfsgfddsd=1
 
-  xxafgdx(_:any){
+
+
+    fsdgdsafdsd=1
+   ddsfadsgdd=1
+  fgfsgdafddsd=1
+
+  xxafgdsdx(_:any){
 
   }
-  xxscdfgx(dfgfdsd:any){
+  xxscasddfgx(dfasdgfdsd:any){
 
   }
 
