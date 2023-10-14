@@ -13,7 +13,7 @@ export class AuditLogTab2Component {
   users: any = new userResolverModel();
 
   asddas=1
-      asddas=1
+      asdgdas=1
 
      constructor(protected usersResolver: UsersResolver) {
   }
