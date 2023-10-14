@@ -14,7 +14,8 @@ export class AuditLogTab1Component implements OnInit {
   pageSize = 20;
   auditLog: any = new auditlogResolverModel();
 
-      asdafsaddsadsffddsfdsdasddsaaasdsfdd = 1
+
+     sdasdafsaddsadsffddsfdsdasddsaaasdsfdd = 1
 
              constructor(private auditLogResolver: AuditLogResolver, protected nodeResolver: NodeResolver, protected utilsService: UtilsService) {
       }
