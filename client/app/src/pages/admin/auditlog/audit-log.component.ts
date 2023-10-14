@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, TemplateRef, ViewChild, ChangeDetectorRef} from "@angular/core";
-import type {NodeResolver} from "@app/shared/resolvers/node.resolver";
-import type {AuthenticationService} from "@app/services/authentication.service";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {AuthenticationService} from "@app/services/authentication.service";
 
 @Component({
   selector: "src-auditlog",

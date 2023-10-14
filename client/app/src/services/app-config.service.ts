@@ -43,11 +43,11 @@ export class AppConfigService {
         queryParams["lang"] = param;
       }
 
-      if (this.authenticationService.session.role == "admin") {
+      if (this.authenticationService.session.role === "admin") {
         this.router.navigate(["/" + this.authenticationService.session.role], {queryParams}).then();
-      } else if (this.authenticationService.session.role == "receiver") {
+      } else if (this.authenticationService.session.role === "receiver") {
         this.router.navigate(["/recipient"], {queryParams}).then();
-      } else if (this.authenticationService.session.role == "custodian") {
+      } else if (this.authenticationService.session.role === "custodian") {
         this.router.navigate(["/custodian"], {queryParams}).then();
       }
     } else {
@@ -194,7 +194,7 @@ export class AppConfigService {
     if (this.appDataService.public.node) {
       if (!this.appDataService.public.node.wizard_done) {
         location.replace("/#/wizard");
-      } else if (this.router.url == "/" && this.appDataService.page == "signuppage") {
+      } else if (this.router.url === "/" && this.appDataService.page === "signuppage") {
         location.replace("/#/signup");
       } else if ((this.router.url === "/" || this.router.url === "/submission") && this.appDataService.public.node.adminonly && !this.authenticationService.session) {
         location.replace("/#/admin/home");

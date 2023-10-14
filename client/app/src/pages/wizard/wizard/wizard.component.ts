@@ -61,7 +61,7 @@ export class WizardComponent implements OnInit {
     this.loadLicense();
     this.wizard.node_language = this.translationService.language;
 
-    if (this.appDataService.pageTitle == "") {
+    if (this.appDataService.pageTitle === "") {
       this.appConfigService.setTitle();
     }
   }

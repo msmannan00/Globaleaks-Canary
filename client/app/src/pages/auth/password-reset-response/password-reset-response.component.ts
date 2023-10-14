@@ -46,7 +46,7 @@ export class PasswordResetResponseComponent implements OnInit {
     this.request.reset_token = this.route.snapshot.queryParams["token"] || "";
     this.request.recovery_key = this.route.snapshot.queryParams["recovery"] || "";
 
-    if (this.state == "start") {
+    if (this.state === "start") {
       this.submit();
     }
   }

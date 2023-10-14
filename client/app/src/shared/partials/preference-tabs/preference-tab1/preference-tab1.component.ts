@@ -115,7 +115,7 @@ export class PreferenceTab1Component implements OnInit {
             modalRef.componentInstance.erk = erk;
           },
           error: (error: any) => {
-            if (error.error["error_message"] == "Authentication Failed") {
+            if (error.error["error_message"] === "Authentication Failed") {
               this.getEncryptionRecoveryKey();
             } else {
               this.preferenceResolver.dataModel.clicked_recovery_key = true;

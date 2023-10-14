@@ -18,12 +18,12 @@ export class HttpsCsrGenComponent {
     department: string;
     email: string;
   } = {
-    country: "",
-    province: "",
-    city: "",
-    company: "",
-    department: "",
-    email: ""
+      country: "",
+      province: "",
+      city: "",
+      company: "",
+      department: "",
+      email: ""
   };
 
   constructor(private httpService: HttpService) {

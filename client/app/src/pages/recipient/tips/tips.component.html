@@ -62,21 +62,21 @@
             <th></th>
             <th (click)="sortKey = 'important'; sortReverse = !sortReverse">
               <i class="fa-solid fa-star"></i>
-              <span *ngIf="sortKey == 'important'">
+              <span *ngIf="sortKey === 'important'">
                 <span *ngIf="!sortReverse" class="fa-solid fa-caret-down"></span>
                 <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
               </span>
             </th>
             <th (click)="sortKey = 'reminder_date'; sortReverse = !sortReverse">
               <i class="fa-solid fa-bell"></i>
-              <span *ngIf="sortKey == 'reminder_date'">
+              <span *ngIf="sortKey === 'reminder_date'">
                 <span *ngIf="!sortReverse" class="fa-solid fa-caret-down"></span>
                 <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
               </span>
             </th>
             <th class="TipInfoID" (click)="sortKey = 'progressive'; sortReverse = !sortReverse">
               <i class="fa-solid fa-hashtag"></i>
-              <span *ngIf="sortKey == 'progressive'">
+              <span *ngIf="sortKey === 'progressive'">
                 <span *ngIf="!sortReverse" class="fa-solid fa-caret-down"></span>
                 <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
               </span>
@@ -85,7 +85,7 @@
               <span (click)="sortKey = 'context_name'; sortReverse = !sortReverse">
                 <i class="fa-solid fa-inbox"></i>
                 <span>{{'Channel' | translate}}</span>
-                <span *ngIf="sortKey == 'context_name'">
+                <span *ngIf="sortKey === 'context_name'">
                   <span *ngIf="!sortReverse" class="fa-solid fa-caret-down"></span>
                   <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
                 </span>
@@ -101,7 +101,7 @@
               <span (click)="sortKey = 'label'; sortReverse = !sortReverse">
                 <i class="fa-solid fa-tag"></i>
                 <span>{{'Label' | translate}}</span>
-                <span *ngIf="sortKey == 'label'">
+                <span *ngIf="sortKey === 'label'">
                   <span *ngIf="!sortReverse" class="fa-solid fa-caret-down"></span>
                   <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
                 </span>
@@ -111,7 +111,7 @@
               <span (click)="sortKey = 'submissionStatusStr'; sortReverse = !sortReverse">
                 <i class="fa-solid fa-dot-circle"></i>
                 <span>{{'Status' | translate}}</span>
-                <span *ngIf="sortKey == 'submissionStatusStr'">
+                <span *ngIf="sortKey === 'submissionStatusStr'">
                   <span *ngIf="!sortReverse" class="fa-solid fa-caret-down"></span>
                   <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
                 </span>
@@ -129,7 +129,7 @@
               <span (click)="sortKey = 'creation_date'; sortReverse = !sortReverse">
                 <i class="fa-solid fa-clock"></i>
                 <span>{{'Report date' | translate}}</span>
-                <span *ngIf="sortKey == 'creation_date'">
+                <span *ngIf="sortKey === 'creation_date'">
                   <span *ngIf="!sortReverse" class="fa-solid fa-caret-down"></span>
                   <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
                 </span>
@@ -146,7 +146,7 @@
               <span (click)="sortKey = 'update_date'; sortReverse = !sortReverse">
                 <i class="fa-solid fa-clock"></i>
                 <span>{{'Last update' | translate}}</span>
-                <span *ngIf="sortKey == 'update_date'">
+                <span *ngIf="sortKey === 'update_date'">
                   <span *ngIf="!sortReverse" class="fa-solid fa-caret-down"></span>
                   <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
                 </span>
@@ -162,7 +162,7 @@
               <span (click)="sortKey = 'expiration_date'; sortReverse = !sortReverse">
                 <i class="fa-solid fa-hourglass"></i>
                 <span>{{'Expiration date' | translate}}</span>
-                <span *ngIf="sortKey == 'expiration_date'">
+                <span *ngIf="sortKey === 'expiration_date'">
                   <span *ngIf="!sortReverse" class="fa-solid fa-caret-down"></span>
                   <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
                 </span>
@@ -185,7 +185,7 @@
               <span (click)="sortKey = 'score'; sortReverse = !sortReverse">
                 <i class="fa-solid fa-flash"></i>
                 <span>{{'Score' | translate}}</span>
-                <span *ngIf="sortKey == 'score'">
+                <span *ngIf="sortKey === 'score'">
                   <span *ngIf="!sortReverse" class="fa-solid fa-caret-down"></span>
                   <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
                 </span>

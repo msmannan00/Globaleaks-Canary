@@ -39,7 +39,7 @@ export class FormComponent implements OnInit {
     }
     this.stepId = "step-" + this.index;
     this.rows = this.fieldUtilitiesService.splitRows(this.fields);
-    if (this.rows.length == 0) {
+    if (this.rows.length === 0) {
       this.rows = this.step;
     }
     this.status = {

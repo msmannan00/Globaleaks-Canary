@@ -159,7 +159,7 @@ export class TippageComponent {
         totalFiles += 1;
       }
     }
-    if (totalFiles == 0) {
+    if (totalFiles === 0) {
       return 0;
     }
 

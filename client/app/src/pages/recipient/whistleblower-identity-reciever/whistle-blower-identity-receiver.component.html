@@ -23,7 +23,7 @@
               </span>
               
           </div>
-          <div *ngIf="tipService.tip.iar && tipService.tip.iar.reply == 'denied'"><label>{{'Reply motivation' | translate}}</label>:<span>{{tipService.tip.iar.reply_motivation}}</span></div>
+          <div *ngIf="tipService.tip.iar && tipService.tip.iar.reply === 'denied'"><label>{{'Reply motivation' | translate}}</label>:<span>{{tipService.tip.iar.reply_motivation}}</span></div>
         </div>
         <span *ngIf="!tipService.tip.data.whistleblower_identity_provided">-</span>
         <div *ngIf="tipService.tip.data.whistleblower_identity_provided">
