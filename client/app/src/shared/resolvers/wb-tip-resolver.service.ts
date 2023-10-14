@@ -20,7 +20,7 @@ export class WbTipResolver implements Resolve<boolean> {
 
   resolve(): Observable<boolean> {
 
-    let requestObservable: Observable<any> = this.httpService.whistleBlowerTip();
+    const requestObservable: Observable<any> = this.httpService.whistleBlowerTip();
     requestObservable.subscribe(
       {
         next: (response: WBTipData) => {

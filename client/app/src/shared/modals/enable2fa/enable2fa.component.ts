@@ -18,7 +18,7 @@ export class Enable2faComponent {
   }
 
   confirm() {
-    let requestObservable = this.utilsService.runUserOperation("enable_2fa", {
+    const requestObservable = this.utilsService.runUserOperation("enable_2fa", {
       "secret": this.twoFactorAuthData.totp.secret,
       "token": this.twoFactorAuthData.totp.token
     }, true);

@@ -31,7 +31,7 @@ export class AddFieldFromTemplateComponent {
 
   add_field_from_template(): void {
     if (this.type === "step") {
-      let field = new new_field();
+      const field = new new_field();
       field.step_id = this.step.id;
       field.template_id = "";
 
@@ -48,7 +48,7 @@ export class AddFieldFromTemplateComponent {
       });
     }
     if (this.type === "field") {
-      let field = new new_field();
+      const field = new new_field();
       field.step_id = this.step.id;
       field.template_id = "";
 

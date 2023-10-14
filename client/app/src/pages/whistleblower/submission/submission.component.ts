@@ -271,7 +271,7 @@ export class SubmissionComponent implements OnInit {
     this.utilsService.resumeFileUploads(this.uploads);
     this.done = true;
 
-    let intervalId = setInterval(() => {
+    const intervalId = setInterval(() => {
       if (this.uploads) {
         for (let key in this.uploads) {
 

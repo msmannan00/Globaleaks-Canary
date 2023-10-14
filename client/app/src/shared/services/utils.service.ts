@@ -35,7 +35,7 @@ export class UtilsService {
   }
 
   str2Uint8Array(str: string) {
-    let result = new Uint8Array(str.length);
+    const result = new Uint8Array(str.length);
     for (let i = 0; i < str.length; i++) {
       result[i] = str.charCodeAt(i);
     }

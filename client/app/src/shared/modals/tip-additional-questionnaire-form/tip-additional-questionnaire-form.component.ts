@@ -176,7 +176,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit {
     this.done = true;
     this.utilsService.resumeFileUploads(this.uploads);
 
-    let intervalId = setInterval(() => {
+    const intervalId = setInterval(() => {
       if (this.uploads) {
         for (let key in this.uploads) {
 

@@ -17,8 +17,8 @@ export class TipInfoComponent {
   }
 
   markReportStatus(date: any) {
-    let report_date = new Date(date);
-    let current_date = new Date();
+    const report_date = new Date(date);
+    const current_date = new Date();
     return current_date > report_date;
   };
 

@@ -32,7 +32,7 @@ export class AddFieldComponent implements OnInit {
   add_field() {
     if (this.type === "step") {
 
-      let field = new new_field();
+      const field = new new_field();
       field.step_id = this.step.id;
       field.template_id = "";
       field.label = this.new_field.label;
@@ -69,7 +69,7 @@ export class AddFieldComponent implements OnInit {
     }
     if (this.type === "field") {
 
-      let field = new new_field();
+      const field = new new_field();
       field.fieldgroup_id = this.step.id;
       field.template_id = "";
 

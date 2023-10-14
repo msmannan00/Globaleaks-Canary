@@ -36,7 +36,7 @@ export class TippageComponent {
 
   ngOnInit() {
 
-    let requestObservable: Observable<any> = this.httpService.whistleBlowerTip();
+    const requestObservable: Observable<any> = this.httpService.whistleBlowerTip();
     requestObservable.subscribe(
       {
         next: (response: WBTipData) => {
@@ -131,8 +131,8 @@ export class TippageComponent {
   };
 
   markReportStatus(date: any) {
-    let report_date = new Date(date);
-    let current_date = new Date();
+    const report_date = new Date(date);
+    const current_date = new Date();
     return current_date > report_date;
   };
 
@@ -167,7 +167,7 @@ export class TippageComponent {
   }
 
   provideIdentityInformation(_: { param1: string, param2: number }) {
-    let intervalId = setInterval(() => {
+    const intervalId = setInterval(() => {
       if (this.uploads) {
         for (let key in this.uploads) {
 

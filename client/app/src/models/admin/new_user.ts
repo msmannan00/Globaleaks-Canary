@@ -21,5 +21,5 @@ export class new_user {
   can_grant_access_to_reports = false;
   can_delete_submission = false;
   can_postpone_expiration = true;
-  can_transfer_access_to_reports=false
+  can_transfer_access_to_reports = false;
 }
