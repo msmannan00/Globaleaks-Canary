@@ -67,7 +67,7 @@ export class WizardComponent implements OnInit {
   }
 
   selectProfile(name: any) {
-    let self = this;
+    const self = this;
     this.config_profiles.forEach(function (profile: any) {
       profile.active = profile.name === name;
       if (profile.active) {

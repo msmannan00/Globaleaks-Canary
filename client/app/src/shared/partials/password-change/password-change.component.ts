@@ -21,7 +21,7 @@ export class PasswordChangeComponent {
   };
 
   changePassword() {
-    let data = {
+    const data = {
       "operation": "change_password",
       "args": this.changePasswordArgs
     };

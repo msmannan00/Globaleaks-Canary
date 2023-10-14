@@ -6,7 +6,7 @@ import {Constants} from "@app/shared/constants/constants";
 })
 export class FieldUtilitiesService {
   parseQuestionnaire(questionnaire: any, parsedFields: any) {
-    let self = this;
+    const self = this;
 
     questionnaire.steps.forEach(function (step: any) {
       parsedFields = self.parseFields(step.children, parsedFields);
@@ -97,7 +97,7 @@ export class FieldUtilitiesService {
   }
 
   calculateScore(scope: any, field: any, entry: any) {
-    let self = this;
+    const self = this;
     let score, i;
 
     if (["selectbox", "multichoice"].indexOf(field.type) > -1) {
@@ -143,7 +143,7 @@ export class FieldUtilitiesService {
 
   updateAnswers(scope: any, parent: any, list: any, answers: any) {
     let entry, option, i, j;
-    let self = this;
+    const self = this;
 
     let localscope = this;
 
@@ -231,7 +231,7 @@ export class FieldUtilitiesService {
   }
 
   onAnswersUpdate(scope: any) {
-    let self = this;
+    const self = this;
     scope.block_submission = false;
     scope.score = 0;
     scope.points_to_sum = 0;
@@ -306,7 +306,7 @@ export class FieldUtilitiesService {
   }
 
   parseFields(fields: any, parsedFields: any) {
-    let self = this;
+    const self = this;
 
     fields.forEach(function (field: any) {
       parsedFields = self.parseField(field, parsedFields);
@@ -316,7 +316,7 @@ export class FieldUtilitiesService {
   }
 
   parseField(field: any, parsedFields: any) {
-    let self = this;
+    const self = this;
 
     if (!Object.keys(parsedFields).length) {
       parsedFields.fields = [];

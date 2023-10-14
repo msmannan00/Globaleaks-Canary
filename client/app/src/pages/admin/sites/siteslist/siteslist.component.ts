@@ -58,7 +58,7 @@ export class SiteslistComponent {
     modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = () => {
 
-      let url = "/api/admin/tenants/" + arg.id;
+      const url = "/api/admin/tenants/" + arg.id;
       return this.httpService.requestDeleteTenant(url).subscribe(_ => {
         this.appConfigService.reinit();
         this.utilsService.reloadCurrentRoute();

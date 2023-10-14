@@ -64,7 +64,7 @@ export class PreferenceTab1Component implements OnInit {
       const modalRef = this.modalService.open(ConfirmationWith2faComponent);
       modalRef.result.then(
         (result) => {
-          let data = {
+          const data = {
             "operation": "disable_2fa",
             "args": {
               "secret": result,
@@ -95,9 +95,9 @@ export class PreferenceTab1Component implements OnInit {
 
   getEncryptionRecoveryKey() {
 
-    let modalRef = this.modalService.open(ConfirmationWithPasswordComponent);
+    const modalRef = this.modalService.open(ConfirmationWithPasswordComponent);
     modalRef.componentInstance.confirmFunction = (result: any) => {
-      let data = {
+      const data = {
         "operation": "get_recovery_key",
         "args": {
           "secret": this.twoFactorAuthData.totp.secret,

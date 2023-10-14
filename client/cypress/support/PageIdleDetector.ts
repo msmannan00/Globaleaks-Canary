@@ -22,7 +22,7 @@ export class PageIdleDetector {
 
   private waitForAngularRequestsToComplete(options = this.defaultOptions) {
     cy.window(options).should((myWindow) => {
-      if (!!myWindow.angular) {
+      if (!myWindow.angular) {
         expect(
           this.numberOfPendingAngularRequests(myWindow),
           "WaitForAngularRequestsToComplete"
@@ -33,7 +33,7 @@ export class PageIdleDetector {
 
   private waitForAngularDigestCycleToComplete(options = this.defaultOptions) {
     cy.window(options).should((myWindow) => {
-      if (!!myWindow.angular) {
+      if (!myWindow.angular) {
         expect(
           this.angularRootScopePhase(myWindow),
           "WaitForAngularDigestCycleToComplete"

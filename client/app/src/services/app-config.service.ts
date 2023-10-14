@@ -123,7 +123,7 @@ export class AppConfigService {
         this.appDataService.languages_enabled_selector = [];
         this.appDataService.languages_supported = new Map<number, string>();
 
-        let self = this;
+        const self = this;
         this.appDataService.public.node.languages_supported.forEach(function (lang: any) {
           self.appDataService.languages_supported.set(lang.code, lang);
 

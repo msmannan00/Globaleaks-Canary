@@ -14,7 +14,7 @@ export class ForcedTwoFactorComponent {
   }
 
   enable2FA() {
-    let data = {
+    const data = {
       "operation": "enable_2fa",
       "args": {
         "secret": this.twoFactorAuthData.totp.secret,

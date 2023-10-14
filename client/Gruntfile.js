@@ -611,7 +611,7 @@ module.exports = function (grunt) {
   }
 
   grunt.registerTask("makeTranslationsSource", function () {
-    let data = {
+    const data = {
       "charset": "UTF-8",
       "headers": {
         "project-id-version": "GlobaLeaks",

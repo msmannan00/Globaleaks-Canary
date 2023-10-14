@@ -76,7 +76,7 @@ export class SubStatusManagerComponent {
           .map((c: any) => c.id)
           .filter((c: number | string) => c)
       };
-      let data = {
+      const data = {
         "operation": "order_elements",
         "args": reorderedIds,
       };

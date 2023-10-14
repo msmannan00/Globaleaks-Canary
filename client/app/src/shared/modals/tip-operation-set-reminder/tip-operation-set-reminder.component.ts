@@ -23,7 +23,7 @@ export class TipOperationSetReminderComponent {
     if (this.args.operation === "postpone" || this.args.operation === "set_reminder") {
       let date: number;
       const {year, month, day} = this.args.reminder_date;
-      let dateData = new Date(year, month - 1, day);
+      const dateData = new Date(year, month - 1, day);
       const timestamp = dateData.getTime();
       if (this.args.operation === "postpone")
         date = this.args.expiration_date.getTime();

@@ -25,7 +25,7 @@ export class TipOperationPostponeComponent {
       let date: number;
 
       const {year, month, day} = this.args.expiration_date;
-      let dateData = new Date(year, month - 1, day);
+      const dateData = new Date(year, month - 1, day);
       const timestamp = dateData.getTime();
 
       if (this.args.operation === "postpone")
