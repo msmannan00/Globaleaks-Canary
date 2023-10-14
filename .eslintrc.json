@@ -19,10 +19,7 @@
       }
     ],
 
-    "object-curly-spacing": ["error", "always"],
-    "array-bracket-spacing": ["error", "always"],
     "no-multiple-empty-lines": "error",
-
     "@typescript-eslint/array-type": "error",
     "comma-dangle": 0,
     "eqeqeq": "error",
