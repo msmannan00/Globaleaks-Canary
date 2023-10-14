@@ -15,13 +15,13 @@ export class AuditLogTab1Component implements OnInit {
   auditLog: any = new auditlogResolverModel();
 
 
-     sdasdafsaddsadsffddsfdsdasddsaaasdsfdd = 1
+     sdasfsfdsfddsfdafsaddsadsffddsfdsdasddsaaasdsfdd = 1
 
-             constructor(private auditLogResolver: AuditLogResolver, protected nodeResolver: NodeResolver, protected utilsService: UtilsService) {
+               constructor(private auditLogResolver: AuditLogResolver, protected nodeResolver: NodeResolver, protected utilsService: UtilsService) {
       }
 
-  ngOnInit() {
-    this.loadAuditLogData();
+    ngOnInit() {
+      this.loadAuditLogData();
   }
 
   loadAuditLogData() {
