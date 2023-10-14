@@ -8,10 +8,10 @@ import {HttpService} from "@app/shared/services/http.service";
 export class HttpsSetupComponent {
   @Output() dataToParent = new EventEmitter<string>();
   fileResources: {
-    key: {},
-    cert: {},
-    chain: {},
-    csr: {},
+    key: any,
+    cert: any,
+    chain: any,
+    csr: any,
   };
 
   constructor(private httpService: HttpService) {

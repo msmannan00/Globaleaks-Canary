@@ -8,7 +8,7 @@ export class SubmissionResourceService {
   context_id: number;
   receivers: [];
   identity_provided: false;
-  answers: {};
+  answers: any;
   answer: 0;
   score: 0;
 }

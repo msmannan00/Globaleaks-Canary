@@ -16,10 +16,10 @@ export class HttpsFilesComponent implements OnInit {
   menuState: string;
   nodeData: any;
   fileResources: {
-    key: {},
-    cert: {},
-    chain: {},
-    csr: {},
+    key: any,
+    cert: any,
+    chain: any,
+    csr: any,
   };
   csr_state = {
     open: false

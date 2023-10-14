@@ -38,7 +38,7 @@ export class TipComponent implements AfterViewInit {
   submission_statuses: any;
   score: any;
   ctx: string;
-  submission: {};
+  submission: any;
   showEditLabelInput: boolean;
   tabs: any[];
   active: string;

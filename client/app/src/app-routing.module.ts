@@ -32,14 +32,10 @@ const routes: Routes = [
     canActivate: [Pageguard],
     component: HomeComponent,
     data: {pageTitle: ""},
-    resolve: {},
     pathMatch: "full",
-
   },
   {
     path: "login",
-
-    resolve: {},
     loadChildren: () => AuthRoutingModule,
   },
   {
@@ -52,7 +48,6 @@ const routes: Routes = [
   },
   {
     path: "action",
-    resolve: {},
     loadChildren: () => ActionRoutingModule,
   },
   {
