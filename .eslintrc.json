@@ -10,7 +10,6 @@
     "plugin:@typescript-eslint/recommended",
     "prettier"
   ],
-
   "rules": {
     "no-multiple-empty-lines": "error",
     "@typescript-eslint/array-type": "error",
@@ -22,7 +21,6 @@
         "argsIgnorePattern": "_"
       }
     ],
-
     "eqeqeq": "error",
     "linebreak-style": [
       "error",
