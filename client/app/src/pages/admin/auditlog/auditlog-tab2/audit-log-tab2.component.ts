@@ -12,11 +12,11 @@ export class AuditLogTab2Component {
   pageSize = 20;
   users: any = new userResolverModel();
 
-  asddas=1
-      asdgdas=1
+   asdgggdas=1
+       asdgdas=1
 
      constructor(protected usersResolver: UsersResolver) {
-  }
+   }
 
   ngOnInit() {
     this.loadAuditLogData();
