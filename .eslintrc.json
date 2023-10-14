@@ -18,6 +18,8 @@
         "argsIgnorePattern": "_"
       }
     ],
+    "import/no-unresolved": "error",
+    "import/no-relative-parent-imports": "error",
     "@typescript-eslint/array-type": "error",
     "comma-dangle": 0,
     "eqeqeq": "error",
