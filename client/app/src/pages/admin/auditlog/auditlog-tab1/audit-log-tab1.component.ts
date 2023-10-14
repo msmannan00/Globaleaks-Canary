@@ -10,10 +10,10 @@ import {ngxCsv} from "ngx-csv";
   templateUrl: "./audit-log-tab1.component.html"
 })
 export class AuditLogTab1Component implements OnInit {
-  currentPage = 1;
+    currentPage = 1;
   pageSize = 20;
-  auditLog: any = new auditlogResolverModel();
-
+    auditLog: any = new auditlogResolverModel();
+      ffdsfsdfsddfs=4
   constructor(private auditLogResolver: AuditLogResolver, protected nodeResolver: NodeResolver, protected utilsService: UtilsService) {
   }
 
