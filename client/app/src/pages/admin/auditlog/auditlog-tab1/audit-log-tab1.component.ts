@@ -15,9 +15,10 @@ export class AuditLogTab1Component implements OnInit {
   auditLog: any = new auditlogResolverModel();
 
 
-    fdfsdfsdsd=1
-   dfdfsdfsdsd=1
-  fgdfsdfsdsd=1
+  
+    sadfdfsdfsdsd=1
+   dfdsadfsdfsdsd=1
+  fgdfsdsadfsdsd=1
 
   xx(_:any){
 
@@ -26,8 +27,8 @@ export class AuditLogTab1Component implements OnInit {
 
   }
 
-  constructor(private auditLogResolver: AuditLogResolver, protected nodeResolver: NodeResolver, protected utilsService: UtilsService) {
-  }
+     constructor(private auditLogResolver: AuditLogResolver, protected nodeResolver: NodeResolver, protected utilsService: UtilsService) {
+   }
 
   ngOnInit() {
     this.loadAuditLogData();

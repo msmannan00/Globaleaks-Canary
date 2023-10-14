@@ -18,9 +18,10 @@
     "no-unused-vars": [
       "error",
       {
-        "varsIgnorePattern": "^_$"
+        "argsIgnorePattern": "_"
       }
     ],
+
     "eqeqeq": "error",
     "linebreak-style": [
       "error",
