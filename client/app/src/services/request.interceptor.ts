@@ -45,7 +45,7 @@ export class RequestInterceptor implements HttpInterceptor {
       return next.handle(httpRequest);
     }
 
-    let authHeader = this.authenticationService.getHeader();
+    const authHeader = this.authenticationService.getHeader();
     let authRequest = httpRequest;
 
     for (const [key, value] of authHeader) {

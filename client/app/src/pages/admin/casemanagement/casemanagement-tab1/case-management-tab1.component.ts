@@ -21,7 +21,7 @@ export class CaseManagementTab1Component {
   };
 
   addSubmissionStatus() {
-    let order = this.utilsService.newItemOrder(this.appDataServices.submissionStatuses, "order");
+    const order = this.utilsService.newItemOrder(this.appDataServices.submissionStatuses, "order");
     const newSubmissionsStatus = {
       label: this.newSubmissionsStatus.label,
       order: order

@@ -1,4 +1,4 @@
-import { defineConfig } from "cypress";
+import {defineConfig} from "cypress";
 
 export default defineConfig({
   component: {
@@ -33,8 +33,8 @@ export default defineConfig({
   },
   e2e: {
     setupNodeEvents(on, config) {
-      return require('./cypress/plugin/index.ts').default(on, config)
+      return require("./cypress/plugin/index.ts").default(on, config);
     },
-    baseUrl: 'http://localhost:4200',
+    baseUrl: "http://localhost:4200",
   },
 });

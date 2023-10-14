@@ -32,7 +32,7 @@ export class ContextsComponent implements OnInit {
   }
 
   add_context() {
-    let context: new_context = new new_context();
+    const context: new_context = new new_context();
     context.name = this.new_context.name;
     context.questionnaire_id = this.node.dataModel.default_questionnaire;
     context.order = this.newItemOrder(this.contextsData, "order");

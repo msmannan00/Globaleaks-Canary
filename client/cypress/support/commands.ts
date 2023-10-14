@@ -17,8 +17,8 @@ declare global {
 }
 
 Cypress.Commands.add("waitForPageIdle", () => {
-    const pageIdleDetector = new PageIdleDetector();
-    pageIdleDetector.waitForPageToBeIdle();
+  const pageIdleDetector = new PageIdleDetector();
+  pageIdleDetector.waitForPageToBeIdle();
   }
 );
 
@@ -109,12 +109,10 @@ Cypress.Commands.add("waitForLoader", () => {
   cy.get("#PageOverlay", {timeout: 1000, log: false}) // Adjust the timeout as needed
     .should(($overlay) => {
       return new Cypress.Promise((resolve, _) => {
-        let visible = false;
-        let startTime = Date.now();
+        const startTime = Date.now();
 
         const checkVisibility = () => {
           if (Cypress.$($overlay).is(":visible")) {
-            visible = true;
             resolve();
           } else if (Date.now() - startTime > 2000) {
             resolve();

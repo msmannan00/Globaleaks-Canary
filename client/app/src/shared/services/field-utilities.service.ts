@@ -24,7 +24,7 @@ export class FieldUtilitiesService {
   }
 
   getValidator(field: any) {
-    let validators: any = {
+    const validators: any = {
       "custom": field.attrs.regexp ? field.attrs.regexp.value : "",
       "none": "",
       "email": Constants.emailRegexp,
@@ -66,7 +66,7 @@ export class FieldUtilitiesService {
   findField(answers_obj: any, field_id: any): any {
     let r;
 
-    for (let key in answers_obj) {
+    for (const key in answers_obj) {
       if (key === field_id) {
         return answers_obj[key][0];
       }
@@ -82,7 +82,7 @@ export class FieldUtilitiesService {
   }
 
   splitRows(fields: any) {
-    let rows: any = [];
+    const rows: any = [];
     let y: any = null;
 
     fields.forEach(function (f: any) {
@@ -98,7 +98,7 @@ export class FieldUtilitiesService {
 
   calculateScore(scope: any, field: any, entry: any) {
     const self = this;
-    let score, i;
+    let i;
 
     if (["selectbox", "multichoice"].indexOf(field.type) > -1) {
       for (i = 0; i < field.options.length; i++) {
@@ -130,7 +130,7 @@ export class FieldUtilitiesService {
       return;
     }
 
-    score = scope.points_to_sum * scope.points_to_mul;
+    const score = scope.points_to_sum * scope.points_to_mul;
 
     if (score < scope.context.score_threshold_medium) {
       scope.score = 1;
@@ -279,8 +279,8 @@ export class FieldUtilitiesService {
     }
 
     for (i = 0; i < field.triggered_by_options.length; i++) {
-      let trigger = field.triggered_by_options[i];
-      let answers_field = this.findField(answers, trigger.field);
+      const trigger = field.triggered_by_options[i];
+      const answers_field = this.findField(answers, trigger.field);
       if (typeof answers_field === "undefined") {
         continue;
       }

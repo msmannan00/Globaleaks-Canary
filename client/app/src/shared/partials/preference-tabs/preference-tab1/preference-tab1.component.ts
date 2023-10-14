@@ -50,7 +50,7 @@ export class PreferenceTab1Component implements OnInit {
 
   toggle2FA(event: Event) {
     if (!this.preferenceResolver.dataModel.two_factor) {
-      let array = new Uint32Array(32);
+      const array = new Uint32Array(32);
 
       window.crypto.getRandomValues(array);
 
@@ -105,7 +105,7 @@ export class PreferenceTab1Component implements OnInit {
         }
       };
 
-      let requestObservable = this.httpService.requestOperationsRecovery(data, this.utilsService.encodeString(result));
+      const requestObservable = this.httpService.requestOperationsRecovery(data, this.utilsService.encodeString(result));
       requestObservable.subscribe(
         {
           next: response => {
@@ -119,7 +119,7 @@ export class PreferenceTab1Component implements OnInit {
               this.getEncryptionRecoveryKey();
             } else {
               this.preferenceResolver.dataModel.clicked_recovery_key = true;
-              let erk = error.error["text"].match(/.{1,4}/g).join("-");
+              const erk = error.error["text"].match(/.{1,4}/g).join("-");
               const modalRef = this.modalService.open(EncryptionRecoveryKeyComponent);
               modalRef.componentInstance.erk = erk;
             }
@@ -133,7 +133,7 @@ export class PreferenceTab1Component implements OnInit {
     if (this.preferenceResolver.dataModel.pgp_key_remove) {
       this.preferenceResolver.dataModel.pgp_key_public = "";
     }
-    let requestObservable = this.httpService.updatePreferenceResource(JSON.stringify(this.preferenceResolver.dataModel));
+    const requestObservable = this.httpService.updatePreferenceResource(JSON.stringify(this.preferenceResolver.dataModel));
     requestObservable.subscribe(
       {
         next: _ => {

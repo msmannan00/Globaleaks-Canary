@@ -17,9 +17,7 @@ export class PasswordResetResponseComponent implements OnInit {
   }
 
   submit() {
-    let requestObservable: Observable<any>;
-
-    requestObservable = this.httpService.requestChangePassword(JSON.stringify({
+    const requestObservable = this.httpService.requestChangePassword(JSON.stringify({
       "reset_token": this.request.reset_token,
       "recovery_key": this.request.recovery_key,
       "auth_code": this.request.auth_code

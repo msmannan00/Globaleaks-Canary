@@ -20,7 +20,7 @@ export class UserComponent {
 
   onQueryParameterChangeListener() {
     this.activatedRoute.queryParams.subscribe(params => {
-      let storageLanguage = localStorage.getItem("default_language");
+      const storageLanguage = localStorage.getItem("default_language");
       if (params["lang"]) {
         const paramLangValue = params["lang"] && this.appDataService.public.node.languages_enabled.includes(params["lang"]) ? params["lang"] : "";
         if (paramLangValue) {

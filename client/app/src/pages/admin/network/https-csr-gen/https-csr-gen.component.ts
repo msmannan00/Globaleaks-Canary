@@ -17,7 +17,7 @@ export class HttpsCsrGenComponent {
     company: string;
     department: string;
     email: string;
-  } = {
+    } = {
       country: "",
       province: "",
       city: "",

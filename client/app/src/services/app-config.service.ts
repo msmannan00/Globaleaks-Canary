@@ -29,7 +29,7 @@ export class AppConfigService {
     this.utilsService = this.serviceInstanceService.utilsService;
 
     this.activatedRoute.paramMap.subscribe(_ => {
-      let currentURL = window.location.hash.substring(2).split("?")[0]; // Use window.location for full URL including query parameters
+      const currentURL = window.location.hash.substring(2).split("?")[0]; // Use window.location for full URL including query parameters
       this.initRoutes(currentURL);
       this.localInitialization();
     });
@@ -38,7 +38,7 @@ export class AppConfigService {
   initRoutes(currentURL: string) {
     if (this.authenticationService && this.authenticationService.session && currentURL !== "login") {
       const queryParams = this.activatedRoute.snapshot.queryParams;
-      let param = localStorage.getItem("default_language");
+      const param = localStorage.getItem("default_language");
       if (param) {
         queryParams["lang"] = param;
       }
@@ -106,7 +106,7 @@ export class AppConfigService {
           this.appDataService.questionnaires_by_id[key].steps = this.appDataService.questionnaires_by_id[key].steps.sort((a: any, b: any) => a.order > b.order);
         }
 
-        for (let [key] of Object.entries(this.appDataService.contexts_by_id)) {
+        for (const [key] of Object.entries(this.appDataService.contexts_by_id)) {
           this.appDataService.contexts_by_id[key].questionnaire = this.appDataService.questionnaires_by_id[this.appDataService.contexts_by_id[key].questionnaire_id];
           if (this.appDataService.contexts_by_id[key].additional_questionnaire_id) {
             this.appDataService.contexts_by_id[key].additional_questionnaire = this.appDataService.questionnaires_by_id[this.appDataService.contexts_by_id[key].additional_questionnaire_id];

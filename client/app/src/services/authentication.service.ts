@@ -25,7 +25,7 @@ export class AuthenticationService {
   init() {
     this.appConfigService = this.serviceInstanceService.appConfigService;
 
-    let json = window.sessionStorage.getItem("session");
+    const json = window.sessionStorage.getItem("session");
     if (json !== null) {
       this.session = JSON.parse(json);
     } else {
@@ -55,7 +55,7 @@ export class AuthenticationService {
   setSession(response: any) {
     this.session = response;
     if (this.session.role !== "whistleblower") {
-      let role = this.session.role === "receiver" ? "recipient" : this.session.role;
+      const role = this.session.role === "receiver" ? "recipient" : this.session.role;
 
       this.session.homepage = "/" + role + "/home";
       this.session.preferencespage = "/" + role + "/preferences";
@@ -113,7 +113,7 @@ export class AuthenticationService {
             this.router.navigate([response.data.redirect]).then();
           }
 
-          let src = location.search;
+          const src = location.search;
           if (src) {
             location.replace(src);
           } else {
@@ -154,7 +154,7 @@ export class AuthenticationService {
   }
 
   public getHeader(confirmation?: string) {
-    let header = new Map<string, string>();
+    const header = new Map<string, string>();
     if (this.session) {
       header.set("X-Session", this.session.id);
       header.set("Accept-Language", "en");
