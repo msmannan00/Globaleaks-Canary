@@ -71,7 +71,7 @@ export class FieldUtilitiesService {
         return answers_obj[key][0];
       }
 
-      if (answers_obj.hasOwnProperty(key) && answers_obj[key] instanceof Array && answers_obj[key].length) {
+      if (Object.prototype.hasOwnProperty.call(answers_obj, key) && Array.isArray(answers_obj[key]) && answers_obj[key].length > 0) {
         r = this.findField(answers_obj[key][0], field_id);
         if (typeof r !== "undefined") {
           return r;
@@ -287,7 +287,7 @@ export class FieldUtilitiesService {
 
       // Check if triggering field is in answers object
       if (trigger.option === answers_field.value ||
-        (answers_field.hasOwnProperty(trigger.option) && answers_field[trigger.option])) {
+        Object.prototype.hasOwnProperty.call(answers_field, trigger.option) && answers_field[trigger.option]) {
         if (trigger.sufficient) {
           field.enabled = true;
           return true;

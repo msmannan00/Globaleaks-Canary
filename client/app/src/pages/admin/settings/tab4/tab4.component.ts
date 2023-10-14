@@ -59,7 +59,7 @@ export class Tab4Component {
     this.utilsService.DefaultL10NResource(lang).subscribe(default_texts => {
       const list = [];
       for (const key in default_texts) {
-        if (default_texts.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(default_texts, key)) {
           let value = default_texts[key];
           if (value.length > 150) {
             value = value.slice(0, 150) + "...";

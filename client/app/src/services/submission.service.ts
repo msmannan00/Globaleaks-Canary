@@ -72,7 +72,7 @@ export class SubmissionService {
     this._submission.receivers = [];
 
     for (const key in this.selected_receivers) {
-      if (this.selected_receivers.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(this.selected_receivers, key)) {
         this._submission.receivers.push(key);
       }
     }

@@ -152,7 +152,7 @@ export class VoiceRecorderComponent implements OnInit {
 
   onStop() {
     this.flow.files = [];
-    if (this.uploads.hasOwnProperty(this.fileInput)) {
+    if (Object.prototype.hasOwnProperty.call(this.uploads, this.fileInput)) {
       delete this.uploads[this.fileInput];
     }
     if (this.seconds >= parseInt(this.field.attrs.min_len.value) && this.seconds <= parseInt(this.field.attrs.max_len.value)) {

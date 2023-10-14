@@ -16,11 +16,8 @@ export class TippageComponent {
 
   fileUploadUrl: string;
   tip_id = null;
-  itemsPerPage = 5;
-  currentCommentsPage = 1;
   answers = {};
   uploads: any = {};
-  showEditLabelInput = false;
   score = 0;
   ctx: string;
   rows: any;
@@ -117,24 +114,6 @@ export class TippageComponent {
       }
     }
   }
-
-  hasMultipleEntries(field_answer: any) {
-    return (typeof field_answer !== undefined) && field_answer.length > 1;
-  };
-
-  filterFields(field: any) {
-    return field.type !== "fileupload";
-  };
-
-  editLabel() {
-    this.showEditLabelInput = true;
-  };
-
-  markReportStatus(date: any) {
-    const report_date = new Date(date);
-    const current_date = new Date();
-    return current_date > report_date;
-  };
 
   uploading() {
     return this.utilsService.isUploading(this.uploads);
