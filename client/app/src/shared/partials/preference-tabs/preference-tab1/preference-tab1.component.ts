@@ -61,7 +61,7 @@ export class PreferenceTab1Component implements OnInit {
       this.modalService.open(Enable2faComponent);
 
     } else {
-      let modalRef = this.modalService.open(ConfirmationWith2faComponent);
+      const modalRef = this.modalService.open(ConfirmationWith2faComponent);
       modalRef.result.then(
         (result) => {
           let data = {

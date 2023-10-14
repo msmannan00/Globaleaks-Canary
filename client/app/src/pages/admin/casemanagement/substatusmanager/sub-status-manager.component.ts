@@ -63,8 +63,8 @@ export class SubStatusManagerComponent {
       return;
     }
 
-    let origIndex = this.ssIdx(this.appDataServices.submissionStatuses[index].id);
-    let origTarget = this.ssIdx(this.appDataServices.submissionStatuses[target].id);
+    const origIndex = this.ssIdx(this.appDataServices.submissionStatuses[index].id);
+    const origTarget = this.ssIdx(this.appDataServices.submissionStatuses[target].id);
 
     if (origIndex != undefined && origTarget != undefined) {
       let movingStatus = this.appDataServices.submissionStatuses[origIndex];

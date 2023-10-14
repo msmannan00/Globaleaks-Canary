@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Resolve, RouterStateSnapshot, ActivatedRouteSnapshot} from "@angular/router";
+import {Resolve} from "@angular/router";
 import {Observable, of} from "rxjs";
 import {switchMap} from "rxjs/operators";
 import {HttpService} from "@app/shared/services/http.service";
@@ -15,7 +15,7 @@ export class AuditLogResolver implements Resolve<boolean> {
   constructor(private httpService: HttpService, private authenticationService: AuthenticationService) {
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+  resolve(): Observable<boolean> {
     if (this.authenticationService.session.role === "admin") {
       return this.httpService.requestAdminAuditLogResource().pipe(
         switchMap((response: auditlogResolverModel) => {

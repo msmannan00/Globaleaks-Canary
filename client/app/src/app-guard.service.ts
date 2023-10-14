@@ -11,9 +11,7 @@ export class SessionGuard implements CanActivate {
   constructor(private router: Router, private appDataService: AppDataService, public authentication: AuthenticationService) {
   }
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     if (!this.authentication.session) {
       this.router.navigateByUrl("/login");

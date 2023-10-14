@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Resolve, RouterStateSnapshot, ActivatedRouteSnapshot} from "@angular/router";
+import {Resolve} from "@angular/router";
 import {Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
 import {HttpService} from "@app/shared/services/http.service";
@@ -18,7 +18,7 @@ export class IarResolver implements Resolve<boolean> {
   ) {
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+  resolve(): Observable<boolean> {
     if (this.authenticationService.session.role === "custodian") {
       return this.httpService.iarResource().pipe(
         map((response: IarData[]) => {

@@ -87,7 +87,7 @@ export class SubStatusComponent implements OnInit {
     modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = () => {
 
-      let url = "/api/admin/statuses/" + this.submissionsStatus.id + "/substatuses/" + arg.id;
+      const url = "/api/admin/statuses/" + this.submissionsStatus.id + "/substatuses/" + arg.id;
       return this.utilsService.deleteSubStatus(url).subscribe(_ => {
         this.appConfigService.reinit();
       });

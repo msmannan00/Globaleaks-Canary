@@ -167,7 +167,7 @@ export class TipsComponent implements OnInit {
   processTips() {
     const uniqueKeys: string[] = [];
 
-    for (let tip of this.RTips.dataModel) {
+    for (const tip of this.RTips.dataModel) {
       tip.context = this.appDataService.contexts_by_id[tip.context_id];
       tip.context_name = tip.context.name;
       tip.submissionStatusStr = this.utils.getSubmissionStatusText(tip.status, tip.substatus, this.appDataService.submissionStatuses);

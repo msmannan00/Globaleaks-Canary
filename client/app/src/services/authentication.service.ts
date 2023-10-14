@@ -187,7 +187,7 @@ export class AuthenticationService {
   };
 
   loginRedirect() {
-    let source_path = location.pathname;
+    const source_path = location.pathname;
 
     if (source_path !== "/login") {
       this.router.navigateByUrl("/login").then();

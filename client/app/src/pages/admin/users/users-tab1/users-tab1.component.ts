@@ -37,7 +37,7 @@ export class UsersTab1Component implements OnInit {
   }
 
   add_user(): void {
-    let user: new_user = new new_user();
+    const user: new_user = new new_user();
 
     user.username = typeof this.new_user.username !== "undefined" ? this.new_user.username : "";
     user.role = this.new_user.role;
