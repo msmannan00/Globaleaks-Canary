@@ -142,7 +142,7 @@ export class TippageComponent {
 
   calculateEstimatedTime() {
     let time = 0;
-    for (let key in this.uploads) {
+    for (const key in this.uploads) {
       if (this.uploads[key].flowFile && this.uploads[key].flowFile.isUploading()) {
         time = time + this.uploads[key].flowFile.timeRemaining();
       }
@@ -153,7 +153,7 @@ export class TippageComponent {
   calculateProgress() {
     let progress = 0;
     let totalFiles = 0;
-    for (let key in this.uploads) {
+    for (const key in this.uploads) {
       if (this.uploads[key].flowFile) {
         progress = progress + this.uploads[key].flowFile.timeRemaining();
         totalFiles += 1;
@@ -169,7 +169,7 @@ export class TippageComponent {
   provideIdentityInformation(_: { param1: string, param2: number }) {
     const intervalId = setInterval(() => {
       if (this.uploads) {
-        for (let key in this.uploads) {
+        for (const key in this.uploads) {
 
           if (this.uploads[key].flowFile && this.uploads[key].flowFile.isUploading()) {
             return;

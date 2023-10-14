@@ -56,7 +56,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit {
   uploading() {
     let uploading = false;
     if (this.uploads && this.done) {
-      for (let key in this.uploads) {
+      for (const key in this.uploads) {
         if (this.uploads[key].flowJs && this.uploads[key].flowJs.isUploading()) {
           uploading = true;
         }
@@ -69,7 +69,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit {
   calculateEstimatedTime() {
     let timeRemaining = 0;
     if (this.uploads && this.done) {
-      for (let key in this.uploads) {
+      for (const key in this.uploads) {
         if (this.uploads[key] && this.uploads[key].flowJs) {
           timeRemaining += this.uploads[key].flowJs.timeRemaining();
         }
@@ -82,7 +82,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit {
   calculateProgress() {
     let progress = 0;
     if (this.uploads && this.done) {
-      for (let key in this.uploads) {
+      for (const key in this.uploads) {
         if (this.uploads[key] && this.uploads[key].flowJs) {
           progress += this.uploads[key].flowJs.progress();
         }
@@ -178,8 +178,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit {
 
     const intervalId = setInterval(() => {
       if (this.uploads) {
-        for (let key in this.uploads) {
-
+        for (const key in this.uploads) {
           if (this.uploads[key].flowFile && this.uploads[key].flowFile.isUploading()) {
             return;
           }

@@ -74,7 +74,7 @@ export class UserEditorComponent implements OnInit {
   }
 
   saveUser(userData: any) {
-    let user = userData;
+    const user = userData;
     if (user.pgp_key_remove) {
       user.pgp_key_public = "";
     }
