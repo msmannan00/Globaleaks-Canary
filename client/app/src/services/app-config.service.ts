@@ -160,7 +160,7 @@ export class AppConfigService {
       return;
     }
 
-    let projectTitle = rootData.node.name;
+    const projectTitle = rootData.node.name;
     let pageTitle = rootData.node.header_title_homepage;
 
 

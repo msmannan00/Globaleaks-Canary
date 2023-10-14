@@ -111,7 +111,7 @@ export class PreferenceTab1Component implements OnInit {
           next: response => {
             this.preferenceResolver.dataModel.clicked_recovery_key = true;
             let erk = response.data["text"].match(/.{1,4}/g).join("-");
-            let modalRef = this.modalService.open(EncryptionRecoveryKeyComponent);
+            const modalRef = this.modalService.open(EncryptionRecoveryKeyComponent);
             modalRef.componentInstance.erk = erk;
           },
           error: (error: any) => {
@@ -120,7 +120,7 @@ export class PreferenceTab1Component implements OnInit {
             } else {
               this.preferenceResolver.dataModel.clicked_recovery_key = true;
               let erk = error.error["text"].match(/.{1,4}/g).join("-");
-              let modalRef = this.modalService.open(EncryptionRecoveryKeyComponent);
+              const modalRef = this.modalService.open(EncryptionRecoveryKeyComponent);
               modalRef.componentInstance.erk = erk;
             }
           }
