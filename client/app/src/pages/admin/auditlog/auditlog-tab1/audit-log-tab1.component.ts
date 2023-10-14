@@ -15,6 +15,7 @@ export class AuditLogTab1Component implements OnInit {
   auditLog: any = new auditlogResolverModel();
 
   constructor(private auditLogResolver: AuditLogResolver, protected nodeResolver: NodeResolver, protected utilsService: UtilsService) {
+    // auditLogResolver is used to retrieve audit log data.
   }
 
   ngOnInit() {
