@@ -1,6 +1,5 @@
 import {Component, OnInit} from "@angular/core";
 import {auditlogResolverModel} from "@app/models/resolvers/auditlogResolverModel";
-import {AppConfigService} from "@app/services/app-config.service";
 import {AuditLogResolver} from "@app/shared/resolvers/audit-log-resolver.service";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -15,25 +14,8 @@ export class AuditLogTab1Component implements OnInit {
   pageSize = 20;
   auditLog: any = new auditlogResolverModel();
 
-
-
-
-
-
-
-    fsdgdsafdsd=1
-   ddsfadsgdd=1
-  fgfsgdafddsd=1
-
-  xxafgdsdx(_:any){
-
+  constructor(private auditLogResolver: AuditLogResolver, protected nodeResolver: NodeResolver, protected utilsService: UtilsService) {
   }
-  xxscasddfgx(dfasdgfdsd:any){
-
-  }
-
-     constructor(private asdsdsadsaad: AppConfigService, private auditLogResolver: AuditLogResolver, protected nodeResolver: NodeResolver, protected utilsService: UtilsService) {
-   }
 
   ngOnInit() {
     this.loadAuditLogData();
