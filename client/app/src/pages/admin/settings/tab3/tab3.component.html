@@ -9,6 +9,7 @@
         <span>{{ 'Add' | translate }}</span>
       </button>
       <div>
+        <br />
         <div id="LanguageAdder" class="row" *ngIf="showLangSelect">
           <div class="col-md-12">
             <ng-select #langSelect [(ngModel)]="selected.value"

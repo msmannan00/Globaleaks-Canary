@@ -38,7 +38,7 @@ describe("globaLeaks setup wizard", () => {
 
     cy.takeScreenshot("wizard/6");
     cy.get('button[name="proceed"]').click();
-
+    cy.waitForLoader();
     cy.url().should('include', '/admin/home');
     cy.logout();
   });
