@@ -8,7 +8,7 @@
             </button>
             <span class="custom-file">
                 <input type="file" hidden #uploadInput (change)="importQuestion(uploadInput.files)" />
-                <label (click)="uploadInput.click()" class="file-upload btn btn-sm btn-outline-secondary">
+                <label (click)="uploadInput.click()" class="btn btn-sm btn-outline-secondary">
                     <i class="fa-solid fa-upload"></i>
                     {{'Import' | translate}}</label>
             </span>
