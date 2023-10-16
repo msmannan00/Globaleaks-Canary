@@ -897,7 +897,7 @@ htmlinput[type="email"] {
   min-width: 140px !important;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  right: 0px;
+  right: -17px;
   position: absolute;
   top: 30px;
 }
