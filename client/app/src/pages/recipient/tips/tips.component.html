@@ -119,7 +119,7 @@
               <span class="dropdown-multi-select-container" *ngIf="RTips.dataModel.length > 0">
                 <i class="fa-solid fa-filter" [ngClass]="{ filterSelected: checkFilter(dropdownStatusModel) }" (click)="toggleDropdown()"></i>
                 <span [class.hidden]="!dropdownVisible">
-                  <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="dropdownStatusData"
+                  <ng-multiselect-dropdown class="status-select" [settings]="dropdownSettings" [data]="dropdownStatusData"
                     [(ngModel)]="dropdownStatusModel" (ngModelChange)="on_changed(dropdownStatusModel)">
                   </ng-multiselect-dropdown>
                 </span>
@@ -201,7 +201,7 @@
         </thead>
         <tbody id="tipListTableBody">
           <ng-container
-            *ngFor="let tip of filteredTips | orderBy:sortKey:sortReverse | slice:((currentPage - 1) * itemsPerPage):((currentPage - 1) * itemsPerPage + itemsPerPage)">
+            *ngFor="let tip of filteredTips | orderBy:sortKey:sortReverse | slice:((currentPage - 1) * itemsPerPage):((currentPage - 1) * itemsPerPage + itemsPerPage); let index = index">
             <tr id="tip-{{index}}" [ngClass]="{'fw-bold': tip.updated, 'selectedTip': isSelected(tip.id)}"
               class="tip-action-open" (click)="utils.go('/status/' + tip.id)">
               <td>

@@ -3,7 +3,7 @@
         <label class="col-md-4 control-label">{{ 'Organization' | translate }}</label>
         <div class="col-md-8">
             <input class="form-control" [(ngModel)]="csr_cfg.company"
-                [ngClass]="{'is-invalid': certSigRequestForm.form.get('company')?.invalid}" name="company" required />
+                [ngClass]="{'is-invalid': certSigRequestForm.form.get('company')?.invalid}" name="csr_cfg.company" required />
         </div>
     </div>
 
@@ -11,8 +11,8 @@
         <label class="col-md-4 control-label">{{ 'Email' | translate }}</label>
         <div class="col-md-8">
             <input class="form-control" [(ngModel)]="csr_cfg.email"
-                [ngClass]="{'is-invalid': certSigRequestForm.form.get('email')?.invalid}" name="email" type="text"
-                required pattern="{{ Constants.emailRegexp }}" />
+                [ngClass]="{'is-invalid': certSigRequestForm.form.get('email')?.invalid}" name="csr_cfg.email" type="text"
+                required [pattern]="Constants.emailRegexp" />
             <div class="text-danger" *ngIf="certSigRequestForm.form.get('email')?.errors?.['pattern']">
                 {{ 'Invalid email address' | translate }}
             </div>
@@ -23,7 +23,7 @@
         <label class="col-md-4 control-label">{{ 'City' | translate }}</label>
         <div class="col-md-8">
             <input class="form-control" [(ngModel)]="csr_cfg.city"
-                [ngClass]="{'is-invalid': certSigRequestForm.form.get('city')?.invalid}" name="city" type="text"
+                [ngClass]="{'is-invalid': certSigRequestForm.form.get('city')?.invalid}" name="csr_cfg.city" type="text"
                 required />
         </div>
     </div>
@@ -32,7 +32,7 @@
         <label class="col-md-4 control-label">{{ 'Country' | translate }}</label>
         <div class="col-md-8">
             <input class="form-control" [(ngModel)]="csr_cfg.province"
-                [ngClass]="{'is-invalid': certSigRequestForm.form.get('province')?.invalid}" name="province" type="text"
+                [ngClass]="{'is-invalid': certSigRequestForm.form.get('province')?.invalid}" name="csr_cfg.province" type="text"
                 required />
         </div>
     </div>
@@ -41,7 +41,7 @@
         <label class="col-md-4 control-label">{{ 'Country code' | translate }}</label>
         <div class="col-md-8">
             <input class="form-control" type="text" [(ngModel)]="csr_cfg.country"
-                [ngClass]="{'is-invalid': certSigRequestForm.form.get('country')?.invalid}" name="country" minlength="2"
+                [ngClass]="{'is-invalid': certSigRequestForm.form.get('country')?.invalid}" name="csr_cfg.country" minlength="2"
                 maxlength="2" required />
         </div>
     </div>

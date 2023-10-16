@@ -125,6 +125,7 @@ export class TipsComponent implements OnInit {
 
   tipDeleteSelected() {
     const modalRef = this.modalService.open(DeleteConfirmationComponent);
+    modalRef.componentInstance.confirmFunction = () => { };
     modalRef.componentInstance.selected_tips = this.selectedTips;
     modalRef.componentInstance.operation = "delete";
   }

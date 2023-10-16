@@ -25,7 +25,7 @@
                     (click)="toggleEditing(); $event.stopPropagation();">
                     <span>{{ 'Cancel' | translate }}</span>
                 </button>
-                <button class="btn btn-sm btn-danger" (click)="deleteStep(step); $event.stopPropagation();">
+                <button name="delStep" class="btn btn-sm btn-danger" (click)="deleteStep(step); $event.stopPropagation();">
                     <span>{{ 'Delete' | translate }}</span>
                 </button>
             </span>

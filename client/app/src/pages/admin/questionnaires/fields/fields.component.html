@@ -44,12 +44,12 @@
                 </span>
             </div>
             <span class="col-md-6 clearfix" *ngIf="field.editable">
-                <span class="float-right">
+                <span class="float-end">
                     <button class="btn btn-sm btn-outline-secondary" *ngIf="!editing"
                         (click)="toggleEditing(); $event.stopPropagation();">
                         <span>{{ 'Edit' | translate }}</span>
                     </button>
-                    <button class="btn btn-sm btn-primary" *ngIf="editing" (click)="save_field(field)">
+                    <button name="save_field" class="btn btn-sm btn-primary" *ngIf="editing" (click)="save_field(field)">
                         <span>{{ 'Save' | translate }}</span>
                     </button>
                     <button class="btn btn-sm btn-outline-secondary" *ngIf="editing"
@@ -377,7 +377,7 @@
                     <div class="form-group" *ngIf="showOptions(field)">
                         <label>
                             <span>{{ 'Options' | translate }}</span>
-                            <button class="btn btn-sm btn-primary show-add-question-btn" (click)="addOption()">
+                            <button name="addOption" class="btn btn-sm btn-primary show-add-question-btn" (click)="addOption()">
                                 <i class="fa-solid fa-plus"></i>
                                 <span>{{ 'Add' | translate }}</span>
                             </button>
@@ -389,12 +389,12 @@
                                         <div class="badge bg-secondary">{{ i + 1 }}</div>
                                     </div>
                                     <div class="col-md-6">
-                                        <input class="form-control" [(ngModel)]="option.label"
+                                        <input class="form-control" name="option.label" [(ngModel)]="option.label"
                                             [placeholder]="'Label' | translate" type="text" [disabled]="!field.editable"
                                             required />
                                     </div>
                                     <div class="col-md-5">
-                                        <button class="btn btn-sm btn-danger" (click)="delOption(option)">
+                                        <button name="delOption" class="btn btn-sm btn-danger" (click)="delOption(option)">
                                             <i class="fa-solid fa-times"></i>
                                         </button>
                                         <button [disabled]="i === 0" class="btn btn-sm btn-primary"

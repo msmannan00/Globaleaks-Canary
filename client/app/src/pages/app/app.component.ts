@@ -11,7 +11,7 @@ import {NavigationEnd, Router} from "@angular/router";
 })
 export class AppComponent {
   showSidebar: boolean = true;
-
+  isNavCollapsed:boolean = true;
   constructor(private router: Router, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService) {
   }
 

@@ -183,6 +183,10 @@ export class HttpService {
     return this.httpClient.post("/api/admin/config/tls/files/" + name, param);
   }
 
+  requestCSRDirectContentResource(param: any): Observable<any> {
+    return this.httpClient.post("/api/admin/config/csr/gen", param);
+  }
+
   downloadCSRFile(): Observable<Blob> {
     const url = "/api/admin/config/tls/files/csr";
     return this.httpClient.get(url, {responseType: "blob"});
@@ -262,8 +266,8 @@ export class HttpService {
     return this.httpClient.get("api/recipient/rtips/" + id);
   }
 
-  rTipsRequestNewComment(param: any, _: any): Observable<any> {
-    return this.httpClient.post("api/recipient/rtips/${id}/comments", param);
+  rTipsRequestNewComment(param: any, id: any): Observable<any> {
+    return this.httpClient.post(`api/recipient/rtips/${id}/comments`, param);
   }
 
   requestStatusesResource(): Observable<any> {
@@ -282,8 +286,8 @@ export class HttpService {
     return this.httpClient.post("/api/admin/tenants", param);
   }
 
-  accessIdentity(_: any): Observable<any> {
-    return this.httpClient.post("api/recipient/rtips/${id}/iars", {"request_motivation": ""});
+  accessIdentity(id: any): Observable<any> {
+    return this.httpClient.post(`api/recipient/rtips/${id}/iars`, {"request_motivation": ""});
   }
 
   requestAddAdminUser(param: any): Observable<any> {

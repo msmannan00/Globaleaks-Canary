@@ -14,8 +14,8 @@
 
     <div *ngSwitchCase="'voice'">
         <i class="fa-solid fa-file-audio" *ngIf="authenticationService.session.role === 'whistleblower'"></i>
-        <div class="audio-player-wrapper" [ngClass]="{ 'disabled-interface': !audioList[field.id] }" *ngIf="authenticationService.session.role === 'receiver'">
-            <audio [src]="audioList[field.id]" controls class="audio-player"></audio>
+        <div class="audio-player-wrapper" *ngIf="authenticationService.session.role === 'receiver'">
+            <audio [src]="audioFiles[field.id]" controls class="audio-player"></audio>
         </div>
     </div>
     

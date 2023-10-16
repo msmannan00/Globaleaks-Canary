@@ -1,4 +1,4 @@
-import {Component, OnInit, QueryList, ViewChild, ViewChildren} from "@angular/core";
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {SubmissionService} from "@app/services/submission.service";
@@ -11,20 +11,11 @@ import {NgForm} from "@angular/forms";
   templateUrl: "./submission.component.html",
   providers: [SubmissionService]
 })
-export class SubmissionComponent implements OnInit {
+export class SubmissionComponent implements OnInit, AfterViewInit{
   @ViewChild("submissionForm") public submissionForm: NgForm;
   @ViewChildren("stepform") stepForms: QueryList<NgForm>;
 
-  constructor(protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, private submissionService: SubmissionService) {
-    this.selectable_contexts = [];
-    this.receivedData = this.submissionService.getSharedData();
-    this.initializeSubmission();
-  }
-
-  ngOnInit() {
-    this.resetForm();
-  }
-
+  isLoaded = false;
   answers: any = {};
   stepFormList: any = {};
   identity_provided = false;
@@ -44,6 +35,21 @@ export class SubmissionComponent implements OnInit {
   submission: SubmissionService;
   show_steps_navigation_bar = false;
   receivedData: any;
+
+  constructor(protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, private submissionService: SubmissionService, private cdr: ChangeDetectorRef) {
+    this.selectable_contexts = [];
+    this.receivedData = this.submissionService.getSharedData();
+  }
+
+  ngAfterViewInit(): void {
+    this.initializeSubmission();
+    this.isLoaded = true;
+    this.cdr.detectChanges();
+  }
+
+  ngOnInit() {
+    this.resetForm();
+  }
 
   firstStepIndex() {
     return this.receiver_selection_step ? -1 : 0;

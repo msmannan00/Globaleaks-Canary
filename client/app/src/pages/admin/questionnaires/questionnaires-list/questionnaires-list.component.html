@@ -1,7 +1,7 @@
 <div class="editorHeader row">
     <span class="col-md-7" (click)="toggleEditing(questionnaire)">{{ questionnaire.name }}</span>
     <span class="col-md-5 clearfix">
-        <span class="float-right">
+        <span class="float-end">
             <button class="btn btn-sm btn-outline-secondary"
                 *ngIf="questionnaire.editable && !editing"
                 (click)="toggleEditing(questionnaire)">
@@ -25,7 +25,7 @@
                 <i class="fa-solid fa-clone"></i>
                 <span>{{ 'Duplicate' | translate }}</span>
             </button>
-            <button class="btn btn-sm btn-danger" *ngIf="questionnaire.editable"
+            <button class="btn btn-sm btn-danger" name="deleteQuestionnaire" *ngIf="questionnaire.editable"
                 (click)="deleteQuestionnaire(questionnaire)">
                 <span>{{ 'Delete' | translate }}</span>
             </button>
