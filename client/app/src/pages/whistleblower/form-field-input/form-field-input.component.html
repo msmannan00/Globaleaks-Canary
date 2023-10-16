@@ -20,7 +20,7 @@
                           dynamic-textarea></textarea>
 
                 <div class="clearfix">
-                    <div *ngIf="entryValue.length && field.attrs.max_len.value > 0 && (field.attrs.max_len.value - entryValue.length) <= 50" class="float-right">{{entryValue.length}}/{{field.attrs.max_len.value}}</div>
+                    <div *ngIf="entryValue.length && field.attrs.max_len.value > 0 && (field.attrs.max_len.value - entryValue.length) <= 50" class="float-end">{{entryValue.length}}/{{field.attrs.max_len.value}}</div>
                 </div>
                 <div *ngIf="displayErrors" class="text-danger">
                     <span *ngIf="textarea?.errors?.['required']">{{'This field is mandatory'|translate}}</span>
@@ -183,8 +183,8 @@
                         </span>
                     </div>
 
-                    <div *ngIf="entry['value'] && entry['value'].length && field.attrs.max_len.value > 0 && (field.attrs.max_len.value - entry['value']) <= 50" class="float-right">{{entry['value'].length}}/{{field.attrs.max_len.value}}</div>
-                    <div *ngIf="entry.required_status && displayErrors" class="float-left text-danger"></div>
+                    <div *ngIf="entry['value'] && entry['value'].length && field.attrs.max_len.value > 0 && (field.attrs.max_len.value - entry['value']) <= 50" class="float-end">{{entry['value'].length}}/{{field.attrs.max_len.value}}</div>
+                    <div *ngIf="entry.required_status && displayErrors" class="float-start text-danger"></div>
                     <span *ngIf="defaultinput?.errors?.['required'] && displayErrors" class="text-danger">{{'This field is mandatory'|translate}}</span>
                     <span *ngIf="defaultinput?.errors?.['minlength'] && displayErrors" class="text-danger">{{'The answer is too short'|translate}}</span>
                 </div>

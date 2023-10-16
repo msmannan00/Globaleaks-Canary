@@ -3,6 +3,8 @@ import {FlowDirective, Transfer} from "@flowjs/ngx-flow";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {AppDataService} from "@app/app-data.service";
 import {ControlContainer, NgForm} from "@angular/forms";
+import { Subscription } from "rxjs";
+import { FlowOptions } from "@flowjs/flow.js";
 
 @Component({
   selector: "src-rfile-upload-button",
@@ -15,57 +17,64 @@ export class RFileUploadButtonComponent implements AfterViewInit, OnInit {
   @Input() formUploader: boolean = true;
   @Input() uploads: any;
   @Input() field: any = undefined;
-  @ViewChild("flowAdvanced", {static: true}) flowAdvanced: FlowDirective;
-  @ViewChild("uploader") uploader: ElementRef;
   @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
+  @ViewChild('flow') flow: FlowDirective;
 
+  autoUploadSubscription: Subscription;
   fileInput: any;
   showError: boolean;
   errorFile: Transfer;
   confirmButton = false;
-
+  flowConfig:FlowOptions
   constructor(protected authenticationService: AuthenticationService, protected appDataService: AppDataService) {
   }
 
   ngOnInit(): void {
+    if(this.authenticationService.session.id){      
+      this.flowConfig ={target: this.fileUploadUrl, speedSmoothingFactor:0.01 , singleFile:(this.field !== undefined && !this.field.multi_entry), allowDuplicateUploads:false, testChunks:false, permanentErrors : [ 500, 501 ], headers : {'X-Session':this.authenticationService.session.id}};
+    };
     this.fileInput = this.field ? this.field.id : "status_page";
   }
 
   ngAfterViewInit() {
     const self = this;
-    this.flowAdvanced.transfers$.subscribe((event,) => {
+    this.autoUploadSubscription = this.flow.transfers$.subscribe((event,) => {
 
       self.confirmButton = false;
       self.showError = false;
 
-      if (!self.uploads) {
+      if(!self.uploads){
         self.uploads = {};
       }
-      if (self.uploads && !self.uploads[self.fileInput]) {
+      if(self.uploads && !self.uploads[self.fileInput]){
         self.uploads[self.fileInput] = [];
       }
-      event.transfers.forEach(function (file) {
+      event.transfers.forEach(function(file){
 
-        if (file.paused && self.errorFile) {
+        if(file.paused && self.errorFile){
           self.errorFile.flowFile.cancel();
-          return;
+          return
         }
-        if (self.appDataService.public.node.maximum_filesize < (file.size / 1000000)) {
+        if(self.appDataService.public.node.maximum_filesize < (file.size/1000000)){
           self.showError = true;
           file.flowFile.pause();
           self.errorFile = file;
-        } else if (!file.complete) {
+        }else if(!file.complete){
           self.confirmButton = true;
         }
       });
-      self.uploads[self.fileInput] = self.flowAdvanced;
+      self.uploads[self.fileInput]=self.flow;
       this.notifyFileUpload.emit(self.uploads);
     });
   }
 
+
+  ngOnDestroy() {
+    this.autoUploadSubscription.unsubscribe();
+  }
   onConfirmClick() {
-    if (!this.flowAdvanced.flowJs.isUploading()) {
-      this.flowAdvanced.upload();
+    if(!this.flow.flowJs.isUploading()){
+      this.flow.upload();
     }
   }
 }

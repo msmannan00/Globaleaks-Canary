@@ -1,17 +1,18 @@
-import {AfterViewInit, ChangeDetectorRef, Component} from "@angular/core";
+import {Component} from "@angular/core";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {ActivatedRoute} from "@angular/router";
 import {HttpService} from "@app/shared/services/http.service";
 import {WbtipService} from "@app/services/wbtip.service";
 import {AppDataService} from "@app/app-data.service";
 import {UtilsService} from "@app/shared/services/utils.service";
+import {Observable} from "rxjs";
 import {WBTipData} from "@app/models/whistleblower/WBTipData";
 
 @Component({
   selector: "src-tippage",
   templateUrl: "./tippage.component.html"
 })
-export class TippageComponent implements AfterViewInit{
+export class TippageComponent {
 
   fileUploadUrl: string;
   tip_id = null;
@@ -27,11 +28,13 @@ export class TippageComponent implements AfterViewInit{
   private submission: any;
   protected tip: any;
 
-  constructor(private fieldUtilitiesService: FieldUtilitiesService, protected utilsService: UtilsService, protected appDataService: AppDataService, private fieldUtilities: FieldUtilitiesService, private activatedRoute: ActivatedRoute, private httpService: HttpService, protected wbTipService: WbtipService, private cdr: ChangeDetectorRef) {
+  constructor(private fieldUtilitiesService: FieldUtilitiesService, protected utilsService: UtilsService, protected appDataService: AppDataService, private fieldUtilities: FieldUtilitiesService, private activatedRoute: ActivatedRoute, private httpService: HttpService, protected wbTipService: WbtipService) {
   }
 
-  ngAfterViewInit(): void {
-    this.httpService.whistleBlowerTip().subscribe(
+  ngOnInit() {
+
+    const requestObservable: Observable<any> = this.httpService.whistleBlowerTip();
+    requestObservable.subscribe(
       {
         next: (response: WBTipData) => {
           this.wbTipService.initialize(response);
@@ -55,7 +58,6 @@ export class TippageComponent implements AfterViewInit{
           if (this.tip.receivers.length === 1 && this.tip.msg_receiver_selected === null) {
             this.tip.msg_receiver_selected = this.tip.msg_receivers_selector[0].key;
           }
-          this.cdr.detectChanges()
         }
       }
     );

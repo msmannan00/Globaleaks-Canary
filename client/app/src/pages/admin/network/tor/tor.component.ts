@@ -20,7 +20,7 @@ export class TorComponent implements OnInit {
   }
 
   resetOnionPrivateKey() {
-    return this.utilsService.runAdminOperation("reset_onion_private_key", {}, true);
+    return this.utilsService.runAdminOperation("reset_onion_private_key", {}, true).subscribe();
   }
 
   updateTor(network: any) {

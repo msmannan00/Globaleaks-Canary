@@ -88,7 +88,7 @@ export class VoiceRecorderComponent implements OnInit {
       headers: {"X-Session": this.authenticationService.session.id},
       query: {
         type: "audio.webm",
-        reference: fileId,
+        reference_id: fileId,
       },
     });
 

@@ -1,7 +1,7 @@
 <div id="TipInfoBox" class="card card-default" >
     <div class="card-header clearfix" (click)="toggleCollapse(); utilsService.stopPropagation($event)">
         <span>{{'Identity' | translate}}</span>
-        <span class="float-right">
+        <span class="float-end">
           <i *ngIf="!collapsed" class="fa-solid fa-chevron-up" data-toggle="tooltip" title="{{'Collapse' | translate}}"></i>
           <i *ngIf="collapsed" class="fa-solid fa-chevron-down" data-toggle="tooltip" title="{{'Expand' | translate}}"></i>
         </span>

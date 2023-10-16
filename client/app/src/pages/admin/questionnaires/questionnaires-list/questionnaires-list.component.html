@@ -1,7 +1,7 @@
 <div class="editorHeader row">
     <span class="col-md-7" (click)="toggleEditing(questionnaire)">{{ questionnaire.name }}</span>
     <span class="col-md-5 clearfix">
-        <span class="float-right">
+        <span class="float-end">
             <button class="btn btn-sm btn-outline-secondary"
                 *ngIf="questionnaire.editable && !editing"
                 (click)="toggleEditing(questionnaire)">

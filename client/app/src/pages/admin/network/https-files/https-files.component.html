@@ -6,7 +6,7 @@
                 <span>(PEM)</span>
                 <span class="float-end">
 
-                    <span class="" *ngIf="!tlsConfig.files?.key?.set">
+                    <span *ngIf="!tlsConfig.files?.key?.set">
                         <input type="file" hidden #pkInput (change)="postFile(pkInput.files,fileResources.key)" />
                         <label id="keyUpload" (click)="pkInput.click()"
                             class="btn btn-sm btn-primary">{{'Upload' | translate}}</label>
@@ -30,7 +30,7 @@
             <div class="card-body clearfix">
                 <span>{{ 'Certificate Signing Request' | translate }}</span>
                 <span>(PEM)</span>
-                <span *ngIf="!tlsConfig.files.csr.set">
+                <span *ngIf="!tlsConfig.files.csr?.set">
                     <span class="float-end">
                         <button id="csrGen" class="btn btn-sm btn-primary" *ngIf="!csr_state.open"
                             (click)="csr_state.open = true">
@@ -45,7 +45,7 @@
                         <src-https-csr-gen [fileResources]="fileResources" (dataToParent)="httpsCsr($event)"></src-https-csr-gen>
                     </div>
                 </span>
-                <span *ngIf="tlsConfig.files.csr.set" class="clearfix">
+                <span *ngIf="tlsConfig.files.csr?.set" class="clearfix">
                     <span class="float-end">
                         <button id="downloadCsr" class="btn btn-sm btn-primary" (click)="downloadCSR()">
                             <i class="fa-solid fa-file-export"></i>
@@ -71,7 +71,7 @@
                     </span>
                 </ng-container>
                 <span class="float-end">
-                    <span class="" *ngIf="!tlsConfig.files.cert.set">
+                    <span *ngIf="!tlsConfig.files.cert.set">
                         <input type="file" hidden #certificateInput
                             (change)="postFile(certificateInput.files,fileResources.cert)" />
                         <label id="certUpload" (click)="certificateInput.click()"
@@ -98,11 +98,11 @@
                     </span>
                 </ng-container>
                 <div class="float-end">
-                    <span class="" *ngIf="!tlsConfig.files.chain.set">
+                    <span *ngIf="!tlsConfig.files.chain.set">
                         <input type="file" hidden #iCertificateInput
                             (change)="postFile(iCertificateInput.files,fileResources.cert)" />
                         <label id="chainUpload" (click)="iCertificateInput.click()"
-                            class=" btn btn-sm btn-primary">{{'Upload' | translate}}</label>
+                            class="btn btn-sm btn-primary">{{'Upload' | translate}}</label>
                     </span>
                     <span *ngIf="tlsConfig.files.chain.set">
                         <button id="deleteChain" class="btn btn-sm btn-danger"
