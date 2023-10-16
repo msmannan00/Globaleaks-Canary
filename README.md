@@ -10,6 +10,9 @@
 [GlobaLeaks](https://www.globaleaks.org/) is free, open source software enabling anyone to easily set up and maintain a secure whistleblowing platform.
 
 ## Community support
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ae6cbdf7d2fe417d93fa73ecc94eeeeb)](https://app.codacy.com/gh/msmannan00/globaleaks-angular-fork?utm_source=github.com&utm_medium=referral&utm_content=msmannan00/globaleaks-angular-fork&utm_campaign=Badge_Grade)
+
 If you need technical support, have general questions, or have new ideas for GlobaLeaks, please post your message on the [Community Forum](https://forum.globaleaks.org/).
 
 Join our [Community Chat](https://community.globaleaks.org) to get in touch with the development team and the GlobaLeaks community:
