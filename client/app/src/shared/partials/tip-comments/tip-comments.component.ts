@@ -29,7 +29,6 @@ export class TipCommentsComponent {
   }
 
   ngOnInit() {
-    console.log(this.tipService.tip);
   }
 
   newComment() {

@@ -44,7 +44,9 @@ a:hover,
   color: #5797d5;
 }
 
-th .fa-solid, .fa-chevron-up, .fa-chevron-down {
+th .fa-solid,
+.fa-chevron-up,
+.fa-chevron-down {
   margin-left: 5px;
   margin-right: 5px;
 }
@@ -89,11 +91,11 @@ th .fa-solid, .fa-chevron-up, .fa-chevron-down {
   padding: 5px;
 }
 
-.uib-button-bar > .btn-group > .btn-info {
+.uib-button-bar>.btn-group>.btn-info {
   display: none;
 }
 
-.uib-button-bar > .btn-success {
+.uib-button-bar>.btn-success {
   display: none;
 }
 
@@ -429,6 +431,7 @@ table tr td {
 }
 
 @keyframes fade-inout {
+
   0%,
   100% {
     opacity: 0;
@@ -667,19 +670,19 @@ p:last-child {
   margin-bottom: 1rem;
 }
 
-[dir='ltr'] .form-group > .input-group > .left-radius {
+[dir='ltr'] .form-group>.input-group>.left-radius {
   border-radius: 5px 0 0 5px;
 }
 
-[dir='rtl'] .form-group > .input-group > .left-radius {
+[dir='rtl'] .form-group>.input-group>.left-radius {
   border-radius: 0 5px 5px 0;
 }
 
-[dir='ltr'] .form-group > .input-group > .right-radius {
+[dir='ltr'] .form-group>.input-group>.right-radius {
   border-radius: 0 5px 5px 0;
 }
 
-[dir='rtl'] .form-group > .input-group > .right-radius {
+[dir='rtl'] .form-group>.input-group>.right-radius {
   border-radius: 5px 0 0 5px;
 }
 
@@ -850,4 +853,51 @@ htmlinput[type="email"] {
   pointer-events: none;
   opacity: 0.4;
   user-select: none;
+}
+
+.nav-items {
+  display: grid !important;
+}
+
+.navbar-toggler:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+
+[dir="ltr"] #Sidebar .fa,
+[dir="ltr"] #Sidebar .fa-solid {
+  margin-right: 0.5em;
+}
+
+[dir="rtl"] #Sidebar .fa,
+[dir="rtl"] #Sidebar .fa-solid {
+  margin-left: 0.5em;
+}
+
+#Sidebar a {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+#Sidebar a.active,
+#Sidebar a:active.active,
+#Sidebar a:hover.active,
+#Sidebar a:focus.active {
+  border-bottom: 1px solid #c8d1e0;
+  width: max-content;
+}
+
+.navbar-toggler {
+  --bs-navbar-toggler-border-color: none;
+  --bs-navbar-toggler-border-radius: none;
+}
+
+.status-select {
+  min-width: 140px !important;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  right: 0px;
+  position: absolute;
+  top: 30px;
 }

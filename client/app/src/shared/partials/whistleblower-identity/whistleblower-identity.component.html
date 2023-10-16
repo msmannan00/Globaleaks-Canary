@@ -10,7 +10,7 @@
 						class="btn btn-sm btn-link"><span *ngIf="collapsed">{{'Show'|translate}}</span><span
 							*ngIf="!collapsed">{{'Hide'|translate}}</span></span>
 				</span>
-				<span class="float-right">
+				<span class="float-end">
 					<i *ngIf="!collapsed" class="fa-solid fa-chevron-up" data-toggle="tooltip"
 						title="{{'Collapse' | translate}}"></i>
 					<i *ngif="collapsed" class="fa-solid fa-chevron-down" data-toggle="tooltip"
@@ -32,7 +32,7 @@
 				<src-whistleblower-identity-field [step]="step" (stateChanged)="stateChanged($event)" [identity_provided]="identity_provided" [answers]="answers" [field]="field" [index]="0"></src-whistleblower-identity-field>
 				<src-rfiles-upload-status [progress]="uploadProgress" [estimatedTime]="uploadEstimateTime" [uploading]="isUploading"></src-rfiles-upload-status>
 				<div id="SubmitBox">
-					<button *ngIf="identity_provided" id="SubmitButton" class="btn btn-primary float-right"
+					<button *ngIf="identity_provided" id="SubmitButton" class="btn btn-primary float-end"
 						(click)="provideIdentityInformation.emit({ param1: field.id, param2: answers })"
 						[disabled]="wbform.invalid" type="submit">
 						<i id="SubmitIconOK" class="fa-solid fa-check"></i>

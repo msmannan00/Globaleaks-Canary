@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div class="col-md-6 clearfix" *ngIf="tenant.id !== 1">
-                <span class="float-right">
+                <span class="float-end">
                     <span *ngIf="tenant.active" class="btn btn-sm btn-primary" (click)="toggleActivation($event)">{{'Enabled'|translate}} </span>
                     <span *ngIf="!tenant.active" class="btn btn-sm btn-danger" (click)="toggleActivation($event)">{{'Disabled'|translate}} </span>
 
