@@ -30,9 +30,7 @@ export class HttpsCsrGenComponent {
   }
 
   submitCSR() {
-    this.fileResources.content = this.csr_cfg;
-    this.fileResources.csr.content = this.csr_cfg;
-    this.httpService.requestCSRContentResource(this.fileResources.csr.name, this.fileResources.csr).subscribe(() => {
+    this.httpService.requestCSRDirectContentResource(this.csr_cfg).subscribe(() => {
       this.dataToParent.emit(this.fileResources);
     });
   }

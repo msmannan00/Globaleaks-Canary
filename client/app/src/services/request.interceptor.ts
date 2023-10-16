@@ -115,7 +115,7 @@ export class CompletedInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       finalize(() => {
         this.count--;
-        if (this.count === 0 && req.url !== "api/auth/token" || this.authenticationService.isSessionActive()) {
+        if (this.count === 0 && (req.url !== "api/auth/token" || this.authenticationService.isSessionActive())) {
           this.appDataService.showLoadingPanel = false;
         }
       }));

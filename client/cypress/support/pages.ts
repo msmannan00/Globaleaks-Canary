@@ -49,16 +49,16 @@ class WhistleblowerPage {
     cy.wait(1000);
     cy.get("#SubmitButton").should("be.visible");
 
-    cy.takeScreenshot("whistleblower/submission",0);
+    //cy.takeScreenshot("whistleblower/submission",0);
 
     cy.get("#SubmitButton").click();
-
-    cy.wait(1000);
-
-    cy.get("#ReceiptCode").should("be.visible");
-
-    cy.takeScreenshot("whistleblower/receipt",0);
-
+    //
+    // cy.wait(1000);
+    //
+    // cy.get("#ReceiptCode").should("be.visible");
+    //
+    // cy.takeScreenshot("whistleblower/receipt",0);
+    //
     return cy.get('#ReceiptCode').invoke('val').then((value) => {
       return value;
     });

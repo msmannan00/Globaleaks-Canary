@@ -13,3 +13,4 @@ client/tmp
 client/coverage/*
 client/cypress/screenshots/*
 *.json
+client/coverage/

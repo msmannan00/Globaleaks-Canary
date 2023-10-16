@@ -100,7 +100,7 @@
                 <div class="float-end">
                     <span *ngIf="!tlsConfig.files.chain.set">
                         <input type="file" hidden #iCertificateInput
-                            (change)="postFile(iCertificateInput.files,fileResources.cert)" />
+                            (change)="postFile(iCertificateInput.files,fileResources.chain)" />
                         <label id="chainUpload" (click)="iCertificateInput.click()"
                             class="btn btn-sm btn-primary">{{'Upload' | translate}}</label>
                     </span>
