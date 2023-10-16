@@ -25,7 +25,7 @@
                 <i class="fa-solid fa-clone"></i>
                 <span>{{ 'Duplicate' | translate }}</span>
             </button>
-            <button class="btn btn-sm btn-danger" *ngIf="questionnaire.editable"
+            <button class="btn btn-sm btn-danger" name="deleteQuestionnaire" *ngIf="questionnaire.editable"
                 (click)="deleteQuestionnaire(questionnaire)">
                 <span>{{ 'Delete' | translate }}</span>
             </button>

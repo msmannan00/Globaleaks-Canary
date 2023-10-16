@@ -28,10 +28,6 @@ export class TipCommentsComponent {
     this.collapsed = !this.collapsed;
   }
 
-  ngOnInit() {
-    console.log(this.tipService.tip);
-  }
-
   newComment() {
     this.tipService.newComment(this.newCommentContent, this.key);
     this.newCommentContent = "";

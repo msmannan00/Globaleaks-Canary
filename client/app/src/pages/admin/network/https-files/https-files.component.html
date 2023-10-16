@@ -6,10 +6,10 @@
                 <span>(PEM)</span>
                 <span class="float-end">
 
-                    <span class="file-upload" *ngIf="!tlsConfig.files?.key?.set">
+                    <span class="" *ngIf="!tlsConfig.files?.key?.set">
                         <input type="file" hidden #pkInput (change)="postFile(pkInput.files,fileResources.key)" />
                         <label id="keyUpload" (click)="pkInput.click()"
-                            class="file-upload btn btn-sm btn-primary">{{'Upload' | translate}}</label>
+                            class="btn btn-sm btn-primary">{{'Upload' | translate}}</label>
                     </span>
                     <button id="pkGen" class="btn btn-sm btn-primary" *ngIf="!tlsConfig.files?.key?.set"
                         (click)="gen_key()">
@@ -71,11 +71,11 @@
                     </span>
                 </ng-container>
                 <span class="float-end">
-                    <span class="file-upload" *ngIf="!tlsConfig.files.cert.set">
+                    <span class="" *ngIf="!tlsConfig.files.cert.set">
                         <input type="file" hidden #certificateInput
                             (change)="postFile(certificateInput.files,fileResources.cert)" />
                         <label id="certUpload" (click)="certificateInput.click()"
-                            class="file-upload btn btn-sm btn-primary">{{'Upload' | translate}}</label>
+                            class="btn btn-sm btn-primary">{{'Upload' | translate}}</label>
                     </span>
                     <span *ngIf="tlsConfig.files.cert.set">
                         <button id="deleteCert" class="btn btn-sm btn-danger" (click)="deleteFile(fileResources.cert)">
@@ -98,11 +98,11 @@
                     </span>
                 </ng-container>
                 <div class="float-end">
-                    <span class="file-upload" *ngIf="!tlsConfig.files.chain.set">
+                    <span class="" *ngIf="!tlsConfig.files.chain.set">
                         <input type="file" hidden #iCertificateInput
                             (change)="postFile(iCertificateInput.files,fileResources.cert)" />
                         <label id="chainUpload" (click)="iCertificateInput.click()"
-                            class="file-upload btn btn-sm btn-primary">{{'Upload' | translate}}</label>
+                            class=" btn btn-sm btn-primary">{{'Upload' | translate}}</label>
                     </span>
                     <span *ngIf="tlsConfig.files.chain.set">
                         <button id="deleteChain" class="btn btn-sm btn-danger"

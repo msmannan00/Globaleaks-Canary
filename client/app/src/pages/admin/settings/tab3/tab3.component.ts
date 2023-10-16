@@ -70,7 +70,6 @@ export class Tab3Component implements OnInit {
       this.appDataService.public.node.languages_enabled = res["languages_enabled"];
       this.translationService.onChange(res["default_language"]);
       localStorage.removeItem("default_language");
-      console.log(this.appDataService.public.node.languages_enabled);
       this.appConfigService.reinit(false);
     });
   }

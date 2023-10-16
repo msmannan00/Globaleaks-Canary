@@ -47,8 +47,7 @@ describe("admin configure, add, and delete contexts", () => {
     cy.login_admin();
 
     cy.visit("#/admin/contexts");
-    cy.contains("button", "Delete").last().click();
-
+    cy.get('button:contains("Delete")').last().click();
     cy.get("#modal-action-ok").click();
 
     cy.logout();

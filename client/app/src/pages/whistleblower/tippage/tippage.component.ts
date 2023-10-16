@@ -1,18 +1,17 @@
-import {Component} from "@angular/core";
+import {AfterViewInit, ChangeDetectorRef, Component} from "@angular/core";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {ActivatedRoute} from "@angular/router";
 import {HttpService} from "@app/shared/services/http.service";
 import {WbtipService} from "@app/services/wbtip.service";
 import {AppDataService} from "@app/app-data.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {Observable} from "rxjs";
 import {WBTipData} from "@app/models/whistleblower/WBTipData";
 
 @Component({
   selector: "src-tippage",
   templateUrl: "./tippage.component.html"
 })
-export class TippageComponent {
+export class TippageComponent implements AfterViewInit{
 
   fileUploadUrl: string;
   tip_id = null;
@@ -28,13 +27,11 @@ export class TippageComponent {
   private submission: any;
   protected tip: any;
 
-  constructor(private fieldUtilitiesService: FieldUtilitiesService, protected utilsService: UtilsService, protected appDataService: AppDataService, private fieldUtilities: FieldUtilitiesService, private activatedRoute: ActivatedRoute, private httpService: HttpService, protected wbTipService: WbtipService) {
+  constructor(private fieldUtilitiesService: FieldUtilitiesService, protected utilsService: UtilsService, protected appDataService: AppDataService, private fieldUtilities: FieldUtilitiesService, private activatedRoute: ActivatedRoute, private httpService: HttpService, protected wbTipService: WbtipService, private cdr: ChangeDetectorRef) {
   }
 
-  ngOnInit() {
-
-    const requestObservable: Observable<any> = this.httpService.whistleBlowerTip();
-    requestObservable.subscribe(
+  ngAfterViewInit(): void {
+    this.httpService.whistleBlowerTip().subscribe(
       {
         next: (response: WBTipData) => {
           this.wbTipService.initialize(response);
@@ -44,7 +41,6 @@ export class TippageComponent {
             this.tip.tip_id = params["tip_id"];
           });
 
-          console.log(this.tip);
           this.fileUploadUrl = "api/whistleblower/wbtip/wbfiles";
           this.tip.context = this.appDataService.contexts_by_id[this.tip.context_id];
 
@@ -59,6 +55,7 @@ export class TippageComponent {
           if (this.tip.receivers.length === 1 && this.tip.msg_receiver_selected === null) {
             this.tip.msg_receiver_selected = this.tip.msg_receivers_selector[0].key;
           }
+          this.cdr.detectChanges()
         }
       }
     );

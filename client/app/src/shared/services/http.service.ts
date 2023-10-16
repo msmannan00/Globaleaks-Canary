@@ -262,8 +262,8 @@ export class HttpService {
     return this.httpClient.get("api/recipient/rtips/" + id);
   }
 
-  rTipsRequestNewComment(param: any, _: any): Observable<any> {
-    return this.httpClient.post("api/recipient/rtips/${id}/comments", param);
+  rTipsRequestNewComment(param: any, id: any): Observable<any> {
+    return this.httpClient.post(`/api/recipient/rtips/${id}/comments`, param);
   }
 
   requestStatusesResource(): Observable<any> {
@@ -282,8 +282,8 @@ export class HttpService {
     return this.httpClient.post("/api/admin/tenants", param);
   }
 
-  accessIdentity(_: any): Observable<any> {
-    return this.httpClient.post("api/recipient/rtips/${id}/iars", {"request_motivation": ""});
+  accessIdentity(id: any): Observable<any> {
+    return this.httpClient.post(`api/recipient/rtips/${id}/iars`, {"request_motivation": ""});
   }
 
   requestAddAdminUser(param: any): Observable<any> {
