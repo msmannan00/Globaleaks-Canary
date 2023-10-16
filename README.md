@@ -4,6 +4,7 @@
 
 
 <div align="center">
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ae6cbdf7d2fe417d93fa73ecc94eeeeb)](https://app.codacy.com/gh/msmannan00/globaleaks-angular-fork?utm_source=github.com&utm_medium=referral&utm_content=msmannan00/globaleaks-angular-fork&utm_campaign=Badge_Grade)
   [![Codacy Badge](https://app.codacy.com/project/badge/Grade/dba702aea19e4b5fa9340f3a5ce8176c)](https://app.codacy.com/gh/msmannan00/globaleaks-angular-fork/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
   <a href="https://github.com/globaleaks/GlobaLeaks/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-AGPLv3%2B-green" alt="License"></a> <a href="https://github.com/globaleaks/GlobaLeaks/blob/main/CODE_OF_CONDUCT.md"><img src="https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg" alt="Code of Conduct"></a> <a href="https://twitter.com/intent/follow?screen_name=GlobaLeaks"><img src="https://img.shields.io/twitter/follow/GlobaLeaks?style=social&logo=twitter" alt="follow on Twitter"></a>
 </div>
