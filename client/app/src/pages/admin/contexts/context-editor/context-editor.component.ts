@@ -1,71 +1,49 @@
-import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AppDataService } from 'app/src/app-data.service';
-import { contextResolverModel } from 'app/src/models/resolvers/contextResolverModel';
-import { AuthenticationService } from 'app/src/services/authentication.service';
-import { DeleteConfirmationComponent } from 'app/src/shared/modals/delete-confirmation/delete-confirmation.component';
-import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
-import { PreferenceResolver } from 'app/src/shared/resolvers/preference.resolver';
-import { QuestionnairesResolver } from 'app/src/shared/resolvers/questionnaires.resolver';
-import { UsersResolver } from 'app/src/shared/resolvers/users.resolver';
-import { HttpService } from 'app/src/shared/services/http.service';
-import { UtilsService } from 'app/src/shared/services/utils.service';
+import {HttpClient} from "@angular/common/http";
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import {NgForm} from "@angular/forms";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {QuestionnairesResolver} from "@app/shared/resolvers/questionnaires.resolver";
+import {UsersResolver} from "@app/shared/resolvers/users.resolver";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({
-  selector: 'src-context-editor',
-  templateUrl: './context-editor.component.html',
-  styleUrls: ['./context-editor.component.css']
+  selector: "src-context-editor",
+  templateUrl: "./context-editor.component.html"
 })
 export class ContextEditorComponent implements OnInit {
-  @Input() contextsData: any[]
+  @Input() contextsData: any[];
   @Input() context: any;
   @Input() index: any;
   @Input() editContext: NgForm;
   @Output() dataToParent = new EventEmitter<string>();
   editing: boolean = false;
-  showAdvancedSettings: boolean = false
+  showAdvancedSettings: boolean = false;
   showSelect: boolean = false;
-  questionnairesData: any = []
-  usersData: any = []
-  nodeData: any = []
-  selected = { value: null };
-  admin_receivers_by_id: any
-  constructor(private cdr: ChangeDetectorRef,private http: HttpClient, public modalService: NgbModal, public appDataService: AppDataService, public preference: PreferenceResolver, public httpService: HttpService, public authenticationService: AuthenticationService, public node: NodeResolver, public users: UsersResolver, public questionnaires: QuestionnairesResolver, public utilsService: UtilsService) {
+  questionnairesData: any = [];
+  usersData: any = [];
+  nodeData: any = [];
+  selected = {value: null};
+  adminReceiversById: any;
+
+  constructor(private http: HttpClient, private modalService: NgbModal, protected nodeResolver: NodeResolver, private usersResolver: UsersResolver, private questionnairesResolver: QuestionnairesResolver, private utilsService: UtilsService) {
   }
 
   ngOnInit(): void {
-    // console.log(this.context, "context");
-    this.questionnairesData = this.questionnaires.dataModel
-    this.usersData = this.users.dataModel
-    this.nodeData = this.node.dataModel
-    
-    this.admin_receivers_by_id = this.utilsService.array_to_map(this.users.dataModel);
-
-    // if (this.contexts.dataModel) {
-    //   this.contextsData = this.contexts.dataModel
-    // }
+    this.questionnairesData = this.questionnairesResolver.dataModel;
+    this.usersData = this.usersResolver.dataModel;
+    this.nodeData = this.nodeResolver.dataModel;
+    this.adminReceiversById = this.utilsService.array_to_map(this.usersResolver.dataModel);
   }
 
   toggleEditing(): void {
     this.editing = !this.editing;
   }
 
-  onReminderSoftChanged(): void {
-    if (this.context.tip_reminder_soft > this.context.tip_reminder_hard) {
-      this.context.tip_reminder_hard = this.context.tip_reminder_soft;
-    }
+  onReminderChanged() {
   }
 
-  onReminderHardChanged(): void {
-    if (this.context.tip_reminder_hard === 0) {
-      this.context.tip_reminder_soft = 0;
-    } else if (this.context.tip_reminder_hard < this.context.tip_reminder_soft) {
-      this.context.tip_reminder_soft = this.context.tip_reminder_hard;
-    }
-  }
-  onReminderChanged() { }
   swap($event: any, index: number, n: number): void {
     $event.stopPropagation();
 
@@ -79,15 +57,8 @@ export class ContextEditorComponent implements OnInit {
 
     this.http.put("/api/admin/contexts", {
       operation: "order_elements",
-      args: { ids: this.contextsData.map(c => c.id) },
-    }).subscribe(
-      response => {
-        // Handle the response if needed
-      },
-      error => {
-        // Handle the error if needed
-      }
-    );
+      args: {ids: this.contextsData.map(c => c.id)},
+    }).subscribe();
   }
 
   moveUp(e: any, idx: number): void {
@@ -97,6 +68,7 @@ export class ContextEditorComponent implements OnInit {
   moveDown(e: any, idx: number): void {
     this.swap(e, idx, 1);
   }
+
   swapReceiver(index: number, n: number): void {
     const target = index + n;
     if (target > -1 && target < this.context.receivers.length) {
@@ -104,6 +76,10 @@ export class ContextEditorComponent implements OnInit {
       this.context.receivers[target] = this.context.receivers[index];
       this.context.receivers[index] = tmp;
     }
+  }
+
+  receiverNotSelectedFilter(item: any): boolean {
+    return this.context.receivers.indexOf(item.id) === -1;
   }
 
   moveUpReceiver(index: number): void {
@@ -124,53 +100,33 @@ export class ContextEditorComponent implements OnInit {
       this.showSelect = false;
     }
   }
-  // moveReceiver(rec: any): void {
-  //   if (rec) {
-  //     const indexToRemove = this.usersData.indexOf(rec);
-  //     if (indexToRemove !== -1) {
-  //       this.context.receivers.push(rec.id);
-  //       this.showSelect = false;
-  //       this.usersData.splice(indexToRemove, 1);
-  //     }
-  //     console.log(this.usersData, "this.usersData");
-
-  //   }
-  // }
-
-  receiverNotSelectedFilter(item: any) {
-    // this.usersData.push(item)
-    // console.log(this.usersData, "this.usersData remove");
-    // this.cdr.detectChanges();
-
-    // return this.context.receivers.indexOf(item.id) === -1;
-  }
 
   deleteContext(context: any): void {
-    this.openConfirmableModalDialog(context, "")
+    this.openConfirmableModalDialog(context, "");
   }
+
   openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
     scope = !scope ? this : scope;
     const modalRef = this.modalService.open(DeleteConfirmationComponent);
     modalRef.componentInstance.arg = arg;
     modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = () => {
-      return this.utilsService.deleteAdminContext(arg.id).subscribe(res => {
-        this.sendDataToParent()
-        // this.utilsService.reloadCurrentRoute()
+      return this.utilsService.deleteAdminContext(arg.id).subscribe(_ => {
+        this.sendDataToParent();
       });
     };
     return modalRef.result;
   }
+
   save_context(context: any) {
     if (context.additional_questionnaire_id === null) {
       context.additional_questionnaire_id = "";
     }
-    // var updated_context: contextResolverModel = this.utilsService.new_context();
-    this.utilsService.updateAdminContext(context, context.id).subscribe(res => {
-      this.sendDataToParent()
-      // this.contextsData.push(res);
-    })
+    this.utilsService.updateAdminContext(context, context.id).subscribe(_ => {
+      this.sendDataToParent();
+    });
   }
+
   sendDataToParent() {
     this.dataToParent.emit();
   }

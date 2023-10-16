@@ -1,9 +1,9 @@
-import {Component, Input} from '@angular/core';
-import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Component, Input} from "@angular/core";
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
-  selector: 'src-add-option-hint',
-  templateUrl: './add-option-hint.component.html'
+  selector: "src-add-option-hint",
+  templateUrl: "./add-option-hint.component.html"
 })
 export class AddOptionHintComponent {
   confirmFunction: (data: any) => void;
@@ -13,7 +13,7 @@ export class AddOptionHintComponent {
   }
 
   confirm() {
-    this.confirmFunction(this.arg)
+    this.confirmFunction(this.arg);
     return this.activeModal.close(this.arg);
   }
 

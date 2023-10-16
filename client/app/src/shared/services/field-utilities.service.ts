@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
-import {Constants} from "../constants/constants";
+import {Injectable} from "@angular/core";
+import {Constants} from "@app/shared/constants/constants";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class FieldUtilitiesService {
   parseQuestionnaire(questionnaire: any, parsedFields: any) {
-    let self = this;
+    const self = this;
 
     questionnaire.steps.forEach(function (step: any) {
       parsedFields = self.parseFields(step.children, parsedFields);
@@ -24,12 +24,12 @@ export class FieldUtilitiesService {
   }
 
   getValidator(field: any) {
-    let validators: any = {
+    const validators: any = {
       "custom": field.attrs.regexp ? field.attrs.regexp.value : "",
       "none": "",
-      "email": Constants.email_regexp,
-      "number": Constants.number_regexp,
-      "phonenumber": Constants.phonenumber_regexp,
+      "email": Constants.emailRegexp,
+      "number": Constants.numberRegexp,
+      "phonenumber": Constants.phoneNumberRegexp,
     };
 
     if (field.attrs.input_validation) {
@@ -66,12 +66,12 @@ export class FieldUtilitiesService {
   findField(answers_obj: any, field_id: any): any {
     let r;
 
-    for (let key in answers_obj) {
+    for (const key in answers_obj) {
       if (key === field_id) {
         return answers_obj[key][0];
       }
 
-      if (answers_obj.hasOwnProperty(key) && answers_obj[key] instanceof Array && answers_obj[key].length) {
+      if (Object.prototype.hasOwnProperty.call(answers_obj, key) && Array.isArray(answers_obj[key]) && answers_obj[key].length > 0) {
         r = this.findField(answers_obj[key][0], field_id);
         if (typeof r !== "undefined") {
           return r;
@@ -82,7 +82,7 @@ export class FieldUtilitiesService {
   }
 
   splitRows(fields: any) {
-    let rows: any = [];
+    const rows: any = [];
     let y: any = null;
 
     fields.forEach(function (f: any) {
@@ -97,8 +97,8 @@ export class FieldUtilitiesService {
   }
 
   calculateScore(scope: any, field: any, entry: any) {
-    let self = this;
-    let score, i;
+    const self = this;
+    let i;
 
     if (["selectbox", "multichoice"].indexOf(field.type) > -1) {
       for (i = 0; i < field.options.length; i++) {
@@ -130,7 +130,7 @@ export class FieldUtilitiesService {
       return;
     }
 
-    score = scope.points_to_sum * scope.points_to_mul;
+    const score = scope.points_to_sum * scope.points_to_mul;
 
     if (score < scope.context.score_threshold_medium) {
       scope.score = 1;
@@ -143,9 +143,9 @@ export class FieldUtilitiesService {
 
   updateAnswers(scope: any, parent: any, list: any, answers: any) {
     let entry, option, i, j;
-    let self = this;
+    const self = this;
 
-    let localscope = this;
+    const localscope = this;
 
     list.forEach(function (field: any) {
       if (self.isFieldTriggered(parent, field, scope.answers, scope.score)) {
@@ -231,7 +231,7 @@ export class FieldUtilitiesService {
   }
 
   onAnswersUpdate(scope: any) {
-    let self = this;
+    const self = this;
     scope.block_submission = false;
     scope.score = 0;
     scope.points_to_sum = 0;
@@ -245,7 +245,7 @@ export class FieldUtilitiesService {
       scope.submission.setContextReceivers(scope.context.id);
     }
 
-    let localscope = this
+    const localscope = this;
 
     scope.questionnaire.steps.forEach(function (step: any) {
       step.enabled = self.isFieldTriggered(null, step, scope.answers, scope.score);
@@ -279,15 +279,15 @@ export class FieldUtilitiesService {
     }
 
     for (i = 0; i < field.triggered_by_options.length; i++) {
-      let trigger = field.triggered_by_options[i];
-      let answers_field = this.findField(answers, trigger.field);
+      const trigger = field.triggered_by_options[i];
+      const answers_field = this.findField(answers, trigger.field);
       if (typeof answers_field === "undefined") {
         continue;
       }
 
       // Check if triggering field is in answers object
       if (trigger.option === answers_field.value ||
-        (answers_field.hasOwnProperty(trigger.option) && answers_field[trigger.option])) {
+        Object.prototype.hasOwnProperty.call(answers_field, trigger.option) && answers_field[trigger.option]) {
         if (trigger.sufficient) {
           field.enabled = true;
           return true;
@@ -306,7 +306,7 @@ export class FieldUtilitiesService {
   }
 
   parseFields(fields: any, parsedFields: any) {
-    let self = this;
+    const self = this;
 
     fields.forEach(function (field: any) {
       parsedFields = self.parseField(field, parsedFields);
@@ -316,7 +316,7 @@ export class FieldUtilitiesService {
   }
 
   parseField(field: any, parsedFields: any) {
-    let self = this;
+    const self = this;
 
     if (!Object.keys(parsedFields).length) {
       parsedFields.fields = [];

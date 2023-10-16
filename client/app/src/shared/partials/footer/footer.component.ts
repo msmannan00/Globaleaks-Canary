@@ -1,12 +1,8 @@
-import { Component } from '@angular/core';
-import {AppConfigService} from "../../../services/app-config.service";
+import {Component} from "@angular/core";
 
 @Component({
-  selector: 'app-footer',
-  templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.css']
+  selector: "app-footer",
+  templateUrl: "./footer.component.html"
 })
 export class FooterComponent {
-  constructor(public appConfig: AppConfigService) {
-  }
 }

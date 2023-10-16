@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { QuestionnairesComponent } from './questionnaires.component';
+import {NgModule} from "@angular/core";
+import {RouterModule, Routes} from "@angular/router";
+import {QuestionnairesComponent} from "@app/pages/admin/questionnaires/questionnaires.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: QuestionnairesComponent,
-    pathMatch: 'full',
+    pathMatch: "full",
   }
 ];
 
@@ -14,4 +14,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class QuestionnairesRoutingModule { }
+export class QuestionnairesRoutingModule {
+}

@@ -1,9 +1,9 @@
-import { Component, Input } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import {Component, Input} from "@angular/core";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
-  selector: 'src-transfer-access',
-  templateUrl: './transfer-access.component.html',
+  selector: "src-transfer-access",
+  templateUrl: "./transfer-access.component.html",
 })
 export class TransferAccessComponent {
   @Input() usersNames: any;
@@ -11,13 +11,14 @@ export class TransferAccessComponent {
   receiverId: string;
 
 
-  constructor(public activeModal: NgbActiveModal) {}
- 
-  confirm(receiverId:any) {
+  constructor(private activeModal: NgbActiveModal) {
+  }
+
+  confirm(receiverId: any) {
     this.activeModal.close(receiverId.id);
   }
 
   cancel() {
-   return this.activeModal.close();
+    return this.activeModal.close();
   }
 }

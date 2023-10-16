@@ -1,34 +1,33 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {NgForm} from "@angular/forms";
-import {UtilsService} from "../../../shared/services/utils.service";
-import {SubmissionService} from "../../../services/submission.service";
+import {UtilsService} from "@app/shared/services/utils.service";
+import {SubmissionService} from "@app/services/submission.service";
 
 @Component({
-  selector: 'src-submission-error',
-  templateUrl: './submission-error.component.html',
-  styleUrls: ['./submission-error.component.css']
+  selector: "src-submission-error",
+  templateUrl: "./submission-error.component.html"
 })
 export class SubmissionErrorComponent {
 
-  @Input() submissionForm: NgForm
-  @Input() hasPreviousStep: boolean
-  @Input() show_steps_navigation_interface: boolean
-  @Input() hasNextStep: boolean
-  @Input() areRecieverSelected: boolean
-  @Input() singlestepform: boolean
-  @Input() context: any
+  @Input() submissionForm: NgForm;
+  @Input() hasPreviousStep: boolean;
+  @Input() show_steps_navigation_interface: boolean;
+  @Input() hasNextStep: boolean;
+  @Input() areReceiverSelected: boolean;
+  @Input() singleStepForm: boolean;
+  @Input() context: any;
   @Input() navigation: number;
   @Input() uploads: number;
   @Input() submission: SubmissionService;
-  @Input() stepforms: any;
+  @Input() stepForms: any;
   @Input() field_id_map: any;
 
   @Input() displayStepErrors: Function;
-  @Input() stepform: Function;
+  @Input() stepForm: Function;
 
   @Output() goToStep: EventEmitter<any> = new EventEmitter();
 
-  constructor(public utilsService:UtilsService) {
+  constructor(protected utilsService: UtilsService) {
   }
 
 }

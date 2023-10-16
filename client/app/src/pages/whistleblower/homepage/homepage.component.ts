@@ -1,30 +1,29 @@
-import { Component } from '@angular/core';
-import { AppDataService } from "../../../app-data.service";
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
-import { PreferenceResolver } from 'app/src/shared/resolvers/preference.resolver';
-import { UtilsService } from 'app/src/shared/services/utils.service';
-import { DisclaimerComponent } from 'app/src/shared/modals/disclaimer/disclaimer.component';
+import {Component} from "@angular/core";
+import {AppDataService} from "@app/app-data.service";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {DisclaimerComponent} from "@app/shared/modals/disclaimer/disclaimer.component";
 
 @Component({
-  selector: 'src-homepage',
-  templateUrl: './homepage.component.html',
-  styleUrls: ['./homepage.component.css']
+  selector: "src-homepage",
+  templateUrl: "./homepage.component.html"
 })
 export class HomepageComponent {
-  constructor(public appDataService: AppDataService, public modalService: NgbModal, public preference: PreferenceResolver, public utilsService: UtilsService, public node: NodeResolver,) {
+
+  constructor(protected appDataService: AppDataService, private modalService: NgbModal, private nodeResolver: NodeResolver) {
   }
 
   openSubmission() {
-    if (this.node.dataModel.disclaimer_text) {
+    if (this.nodeResolver.dataModel.disclaimer_text) {
       return this.open_disclaimer_modal();
     }
-    return this.appDataService.page = "submissionpage"
+    return this.appDataService.page = "submissionpage";
   }
+
   open_disclaimer_modal(): Promise<any> {
     const modalRef = this.modalService.open(DisclaimerComponent);
     modalRef.componentInstance.confirmFunction = () => {
-      return this.appDataService.page = "submissionpage"
+      return this.appDataService.page = "submissionpage";
     };
     return modalRef.result;
   }

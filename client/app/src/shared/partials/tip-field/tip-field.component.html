@@ -1,4 +1,4 @@
-<div *ngIf="fields.enabled && (!preview || fields.preview)" [ngClass]="{'nested': !preview}" class="fieldAnswer">
+<div *ngIf="fields.enabled && (!preview || fields.preview)" [ngClass]="{'nested': !preview}" class="field-answer">
     <div [ngClass]="{'fw-bold': !preview}">
         <span *ngIf="!fields && !preview">{{index + 1}})</span>
         <span>{{fields.label |translate}}</span>

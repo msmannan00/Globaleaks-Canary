@@ -1,4 +1,4 @@
-<div class="configSection">
+<div class="config-section">
     <div>
         <span>{{ 'Channels' | translate }}</span>
         <button class="btn btn-sm btn-primary show-add-context-btn" (click)="toggleAddContext()">
@@ -31,7 +31,7 @@
             <div>
                 <form [id]="'context-' + index" name="editContext" #editContext="ngForm" novalidate>
                     <src-context-editor [context]="context" [editContext]="editContext" [contextsData]="contextsData"
-                        [index]="index" (dataToParent)="handleDataFromChild($event)"></src-context-editor>
+                        [index]="index" (dataToParent)="handleDataFromChild()"></src-context-editor>
                 </form>
             </div>
         </ng-container>

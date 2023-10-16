@@ -1,20 +1,24 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { UtilsService } from '../../services/utils.service';
+import {HttpClient} from "@angular/common/http";
+import {Component, Input} from "@angular/core";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({
-  selector: 'src-questionnaire-duplication',
-  templateUrl: './questionnaire-duplication.component.html'
+  selector: "src-questionnaire-duplication",
+  templateUrl: "./questionnaire-duplication.component.html"
 })
 export class QuestionnaireDuplicationComponent {
   @Input() questionnaire: any;
   @Input() operation: any;
-  duplicate_questionnaire: { name: string } = { name: '' };
-  constructor(private utilsService: UtilsService, private http: HttpClient, public activeModal: NgbActiveModal, private modalService: NgbModal,) { }
+  duplicate_questionnaire: { name: string } = {name: ""};
+
+  constructor(private utilsService: UtilsService, private http: HttpClient, private modalService: NgbModal) {
+  }
+
   cancel() {
     this.modalService.dismissAll();
   }
+
   confirm() {
     if (this.operation === "duplicate") {
       this.http.post(
@@ -25,9 +29,8 @@ export class QuestionnaireDuplicationComponent {
         }
       ).subscribe(() => {
         this.modalService.dismissAll();
-        this.utilsService.reloadCurrentRoute()
-
-      })
+        this.utilsService.reloadCurrentRoute();
+      });
     }
   }
 }

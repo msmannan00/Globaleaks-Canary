@@ -1,25 +1,19 @@
-import { Injectable } from '@angular/core';
-import {
-    Resolve, Router
-} from '@angular/router';
-import { Observable, of } from 'rxjs';
-import {HttpService} from "../services/http.service";
-import {preferenceResolverModel} from "../../models/resolvers/preferenceResolverModel";
-
-import {AuthenticationService} from "../../services/authentication.service";
-import {catchError, map} from "rxjs/operators";
+import {Injectable} from "@angular/core";
+import {Resolve, Router} from "@angular/router";
+import {Observable, of} from "rxjs";
+import {HttpService} from "@app/shared/services/http.service";
+import {preferenceResolverModel} from "@app/models/resolvers/preferenceResolverModel";
+import {AuthenticationService} from "@app/services/authentication.service";
+import {map} from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class PreferenceResolver implements Resolve<boolean> {
   dataModel: preferenceResolverModel = new preferenceResolverModel();
 
-  constructor(
-    private router: Router,
-    private httpService: HttpService,
-    private authenticationService: AuthenticationService
-  ) {}
+  constructor(private router: Router, private httpService: HttpService, private authenticationService: AuthenticationService) {
+  }
 
   resolve(): Observable<boolean> {
     if (this.authenticationService.isSessionActive()) {

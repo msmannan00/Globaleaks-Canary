@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from "@angular/core";
 import {UtilsService} from "./utils.service";
-import {TranslationService} from "../../services/translation.service";
-import {SubmissionService} from "../../services/submission.service";
-import {AuthenticationService} from "../../services/authentication.service";
-import {AppConfigService} from "../../services/app-config.service";
+import {TranslationService} from "@app/services/translation.service";
+import {SubmissionService} from "@app/services/submission.service";
+import {AuthenticationService} from "@app/services/authentication.service";
+import {AppConfigService} from "@app/services/app-config.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class ServiceInstanceService {
 

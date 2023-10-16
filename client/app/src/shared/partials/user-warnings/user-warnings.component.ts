@@ -1,15 +1,14 @@
-import { Component } from '@angular/core';
-import { AuthenticationService } from 'app/src/services/authentication.service';
-import { PreferenceResolver } from '../../resolvers/preference.resolver';
-import { NodeResolver } from '../../resolvers/node.resolver';
+import {Component} from "@angular/core";
+import {AuthenticationService} from "@app/services/authentication.service";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 
 @Component({
-  selector: 'src-user-warnings',
-  templateUrl: './user-warnings.component.html',
-  styleUrls: ['./user-warnings.component.css'],
+  selector: "src-user-warnings",
+  templateUrl: "./user-warnings.component.html"
 })
-export class UserWarningsComponent  {
+export class UserWarningsComponent {
 
-  constructor(public authentication: AuthenticationService, public preferece:PreferenceResolver, public node:NodeResolver) {
+  constructor(protected authentication: AuthenticationService, protected preferenceResolver: PreferenceResolver, protected nodeResolver: NodeResolver) {
   }
 }

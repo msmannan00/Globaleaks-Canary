@@ -1,22 +1,23 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FieldtemplatesResolver } from 'app/src/shared/resolvers/fieldtemplates.resolver';
-import { HttpService } from 'app/src/shared/services/http.service';
-import { QuestionnariesService } from '../questionnaries.service';
+import {Component, Input, OnInit} from "@angular/core";
+import {FieldTemplatesResolver} from "@app/shared/resolvers/field-templates-resolver.service";
 
 @Component({
-  selector: 'src-step',
-  templateUrl: './step.component.html',
-  styleUrls: ['./step.component.css']
+  selector: "src-step",
+  templateUrl: "./step.component.html"
 })
 export class StepComponent implements OnInit {
   @Input() step: any;
   showAddQuestion: boolean = false;
   showAddQuestionFromTemplate: boolean = false;
-  fieldtemplatesData: any = []
-  constructor(public fieldtemplates: FieldtemplatesResolver, private httpService: HttpService,private questionnariesService: QuestionnariesService) { }
-  ngOnInit(): void {
-    this.fieldtemplatesData = this.fieldtemplates.dataModel
+  fieldTemplatesData: any = [];
+
+  constructor(protected fieldTemplates: FieldTemplatesResolver) {
   }
+
+  ngOnInit(): void {
+    this.fieldTemplatesData = this.fieldTemplates.dataModel;
+  }
+
   toggleAddQuestion(): void {
     this.showAddQuestion = !this.showAddQuestion;
     this.showAddQuestionFromTemplate = false;
@@ -26,12 +27,12 @@ export class StepComponent implements OnInit {
     this.showAddQuestionFromTemplate = !this.showAddQuestionFromTemplate;
     this.showAddQuestion = false;
   }
-  listenToAddField(data: any) {
-    this.showAddQuestion = false
-    // this.questionnariesService.sendData('');
+
+  listenToAddField() {
+    this.showAddQuestion = false;
   }
-  listenToAddFieldFormTemplate(data: any) {
-    this.showAddQuestionFromTemplate = false
-    // this.questionnariesService.sendData('')
+
+  listenToAddFieldFormTemplate() {
+    this.showAddQuestionFromTemplate = false;
   }
 }

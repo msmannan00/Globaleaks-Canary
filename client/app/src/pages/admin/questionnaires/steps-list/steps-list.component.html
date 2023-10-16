@@ -1,4 +1,4 @@
-<div class="configItem">
+<div class="config-item">
     <div class="editorHeader row">
         <span class="col-md-7" (click)="toggleEditing(); $event.stopPropagation();">
             <span class="badge bg-primary">{{index + 1}}</span>
@@ -49,7 +49,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-md-12" *ngIf="node.dataModel.enable_scoring_system">
+            <div class="form-group col-md-12" *ngIf="nodeResolver.dataModel.enable_scoring_system">
                 <label>{{ 'Triggered by score:' | translate }}</label>
                 <select name="step.triggered_by_score" class="form-control" [(ngModel)]="step.triggered_by_score" convert-to-number>
                     <option value="0">{{ 'Low' | translate }}</option>

@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import {Component} from "@angular/core";
 
 @Component({
-  selector: 'src-custodian-sidebar',
-  templateUrl: './sidebar.component.html'
+  selector: "src-custodian-sidebar",
+  templateUrl: "./sidebar.component.html"
 })
 export class SidebarComponent {
 

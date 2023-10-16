@@ -1,5 +1,4 @@
 export class tokenResponse {
-  id: string
-  answer: string
+  id: string;
+  answer: string;
 }
-

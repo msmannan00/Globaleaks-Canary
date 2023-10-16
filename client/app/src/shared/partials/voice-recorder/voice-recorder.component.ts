@@ -1,22 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import * as Flow from '@flowjs/flow.js';
-import { AuthenticationService } from 'app/src/services/authentication.service';
-import { AppDataService } from 'app/src/app-data.service';
-import { SubmissionService } from 'app/src/services/submission.service';
-import { Subscription } from 'rxjs';
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import * as Flow from "@flowjs/flow.js";
+import {AuthenticationService} from "@app/services/authentication.service";
+import {SubmissionService} from "@app/services/submission.service";
+
 @Component({
-  selector: 'src-voice-recorder',
-  templateUrl: './voice-recorder.component.html',
-  styleUrls: ['./voice-recorder.component.css']
+  selector: "src-voice-recorder",
+  templateUrl: "./voice-recorder.component.html"
 })
-export class VoiceRecorderComponent implements OnInit  {
-  @Input() uploads: any
-  @Input() field: any
-  @Input() fileupload_url: any
-  @Input() entryIndex: any
-  @Input() fieldEntry: any
-  _fakemodel: any
-  fileinput: any
+export class VoiceRecorderComponent implements OnInit {
+  @Input() uploads: any;
+  @Input() field: any;
+  @Input() fileUploadUrl: any;
+  @Input() entryIndex: any;
+  @Input() fieldEntry: any;
+  _fakeModel: any;
+  fileInput: any;
   seconds: number = 0;
   activeButton: string | null = null;
   isRecording: boolean = false;
@@ -33,14 +31,16 @@ export class VoiceRecorderComponent implements OnInit  {
   recordButton: boolean;
   vars: any;
   chunks: never[];
-  file: Flow
+  file: Flow;
 
   @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
-  constructor(public authenticationService: AuthenticationService, public appDataService:AppDataService,public submissionService:SubmissionService) { }
+
+  constructor(protected authenticationService: AuthenticationService, private submissionService: SubmissionService) {
+  }
+
   ngOnInit(): void {
-    this.fileinput = this.field ? this.field.id : 'status_page';
-    this.uploads[this.fileinput] = { files: [] }
-    // this._fakemodel[this.fileinput]
+    this.fileInput = this.field ? this.field.id : "status_page";
+    this.uploads[this.fileInput] = {files: []};
   }
 
   async initAudioContext(stream: MediaStream): Promise<void> {
@@ -62,7 +62,7 @@ export class VoiceRecorderComponent implements OnInit  {
     this.activeButton = "record";
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices
-        .getUserMedia({ audio: true })
+        .getUserMedia({audio: true})
         .then((stream) => {
           this.startRecording(fileId, stream);
         })
@@ -79,17 +79,17 @@ export class VoiceRecorderComponent implements OnInit  {
     this.seconds = 0;
     this.startTime = Date.now();
     this.flow = new Flow({
-        target: this.fileupload_url,
-        speedSmoothingFactor: 0.01,
-        singleFile: this.field !== undefined && !this.field.multi_entry,
-        allowDuplicateUploads: false,
-        testChunks: false,
-        permanentErrors: [500, 501],
-        headers: { 'X-Session': this.authenticationService.session.id },
-        query: {
+      target: this.fileUploadUrl,
+      speedSmoothingFactor: 0.01,
+      singleFile: this.field !== undefined && !this.field.multi_entry,
+      allowDuplicateUploads: false,
+      testChunks: false,
+      permanentErrors: [500, 501],
+      headers: {"X-Session": this.authenticationService.session.id},
+      query: {
         type: "audio.webm",
         reference: fileId,
-        },
+      },
     });
 
     this.secondsTracker = setInterval(() => {
@@ -113,7 +113,7 @@ export class VoiceRecorderComponent implements OnInit  {
   async stopRecording(): Promise<void> {
     // this.vars["recording"] = false;
     this.mediaRecorder?.stop();
-    this.recorder?.stop()
+    this.recorder?.stop();
     const tracks = this.mediaRecorder?.stream.getTracks();
     tracks?.forEach((track) => {
       track.stop();
@@ -127,8 +127,8 @@ export class VoiceRecorderComponent implements OnInit  {
         });
       };
     });
-    
-    const { data, name, relativePath } = await dataAvailablePromise;
+
+    const {data, name, relativePath} = await dataAvailablePromise;
     this.recording_blob = data;
     this.recording_blob.name = name;
     this.recording_blob.relativePath = relativePath;
@@ -147,21 +147,22 @@ export class VoiceRecorderComponent implements OnInit  {
     if (this.mediaRecorder && (this.mediaRecorder.state === "recording" || this.mediaRecorder.state === "paused")) {
       this.mediaRecorder.stop();
     }
-    this.onStop()
+    this.onStop();
   }
+
   onStop() {
     this.flow.files = [];
-    if (this.uploads.hasOwnProperty(this.fileinput)) {
-      delete this.uploads[this.fileinput];
+    if (Object.prototype.hasOwnProperty.call(this.uploads, this.fileInput)) {
+      delete this.uploads[this.fileInput];
     }
     if (this.seconds >= parseInt(this.field.attrs.min_len.value) && this.seconds <= parseInt(this.field.attrs.max_len.value)) {
       this.audioPlayer = URL.createObjectURL(this.recording_blob);
       this.flow.addFile(this.recording_blob);
-      this.uploads[this.fileinput] = this.flow;
+      this.uploads[this.fileInput] = this.flow;
       this.submissionService.setSharedData(this.flow);
     }
   }
-  
+
   deleteRecording(): void {
     if (this.flow) {
       this.flow.cancel();
@@ -171,12 +172,13 @@ export class VoiceRecorderComponent implements OnInit  {
     this.seconds = 0;
     this.audioPlayer = null;
     this.submissionService.setSharedData(null);
-    delete this.uploads[this.fileinput];
+    delete this.uploads[this.fileInput];
   }
+
   async enableNoiseSuppression(stream: MediaStream): Promise<void> {
     const supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
     if ("noiseSuppression" in supportedConstraints) {
-      const settings = { noiseSuppression: true };
+      const settings = {noiseSuppression: true};
       stream.getAudioTracks().forEach(track => {
         track.applyConstraints(settings);
       });
@@ -207,5 +209,5 @@ export class VoiceRecorderComponent implements OnInit  {
     compressor.release.value = 0.25;
     return compressor;
   }
-  
+
 }

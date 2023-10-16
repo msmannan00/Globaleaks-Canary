@@ -1,27 +1,24 @@
-import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, TemplateRef, ViewChild} from "@angular/core";
+
 @Component({
-  selector: 'src-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css']
+  selector: "src-settings",
+  templateUrl: "./settings.component.html"
 })
-export class SettingsComponent implements AfterViewInit, OnInit {
-  @ViewChild('tab1') tab1!: TemplateRef<any>;
+export class SettingsComponent implements AfterViewInit {
+  @ViewChild("tab1") tab1!: TemplateRef<any>;
   tabs: any[];
-  nodeData: any
-  active: string
-  constructor() { }
-  ngOnInit() { }
+  nodeData: any;
+  active: string;
 
   ngAfterViewInit(): void {
-    this.active = "Settings"
+    this.active = "Settings";
 
     this.tabs = [
       {
-        title: 'Settings',
+        title: "Settings",
         component: this.tab1
       },
     ];
-
   }
 }
 

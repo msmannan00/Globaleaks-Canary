@@ -1,16 +1,14 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
-import {AuthenticationService} from "../../../services/authentication.service";
+import {ChangeDetectionStrategy, Component} from "@angular/core";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 
 @Component({
-  selector: 'src-admin-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css'],
+  selector: "src-admin-sidebar",
+  templateUrl: "./sidebar.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SidebarComponent  {
+export class SidebarComponent {
 
-  constructor(public node : NodeResolver, public authenticationService:AuthenticationService) {
+  constructor(protected nodeResolver: NodeResolver) {
   }
 
 }

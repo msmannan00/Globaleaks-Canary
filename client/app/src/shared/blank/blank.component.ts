@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import {Component} from "@angular/core";
 
 @Component({
-  selector: 'src-blank',
-  templateUrl: './blank.component.html'
+  selector: "src-blank",
+  templateUrl: "./blank.component.html"
 })
 export class BlankComponent {
 

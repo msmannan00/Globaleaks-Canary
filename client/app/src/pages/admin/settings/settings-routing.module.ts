@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { SettingsComponent } from './settings.component';
+import {NgModule} from "@angular/core";
+import {RouterModule, Routes} from "@angular/router";
+import {SettingsComponent} from "@app/pages/admin/settings/settings.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: SettingsComponent,
-    pathMatch: 'full',
+    pathMatch: "full",
   }
 ];
 
@@ -14,4 +14,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SettingsRoutingModule { }
+export class SettingsRoutingModule {
+}

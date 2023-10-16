@@ -1,4 +1,4 @@
-<div class="configSection row">
+<div class="config-section row">
     <div class="col-md-12">
         <div>
             <span>{{ 'Question templates' | translate }}</span>
@@ -8,15 +8,15 @@
             </button>
             <span class="custom-file">
                 <input type="file" hidden #uploadInput (change)="importQuestion(uploadInput.files)" />
-                <label (click)="uploadInput.click()" class="file-upload btn btn-sm btn-outline-secondary">
+                <label (click)="uploadInput.click()" class="btn btn-sm btn-outline-secondary">
                     <i class="fa-solid fa-upload"></i>
                     {{'Import' | translate}}</label>
             </span>
         </div>
     </div>
-    <div class="configSection col-md-6" *ngIf="showAddQuestion">
+    <div class="config-section col-md-6" *ngIf="showAddQuestion">
         <ng-container *ngIf="questionnairesData.length > 0">
-            <src-add-field [step]="step" [type]="'template'" (dataToParent)="listenToAddField($event)"></src-add-field>
+            <src-add-field [step]="step" [type]="'template'" (dataToParent)="listenToAddField()"></src-add-field>
         </ng-container>
     </div>
     <div class="col-md-12" *ngFor="let field of fields | orderBy:'label' ; let index = index">

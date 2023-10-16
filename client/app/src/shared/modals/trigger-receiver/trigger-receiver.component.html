@@ -18,7 +18,7 @@
     </ng-select>
     <div *ngIf="arg.trigger_receiver">
         <br />
-        <ol class="selectionList">
+        <ol class="selection-list">
             <li *ngFor="let user of arg.trigger_receiver; let i = index">
                 <span class="action-btns">
                     <span (click)="removeReceiver(i)" ngbTooltip="{{ 'Remove' | translate }}">

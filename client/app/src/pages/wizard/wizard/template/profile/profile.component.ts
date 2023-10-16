@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import {Component} from "@angular/core";
 
 @Component({
-  selector: 'src-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  selector: "src-profile",
+  templateUrl: "./profile.component.html"
 })
 export class ProfileComponent {
 

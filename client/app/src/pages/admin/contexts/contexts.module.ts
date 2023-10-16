@@ -1,14 +1,14 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from "@angular/core";
+import {CommonModule} from "@angular/common";
 
-import { ContextsRoutingModule } from './contexts-routing.module';
-import { ContextsComponent } from './contexts.component';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { NgbNavModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { SharedModule } from 'app/src/shared.module';
-import { ContextEditorComponent } from './context-editor/context-editor.component';
+import {ContextsRoutingModule} from "@app/pages/admin/contexts/contexts-routing.module";
+import {ContextsComponent} from "@app/pages/admin/contexts/contexts.component";
+import {FormsModule} from "@angular/forms";
+import {RouterModule} from "@angular/router";
+import {NgbNavModule, NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgSelectModule} from "@ng-select/ng-select";
+import {SharedModule} from "@app/shared.module";
+import {ContextEditorComponent} from "@app/pages/admin/contexts/context-editor/context-editor.component";
 
 
 @NgModule({
@@ -18,7 +18,8 @@ import { ContextEditorComponent } from './context-editor/context-editor.componen
   ],
   imports: [
     CommonModule,
-    ContextsRoutingModule, SharedModule,NgbNavModule,NgbModule,RouterModule,FormsModule,NgSelectModule
+    ContextsRoutingModule, SharedModule, NgbNavModule, NgbModule, RouterModule, FormsModule, NgSelectModule
   ]
 })
-export class ContextsModule { }
+export class ContextsModule {
+}

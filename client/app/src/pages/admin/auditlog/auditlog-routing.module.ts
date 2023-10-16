@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import {AuditlogComponent} from "./auditlog.component";
+import {NgModule} from "@angular/core";
+import {RouterModule, Routes} from "@angular/router";
+import {AuditLogComponent} from "@app/pages/admin/auditlog/audit-log.component";
 
 const routes: Routes = [
   {
-    path: '',
-    component: AuditlogComponent,
-    pathMatch: 'full',
+    path: "",
+    component: AuditLogComponent,
+    pathMatch: "full",
   }
 ];
 
@@ -14,4 +14,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AuditLogRoutingModule { }
+export class AuditLogRoutingModule {
+}

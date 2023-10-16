@@ -9,13 +9,13 @@
 		<div class="form-group">
 			<div class="input-group">
 				<input class="d-none" type="password" name="disable-autocomplete-hack" />
-				<input [autocomplete]="'off'" #receiptinput="ngModel" [(ngModel)]="formatted_receipt" id="receipt-input" class="form-control left-radius"
-					type="text" autocomplete="receipt" name="receipt" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" size="19" customReceiptValidator>
+				<input [autocomplete]="'off'" #receiptinput="ngModel" [(ngModel)]="formattedReceipt" id="receipt-input" class="form-control left-radius"
+                       type="text" autocomplete="receipt" name="receipt" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" size="19" customReceiptValidator>
 
 				<button
-					[disabled]="formatted_receipt.length < 16 || authenticationService.loginInProgress || !receiptinput.errors?.['receiptvalidator']"
-					(click)="authenticationService.login(0, 'whistleblower', formatted_receipt)" id="ReceiptButton"
-					class="btn btn-primary right-radius" type="submit">
+                        [disabled]="formattedReceipt.length < 16 || authenticationService.loginInProgress || !receiptinput.errors?.['receiptvalidator']"
+                        (click)="authenticationService.login(0, 'whistleblower', formattedReceipt)" id="ReceiptButton"
+                        class="btn btn-primary right-radius" type="submit">
 					<span>
 						{{'Log in'|translate}}
 					</span>
@@ -24,6 +24,6 @@
 		</div>
 	</div>
 </form>
-<div *ngIf="appDataService.errorCodes.code == 9" class="LoginErrorBoxHomepage text-danger">
+<div *ngIf="appDataService.errorCodes.code === 9" class="login-error-box-homepage text-danger">
 	{{'The receipt is either invalid or the report has expired.'|translate}}
 </div>

@@ -1,24 +1,16 @@
-import {Component, Input} from '@angular/core';
-import {WbtipService} from "../../../services/wbtip.service";
+import {Component, Input} from "@angular/core";
 
 @Component({
-  selector: 'src-tip-field',
-  templateUrl: './tip-field.component.html',
-  styleUrls: ['./tip-field.component.css']
+  selector: "src-tip-field",
+  templateUrl: "./tip-field.component.html"
 })
 export class TipFieldComponent {
   @Input() fields: any;
   @Input() index: number;
-  @Input() fieldAnswers:any
-  @Input() preview:boolean = false;
+  @Input() fieldAnswers: any;
+  @Input() preview: boolean = false;
 
-  // preview: boolean = false;
-  hasMultipleEntries(field_answer:any) {
+  hasMultipleEntries(field_answer: any) {
     return field_answer.length > 1;
   };
-
-  constructor(public wbtipService:WbtipService) {
-  }
-
-  protected readonly JSON = JSON;
 }

@@ -1,8 +1,8 @@
-import { ComponentFactoryResolver, Directive, Input, ViewContainerRef } from '@angular/core';
-import { ImageUploadComponent } from '../partials/image-upload/image-upload.component';
+import {ComponentFactoryResolver, Directive, Input, ViewContainerRef} from "@angular/core";
+import {ImageUploadComponent} from "@app/shared/partials/image-upload/image-upload.component";
 
 @Directive({
-  selector: '[appImageUpload]',
+  selector: "[appImageUpload]",
 })
 export class ImageUploadDirective {
   @Input() imageUploadModel: any;
@@ -10,10 +10,8 @@ export class ImageUploadDirective {
   @Input() imageUploadId: string;
   @Input() imageSrcUrl: string;
 
-  constructor(
-    private viewContainerRef: ViewContainerRef,
-    private componentFactoryResolver: ComponentFactoryResolver
-  ) {}
+  constructor(private viewContainerRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) {
+  }
 
   ngOnInit() {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ImageUploadComponent);

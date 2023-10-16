@@ -1,14 +1,13 @@
-import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { NodeResolver } from 'app/src/shared/resolvers/node.resolver';
+import {AfterViewInit, Component, TemplateRef, ViewChild, ChangeDetectorRef} from "@angular/core";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 
 @Component({
-  selector: 'src-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  selector: "src-users",
+  templateUrl: "./users.component.html"
 })
-export class UsersComponent implements AfterViewInit, OnInit {
-  @ViewChild('tab1') tab1!: TemplateRef<any>;
-  @ViewChild('tab2') tab2!: TemplateRef<any>;
+export class UsersComponent implements AfterViewInit {
+  @ViewChild("tab1") tab1!: TemplateRef<any>;
+  @ViewChild("tab2") tab2!: TemplateRef<any>;
   tabs: any[];
   nodeData: any;
   active: string;
@@ -16,10 +15,8 @@ export class UsersComponent implements AfterViewInit, OnInit {
   constructor(
     public node: NodeResolver,
     private cdr: ChangeDetectorRef
-  ) { }
-
-  ngOnInit() { }
-
+  ) {
+  }
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.active = "Users";
@@ -27,11 +24,11 @@ export class UsersComponent implements AfterViewInit, OnInit {
       this.nodeData = this.node;
       this.tabs = [
         {
-          title: 'Users',
+          title: "Users",
           component: this.tab1
         },
         {
-          title: 'Options',
+          title: "Options",
           component: this.tab2
         },
       ];

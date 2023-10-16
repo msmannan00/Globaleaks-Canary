@@ -5,7 +5,7 @@
     <div *ngIf="selectable_contexts.length > 1 || context_id">
         <div class="title">{{submission.context.name}}</div>
         <div class="row">
-            <div class="col-md-2" *ngIf="submission.context.picture"><img class="contextImg" alt="context picture" src="/s/{{submission.context.id}}" /></div>
+            <div class="col-md-2" *ngIf="submission.context.picture"><img class="context-image" alt="context picture" src="/s/{{submission.context.id}}" /></div>
         </div>
     </div>
     <form #submissionForm="ngForm" autocomplete="off" novalidate [ngClass]="{'was-validated': displayErrors()}">
@@ -13,19 +13,19 @@
             <ul id="SubmissionTabsNavigationBox" class="nav nav-tabs" *ngIf="submission.context.show_steps_navigation_interface && submission.context.questionnaire.steps.length > 1">
                 <li *ngIf="submission.context.allow_recipients_selection" class="nav-item">
                     <a href="#" id="receiver-selection-link" [ngClass]="{active: navigation === -1}" class="nav-link nav-link-custom" (click)="goToStep(-1)">
-                        <span class="StepIndex" [ngClass]="{'StepIndexSelected': navigation === -1}">1</span> <span class="StepLabel">{{'Recipient selection'|translate}}</span>
+                        <span class="step-index" [ngClass]="{'step-index-selected': navigation === -1}">1</span> <span class="step-label">{{'Recipient selection'|translate}}</span>
                     </a>
                 </li>
                 <li id="context-{{index}}" *ngFor="let step of (submission.context.questionnaire.steps | orderBy:'order');let index = index" class="nav-item">
                 <div *ngIf="step.enabled">
                     <a href="#"  id="step-{{index}}-link" [ngClass]="{active: navigation === index}" class="nav-link nav-link-custom" (click)="goToStep(index)">
-                        <span class="StepIndex" [ngClass]="{'StepIndexSelected': navigation === index}">{{index + (submission.context.allow_recipients_selection ? 2 : 1)}}</span> <span class="StepLabel">{{step.label}}</span>
+                        <span class="step-index" [ngClass]="{'step-index-selected': navigation === index}">{{index + (submission.context.allow_recipients_selection ? 2 : 1)}}</span> <span class="step-label">{{step.label}}</span>
                     </a>
                 </div>
             </ul>
             <div id="SubmissionTabsContentBox" class="tab-content">
                 <div *ngIf="displayErrors()">
-                    <src-submission-error [field_id_map]="field_id_map" [stepforms]="stepforms" [submission]="submission" [uploads]="submission.uploads" [stepform]="stepForm" [hasPreviousStep] = hasPreviousStep() [areRecieverSelected] = areReceiversSelected() [displayStepErrors]="displayStepErrors"  [submissionForm]="submissionForm" ></src-submission-error>
+                    <src-submission-error [field_id_map]="field_id_map" [stepForms]="stepForms" [submission]="submission" [uploads]="submission.uploads" [stepForm]="stepForm" [hasPreviousStep] = hasPreviousStep() [areReceiverSelected] = areReceiversSelected() [displayStepErrors]="displayStepErrors" [submissionForm]="submissionForm" ></src-submission-error>
                 </div>
                 <div id="step-receiver-selection" *ngIf="submission.context.allow_recipients_selection">
                     <div *ngIf="navigation === -1">
@@ -38,7 +38,7 @@
                             <div [class.hidden]="navigation !== index">
                                 <div id="step-{{index}}" ngForm #stepform="ngForm" ngFormChanges (ngFormChange)="onFormChange()">
                                     <markdown *ngIf="step.description" class="description" [data]="step.description | stripHtml"></markdown>
-                                    <src-form (notifyFileUpload)="notifyFileUpload($event)" [fileupload_url]="'api/whistleblower/submission/attachment'" [identity_provided]=identity_provided [uploads]="uploads" [displayErrors]="displayErrors()" [answers]="answers" [submission]="submission" [step]="step" [index]="index"></src-form>
+                                    <src-form (notifyFileUpload)="notifyFileUpload($event)" [fileUploadUrl]="'api/whistleblower/submission/attachment'" [identity_provided]=identity_provided [uploads]="uploads" [displayErrors]="displayErrors()" [answers]="answers" [submission]="submission" [step]="step" [index]="index"></src-form>
                                 </div>
                             </div>
                         </span>
@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-        <div id="SubmissionButtons">
+        <div id="submission-buttons">
             <button id="PreviousStepButton" class="btn btn-outline-secondary" *ngIf="hasPreviousStep()" (click)="decrementStep()">
                 <i class="fa-solid fa-arrow-circle-left"></i>
                 <span>{{'Previous'|translate}}</span>
@@ -57,7 +57,7 @@
                 <i class="fa-solid fa-arrow-circle-right"></i>
             </button>
 
-            <src-rfiles-upload-status [progress]="calculateProgress()" [estimatedtime]="calculateEstimatedTime()" [uploading]="uploading()" *ngIf="!hasNextStep() && uploading()"></src-rfiles-upload-status>
+            <src-rfiles-upload-status [progress]="calculateProgress()" [estimatedTime]="calculateEstimatedTime()" [uploading]="uploading()" *ngIf="!hasNextStep() && uploading()"></src-rfiles-upload-status>
             <button id="SubmitButton" class="btn btn-primary" *ngIf="!hasNextStep()" (click)="completeSubmission()" [disabled]="!authenticationService.session || submission.blocked || done" type="submit">{{'Submit'|translate}}</button>
         </div>
     </form>

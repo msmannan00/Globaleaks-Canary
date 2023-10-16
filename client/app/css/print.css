@@ -1,8 +1,8 @@
 @media print {
-  #HeaderBox,
-  #FooterBox,
-  #Toolbar,
-  #TipInfoBox .panel-heading,
+  #header-box,
+  #footer-box,
+  #toolbar,
+  #tip-info-box .panel-heading,
   .popover *,
   .popover .arrow,
   .fa-collapse-down,

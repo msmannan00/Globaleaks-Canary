@@ -5,10 +5,8 @@
             <div class="card-header">{{ 'Automatic configuration' | translate }}</div>
             <div class="card-body">
                 <p>
-                    {{ 'Using automatic HTTPS configuration will handle the entire process of requesting, enabling and
-                    renewing certificates from the Let\'s Encrypt Certificate Authority.' | translate }}
-                    {{ 'The platform must be reachable through a public IP address and the selected hostname must have a
-                    DNS record referencing that address.' | translate }}
+                    {{ 'Using automatic HTTPS configuration will handle the entire process of requesting, enabling and renewing certificates from the Let\'s Encrypt Certificate Authority.' | translate }}
+                    {{ 'The platform must be reachable through a public IP address and the selected hostname must have a DNS record referencing that address.' | translate }}
                 </p>
                 <button id="HTTPSAutoMode" class="btn btn-primary" (click)="setupAcme()">{{ 'Proceed' | translate }}</button>
             </div>
@@ -18,8 +16,7 @@
         <div class="card card-default">
             <div class="card-header">{{ 'Manual configuration' | translate }}</div>
             <div class="card-body">
-                <p>{{ 'The manual configuration wizard will guide you through the setup of HTTPS from an alternative
-                    Certificate Authority.' | translate }}</p>
+                <p>{{ 'The manual configuration wizard will guide you through the setup of HTTPS from an alternative Certificate Authority.' | translate }}</p>
                 <button id="HTTPSManualMode" class="btn btn-primary" (click)="setup()">{{ 'Proceed' | translate }}</button>
             </div>
         </div>

@@ -1,41 +1,37 @@
-import {Component, OnInit} from '@angular/core';
-import {IarsResolver} from "../../../shared/resolvers/iars.resolver";
-import {UtilsService} from "../../../shared/services/utils.service";
-import {HttpService} from "../../../shared/services/http.service";
-import {RequestSupportComponent} from "../../../shared/modals/request-support/request-support.component";
+import {Component} from "@angular/core";
+import {IarResolver} from "@app/shared/resolvers/iar-resolver.service";
+import {UtilsService} from "@app/shared/services/utils.service";
+import {HttpService} from "@app/shared/services/http.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {
-  TipOperationFileIdentityAccessRequestComponent
-} from "../../../shared/modals/tip-operation-file-identity-access-request/tip-operation-file-identity-access-request.ompoent";
-import {
   TipOperationFileIdentityAccessReplyComponent
-} from "../../../shared/modals/tip-operation-file-identity-access-reply/tip-operation-file-identity-access-reply.component";
+} from "@app/shared/modals/tip-operation-file-identity-access-reply/tip-operation-file-identity-access-reply.component";
 
 @Component({
-  selector: 'src-identity-access-requests',
-  templateUrl: './identity-access-requests.component.html'
+  selector: "src-identity-access-requests",
+  templateUrl: "./identity-access-requests.component.html"
 })
-export class IdentityAccessRequestsComponent implements OnInit{
+export class IdentityAccessRequestsComponent {
 
-  constructor(private modalService: NgbModal, private httpService: HttpService, public iarsResolver:IarsResolver, public utilsService:UtilsService) {
+  constructor(private modalService: NgbModal, private httpService: HttpService, protected iarResolver: IarResolver, protected utilsService: UtilsService) {
   }
 
-  ngOnInit(): void {
-  }
-
-  authorize_identity_access_request(iar_id:string){
-    this.httpService.authorizeIdentity("api/custodian/iars/" + iar_id, {"reply": "authorized", "reply_motivation": ""}).subscribe(
+  authorize_identity_access_request(iar_id: string) {
+    this.httpService.authorizeIdentity("api/custodian/iars/" + iar_id, {
+      "reply": "authorized",
+      "reply_motivation": ""
+    }).subscribe(
       {
         next: () => {
-          this.utilsService.reloadCurrentRoute()
+          this.utilsService.reloadCurrentRoute();
         }
       }
     );
   }
 
-  file_denied_identity_access_reply(iar_id:string){
+  fileDeniedIdentityAccessReply(iar_id: string) {
     const modalRef = this.modalService.open(TipOperationFileIdentityAccessReplyComponent);
-    modalRef.componentInstance.iar_id = iar_id
+    modalRef.componentInstance.iar_id = iar_id;
   }
 
 }

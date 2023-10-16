@@ -1,37 +1,35 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import {HomeComponent} from "./home/home.component";
-import { PreferenceResolver } from 'app/src/shared/resolvers/preference.resolver';
-import { TipsComponent } from './tips/tips.component';
-import { SettingsComponent } from './settings/settings.component';
-// import { TipComponent } from './tip/tip.component';
-import {PreferencesComponent} from "../../shared/partials/preferences/preferences.component";
+import {NgModule} from "@angular/core";
+import {RouterModule, Routes} from "@angular/router";
+import {HomeComponent} from "@app/pages/recipient/home/home.component";
+import {TipsComponent} from "@app/pages/recipient/tips/tips.component";
+import {SettingsComponent} from "@app/pages/recipient/settings/settings.component";
+import {PreferencesComponent} from "@app/shared/partials/preferences/preferences.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: HomeComponent,
-    pathMatch: 'full',
+    pathMatch: "full",
   },
   {
-    path: 'home',
+    path: "home",
     component: HomeComponent,
-    pathMatch: 'full',
+    pathMatch: "full",
   },
   {
-    path: 'reports',
+    path: "reports",
     component: TipsComponent,
-    pathMatch: 'full',
+    pathMatch: "full",
   },
   {
-    path: 'settings',
+    path: "settings",
     component: SettingsComponent,
-    pathMatch: 'full',
+    pathMatch: "full",
   },
   {
-    path: 'preferences',
+    path: "preferences",
     component: PreferencesComponent,
-    pathMatch: 'full',
+    pathMatch: "full",
   }
 ];
 
@@ -39,4 +37,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class RecipientRoutingModule {}
+export class RecipientRoutingModule {
+}

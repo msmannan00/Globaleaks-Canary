@@ -1,12 +1,12 @@
-import {HttpClient} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
-import {NgbDateStruct, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {UtilsService} from '../../services/utils.service';
+import {HttpClient} from "@angular/common/http";
+import {Component, Input} from "@angular/core";
+import {NgbDateStruct, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 
 @Component({
-  selector: 'src-tip-operation-set-reminder',
-  templateUrl: './tip-operation-set-reminder.component.html'
+  selector: "src-tip-operation-set-reminder",
+  templateUrl: "./tip-operation-set-reminder.component.html"
 })
 export class TipOperationSetReminderComponent {
   @Input() args: any;
@@ -14,19 +14,16 @@ export class TipOperationSetReminderComponent {
   request_motivation: any;
   model: NgbDateStruct;
 
-  constructor(
-    private modalService: NgbModal,
-    private http: HttpClient,
-    private utils: UtilsService) {
+  constructor(private modalService: NgbModal, private http: HttpClient, private utils: UtilsService) {
   }
 
   confirm() {
-    this.cancel()
+    this.cancel();
 
     if (this.args.operation === "postpone" || this.args.operation === "set_reminder") {
       let date: number;
       const {year, month, day} = this.args.reminder_date;
-      let dateData = new Date(year, month - 1, day);
+      const dateData = new Date(year, month - 1, day);
       const timestamp = dateData.getTime();
       if (this.args.operation === "postpone")
         date = this.args.expiration_date.getTime();
@@ -51,7 +48,7 @@ export class TipOperationSetReminderComponent {
   }
 
   disableReminder() {
-    this.cancel()
+    this.cancel();
     const req = {
       "operation": "set_reminder",
       "args": {
@@ -76,7 +73,7 @@ export class TipOperationSetReminderComponent {
     const reminderDate = this.args.reminder_date;
     this.args.reminder_date = {
       year: reminderDate.getUTCFullYear(),
-      month: reminderDate.getUTCMonth() + 1, // Add 1 since NgbDateStruct months are 1-based
+      month: reminderDate.getUTCMonth() + 1,
       day: reminderDate.getUTCDate()
     };
   }

@@ -1,4 +1,4 @@
-import { PageIdleDetector } from './PageIdleDetector';
+import {PageIdleDetector} from "./PageIdleDetector";
 
 declare global {
   namespace Cypress {
@@ -6,7 +6,7 @@ declare global {
       waitForLoader: () => void;
       waitForPageIdle: () => void;
       logout: () => void;
-      takeScreenshot: (filename: string, locator?:any) => void;
+      takeScreenshot: (filename: string, timeout: number, locator?: any) => void;
       waitUntilClickable: (locator: string, timeout?: number) => void;
       waitForUrl: (url: string, timeout?: number) => Chainable<any>;
       login_admin: (username?: string, password?: string, url?: string, firstlogin?: boolean) => void;
@@ -17,8 +17,8 @@ declare global {
 }
 
 Cypress.Commands.add("waitForPageIdle", () => {
-    const pageIdleDetector = new PageIdleDetector();
-    pageIdleDetector.waitForPageToBeIdle();
+  const pageIdleDetector = new PageIdleDetector();
+  pageIdleDetector.waitForPageToBeIdle();
   }
 );
 
@@ -30,10 +30,10 @@ Cypress.Commands.add("login_receiver", (username, password, url, firstlogin) => 
   let finalURL = "/actions/forcedpasswordchange";
 
   cy.visit(url);
-  cy.get('[name="username"]').type(username);
+  cy.get("[name=\"username\"]").type(username);
 
   // @ts-ignore
-  cy.get('[name="password"]').type(password);
+  cy.get("[name=\"password\"]").type(password);
   cy.get("#login-button").click();
 
   if (!firstlogin) {
@@ -57,9 +57,9 @@ Cypress.Commands.add("login_custodian", (username, password, url, firstlogin) =>
   let finalURL = "/actions/forcedpasswordchange";
 
   cy.visit(url);
-  cy.get('[name="username"]').type(username);
+  cy.get("[name=\"username\"]").type(username);
   // @ts-ignore
-  cy.get('[name="password"]').type(password);
+  cy.get("[name=\"password\"]").type(password);
   cy.get("#login-button").click();
 
   if (!firstlogin) {
@@ -74,12 +74,12 @@ Cypress.Commands.add("login_custodian", (username, password, url, firstlogin) =>
 
 });
 
-Cypress.Commands.add("takeScreenshot", (filename, locator?:any) => {
-  if (!Cypress.env('takeScreenshots')) {
+Cypress.Commands.add("takeScreenshot", (filename, timeout: number = 0, _?: any) => {
+  if (!Cypress.env("takeScreenshots")) {
     return;
   }
 
-  cy.wait(1000)
+  cy.wait(timeout);
   cy.get("html, body").invoke(
     "attr",
     "style",
@@ -99,22 +99,19 @@ Cypress.Commands.add("takeScreenshot", (filename, locator?:any) => {
 
 Cypress.Commands.add("waitUntilClickable", (locator: string, timeout?: number) => {
   const t = timeout === undefined ? Cypress.config().defaultCommandTimeout : timeout;
-  cy.get(locator).click({ timeout: t });
+  cy.get(locator).click({timeout: t});
 });
 
 Cypress.Commands.add("waitForLoader", () => {
-  // Use cy.intercept to wait for all ongoing HTTP requests to complete
   cy.intercept("**").as("httpRequests");
 
-  cy.get("#PageOverlay", { timeout: 1000, log: false }) // Adjust the timeout as needed
+  cy.get("#PageOverlay", {timeout: 1000, log: false})
     .should(($overlay) => {
-      return new Cypress.Promise((resolve, reject) => {
-        let visible = false;
-        let startTime = Date.now();
+      return new Cypress.Promise((resolve, _) => {
+        const startTime = Date.now();
 
         const checkVisibility = () => {
           if (Cypress.$($overlay).is(":visible")) {
-            visible = true;
             resolve();
           } else if (Date.now() - startTime > 2000) {
             resolve();
@@ -128,15 +125,13 @@ Cypress.Commands.add("waitForLoader", () => {
     })
     .then(() => {
       cy.wait("@httpRequests");
-      cy.wait(1000)
     });
 });
 
 
-
 Cypress.Commands.add("waitForUrl", (url: string, timeout?: number) => {
   const t = timeout === undefined ? Cypress.config().defaultCommandTimeout : timeout;
-  return cy.url().should("include", url, { timeout: t });
+  return cy.url().should("include", url, {timeout: t});
 });
 
 Cypress.Commands.add("login_admin", (username, password, url, firstlogin) => {
@@ -148,10 +143,9 @@ Cypress.Commands.add("login_admin", (username, password, url, firstlogin) => {
 
   cy.visit(url);
 
-  cy.get('[name="username"]').type(username);
+  cy.get("[name=\"username\"]").type(username);
 
-  // @ts-ignore
-  cy.get('[name="password"]').type(password);
+  cy.get("[name=\"password\"]").type(password);
   cy.get("#login-button").click();
 
   if (firstlogin) {

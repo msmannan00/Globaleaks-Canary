@@ -1,7 +1,8 @@
 export class PageIdleDetector {
-  private defaultOptions = { timeout: 60000 };
+  private defaultOptions = {timeout: 60000};
 
-  constructor() {}
+  constructor() {
+  }
 
   waitForPageToBeIdle() {
     this.waitForPageToLoad();
@@ -12,9 +13,9 @@ export class PageIdleDetector {
 
   private waitForPageToLoad(options = this.defaultOptions) {
     cy.document(options).should((myDocument) => {
-      expect(myDocument.readyState, 'WaitForPageToLoad').to.be.oneOf([
-        'interactive',
-        'complete'
+      expect(myDocument.readyState, "WaitForPageToLoad").to.be.oneOf([
+        "interactive",
+        "complete"
       ]);
     });
   }
@@ -24,7 +25,7 @@ export class PageIdleDetector {
       if (!!myWindow.angular) {
         expect(
           this.numberOfPendingAngularRequests(myWindow),
-          'WaitForAngularRequestsToComplete'
+          "WaitForAngularRequestsToComplete"
         ).to.have.length(0);
       }
     });
@@ -35,14 +36,14 @@ export class PageIdleDetector {
       if (!!myWindow.angular) {
         expect(
           this.angularRootScopePhase(myWindow),
-          'WaitForAngularDigestCycleToComplete'
+          "WaitForAngularDigestCycleToComplete"
         ).to.be.null;
       }
     });
   }
 
   private waitForAnimationsToStop(options = this.defaultOptions) {
-    cy.get(':animated', options).should('not.exist');
+    cy.get(":animated", options).should("not.exist");
   }
 
   private getInjector(myWindow: any) {
@@ -50,11 +51,11 @@ export class PageIdleDetector {
   }
 
   private numberOfPendingAngularRequests(myWindow: any) {
-    return this.getInjector(myWindow).get('$http').pendingRequests;
+    return this.getInjector(myWindow).get("$http").pendingRequests;
   }
 
   private angularRootScopePhase(myWindow: any) {
-    return this.getInjector(myWindow).get('$rootScope').$$phase;
+    return this.getInjector(myWindow).get("$rootScope").$$phase;
   }
 
 }

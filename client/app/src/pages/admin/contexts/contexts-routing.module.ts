@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ContextsComponent } from './contexts.component';
+import {NgModule} from "@angular/core";
+import {RouterModule, Routes} from "@angular/router";
+import {ContextsComponent} from "@app/pages/admin/contexts/contexts.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: ContextsComponent,
-    pathMatch: 'full',
+    pathMatch: "full",
   }
 ];
 
@@ -14,4 +14,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ContextsRoutingModule { }
+export class ContextsRoutingModule {
+}

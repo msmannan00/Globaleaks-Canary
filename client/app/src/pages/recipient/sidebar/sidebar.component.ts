@@ -1,16 +1,14 @@
-import { Component } from '@angular/core';
-import { PreferenceResolver } from 'app/src/shared/resolvers/preference.resolver';
-import {TranslateService} from "@ngx-translate/core";
+import {Component} from "@angular/core";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 
 @Component({
-  selector: 'src-receipt-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  selector: "src-receipt-sidebar",
+  templateUrl: "./sidebar.component.html"
 })
-export class SidebarComponent  {
+export class SidebarComponent {
   message: string;
 
-  constructor(public preferenceResolver: PreferenceResolver) {
+  constructor(protected preferenceResolver: PreferenceResolver) {
   }
- 
+
 }

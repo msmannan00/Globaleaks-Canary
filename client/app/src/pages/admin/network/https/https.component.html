@@ -2,16 +2,16 @@
     <form name="adminNetForm" #adminNetForm="ngForm" novalidate>
         <p class="input-group">
             <span class="input-group-prepend"><span class="input-group-text">{{ 'Hostname' | translate }}</span></span>
-            <input name="hostname" class="form-control" type="text" [(ngModel)]="node.dataModel.hostname"
-                #hostname="ngModel" [pattern]="Constants.hostname_regexp"
+            <input name="hostname" class="form-control" type="text" [(ngModel)]="nodeResolver.dataModel.hostname"
+                #hostname="ngModel" [pattern]="Constants.hostnameRegexp"
                 [ngClass]="{'is-invalid': hostname.errors?.['pattern']}" />
             <span class="input-group-append">
-                <button class="btn btn-primary" (click)="updateHostname(node.dataModel.hostname)" [disabled]="adminNetForm.pristine">{{ 'Save' | translate }}</button>
+                <button class="btn btn-primary" (click)="updateHostname(nodeResolver.dataModel.hostname)" [disabled]="adminNetForm.pristine">{{ 'Save' | translate }}</button>
             </span>
         </p>
     </form>
 </div>
-<div id="HTTPSSettings" *ngIf="node.dataModel.hostname">
+<div id="HTTPSSettings" *ngIf="nodeResolver.dataModel.hostname">
     <div class="card card-default">
         <div class="card-body" [ngSwitch]="menuState">
             <div *ngSwitchCase="'setup'">

@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { NetworkComponent } from './network.component';
+import {NgModule} from "@angular/core";
+import {RouterModule, Routes} from "@angular/router";
+import {NetworkComponent} from "@app/pages/admin/network/network.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: NetworkComponent,
-    pathMatch: 'full',
+    pathMatch: "full",
   }
 ];
 
@@ -14,4 +14,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class NetworkRoutingModule { }
+export class NetworkRoutingModule {
+}

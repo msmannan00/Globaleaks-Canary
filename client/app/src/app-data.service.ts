@@ -1,24 +1,20 @@
-import { Injectable } from '@angular/core';
-import {errorCodes} from "./models/app/error-code";
-import {Root} from "./models/app/public-model";
+import {Injectable} from "@angular/core";
+import {errorCodes} from "@app/models/app/error-code";
+import {Root} from "@app/models/app/public-model";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AppDataService {
-
-  constructor() {
-
-  }
 
   public = <Root>{};
   started = false;
   showLoadingPanel = false;
-  errorCodes = new errorCodes()
-  pageTitle = "Globaleaks"
-  projectTitle = ""
-  header_title = ""
-  page = "homepage"
+  errorCodes = new errorCodes();
+  pageTitle = "Globaleaks";
+  projectTitle = "";
+  header_title = "";
+  page = "homepage";
   languages_enabled = new Map<number, any>();
   sidebar = "";
 
@@ -27,12 +23,12 @@ export class AppDataService {
   connection: { tor: any };
   languages_enabled_selector: any[];
   ctx: string;
-  receipt:string
+  receipt: string;
   score: number;
 
-  receivers_by_id:any = {}
-  submission_statuses: any;
+  receivers_by_id: any = {};
+  submissionStatuses: any;
   submission_statuses_by_id: any;
-  contexts_by_id:any = {}
-  questionnaires_by_id:any = {}
+  contexts_by_id: any = {};
+  questionnaires_by_id: any = {};
 }

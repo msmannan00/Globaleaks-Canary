@@ -1,4 +1,4 @@
-<div class="configItem">
+<div class="config-item">
     <div class="editorHeader">
         <div class="row" (click)="field.editable && toggleEditing(); $event.stopPropagation();">
             <div class="col-md-6">
@@ -320,7 +320,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group" *ngIf="node.dataModel.enable_scoring_system">
+                    <div class="form-group" *ngIf="nodeResolver.dataModel.enable_scoring_system">
                         <label>{{ 'Triggered by score' | translate }}:</label>
                         <select class="form-control" [(ngModel)]="field.triggered_by_score" convert-to-number>
                             <option value="0">{{ 'Low' | translate }}</option>
@@ -383,7 +383,7 @@
                             </button>
                         </label>
                         <div class="col-md-12">
-                            <div class="fieldOption" *ngFor="let option of field.options; let i = index">
+                            <div class="field-option" *ngFor="let option of field.options; let i = index">
                                 <div class="row">
                                     <div class="col-md-1">
                                         <div class="badge bg-secondary">{{ i + 1 }}</div>
@@ -429,7 +429,7 @@
                                                 <i class="fa-solid fa-user"></i>
                                             </button>
                                         </span>
-                                        <span *ngIf="node.dataModel.enable_scoring_system">
+                                        <span *ngIf="nodeResolver.dataModel.enable_scoring_system">
                                             <button class="btn btn-sm"
                                                 [ngClass]="option.score_type !== 'none' ? 'btn-primary' : 'btn-outline-secondary'"
                                                 (click)="assignScorePointsDialog(option)"
@@ -463,18 +463,18 @@
                                 <span>{{ 'Add new question' | translate }}</span>
                             </button>
                             <button class="btn btn-sm btn-primary show-add-question-from-template-btn"
-                                (click)="toggleAddQuestionFromTemplate()" *ngIf="fieldtemplatesData.length > 0">
+                                (click)="toggleAddQuestionFromTemplate()" *ngIf="fieldTemplatesData.length > 0">
                                 <i class="fa-solid fa-plus"></i>
                                 <span>{{ 'Add question from template' | translate }}</span>
                             </button>
                         </div>
                         <div class="row" *ngIf="field.editable && field.type === 'fieldgroup'">
                             <div class="col-md-12" *ngIf="showAddQuestion">
-                                <src-add-field [step]="field" [type]="'field'" (dataToParent)="listenToAddField($event)"></src-add-field>
+                                <src-add-field [step]="field" [type]="'field'" (dataToParent)="listenToAddField()"></src-add-field>
                             </div>
                             <div class="col-md-12" *ngIf="showAddQuestionFromTemplate">
-                                <src-add-field-from-template [fieldtemplatesData]="fieldtemplatesData" [step]="field"
-                                    [type]="'field'" (dataToParent)="listenToAddFieldFormTemplate($event)"></src-add-field-from-template>
+                                <src-add-field-from-template [fieldTemplatesData]="fieldTemplatesData" [step]="field"
+                                                             [type]="'field'" (dataToParent)="listenToAddFieldFormTemplate()"></src-add-field-from-template>
                             </div>
                         </div>
                         <div class="configuredFields">

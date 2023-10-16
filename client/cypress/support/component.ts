@@ -1,12 +1,12 @@
-import './commands'
-import { mount } from 'cypress/angular'
+import "./commands";
+import {mount} from "cypress/angular";
 
 declare global {
   namespace Cypress {
     interface Chainable {
-      mount: typeof mount
+      mount: typeof mount;
     }
   }
 }
 
-Cypress.Commands.add('mount', mount)
+Cypress.Commands.add("mount", mount);

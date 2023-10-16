@@ -1,25 +1,23 @@
-import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, AfterViewInit } from '@angular/core';
-import { PreferenceTab1Component } from "../preference-tabs/preference-tab1/preference-tab1.component";
-import { PreferenceTab2Component } from "../preference-tabs/preference-tab2/preference-tab2.component";
-import {NgForm} from "@angular/forms";
+import {Component} from "@angular/core";
+import {PreferenceTab1Component} from "@app/shared/partials/preference-tabs/preference-tab1/preference-tab1.component";
+import {PreferenceTab2Component} from "@app/shared/partials/preference-tabs/preference-tab2/preference-tab2.component";
 
 @Component({
-  selector: 'src-preferences',
-  templateUrl: './preferences.component.html',
-  styleUrls: ['./preferences.component.css']
+  selector: "src-preferences",
+  templateUrl: "./preferences.component.html"
 })
 export class PreferencesComponent {
   activeTab: string = "tab1";
 
   tabs = [
     {
-      id: 'tab1',
-      title: 'One',
+      id: "tab1",
+      title: "One",
       component: PreferenceTab1Component
     },
     {
-      id: 'tab2',
-      title: 'Two',
+      id: "tab2",
+      title: "Two",
       component: PreferenceTab2Component
     }
   ];

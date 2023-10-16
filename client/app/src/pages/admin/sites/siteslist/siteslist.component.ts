@@ -1,31 +1,29 @@
-import {Component, Input} from '@angular/core';
-import {AppDataService} from "../../../../app-data.service";
-import {DeleteConfirmationComponent} from "../../../../shared/modals/delete-confirmation/delete-confirmation.component";
+import {Component, Input} from "@angular/core";
+import {AppDataService} from "@app/app-data.service";
+import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {HttpService} from "../../../../shared/services/http.service";
-import {UtilsService} from "../../../../shared/services/utils.service";
-import {AppConfigService} from "../../../../services/app-config.service";
-import {HttpClient} from "@angular/common/http";
+import {HttpService} from "@app/shared/services/http.service";
+import {UtilsService} from "@app/shared/services/utils.service";
+import {AppConfigService} from "@app/services/app-config.service";
 
 @Component({
-  selector: 'src-siteslist',
-  templateUrl: './siteslist.component.html'
+  selector: "src-siteslist",
+  templateUrl: "./siteslist.component.html"
 })
 export class SiteslistComponent {
-  @Input() tenant:any;
-  @Input() index:any;
+  @Input() tenant: any;
+  @Input() index: any;
   editing = false;
 
-  constructor(private http: HttpClient, public appConfigService:AppConfigService, public appDataService:AppDataService, public modalService: NgbModal, private httpService:HttpService, private utilsService:UtilsService) {
+  constructor(private appConfigService: AppConfigService, protected appDataService: AppDataService, private modalService: NgbModal, private httpService: HttpService, private utilsService: UtilsService) {
   }
 
   toggleActivation(event: Event): void {
     event.stopPropagation();
     this.tenant.active = !this.tenant.active;
 
-    let url = "/api/admin/tenants/"+this.tenant.id
-    this.httpService.requestUpdateTenant(url, this.tenant).subscribe(res => {
-      //this.appConfigService.reinit()
+    const url = "/api/admin/tenants/" + this.tenant.id;
+    this.httpService.requestUpdateTenant(url, this.tenant).subscribe(_ => {
     });
   }
 
@@ -33,23 +31,23 @@ export class SiteslistComponent {
     return this.tenant.id !== 1;
   }
 
-  saveTenant(){
-    let url = "/api/admin/tenants/"+this.tenant.id
-    this.httpService.requestUpdateTenant(url, this.tenant).subscribe(res => {
-      this.utilsService.reloadCurrentRoute()
+  saveTenant() {
+    const url = "/api/admin/tenants/" + this.tenant.id;
+    this.httpService.requestUpdateTenant(url, this.tenant).subscribe(_ => {
+      this.utilsService.reloadCurrentRoute();
     });
   }
 
-  deleteTenant(event:any, tenant:any){
+  deleteTenant(event: any, tenant: any) {
     event.stopPropagation();
-    this.openConfirmableModalDialog(tenant, "")
+    this.openConfirmableModalDialog(tenant, "");
   }
 
   configureTenant($event: Event, tid: number): void {
     $event.stopPropagation();
 
     this.httpService.requestTenantSwitch("api/auth/tenantauthswitch/" + tid).subscribe(res => {
-      window.open(res.redirect)
+      window.open(res.redirect);
     });
   }
 
@@ -60,10 +58,10 @@ export class SiteslistComponent {
     modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = () => {
 
-      let url = "/api/admin/tenants/"+arg.id
-      return this.httpService.requestDeleteTenant(url).subscribe(res => {
-        this.appConfigService.reinit()
-        this.utilsService.reloadCurrentRoute()
+      const url = "/api/admin/tenants/" + arg.id;
+      return this.httpService.requestDeleteTenant(url).subscribe(_ => {
+        this.appConfigService.reinit();
+        this.utilsService.reloadCurrentRoute();
       });
     };
     return modalRef.result;

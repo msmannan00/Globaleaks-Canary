@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import {SignupComponent} from "./signup/signup.component";
+import {NgModule} from "@angular/core";
+import {RouterModule, Routes} from "@angular/router";
+import {SignupComponent} from "@app/pages/signup/signup/signup.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: SignupComponent,
-    pathMatch: 'full',
+    pathMatch: "full",
   },
 ];
 
@@ -14,4 +14,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class SignupRoutingModule {}
+export class SignupRoutingModule {
+}
