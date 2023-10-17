@@ -25,6 +25,6 @@ export class ReceiptComponent implements OnInit {
     if (!receipt || receipt.length !== 16) {
       return "";
     }
-    return receipt.slice(0, 4) + " " + receipt.slice(4, 4) + " " + receipt.slice(8, 4) + " " + receipt.slice(12, 4);
+    return receipt.substr(0, 4) + " " + receipt.substr(4, 4) + " " + receipt.substr(8, 4) + " " + receipt.substr(12, 4);
   }
 }
