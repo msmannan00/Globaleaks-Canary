@@ -57,7 +57,6 @@ export class TipsComponent implements OnInit {
     allowSearchFilter: true,
     searchPlaceholderText: this.translateService.instant("Search")
   };
-
   constructor(private router: Router, protected RTips: RTipsResolver, protected preference: PreferenceResolver, private modalService: NgbModal, protected utils: UtilsService, protected appDataService: AppDataService, private elementRef: ElementRef, private translateService: TranslateService, private tokenResourceService: TokenResource) {
 
   }
@@ -214,6 +213,9 @@ export class TipsComponent implements OnInit {
 
   toggleDropdown() {
     this.dropdownVisible = !this.dropdownVisible;
+    this.reportDatePicker = false;
+    this.lastUpdatePicker = false;
+    this.expirationDatePicker = false;
   }
 
   onSearchChange(value: string | number | undefined) {
@@ -296,6 +298,7 @@ export class TipsComponent implements OnInit {
     this.reportDatePicker = false;
     this.lastUpdatePicker = false;
     this.expirationDatePicker = false;
+    this.dropdownVisible = false;
   }
 
 }

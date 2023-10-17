@@ -1,5 +1,5 @@
 <div class="ngb-dtepicker-container-inner">
-	<ngb-datepicker #dp  (dateSelect)="onDateSelection($event)" [displayMonths]="1" [dayTemplate]="t" outsideDays="hidden">
+	<ngb-datepicker #dp class="bg-white" (dateSelect)="onDateSelection($event)" [displayMonths]="1" [dayTemplate]="t" outsideDays="hidden">
 	</ngb-datepicker>
 	
 	<ng-template #t let-date let-focused="focused">
@@ -13,5 +13,5 @@
 			{{ date.day }}
 		</span>
 	</ng-template>
-	<button class="btn btn-danger ms-3" (click)="resetDatepicker()">Reset</button>
+	<button class="btn btn-danger ms-3 position-absolute bottom-0" (click)="resetDatepicker()">Reset</button>
 </div>

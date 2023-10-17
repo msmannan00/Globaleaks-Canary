@@ -44,7 +44,9 @@ a:hover,
   color: #5797d5;
 }
 
-th .fa-solid, .fa-chevron-up, .fa-chevron-down {
+th .fa-solid,
+.fa-chevron-up,
+.fa-chevron-down {
   margin-left: 5px;
   margin-right: 5px;
 }
@@ -89,7 +91,11 @@ th .fa-solid, .fa-chevron-up, .fa-chevron-down {
   padding: 5px;
 }
 
-.uib-button-bar > .btn-group > .btn-info {
+.uib-button-bar>.btn-group>.btn-info {
+  display: none;
+}
+
+.uib-button-bar>.btn-success {
   display: none;
 }
 
@@ -186,12 +192,6 @@ h6 {
 
 .table thead th {
   border-top: 0;
-}
-
-table thead th:nth-child(1),
-.table thead th:nth-child(9),
-.table thead th:nth-child(10) {
-  cursor: auto;
 }
 
 .btn {
@@ -425,10 +425,12 @@ table tr td {
 }
 
 @keyframes fade-inout {
+
   0%,
   100% {
     opacity: 0;
   }
+
   50% {
     opacity: 1;
   }
@@ -885,11 +887,19 @@ htmlinput[type="email"] {
   --bs-navbar-toggler-border-radius: none;
 }
 
-.status-select {
-  min-width: 140px !important;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  right: -17px;
-  position: absolute;
-  top: 30px;
+th:not(:first-child):not(:nth-last-child(-n+4)) {
+  cursor: pointer !important;
+}
+
+.dropdownVisible div.multiselect-dropdown div.dropdown-list{
+  display: block !important;
+  margin-top: 0px !important;
+}
+
+.dropdownVisible div.multiselect-dropdown div span.dropdown-btn{
+  display: none !important;
+}
+
+.editorHeader {
+  cursor: pointer;
 }

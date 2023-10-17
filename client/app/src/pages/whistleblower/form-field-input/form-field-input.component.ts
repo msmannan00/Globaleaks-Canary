@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {ControlContainer, NgForm} from "@angular/forms";
 import {SubmissionService} from "@app/services/submission.service";
+import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: "src-form-field-input",
@@ -30,6 +31,9 @@ export class FormFieldInputComponent implements OnInit {
   fieldFormVar: any = {};
   fieldFormVarName: any;
   input_entryIndex = "";
+  input_date :NgbDateStruct;
+  input_start_date :any;
+  input_end_date :any;
   validator: any;
   rows: any;
   dateRange: any = {
@@ -41,10 +45,13 @@ export class FormFieldInputComponent implements OnInit {
   }
 
   clearDateRange() {
+    this.input_start_date = "";
+    this.input_end_date = "";
     this.dateRange = {
       "start": "",
       "end": ""
     };
+    this.entry.value = "";
   }
 
   initializeFormNames() {
@@ -62,6 +69,30 @@ export class FormFieldInputComponent implements OnInit {
         this.validator = validator_regex;
       }
     }
+  }
+
+  onDateSelection() {
+    const formattedDate = this.convertNgbDateToISOString(this.input_date);
+    this.entry.value = formattedDate;
+  }
+  
+  convertNgbDateToISOString(date: NgbDateStruct): string {
+    const jsDate = new Date(date.year, date.month - 1, date.day);
+    return jsDate.toISOString();
+  }
+  
+  onStartDateSelection(date: NgbDateStruct): void {
+    const startDate = new Date(date.year, date.month - 1, date.day);
+    const formattedStartDate = startDate.getTime().toString();
+    this.dateRange.start = formattedStartDate;
+    this.entry.value = `${this.dateRange.start}:${this.dateRange.end}`;
+  }
+
+  onEndDateSelection(date: NgbDateStruct): void {
+    const endDate = new Date(date.year, date.month - 1, date.day);
+    const formattedEndDate = endDate.getTime().toString();
+    this.dateRange.end = formattedEndDate;
+    this.entry.value = `${this.dateRange.start}:${this.dateRange.end}`;
   }
 
   validateUploadSubmission() {
