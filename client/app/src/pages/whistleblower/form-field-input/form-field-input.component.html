@@ -64,15 +64,17 @@
             <div *ngSwitchCase="'date'">
                 <div class="input-group">
                     <input id="{{fieldEntry}}"
+                           class="form-control inputelem"
                            [name]="'input-'+entryIndex"
                            type="text"
                            readonly="readonly"
                            [attr.aria-label]="field.label"
-                           [(ngModel)]="entry['value']"
+                           [(ngModel)]="input_date"
                            [required]="entry.required_status"
                            ngbDatepicker
                            #datepicker="ngbDatepicker"
-                           (click)="datepicker.toggle()"/>
+                           (click)="datepicker.toggle()"
+                           (ngModelChange)="onDateSelection()"/>
                     <span class="input-group-append" (click)="datepicker.toggle()"><i class="input-group-text fa-solid fa-calendar"></i></span>
                 </div>
             </div>
@@ -81,33 +83,37 @@
                     <label>{{'From'|translate}}</label>
                     <div class="input-group mx-1">
                         <input id="{{fieldEntry}}"
-                               [name]="'input-'+entryIndex"
+                               class="form-control inputelem"
+                               name="startDate"
                                type="text"
                                [readOnly]="true"
                                [attr.aria-label]="field.label"
-                               [(ngModel)]="dateRange.start"
+                               [(ngModel)]="input_start_date"
                                [required]="entry.required_status"
                                [placeholder]="field.placeholder"
+                               ngbDatepicker
                                #datepickerstart="ngbDatepicker"
                                (click)="datepickerstart.toggle()"
-                               ngbDatepicker/>
+                               (ngModelChange)="onStartDateSelection(input_start_date)"/>
                         <span class="input-group-append" (click)="datepickerstart.toggle()"><i class="input-group-text fa-solid fa-calendar"></i></span>
                     </div>
                 </span>
-                <span class="form-group mx-1" *ngIf="dateRange.start">
+                <span class="form-group mx-1" *ngIf="input_start_date">
                     <label>{{'To'|translate}}</label>
                     <div class="input-group mx-1">
                         <input id="{{fieldEntry}}"
-                               [name]="'input-'+entryIndex"
+                               class="form-control inputelem"
+                               name="endDate"
                                type="text"
                                [readonly]="true"
                                [attr.aria-label]="field.label"
-                               [(ngModel)]="dateRange.end"
+                               [(ngModel)]="input_end_date"
                                [required]="entry.required_status"
                                [placeholder]="field.placeholder"
+                               ngbDatepicker
                                #datepickerend="ngbDatepicker"
                                (click)="datepickerend.toggle()"
-                               ngbDatepicker/>
+                               (ngModelChange)="onEndDateSelection(input_end_date)"/>
                         <span class="input-group-append" (click)="datepickerend.toggle()"><i class="input-group-text fa-solid fa-calendar"></i></span>
                     </div>
                 </span>

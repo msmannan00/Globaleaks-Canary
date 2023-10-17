@@ -19,23 +19,25 @@ export class TipFieldAnswerEntryComponent {
     this.loadAudioFile(this.field.id);
   }
   loadAudioFile(reference_id: string): void {
-    for (const wbfile of this.tipService.tip.wbfiles) {
-      if (wbfile.reference_id === reference_id) {
-        const id = wbfile.id;
-
-        const headers = new HttpHeaders({
-          'x-session': this.authenticationService.session.id
-        });
-
-        this.http.get('api/recipient/wbfiles/' + id, {
-          headers,
-          responseType: 'blob'
-        })
-        .subscribe(response => {
-          this.audioFiles[reference_id] = URL.createObjectURL(response);
-        });
-        break;
-      }
-    }
-  }
+    if(this.tipService.tip.wbfiles){
+      for (const wbfile of this.tipService.tip.wbfiles) {
+        if (wbfile.reference_id === reference_id) {
+          const id = wbfile.id;
+  
+          const headers = new HttpHeaders({
+            'x-session': this.authenticationService.session.id
+          });
+  
+          this.http.get('api/recipient/wbfiles/' + id, {
+            headers,
+            responseType: 'blob'
+          })
+          .subscribe(response => {
+            this.audioFiles[reference_id] = URL.createObjectURL(response);
+          });
+          break;
+        };
+      };
+    };
+  };
 }

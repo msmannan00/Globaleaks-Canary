@@ -35,8 +35,8 @@
 
     <span *ngSwitchCase="'daterange'">
         <span *ngIf="entry['value']">
-            <span>{{'From:'|translate}}</span> {{entry['value'] | split: [":",0] | date:'dd-MM-yyyy'}}-->
-            <span>{{'To:'|translate}}</span> {{entry['value'] | split: [":",1] |  date:'dd-MM-yyyy'}}-->
+            <span>{{'From:'|translate}}</span> {{entry['value'] | split: [":",0] | date:'dd-MM-yyyy'}}
+            <span>{{'To:'|translate}}</span> {{entry['value'] | split: [":",1] |  date:'dd-MM-yyyy'}}
         </span>
     </span>
 

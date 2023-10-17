@@ -26,11 +26,6 @@
           class="btn btn-outline-secondary">
           <i class="fa-solid fa-user-minus"></i>
         </span>
-        <span id="tip-action-delete-selected" *ngIf="preference.dataModel.can_delete_submission"
-          (click)="tipDeleteSelected()" data-toggle="tooltip" title="{{'Delete' | translate}}"
-          class="btn btn-outline-secondary">
-          <i class="fa-solid fa-trash"></i>
-        </span>
         <span id="tip-action-export-selected" (click)="tipsExport()" data-toggle="tooltip"
           title="{{'Export' | translate}}" class="btn btn-outline-secondary">
           <i class="fa-solid fa-save"></i>
@@ -119,7 +114,7 @@
               <span class="dropdown-multi-select-container" *ngIf="RTips.dataModel.length > 0">
                 <i class="fa-solid fa-filter" [ngClass]="{ filterSelected: checkFilter(dropdownStatusModel) }" (click)="toggleDropdown()"></i>
                 <span [class.hidden]="!dropdownVisible">
-                  <ng-multiselect-dropdown class="status-select" [settings]="dropdownSettings" [data]="dropdownStatusData"
+                  <ng-multiselect-dropdown [ngClass]="{ 'dropdownVisible': dropdownVisible }" [settings]="dropdownSettings" [data]="dropdownStatusData"
                     [(ngModel)]="dropdownStatusModel" (ngModelChange)="on_changed(dropdownStatusModel)">
                   </ng-multiselect-dropdown>
                 </span>
@@ -136,8 +131,8 @@
               </span>
               <span class="ngb-dtepicker-container ms-1">
                 <i class="fas fa-calendar" [ngClass]="{'calendar-active':  reportDateFilter}"
-                  (click)="reportDatePicker=!reportDatePicker;lastUpdatePicker=false;expirationDatePicker=false;"></i>
-                <ngbd-datepicker-range #datePicker [currentDates]="reportDateModel"
+                  (click)="reportDatePicker=!reportDatePicker;lastUpdatePicker=false;expirationDatePicker=false;dropdownVisible=false;"></i>
+                <ngbd-datepicker-range class="position-absolute d-block" #datePicker [currentDates]="reportDateModel"
                   (emitDateSelection)="onReportFilterChange($event)" *ngIf="reportDatePicker"></ngbd-datepicker-range>
               </span>
 
@@ -153,8 +148,8 @@
               </span>
               <span class="ngb-dtepicker-container ms-1">
                 <i class="fas fa-calendar" [ngClass]="{'calendar-active':  updateDateFilter}"
-                  (click)="lastUpdatePicker=!lastUpdatePicker;reportDatePicker=false;expirationDatePicker=false;"></i>
-                <ngbd-datepicker-range #datePicker [currentDates]="updateDateModel"
+                  (click)="lastUpdatePicker=!lastUpdatePicker;reportDatePicker=false;expirationDatePicker=false;dropdownVisible=false;"></i>
+                <ngbd-datepicker-range class="position-absolute d-block" #datePicker [currentDates]="updateDateModel"
                   (emitDateSelection)="onUpdateFilterChange($event)" *ngIf="lastUpdatePicker"></ngbd-datepicker-range>
               </span>
             </th>
@@ -169,8 +164,8 @@
               </span>
               <span class="ngb-dtepicker-container ms-1">
                 <i class="fas fa-calendar" [ngClass]="{'calendar-active':  expiryDateFilter}"
-                  (click)="expirationDatePicker=!expirationDatePicker;reportDatePicker=false;lastUpdatePicker=false;"></i>
-                <ngbd-datepicker-range #datePicker [currentDates]="expiryDateModel"
+                  (click)="expirationDatePicker=!expirationDatePicker;reportDatePicker=false;lastUpdatePicker=false;dropdownVisible=false;"></i>
+                <ngbd-datepicker-range class="position-absolute d-block" #datePicker [currentDates]="expiryDateModel"
                   (emitDateSelection)="onExpiryFilterChange($event)"
                   *ngIf="expirationDatePicker"></ngbd-datepicker-range>
               </span>
