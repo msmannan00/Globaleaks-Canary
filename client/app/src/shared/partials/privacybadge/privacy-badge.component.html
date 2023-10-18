@@ -38,8 +38,7 @@
 			</div>
 		</div>
 		<div *ngIf="appDataService.public.node.enable_custom_privacy_badge">
-			<div id="PrivacyBoxTextBox"
-				class="float-start">
+			<div id="PrivacyBoxTextBox">
 				<markdown [data]="markdown | stripHtml"
 					id="PrivacyBadgeCustomText"
 					class="variable-binding"></markdown>

@@ -62,8 +62,8 @@ export class SubmissionComponent implements OnInit, AfterViewInit{
     this.questionnaire = context.questionnaire;
 
     this.submission.create(context.id);
-    this.fieldUtilitiesService.onAnswersUpdate(this);
     this.context = context;
+    this.fieldUtilitiesService.onAnswersUpdate(this);
 
     this.field_id_map = this.fieldUtilitiesService.build_field_id_map(this.questionnaire);
     this.show_steps_navigation_bar = this.context.allow_recipients_selection || this.questionnaire.steps.length > 1;
