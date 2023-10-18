@@ -15,7 +15,7 @@ export class ReceiptComponent implements OnInit {
   ngOnInit(): void {
     const receipt = this.appDataService.receipt;
     if (receipt && receipt.length === 16) {
-      this.formattedReceipt = receipt.slice(0, 4) + " " + receipt.slice(4, 4) + " " + receipt.slice(8, 4) + " " + receipt.slice(12, 4);
+      this.formattedReceipt = receipt.substring(0, 4) + " " + receipt.substring(4, 8) + " " + receipt.substring(8, 12) + " " + receipt.substring(12, 16);
       return;
     }
   }

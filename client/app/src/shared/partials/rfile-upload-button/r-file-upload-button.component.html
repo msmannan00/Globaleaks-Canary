@@ -14,10 +14,11 @@
         <div *ngIf="showError">
             <br>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{'File size not accepted.'|translate}} {{errorFile.flowFile.name}} {{'Maximum file size is:'|translate}} {{appDataService.public.node.maximum_filesize}}MB
-                <a href="#" class="close" (click)="errorFile.flowFile.cancel() ;showError=false" data-dismiss="alert" aria-label="close">&times;</a>
+                <div><strong>{{'File size not accepted.' | translate}}</strong> {{errorFile.flowFile.name}} {{'Maximum file size is:' | translate}} {{appDataService.public.node.maximum_filesize}}MB</div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="errorFile.flowFile.cancel(); showError=false" ></button>
             </div>
         </div>
+
     </div>
 
     <div class="transfers">
