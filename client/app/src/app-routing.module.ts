@@ -36,10 +36,12 @@ const routes: Routes = [
   },
   {
     path: "login",
+    data: {pageTitle: "Log in"},
     loadChildren: () => AuthRoutingModule,
   },
   {
     path: "signup",
+    data: {pageTitle: "Sign up"},
     resolve: {
       PreferenceResolver
     },
@@ -69,23 +71,25 @@ const routes: Routes = [
     },
     loadChildren: () => CustodianRoutingModule,
     data: {
-      sidebar: "custodian-sidebar"
-    }
+      sidebar: "custodian-sidebar" , pageTitle: "Home"
+    },
   },
   {
     path: "admin",
     canActivate: [SessionGuard],
     loadChildren: () => AdminRoutingModule,
     data: {
-      sidebar: "admin-sidebar", pageTitle: "Home"
-    }
+      sidebar: "admin-sidebar", pageTitle: "Log in"
+    },
   },
   {
     path: "password/reset",
+    data: {pageTitle: "Password reset"},
     component: PasswordResetResponseComponent,
   },
   {
     path: "activation",
+    data: {pageTitle: "Sign up"},
     component: ActivationComponent,
   },
   {
@@ -99,6 +103,7 @@ const routes: Routes = [
   },
   {
     path: "status/:tip_id",
+    data: {pageTitle: "Report"},
     component: TipComponent,
     pathMatch: "full",
     resolve: {

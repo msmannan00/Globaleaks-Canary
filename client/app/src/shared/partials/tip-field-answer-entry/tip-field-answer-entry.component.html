@@ -1,12 +1,12 @@
 <div [ngSwitch]="field.type" class="nested">
     <div *ngSwitchCase="'checkbox'">
         <span *ngIf="entry">
-            <div *ngFor="let item of entry | orderBy:['y', 'x']">
+            <div [ngSwitch]="field.type">
               <div *ngFor="let option of field.options">
-                  <div *ngIf="item.key === option.id && item.value === true">
-                    <i class="fa-solid fa-check-square"></i>
-                    <span>{{option.label}}</span>
-                  </div>
+                <div *ngIf="entry[option.id] === true">
+                  <i class="fa-solid fa-check-square"></i>
+                  <span>{{ option.label }}</span>
+                </div>
               </div>
             </div>
         </span>

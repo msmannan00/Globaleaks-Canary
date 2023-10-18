@@ -8,6 +8,7 @@ import {TranslationService} from "@app/services/translation.service";
 import {Router, NavigationEnd, ActivatedRoute} from "@angular/router";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
+import { filter } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -216,17 +217,22 @@ export class AppConfigService {
   routeChangeListener() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        setTimeout(() => {
-          this.onValidateInitialConfiguration();
-          const currentRoute = this.activatedRoute.firstChild?.snapshot;
-          if (currentRoute?.data) {
-            this.header_title = currentRoute.data["pageTitle"];
-            this.sidebar = currentRoute.data["sidebar"];
-          }
+        this.onValidateInitialConfiguration();
+        const lastChildRoute = this.findLastChildRoute(this.router.routerState.root);
+        if (lastChildRoute && lastChildRoute.snapshot.data && lastChildRoute.snapshot.data['pageTitle']) {
+          this.header_title = lastChildRoute.snapshot.data['pageTitle'];
+          this.sidebar = lastChildRoute.snapshot.data['sidebar'];
           this.setTitle();
-        });
+        }
       }
     });
+  }
+
+  findLastChildRoute(route: ActivatedRoute): ActivatedRoute {
+    while (route.firstChild) {
+      route = route.firstChild;
+    }
+    return route;
   }
 
   reinit(languageInit = true) {

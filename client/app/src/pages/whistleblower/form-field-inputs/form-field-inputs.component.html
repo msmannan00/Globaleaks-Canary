@@ -1,6 +1,6 @@
 <div id="{{fieldId}}" class="question">
     <div class="question-label">
-        <label data-content="field.hint" data-toggle="tooltip" title="{{'field.hint' | translate}}" for="{{field.id + '-input-' + 0}}">
+        <label data-content="field.hint" data-toggle="tooltip" [title]="field.hint" for="{{field.id + '-input-' + 0}}">
             <span *ngIf="field.label" class="title">{{field.label|translate}}</span>
             <span *ngIf="field.hint">
                 <i class="fa-solid fa-question-circle"></i>

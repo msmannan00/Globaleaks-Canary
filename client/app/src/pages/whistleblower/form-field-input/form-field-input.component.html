@@ -43,7 +43,7 @@
             </div>
             <div *ngSwitchCase="'multichoice'">
                 <div *ngFor="let option of field.options | orderBy:'order';let innerindex = index">
-                    <input class="form-control-input inputelem" type="radio" id="{{fieldId}}-input-{{entryIndex}}-option-{{innerindex}}" [(ngModel)]="entry['value']" value="{{option.id}}" [required]="field.required" />
+                    <input [name]="'input-' +  entryIndex" class="form-control-input inputelem" type="radio" id="{{fieldId}}-input-{{entryIndex}}-option-{{innerindex}}" [(ngModel)]="entry['value']" value="{{option.id}}" [required]="field.required" />
                     <span data-toggle="tooltip" title="{{option.hint1}}" class="form-control-label" [ngClass]="{'text-underline': option.hint1}">{{option.label}}</span>
                 </div>
             </div>

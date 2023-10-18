@@ -10,26 +10,31 @@ const routes: Routes = [
     path: "preferences",
     component: PreferencesComponent,
     pathMatch: "full",
+    data: {pageTitle: "Preferences"},
   },
   {
     path: "home",
     component: HomeComponent,
     pathMatch: "full",
+    data: {pageTitle: "Home"},
   },
   {
     path: "",
     component: HomeComponent,
     pathMatch: "full",
+    data: {pageTitle: "Home"},
   },
   {
     path: "settings",
     component: SettingsComponent,
     pathMatch: "full",
+    data: {pageTitle: "Sites"},
   },
   {
     path: "requests",
     component: IdentityAccessRequestsComponent,
     pathMatch: "full",
+    data: {pageTitle: "Requests"},
   }
 ];
 
