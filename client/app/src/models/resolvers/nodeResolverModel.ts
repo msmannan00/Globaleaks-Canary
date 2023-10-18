@@ -60,7 +60,10 @@ export class nodeResolverModel {
   contexts_clarification: string;
   custom_privacy_badge_text: string;
   disclaimer_text: string;
+  footer_whistleblowing_policy: string;
+  footer_privacy_policy: string;
   footer: string;
+  footer_accessibility_declaration: string;
   header_title_homepage: string;
   presentation: string;
   signup_tos1_checkbox_label: string;

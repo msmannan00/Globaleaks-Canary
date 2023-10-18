@@ -103,7 +103,7 @@ export class CompletedInterceptor implements HttpInterceptor {
 
   count = 0;
 
-  constructor(private authenticationService: AuthenticationService, private appDataService: AppDataService) {
+  constructor(private appDataService: AppDataService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -115,7 +115,7 @@ export class CompletedInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       finalize(() => {
         this.count--;
-        if (this.count === 0 && (req.url !== "api/auth/token" || this.authenticationService.isSessionActive())) {
+        if (this.count === 0) {
           this.appDataService.showLoadingPanel = false;
         }
       }));
