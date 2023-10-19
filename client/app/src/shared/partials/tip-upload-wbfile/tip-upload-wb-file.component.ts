@@ -17,8 +17,10 @@ export class TipUploadWbFileComponent {
   collapsed = false;
   file_upload_description: string = "";
   fileInput: any = "fileinput";
+  showError: boolean;
+  errorFile: any;
 
-  constructor(private appConfigService: AppConfigService, private authenticationService: AuthenticationService, protected utilsService: UtilsService, private appDataService: AppDataService) {
+  constructor(private appConfigService: AppConfigService, private authenticationService: AuthenticationService, protected utilsService: UtilsService, protected appDataService: AppDataService) {
 
   }
 
@@ -43,6 +45,11 @@ export class TipUploadWbFileComponent {
       flowJsInstance.on("fileSuccess", (_) => {
         this.appConfigService.reinit(false);
         this.utilsService.reloadCurrentRoute();
+        this.errorFile = null
+      });
+      flowJsInstance.on("fileError", (file, message) => {
+        this.showError = true
+        this.errorFile = file
       });
 
       const fileNameParts = file.name.split(".");
@@ -56,7 +63,7 @@ export class TipUploadWbFileComponent {
       flowJsInstance.upload();
     }
   }
-
-  protected readonly console = console;
-  protected readonly alert = alert;
+  protected dismissError(){
+    this.showError = false;
+  }
 }

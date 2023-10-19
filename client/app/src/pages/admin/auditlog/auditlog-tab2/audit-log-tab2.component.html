@@ -24,7 +24,7 @@
         </tbody>
     </table>
 
-    <div class="text-center">
+    <div class="text-center" *ngIf="users.length > pageSize">
         <ngb-pagination
                 [(page)]="currentPage"
                 [pageSize]="pageSize"

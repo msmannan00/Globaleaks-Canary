@@ -40,7 +40,6 @@ export class WbtipService {
     });
 
     const request = this.httpService.requestNewComment(requestData);
-
     request.subscribe({
       next: () => {
         this.utilsService.reloadCurrentRoute();

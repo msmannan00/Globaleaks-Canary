@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="title">{{'Sign up'|translate}}</div>
         </div>
-    </div><br>
+    </div>
     <div class="row">
         <div class="col-md-6 form-group">
             <label>{{'Name'|translate}}</label>
@@ -15,7 +15,7 @@
             <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
             <input name="surname" class="form-control" [(ngModel)]="signup.surname" type="text" required>
         </div>
-    </div><br>
+    </div>
     <div class="row">
         <div class="col-md-6 form-group">
             <label>{{'Phone number'|translate}}</label> <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
@@ -24,11 +24,11 @@
                 <span>{{'Invalid phone number'|translate}}</span>
             </div>
         </div>
-    </div><br>
+    </div>
     <div class="row">
         <div class="col-md-6 form-group">
             <label>
-                <span>{{'111Email address'|translate}}</span>
+                <span>{{'Email address'|translate}}</span>
                 <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
             </label>
             <div>
@@ -40,7 +40,7 @@
         </div>
         <div class="col-md-6 form-group">
             <label>
-                <span>{{'222Email address'|translate}}</span> (<span>{{'Confirm'|translate}}</span>)
+                <span>{{'Email address'|translate}}</span> (<span>{{'Confirm'|translate}}</span>)
                 <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
             </label>
             <div>
@@ -50,26 +50,26 @@
                 </div>
             </div>
         </div>
-    </div><br>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <label class="title">{{'Organization'|translate}}</label>
         </div>
-    </div><br>
+    </div>
     <div class="row">
         <div class="col-md-12 form-group">
             <label>{{'Name'|translate}}</label>
             <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
             <input name="organization_name" class="form-control" [(ngModel)]="signup.organization_name" type="text" (ngModelChange)="updateSubdomain.emit()" required>
         </div>
-    </div><br>
+    </div>
     <div class="row">
         <div class="col-md-12 form-group">
             <label>{{'Address'|translate}}</label>
             <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
             <input name="organization_location" class="form-control" [(ngModel)]="signup.organization_location" type="text" required>
         </div>
-    </div><br>
+    </div>
     <div class="row">
         <div class="col-md-6 form-group">
             <label>{{'Fiscal code'|translate}}</label>
@@ -83,7 +83,7 @@
             <input name="vat_code" class="form-control" [(ngModel)]="signup.organization_vat_code" type="text"
                    [required]="!signup.organization_tax_code && !signup.organization_vat_code">
         </div>
-    </div><br>
+    </div>
     <div class="row">
         <div class="col-md-12 form-group">
             <label>
@@ -97,8 +97,7 @@
             </div>
         </div>
     </div>
-    <br />
-    <src-tos [signup]="signup" ></src-tos><br>
+    <src-tos [signup]="signup" ></src-tos>
     <div class="row">
         <div class="col-md-12">
             <button class="ButtonNext btn btn-primary" (click)="(validated = true) && !signupform.invalid && complete.emit()">

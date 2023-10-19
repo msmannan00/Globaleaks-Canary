@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnDestroy, ViewChild} from "@angular/core";
+import {Component, ElementRef, Input, ViewChild} from "@angular/core";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AuthenticationService} from "@app/services/authentication.service";
@@ -10,7 +10,7 @@ import {AppDataService} from "@app/app-data.service";
   selector: "src-admin-file",
   templateUrl: "./admin-file.component.html"
 })
-export class AdminFileComponent implements OnDestroy {
+export class AdminFileComponent {
   @Input() adminFile: any;
   nodeData: any = [];
   @ViewChild("uploader") uploaderElementRef!: ElementRef<HTMLInputElement>;
@@ -57,10 +57,7 @@ export class AdminFileComponent implements OnDestroy {
     }
   }
 
-  reload() {
-  }
-
-  delete_file(url: string): void {
+  deleteFile(url: string): void {
     this.utilsService.deleteFile(url).subscribe(
       () => {
         this.appConfigService.reinit(false);
@@ -68,8 +65,4 @@ export class AdminFileComponent implements OnDestroy {
       }
     );
   }
-
-  ngOnDestroy() {
-  }
-
 }

@@ -37,9 +37,9 @@
                             <i class="fa-solid fa-cog"></i>
                             <span>{{ 'Generate' | translate }}</span>
                         </button>
-                        <button type="submit" class="close btn" *ngIf="csr_state.open" (click)="csr_state.open = false"
+                        <button type="submit" class="close btn large-close-button" *ngIf="csr_state.open" (click)="csr_state.open = false"
                             aria-label="Close">&times;</button>
-                    </span>
+                    </span><br><br>
                     <div *ngIf="csr_state.open">
                         <hr />
                         <src-https-csr-gen [fileResources]="fileResources" (dataToParent)="httpsCsr($event)"></src-https-csr-gen>
@@ -100,7 +100,7 @@
                 <div class="float-end">
                     <span *ngIf="!tlsConfig.files.chain.set">
                         <input type="file" hidden #iCertificateInput
-                            (change)="postFile(iCertificateInput.files,fileResources.cert)" />
+                            (change)="postFile(iCertificateInput.files,fileResources.chain)" />
                         <label id="chainUpload" (click)="iCertificateInput.click()"
                             class="btn btn-sm btn-primary">{{'Upload' | translate}}</label>
                     </span>

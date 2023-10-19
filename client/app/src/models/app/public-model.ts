@@ -43,6 +43,7 @@ export interface Node {
   disclaimer_text: string;
   footer: string;
   header_title_homepage: string;
+  footer_whistleblowing_policy:any;
   presentation: string;
   signup_tos1_checkbox_label: string;
   signup_tos1_text: string;
@@ -59,6 +60,8 @@ export interface Node {
   css: any;
   favicon: any;
   logo: any;
+  footer_accessibility_declaration: any;
+  footer_privacy_policy: any;
 }
 
 export interface LanguagesSupported {

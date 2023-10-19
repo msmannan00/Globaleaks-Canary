@@ -9,8 +9,8 @@ import {HttpService} from "@app/shared/services/http.service";
 export class UrlRedirectsComponent implements OnInit {
   redirectData: any = [];
   new_redirect: any = {
-    path1: "",
-    path2: ""
+    path1: null,
+    path2: null
   };
 
   constructor(private redirects: RedirectsResolver, private httpService: HttpService) {

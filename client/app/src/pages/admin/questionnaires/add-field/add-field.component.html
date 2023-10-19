@@ -1,14 +1,14 @@
 <form class="add-field" #newField="ngForm">
     <div class="form-group">
         <label>{{ 'Question' | translate }}</label>
-        <input name="label" class="form-control" [(ngModel)]="new_field.label" type="text" required>
+        <input name="new_field.label" class="form-control" [(ngModel)]="new_field.label" type="text" required>
         <div class="text-danger" *ngIf="newField.form.get('label')?.errors?.['required']">
             <span>{{ 'This field is mandatory' | translate }}</span>
         </div>
     </div>
     <div class="form-group">
         <label>{{ 'Type' | translate }}</label>
-        <select name="type" class="form-control" [(ngModel)]="new_field.type" required>
+        <select name="new_field.type" class="form-control" [(ngModel)]="new_field.type" required>
             <option value="inputbox">{{ 'Single-line text input' | translate }}</option>
             <option value="textarea">{{ 'Multi-line text input' | translate }}</option>
             <option value="selectbox">{{ 'Selection box' | translate }}</option>

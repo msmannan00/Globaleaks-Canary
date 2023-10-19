@@ -8,7 +8,7 @@
 							placeholder="{{'Label' | translate}}" [(ngModel)]="tipService.tip.label" />
 						<span class="input-group-append" data-toggle="tooltip"
 							title="{{'Label the report' | translate}} ">
-							<button id="assignLabelButton" class="btn btn-primary"
+							<button id="assignLabelButton" class="btn btn-primary" name="tip.label"
 								(click)="updateLabel(tipService.tip.label)">
 								<i class="fa-solid fa-tag"></i>
 							</button>

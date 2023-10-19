@@ -1,8 +1,7 @@
 <div class="row mb-2" *ngIf="appDataService.public.node.contexts_clarification">
-    <markdown class="col-md-12" *ngIf="appDataService.public.node.presentation" [data]="appDataService.public.node.contexts_clarification | stripHtml"></markdown>
+    <b><markdown class="col-md-12" [data]="appDataService.public.node.contexts_clarification | stripHtml"></markdown></b>
 </div>
 <div id="SubmissionStepContext" class="row">
-
     <div id="context-{{index}}" *ngFor="let context of (selectable_contexts| orderBy:contextsOrderPredicate);let index = index" (click)="selectContext.emit(context)" [class]="utilsService.getCardSize(selectable_contexts.length)">
         <div class="select-card">
             <div class="row">

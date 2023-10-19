@@ -20,7 +20,7 @@
         </tbody>
     </table>
 
-    <div class="text-center">
+    <div class="text-center" *ngIf="auditLog.length > pageSize">
         <ngb-pagination
                 [(page)]="currentPage"
                 [pageSize]="pageSize"

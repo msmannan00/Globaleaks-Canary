@@ -99,6 +99,7 @@ export class Tab2Component implements OnInit {
       () => {
         this.updateFiles();
         this.utilsService.init();
+        this.utilsService.reloadCurrentRoute()
       }
     );
   }
@@ -125,6 +126,7 @@ export class Tab2Component implements OnInit {
         () => {
           this.authenticationData.session.permissions.can_upload_files = false;
           status.checked = false;
+          status.click()
         }
       );
     } else {

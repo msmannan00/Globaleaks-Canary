@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {Constants} from "@app/shared/constants/constants";
 import {HttpService} from "@app/shared/services/http.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({
   selector: "src-https-csr-gen",
@@ -26,14 +27,19 @@ export class HttpsCsrGenComponent {
       email: ""
   };
 
-  constructor(private httpService: HttpService) {
+  constructor(private httpService: HttpService, private utilsService:UtilsService) {
   }
 
   submitCSR() {
-    this.fileResources.content = this.csr_cfg;
-    this.fileResources.csr.content = this.csr_cfg;
-    this.httpService.requestCSRContentResource(this.fileResources.csr.name, this.fileResources.csr).subscribe(() => {
-      this.dataToParent.emit(this.fileResources);
-    });
+    this.httpService.requestCSRDirectContentResource(this.csr_cfg).subscribe(
+      (response) => {
+      },
+      (error) => {
+        if (error.status === 201) {
+          const errorText = error.error.text;
+          this.utilsService.saveAs(new Blob([errorText], { type: 'application/octet-stream' }), "csr.pem");
+        }
+      }
+    );
   }
 }
