@@ -4037,7 +4037,7 @@ textarea.form-control-lg {
   align-items: center;
 }
 
-.navbar-toggler {
+.navbar-toggle {
   padding: var(--bs-navbar-toggler-padding-y) var(--bs-navbar-toggler-padding-x);
   font-size: var(--bs-navbar-toggler-font-size);
   line-height: 1;
@@ -4048,14 +4048,14 @@ textarea.form-control-lg {
   transition: var(--bs-navbar-toggler-transition);
 }
 @media (prefers-reduced-motion: reduce) {
-  .navbar-toggler {
+  .navbar-toggle {
     transition: none;
   }
 }
-.navbar-toggler:hover {
+.navbar-toggle:hover {
   text-decoration: none;
 }
-.navbar-toggler:focus {
+.navbar-toggle:focus {
   text-decoration: none;
   outline: 0;
   box-shadow: 0 0 0 var(--bs-navbar-toggler-focus-width);
@@ -4099,7 +4099,7 @@ textarea.form-control-lg {
     display: flex !important;
     flex-basis: auto;
   }
-  .navbar-expand-sm .navbar-toggler {
+  .navbar-expand-sm .navbar-toggle {
     display: none;
   }
   .navbar-expand-sm .offcanvas {
@@ -4146,7 +4146,7 @@ textarea.form-control-lg {
     display: flex !important;
     flex-basis: auto;
   }
-  .navbar-expand-md .navbar-toggler {
+  .navbar-expand-md .navbar-toggle {
     display: none;
   }
   .navbar-expand-md .offcanvas {
@@ -4193,7 +4193,7 @@ textarea.form-control-lg {
     display: flex !important;
     flex-basis: auto;
   }
-  .navbar-expand-lg .navbar-toggler {
+  .navbar-expand-lg .navbar-toggle {
     display: none;
   }
   .navbar-expand-lg .offcanvas {
@@ -4240,7 +4240,7 @@ textarea.form-control-lg {
     display: flex !important;
     flex-basis: auto;
   }
-  .navbar-expand-xl .navbar-toggler {
+  .navbar-expand-xl .navbar-toggle {
     display: none;
   }
   .navbar-expand-xl .offcanvas {
@@ -4287,7 +4287,7 @@ textarea.form-control-lg {
     display: flex !important;
     flex-basis: auto;
   }
-  .navbar-expand-xxl .navbar-toggler {
+  .navbar-expand-xxl .navbar-toggle {
     display: none;
   }
   .navbar-expand-xxl .offcanvas {
@@ -4333,7 +4333,7 @@ textarea.form-control-lg {
   display: flex !important;
   flex-basis: auto;
 }
-.navbar-expand .navbar-toggler {
+.navbar-expand .navbar-toggle {
   display: none;
 }
 .navbar-expand .offcanvas {

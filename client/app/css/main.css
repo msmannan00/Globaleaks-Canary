@@ -858,7 +858,7 @@ htmlinput[type="email"] {
   display: grid !important;
 }
 
-.navbar-toggler:focus {
+.navbar-toggle:focus {
   outline: none !important;
   box-shadow: none !important;
 }
@@ -887,7 +887,7 @@ htmlinput[type="email"] {
   width: max-content;
 }
 
-.navbar-toggler {
+.navbar-toggle {
   --bs-navbar-toggler-border-color: none;
   --bs-navbar-toggler-border-radius: none;
 }
