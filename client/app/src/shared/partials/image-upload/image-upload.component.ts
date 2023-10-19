@@ -61,7 +61,7 @@ export class ImageUploadComponent implements AfterViewInit, OnDestroy {
 
   deletePicture() {
     this.http
-      .delete("/api/admin/files/" + this.imageUploadId)
+      .delete("api/admin/files/" + this.imageUploadId)
       .subscribe(() => {
         if (this.imageUploadModel) {
           this.imageUploadModel[this.imageUploadModelAttr] = "";

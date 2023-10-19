@@ -1,5 +1,13 @@
 {
+  "/": {
+    "target": "https://localhost:8443",
+    "secure": false
+  },
   "/api": {
+    "target": "https://localhost:8443",
+    "secure": false
+  },
+  "/assets": {
     "target": "https://localhost:8443",
     "secure": false
   },

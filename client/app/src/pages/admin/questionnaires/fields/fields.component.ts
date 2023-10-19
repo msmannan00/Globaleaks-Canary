@@ -62,7 +62,7 @@ export class FieldsComponent implements OnInit {
   }
 
   exportQuestion(field: any) {
-    this.utilsService.download("/api/admin/fieldtemplates/" + field.id);
+    this.utilsService.download("api/admin/fieldtemplates/" + field.id);
   }
 
   delField(field: any) {
