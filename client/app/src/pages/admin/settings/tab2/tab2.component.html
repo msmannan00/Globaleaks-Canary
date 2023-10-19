@@ -1,7 +1,7 @@
 <div class="row mt-4">
     <div class="col-md-10" [ngClass]="{'container-disabled': !authenticationData.session.permissions.can_upload_files}">
         <div class="form-group">
-            <div class="mb-2">
+            <div>
                 <ng-container *ngFor="let admin_file of admin_files">
                     <src-admin-file [adminFile]="admin_file"></src-admin-file>
                 </ng-container>

@@ -855,12 +855,12 @@ htmlinput[type="email"] {
 }
 
 .nav-items {
-  display: grid !important;
+  display: grid;
 }
 
-.navbar-toggle:focus {
-  outline: none !important;
-  box-shadow: none !important;
+.navbar-toggler:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 
@@ -887,24 +887,29 @@ htmlinput[type="email"] {
   width: max-content;
 }
 
-.navbar-toggle {
+.navbar-toggler {
   --bs-navbar-toggler-border-color: none;
   --bs-navbar-toggler-border-radius: none;
 }
 
 th:not(:first-child):not(:nth-last-child(-n+4)) {
-  cursor: pointer !important;
+  cursor: pointer;
 }
 
-.dropdownVisible div.multiselect-dropdown div.dropdown-list{
+body .dropdown-visible>div.multiselect-dropdown>div.dropdown-list {
   display: block !important;
-  margin-top: 0 !important;
+  margin-top: 0;
 }
 
-.dropdownVisible div.multiselect-dropdown div span.dropdown-btn{
+body .dropdown-visible>div.multiselect-dropdown>div>span.dropdown-btn {
   display: none !important;
 }
 
 .editorHeader {
   cursor: pointer;
+}
+
+.input-group-text {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
 }

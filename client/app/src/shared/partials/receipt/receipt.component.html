@@ -1,7 +1,6 @@
-<!-- <form #WhistleblowerLoginForm="ngForm" autocomplete="off" novalidate> -->
 <form id="WhistleblowerLoginForm" autocomplete="off" novalidate>
 	<div>
-		<label id="WhistleblowerLoginQuestion" for="receipt-input" *ngIf="appDataService.page === 'receiptpage'">
+		<label id="WhistleblowerLoginQuestion" for="receipt-input">
 			{{'Have you already filed a report? Enter your receipt.'|translate}}
 		</label>
 	</div>
@@ -10,7 +9,7 @@
 			<div class="input-group">
 				<input class="d-none" type="password" name="disable-autocomplete-hack" />
 				<input [autocomplete]="'off'" #receiptinput="ngModel" [(ngModel)]="formattedReceipt" id="receipt-input" class="form-control left-radius"
-                       type="text" autocomplete="receipt" name="receipt" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" size="19" customReceiptValidator>
+                       type="text" autocomplete="receipt" name="receipt" maxlength="19" size="19" customReceiptValidator>
 
 				<button
                         [disabled]="formattedReceipt.length < 16 || authenticationService.loginInProgress || !receiptinput.errors?.['receiptvalidator']"

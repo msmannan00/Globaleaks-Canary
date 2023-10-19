@@ -114,7 +114,7 @@
               <span class="dropdown-multi-select-container" *ngIf="RTips.dataModel.length > 0">
                 <i class="fa-solid fa-filter" [ngClass]="{ filterSelected: checkFilter(dropdownStatusModel) }" (click)="toggleDropdown()"></i>
                 <span [class.hidden]="!dropdownVisible">
-                  <ng-multiselect-dropdown [ngClass]="{ 'dropdownVisible': dropdownVisible }" [settings]="dropdownSettings" [data]="dropdownStatusData"
+                  <ng-multiselect-dropdown [class.dropdown-visible]="dropdownVisible" [settings]="dropdownSettings" [data]="dropdownStatusData"
                     [(ngModel)]="dropdownStatusModel" (ngModelChange)="on_changed(dropdownStatusModel)">
                   </ng-multiselect-dropdown>
                 </span>
