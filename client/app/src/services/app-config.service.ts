@@ -223,6 +223,10 @@ export class AppConfigService {
           this.header_title = lastChildRoute.snapshot.data['pageTitle'];
           this.sidebar = lastChildRoute.snapshot.data['sidebar'];
           this.setTitle();
+        }else{
+          this.header_title = "";
+          this.sidebar = "";
+          this.setTitle();
         }
       }
     });
