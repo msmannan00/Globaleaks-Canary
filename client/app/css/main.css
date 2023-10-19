@@ -898,7 +898,7 @@ th:not(:first-child):not(:nth-last-child(-n+4)) {
 
 .dropdownVisible div.multiselect-dropdown div.dropdown-list{
   display: block !important;
-  margin-top: 0px !important;
+  margin-top: 0 !important;
 }
 
 .dropdownVisible div.multiselect-dropdown div span.dropdown-btn{
