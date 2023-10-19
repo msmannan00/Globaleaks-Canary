@@ -119,7 +119,6 @@ export class AppConfigService {
         };
 
         this.appDataService.privacy_badge_open = !this.appDataService.connection.tor;
-        this.utilsService.routeCheck();
         this.appDataService.languages_enabled = new Map<number, string>();
         this.appDataService.languages_enabled_selector = [];
         this.appDataService.languages_supported = new Map<number, string>();
