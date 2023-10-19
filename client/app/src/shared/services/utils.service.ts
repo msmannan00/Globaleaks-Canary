@@ -365,7 +365,7 @@ export class UtilsService {
     window.print();
   }
 
-  saveAs(filename: string, url: string): void {
+  saveAs(filename: any, url: string): void {
 
     const headers = new HttpHeaders({
       "X-Session": this.authenticationService.session.id

@@ -184,7 +184,7 @@ export class HttpService {
   }
 
   requestCSRDirectContentResource(param: any): Observable<any> {
-    return this.httpClient.post("/api/admin/config/csr/gen", param);
+    return this.httpClient.post("api/admin/config/csr/gen", param);
   }
 
   downloadCSRFile(): Observable<Blob> {

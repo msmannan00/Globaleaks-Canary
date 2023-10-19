@@ -20,7 +20,7 @@
         </tbody>
     </table>
 
-    <div class="text-center">
+    <div class="text-center" *ngIf="jobs.length > pageSize">
         <ngb-pagination
                 [(page)]="currentPage"
                 [pageSize]="pageSize"

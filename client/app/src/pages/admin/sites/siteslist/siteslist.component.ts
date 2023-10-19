@@ -46,7 +46,7 @@ export class SiteslistComponent {
   configureTenant($event: Event, tid: number): void {
     $event.stopPropagation();
 
-    this.httpService.requestTenantSwitch("api/auth/tenantauthswitch/" + tid).subscribe(res => {
+    this.httpService.requestTenantSwitch("/api/auth/tenantauthswitch/" + tid).subscribe(res => {
       window.open(res.redirect);
     });
   }

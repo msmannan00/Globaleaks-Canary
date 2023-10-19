@@ -108,10 +108,7 @@ export class CompletedInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.count++;
-
-    if (this.count === 1 && req.url !== 'api/auth/token') {
-      this.appDataService.showLoadingPanel = true;
-    }
+    this.appDataService.showLoadingPanel = true;
     return next.handle(req).pipe(
       finalize(() => {
         this.count--;
