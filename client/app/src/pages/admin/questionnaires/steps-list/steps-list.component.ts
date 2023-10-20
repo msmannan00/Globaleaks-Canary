@@ -43,7 +43,7 @@ export class StepsListComponent {
     [this.questionnaire.steps[index], this.questionnaire.steps[target]] =
       [this.questionnaire.steps[target], this.questionnaire.steps[index]];
 
-    this.httpClient.put("/api/admin/steps", {
+    this.httpClient.put("api/admin/steps", {
       operation: "order_elements",
       args: {
         ids: this.questionnaire.steps.map((c: { id: any; }) => c.id),

@@ -39,30 +39,25 @@ module.exports = function (grunt) {
     copy: {
       sources: {
         files: [
+          {
+            expand: true,
+            cwd: 'node_modules/',
+            src: ['@fontsource/**/files/*400*',
+              '@fontsource/**/files/*700*'],
+            dest: 'app/assets/lib/webfonts/@fontsource/files/',
+            flatten: true
+          },
+          {
+            expand: true,
+            cwd: 'node_modules/',
+            src: ['@fortawesome/fontawesome-free/webfonts/*'],
+            dest: 'app/assets/lib/webfonts/@fontawesome/files/',
+            flatten: true
+          },
+
           {dest: "build/index.html", cwd: ".", src: ["app/index.html"], expand: false, flatten: true},
           {dest: "build/viewer/", cwd: ".", src: ["app/viewer/*"], expand: true, flatten: true},
           {dest: "app/assets/license.txt", cwd: ".", src: ["../LICENSE"], expand: false, flatten: true},
-          {
-            dest: "app/assets/lib/css/",
-            cwd: ".",
-            src: ["node_modules/@fortawesome/fontawesome-free/css/solid.css"],
-            expand: true,
-            flatten: true
-          },
-          {
-            dest: "app/assets/lib/webfonts",
-            cwd: ".",
-            src: ["node_modules/font-awesome/fonts/*"],
-            expand: true,
-            flatten: true
-          },
-          {
-            dest: "app/assets/lib/webfonts",
-            cwd: ".",
-            src: ["node_modules/@fortawesome/fontawesome-free/webfonts/*"],
-            expand: true,
-            flatten: true
-          },
           {
             dest: "app/assets/lib/bootstrap",
             cwd: ".",
@@ -93,10 +88,12 @@ module.exports = function (grunt) {
       },
       package: {
         files: [
+          {dest: "build/css/files", cwd: "tmp/assets/lib/webfonts/@fontawesome/files", src: ["**"], expand: true},
+          {dest: "build/css/files", cwd: "tmp/assets/lib/webfonts/@fontsource/files", src: ["**"], expand: true},
           {dest: "build/css", cwd: "tmp/css", src: ["**"], expand: true},
           {dest: "build/js", cwd: "tmp/js", src: ["**"], expand: true},
           {dest: "build/data", cwd: "tmp/assets/data", src: ["**"], expand: true},
-          {dest: "build/lib", cwd: "tmp/assets/lib", src: ["**"], expand: true},
+          {dest: "build/lib/bootstrap", cwd: "tmp/assets/lib/bootstrap", src: ["**"], expand: true},
           {dest: "build/index.html", cwd: ".", src: ["tmp/index.html"], expand: false, flatten: true},
           {dest: "build/assets/favicon.ico", cwd: ".", src: ["tmp/assets/favicon.ico"], expand: false, flatten: true},
           {dest: "build/license.txt", cwd: ".", src: ["tmp/assets/license.txt"], expand: false, flatten: true},
@@ -123,7 +120,37 @@ module.exports = function (grunt) {
       }
     },
 
+
+    concat: {
+      fontawesome: {
+        src: [
+          'node_modules/@fortawesome/fontawesome-free/css/fontawesome.css',
+          'node_modules/@fortawesome/fontawesome-free/css/solid.css',
+          'node_modules/@fortawesome/fontawesome-free/css/regular.css'],
+        dest: 'app/assets/lib/webfonts/@fontawesome/fontawesome-all.css'
+      },
+      fontsource: {
+        src: [
+          'node_modules/@fontsource/*/400.css',
+          'node_modules/@fontsource/*/700.css'],
+        dest: 'app/assets/lib/webfonts/@fontsource/fontsource-all.css'
+      }
+    },
     "string-replace": {
+      initFonts: {
+        src: "./app/assets/lib/webfonts/@fontawesome/fontawesome-all.css",
+        dest: "./app/assets/lib/webfonts/@fontawesome/fontawesome-all.css",
+        options: {
+          replacements: [
+            {
+              pattern: /url\("\.\.\/webfonts\/fa/gi,
+              replacement: function () {
+                return 'url("./files/fa';
+              },
+            }
+          ]
+        }
+      },
       pass1: {
         src: "./tmp/css/*.css",
         dest: "./tmp/css/",
@@ -133,6 +160,24 @@ module.exports = function (grunt) {
               pattern: /'fa-solid-/gi,
               replacement: function () {
                 return "'../lib/webfonts/fa-solid-";
+              }
+            },
+            {
+              pattern: /url\(fa-/gi,
+              replacement: function () {
+                return "url(./files/fa-";
+              }
+            },
+            {
+              pattern: /url\(noto/gi,
+              replacement: function () {
+                return "url(./files/noto";
+              }
+            },
+            {
+              pattern: /url\(inter/gi,
+              replacement: function () {
+                return "url(./files/inter";
               }
             },
             {
@@ -391,6 +436,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-stylelint");
   grunt.loadNpmTasks("grunt-string-replace");
   grunt.loadNpmTasks("gruntify-eslint");
+  grunt.loadNpmTasks('grunt-contrib-concat');
 
   let readNoTranslateStrings = function () {
     return JSON.parse(grunt.file.read("app/data_src/notranslate_strings.json"));
@@ -989,7 +1035,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask("updateTranslations", ["fetchTranslations", "makeAppData", "verifyAppData"]);
 
-  grunt.registerTask("build", ["clean", "copy:sources", "shell:build", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
+  grunt.registerTask("build", ["clean", "concat:fontsource", "concat:fontawesome", "string-replace:initFonts", "copy:sources", "shell:build", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
 
   grunt.registerTask("serve", ["shell:serve"]);
 

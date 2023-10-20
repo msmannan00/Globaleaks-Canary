@@ -67,7 +67,7 @@ export class Tab2Component implements OnInit {
       const file = files[0];
 
       const flowJsInstance = new Flow({
-        target: "/api/admin/files/custom",
+        target: "api/admin/files/custom",
         speedSmoothingFactor: 0.01,
         singleFile: true,
         allowDuplicateUploads: false,

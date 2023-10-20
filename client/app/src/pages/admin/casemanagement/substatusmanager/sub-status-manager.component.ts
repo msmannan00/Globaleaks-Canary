@@ -80,7 +80,7 @@ export class SubStatusManagerComponent {
         "operation": "order_elements",
         "args": reorderedIds,
       };
-      this.httpService.runOperation("/api/admin/statuses", "order_elements", data, false);
+      this.httpService.runOperation("api/admin/statuses", "order_elements", data, false);
     }
   }
 
@@ -89,7 +89,7 @@ export class SubStatusManagerComponent {
   }
 
   saveSubmissionsStatus(submissionsStatus: any): void {
-    const url = "/api/admin/statuses/" + submissionsStatus.id;
+    const url = "api/admin/statuses/" + submissionsStatus.id;
     this.httpService.requestUpdateStatus(url, submissionsStatus).subscribe(_ => {
       this.appConfigService.reinit();
     });
@@ -101,7 +101,7 @@ export class SubStatusManagerComponent {
     modalRef.componentInstance.arg = arg;
     modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = () => {
-      const url = "/api/admin/statuses/" + arg.id;
+      const url = "api/admin/statuses/" + arg.id;
       return this.utilsService.deleteStatus(url).subscribe(_ => {
         this.appConfigService.reinit();
       });

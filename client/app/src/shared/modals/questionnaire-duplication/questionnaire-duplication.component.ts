@@ -22,7 +22,7 @@ export class QuestionnaireDuplicationComponent {
   confirm() {
     if (this.operation === "duplicate") {
       this.http.post(
-        "/api/admin/questionnaires/duplicate",
+        "api/admin/questionnaires/duplicate",
         {
           questionnaire_id: this.questionnaire.id,
           new_name: this.duplicate_questionnaire.name
