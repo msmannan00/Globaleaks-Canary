@@ -658,7 +658,7 @@ p:last-child {
 }
 
 #login-status-box {
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .col-auto {
@@ -912,8 +912,6 @@ body .dropdown-visible>div.multiselect-dropdown>div>span.dropdown-btn {
 }
 
 .input-group-text {
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
   color: #495057;
 }
 
@@ -931,4 +929,13 @@ i.fa-solid.fa-chevron-left {
 
 i.fa-solid.fa-chevron-right {
   margin: 0;
+}
+
+#SupportLink {
+  color: #205282;
+  cursor: pointer;
+}
+
+#SupportLink:hover {
+  color: #5797d5;
 }

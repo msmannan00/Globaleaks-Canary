@@ -193,7 +193,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit {
       this.httpService.whistleBlowerTipUpdate({
         "cmd": "additional_questionnaire",
         "answers": this.answers
-      }, this.wbTipService.tip.id).subscribe
+      }).subscribe
       (
         {
           next: _ => {

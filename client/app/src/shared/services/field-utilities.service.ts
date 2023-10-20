@@ -170,7 +170,7 @@ export class FieldUtilitiesService {
         return;
       }
 
-      if (scope.appDataService.public.node.enable_scoring_system) {
+      if (scope.appDataService?.public.node.enable_scoring_system) {
         scope.answers[field.id].forEach(function (entry: any) {
           localscope.calculateScore(scope, field, entry);
         });

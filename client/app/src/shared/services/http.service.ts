@@ -206,8 +206,8 @@ export class HttpService {
     return this.httpClient.get("api/whistleblower/wbtip");
   }
 
-  whistleBlowerTipUpdate(param: any, tipid: string): Observable<any> {
-    return this.httpClient.post("api/whistleblower/wbtip/" + tipid + "/update", param);
+  whistleBlowerTipUpdate(param: any): Observable<any> {
+    return this.httpClient.post("api/whistleblower/wbtip/fillform" , param);
   }
 
   whistleBlowerIdentityUpdate(param: any, tipid: string): Observable<any> {
