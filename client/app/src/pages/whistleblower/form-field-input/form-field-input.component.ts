@@ -1,13 +1,13 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
-import {ControlContainer, NgForm} from "@angular/forms";
-import {SubmissionService} from "@app/services/submission.service";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FieldUtilitiesService } from "@app/shared/services/field-utilities.service";
+import { ControlContainer, NgForm } from "@angular/forms";
+import { SubmissionService } from "@app/services/submission.service";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: "src-form-field-input",
   templateUrl: "./form-field-input.component.html",
-  viewProviders: [{provide: ControlContainer, useExisting: NgForm}]
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
 })
 export class FormFieldInputComponent implements OnInit {
 
@@ -31,16 +31,18 @@ export class FormFieldInputComponent implements OnInit {
   fieldFormVar: any = {};
   fieldFormVarName: any;
   input_entryIndex = "";
-  input_date :NgbDateStruct;
-  input_start_date :any;
-  input_end_date :any;
+  input_date: NgbDateStruct;
+  input_start_date: any;
+  input_end_date: any;
   validator: any;
   rows: any;
   dateRange: any = {
     "start": "",
     "end": ""
   };
-
+  dateOptions1: any = {};
+  dateOptions2: any = {};
+  dateOptions: any = {};
   constructor(private fieldUtilitiesService: FieldUtilitiesService) {
   }
 
@@ -69,18 +71,34 @@ export class FormFieldInputComponent implements OnInit {
         this.validator = validator_regex;
       }
     }
+    if (this.field.type === "date") {
+      if (this.field.attrs.min_date) {
+        this.dateOptions.min_date = this.field.attrs.min_date.value;
+      }
+      if (this.field.attrs.max_date) {
+        this.dateOptions.max_date = this.field.attrs.max_date.value;
+      }
+    }
+    if (this.field.type === "daterange") {
+      if (this.field.attrs.min_date) {
+        this.dateOptions1 = this.field.attrs.min_date.value;
+      }
+      if (this.field.attrs.max_date) {
+        this.dateOptions2 = this.field.attrs.max_date.value;
+      }
+    }
   }
 
   onDateSelection() {
     const formattedDate = this.convertNgbDateToISOString(this.input_date);
     this.entry.value = formattedDate;
   }
-  
+
   convertNgbDateToISOString(date: NgbDateStruct): string {
     const jsDate = new Date(date.year, date.month - 1, date.day);
     return jsDate.toISOString();
   }
-  
+
   onStartDateSelection(date: NgbDateStruct): void {
     const startDate = new Date(date.year, date.month - 1, date.day);
     const formattedStartDate = startDate.getTime().toString();

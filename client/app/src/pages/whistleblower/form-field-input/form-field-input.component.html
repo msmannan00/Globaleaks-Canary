@@ -66,6 +66,8 @@
                     <input id="{{fieldEntry}}"
                            class="form-control inputelem"
                            [name]="'input-'+entryIndex"
+                           [minDate]="dateOptions.min_date"
+                           [maxDate]="dateOptions.max_date"
                            type="text"
                            readonly="readonly"
                            [attr.aria-label]="field.label"
@@ -75,16 +77,18 @@
                            #datepicker="ngbDatepicker"
                            (click)="datepicker.toggle()"
                            (ngModelChange)="onDateSelection()"/>
-                    <span class="input-group-append" (click)="datepicker.toggle()"><i class="input-group-text fa-solid fa-calendar"></i></span>
+                    <span class="input-group-append btn btn-light border border-1" (click)="datepicker.toggle()"><i class="fa-solid fa-calendar"></i></span>
                 </div>
             </div>
-            <div *ngSwitchCase="'daterange'" class="form-inline">
+            <div *ngSwitchCase="'daterange'" class="form-inline d-inline-flex align-items-center">
                 <span class="form-group">
                     <label>{{'From'|translate}}</label>
                     <div class="input-group mx-1">
                         <input id="{{fieldEntry}}"
                                class="form-control inputelem"
                                name="startDate"
+                               [minDate]="dateOptions1"
+                               [maxDate]="dateOptions2"
                                type="text"
                                [readOnly]="true"
                                [attr.aria-label]="field.label"
@@ -95,15 +99,17 @@
                                #datepickerstart="ngbDatepicker"
                                (click)="datepickerstart.toggle()"
                                (ngModelChange)="onStartDateSelection(input_start_date)"/>
-                        <span class="input-group-append" (click)="datepickerstart.toggle()"><i class="input-group-text fa-solid fa-calendar"></i></span>
+                        <span class="input-group-append btn btn-light border border-1" (click)="datepickerstart.toggle()"><i class="fa-solid fa-calendar"></i></span>
                     </div>
                 </span>
-                <span class="form-group mx-1" *ngIf="input_start_date">
+                <span class="form-group mx-1" *ngIf="input_start_date d-inline-flex align-items-center">
                     <label>{{'To'|translate}}</label>
                     <div class="input-group mx-1">
                         <input id="{{fieldEntry}}"
                                class="form-control inputelem"
                                name="endDate"
+                               [minDate]="dateOptions1"
+                               [maxDate]="dateOptions2"
                                type="text"
                                [readonly]="true"
                                [attr.aria-label]="field.label"
@@ -114,10 +120,10 @@
                                #datepickerend="ngbDatepicker"
                                (click)="datepickerend.toggle()"
                                (ngModelChange)="onEndDateSelection(input_end_date)"/>
-                        <span class="input-group-append" (click)="datepickerend.toggle()"><i class="input-group-text fa-solid fa-calendar"></i></span>
+                        <span class="input-group-append btn btn-light border border-1" (click)="datepickerend.toggle()"><i class="fa-solid fa-calendar"></i></span>
                     </div>
                 </span>
-                <span class="ms-1" data-ng-if="daterange.start">
+                <span class="ms-1 mt-2 d-inline-flex align-items-center" data-ng-if="daterange.start">
                     <button type="button" class="btn btn-outline-secondary" (click)="clearDateRange()"><i class="fa-solid fa-times-circle"></i></button>
                 </span>
             </div>

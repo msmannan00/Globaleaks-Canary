@@ -867,11 +867,13 @@ htmlinput[type="email"] {
 [dir="ltr"] #Sidebar .fa,
 [dir="ltr"] #Sidebar .fa-solid {
   margin-right: 0.5em;
+  width: 16px;
 }
 
 [dir="rtl"] #Sidebar .fa,
 [dir="rtl"] #Sidebar .fa-solid {
   margin-left: 0.5em;
+  width: 16px;
 }
 
 #Sidebar a {
@@ -912,4 +914,21 @@ body .dropdown-visible>div.multiselect-dropdown>div>span.dropdown-btn {
 .input-group-text {
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
+  color: #495057;
+}
+
+i.fa-solid.fa-chevron-down {
+  margin: 0;
+}
+
+i.fa-solid.fa-chevron-up {
+  margin: 0;
+}
+
+i.fa-solid.fa-chevron-left {
+  margin: 0;
+}
+
+i.fa-solid.fa-chevron-right {
+  margin: 0;
 }
