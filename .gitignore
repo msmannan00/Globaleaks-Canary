@@ -10,6 +10,7 @@ client/app/viewer/pdf.min.js
 client/app/viewer/pdf.worker.min.js
 client/npm-shrinkwrap.json
 client/tmp
+client/app/assets/lib
 client/coverage/*
 client/cypress/screenshots/*
 *.json

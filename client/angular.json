@@ -40,11 +40,9 @@
               "app/css/loader.css",
               "app/css/print.css",
               "app/css/button.css",
-              "app/css/ng-select.css",
-              "node_modules/font-awesome/css/font-awesome.css",
-              "node_modules/@fortawesome/fontawesome-free/css/fontawesome.css",
               "node_modules/@fortawesome/fontawesome-free/css/solid.css",
-              "app/assets/lib/css/solid.css",
+              "app/assets/lib/webfonts/@fontawesome/fontawesome-all.css",
+              "app/assets/lib/webfonts/@fontsource/fontsource-all.css",
               "node_modules/@ng-select/ng-select/themes/default.theme.css",
               "node_modules/ng-multiselect-dropdown/themes/ng-multiselect-dropdown.theme.scss",
               "app/css/bootstrap-fixes.css"
