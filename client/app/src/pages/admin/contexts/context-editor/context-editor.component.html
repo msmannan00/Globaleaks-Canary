@@ -82,8 +82,8 @@
                                 <span *ngIf="index !== 0" (click)="moveUpReceiver(index)" [ngbTooltip]="'Move up' | translate">
                                     <i class="fa-solid fa-chevron-up"></i>
                                 </span>
-                                <i *ngIf="(index !== receiver.length - 1) || (index !== 0)" class="fa-solid fa-none"></i>
-                                <span *ngIf="index !== receiver.length - 1" (click)="moveDownReceiver(index)" [ngbTooltip]="'Move down' | translate">
+                                <i *ngIf="(index !== context.receivers.length - 1) || (index !== 0)" class="fa-solid fa-none"></i>
+                                <span *ngIf="index !== context.receivers.length - 1" (click)="moveDownReceiver(index)" [ngbTooltip]="'Move down' | translate">
                                     <i class="fa-solid fa-chevron-down"></i>
                                 </span>
                             </span>

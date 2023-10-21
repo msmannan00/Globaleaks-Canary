@@ -209,6 +209,10 @@ h6 {
   margin-bottom: 1em;
 }
 
+#ReceiverContextAdder{
+  margin-bottom: 5px;
+}
+
 #sidebar a {
   display: block;
   margin-bottom: 0.5em;
