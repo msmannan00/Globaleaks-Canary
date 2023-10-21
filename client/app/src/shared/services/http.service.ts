@@ -56,7 +56,7 @@ export class HttpService {
   }
 
   updatePreferenceResource(data: any): Observable<any> {
-    return this.httpClient.put("api/preferences", data);
+    return this.httpClient.put("api/user/preferences", data);
   }
 
   requestChangePassword(param: string): Observable<any> {
