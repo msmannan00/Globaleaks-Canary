@@ -6,13 +6,13 @@
 </div>
 <div class="modal-body">
     <div id="ReceiverContextAdder" class="form-group">
-        <div class="input-group">
-            <ng-select class="w-25" [(ngModel)]="receiverId" [items]="selectableRecipients" bindLabel="name"
-                placeholder="{{ 'Search' | translate }}" [searchable]="true">
-                <ng-template ng-label-tmp let-item="item">
-                    <span>{{ item.name }}</span>
-                </ng-template>
-            </ng-select>
+        <div class="input-group w-25">
+            <select class="form-control w-25" [(ngModel)]="receiverId">
+                <option value="">{{ 'Search' | translate }}</option>
+                <ng-container *ngFor="let item of selectableRecipients">
+                    <option [value]="item.id">{{ item.name }}</option>
+                </ng-container>
+            </select>
             <div class="input-group-append">
                 <span class="input-group-text h-100"><i class="fa-solid fa-search"></i></span>
             </div>
