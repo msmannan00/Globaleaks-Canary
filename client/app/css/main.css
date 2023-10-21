@@ -209,6 +209,27 @@ h6 {
   margin-bottom: 1em;
 }
 
+.ngb-dp-week > .ngb-dp-weekday {
+  color: #205282;
+}
+
+.ngb-dp-week>.ngb-dp-day>.bg-primary {
+  background-color: #205282 !important;
+}
+
+.multiselect-dropdown>.dropdown-list{
+  min-width: 200px;
+  border-radius: 5px !important;
+}
+
+.ngb-datepicker-container-inner{
+  box-shadow: 0 0 10px #b3b3b3;
+  border-radius: 6px !important;
+  background: white;
+  padding: 5px;
+  padding-bottom: 53px;
+}
+
 #sidebar a {
   display: block;
   margin-bottom: 0.5em;
