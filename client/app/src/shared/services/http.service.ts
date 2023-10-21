@@ -60,7 +60,7 @@ export class HttpService {
   }
 
   requestChangePassword(param: string): Observable<any> {
-    return this.httpClient.put<password_recovery_response_model>("api/reset/password", param);
+    return this.httpClient.put<password_recovery_response_model>("api/user/reset/password", param);
   }
 
   requestToken(param: string): Observable<any> {
