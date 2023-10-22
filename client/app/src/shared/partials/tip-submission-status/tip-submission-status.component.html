@@ -5,12 +5,14 @@
       <ng-option *ngFor="let item of  appDataService.submissionStatuses.slice(1)" [value]="item.id">
         {{item.label}}
       </ng-option>
-      <ng-option value=""></ng-option>
     </ng-select>
 
-    <ng-select class="select-size" *ngIf="tipService.tip.status && appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()]" [clearable]="false" [ngModelOptions]="{standalone: true}" [(ngModel)]="tipService.tip.substatus" [hidden]="!appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()].substatuses.length" (change)="updateSubmissionSubStatus()">
-      <ng-option *ngFor="let item of appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()].substatuses" [value]="item.id">{{item.label}}</ng-option>
-      <ng-option value=""></ng-option>
-    </ng-select>
+    <ng-container *ngIf="appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()].substatuses.length>0">
+      &nbsp;&nbsp;
+      <ng-select class="select-size" *ngIf="tipService.tip.status && appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()]" [clearable]="false" [ngModelOptions]="{standalone: true}" [(ngModel)]="tipService.tip.substatus" [hidden]="!appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()].substatuses.length" (change)="updateSubmissionSubStatus()">
+        <ng-option *ngFor="let item of appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()].substatuses" [value]="item.id">{{item.label}}</ng-option>
+        <ng-option value=""></ng-option>
+      </ng-select>
+    </ng-container>
   </span>
 </span>
