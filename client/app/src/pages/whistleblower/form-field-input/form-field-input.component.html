@@ -33,12 +33,10 @@
                     <option *ngFor="let option of field.options | orderBy:field.attrs.display_alphabetically.value ? 'label' : 'order'; let index = index" id="{{fieldEntry}}-option-{{index}}" value="{{option.id}}">{{option.label}}</option>
                 </select>
                 <div class="input-group" [ngClass]="{'d-block': !entry['value']}" *ngIf="field.options.length >= 10">
-
                     <ng-select [clearable]="false" [(ngModel)]="entry['value']" theme="bootstrap">
                         <ng-option *ngFor="let option of field.options | orderBy:field.attrs.display_alphabetically.value ? 'label' : 'order'" [value]="option.id">{{option.label}}</ng-option>
                     </ng-select>
-
-                    <span class="input-append" (click)="entry['value']='';" disabled="!entry['value']" *ngIf="entry['value']"><i class="input-group-text fa-solid fa-times-circle"></i></span>
+                    <span class="input-append" (click)="entry['value']='';" disabled="!entry['value']" *ngIf="entry['value']"><i class="input-group-text cross-padding fa-solid fa-times-circle"></i></span>
                 </div>
             </div>
             <div *ngSwitchCase="'multichoice'">

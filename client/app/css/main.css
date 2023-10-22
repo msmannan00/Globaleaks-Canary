@@ -927,6 +927,12 @@ body .dropdown-visible>div.multiselect-dropdown>div>span.dropdown-btn {
   color: #495057;
 }
 
+.cross-padding {
+  padding: 9px;
+  border-radius: 5px;
+  margin-left: 5px;
+}
+
 i.fa-solid.fa-chevron-down {
   margin: 0;
 }
