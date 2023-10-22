@@ -51,6 +51,10 @@ th .fa-solid,
   margin-right: 5px;
 }
 
+.status-box-list {
+  width:150px;
+}
+
 .status-container {
   display: flex;
   align-items: center;
