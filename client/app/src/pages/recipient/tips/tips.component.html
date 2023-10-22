@@ -85,11 +85,12 @@
                   <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
                 </span>
               </span>
-              <span class="dropdown-multi-select-container">
-                <i class="fa-solid fa-filter" data-ng-class="{filterSelected: checkFilter(dropdownContextModel)}"></i>
-                <span translation-texts="dropdownDefaultText" data-ng-dropdown-multiselect=""
-                  options="dropdownContextData" selected-model="dropdownContextModel" events="on_changed"
-                  extra-settings="dropdownSettings"></span>
+              <span class="dropdown-multi-select-container" *ngIf="RTips.dataModel.length > 0">
+                <i class="fa-solid fa-filter" [ngClass]="{ filterSelected: checkFilter(dropdownContextModel) }" (click)="toggleDropdown()"></i>
+                <span [class.hidden]="!dropdownVisible">
+                  <ng-multiselect-dropdown [class.dropdown-visible]="dropdownVisible" [settings]="dropdownSettings" [data]="dropdownContextData" [(ngModel)]="dropdownContextModel" (ngModelChange)="on_changed(dropdownContextModel)">
+                  </ng-multiselect-dropdown>
+                </span>
               </span>
             </th>
             <th class="TipInfoLabel">
@@ -185,11 +186,13 @@
                   <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
                 </span>
               </span>
-              <span class="dropdown-multi-select-container">
-                <i class="fa-solid fa-filter" data-ng-class="{filterSelected: checkFilter(dropdownScoreModel)}"></i>
-                <span translation-texts="dropdownDefaultText" data-ng-dropdown-multiselect options="dropdownScoreData"
-                  class="dropdown-multiselect-padding" selected-model="dropdownScoreModel" events="on_changed"
-                  extra-settings="dropdownSettings"></span>
+              <span class="dropdown-multi-select-container" *ngIf="RTips.dataModel.length > 0">
+                <i class="fa-solid fa-filter" [ngClass]="{ filterSelected: checkFilter(dropdownScoreModel) }" (click)="toggleDropdown()"></i>
+                <span [class.hidden]="!dropdownVisible">
+                  <ng-multiselect-dropdown [class.dropdown-visible]="dropdownVisible" [settings]="dropdownSettings" [data]="dropdownScoreData"
+                                           [(ngModel)]="dropdownScoreModel" (ngModelChange)="on_changed(dropdownScoreModel)">
+                  </ng-multiselect-dropdown>
+                </span>
               </span>
             </th>
           </tr>

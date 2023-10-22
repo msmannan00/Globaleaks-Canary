@@ -111,6 +111,10 @@ th .fa-solid,
   padding-bottom: 53px;
 }
 
+.multiselect-item-checkbox {
+  font-weight: normal;
+}
+
 .uib-datepicker-popup {
   padding: 5px;
   margin: 0;
