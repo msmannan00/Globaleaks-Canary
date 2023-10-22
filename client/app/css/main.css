@@ -107,8 +107,7 @@ th .fa-solid,
   box-shadow: 0 0 10px #b3b3b3;
   border-radius: 6px !important;
   background: white;
-  padding: 5px;
-  padding-bottom: 53px;
+  padding: 5px 5px 53px;
 }
 
 .multiselect-item-checkbox {
