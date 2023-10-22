@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import sha256, {} from "fast-sha256";
 
 @Injectable({
   providedIn: "root"
@@ -57,24 +56,15 @@ export class TokenResource {
 
     if (webCrypto) {
       digestPremise = webCrypto.digest({name: "SHA-256"}, toHash);
-    } else {
-      digestPremise = new Promise((resolve, reject) => {
-        if (sha256(toHash)) {
-          resolve("ok");
-        } else {
-          reject("error");
-        }
-      });
-    }
-
-    if (typeof digestPremise.then !== "undefined") {
-      digestPremise.then(res => {
-        this.calculateHash(res, resolve);
-      });
-    } else {
-      digestPremise.then(res => {
-        return res;
-      });
+      if (typeof digestPremise.then !== "undefined") {
+        digestPremise.then(res => {
+          this.calculateHash(res, resolve);
+        });
+      } else {
+        digestPremise.then(res => {
+          return res;
+        });
+      }
     }
 
     return digestPremise;

@@ -2,22 +2,23 @@
   <span id="assign-submission-status" class="status-container">
     <div class="status-label">{{ 'Status:' | translate }}</div>
 
-    <span class="ml-2">
+    <span class="status-box-list">
       <select class="form-control ml-2" [(ngModel)]="tipService.tip.status" (change)="updateSubmissionStatus()">
         <ng-container *ngFor="let item of appDataService.submissionStatuses.slice(1)">
           <option *ngIf="item" [value]="item.id">{{ item.label }}</option>
         </ng-container>
       </select>
     </span>
-    &nbsp;&nbsp;
-    <span class="ml-3">
-      <select class="form-control" *ngIf="tipService.tip.status && appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()]" [(ngModel)]="tipService.tip.substatus" [hidden]="!appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()].substatuses.length" (change)="updateSubmissionSubStatus()">
-        <ng-container *ngFor="let item of appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()].substatuses">
-          <option *ngIf="item" [value]="item.id">{{ item.label }}</option>
-        </ng-container>
-      <option value=""></option>
-      </select>
-    </span>
-
+    <ng-container *ngIf="appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()].substatuses.length">
+      &nbsp;&nbsp;
+      <span>
+        <select class="form-control status-box-list" *ngIf="tipService.tip.status && appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()]" [(ngModel)]="tipService.tip.substatus" [hidden]="!appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()].substatuses.length" (change)="updateSubmissionSubStatus()">
+          <ng-container *ngFor="let item of appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()].substatuses">
+            <option *ngIf="item" [value]="item.id">{{ item.label }}</option>
+          </ng-container>
+        <option value=""></option>
+        </select>
+      </span>
+    </ng-container>
   </span>
 </span>

@@ -51,11 +51,6 @@ th .fa-solid,
   margin-right: 5px;
 }
 
-.status-container {
-  display: flex;
-  align-items: center;
-}
-
 .status-label {
   margin-right: 10px;
 }
@@ -710,6 +705,10 @@ p:last-child {
   width: auto;
 }
 
+.language-box > .language-picker {
+  width: auto;
+}
+
 .input-group.input-group-rtl .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -730,6 +729,10 @@ p:last-child {
 
 #language-picker-box {
   width: 190px;
+}
+
+.status-box-list {
+  width:150px;
 }
 
 #login-status-box,
