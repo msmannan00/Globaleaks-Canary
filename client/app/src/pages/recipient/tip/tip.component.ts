@@ -94,7 +94,7 @@ export class TipComponent implements AfterViewInit {
   }
 
   openGrantTipAccessModal(): void {
-    this.utils.runUserOperation("get_users_names", {}, false).subscribe((response: any) => {
+    this.utils.runUserOperation("get_users_names", {}, true).subscribe((response: any) => {
       const modalRef = this.modalService.open(GrantAccessComponent);
       modalRef.componentInstance.args = {
         users_names: response
@@ -117,7 +117,7 @@ export class TipComponent implements AfterViewInit {
   }
 
   openRevokeTipAccessModal() {
-    this.utils.runUserOperation("get_users_names", {}, false).subscribe(
+    this.utils.runUserOperation("get_users_names", {}, true).subscribe(
       {
         next: response => {
           const modalRef = this.modalService.open(RevokeAccessComponent);
@@ -143,7 +143,7 @@ export class TipComponent implements AfterViewInit {
   }
 
   openTipTransferModal() {
-    this.utils.runUserOperation("get_users_names", {}, false).subscribe(
+    this.utils.runUserOperation("get_users_names", {}, true).subscribe(
       {
         next: (response: any) => {
           const selectableRecipients: any = [];

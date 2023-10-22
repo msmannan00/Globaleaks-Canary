@@ -67,12 +67,12 @@
                     </label>
                     <div id="ReceiverContextAdder" class="row">
                         <div class="col-md-12" *ngIf="showSelect">
-                            <select name="selected.value" [(ngModel)]="selected.value" class="form-control">
-                                <option value="">{{ 'Search' | translate }}</option>
-                                <option *ngFor="let item of usersData | filter:'role':'receiver'" (click)="moveReceiver(item);" [value]="item.name">
+                            <ng-select [(ngModel)]="selected.value" name="selected.value" bindLabel="name" [items]="usersData | filter:  'role': 'receiver'" [searchable]="true" [placeholder]="'Search' | translate"
+                                (change)="moveReceiver($event)">
+                                <ng-template ng-option-tmp let-item="item">
                                     {{ item.name }}
-                                </option>
-                            </select>
+                                </ng-template>
+                            </ng-select>
                             <br />
                         </div>
                     </div>

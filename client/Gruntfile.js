@@ -1,3 +1,8 @@
+const fs = require("fs");
+const superagent = require("superagent");
+const Gettext = require("node-gettext");
+const path = require("path");
+const gettextParser = require("gettext-parser");
 module.exports = function (grunt) {
   let fs = require("fs"),
     path = require("path"),

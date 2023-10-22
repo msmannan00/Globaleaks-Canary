@@ -239,6 +239,7 @@ export class AppConfigService {
   }
 
   reinit(languageInit = true) {
+    //this.utilsService.reloadCurrentRouteFresh()
     this.localInitialization(languageInit);
   }
 }

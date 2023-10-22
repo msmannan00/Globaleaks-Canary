@@ -54,6 +54,7 @@ if (!isBrowserCompatible()) {
   document.getElementById("browser-not-supported").style.display = "block";
 } else {
   createAndAppendLink("css/styles.css");
+  createAndAppendLink("lib/css/solid.css");
 
   const scriptFiles = ["js/scripts.js", "js/polyfills.js", "js/runtime.js", "js/main.js"];
   for (const scriptFile of scriptFiles) {

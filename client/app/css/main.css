@@ -51,6 +51,19 @@ th .fa-solid,
   margin-right: 5px;
 }
 
+.status-box-container {
+  margin-right: 5px;
+}
+
+.status-box-list {
+  width:150px;
+}
+
+.status-container {
+  display: flex;
+  align-items: center;
+}
+
 .status-label {
   margin-right: 10px;
 }
@@ -75,6 +88,31 @@ th .fa-solid,
 
 .invisible {
   opacity: 0;
+}
+
+.ngb-dp-week > .ngb-dp-weekday {
+  color: #205282;
+}
+
+.ngb-dp-week>.ngb-dp-day>.bg-primary {
+  background-color: #205282 !important;
+}
+
+.multiselect-dropdown>.dropdown-list{
+  min-width: 200px;
+  border-radius: 5px !important;
+}
+
+.ngb-datepicker-container-inner{
+  box-shadow: 0 0 10px #b3b3b3;
+  border-radius: 6px !important;
+  background: white;
+  padding: 5px;
+  padding-bottom: 53px;
+}
+
+.multiselect-item-checkbox {
+  font-weight: normal;
 }
 
 .uib-datepicker-popup {
@@ -204,25 +242,8 @@ h6 {
   margin-bottom: 1em;
 }
 
-.ngb-dp-week > .ngb-dp-weekday {
-  color: #205282;
-}
-
-.ngb-dp-week>.ngb-dp-day>.bg-primary {
-  background-color: #205282 !important;
-}
-
-.multiselect-dropdown>.dropdown-list{
-  min-width: 200px;
-  border-radius: 5px !important;
-}
-
-.ngb-datepicker-container-inner{
-  box-shadow: 0 0 10px #b3b3b3;
-  border-radius: 6px !important;
-  background: white;
-  padding: 5px;
-  padding-bottom: 53px;
+#ReceiverContextAdder{
+  margin-bottom: 5px;
 }
 
 #sidebar a {
@@ -705,10 +726,6 @@ p:last-child {
   width: auto;
 }
 
-.language-box > .language-picker {
-  width: auto;
-}
-
 .input-group.input-group-rtl .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -729,10 +746,6 @@ p:last-child {
 
 #language-picker-box {
   width: 190px;
-}
-
-.status-box-list {
-  width:150px;
 }
 
 #login-status-box,
@@ -937,6 +950,12 @@ body .dropdown-visible>div.multiselect-dropdown>div>span.dropdown-btn {
 
 .input-group-text {
   color: #495057;
+}
+
+.cross-padding {
+  padding: 9px;
+  border-radius: 5px;
+  margin-left: 5px;
 }
 
 i.fa-solid.fa-chevron-down {

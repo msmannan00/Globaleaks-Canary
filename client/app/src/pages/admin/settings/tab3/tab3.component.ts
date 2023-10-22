@@ -55,6 +55,7 @@ export class Tab3Component implements OnInit {
     if (language && (this.nodeResolver.dataModel.languages_enabled.indexOf(language.code) === -1)) {
       this.nodeResolver.dataModel.languages_enabled.push(language.code);
     }
+    this.langSelect.clearModel();
   }
 
   removeLang(index: number, lang_code: string) {

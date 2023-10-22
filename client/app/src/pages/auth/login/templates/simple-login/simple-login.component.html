@@ -19,10 +19,10 @@
     <div class="form-group">
       <label>{{'Please select your account:'|translate}}</label>
 
-      <select class="form-control" name="loginData.loginUsername" [(ngModel)]="loginData.loginUsername">
-        <option [value]="null" disabled>Select an option</option>
-        <option *ngFor="let item of appDataService.public.receivers" [value]="item.id">{{item.name}}</option>
-      </select>
+      <ng-select name="loginData.loginUsername" [clearable]="false" [ngModelOptions]="{standalone: true}" [(ngModel)]="loginData.loginUsername">
+        <ng-option *ngFor="let item of appDataService.public.receivers" [value]="item.id">{{item.name}}</ng-option>
+      </ng-select>
+
     </div>
 
     <div *ngIf="loginData.loginUsername">
