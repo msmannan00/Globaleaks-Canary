@@ -71,6 +71,7 @@ export class Tab3Component implements OnInit {
       this.translationService.onChange(res["default_language"]);
       localStorage.removeItem("default_language");
       this.appConfigService.reinit(false);
+      this.utilsService.reloadCurrentRoute();
     });
   }
 }
