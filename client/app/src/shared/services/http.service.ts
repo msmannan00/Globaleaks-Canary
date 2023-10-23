@@ -211,7 +211,7 @@ export class HttpService {
   }
 
   whistleBlowerIdentityUpdate(param: any, tipid: string): Observable<any> {
-    return this.httpClient.post("api/whistleblower/wbtip/" + tipid + "/provideidentityinformation", param);
+    return this.httpClient.post("api/whistleblower/wbtip/identity", param);
   }
 
   requestAdminFieldTemplateResource(): Observable<any> {

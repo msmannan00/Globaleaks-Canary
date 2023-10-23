@@ -25,11 +25,13 @@ export class WhistleblowerIdentityFieldComponent implements OnInit {
 
   changeIdentitySetting(status: boolean): void {
     this.identity_provided = status;
+    this.submission._submission.identity_provided = status
     this.stateChanged.emit(status);
   }
 
   ngOnInit(): void {
     this.identity_provided = true;
+    this.submission._submission.identity_provided = true
     this.stateChanged.emit(true);
   }
 }

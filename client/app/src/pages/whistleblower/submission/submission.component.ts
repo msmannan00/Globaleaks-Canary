@@ -270,7 +270,6 @@ export class SubmissionComponent implements OnInit, AfterViewInit{
       this.utilsService.scrollToTop();
       return;
     }
-    this.submission._submission.identity_provided = this.identity_provided;
 
     this.submission._submission.answers = this.answers;
 
