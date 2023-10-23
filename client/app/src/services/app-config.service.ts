@@ -8,7 +8,6 @@ import {TranslationService} from "@app/services/translation.service";
 import {Router, NavigationEnd, ActivatedRoute} from "@angular/router";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
-import { filter } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -194,7 +193,7 @@ export class AppConfigService {
     if (this.appDataService.public.node) {
       if (!this.appDataService.public.node.wizard_done) {
         location.replace("/#/wizard");
-      } else if (this.router.url === "/" && this.appDataService.page === "signuppage") {
+      } else if (this.router.url === "/" && this.appDataService.public.node.enable_signup) {
         location.replace("/#/signup");
       } else if ((this.router.url === "/" || this.router.url === "/submission") && this.appDataService.public.node.adminonly && !this.authenticationService.session) {
         location.replace("/#/admin/home");
@@ -239,7 +238,6 @@ export class AppConfigService {
   }
 
   reinit(languageInit = true) {
-    //this.utilsService.reloadCurrentRouteFresh()
     this.localInitialization(languageInit);
   }
 }
