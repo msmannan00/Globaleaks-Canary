@@ -29,7 +29,6 @@ export class SubmissionComponent implements OnInit, AfterViewInit{
   uploads: any = {};
   field_id_map: any;
   questionnaire: any;
-  receiver_selection_step: number;
   contextsOrderPredicate = this.appDataService.public.node.show_contexts_in_alphabetical_order ? "name" : "order";
   selectable_contexts: any[];
   submission: SubmissionService;
@@ -52,7 +51,8 @@ export class SubmissionComponent implements OnInit, AfterViewInit{
   }
 
   firstStepIndex() {
-    return this.receiver_selection_step ? -1 : 0;
+    console.log()
+    return this.submission.context.allow_recipients_selection ? -1 : 0;
   };
 
   prepareSubmission(context: any) {
