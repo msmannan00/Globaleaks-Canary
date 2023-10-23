@@ -957,6 +957,10 @@ body .dropdown-visible>div.multiselect-dropdown>div>span.dropdown-btn {
   color: #495057;
 }
 
+.no-filtered-data{
+  font-size: 14px;
+}
+
 .cross-padding {
   padding: 9px;
   border-radius: 5px;
