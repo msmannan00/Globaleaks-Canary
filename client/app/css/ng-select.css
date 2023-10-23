@@ -63,7 +63,7 @@
 }
 .ng-select .ng-select-container .ng-value-container .ng-input > input {
   box-sizing: content-box;
-  background: #f5f7fa;
+  background: none transparent;
   border: 0 none;
   box-shadow: none;
   outline: none;
