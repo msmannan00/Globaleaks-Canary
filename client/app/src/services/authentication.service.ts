@@ -18,6 +18,7 @@ export class AuthenticationService {
   loginInProgress: boolean = false;
   requireAuthCode: boolean = false;
   loginData: LoginDataRef = new LoginDataRef();
+  specialPermission = false;
 
   constructor(private serviceInstanceService: ServiceInstanceService, private activatedRoute: ActivatedRoute, private httpService: HttpService, private rootDataService: AppDataService, private router: Router) {
   }
@@ -105,6 +106,7 @@ export class AuthenticationService {
     requestObservable.subscribe(
       {
         next: (response: any) => {
+          this.specialPermission = response['permissions']['can_edit_general_settings']
           this.rootDataService.showLoadingPanel = false;
           this.reset();
           this.setSession(response);
