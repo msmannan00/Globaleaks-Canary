@@ -45,8 +45,8 @@
         <input name="nodeResolver.dataModel.whistleblowing_button" class="form-control" [(ngModel)]="nodeResolver.dataModel.whistleblowing_button" type="text" />
       </div>
 
+        <!-- <div class="form-group" *ngIf="nodeResolver.dataModel.mode === 'default'"> -->
         <div class="form-group" *ngIf="nodeResolver.dataModel.mode === 'default'">
-        <div class="form-group">
           <label>{{ 'Disclaimer' | translate }}</label>
           <div>
             <textarea name="nodeResolver.dataModel.disclaimer_text" class="form-control" [(ngModel)]="nodeResolver.dataModel.disclaimer_text"></textarea>
@@ -55,26 +55,26 @@
 
         <div class="form-group">
           <label>{{'Whistleblowing Policy'|translate}}</label>
-          <input name="footer_whistleblowing_policy" class="form-control" [(ngModel)]="nodeResolver.dataModel.footer_whistleblowing_policy" [pattern]="Constants.secureLocalUrlRegexp" [ngClass]="{'is-invalid': contentForm.form.get('footer_whistleblowing_policy')?.invalid && nodeResolver.dataModel.footer_whistleblowing_policy.length>0}" type="text" required/>
+          <input name="footer_whistleblowing_policy" class="form-control" [(ngModel)]="nodeResolver.dataModel.footer_whistleblowing_policy" [pattern]="Constants.secureLocalUrlRegexp" [ngClass]="{'is-invalid': contentForm.form.get('footer_whistleblowing_policy')?.errors?.['pattern']}" type="text" required/>
         </div>
 
         <div class="form-group">
           <label>{{'Privacy Policy'|translate}}</label>
-          <input name="footer_privacy_policy" class="form-control" [(ngModel)]="nodeResolver.dataModel.footer_privacy_policy" [pattern]="Constants.secureLocalUrlRegexp" [ngClass]="{'is-invalid': contentForm.form.get('footer_privacy_policy')?.invalid && nodeResolver.dataModel.footer_privacy_policy.length>0}" type="text" required/>
+          <input name="footer_privacy_policy" class="form-control" [(ngModel)]="nodeResolver.dataModel.footer_privacy_policy" [pattern]="Constants.secureLocalUrlRegexp" [ngClass]="{'is-invalid': contentForm.form.get('footer_privacy_policy')?.errors?.['pattern']}" type="text" required/>
         </div>
 
         <div class="form-group">
           <label>{{'Accessibility Declaration'|translate}}</label>
-          <input name="footer_accessibility_declaration" class="form-control" [(ngModel)]="nodeResolver.dataModel.footer_accessibility_declaration" [pattern]="Constants.secureLocalUrlRegexp" [ngClass]="{'is-invalid': contentForm.form.get('footer_accessibility_declaration')?.invalid && nodeResolver.dataModel.footer_accessibility_declaration.length>0}" type="text" required/>
+          <input name="footer_accessibility_declaration" class="form-control" [(ngModel)]="nodeResolver.dataModel.footer_accessibility_declaration" [pattern]="Constants.secureLocalUrlRegexp" [ngClass]="{'is-invalid': contentForm.form.get('footer_accessibility_declaration')?.errors?.['pattern']}" type="text" required/>
         </div>
 
-        <div>
+        <div class="form-group" *ngIf="nodeResolver.dataModel.mode === 'default'">
           <label>{{ 'Footer' | translate }}</label>
           <div>
             <textarea name="nodeResolver.dataModel.footer" class="form-control" [(ngModel)]="nodeResolver.dataModel.footer"></textarea>
           </div>
         </div>
-      </div>
+      <!-- </div> -->
 
       <div class="form-group">
         <button class="btn btn-primary"

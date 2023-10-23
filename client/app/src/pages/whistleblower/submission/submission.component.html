@@ -9,7 +9,7 @@
                 <div class="col-md-2" *ngIf="submission.context.picture"><img class="context-image" alt="context picture" src="/s/{{submission.context.id}}" /></div>
             </div>
         </div>
-        <form #submissionForm="ngForm" autocomplete="off" novalidate [ngClass]="{'was-validated': displayErrors()}">
+        <form #submissionForm="ngForm" autocomplete="off" novalidate>
             <div class="tabbable tabs-below">
                 <ul id="SubmissionTabsNavigationBox" class="nav nav-tabs" *ngIf="submission.context.show_steps_navigation_interface && submission.context.questionnaire.steps.length > 1">
                     <li *ngIf="submission.context.allow_recipients_selection" class="nav-item">

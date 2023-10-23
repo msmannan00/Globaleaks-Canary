@@ -5,7 +5,7 @@
     </button>
 </div>
 <div class="modal-body">
-    <form #submissionForm="ngForm" autocomplete="off" novalidate [ngClass]="{'was-validated': displayErrors()}">
+    <form #submissionForm="ngForm" autocomplete="off" novalidate>
         <div class="tabbable tabs-below">
             <ul id="SubmissionTabsNavigationBox" class="nav nav-tabs" *ngIf="wbTipService.tip.additional_questionnaire.steps.length > 1">
                 <li class="nav-item" *ngFor="let step of wbTipService.tip.additional_questionnaire.steps | orderBy:'order' ;let index = index">
@@ -52,7 +52,6 @@
         <button id="SubmitButton" class="btn btn-primary" [disabled]="done" *ngIf="!hasNextStep()" (click)="completeSubmission()" type="submit">
             <i id="SubmitIconOK" class="fa-solid fa-check"></i>
             <span>{{'Submit'|translate}}</span>
-<!--            <span data-ng-show="submission.wait">({{submission.countdown}})</span>-->
         </button>
     </div>
 </div>

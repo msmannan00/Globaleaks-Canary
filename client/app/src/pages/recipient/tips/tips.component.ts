@@ -1,17 +1,17 @@
-import {Component, ElementRef, HostListener, OnInit} from "@angular/core";
-import {NgbDate, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {AppDataService} from "@app/app-data.service";
-import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
-import {GrantAccessComponent} from "@app/shared/modals/grant-access/grant-access.component";
-import {RevokeAccessComponent} from "@app/shared/modals/revoke-access/revoke-access.component";
-import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
-import {RTipsResolver} from "@app/shared/resolvers/r-tips-resolver.service";
-import {UtilsService} from "@app/shared/services/utils.service";
-import {TranslateService} from "@ngx-translate/core";
-import {IDropdownSettings} from "ng-multiselect-dropdown";
-import {filter, orderBy} from "lodash";
-import {TokenResource} from "@app/shared/services/token-resource.service";
-import {Router} from "@angular/router";
+import { Component, ElementRef, HostListener, OnInit } from "@angular/core";
+import { NgbDate, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { AppDataService } from "@app/app-data.service";
+import { DeleteConfirmationComponent } from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
+import { GrantAccessComponent } from "@app/shared/modals/grant-access/grant-access.component";
+import { RevokeAccessComponent } from "@app/shared/modals/revoke-access/revoke-access.component";
+import { PreferenceResolver } from "@app/shared/resolvers/preference.resolver";
+import { RTipsResolver } from "@app/shared/resolvers/r-tips-resolver.service";
+import { UtilsService } from "@app/shared/services/utils.service";
+import { TranslateService } from "@ngx-translate/core";
+import { IDropdownSettings } from "ng-multiselect-dropdown";
+import { filter, orderBy } from "lodash";
+import { TokenResource } from "@app/shared/services/token-resource.service";
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -38,7 +38,9 @@ export class TipsComponent implements OnInit {
   dropdownScoreData: any[] = [];
   sortKey: string = "creation_date";
   sortReverse: boolean = true;
-  dropdownVisible = false;
+  channelDropdownVisible: boolean = false;
+  statusDropdownVisible: boolean = false;
+  scoreDropdownVisible: boolean = false;
   index: number;
   date: { year: number; month: number };
   reportDatePicker: boolean = false;
@@ -173,18 +175,18 @@ export class TipsComponent implements OnInit {
       tip.submissionStatusStr = this.utils.getSubmissionStatusText(tip.status, tip.substatus, this.appDataService.submissionStatuses);
       if (!uniqueKeys.includes(tip.submissionStatusStr)) {
         uniqueKeys.push(tip.submissionStatusStr);
-        this.dropdownStatusData.push({id: this.dropdownStatusData.length + 1, label: tip.submissionStatusStr});
+        this.dropdownStatusData.push({ id: this.dropdownStatusData.length + 1, label: tip.submissionStatusStr });
       }
       if (!uniqueKeys.includes(tip.context_name)) {
         uniqueKeys.push(tip.context_name);
-        this.dropdownContextData.push({id: this.dropdownContextData.length + 1, label: tip.context_name});
+        this.dropdownContextData.push({ id: this.dropdownContextData.length + 1, label: tip.context_name });
       }
 
       const scoreLabel = this.maskScore(tip.score);
 
       if (!uniqueKeys.includes(scoreLabel)) {
         uniqueKeys.push(scoreLabel);
-        this.dropdownScoreData.push({id: this.dropdownScoreData.length + 1, label: scoreLabel});
+        this.dropdownScoreData.push({ id: this.dropdownScoreData.length + 1, label: scoreLabel });
       }
     }
   }
@@ -200,10 +202,23 @@ export class TipsComponent implements OnInit {
       return this.translateService.instant("None");
     }
   }
-
-  on_changed(dropdownStatusModel: any) {
+  on_changed(model: any, type: string) {    
     this.processTips();
-    this.dropdownStatusModel = dropdownStatusModel;
+    if (model.length > 0 && type === "Score") {
+      this.dropdownContextModel = [];
+      this.dropdownStatusModel = [];
+      this.dropdownScoreModel = model;
+    }
+    if (model.length > 0 && type === "Status") {
+      this.dropdownContextModel = [];
+      this.dropdownScoreModel = [];
+      this.dropdownStatusModel = model;
+    }
+    if (model.length > 0 && type === "Context") {
+      this.dropdownStatusModel = [];
+      this.dropdownScoreModel = [];
+      this.dropdownContextModel = model;
+    }
     this.applyFilter();
   }
 
@@ -211,14 +226,36 @@ export class TipsComponent implements OnInit {
     return filter.length > 0;
   };
 
-  toggleDropdown() {
-    this.dropdownVisible = !this.dropdownVisible;
+  toggleChannelDropdown() {
+    this.channelDropdownVisible = !this.channelDropdownVisible;
+    this.statusDropdownVisible = false;
+    this.scoreDropdownVisible = false;
+    this.reportDatePicker = false;
+    this.lastUpdatePicker = false;
+    this.expirationDatePicker = false;
+  }
+
+  toggleStatusDropdown() {
+    this.statusDropdownVisible = !this.statusDropdownVisible;
+    this.channelDropdownVisible = false;
+    this.scoreDropdownVisible = false;
+    this.reportDatePicker = false;
+    this.lastUpdatePicker = false;
+    this.expirationDatePicker = false;
+  }
+
+  toggleScoreDropdown() {
+    this.scoreDropdownVisible = !this.scoreDropdownVisible;
+    this.channelDropdownVisible = false;
+    this.statusDropdownVisible = false;
     this.reportDatePicker = false;
     this.lastUpdatePicker = false;
     this.expirationDatePicker = false;
   }
 
   onSearchChange(value: string | number | undefined) {
+    console.log("erch");
+    
     if (typeof value !== "undefined") {
       this.currentPage = 1;
       this.filteredTips = this.RTips.dataModel;
@@ -238,8 +275,8 @@ export class TipsComponent implements OnInit {
 
   onReportFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
     this.processTips();
-    const {fromDate, toDate} = event;
-    this.reportDateModel = {fromDate, toDate};
+    const { fromDate, toDate } = event;
+    this.reportDateModel = { fromDate, toDate };
     if (!fromDate && !toDate) {
       this.reportDateFilter = null;
       this.closeAllDatePickers();
@@ -251,8 +288,8 @@ export class TipsComponent implements OnInit {
 
   onUpdateFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
     this.processTips();
-    const {fromDate, toDate} = event;
-    this.updateDateModel = {fromDate, toDate};
+    const { fromDate, toDate } = event;
+    this.updateDateModel = { fromDate, toDate };
     if (!fromDate && !toDate) {
       this.updateDateFilter = null;
       this.closeAllDatePickers();
@@ -264,8 +301,8 @@ export class TipsComponent implements OnInit {
 
   onExpiryFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
     this.processTips();
-    const {fromDate, toDate} = event;
-    this.expiryDateModel = {fromDate, toDate};
+    const { fromDate, toDate } = event;
+    this.expiryDateModel = { fromDate, toDate };
     if (!fromDate && !toDate) {
       this.expiryDateFilter = null;
       this.closeAllDatePickers();
@@ -298,7 +335,12 @@ export class TipsComponent implements OnInit {
     this.reportDatePicker = false;
     this.lastUpdatePicker = false;
     this.expirationDatePicker = false;
-    this.dropdownVisible = false;
+    this.scoreDropdownVisible = false;
+    this.channelDropdownVisible = false;
+    this.statusDropdownVisible = false;
+    this.reportDatePicker = false;
+    this.lastUpdatePicker = false;
+    this.expirationDatePicker = false;
   }
 
 }
