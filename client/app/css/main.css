@@ -444,8 +444,13 @@ table tr td {
 }
 
 #logo-box img {
-  max-height: 10rem;
+  max-height: 5rem;
   max-width: 20rem;
+  margin: 0;
+}
+
+logo-box {
+  margin: 0;
 }
 
 #toolbar {
@@ -685,12 +690,13 @@ p:last-child {
 
 #logo-box,
 #title-box {
-  margin: 1em 0;
+  margin: 0;
 }
 
 #title-box {
   font-size: 1.6rem;
   font-weight: bold;
+  margin: 0.8em 0;
 }
 
 #login-status-box {

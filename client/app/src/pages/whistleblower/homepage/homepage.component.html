@@ -1,7 +1,7 @@
 <div id="homepage-box">
     <markdown id="Presentation" class="mb-4" *ngIf="appDataService.public.node.presentation" [data]="appDataService.public.node.presentation | stripHtml"></markdown>
 
-    <div id="WhistleblowerBox" class="d-block mx-auto mb-4">
+    <div id="WhistleblowerBox" class="d-block mx-auto">
         <div id="WhistleblowerSubmitBoxButtonDisabled" class="mb-4" *ngIf="appDataService.public.node.disable_submissions || (!appDataService.public.node.https_whistleblower && !appDataService.connection.tor)">
             <button class="btn btn-danger disabled">
                 <i class="fa-solid fa-ban-circle"></i>
@@ -17,7 +17,7 @@
 
         <button id="WhistleblowingButton" (click)="openSubmission()" class="btn btn-primary">{{appDataService.public.node.whistleblowing_button|translate}}</button>
     </div>
-    <div id="whistle-blower-login-box" *ngIf="appDataService.public.node.https_whistleblower || appDataService.connection.tor">
+    <br><div id="whistle-blower-login-box" *ngIf="appDataService.public.node.https_whistleblower || appDataService.connection.tor">
         <src-receipt></src-receipt>
     </div>
 </div>

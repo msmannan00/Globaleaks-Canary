@@ -46,6 +46,7 @@
   display: none;
 }
 .ng-select .ng-select-container {
+  background: #f5f7fa !important;
   cursor: default;
   display: flex;
   outline: none;
@@ -62,7 +63,7 @@
 }
 .ng-select .ng-select-container .ng-value-container .ng-input > input {
   box-sizing: content-box;
-  background: none transparent;
+  background: #f5f7fa;
   border: 0 none;
   box-shadow: none;
   outline: none;
