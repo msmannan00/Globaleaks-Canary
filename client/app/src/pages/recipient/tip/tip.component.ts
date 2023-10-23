@@ -44,7 +44,6 @@ export class TipComponent implements AfterViewInit {
   active: string;
 
   constructor(private cdr: ChangeDetectorRef, private cryptoService: CryptoService, protected utils: UtilsService, protected preferencesService: PreferenceResolver, protected modalService: NgbModal, private activatedRoute: ActivatedRoute, protected httpService: HttpService, protected http: HttpClient, protected appDataService: AppDataService, protected RTipService: ReceiverTipService, protected fieldUtilities: FieldUtilitiesService, protected authenticationService: AuthenticationService) {
-    this.loadTipDate();
   }
 
   ngAfterViewInit(): void {
@@ -64,6 +63,7 @@ export class TipComponent implements AfterViewInit {
           component: this.tab3
         },
       ];
+      this.loadTipDate();
       this.cdr.detectChanges();
     });
   }
