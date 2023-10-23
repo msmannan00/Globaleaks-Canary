@@ -86,9 +86,9 @@
                 </span>
               </span>
               <span class="dropdown-multi-select-container" *ngIf="RTips.dataModel.length > 0">
-                <i class="fa-solid fa-filter" [ngClass]="{ filterSelected: checkFilter(dropdownContextModel) }" (click)="toggleDropdown()"></i>
-                <span [class.hidden]="!dropdownVisible">
-                  <ng-multiselect-dropdown [class.dropdown-visible]="dropdownVisible" [settings]="dropdownSettings" [data]="dropdownContextData" [(ngModel)]="dropdownContextModel" (ngModelChange)="on_changed(dropdownContextModel)">
+                <i class="fa-solid fa-filter" [ngClass]="{ filterSelected: checkFilter(dropdownContextModel) }" (click)="toggleChannelDropdown()"></i>
+                <span [class.hidden]="!channelDropdownVisible">
+                  <ng-multiselect-dropdown [class.dropdown-visible]="channelDropdownVisible" [settings]="dropdownSettings" [data]="dropdownContextData" [(ngModel)]="dropdownContextModel" (ngModelChange)="on_changed(dropdownContextModel,'Channel')">
                   </ng-multiselect-dropdown>
                 </span>
               </span>
@@ -113,10 +113,10 @@
                 </span>
               </span>
               <span class="dropdown-multi-select-container" *ngIf="RTips.dataModel.length > 0">
-                <i class="fa-solid fa-filter" [ngClass]="{ filterSelected: checkFilter(dropdownStatusModel) }" (click)="toggleDropdown()"></i>
-                <span [class.hidden]="!dropdownVisible">
-                  <ng-multiselect-dropdown [class.dropdown-visible]="dropdownVisible" [settings]="dropdownSettings" [data]="dropdownStatusData"
-                    [(ngModel)]="dropdownStatusModel" (ngModelChange)="on_changed(dropdownStatusModel)">
+                <i class="fa-solid fa-filter" [ngClass]="{ filterSelected: checkFilter(dropdownStatusModel) }" (click)="toggleStatusDropdown()"></i>
+                <span [class.hidden]="!statusDropdownVisible">
+                  <ng-multiselect-dropdown [class.dropdown-visible]="statusDropdownVisible" [settings]="dropdownSettings" [data]="dropdownStatusData"
+                    [(ngModel)]="dropdownStatusModel" (ngModelChange)="on_changed(dropdownStatusModel,'Status')">
                   </ng-multiselect-dropdown>
                 </span>
               </span>
@@ -132,7 +132,7 @@
               </span>
               <span class="ngb-dtepicker-container ms-1">
                 <i class="fas fa-calendar" [ngClass]="{'calendar-active':  reportDateFilter}"
-                  (click)="reportDatePicker=!reportDatePicker;lastUpdatePicker=false;expirationDatePicker=false;dropdownVisible=false;"></i>
+                  (click)="reportDatePicker=!reportDatePicker;lastUpdatePicker=false;expirationDatePicker=false;statusDropdownVisible=false;channelDropdownVisible=false;scoreDropdownVisible=false;"></i>
                 <ngbd-datepicker-range class="position-absolute d-block" #datePicker [currentDates]="reportDateModel"
                   (emitDateSelection)="onReportFilterChange($event)" *ngIf="reportDatePicker"></ngbd-datepicker-range>
               </span>
@@ -149,7 +149,7 @@
               </span>
               <span class="ngb-dtepicker-container ms-1">
                 <i class="fas fa-calendar" [ngClass]="{'calendar-active':  updateDateFilter}"
-                  (click)="lastUpdatePicker=!lastUpdatePicker;reportDatePicker=false;expirationDatePicker=false;dropdownVisible=false;"></i>
+                  (click)="lastUpdatePicker=!lastUpdatePicker;reportDatePicker=false;expirationDatePicker=false;statusDropdownVisible=false;channelDropdownVisible=false;scoreDropdownVisible=false;"></i>
                 <ngbd-datepicker-range class="position-absolute d-block" #datePicker [currentDates]="updateDateModel"
                   (emitDateSelection)="onUpdateFilterChange($event)" *ngIf="lastUpdatePicker"></ngbd-datepicker-range>
               </span>
@@ -165,7 +165,7 @@
               </span>
               <span class="ngb-dtepicker-container ms-1">
                 <i class="fas fa-calendar" [ngClass]="{'calendar-active':  expiryDateFilter}"
-                  (click)="expirationDatePicker=!expirationDatePicker;reportDatePicker=false;lastUpdatePicker=false;dropdownVisible=false;"></i>
+                  (click)="expirationDatePicker=!expirationDatePicker;reportDatePicker=false;lastUpdatePicker=false;statusDropdownVisible=false;channelDropdownVisible=false;scoreDropdownVisible=false;"></i>
                 <ngbd-datepicker-range class="position-absolute d-block" #datePicker [currentDates]="expiryDateModel"
                   (emitDateSelection)="onExpiryFilterChange($event)"
                   *ngIf="expirationDatePicker"></ngbd-datepicker-range>
@@ -187,10 +187,10 @@
                 </span>
               </span>
               <span class="dropdown-multi-select-container" *ngIf="RTips.dataModel.length > 0">
-                <i class="fa-solid fa-filter" [ngClass]="{ filterSelected: checkFilter(dropdownScoreModel) }" (click)="toggleDropdown()"></i>
-                <span [class.hidden]="!dropdownVisible">
-                  <ng-multiselect-dropdown [class.dropdown-visible]="dropdownVisible" [settings]="dropdownSettings" [data]="dropdownScoreData"
-                                           [(ngModel)]="dropdownScoreModel" (ngModelChange)="on_changed(dropdownScoreModel)">
+                <i class="fa-solid fa-filter" [ngClass]="{ filterSelected: checkFilter(dropdownScoreModel) }" (click)="toggleScoreDropdown()"></i>
+                <span [class.hidden]="!scoreDropdownVisible">
+                  <ng-multiselect-dropdown [class.dropdown-visible]="scoreDropdownVisible" [settings]="dropdownSettings" [data]="dropdownScoreData"
+                                           [(ngModel)]="dropdownScoreModel" (ngModelChange)="on_changed(dropdownScoreModel,'Score')">
                   </ng-multiselect-dropdown>
                 </span>
               </span>

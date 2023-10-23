@@ -16,7 +16,7 @@ export class NodeResolver implements Resolve<boolean> {
   }
 
   resolve(): Observable<boolean> {
-    if (this.authenticationService.session.role === "admin") {
+    if (this.authenticationService.session.role === "admin" || "recipient") {
       return this.httpService.requestNodeResource().pipe(
         map((response: nodeResolverModel) => {
           this.dataModel = response;
