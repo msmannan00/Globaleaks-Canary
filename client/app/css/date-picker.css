@@ -45,8 +45,8 @@ ngb-datepicker-month {
 	background-color: var(--bs-light);
 }
 
-.ngb-dp-month + .ngb-dp-month .ngb-dp-month-name,
-.ngb-dp-month + .ngb-dp-month .ngb-dp-week {
+.ngb-dp-month+.ngb-dp-month .ngb-dp-month-name,
+.ngb-dp-month+.ngb-dp-month .ngb-dp-week {
 	padding-left: 1rem;
 }
 
@@ -61,6 +61,7 @@ ngb-datepicker-month {
 .ngb-dp-week:last-child {
 	padding-bottom: 0.25rem;
 }
+
 [ngbDatepickerDayView] {
 	text-align: center;
 	width: 2rem;
@@ -79,6 +80,7 @@ ngb-datepicker-month {
 [ngbDatepickerDayView].outside {
 	opacity: 0.5;
 }
+
 ngb-datepicker-month {
 	display: block;
 }
@@ -126,6 +128,7 @@ ngb-datepicker-month {
 .ngb-dp-day[tabindex='0'] {
 	z-index: 1;
 }
+
 ngb-datepicker-navigation {
 	display: flex;
 	align-items: center;
@@ -175,7 +178,8 @@ ngb-datepicker-navigation {
 	outline-style: auto;
 }
 
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
 	.ngb-dp-arrow-btn:focus {
 		outline-style: solid;
 	}
@@ -192,17 +196,47 @@ ngb-datepicker-navigation {
 	display: flex;
 	flex: 1 1 9rem;
 }
-.ngb-datepicker-navigation-select > .form-select {
+
+.ngb-datepicker-navigation-select>.form-select {
 	flex: 1 1 auto;
 	padding: 0 0.5rem;
 	font-size: 0.875rem;
 	height: 1.85rem;
 }
 
-.ngb-datepicker-navigation-select > .form-select:focus {
+.ngb-datepicker-navigation-select>.form-select:focus {
 	z-index: 1;
 }
 
-.ngb-datepicker-navigation-select > .form-select::-ms-value {
+.ngb-datepicker-navigation-select>.form-select::-ms-value {
 	background-color: transparent !important;
+}
+
+ngb-datepicker-navigation-select>.form-select {
+	flex: 1 1 auto;
+	padding: 0 0.5rem;
+	font-size: .875rem;
+	height: 1.85rem;
+}
+
+.custom-day {
+	text-align: center;
+	padding: 0.185rem 0.25rem;
+	display: inline-block;
+	height: 2rem;
+	width: 2rem;
+}
+
+.custom-day.focused {
+	background-color: #e6e6e6;
+}
+
+.custom-day.range,
+.custom-day:hover {
+	background-color: rgb(2, 117, 216);
+	color: white;
+}
+
+.custom-day.faded {
+	background-color: rgba(2, 117, 216, 0.5);
 }
