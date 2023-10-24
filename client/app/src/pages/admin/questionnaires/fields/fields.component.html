@@ -389,7 +389,7 @@
                                         <div class="badge bg-secondary">{{ i + 1 }}</div>
                                     </div>
                                     <div class="col-md-6">
-                                        <input class="form-control" name="option.label" [(ngModel)]="option.label"
+                                        <input class="form-control" name="option.label" [(ngModel)]="option.label" [attr.placeholder]="'Label' | translate"
                                             [placeholder]="'Label' | translate" type="text" [disabled]="!field.editable"
                                             required />
                                     </div>

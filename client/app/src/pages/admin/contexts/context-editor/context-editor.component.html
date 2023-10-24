@@ -67,7 +67,7 @@
                     </label>
                     <div id="ReceiverContextAdder" class="row">
                         <div class="col-md-12" *ngIf="showSelect">
-                            <ng-select [(ngModel)]="selected.value" name="selected.value" bindLabel="name" [items]="usersData | filter:  'role': 'receiver'" [searchable]="true" [placeholder]="'Search' | translate"
+                            <ng-select [(ngModel)]="selected.value" [attr.placeholder]="'Search' | translate" name="selected.value" bindLabel="name" [items]="usersData | filter:  'role': 'receiver'" [searchable]="true" [placeholder]="'Search' | translate"
                                 (change)="moveReceiver($event)">
                                 <ng-template ng-option-tmp let-item="item">
                                     {{ item.name }}
