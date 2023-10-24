@@ -77,6 +77,10 @@ export class SubmissionService {
       }
     }
 
+    if (!this._submission.identity_provided){
+      this._submission.identity_provided = false;
+    }
+
     const _submission_data = {
       context_id: this._submission.context_id,
       receivers: this._submission.receivers,
