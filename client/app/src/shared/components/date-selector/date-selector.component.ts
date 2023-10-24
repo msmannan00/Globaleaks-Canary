@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {Component, EventEmitter, Input, Output, ViewEncapsulation} from "@angular/core";
 import {NgbDate, NgbDatepickerModule} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule} from "@angular/forms";
 import {JsonPipe} from "@angular/common";
@@ -8,28 +8,8 @@ import {JsonPipe} from "@angular/common";
   standalone: true,
   imports: [NgbDatepickerModule, FormsModule, JsonPipe],
   templateUrl: "./date-selector.component.html",
-  styles: [
-		`
-			.custom-day {
-				text-align: center;
-				padding: 0.185rem 0.25rem;
-				display: inline-block;
-				height: 2rem;
-				width: 2rem;
-			}
-			.custom-day.focused {
-				background-color: #e6e6e6;
-			}
-			.custom-day.range,
-			.custom-day:hover {
-				background-color: rgb(2, 117, 216);
-				color: white;
-			}
-			.custom-day.faded {
-				background-color: rgba(2, 117, 216, 0.5);
-			}
-		`,
-	],
+  // styleUrls: ['./date-selector.component.css'],
+  // encapsulation: ViewEncapsulation.None,
 })
 export class DateRangeSelectorComponent {
   hoveredDate: NgbDate | null = null;

@@ -130,8 +130,8 @@ ngb-datepicker-month {
 }
 
 ngb-datepicker-navigation {
-	display: flex;
-	align-items: center;
+	display: flex !important;
+	align-items: center !important;
 }
 
 .ngb-dp-navigation-chevron {
@@ -193,8 +193,8 @@ ngb-datepicker-navigation {
 }
 
 .ngb-dp-navigation-select {
-	display: flex;
-	flex: 1 1 9rem;
+	display: flex !important;
+	flex: 1 1 9rem !important;
 }
 
 .ngb-datepicker-navigation-select>.form-select {
@@ -213,10 +213,10 @@ ngb-datepicker-navigation {
 }
 
 ngb-datepicker-navigation-select>.form-select {
-	flex: 1 1 auto;
-	padding: 0 0.5rem;
-	font-size: .875rem;
-	height: 1.85rem;
+	flex: 1 1 auto !important;
+	padding: 0 0.5rem !important;
+	font-size: .875rem !important;
+	height: 1.85rem !important;
 }
 
 button.ngb-dp-arrow-btn {
