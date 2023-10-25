@@ -1,10 +1,13 @@
 import {Component, QueryList, ViewChild, ViewChildren} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
+import {WBTipData} from "@app/models/whistleblower/WBTipData";
+import {WhistleblowerLoginResolver} from "@app/shared/resolvers/whistleblower-login.resolver";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {SubmissionService} from "@app/services/submission.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {NgForm} from "@angular/forms";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: "src-submission",
@@ -33,17 +36,16 @@ export class SubmissionComponent{
   show_steps_navigation_bar = false;
   receivedData: any;
 
-  constructor(protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, public submissionService: SubmissionService) {
+  constructor(private whistleblowerLoginResolver:WhistleblowerLoginResolver, protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, public submissionService: SubmissionService) {
     this.selectable_contexts = [];
     this.receivedData = this.submissionService.getSharedData();
-  }
 
-  ngAfterViewInit(): void {
-  }
-
-  ngOnInit() {
-    this.resetForm();
-    this.initializeSubmission();
+    if(!this.whistleblowerLoginResolver.loggedIn){
+      this.utilsService.reloadCurrentRoute();
+    }else {
+      this.resetForm();
+      this.initializeSubmission();
+    }
   }
 
   firstStepIndex() {

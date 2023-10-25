@@ -20,6 +20,7 @@ import {CustodianRoutingModule} from "@app/pages/custodian/custodian-routing.mod
 import {IarResolver} from "@app/shared/resolvers/iar-resolver.service";
 import {BlankComponent} from "@app/shared/blank/blank.component";
 import {WbTipResolver} from "@app/shared/resolvers/wb-tip-resolver.service";
+import {WhistleblowerLoginResolver} from "@app/shared/resolvers/whistleblower-login.resolver";
 
 
 const routes: Routes = [
@@ -35,7 +36,7 @@ const routes: Routes = [
     data: {pageTitle: ""},
     pathMatch: "full",
     resolve: {
-      WbTipResolver
+      WbTipResolver, WhistleblowerLoginResolver
     }
   },
   {

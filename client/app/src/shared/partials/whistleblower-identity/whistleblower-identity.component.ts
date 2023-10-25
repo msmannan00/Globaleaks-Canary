@@ -19,7 +19,7 @@ export class WhistleblowerIdentityComponent {
   @Input() uploadEstimateTime: any;
   @Input() isUploading: any;
   @Input() uploadProgress: any;
-  identity_provided: boolean = false;
+  identity_provided: boolean = true;
 
   constructor(protected wbTipService: WbtipService, protected utilsService: UtilsService) {
     this.collapsed = this.wbTipService.tip.data.whistleblower_identity_provided;
@@ -35,6 +35,5 @@ export class WhistleblowerIdentityComponent {
 
   stateChanged(status: boolean) {
     this.identity_provided = status;
-
   }
 }

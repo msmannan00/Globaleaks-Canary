@@ -113,13 +113,13 @@ export class CompletedInterceptor implements HttpInterceptor {
       finalize(() => {
         this.count--;
 
-        if (this.count === 0 && req.url !== "api/auth/token") {
+        if (this.count === 0) {
           setTimeout(() => {
             if (this.count === 0) {
               this.appDataService.showLoadingPanel = false;
-            };
+            }
           }, 200);
-        };
+        }
       })
     );
   }
