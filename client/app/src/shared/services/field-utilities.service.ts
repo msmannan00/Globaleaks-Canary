@@ -242,7 +242,7 @@ export class FieldUtilitiesService {
     }
 
     if (scope.context) {
-      scope.submission.setContextReceivers(scope.context.id);
+      scope.submissionService.setContextReceivers(scope.context.id);
     }
 
     const localscope = this;
@@ -253,8 +253,8 @@ export class FieldUtilitiesService {
     });
 
     if (scope.context) {
-      scope.submission._submission.score = scope.score;
-      scope.submission.blocked = scope.block_submission;
+      scope.submissionService._submission.score = scope.score;
+      scope.submissionService.blocked = scope.block_submission;
     }
   }
 
