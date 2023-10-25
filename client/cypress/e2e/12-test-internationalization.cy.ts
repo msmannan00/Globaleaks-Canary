@@ -7,7 +7,7 @@ describe("Whistleblower Navigate Home Page", () => {
 
     cy.contains("div", "TEXT2_IT").should("not.exist");
 
-    cy.visit("#/?lang=it");
+    cy.visit("#/?lang=de");
 
     cy.contains("div", "TEXT1_IT").should("exist");
 
