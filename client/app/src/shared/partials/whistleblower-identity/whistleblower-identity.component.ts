@@ -35,5 +35,6 @@ export class WhistleblowerIdentityComponent {
 
   stateChanged(status: boolean) {
     this.identity_provided = status;
+
   }
 }

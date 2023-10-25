@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild, ElementRef} from "@angular/core";
+import {Component, Input, ViewChild, ElementRef, ChangeDetectorRef} from "@angular/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppDataService} from "@app/app-data.service";
 import {AuthenticationService} from "@app/services/authentication.service";
@@ -17,10 +17,10 @@ export class TipUploadWbFileComponent {
   collapsed = false;
   file_upload_description: string = "";
   fileInput: any = "fileinput";
-  showError: boolean;
+  showError: boolean = false;
   errorFile: any;
 
-  constructor(private appConfigService: AppConfigService, private authenticationService: AuthenticationService, protected utilsService: UtilsService, protected appDataService: AppDataService) {
+  constructor(private cdr: ChangeDetectorRef, private appConfigService: AppConfigService, private authenticationService: AuthenticationService, protected utilsService: UtilsService, protected appDataService: AppDataService) {
 
   }
 
@@ -50,6 +50,7 @@ export class TipUploadWbFileComponent {
       flowJsInstance.on("fileError", (file, message) => {
         this.showError = true
         this.errorFile = file
+        this.cdr.detectChanges()
       });
 
       const fileNameParts = file.name.split(".");

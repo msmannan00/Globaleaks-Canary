@@ -43,7 +43,6 @@ export class SubmissionComponent implements OnInit, AfterViewInit{
   ngAfterViewInit(): void {
     this.initializeSubmission();
     this.isLoaded = true;
-    this.cdr.detectChanges();
   }
 
   ngOnInit() {

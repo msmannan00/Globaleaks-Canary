@@ -1,4 +1,14 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
+} from "@angular/core";
 import {FlowDirective, Transfer} from "@flowjs/ngx-flow";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {AppDataService} from "@app/app-data.service";
@@ -22,11 +32,11 @@ export class RFileUploadButtonComponent implements AfterViewInit, OnInit {
 
   autoUploadSubscription: Subscription;
   fileInput: any;
-  showError: boolean;
+  showError: boolean = false;
   errorFile: Transfer;
   confirmButton = false;
   flowConfig:FlowOptions
-  constructor(protected authenticationService: AuthenticationService, protected appDataService: AppDataService) {
+  constructor(private cdr: ChangeDetectorRef, protected authenticationService: AuthenticationService, protected appDataService: AppDataService) {
   }
 
   ngOnInit(): void {
@@ -57,6 +67,7 @@ export class RFileUploadButtonComponent implements AfterViewInit, OnInit {
         }
         if(self.appDataService.public.node.maximum_filesize < (file.size/1000000)){
           self.showError = true;
+          self.cdr.detectChanges();
           file.flowFile.pause();
           self.errorFile = file;
         }else if(!file.complete){

@@ -1,3 +1,4 @@
+
 <ng-container *ngIf="this.isLoaded">
     <div *ngIf="selectable_contexts.length && !submission.context">
         <src-context-selection (selectContext)="selectContext($event)" [selectable_contexts] = selectable_contexts [contextsOrderPredicate] = contextsOrderPredicate></src-context-selection>
