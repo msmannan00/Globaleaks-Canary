@@ -20,7 +20,13 @@
     </div>
     
 
-    <div *ngSwitchCase="'selectbox' || 'multichoice'">
+    <div *ngSwitchCase="'selectbox'">
+        <div *ngFor="let option of field.options">
+            <span *ngIf="entry['value'] === option.id">{{option.label}}</span>
+        </div>
+    </div>
+
+    <div *ngSwitchCase="'multichoice'">
         <div *ngFor="let option of field.options">
             <span *ngIf="entry['value'] === option.id">{{option.label}}</span>
         </div>

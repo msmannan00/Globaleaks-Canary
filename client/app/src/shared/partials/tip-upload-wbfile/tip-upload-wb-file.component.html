@@ -1,4 +1,4 @@
-<div id="TipPageWBFileUpload" class="card card-default">
+<div id="TipPageRFileUpload" class="card card-default" [attr.aria-expanded]="collapsed">
     <div class="card-header clearfix" (click)="collapsed = !collapsed; utilsService.stopPropagation($event);">
         <span>{{'Files attached by recipients' | translate}}</span>
         <span class="float-end">
