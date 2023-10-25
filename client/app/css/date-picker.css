@@ -157,13 +157,14 @@ ngb-datepicker-navigation {
 
 .ngb-dp-arrow.right {
 	justify-content: flex-end;
-
-	.ngb-dp-navigation-chevron {
-		transform: rotate(45deg);
-		margin-left: 0.15em;
-		margin-right: 0.25em;
-	}
 }
+
+.ngb-dp-arrow.right .ngb-dp-navigation-chevron {
+	transform: rotate(45deg);
+	margin-left: 0.15em;
+	margin-right: 0.25em;
+}
+
 
 .ngb-dp-arrow-btn {
 	padding: 0 0.25rem;

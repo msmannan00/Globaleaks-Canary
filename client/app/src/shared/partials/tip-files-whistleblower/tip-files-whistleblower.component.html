@@ -1,4 +1,4 @@
-<div id="TipPageFilesInfoBox" class="card card-default">
+<div id="TipPageFilesInfoBox" class="card card-default" [attr.aria-expanded]="collapsed">
     <div class="card-header clearfix" (click)="toggleColLapse()">
         <span>{{'Attachments'|translate}}</span>
         <span class="float-end">

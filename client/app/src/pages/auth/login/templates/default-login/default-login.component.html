@@ -2,7 +2,7 @@
 	<div class="form-group">
 		<div class="input-group mb-3">
 			<span class="input-group-text"><i class="fa-solid fa-user"></i></span>
-			<input class="form-control" name="username"
+			<input class="form-control" name="username" [attr.aria-label]="'Username' | translate"
 				   placeholder="{{'Username' | translate}}" [(ngModel)]="authentication.loginData.loginUsername"
 				   type="text" required />
 		</div>
@@ -11,7 +11,7 @@
 	<div class="form-group mb-3">
 		<div class="input-group">
 			<span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-			<input class="form-control" name="password"
+			<input class="form-control" name="password" [attr.aria-label]="'Password' | translate"
 				   placeholder="{{'Password' | translate}}" [(ngModel)]="authentication.loginData.loginPassword"
 				   type="password" required />
 		</div>

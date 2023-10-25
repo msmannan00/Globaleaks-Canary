@@ -19,7 +19,7 @@
                             </label>
                         </span>
                         <span class="float-end">
-                            <span class="text-danger" data-toggle="tooltip" title="{{'Remove' | translate}}" (click)="utilsService.deleteFromList(entries, entry)">
+                            <span class="text-danger" data-toggle="tooltip" title="{{'Remove' | translate}}" [attr.aria-label]="'Remove' | translate" (click)="utilsService.deleteFromList(entries, entry)">
                               <i class="fa-solid fa-times"></i>
                             </span>
                         </span>
@@ -28,7 +28,7 @@
                <src-form-field-input [fileUploadUrl]="fileUploadUrl" (notifyFileUpload)="notifyFileUpload.emit()" [identity_provided] = identity_provided [uploads]="uploads" [fields]="fields" [step]="step" [answers]="answers" [fieldId]="fieldId" [displayErrors]="displayErrors" [entry]="entry" [entryIndex]="entryIndex" [fieldEntry]="fieldEntry" [submission]="submission" [field]="field" [index]="entryIndex"></src-form-field-input>
             </div>
             <div *ngIf="field.multi_entry && field.type === 'fieldgroup'" class="float-end">
-                <button class="btn btn-outline-secondary" (click)="addAnswerEntry()">
+                <button class="btn btn-outline-secondary" [attr.aria-label]="'Add' | translate" (click)="addAnswerEntry()">
                     <i class="fa-solid fa-plus"></i>
                 </button>
             </div>

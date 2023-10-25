@@ -1,4 +1,4 @@
-<div id="TipInfoBox" class="card card.bg-primary">
+<div id="TipInfoBox" class="card card.bg-primary" [attr.aria-expanded]="collapsed">
 	<div class="card-header" (click)="toggleColLapse(); utilsService.stopPropagation($event)">
 		<span>{{'Additional questionnaire'|translate}}</span>
 	</div>

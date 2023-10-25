@@ -21,7 +21,7 @@ import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
     TipsComponent,
     TipComponent,
     SettingsComponent,
-    WhistleBlowerIdentityReceiverComponent
+    WhistleBlowerIdentityReceiverComponent,
   ],
   imports: [
     CommonModule, RouterModule, TranslateModule, SharedModule, FormsModule,
