@@ -254,8 +254,6 @@ export class TipsComponent implements OnInit {
   }
 
   onSearchChange(value: string | number | undefined) {
-    console.log("erch");
-    
     if (typeof value !== "undefined") {
       this.currentPage = 1;
       this.filteredTips = this.RTips.dataModel;

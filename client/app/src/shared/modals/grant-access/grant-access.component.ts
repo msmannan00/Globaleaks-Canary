@@ -10,7 +10,8 @@ import {AppDataService} from "@app/app-data.service";
 })
 export class GrantAccessComponent {
 
-  @Input() args: any;
+  @Input() usersNames: any;
+  @Input() selectableRecipients: any;
   @Input() confirmFun: Function;
   @Input() cancelFun: Function;
   receiver_id: any;
