@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div *ngSwitchCase="'selectbox'">
-                <select id="{{fieldEntry}}" [name]="'input-' +  entryIndex" class="form-control inputelem" [required]="entry.required_status" [(ngModel)]="entry['value']" *ngIf="field.options.length < 10">
+                <select id="{{fieldEntry}}" [name]="'input-' +  entryIndex" class="form-select inputelem" [required]="entry.required_status" [(ngModel)]="entry['value']" *ngIf="field.options.length < 10">
                     <option class="d-none" value=""></option>
                     <option *ngFor="let option of field.options | orderBy:field.attrs.display_alphabetically.value ? 'label' : 'order'; let index = index" id="{{fieldEntry}}-option-{{index}}" value="{{option.id}}">{{option.label}}</option>
                 </select>

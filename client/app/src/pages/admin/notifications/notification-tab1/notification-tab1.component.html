@@ -26,7 +26,7 @@
           
           <div class="form-group">
             <label>{{ 'Security' | translate }}</label>
-            <select class="form-control" name="notification.dataModel.smtp_security" [(ngModel)]="notificationResolver.dataModel.smtp_security">
+            <select class="form-select" name="notification.dataModel.smtp_security" [(ngModel)]="notificationResolver.dataModel.smtp_security">
               <option value="PLAIN">PLAIN</option>
               <option value="SSL">SMTPS</option>
               <option value="TLS">SMTP/TLS</option>

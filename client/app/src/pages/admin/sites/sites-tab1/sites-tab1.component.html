@@ -27,7 +27,7 @@
             </div>
             <div class="form-group">
                 <label>{{'Mode:'|translate}}</label>
-                <select name="type" class="form-control" [(ngModel)]="newTenant.mode" required>
+                <select name="type" class="form-select" [(ngModel)]="newTenant.mode" required>
                     <option value="default" [selected]="newTenant.mode === 'default'">DEFAULT</option>
                     <option value="wbpa">WHISTLEBLOWINGPA</option>
                 </select>

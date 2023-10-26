@@ -2,14 +2,14 @@
     <div class="col-md-12">
         <div class="form-group">
             <label>{{'Language' | translate}}:</label>
-            <select class="form-control" name="vars.language_to_customize" [(ngModel)]="vars.language_to_customize"
+            <select class="form-select" name="vars.language_to_customize" [(ngModel)]="vars.language_to_customize"
                     (ngModelChange)="get_l10n(vars.language_to_customize)">
                 <option *ngFor="let item of languages_enabled_selector" [value]="item.code">{{item.name}}</option>
             </select>
         </div>
         <div class="form-group">
             <label>{{'Add custom text' | translate}}</label>
-            <select class="form-control" name="vars.text_to_customize" [(ngModel)]="vars.text_to_customize"
+            <select class="form-select" name="vars.text_to_customize" [(ngModel)]="vars.text_to_customize"
                     (ngModelChange)="vars.custom_text = custom_texts[vars.text_to_customize] ? custom_texts[vars.text_to_customize] : default_texts[vars.text_to_customize]">
                 <option *ngFor="let item of custom_texts_selector" [value]="item.key">{{item.value}}</option>
             </select>

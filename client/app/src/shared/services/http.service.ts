@@ -193,13 +193,13 @@ export class HttpService {
   }
 
   disableTLSConfig(): Observable<any> {
-    const url = "api/admin/config/tls/files/disable";
-    return this.httpClient.post(url, {});
+    const url = "api/admin/config/tls/disable";
+    return this.httpClient.put(url, {});
   }
 
   enableTLSConfig(): Observable<any> {
-    const url = "api/admin/config/tls/files/enable";
-    return this.httpClient.post(url, {});
+    const url = "api/admin/config/tls/enable";
+    return this.httpClient.put(url, {});
   }
 
   whistleBlowerTip(): Observable<any> {
