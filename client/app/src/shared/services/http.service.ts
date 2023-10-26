@@ -80,7 +80,7 @@ export class HttpService {
   }
 
   requestSignupToken(token: any): Observable<any> {
-    return this.httpClient.get("api/signup/" + token);
+    return this.httpClient.post("api/signup/" + token, {});
   }
 
   requestTenantSwitch(url: any): Observable<any> {
@@ -193,12 +193,12 @@ export class HttpService {
   }
 
   disableTLSConfig(): Observable<any> {
-    const url = "api/admin/config/tls/disable";
+    const url = "api/admin/config/tls/files/disable";
     return this.httpClient.post(url, {});
   }
 
   enableTLSConfig(): Observable<any> {
-    const url = "api/admin/config/tls/enable";
+    const url = "api/admin/config/tls/files/enable";
     return this.httpClient.post(url, {});
   }
 

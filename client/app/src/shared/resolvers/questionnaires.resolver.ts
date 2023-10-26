@@ -10,7 +10,7 @@ import {map} from "rxjs/operators";
   providedIn: "root"
 })
 export class QuestionnairesResolver implements Resolve<boolean> {
-  dataModel: questionnaireResolverModel = new questionnaireResolverModel();
+  dataModel: any = new questionnaireResolverModel();
 
   constructor(private httpService: HttpService, private authenticationService: AuthenticationService) {
   }

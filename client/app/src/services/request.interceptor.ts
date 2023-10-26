@@ -10,7 +10,6 @@ import {errorCodes} from "@app/models/app/error-code";
 
 const protectedUrls = [
   "api/wizard",
-  "api/signup",
   "api/whistleblower/submission",
   "api/auth/receiptauth",
   "api/auth/tokenauth",
@@ -56,7 +55,7 @@ export class RequestInterceptor implements HttpInterceptor {
       headers: authRequest.headers.set("Accept-Language", this.getAcceptLanguageHeader() || ""),
     });
 
-    if (protectedUrls.includes(httpRequest.url)) {
+    if (protectedUrls.includes(httpRequest.url) || httpRequest.url.startsWith("api/signup")) {
       return this.httpClient.post("api/auth/token", {}).pipe(
         switchMap((response) => from(this.cryptoService.proofOfWork(Object.assign(new tokenResponse(), response).id)).pipe(
           switchMap((ans) => next.handle(httpRequest.clone({
@@ -118,7 +117,7 @@ export class CompletedInterceptor implements HttpInterceptor {
             if (this.count === 0) {
               this.appDataService.showLoadingPanel = false;
             }
-          }, 200);
+          }, 100);
         }
       })
     );
