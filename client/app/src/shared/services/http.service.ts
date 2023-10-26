@@ -167,16 +167,16 @@ export class HttpService {
     return this.httpClient.delete("api/admin/redirects/" + id);
   }
 
-  requestUpdateTlsConfigFilesResource(name: any, data: any): Observable<any> {
-    return this.httpClient.put("api/admin/config/tls/files/" + name, data);
+  requestUpdateTlsConfigFilesResource(name: any, authHeader:any, data: any): Observable<any> {
+    return this.httpClient.put("api/admin/config/tls/files/" + name, data, { headers: authHeader });
   }
 
   requestDeleteTlsConfigFilesResource(name: string): Observable<any> {
     return this.httpClient.delete("api/admin/config/tls/files/" + name);
   }
 
-  requestAdminAcmeResource(param: any): Observable<any> {
-    return this.httpClient.post("api/admin/config/acme/run", param);
+  requestAdminAcmeResource(param: any, authHeader:any): Observable<any> {
+     return this.httpClient.post("api/admin/config/acme/run", param,{ headers: authHeader });
   }
 
   requestCSRContentResource(name: any, param: any): Observable<any> {
@@ -192,14 +192,14 @@ export class HttpService {
     return this.httpClient.get(url, {responseType: "blob"});
   }
 
-  disableTLSConfig(): Observable<any> {
-    const url = "api/admin/config/tls/disable";
-    return this.httpClient.put(url, {});
+  disableTLSConfig(tls:any, authHeader:any): Observable<any> {
+    const url = "api/admin/config/tls";
+    return this.httpClient.post(url, tls, { headers: authHeader });
   }
 
-  enableTLSConfig(): Observable<any> {
-    const url = "api/admin/config/tls/enable";
-    return this.httpClient.put(url, {});
+  enableTLSConfig(tls:any, authHeader:any): Observable<any> {
+    const url = "api/admin/config/tls";
+    return this.httpClient.post(url, tls, { headers: authHeader });
   }
 
   whistleBlowerTip(): Observable<any> {

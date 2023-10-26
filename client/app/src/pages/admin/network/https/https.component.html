@@ -11,17 +11,15 @@
         </p>
     </form>
 </div>
-<div id="HTTPSSettings" *ngIf="nodeResolver.dataModel.hostname">
+<div id="HTTPSSettings">
     <div class="card card-default">
         <div class="card-body" [ngSwitch]="menuState">
+            <src-https-status [tlsConfig]="tlsConfig" (dataToParent)="httpsStatus($event)"></src-https-status>
             <div *ngSwitchCase="'setup'">
                 <src-https-setup (dataToParent)="httpsSetup($event)"></src-https-setup>
             </div>
             <div *ngSwitchCase="'files'">
                 <src-https-files [tlsConfig]="tlsConfig" [state]="state" (dataToParent)="httpsFiles($event)"></src-https-files>
-            </div>
-            <div *ngSwitchCase="'status'">
-                <src-https-status [tlsConfig]="tlsConfig" (dataToParent)="httpsStatus($event)"></src-https-status>
             </div>
         </div>
     </div>

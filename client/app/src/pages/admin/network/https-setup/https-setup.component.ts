@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Output} from "@angular/core";
+import {AuthenticationService} from "@app/services/authentication.service";
 import {HttpService} from "@app/shared/services/http.service";
+import {switchMap} from "rxjs";
 
 @Component({
   selector: "src-https-setup",
@@ -14,7 +16,7 @@ export class HttpsSetupComponent {
     csr: any,
   };
 
-  constructor(private httpService: HttpService) {
+  constructor(private httpService: HttpService, private authenticationService: AuthenticationService) {
     this.fileResources = {
       key: {name: "key"},
       cert: {name: "cert"},
@@ -24,8 +26,9 @@ export class HttpsSetupComponent {
   }
 
   setupAcme() {
-    this.httpService.requestUpdateTlsConfigFilesResource("key", this.fileResources.key).subscribe(() => {
-      this.httpService.requestAdminAcmeResource({}).subscribe(() => {
+    const authHeader = this.authenticationService.getHeader();
+    this.httpService.requestUpdateTlsConfigFilesResource("key", authHeader, this.fileResources.key).subscribe(() => {
+      this.httpService.requestAdminAcmeResource({}, authHeader).subscribe(() => {
         this.dataToParent.emit();
       });
     });

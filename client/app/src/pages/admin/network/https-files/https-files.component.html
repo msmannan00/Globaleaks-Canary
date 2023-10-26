@@ -115,10 +115,7 @@
             </div>
         </div>
     </ng-container>
-    <button class="btn btn-primary" *ngIf="state > 1" (click)="toggleCfg()">
-        {{ 'Enable' | translate }}
-    </button>
-    <button class="btn btn-danger" (click)="resetCfg()">
-        {{ 'Reset' | translate }}
-    </button>
+    <button *ngIf="!tlsConfig.enabled && state>0" class="btn btn-primary" (click)="toggleCfg()">{{ 'Enable' | translate }}</button>
+    <button *ngIf="tlsConfig.enabled" class="btn btn-danger" (click)="toggleCfg()">{{ 'Disable' | translate }}</button>
+    <button class="btn btn-danger" (click)="resetCfg()">{{ 'Reset' | translate }}</button>
 </div>
