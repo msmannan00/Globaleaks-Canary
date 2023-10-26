@@ -260,8 +260,6 @@
                         <div *ngIf="field.type === 'date' || field.type === 'daterange'"
                             [ngbTooltip]="'Accept multiple file uploads' | translate">
                             <div class="form-group">
-                                <!-- <div ngbDatepicker [(ngModel)]="field.attrs.min_date.value" [is-open]="openMinDate"
-                                    [show-button-bar]="false" (click)="toggleMinDate()"> -->
                                 <input class="form-control" placeholder="yyyy-mm-dd" name="minDate"
                                     [(ngModel)]="field.attrs.min_date.value" ngbDatepicker #minDate="ngbDatepicker"
                                     (click)="toggleMinDate() ; minDate.toggle()" />
@@ -273,13 +271,11 @@
                                         <i class="fa-solid fa-times"></i>
                                     </button>
                                 </span>
-                                <button *ngIf="field.attrs.min_date.value === ''" type="button"
+                                <button (click)="minDate.toggle()" *ngIf="field.attrs.min_date.value === ''" type="button"
                                     class="btn btn-sm btn-outline-secondary"><i
                                         class="fa-solid fa-calendar"></i></button>
-                                <!-- </div> -->
                             </div>
                             <div class="form-group">
-                                <!-- <div> -->
                                 <input class="form-control" placeholder="yyyy-mm-dd" name="dp"
                                     [(ngModel)]="field.attrs.max_date.value" ngbDatepicker #d="ngbDatepicker"
                                     (click)="toggleMaxDate() ; d.toggle()" />
@@ -293,7 +289,6 @@
                                 <button *ngIf="field.attrs.max_date.value === ''" type="button" (click)="d.toggle()"
                                     class="btn btn-sm btn-outline-secondary"><i
                                         class="fa-solid fa-calendar"></i></button>
-                                <!-- </div> -->
                             </div>
                         </div>
                     </div>

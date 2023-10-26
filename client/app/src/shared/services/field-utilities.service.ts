@@ -1,5 +1,5 @@
-import {Injectable} from "@angular/core";
-import {Constants} from "@app/shared/constants/constants";
+import { Injectable } from "@angular/core";
+import { Constants } from "@app/shared/constants/constants";
 
 @Injectable({
   providedIn: "root"
@@ -122,7 +122,7 @@ export class FieldUtilitiesService {
       }
     } else if (field.type === "fieldgroup") {
       field.children.forEach(function (field: any) {
-        entry[field.id].forEach(function (entry: any) {
+        entry[field.id]?.forEach(function (entry: any) {
           self.calculateScore(scope, field, entry);
         });
       });
@@ -131,13 +131,14 @@ export class FieldUtilitiesService {
     }
 
     const score = scope.points_to_sum * scope.points_to_mul;
-
-    if (score < scope.context.score_threshold_medium) {
-      scope.score = 1;
-    } else if (score < scope.context.score_threshold_high) {
-      scope.score = 2;
-    } else {
-      scope.score = 3;
+    if (scope.context) {
+      if (score < scope.context.score_threshold_medium) {
+        scope.score = 1;
+      } else if (score < scope.context.score_threshold_high) {
+        scope.score = 2;
+      } else {
+        scope.score = 3;
+      }
     }
   }
 
@@ -171,7 +172,7 @@ export class FieldUtilitiesService {
       }
 
       if (scope.appDataService?.public.node.enable_scoring_system) {
-        scope.answers[field.id].forEach(function (entry: any) {
+        scope.answers[field.id]?.forEach(function (entry: any) {
           localscope.calculateScore(scope, field, entry);
         });
       }

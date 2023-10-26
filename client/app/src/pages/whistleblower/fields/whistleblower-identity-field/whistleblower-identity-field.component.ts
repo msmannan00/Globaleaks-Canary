@@ -25,7 +25,9 @@ export class WhistleblowerIdentityFieldComponent implements OnInit {
 
   changeIdentitySetting(status: boolean): void {
     this.identity_provided = status;
-    this.submission._submission.identity_provided = status
+    if(this.submission){
+      this.submission._submission.identity_provided = status
+    }
     this.stateChanged.emit(status);
   }
 
