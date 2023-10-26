@@ -7,9 +7,7 @@ import {JsonPipe} from "@angular/common";
   selector: "ngbd-datepicker-range",
   standalone: true,
   imports: [NgbDatepickerModule, FormsModule, JsonPipe],
-  templateUrl: "./date-selector.component.html",
-  // styleUrls: ['./date-selector.component.css'],
-  // encapsulation: ViewEncapsulation.None,
+  templateUrl: "./date-selector.component.html"
 })
 export class DateRangeSelectorComponent {
   hoveredDate: NgbDate | null = null;

@@ -27,17 +27,19 @@ describe("admin configure languages", () => {
 
     cy.get(".non-default-language").eq(0).click();
     cy.contains("button", "Save").click();
+    cy.contains("button", "Sprachen").click();
 
     cy.get(".non-default-language").eq(0).click();
     cy.get(".remove-lang-btn").eq(1).click();
-    cy.contains("button", "Salva").click();
+    cy.contains("button", "Speichern").click();
+    cy.waitForLoader()
 
     cy.visit("/#/admin/settings");
-    cy.get('#language-picker-box').find('ng-select').last().click().get('ng-dropdown-panel').contains('Italiano').click();
+    cy.get('#language-picker-box').find('ng-select').last().click().get('ng-dropdown-panel').contains('Deutsch').click();
 
     cy.get('[name="node.dataModel.header_title_homepage"]').clear().type("TEXT1_IT");
     cy.get('[name="node.dataModel.presentation"]').clear().type("TEXT2_IT");
-    cy.get('button.btn.btn-primary').eq(0).contains('Salva').click();
+    cy.get('button.btn.btn-primary').eq(0).contains('Speichern').click();
 
     cy.get('#language-picker-box').find('ng-select').last().click().get('ng-dropdown-panel').contains('English').click();
 

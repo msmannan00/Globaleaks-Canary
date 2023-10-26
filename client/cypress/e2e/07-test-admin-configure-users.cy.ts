@@ -66,6 +66,7 @@ describe("admin add, configure, and delete users", () => {
       for (let i = 1; i < numberOfUsers; i++) {
         cy.get(".userList").eq(i).within(() => {
           if (Cypress.$("button:contains('Edit')").length > 0) {
+            cy.wait(1000)
             cy.contains("button", "Edit").click();
             cy.contains("span", "Set password").first().click();
             cy.get('input[name="password"]').clear().type(Cypress.env("init_password"));

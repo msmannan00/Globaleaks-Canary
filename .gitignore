@@ -14,3 +14,4 @@ client/app/assets/lib
 client/coverage/*
 client/cypress/screenshots/*
 *.json
+path.py

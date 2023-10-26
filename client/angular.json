@@ -35,7 +35,6 @@
             ],
             "styles": [
               "app/css/date-picker.css",
-
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "app/css/main.css",
               "app/css/ui-select-bootstrap4-fix.css",

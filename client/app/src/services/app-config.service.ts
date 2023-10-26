@@ -197,6 +197,8 @@ export class AppConfigService {
         location.replace("/#/signup");
       } else if ((this.router.url === "/" || this.router.url === "/submission") && this.appDataService.public.node.adminonly && !this.authenticationService.session) {
         location.replace("/#/admin/home");
+      } else if (this.router.url === "/signup" && !this.appDataService.public.node.enable_signup) {
+        location.replace("/#/");
       }
     }
   }

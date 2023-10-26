@@ -1,4 +1,4 @@
-export interface Root {
+export class Root {
   node: Node;
   questionnaires: Questionnaire[];
   submission_statuses: Status[];
@@ -6,7 +6,7 @@ export interface Root {
   contexts: Context[];
 }
 
-export interface Node {
+export class Node {
   viewer: any;
   acme: boolean;
   timezone: number;
@@ -21,12 +21,12 @@ export interface Node {
   default_questionnaire: string;
   description: string;
   disable_privacy_badge: boolean;
-  disable_submissions: boolean;
+  disable_submissions: boolean = false;
   enable_custom_privacy_badge: boolean;
   enable_scoring_system: boolean;
   enable_signup: boolean;
   hostname: string;
-  https_whistleblower: boolean;
+  https_whistleblower: boolean = false;
   maximum_filesize: number;
   mode: string;
   name: string;

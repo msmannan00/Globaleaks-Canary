@@ -150,9 +150,13 @@ export class AuthenticationService {
           }
 
           this.rootDataService.errorCodes = new errorCodes(error.error.error_message, error.error.error_code, error.error.arguments);
+          if (callback) {
+            callback();
+          }
         }
       }
     );
+    return requestObservable;
   }
 
   public getHeader(confirmation?: string) {

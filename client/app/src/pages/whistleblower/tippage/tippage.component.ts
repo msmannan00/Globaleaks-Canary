@@ -1,4 +1,5 @@
 import {Component} from "@angular/core";
+import {WbTipResolver} from "@app/shared/resolvers/wb-tip-resolver.service";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {ActivatedRoute} from "@angular/router";
 import {HttpService} from "@app/shared/services/http.service";
@@ -28,39 +29,36 @@ export class TippageComponent {
   private submission: any;
   protected tip: any;
 
-  constructor(private fieldUtilitiesService: FieldUtilitiesService, protected utilsService: UtilsService, protected appDataService: AppDataService, private fieldUtilities: FieldUtilitiesService, private activatedRoute: ActivatedRoute, private httpService: HttpService, protected wbTipService: WbtipService) {
+  constructor(private wbTipResolver:WbTipResolver, private fieldUtilitiesService: FieldUtilitiesService, protected utilsService: UtilsService, protected appDataService: AppDataService, private fieldUtilities: FieldUtilitiesService, private activatedRoute: ActivatedRoute, private httpService: HttpService, protected wbTipService: WbtipService) {
   }
 
   ngOnInit() {
+    let wpTip = this.wbTipResolver.dataModel
+    if(wpTip){
+      this.wbTipService.initialize(wpTip);
+      this.tip = this.wbTipService.tip;
 
-    const requestObservable: Observable<any> = this.httpService.whistleBlowerTip();
-    requestObservable.subscribe(
-      {
-        next: (response: WBTipData) => {
-          this.wbTipService.initialize(response);
-          this.tip = this.wbTipService.tip;
+      this.activatedRoute.queryParams.subscribe(params => {
+        this.tip.tip_id = params["tip_id"];
+      });
 
-          this.activatedRoute.queryParams.subscribe(params => {
-            this.tip.tip_id = params["tip_id"];
-          });
+      this.fileUploadUrl = "api/whistleblower/wbtip/wbfiles";
+      this.tip.context = this.appDataService.contexts_by_id[this.tip.context_id];
 
-          this.fileUploadUrl = "api/whistleblower/wbtip/wbfiles";
-          this.tip.context = this.appDataService.contexts_by_id[this.tip.context_id];
+      this.tip.receivers_by_id = this.utilsService.array_to_map(this.tip.receivers);
+      this.score = this.tip.score;
+      this.ctx = "wbtip";
+      this.preprocessTipAnswers(this.tip);
 
-          this.tip.receivers_by_id = this.utilsService.array_to_map(this.tip.receivers);
-          this.score = this.tip.score;
-          this.ctx = "wbtip";
-          this.preprocessTipAnswers(this.tip);
-
-          this.tip.submissionStatusStr = this.utilsService.getSubmissionStatusText(this.tip.status, this.tip.substatus, this.appDataService.submissionStatuses);
-          this.submission = {};
-          this.submission._submission = this.tip;
-          if (this.tip.receivers.length === 1 && this.tip.msg_receiver_selected === null) {
-            this.tip.msg_receiver_selected = this.tip.msg_receivers_selector[0].key;
-          }
-        }
+      this.tip.submissionStatusStr = this.utilsService.getSubmissionStatusText(this.tip.status, this.tip.substatus, this.appDataService.submissionStatuses);
+      this.submission = {};
+      this.submission._submission = this.tip;
+      if (this.tip.receivers.length === 1 && this.tip.msg_receiver_selected === null) {
+        this.tip.msg_receiver_selected = this.tip.msg_receivers_selector[0].key;
       }
-    );
+    }else {
+      this.utilsService.reloadCurrentRoute()
+    }
   }
 
   filterNotTriggeredField(parent: any, field: any, answers: any) {
