@@ -221,7 +221,7 @@
         </button>
         </div>
     </div>
-    <div *ngIf="step === 6" ngForm #wizardFormStep6="ngForm" class="clearfix">
+    <div *ngIf="step === 6" ngForm #wizardFormStep6="ngForm" [ngClass]="{'was-validated': validation.step6}" class="clearfix">
         <div class="row wizard-block">
             <div class="col-md-12">
                 <div class="form-group">
