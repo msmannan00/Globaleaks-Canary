@@ -108,7 +108,6 @@ export class TipsComponent implements OnInit {
       {
         next: response => {
           const modalRef = this.modalService.open(RevokeAccessComponent);
-          // modalRef.componentInstance.users_names = response;
           modalRef.componentInstance.args = {
             users_names: response
           };
@@ -317,7 +316,6 @@ export class TipsComponent implements OnInit {
     this.filteredTips = this.utils.getDateFilter(this.filteredTips, this.reportDateFilter, this.updateDateFilter, this.expiryDateFilter);
   }
 
-  // BODY CLICK HANDLER
   @HostListener("document:click", ["$event"])
   onClick(event: MouseEvent) {
     const clickedElement = event.target as HTMLElement;

@@ -180,7 +180,6 @@ export class FieldUtilitiesService {
       for (i = 0; i < answers[field.id].length; i++) {
         entry = answers[field.id][i];
 
-        /* Block related to updating required status */
         if (["inputbox", "textarea"].indexOf(field.type) > -1) {
           entry.required_status = (field.required || field.attrs.min_len.value > 0) && !entry["value"];
         } else if (field.type === "checkbox") {
@@ -201,7 +200,6 @@ export class FieldUtilitiesService {
           entry.required_status = field.required && !entry["value"];
         }
 
-        /* Block related to evaluate options */
         if (["checkbox", "selectbox", "multichoice"].indexOf(field.type) > -1) {
           for (j = 0; j < field.options.length; j++) {
             option = field.options[j];
@@ -286,7 +284,6 @@ export class FieldUtilitiesService {
         continue;
       }
 
-      // Check if triggering field is in answers object
       if (trigger.option === answers_field.value ||
         Object.prototype.hasOwnProperty.call(answers_field, trigger.option) && answers_field[trigger.option]) {
         if (trigger.sufficient) {

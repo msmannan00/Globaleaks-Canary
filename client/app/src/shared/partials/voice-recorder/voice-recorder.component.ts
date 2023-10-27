@@ -111,7 +111,6 @@ export class VoiceRecorderComponent implements OnInit {
 
 
   async stopRecording(): Promise<void> {
-    // this.vars["recording"] = false;
     this.mediaRecorder?.stop();
     this.recorder?.stop();
     const tracks = this.mediaRecorder?.stream.getTracks();
@@ -204,7 +203,6 @@ export class VoiceRecorderComponent implements OnInit {
     compressor.threshold.value = -50;
     compressor.knee.value = 40;
     compressor.ratio.value = 12;
-    // compressor.reduction.value = -20;
     compressor.attack.value = 0;
     compressor.release.value = 0.25;
     return compressor;

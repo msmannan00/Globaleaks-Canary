@@ -29,7 +29,7 @@ export class AppConfigService {
     this.utilsService = this.serviceInstanceService.utilsService;
 
     this.activatedRoute.paramMap.subscribe(_ => {
-      const currentURL = window.location.hash.substring(2).split("?")[0]; // Use window.location for full URL including query parameters
+      const currentURL = window.location.hash.substring(2).split("?")[0];
       this.initRoutes(currentURL);
       this.localInitialization();
     });
