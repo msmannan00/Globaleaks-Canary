@@ -13,7 +13,7 @@
             </button>
         </div>
     </div>
-    <div *ngIf="step === 2" ngForm #wizardFormStep2="ngForm" class="clearfix">
+    <div *ngIf="step === 2" ngForm #wizardFormStep2="ngForm" [ngClass]="{'was-validated': validation.step2}" class="clearfix">
         <div class="row wizard-block">
             <div class="col-md-6">
                 <div class="row form-group">
@@ -38,7 +38,7 @@
         </button>
         </div>
     </div>
-    <div *ngIf="step === 3" ngForm #wizardFormStep3="ngForm" class="clearfix">
+    <div *ngIf="step === 3" ngForm #wizardFormStep3="ngForm" [ngClass]="{'was-validated': validation.step3}" class="clearfix">
         <div class="row wizard-block">
             <div class="title">{{'Please choose a configuration profile:'|translate}}</div>
             <div class="col-md-6">
@@ -56,7 +56,7 @@
         </button>
         </div>
     </div>
-    <div *ngIf="step === 4" ngForm #wizardFormStep4="ngForm" class="clearfix">
+    <div *ngIf="step === 4" ngForm #wizardFormStep4="ngForm" [ngClass]="{'was-validated': validation.step4}" class="clearfix">
          <div class="row wizard-block">
             <div class="col-md-12 title">{{'Admin'|translate}}</div>
             <div class="col-md-6">
@@ -136,7 +136,7 @@
         </button>
         </div>
     </div>
-    <div *ngIf="step === 5" ngForm #wizardFormStep5="ngForm" class="clearfix">
+    <div *ngIf="step === 5" ngForm #wizardFormStep5="ngForm" [ngClass]="{'was-validated': validation.step5}" class="clearfix">
         <div class="row wizard-block">
             <div class="col-md-12 title">{{'Recipient'|translate}}</div>
             <div class="col-md-6">
@@ -221,7 +221,9 @@
         </button>
         </div>
     </div>
-    <div *ngIf="step === 6" ngForm #wizardFormStep6="ngForm" [ngClass]="{'was-validated': validation.step6}" class="clearfix">
+
+
+    <div *ngIf="step === 6" ngForm #wizardFormStep6="ngForm" [ngClass]="{'was-validated': validation.step6}" class="clearfix was-validated">
         <div class="row wizard-block">
             <div class="col-md-12">
                 <div class="form-group">
@@ -229,7 +231,7 @@
                        <div class="tos-text">{{license|translate}}</div>
                     <div class="form-check">
                         <input name="tosAccept" class="tos-agreement-input inputelem" type="checkbox" [(ngModel)]="tosAccept" required>
-                        <span class="tos-agreement-label form-check-label">{{'I have read and agree to the terms of the license.'|translate}}</span>
+                        <span class="tos-agreement-label form-check-label text-danger" [ngClass]="{'text-danger': validation.step6}">{{'I have read and agree to the terms of the license.'|translate}}</span>
                     </div>
                     <div class="form-check" *ngIf="appDataService.public.node.root_tenant">
                         <input class="inputelem" name="wizard.enable_developers_exception_notification" [(ngModel)]="wizard.enable_developers_exception_notification" type="checkbox">
