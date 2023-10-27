@@ -1002,8 +1002,7 @@ i.fa-solid.fa-chevron-right {
   animation: blink 1s infinite;
 }
 
-.tenant-badge a.badge.bg-primary:hover,
-.tenant-badge a.badge.bg-primary:active,
-.tenant-badge a.badge.bg-primary:focus {
-  color: #9fc9f1;
+.form-check{
+  margin-left:0;
+  padding-left:0;
 }
