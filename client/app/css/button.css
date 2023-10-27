@@ -11,3 +11,7 @@
 .btn {
   margin-right: 5px;
 }
+
+.tenant-badge a.badge.bg-primary:hover {
+  color: #9fc9f1;
+}
