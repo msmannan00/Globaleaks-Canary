@@ -18,7 +18,7 @@
             <div *ngSwitchCase="'setup'">
                 <src-https-setup (dataToParent)="httpsSetup($event)"></src-https-setup>
             </div>
-            <div *ngSwitchCase="'files'">
+            <div *ngSwitchDefault>
                 <src-https-files [tlsConfig]="tlsConfig" [state]="state" (dataToParent)="httpsFiles($event)"></src-https-files>
             </div>
         </div>

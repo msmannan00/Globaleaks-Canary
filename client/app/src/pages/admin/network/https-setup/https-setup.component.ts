@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Output} from "@angular/core";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {HttpService} from "@app/shared/services/http.service";
-import {switchMap} from "rxjs";
 
 @Component({
   selector: "src-https-setup",
