@@ -48,9 +48,6 @@ export class HttpsFilesComponent implements OnInit {
           }
         );
       },
-      (error) => {
-        console.error("Error reading file:", error);
-      }
     );
   }
 
@@ -66,7 +63,6 @@ export class HttpsFilesComponent implements OnInit {
     modalRef.componentInstance.confirmFunction = (arg: any) => {
       return this.httpService.requestDeleteTlsConfigFilesResource(arg).subscribe(() => {
         this.dataToParent.emit();
-        // this.utilsService.reloadCurrentRoute()
       });
     };
     return modalRef.result;

@@ -39,8 +39,8 @@ export class ImageUploadComponent implements AfterViewInit, OnDestroy {
     if (files && files.length > 0) {
       const file = files[0];
       const fileNameParts = file.name.split(".");
-      const fileExtension = fileNameParts.pop(); // Remove the file extension
-      const fileNameWithoutExtension = fileNameParts.join("."); // Join the rest of the file name without extension
+      const fileExtension = fileNameParts.pop(); 
+      const fileNameWithoutExtension = fileNameParts.join(".");
       const timestamp = new Date().getTime();
       const fileNameWithTimestamp = `${fileNameWithoutExtension}_${timestamp}.${fileExtension}`;
       const modifiedFile = new File([file], fileNameWithTimestamp, {type: file.type});

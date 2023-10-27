@@ -28,7 +28,6 @@ export class TipOperationSetReminderComponent {
       if (this.args.operation === "postpone")
         date = this.args.expiration_date.getTime();
       else {
-        // date = this.args.reminder_date.getTime();
         date = timestamp;
       }
 

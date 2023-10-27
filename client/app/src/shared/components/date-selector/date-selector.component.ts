@@ -69,7 +69,7 @@ export class DateRangeSelectorComponent {
   }
 
   formatDate(date: NgbDate): string {
-    const jsDate = new Date(date.year, date.month - 1, date.day); // Month in JavaScript is 0-indexed
+    const jsDate = new Date(date.year, date.month - 1, date.day);
     return jsDate.toString();
   }
 }

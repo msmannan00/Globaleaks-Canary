@@ -160,11 +160,11 @@ export class TippageComponent {
       (
         {
           next: _ => {
-            clearInterval(intervalId); // Clear the interval
+            clearInterval(intervalId); 
             this.utilsService.reloadCurrentRoute();
           },
           error: (_: any) => {
-            clearInterval(intervalId); // Clear the interval
+            clearInterval(intervalId);
             this.utilsService.reloadCurrentRoute();
           }
         }

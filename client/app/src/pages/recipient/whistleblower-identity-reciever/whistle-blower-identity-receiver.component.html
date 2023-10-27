@@ -28,9 +28,6 @@
         <span *ngIf="!tipService.tip.data.whistleblower_identity_provided">-</span>
         <div *ngIf="tipService.tip.data.whistleblower_identity_provided">
           <div *ngIf="tipService.tip.iar && tipService.tip.iar.reply === 'authorized'">
-            <!-- <div data-ng-repeat="field in whistleblower_identity_field.children | orderBy:['y', 'x']">
-              <span data-ng-init="fieldAnswers=tipService.tip.data.whistleblower_identity" data-ng-include="'views/partials/tip_field.html'"></span>
-            </div> -->
             <div *ngFor="let field of tipService.tip.whistleblower_identity_field.children ; let index = index">
               <src-tip-field [fields]=field [fieldAnswers]=tipService.tip.data.whistleblower_identity
 					    [index]="index"></src-tip-field>

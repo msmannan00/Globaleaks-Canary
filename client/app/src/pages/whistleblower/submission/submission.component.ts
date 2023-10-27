@@ -49,7 +49,6 @@ export class SubmissionComponent{
   }
 
   firstStepIndex() {
-    console.log()
     return this.submissionService.context.allow_recipients_selection ? -1 : 0;
   };
 
@@ -287,7 +286,7 @@ export class SubmissionComponent{
       }
 
       this.submissionService.submit();
-      clearInterval(intervalId); // Clear the interval
+      clearInterval(intervalId);
     }, 1000);
   }
 
