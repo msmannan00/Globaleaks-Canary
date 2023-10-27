@@ -231,7 +231,7 @@
                        <div class="tos-text">{{license|translate}}</div>
                     <div class="form-check">
                         <input name="tosAccept" class="tos-agreement-input inputelem" type="checkbox" [(ngModel)]="tosAccept" required>
-                        <span class="tos-agreement-label form-check-label text-danger" [ngClass]="{'text-danger': validation.step6}">{{'I have read and agree to the terms of the license.'|translate}}</span>
+                        <span class="tos-agreement-label form-check-label" [ngClass]="{'text-danger': validation.step6 && wizardFormStep6.invalid}">{{'I have read and agree to the terms of the license.'|translate}}</span>
                     </div>
                     <div class="form-check" *ngIf="appDataService.public.node.root_tenant">
                         <input class="inputelem" name="wizard.enable_developers_exception_notification" [(ngModel)]="wizard.enable_developers_exception_notification" type="checkbox">

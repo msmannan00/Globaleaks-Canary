@@ -32,3 +32,10 @@ body .dropdown-visible>div.multiselect-dropdown>div>span.dropdown-btn {
   background: white;
   padding: 5px 5px 53px;
 }
+
+.tenant-badge a.badge.bg-primary:hover,
+.tenant-badge a.badge.bg-primary:active,
+.tenant-badge a.badge.bg-primary:focus {
+  color: #fff !important;
+  background: #66b0ff !important;
+}
