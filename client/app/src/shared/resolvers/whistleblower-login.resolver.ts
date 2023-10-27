@@ -25,7 +25,7 @@ export class WhistleblowerLoginResolver implements Resolve<boolean> {
       this.loggedIn = true;
       setTimeout(() => {
         this.authenticationService.login(0, "whistleblower", "")
-      }, 5000);
+      }, 0);
     }
     return of(true);
   }
