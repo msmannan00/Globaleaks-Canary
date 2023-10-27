@@ -6,23 +6,17 @@
   </div>
   <div class="modal-body">
     <div id="ReceiverContextAdder" class="form-group">
-      <div class="input-group">
-        <ng-select class="w-25" [(ngModel)]="receiver_id"  placeholder="{{ 'Search' | translate }}" [searchable]="true">
-          <ng-container *ngFor="let receiver of receivers_by_id | keyvalue">
-            <ng-container *ngFor="let user of args.users_names | keyvalue">
-              <ng-option *ngIf="receiver.key === user.key" [value]="user.key">
-                {{ user.value }}
-              </ng-option>
-            </ng-container>
-          </ng-container>
-          <ng-template>
-            No results found
-          </ng-template>
-        </ng-select>
-        <div class="input-group-append">
-          <span class="input-group-text h-100"><i class="fa-solid fa-search"></i></span>
+        <div class="input-group">
+            <ng-select class="w-25" [(ngModel)]="receiver_id" [items]="selectableRecipients" bindLabel="name"
+                placeholder="{{ 'Search' | translate }}" [searchable]="true">
+                <ng-template ng-label-tmp let-item="item">
+                    <span>{{ item.name }}</span>
+                </ng-template>
+            </ng-select>
+            <div class="input-group-append">
+                <span class="input-group-text h-100"><i class="fa-solid fa-search"></i></span>
+            </div>
         </div>
-      </div>
     </div>
   </div>
   <div class="modal-footer">

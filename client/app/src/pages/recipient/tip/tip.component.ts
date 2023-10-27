@@ -1,5 +1,5 @@
 import {AfterViewInit, ChangeDetectorRef, Component, TemplateRef, ViewChild} from "@angular/core";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AppDataService} from "@app/app-data.service";
 import {ReceiverTipService} from "@app/services/receiver-tip.service";
@@ -43,7 +43,7 @@ export class TipComponent implements AfterViewInit {
   tabs: any[];
   active: string;
 
-  constructor(private cdr: ChangeDetectorRef, private cryptoService: CryptoService, protected utils: UtilsService, protected preferencesService: PreferenceResolver, protected modalService: NgbModal, private activatedRoute: ActivatedRoute, protected httpService: HttpService, protected http: HttpClient, protected appDataService: AppDataService, protected RTipService: ReceiverTipService, protected fieldUtilities: FieldUtilitiesService, protected authenticationService: AuthenticationService) {
+  constructor( private router: Router,private cdr: ChangeDetectorRef, private cryptoService: CryptoService, protected utils: UtilsService, protected preferencesService: PreferenceResolver, protected modalService: NgbModal, private activatedRoute: ActivatedRoute, protected httpService: HttpService, protected http: HttpClient, protected appDataService: AppDataService, protected RTipService: ReceiverTipService, protected fieldUtilities: FieldUtilitiesService, protected authenticationService: AuthenticationService) {
   }
 
   ngAfterViewInit(): void {
@@ -94,15 +94,20 @@ export class TipComponent implements AfterViewInit {
 
   openGrantTipAccessModal(): void {
     this.utils.runUserOperation("get_users_names", {}, true).subscribe((response: any) => {
+      const selectableRecipients: any = [];
+      this.appDataService.public.receivers.forEach(async (receiver: { id: string | number; }) => {
+        if (receiver.id !== this.authenticationService.session.user_id && !this.tip.receivers_by_id[receiver.id]) {
+          selectableRecipients.push(receiver);
+        }
+      });
       const modalRef = this.modalService.open(GrantAccessComponent);
-      modalRef.componentInstance.args = {
-        users_names: response
-      };
+      modalRef.componentInstance.usersNames = response;
+      modalRef.componentInstance.selectableRecipients = selectableRecipients;
       modalRef.componentInstance.confirmFun = (receiver_id: any) => {
         const req = {
           operation: "grant",
           args: {
-            receiver: receiver_id
+            receiver: receiver_id.id
           },
         };
         this.httpService.tipOperation(req.operation, req.args, this.RTipService.tip.id)
@@ -119,15 +124,20 @@ export class TipComponent implements AfterViewInit {
     this.utils.runUserOperation("get_users_names", {}, true).subscribe(
       {
         next: response => {
+          const selectableRecipients: any = [];
+          this.appDataService.public.receivers.forEach(async (receiver: { id: string | number; }) => {
+            if (receiver.id !== this.authenticationService.session.user_id && this.tip.receivers_by_id[receiver.id]) {
+              selectableRecipients.push(receiver);
+            }
+          });
           const modalRef = this.modalService.open(RevokeAccessComponent);
-          modalRef.componentInstance.args = {
-            users_names: response
-          };
+          modalRef.componentInstance.usersNames = response;
+          modalRef.componentInstance.selectableRecipients = selectableRecipients;
           modalRef.componentInstance.confirmFun = (receiver_id: any) => {
             const req = {
               operation: "revoke",
               args: {
-                receiver: receiver_id
+                receiver: receiver_id.id
               },
             };
             this.httpService.tipOperation(req.operation, req.args, this.RTipService.tip.id)
@@ -166,6 +176,7 @@ export class TipComponent implements AfterViewInit {
                 this.http
                   .put(`api/recipient/rtips/${this.tip.id}`, req)
                   .subscribe(() => {
+                    this.router.navigate(['recipient', 'reports']);
                   });
               }
             },
