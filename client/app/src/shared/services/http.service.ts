@@ -194,7 +194,7 @@ export class HttpService {
 
   disableTLSConfig(tls:any, authHeader:any): Observable<any> {
     const url = "api/admin/config/tls";
-    return this.httpClient.post(url, tls, { headers: authHeader });
+    return this.httpClient.put(url, tls, { headers: authHeader });
   }
 
   enableTLSConfig(tls:any, authHeader:any): Observable<any> {
