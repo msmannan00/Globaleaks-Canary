@@ -7,6 +7,8 @@ import {AuthenticationService} from "@app/services/authentication.service";
 import {AppDataService} from "@app/app-data.service";
 import {TranslationService} from "@app/services/translation.service";
 import {errorCodes} from "@app/models/app/error-code";
+import { of } from 'rxjs';
+import { timer } from 'rxjs';
 
 const protectedUrls = [
   "api/wizard",
@@ -99,25 +101,29 @@ export class ErrorCatchingInterceptor implements HttpInterceptor {
 
 @Injectable()
 export class CompletedInterceptor implements HttpInterceptor {
-
   count = 0;
 
-  constructor(private authenticationService: AuthenticationService, private appDataService: AppDataService) {
-  }
+  constructor(private authenticationService: AuthenticationService, private appDataService: AppDataService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.count++;
     this.appDataService.showLoadingPanel = true;
+
     return next.handle(req).pipe(
+      catchError((error) => {
+        this.count = Math.max(0, this.count - 1);
+        return of(error);
+      }),
       finalize(() => {
         this.count--;
 
-        if (this.count === 0 && (req.url !== "api/auth/token" || this.authenticationService.session)) {
-          setTimeout(() => {
-            if (this.count === 0) {
+        if (this.count === 0 && (req.url !== 'api/auth/token' || this.authenticationService.session)) {
+          timer(150).pipe(
+            switchMap(() => {
               this.appDataService.showLoadingPanel = false;
-            }
-          }, 100);
+              return of(null);
+            })
+          ).subscribe();
         }
       })
     );
