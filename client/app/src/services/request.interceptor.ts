@@ -12,8 +12,6 @@ import { timer } from 'rxjs';
 
 const protectedUrls = [
   "api/wizard",
-  "api/whistleblower/submission",
-  "api/auth/receiptauth",
   "api/auth/tokenauth",
   "api/auth/authentication",
   "api/user/reset/password",
@@ -57,7 +55,7 @@ export class RequestInterceptor implements HttpInterceptor {
       headers: authRequest.headers.set("Accept-Language", this.getAcceptLanguageHeader() || ""),
     });
 
-    if (protectedUrls.includes(httpRequest.url) || httpRequest.url.startsWith("api/signup")) {
+    if (httpRequest.url.startsWith("api/auth/receiptauth") && !this.authenticationService.session ||  protectedUrls.includes(httpRequest.url)  || httpRequest.url.startsWith("api/signup")) {
       return this.httpClient.post("api/auth/token", {}).pipe(
         switchMap((response) => from(this.cryptoService.proofOfWork(Object.assign(new tokenResponse(), response).id)).pipe(
           switchMap((ans) => next.handle(httpRequest.clone({
@@ -118,7 +116,7 @@ export class CompletedInterceptor implements HttpInterceptor {
         this.count--;
 
         if (this.count === 0 && (req.url !== 'api/auth/token' || this.authenticationService.session)) {
-          timer(150).pipe(
+          timer(500).pipe(
             switchMap(() => {
               this.appDataService.showLoadingPanel = false;
               return of(null);

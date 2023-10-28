@@ -32,8 +32,14 @@ export class TipCommentsComponent {
   }
 
   newComment() {
-    this.tipService.newComment(this.newCommentContent, this.key);
+    let response = this.tipService.newComment(this.newCommentContent, this.key);
     this.newCommentContent = "";
+
+    response.subscribe(
+      (data) => {
+        this.tipService.tip.comments.push(data)
+      }
+    );
   }
 
   onEnableTwoWayCommentsChange() {

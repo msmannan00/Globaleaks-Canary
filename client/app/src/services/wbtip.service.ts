@@ -39,16 +39,11 @@ export class WbtipService {
       "visibility": visibility
     });
 
-    const request = this.httpService.requestNewComment(requestData);
-    request.subscribe({
-      next: () => {
-        this.utilsService.reloadCurrentRoute();
-      }
-    });
+    return this.httpService.requestNewComment(requestData);
   }
 
 
   newComment(content: string, visibility: string) {
-    this.sendContent(content, visibility);
+    return this.sendContent(content, visibility);
   }
 }

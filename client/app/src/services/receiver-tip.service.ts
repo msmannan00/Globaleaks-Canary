@@ -28,11 +28,7 @@ export class ReceiverTipService {
 
   newComment(content: string, visibility: string) {
     const param = JSON.stringify({"id": this.tip.msg_receiver_selected, "content": content, "visibility": visibility});
-    this.httpService.rTipsRequestNewComment(param, this.tip.id).subscribe({
-      next: () => {
-        this.utilsService.reloadCurrentRoute();
-      }
-    });
+    return this.httpService.rTipsRequestNewComment(param, this.tip.id);
   }
 
   private getMsgReceiversSelector() {
