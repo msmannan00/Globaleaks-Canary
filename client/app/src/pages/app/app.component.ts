@@ -31,4 +31,8 @@ export class AppComponent {
     this.appConfig.routeChangeListener();
     this.checkToShowSidebar();
   }
+
+  public openGithubReport() {
+    window.open("https://github.com/msmannan00/globaleaks-angular-fork/issues/new/choose", '_blank');
+  }
 }

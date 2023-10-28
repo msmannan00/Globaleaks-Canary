@@ -5,6 +5,8 @@
   font-size: 14px;
   font-weight:600;
   text-align: left;
+  cursor:pointer;
+  text-decoration: none;
 }
 
 #browser-not-supported {
