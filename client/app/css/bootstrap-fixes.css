@@ -2,8 +2,8 @@
   background-color: #f0f0f0;
 }
 
-.form-control.is-valid,
-.was-validated .form-control:valid {
+.form-control.is-valid:focus,
+.was-validated .form-control:focus {
   border-color: #86b7fe !important;
   box-shadow: 0 0 0 .25rem #0d6efd40 !important;
 }
