@@ -33,6 +33,6 @@ export class AppComponent {
   }
 
   public openGithubReport() {
-    window.open("https://github.com/msmannan00/globaleaks-angular-fork/issues/new/choose", '_blank');
+    window.open("https://github.com/msmannan00/globaleaks-angular-fork/issues", '_blank');
   }
 }

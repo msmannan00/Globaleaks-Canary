@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild} from "@angular/core";
+import {ChangeDetectorRef, Component, Input, ViewChild} from "@angular/core";
 import {WbtipService} from "@app/services/wbtip.service";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -19,16 +19,18 @@ export class TipCommentsComponent {
   newCommentContent = "";
   currentCommentsPage: number = 1;
   itemsPerPage = 5;
+  comments:any[];
 
-  constructor(private rTipService: ReceiverTipService, protected authenticationService: AuthenticationService, protected utilsService: UtilsService) {
+  constructor(private rTipService: ReceiverTipService, protected authenticationService: AuthenticationService, protected utilsService: UtilsService, private cdr: ChangeDetectorRef) {
 
+  }
+
+  ngOnInit() {
+    this.comments = []
   }
 
   public toggleCollapse() {
     this.collapsed = !this.collapsed;
-  }
-
-  ngOnInit() {
   }
 
   newComment() {
@@ -37,7 +39,10 @@ export class TipCommentsComponent {
 
     response.subscribe(
       (data) => {
-        this.tipService.tip.comments.push(data)
+        this.tipService.tip.comments.push(data);
+        this.comments = [...this.comments, data];
+        console.log(this.comments)
+        this.cdr.detectChanges();
       }
     );
   }
