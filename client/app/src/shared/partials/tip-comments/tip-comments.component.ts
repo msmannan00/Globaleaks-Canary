@@ -26,7 +26,7 @@ export class TipCommentsComponent {
   }
 
   ngOnInit() {
-    this.comments = []
+    this.comments = this.tipService.tip.comments
   }
 
   public toggleCollapse() {
@@ -39,8 +39,9 @@ export class TipCommentsComponent {
 
     response.subscribe(
       (data) => {
+        this.comments = this.tipService.tip.comments
         this.tipService.tip.comments.push(data);
-        this.comments = [...this.comments, data];
+        this.comments = [...this.comments, []];
         console.log(this.comments)
         this.cdr.detectChanges();
       }
