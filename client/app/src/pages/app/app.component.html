@@ -1,5 +1,5 @@
-<div class="devMode">
-  <p (click)="openGithubReport()">Globaleaks Beta Version 〡 Report Bug at https://github.com/msmannan00/globaleaks-angular-fork</p>
+<div class="devMode" (click)="openGithubReport()">
+  <p>Globaleaks Beta Version 〡 Report Bug at https://github.com/msmannan00/globaleaks-angular-fork</p>
 </div>
 
 <div class="container" id="browser-not-supported" *ngIf="!appDataService.started || appDataService.showLoadingPanel">

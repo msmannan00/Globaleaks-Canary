@@ -139,7 +139,7 @@ export class TipsComponent implements OnInit {
   }
 
   reload() {
-    this.utils.reloadCurrentRoute();
+    this.utils.reloadComponent();
   }
 
   tipSwitch(id: number): void {

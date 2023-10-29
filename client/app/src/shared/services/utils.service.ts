@@ -138,6 +138,19 @@ export class UtilsService {
     });
   }
 
+  reloadComponent(){
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+
+    let currentUrl = this.router.url + "?";
+
+    this.router.navigateByUrl(currentUrl)
+      .then(() => {
+        this.router.navigated = false;
+        this.router.navigate([this.router.url]);
+      });
+  }
   reloadCurrentRouteFresh(removeQueryParam = false) {
 
     let currentUrl = this.router.url;
