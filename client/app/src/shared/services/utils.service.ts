@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {AppDataService} from "@app/app-data.service";
 import {TranslateService} from "@ngx-translate/core";
-import {Router} from "@angular/router";
+import {NavigationExtras, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {RequestSupportComponent} from "@app/shared/modals/request-support/request-support.component";
 import {HttpService} from "@app/shared/services/http.service";
@@ -132,7 +132,6 @@ export class UtilsService {
   }
 
   reloadCurrentRoute() {
-    console.log("reloading ...")
     const currentUrl = this.router.url;
     this.router.navigateByUrl("blank", {skipLocationChange: true, replaceUrl: true}).then(() => {
       this.router.navigate([currentUrl]);
