@@ -987,3 +987,13 @@ i.fa-solid.fa-chevron-right {
   margin-left:0;
   padding-left:0;
 }
+
+.was-validated .form-check-input:valid ~ .form-check-label, .form-check-input.is-valid ~ .form-check-label {
+  color: #2866a2;
+}
+.was-validated .form-check-input:valid, .form-check-input.is-valid {
+  border-color: #0d6efd;
+}
+.was-validated .form-check-input:valid:checked, .form-check-input.is-valid:checked {
+  background-color: #0d6efd;
+}
