@@ -110,6 +110,7 @@ const routes: Routes = [
     path: "status/:tip_id",
     data: {pageTitle: "Report"},
     component: TipComponent,
+    canActivate: [SessionGuard],
     pathMatch: "full",
     resolve: {
       PreferenceResolver, NodeResolver, RtipsResolver: RTipsResolver

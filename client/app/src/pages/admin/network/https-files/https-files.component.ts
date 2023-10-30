@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import {AuthenticationService} from "@app/services/authentication.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ConfirmationComponent} from "@app/shared/modals/confirmation/confirmation.component";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
@@ -12,7 +13,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
 export class HttpsFilesComponent implements OnInit {
   @Output() dataToParent = new EventEmitter<string>();
   @Input() tlsConfig: any;
-  @Input() state: any;
+  @Input() state: number = 0;
   menuState: string;
   nodeData: any;
   fileResources: {
@@ -25,7 +26,7 @@ export class HttpsFilesComponent implements OnInit {
     open: false
   };
 
-  constructor(private nodeResolver: NodeResolver, private httpService: HttpService, private modalService: NgbModal, private utilsService: UtilsService) {
+  constructor(private authenticationService: AuthenticationService, private nodeResolver: NodeResolver, private httpService: HttpService, private modalService: NgbModal, private utilsService: UtilsService) {
     this.fileResources = {
       key: {name: "key"},
       cert: {name: "cert"},
@@ -52,7 +53,8 @@ export class HttpsFilesComponent implements OnInit {
   }
 
   gen_key() {
-    this.httpService.requestUpdateTlsConfigFilesResource("key", this.fileResources.key).subscribe(() => {
+    const authHeader = this.authenticationService.getHeader();
+    this.httpService.requestUpdateTlsConfigFilesResource("key", authHeader, this.fileResources.key).subscribe(() => {
       this.dataToParent.emit();
     });
   }
@@ -90,11 +92,13 @@ export class HttpsFilesComponent implements OnInit {
 
   toggleCfg() {
     if (this.tlsConfig.enabled) {
-      this.httpService.disableTLSConfig().subscribe(() => {
+      const authHeader = this.authenticationService.getHeader();
+      this.httpService.disableTLSConfig(this.tlsConfig, authHeader).subscribe(() => {
         this.dataToParent.emit();
       });
     } else {
-      this.httpService.enableTLSConfig().subscribe(() => {
+      const authHeader = this.authenticationService.getHeader();
+      this.httpService.enableTLSConfig(this.tlsConfig, authHeader).subscribe(() => {
         window.location.href = "https://" + this.nodeData.hostname;
       });
     }

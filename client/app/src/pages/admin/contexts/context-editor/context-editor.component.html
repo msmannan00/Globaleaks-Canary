@@ -53,7 +53,7 @@
                 </div>
                 <div class="form-group">
                     <label>{{ 'Questionnaire' | translate }}</label>
-                    <select class="form-control" name="context.questionnaire_id" [(ngModel)]="context.questionnaire_id">
+                    <select class="form-select" name="context.questionnaire_id" [(ngModel)]="context.questionnaire_id">
                         <option *ngFor="let item of questionnairesData" [value]="item.id">{{ item.name }}</option>
                     </select>
                 </div>
@@ -196,7 +196,7 @@
                             </div>
                             <div class="form-group">
                                 <label>{{ 'Additional questionnaire' | translate }}</label>
-                                <select class="form-control" [(ngModel)]="context.additional_questionnaire_id" name="context.additional_questionnaire_id">
+                                <select class="form-select" [(ngModel)]="context.additional_questionnaire_id" name="context.additional_questionnaire_id">
                                     <option *ngIf="context.additional_questionnaire_id" [value]="null"></option>
                                     <option [value]="item.id" *ngFor="let item of questionnairesData">{{ item.name }}
                                     </option>

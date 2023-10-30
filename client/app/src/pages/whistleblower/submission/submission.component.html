@@ -9,7 +9,7 @@
                 <div class="col-md-2" *ngIf="submissionService.context.picture"><img class="context-image" alt="context picture" src="/s/{{submissionService.context.id}}" /></div>
             </div>
         </div>
-        <form #submissionForm="ngForm" autocomplete="off" novalidate>
+        <form #submissionForm="ngForm" [ngClass]="{'was-validated': displayErrors()}"  autocomplete="off" novalidate>
             <div class="tabbable tabs-below">
                 <ul id="SubmissionTabsNavigationBox" class="nav nav-tabs" *ngIf="submissionService.context.show_steps_navigation_interface && submissionService.context.questionnaire.steps.length > 1">
                     <li *ngIf="submissionService.context.allow_recipients_selection" [attr.aria-selected]="navigation === -1" [attr.aria-current]="navigation === -1 ? 'step' : 'false'" aria-controls="tab-recipient-selection" class="nav-item">

@@ -12,12 +12,6 @@ ngb-datepicker-month {
 	padding: 0;
 }
 
-.ngb-datepicker.disabled .ngb-dp-weekday,
-.ngb-datepicker.disabled .ngb-dp-week-number,
-.ngb-datepicker.disabled .ngb-dp-month-name {
-	color: var(--bs-text-muted);
-}
-
 .ngb-dp-body {
 	z-index: 1055;
 }

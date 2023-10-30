@@ -16,8 +16,18 @@ export class WbTipResolver implements Resolve<boolean> {
   constructor(private authenticationService: AuthenticationService, private httpService: HttpService) {
   }
 
+  onReload(callback: () => void) {
+    this.httpService.whistleBlowerTip().subscribe(
+      (response: WBTipData) => {
+        this.dataModel = response;
+        callback();
+      }
+    );
+  }
+
   resolve(): Observable<boolean> {
-    if (this.authenticationService.session && this.authenticationService.session.role === "whistleblower") {
+
+    if (!this.dataModel && this.authenticationService.session && this.authenticationService.session.role === "whistleblower") {
       return this.httpService.whistleBlowerTip().pipe(
         map((response: WBTipData) => {
           this.dataModel = response;

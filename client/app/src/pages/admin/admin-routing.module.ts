@@ -65,7 +65,7 @@ const routes: Routes = [
   {
     path: "sites",
     resolve: {
-      NodeResolver, PreferenceResolver, UsersResolver, JobResolver, TipsResolver, StatuseResolver: StatusResolver
+      NodeResolver, PreferenceResolver, UsersResolver, JobResolver, TipsResolver, QuestionnairesResolver, StatusResolver
     },
     loadChildren: () => SitesModule,
     pathMatch: "full",

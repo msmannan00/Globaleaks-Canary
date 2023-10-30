@@ -88,4 +88,8 @@ export class RFileUploadButtonComponent implements AfterViewInit, OnInit {
       this.flow.upload();
     }
   }
+
+  protected dismissError(){
+    this.showError = false;
+  }
 }

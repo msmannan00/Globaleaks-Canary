@@ -12,6 +12,7 @@ client/npm-shrinkwrap.json
 client/tmp
 client/app/assets/lib
 client/coverage/*
+client/cypress/downloads/*
 client/cypress/screenshots/*
 *.json
 path.py

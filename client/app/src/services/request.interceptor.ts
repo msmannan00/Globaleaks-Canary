@@ -7,12 +7,11 @@ import {AuthenticationService} from "@app/services/authentication.service";
 import {AppDataService} from "@app/app-data.service";
 import {TranslationService} from "@app/services/translation.service";
 import {errorCodes} from "@app/models/app/error-code";
+import { of } from 'rxjs';
+import { timer } from 'rxjs';
 
 const protectedUrls = [
   "api/wizard",
-  "api/signup",
-  "api/whistleblower/submission",
-  "api/auth/receiptauth",
   "api/auth/tokenauth",
   "api/auth/authentication",
   "api/user/reset/password",
@@ -56,7 +55,7 @@ export class RequestInterceptor implements HttpInterceptor {
       headers: authRequest.headers.set("Accept-Language", this.getAcceptLanguageHeader() || ""),
     });
 
-    if (protectedUrls.includes(httpRequest.url)) {
+    if (httpRequest.url.startsWith("api/auth/receiptauth") && !this.authenticationService.session ||  protectedUrls.includes(httpRequest.url)  || httpRequest.url.startsWith("api/signup")) {
       return this.httpClient.post("api/auth/token", {}).pipe(
         switchMap((response) => from(this.cryptoService.proofOfWork(Object.assign(new tokenResponse(), response).id)).pipe(
           switchMap((ans) => next.handle(httpRequest.clone({
@@ -100,25 +99,29 @@ export class ErrorCatchingInterceptor implements HttpInterceptor {
 
 @Injectable()
 export class CompletedInterceptor implements HttpInterceptor {
-
   count = 0;
 
-  constructor(private appDataService: AppDataService) {
-  }
+  constructor(private authenticationService: AuthenticationService, private appDataService: AppDataService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.count++;
     this.appDataService.showLoadingPanel = true;
+
     return next.handle(req).pipe(
+      catchError((error) => {
+        this.count = Math.max(0, this.count - 1);
+        return of(error);
+      }),
       finalize(() => {
         this.count--;
 
-        if (this.count === 0) {
-          setTimeout(() => {
-            if (this.count === 0) {
+        if (this.count === 0 && (req.url !== 'api/auth/token' || this.authenticationService.session)) {
+          timer(100).pipe(
+            switchMap(() => {
               this.appDataService.showLoadingPanel = false;
-            }
-          }, 200);
+              return of(null);
+            })
+          ).subscribe();
         }
       })
     );

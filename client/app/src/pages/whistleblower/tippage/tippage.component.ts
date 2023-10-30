@@ -1,13 +1,11 @@
 import {Component} from "@angular/core";
 import {WbTipResolver} from "@app/shared/resolvers/wb-tip-resolver.service";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {HttpService} from "@app/shared/services/http.service";
 import {WbtipService} from "@app/services/wbtip.service";
 import {AppDataService} from "@app/app-data.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {Observable} from "rxjs";
-import {WBTipData} from "@app/models/whistleblower/WBTipData";
 
 @Component({
   selector: "src-tippage",
@@ -29,7 +27,7 @@ export class TippageComponent {
   private submission: any;
   protected tip: any;
 
-  constructor(private wbTipResolver:WbTipResolver, private fieldUtilitiesService: FieldUtilitiesService, protected utilsService: UtilsService, protected appDataService: AppDataService, private fieldUtilities: FieldUtilitiesService, private activatedRoute: ActivatedRoute, private httpService: HttpService, protected wbTipService: WbtipService) {
+  constructor(private router: Router, private wbTipResolver:WbTipResolver, private fieldUtilitiesService: FieldUtilitiesService, protected utilsService: UtilsService, protected appDataService: AppDataService, private fieldUtilities: FieldUtilitiesService, private activatedRoute: ActivatedRoute, private httpService: HttpService, protected wbTipService: WbtipService) {
   }
 
   ngOnInit() {
@@ -174,6 +172,11 @@ export class TippageComponent {
 
   }
 
+  onReload(){
+    this.wbTipResolver.onReload(() => {
+      this.utilsService.reloadCurrentRoute();
+    })
+  }
   onFormChange() {
     this.fieldUtilitiesService.onAnswersUpdate(this);
   }

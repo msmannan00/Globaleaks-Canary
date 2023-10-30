@@ -61,6 +61,7 @@ export class FormFieldInputComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.entry['value'] = '';
     this.fieldFormVarName = this.fieldUtilitiesService.fieldFormName(this.field.id + "$" + this.index);
     this.initializeFormNames();
     this.fieldEntry = this.fieldId + "-input-" + this.index;

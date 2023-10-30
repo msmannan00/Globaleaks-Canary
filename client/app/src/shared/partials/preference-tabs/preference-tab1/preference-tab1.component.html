@@ -54,7 +54,7 @@
 
     <div id="Language" class="form-group" *ngIf="appDataService.languages_enabled_selector.length > 1">
         <label>{{'Language'|translate}}</label>
-        <select class="form-control" name="languageModel" [(ngModel)]="languageModel" (ngModelChange)="onlanguagechange()">
+        <select class="form-select" name="languageModel" [(ngModel)]="languageModel" (ngModelChange)="onlanguagechange()">
             <option *ngFor="let item of appDataService.languages_enabled_selector" [value]="item.code">{{ item.native }}</option>
         </select>
     </div>

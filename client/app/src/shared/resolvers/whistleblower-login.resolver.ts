@@ -21,9 +21,11 @@ export class WhistleblowerLoginResolver implements Resolve<boolean> {
   }
 
   resolve(): Observable<boolean> {
-    if (!this.authenticationService.session && this.appDataService.page == 'submissionpage') {
+    if (this.appDataService.page == 'submissionpage') {
       this.loggedIn = true;
-      this.authenticationService.login(0, "whistleblower", "")
+      setTimeout(() => {
+        this.authenticationService.login(0, "whistleblower", "")
+      }, 0);
     }
     return of(true);
   }

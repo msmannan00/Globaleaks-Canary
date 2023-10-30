@@ -73,7 +73,7 @@ export class nodeResolverModel {
   signup_tos2_text: string;
   signup_tos2_title: string;
   whistleblowing_button: string;
-  whistleblowing_question: string;
+  whistleblowing_question: any;
   css: any;
   favicon: any;
   logo: any;

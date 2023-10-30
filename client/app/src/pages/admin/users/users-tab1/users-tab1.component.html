@@ -12,7 +12,7 @@
                 <label>{{ 'Role' | translate }}</label>
                 <span class="text-danger" [ngbTooltip]="'This field is mandatory' | translate">*</span>
                 <div>
-                    <select name="role" class="form-control" [(ngModel)]="new_user.role" required>
+                    <select name="role" class="form-select" [(ngModel)]="new_user.role" required>
                         <option value="admin">{{ 'Admin' | translate }}</option>
                         <option value="receiver">{{ 'Recipient' | translate }}</option>
                         <option *ngIf="nodeResolver.dataModel.enable_custodian" value="custodian">{{ 'Custodian' | translate }}

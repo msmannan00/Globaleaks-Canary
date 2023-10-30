@@ -1,3 +1,14 @@
+.devMode {
+  background-color: orange;
+  color: white;
+  padding: 15px;
+  font-size: 14px;
+  font-weight:600;
+  text-align: left;
+  cursor:pointer;
+  text-decoration: none;
+}
+
 #browser-not-supported {
   display: none;
 }
@@ -94,22 +105,6 @@ th .fa-solid,
   color: #205282;
 }
 
-.ngb-dp-week>.ngb-dp-day>.bg-primary {
-  background-color: #205282 !important;
-}
-
-.multiselect-dropdown>.dropdown-list{
-  min-width: 200px;
-  border-radius: 5px !important;
-}
-
-.ngb-datepicker-container-inner{
-  box-shadow: 0 0 10px #b3b3b3;
-  border-radius: 6px !important;
-  background: white;
-  padding: 5px 5px 53px;
-}
-
 .multiselect-item-checkbox {
   font-weight: normal;
 }
@@ -176,11 +171,6 @@ th .fa-solid,
 
 .form-control:hover {
   background-color: #fff;
-}
-
-.form-control.is-valid,
-.was-validated .form-control:valid {
-  border-color: #c8d1e0;
 }
 
 .h1,
@@ -940,15 +930,6 @@ th:not(:first-child):not(:nth-last-child(-n+4)) {
   cursor: pointer;
 }
 
-body .dropdown-visible>div.multiselect-dropdown>div.dropdown-list {
-  display: block !important;
-  margin-top: 0;
-}
-
-body .dropdown-visible>div.multiselect-dropdown>div>span.dropdown-btn {
-  display: none !important;
-}
-
 .editorHeader {
   cursor: pointer;
 }
@@ -1002,8 +983,7 @@ i.fa-solid.fa-chevron-right {
   animation: blink 1s infinite;
 }
 
-.tenant-badge a.badge.bg-primary:hover,
-.tenant-badge a.badge.bg-primary:active,
-.tenant-badge a.badge.bg-primary:focus {
-  color: #9fc9f1;
+.form-check{
+  margin-left:0;
+  padding-left:0;
 }
