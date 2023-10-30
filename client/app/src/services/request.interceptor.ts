@@ -15,7 +15,6 @@ const protectedUrls = [
   "api/auth/tokenauth",
   "api/auth/authentication",
   "api/user/reset/password",
-  "api/user/preferences",
   "api/recipient/rtip",
 ];
 
