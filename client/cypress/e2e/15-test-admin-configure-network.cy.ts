@@ -10,7 +10,6 @@ describe("admin configure network", () => {
     cy.get('[name="hostname"]').clear().type("localhost");
     cy.get('button:contains("Save")').first().click();
 
-    cy.waitForLoader();
     cy.get("#HTTPSManualMode").click();
     cy.contains("button", "Generate").click();
     cy.waitForLoader();
