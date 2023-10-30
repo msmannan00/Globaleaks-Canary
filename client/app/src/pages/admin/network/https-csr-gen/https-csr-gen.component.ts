@@ -33,6 +33,7 @@ export class HttpsCsrGenComponent {
   submitCSR() {
     this.httpService.requestCSRDirectContentResource(this.csr_cfg).subscribe(
       (response) => {
+        this.utilsService.saveAs(new Blob([response.data], {type: "text/plain;charset=utf-8"}), "csr.pem");
       },
       (error) => {
         if (error.status === 201) {
