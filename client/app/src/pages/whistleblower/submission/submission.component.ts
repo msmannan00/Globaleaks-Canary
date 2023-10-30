@@ -45,6 +45,7 @@ export class SubmissionComponent{
     }else {
       this.resetForm();
       this.initializeSubmission();
+      this.whistleblowerLoginResolver.loggedIn = false;
     }
   }
 

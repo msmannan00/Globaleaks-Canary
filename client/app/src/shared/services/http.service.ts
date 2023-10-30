@@ -22,8 +22,8 @@ export class HttpService {
     return this.httpClient.post("api/auth/authentication", param);
   }
 
-  requestWhistleBlowerLogin(param: string): Observable<any> {
-    return this.httpClient.post("api/auth/receiptauth", param);
+  requestWhistleBlowerLogin(param: string, authHeader:any): Observable<any> {
+    return this.httpClient.post("api/auth/receiptauth", param, { headers: authHeader });
   }
 
   requestDeleteUserSession(): Observable<any> {

@@ -16,7 +16,6 @@ const protectedUrls = [
   "api/auth/authentication",
   "api/user/reset/password",
   "api/recipient/rtip",
-  "api/auth/receiptauth",
   "api/signup",
 ];
 
@@ -56,7 +55,7 @@ export class RequestInterceptor implements HttpInterceptor {
       headers: authRequest.headers.set("Accept-Language", this.getAcceptLanguageHeader() || ""),
     });
 
-    if (protectedUrls.includes(httpRequest.url)) {
+    if (httpRequest.url.endsWith("api/auth/receiptauth") && !this.authenticationService.session || protectedUrls.includes(httpRequest.url)) {
       return this.httpClient.post("api/auth/token", {}).pipe(
         switchMap((response) => from(this.cryptoService.proofOfWork(Object.assign(new tokenResponse(), response).id)).pipe(
           switchMap((ans) => next.handle(httpRequest.clone({
