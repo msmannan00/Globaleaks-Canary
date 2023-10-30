@@ -55,7 +55,7 @@ export class RequestInterceptor implements HttpInterceptor {
       headers: authRequest.headers.set("Accept-Language", this.getAcceptLanguageHeader() || ""),
     });
 
-    if (httpRequest.url.startsWith("api/auth/receiptauth") && !this.authenticationService.session ||  protectedUrls.includes(httpRequest.url)  || httpRequest.url.startsWith("api/signup")) {
+    if (protectedUrls.includes(httpRequest.url)) {
       return this.httpClient.post("api/auth/token", {}).pipe(
         switchMap((response) => from(this.cryptoService.proofOfWork(Object.assign(new tokenResponse(), response).id)).pipe(
           switchMap((ans) => next.handle(httpRequest.clone({
@@ -108,10 +108,6 @@ export class CompletedInterceptor implements HttpInterceptor {
     this.appDataService.showLoadingPanel = true;
 
     return next.handle(req).pipe(
-      catchError((error) => {
-        this.count = Math.max(0, this.count - 1);
-        return of(error);
-      }),
       finalize(() => {
         this.count--;
 
