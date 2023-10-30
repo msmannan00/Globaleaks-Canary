@@ -9,7 +9,7 @@
 
         <div class="form-group">
             <label>
-                <input name="node.dataModel.encryption" [(ngModel)]="nodeResolver.dataModel.encryption" type="checkbox" (ngModelChange)="enableEncryption()"
+                <input #encryption name="node.dataModel.encryption" [(ngModel)]="nodeResolver.dataModel.encryption" type="checkbox" (ngModelChange)="enableEncryption(encryption)"
                        [disabled]="nodeResolver.dataModel.encryption" />
                 <span>{{'Enable encryption' | translate}}</span>
             </label>
@@ -18,7 +18,7 @@
         <div *ngIf="nodeResolver.dataModel.encryption">
             <div class="form-group">
                 <label>
-                    <input name="node.dataModel.escrow" [(ngModel)]="nodeResolver.dataModel.escrow" type="checkbox" (ngModelChange)="toggleEscrow()"
+                    <input #escrow name="node.dataModel.escrow" [(ngModel)]="nodeResolver.dataModel.escrow" type="checkbox" (ngModelChange)="toggleEscrow(escrow)"
                            [disabled]="nodeResolver.dataModel.escrow && !preferenceResolver.dataModel.escrow" />
                     <span>{{'Enable administrators to change user passwords' | translate}}</span>
                 </label>

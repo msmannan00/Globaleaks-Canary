@@ -33,10 +33,10 @@ export class Tab5Component {
 
   }
 
-  enableEncryption() {
+  enableEncryption(encryption:any) {
     const node = this.nodeResolver.dataModel;
     node.encryption = false;
-
+    encryption = node.encryption;
     if (!node.encryption) {
       const modalRef = this.modalService.open(EnableEncryptionComponent, {});
       modalRef.result.then(
@@ -53,8 +53,9 @@ export class Tab5Component {
     }
   }
 
-  toggleEscrow() {
+  toggleEscrow(escrow:any) {
     this.nodeResolver.dataModel.escrow = !this.nodeResolver.dataModel.escrow;
+    escrow.checked = this.nodeResolver.dataModel.escrow;
     this.utilsService.runAdminOperation("toggle_escrow", {}, true).subscribe(
       () => {
         this.preferenceResolver.dataModel.escrow = !this.preferenceResolver.dataModel.escrow;
