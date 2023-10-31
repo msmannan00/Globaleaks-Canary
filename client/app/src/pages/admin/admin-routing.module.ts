@@ -83,7 +83,7 @@ const routes: Routes = [
   {
     path: "questionnaires",
     resolve: {
-      NodeResolver, PreferenceResolver, UsersResolver, QuestionnairesResolver, RedirectsResolver, FieldtemplatesResolver: FieldTemplatesResolver
+      NodeResolver, PreferenceResolver, ContextsResolver, UsersResolver, QuestionnairesResolver, FieldTemplatesResolver
     },
     loadChildren: () => QuestionnairesModule,
     pathMatch: "full",

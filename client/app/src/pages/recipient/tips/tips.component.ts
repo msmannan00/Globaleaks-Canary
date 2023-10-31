@@ -1,4 +1,5 @@
 import { Component, ElementRef, HostListener, OnInit } from "@angular/core";
+import {AppConfigService} from "@app/services/app-config.service";
 import { NgbDate, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AppDataService } from "@app/app-data.service";
 import { DeleteConfirmationComponent } from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
@@ -59,7 +60,7 @@ export class TipsComponent implements OnInit {
     allowSearchFilter: true,
     searchPlaceholderText: this.translateService.instant("Search")
   };
-  constructor(private router: Router, protected RTips: RTipsResolver, protected preference: PreferenceResolver, private modalService: NgbModal, protected utils: UtilsService, protected appDataService: AppDataService, private elementRef: ElementRef, private translateService: TranslateService, private tokenResourceService: TokenResource) {
+  constructor(private appConfigServices: AppConfigService, private router: Router, protected RTips: RTipsResolver, protected preference: PreferenceResolver, private modalService: NgbModal, protected utils: UtilsService, protected appDataService: AppDataService, private elementRef: ElementRef, private translateService: TranslateService, private tokenResourceService: TokenResource) {
 
   }
 
@@ -139,7 +140,11 @@ export class TipsComponent implements OnInit {
   }
 
   reload() {
-    this.utils.reloadComponent();
+    const reloadCallback = () => {
+      this.utils.reloadComponent()
+    };
+
+    this.appConfigServices.localInitialization(true, reloadCallback)
   }
 
   tipSwitch(id: number): void {

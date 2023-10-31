@@ -36,8 +36,8 @@
 			<i class="glyphicon glyphicon-user"></i>
 		</span>
 		<span id="LogoutLinkBox">
-			<a id="LogoutLink" href="#" (click)="onLogout()" data-toggle="tooltip"
-				title="{{'Logout' | translate}}"><i class="fa-solid fa-fw fa-sign-out-alt"></i><span
+			<a id="LogoutLink" (click)="onLogout()" data-toggle="tooltip"
+				title="{{'Logout' | translate}}"><i class="pointer fa-solid fa-fw fa-sign-out-alt"></i><span
 					*ngIf="authentication.session.role === 'whistleblower'"><span> </span><span
 						>{{'Logout'|translate}}</span></span></a>
 		</span>

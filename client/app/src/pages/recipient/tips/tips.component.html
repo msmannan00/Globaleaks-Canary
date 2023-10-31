@@ -133,8 +133,9 @@
               <span class="ngb-dtepicker-container ms-1">
                 <i class="fas fa-calendar" [ngClass]="{'calendar-active':  reportDateFilter}"
                   (click)="reportDatePicker=!reportDatePicker;lastUpdatePicker=false;expirationDatePicker=false;statusDropdownVisible=false;channelDropdownVisible=false;scoreDropdownVisible=false;"></i>
-                <ngbd-datepicker-range class="position-absolute d-block" #datePicker [currentDates]="reportDateModel"
-                  (emitDateSelection)="onReportFilterChange($event)" *ngIf="reportDatePicker"></ngbd-datepicker-range>
+                <div [hidden]="!reportDatePicker">
+                  <ngbd-datepicker-range class="position-absolute d-block" #datePicker [currentDates]="reportDateModel" (emitDateSelection)="onReportFilterChange($event)"></ngbd-datepicker-range>
+                </div>
               </span>
 
             </th>
@@ -150,8 +151,9 @@
               <span class="ngb-dtepicker-container ms-1">
                 <i class="fas fa-calendar" [ngClass]="{'calendar-active':  updateDateFilter}"
                   (click)="lastUpdatePicker=!lastUpdatePicker;reportDatePicker=false;expirationDatePicker=false;statusDropdownVisible=false;channelDropdownVisible=false;scoreDropdownVisible=false;"></i>
-                <ngbd-datepicker-range class="position-absolute d-block" #datePicker [currentDates]="updateDateModel"
-                  (emitDateSelection)="onUpdateFilterChange($event)" *ngIf="lastUpdatePicker"></ngbd-datepicker-range>
+                <div [hidden]="!lastUpdatePicker">
+                  <ngbd-datepicker-range class="position-absolute d-block" #datePicker [currentDates]="updateDateModel" (emitDateSelection)="onUpdateFilterChange($event)"></ngbd-datepicker-range>
+                </div>
               </span>
             </th>
             <th class="TipInfoExpirationDate">
@@ -166,9 +168,9 @@
               <span class="ngb-dtepicker-container ms-1">
                 <i class="fas fa-calendar" [ngClass]="{'calendar-active':  expiryDateFilter}"
                   (click)="expirationDatePicker=!expirationDatePicker;reportDatePicker=false;lastUpdatePicker=false;statusDropdownVisible=false;channelDropdownVisible=false;scoreDropdownVisible=false;"></i>
-                <ngbd-datepicker-range class="position-absolute d-block" #datePicker [currentDates]="expiryDateModel"
-                  (emitDateSelection)="onExpiryFilterChange($event)"
-                  *ngIf="expirationDatePicker"></ngbd-datepicker-range>
+                <div [hidden]="!expirationDatePicker">
+                  <ngbd-datepicker-range class="position-absolute d-block" #datePicker [currentDates]="expiryDateModel" (emitDateSelection)="onExpiryFilterChange($event)"></ngbd-datepicker-range>
+                </div>
               </span>
             </th>
             <th class="TipInfoReadReceipt">

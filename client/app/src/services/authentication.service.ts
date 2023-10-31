@@ -92,7 +92,8 @@ export class AuthenticationService {
     } else {
       if (username === "whistleblower") {
         password = password.replace(/\D/g, "");
-        requestObservable = this.httpService.requestWhistleBlowerLogin(JSON.stringify({"receipt": password}));
+        const authHeader = this.getHeader();
+        requestObservable = this.httpService.requestWhistleBlowerLogin(JSON.stringify({"receipt": password}), authHeader);
       } else {
         requestObservable = this.httpService.requestGeneralLogin(JSON.stringify({
           "tid": tid,

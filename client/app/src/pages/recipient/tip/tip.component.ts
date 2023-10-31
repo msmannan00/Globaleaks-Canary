@@ -1,5 +1,6 @@
 import {AfterViewInit, ChangeDetectorRef, Component, TemplateRef, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
+import {AppConfigService} from "@app/services/app-config.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AppDataService} from "@app/app-data.service";
 import {ReceiverTipService} from "@app/services/receiver-tip.service";
@@ -43,7 +44,7 @@ export class TipComponent implements AfterViewInit {
   tabs: any[];
   active: string;
 
-  constructor(private router: Router,private cdr: ChangeDetectorRef, private cryptoService: CryptoService, protected utils: UtilsService, protected preferencesService: PreferenceResolver, protected modalService: NgbModal, private activatedRoute: ActivatedRoute, protected httpService: HttpService, protected http: HttpClient, protected appDataService: AppDataService, protected RTipService: ReceiverTipService, protected fieldUtilities: FieldUtilitiesService, protected authenticationService: AuthenticationService) {
+  constructor(private appConfigServices: AppConfigService, private router: Router,private cdr: ChangeDetectorRef, private cryptoService: CryptoService, protected utils: UtilsService, protected preferencesService: PreferenceResolver, protected modalService: NgbModal, private activatedRoute: ActivatedRoute, protected httpService: HttpService, protected http: HttpClient, protected appDataService: AppDataService, protected RTipService: ReceiverTipService, protected fieldUtilities: FieldUtilitiesService, protected authenticationService: AuthenticationService) {
   }
 
   ngAfterViewInit(): void {
@@ -189,7 +190,11 @@ export class TipComponent implements AfterViewInit {
   }
 
   reload(): void {
-    this.utils.reloadComponent();
+    const reloadCallback = () => {
+      this.utils.reloadComponent()
+    };
+
+    this.appConfigServices.localInitialization(true, reloadCallback)
   }
 
   filterNotTriggeredField(parent: any, field: any, answers: any): void {
