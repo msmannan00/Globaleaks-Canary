@@ -31,6 +31,7 @@ export class SignupComponent {
   }
 
   ngOnInit() {
+    this.appDataService.pageTitle="";
     this.appConfig.routeChangeListener();
   }
 

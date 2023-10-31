@@ -28,6 +28,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    this.appDataService.pageTitle="";
     this.appConfig.routeChangeListener();
     this.checkToShowSidebar();
   }
