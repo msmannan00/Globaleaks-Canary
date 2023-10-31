@@ -216,7 +216,6 @@ export class AppConfigService {
 
   routeChangeListener() {
     this.router.events.subscribe((event) => {
-      this.header_title = "";
       if (event instanceof NavigationEnd) {
         this.onValidateInitialConfiguration();
         const lastChildRoute = this.findLastChildRoute(this.router.routerState.root);
