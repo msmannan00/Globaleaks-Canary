@@ -1,15 +1,10 @@
 import { Injectable } from '@angular/core';
 import {
-  Router, Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
+  Resolve,
 } from '@angular/router';
 import {AppDataService} from "@app/app-data.service";
-import {WBTipData} from "@app/models/whistleblower/WBTipData";
 import {AuthenticationService} from "@app/services/authentication.service";
-import {HttpService} from "@app/shared/services/http.service";
 import { Observable, of } from 'rxjs';
-import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'

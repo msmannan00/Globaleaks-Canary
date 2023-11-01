@@ -20,7 +20,7 @@
             <td>{{data.last_update | date:'dd-MM-yyyy HH:mm'}}</td>
             <td>{{data.expiration_date | date:'dd-MM-yyyy'}}</td>
             <td>{{appDataService.contexts_by_id[data.context_id]['name']}}</td>
-            <td>{{utilsService.getSubmissionStatusText(data.status, data.substatus, appDataService.submissionStatuses)}}</td>
+            <td>{{utilsService.getSubmissionStatusText(data.status, appDataService.submissionStatuses)}}</td>
             <td><i data-ng-if="itip.tor" class="fa-solid fa-check"></i></td>
             <td>{{data.comments}}</td>
             <td>{{data.files}}</td>

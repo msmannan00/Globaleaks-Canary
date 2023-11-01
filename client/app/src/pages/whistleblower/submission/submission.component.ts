@@ -1,13 +1,11 @@
 import {Component, QueryList, ViewChild, ViewChildren} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
-import {WBTipData} from "@app/models/whistleblower/WBTipData";
 import {WhistleblowerLoginResolver} from "@app/shared/resolvers/whistleblower-login.resolver";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {SubmissionService} from "@app/services/submission.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {NgForm} from "@angular/forms";
-import {map} from "rxjs/operators";
 
 @Component({
   selector: "src-submission",

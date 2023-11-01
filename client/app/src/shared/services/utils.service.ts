@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {AppDataService} from "@app/app-data.service";
 import {TranslateService} from "@ngx-translate/core";
-import {NavigationExtras, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {RequestSupportComponent} from "@app/shared/modals/request-support/request-support.component";
 import {HttpService} from "@app/shared/services/http.service";
@@ -186,7 +186,7 @@ export class UtilsService {
   encodeString(string: string): string {
     const codeUnits = Uint16Array.from(
       {length: string.length},
-      (element, index) => string.charCodeAt(index)
+      (_, index) => string.charCodeAt(index)
     );
 
     const charCodes = new Uint8Array(codeUnits.buffer);
@@ -252,7 +252,7 @@ export class UtilsService {
     }
   }
 
-  getSubmissionStatusText(status: any, substatus: any, submission_statuses: any) {
+  getSubmissionStatusText(status: any, submission_statuses: any) {
     let text;
     for (let i = 0; i < submission_statuses.length; i++) {
       if (submission_statuses[i].id === status) {

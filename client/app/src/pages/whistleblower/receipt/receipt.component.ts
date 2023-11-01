@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {AppDataService} from "@app/app-data.service";
@@ -11,7 +11,7 @@ export class ReceiptComponent implements OnInit {
   receipt: any;
   receiptId: string = "";
 
-  constructor(protected utilsService: UtilsService, protected authenticationService: AuthenticationService, protected appDataService: AppDataService, private cdr: ChangeDetectorRef) {
+  constructor(protected utilsService: UtilsService, protected authenticationService: AuthenticationService, protected appDataService: AppDataService) {
   }
 
   public ngOnInit(): void {

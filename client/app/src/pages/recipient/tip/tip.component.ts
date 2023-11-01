@@ -86,7 +86,7 @@ export class TipComponent implements AfterViewInit {
           this.ctx = "rtip";
           this.showEditLabelInput = this.tip.label === "";
           this.preprocessTipAnswers(this.tip);
-          this.tip.submissionStatusStr = this.utils.getSubmissionStatusText(this.tip.status, this.tip.substatus, this.appDataService.submissionStatuses);
+          this.tip.submissionStatusStr = this.utils.getSubmissionStatusText(this.tip.status, this.appDataService.submissionStatuses);
           this.submission = {};
         }
       }

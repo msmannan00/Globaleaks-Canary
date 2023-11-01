@@ -33,10 +33,9 @@ export class Tab5Component {
 
   }
 
-  enableEncryption(encryption:any) {
+  enableEncryption() {
     const node = this.nodeResolver.dataModel;
     node.encryption = false;
-    encryption = node.encryption;
     if (!node.encryption) {
       const modalRef = this.modalService.open(EnableEncryptionComponent, {});
       modalRef.result.then(

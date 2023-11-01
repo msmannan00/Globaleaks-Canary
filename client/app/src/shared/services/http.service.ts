@@ -210,7 +210,7 @@ export class HttpService {
     return this.httpClient.post("api/whistleblower/wbtip/fillform" , param);
   }
 
-  whistleBlowerIdentityUpdate(param: any, tipid: string): Observable<any> {
+  whistleBlowerIdentityUpdate(param: any): Observable<any> {
     return this.httpClient.post("api/whistleblower/wbtip/identity", param);
   }
 
