@@ -35,7 +35,8 @@ export class UserComponent {
     });
   }
 
-  onLogout() {
+  onLogout(event: Event) {
+    event.preventDefault();
     const promise = () => {
       localStorage.removeItem("default_language");
       this.appConfigService.reinit(false);
