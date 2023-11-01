@@ -145,11 +145,10 @@ export class PreferenceTab1Component implements OnInit {
 
   loadPublicKeyFile (files: any){
     if (files && files.length > 0) {
-    this.utilsService.readFileAsText(files[0])
-      .then((txt: string) => {
-        this.preferenceResolver.dataModel.pgp_key_public = txt;
-      })
-      // .catch(this.utilsService.displayErrorMsg);
+      this.utilsService.readFileAsText(files[0])
+        .then((txt: string) => {
+          this.preferenceResolver.dataModel.pgp_key_public = txt;
+        });
     }
   };
   onlanguagechange() {

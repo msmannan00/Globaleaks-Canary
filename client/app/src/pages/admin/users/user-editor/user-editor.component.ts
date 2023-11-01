@@ -114,11 +114,10 @@ export class UserEditorComponent implements OnInit {
   }
   loadPublicKeyFile (files: any){
     if (files && files.length > 0) {
-    this.utilsService.readFileAsText(files[0])
-      .then((txt: string) => {
-        this.user.dataModel.pgp_key_public = txt;
-      })
-      // .catch(this.utilsService.displayErrorMsg);
+      this.utilsService.readFileAsText(files[0])
+        .then((txt: string) => {
+          this.user.pgp_key_public = txt;
+        });
     }
   };
   toggleUserEscrow(user: any) {
