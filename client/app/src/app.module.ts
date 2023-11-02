@@ -5,7 +5,6 @@ import {AppComponent} from "@app/pages/app/app.component";
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import {AuthModule} from "@app/pages/auth/auth.module";
 import {APP_BASE_HREF, HashLocationStrategy, LocationStrategy,} from "@angular/common";
-import {OrderModule} from "ngx-order-pipe";
 import {AppConfigService} from "@app/services/app-config.service";
 import {SharedModule} from "@app/shared.module";
 import {HeaderComponent} from "@app/shared/partials/header/header.component";
@@ -55,7 +54,6 @@ export function createTranslateLoader(http: HttpClient) {
     AuthModule,
     SignupModule,
     ActionModule,
-    OrderModule,
     WizardModule,
     AdminModule,
     RecipientModule,

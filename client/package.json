@@ -69,7 +69,6 @@
 		"ng2-select": "^2.0.0",
 		"ngx-csv": "^0.3.2",
 		"ngx-markdown": "^15.1.2",
-		"ngx-order-pipe": "^2.2.0",
 		"ngx-qrcode": "^0.1.0-rc.1",
 		"node-gettext": "^3.0.0",
 		"postcss-rtl": "^2.0.0",
