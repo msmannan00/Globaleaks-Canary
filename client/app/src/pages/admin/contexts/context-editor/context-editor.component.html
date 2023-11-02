@@ -21,7 +21,7 @@
                     <span>{{ 'Edit' | translate }}</span>
                 </button>
                 <button class="btn btn-sm btn-primary" *ngIf="editing" [disabled]="editContext.invalid"
-                    (click)="save_context(context)">
+                    (click)="saveContext(context)">
                     <span>{{ 'Save' | translate }}</span>
                 </button>
                 <button class="btn btn-sm btn-outline-secondary" *ngIf="editing" (click)="toggleEditing()">
@@ -100,7 +100,7 @@
                             <div class="dual_title"><span>{{ 'Reminder date' | translate }}</span> ({{ 'days' | translate }})</div>
                         </div>
                         <div class="input-group">
-                            <input class="form-control" name="reminder" (ngModelChange)="onReminderChanged()" [(ngModel)]="context.tip_reminder" type="number" min="0" />
+                            <input class="form-control" name="reminder" [(ngModel)]="context.tip_reminder" type="number" min="0" />
                         </div>
                     </div>
                     <div>{{ 'Set the value to 0 to disable this feature.' | translate }}</div>

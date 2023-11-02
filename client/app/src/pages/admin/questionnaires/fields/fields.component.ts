@@ -50,7 +50,7 @@ export class FieldsComponent implements OnInit {
     this.children = this.field.children;
   }
 
-  save_field(field: any) {
+  saveField(field: any) {
     this.utilsService.assignUniqueOrderIndex(field.options);
     return this.httpService.requestUpdateAdminQuestionnaireField(field.id, field).subscribe(_ => {
       return this.questionnaireService.sendData();
@@ -66,7 +66,7 @@ export class FieldsComponent implements OnInit {
   }
 
   delField(field: any) {
-    this.openConfirmableModalDialog(field, "");
+    this.openConfirmableModalDialog(field, "").then();
   }
 
   openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
@@ -86,22 +86,22 @@ export class FieldsComponent implements OnInit {
 
   moveUpAndSave(field: any): void {
     this.utilsService.moveUp(field);
-    this.save_field(field);
+    this.saveField(field);
   }
 
   moveDownAndSave(field: any): void {
     this.utilsService.moveDown(field);
-    this.save_field(field);
+    this.saveField(field);
   }
 
   moveLeftAndSave(field: any): void {
     this.utilsService.moveLeft(field);
-    this.save_field(field);
+    this.saveField(field);
   }
 
   moveRightAndSave(field: any): void {
     this.utilsService.moveRight(field);
-    this.save_field(field);
+    this.saveField(field);
   }
 
   typeSwitch(type: string): string {
@@ -190,7 +190,7 @@ export class FieldsComponent implements OnInit {
   }
 
   addOptionHintDialog(option: any) {
-    this.openOptionHintDialog(option);
+    this.openOptionHintDialog(option).then();
 
   }
 
@@ -217,7 +217,7 @@ export class FieldsComponent implements OnInit {
   }
 
   triggerReceiverDialog(option: any): void {
-    this.openTriggerReceiverDialog(option);
+    this.openTriggerReceiverDialog(option).then();
 
   }
 
@@ -230,7 +230,7 @@ export class FieldsComponent implements OnInit {
   }
 
   assignScorePointsDialog(option: any) {
-    this.openAssignScorePointsDialog(option);
+    this.openAssignScorePointsDialog(option).then();
   }
 
   openAssignScorePointsDialog(arg: any): Promise<any> {

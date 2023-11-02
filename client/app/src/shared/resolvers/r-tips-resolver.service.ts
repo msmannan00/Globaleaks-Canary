@@ -4,7 +4,7 @@ import {Observable, of} from "rxjs";
 import {HttpService} from "@app/shared/services/http.service";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {map} from "rxjs/operators";
-import {rtipResolverModel} from "@app/models/resolvers/rtipsResolverModel";
+import {rtipResolverModel} from "@app/models/resolvers/rtips-resolver-model";
 
 @Injectable({
   providedIn: "root"

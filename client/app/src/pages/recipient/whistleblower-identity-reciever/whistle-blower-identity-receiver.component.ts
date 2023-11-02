@@ -20,12 +20,12 @@ export class WhistleBlowerIdentityReceiverComponent {
     this.collapsed = !this.collapsed;
   }
 
-  file_identity_access_request() {
+  fileIdentityAccessRequest() {
     const modalRef = this.modalService.open(TipOperationFileIdentityAccessRequestComponent);
     modalRef.componentInstance.tip = this.tipService.tip;
   }
 
-  access_identity() {
+  accessIdentity() {
     return this.httpService.accessIdentity(this.tipService.tip.id).subscribe(
       _ => {
         this.utils.reloadCurrentRoute();

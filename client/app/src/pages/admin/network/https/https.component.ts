@@ -31,10 +31,10 @@ export class HttpsComponent implements OnInit {
   }
 
   updateHostname(hostname: any) {
-    this.utilsService.runAdminOperation("set_hostname", { "value": hostname }, false)
+    this.utilsService.runAdminOperation("set_hostname", {"value": hostname}, false)
       .subscribe(
         () => {
-          location.reload()
+          location.reload();
         }
       );
   }

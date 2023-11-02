@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {new_field} from "@app/models/admin/new_field";
+import {newField} from "@app/models/admin/new-field";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 
 @Component({
@@ -29,9 +29,9 @@ export class AddFieldFromTemplateComponent {
     }
   }
 
-  add_field_from_template(): void {
+  addFieldFromTemplate(): void {
     if (this.type === "step") {
-      const field = new new_field();
+      const field = new newField();
       field.step_id = this.step.id;
       field.template_id = "";
 
@@ -48,7 +48,7 @@ export class AddFieldFromTemplateComponent {
       });
     }
     if (this.type === "field") {
-      const field = new new_field();
+      const field = new newField();
       field.step_id = this.step.id;
       field.template_id = "";
 

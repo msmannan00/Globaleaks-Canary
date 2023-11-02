@@ -18,16 +18,16 @@ export class HttpsCsrGenComponent {
     company: string;
     department: string;
     email: string;
-    } = {
-      country: "",
-      province: "",
-      city: "",
-      company: "",
-      department: "",
-      email: ""
+  } = {
+    country: "",
+    province: "",
+    city: "",
+    company: "",
+    department: "",
+    email: ""
   };
 
-  constructor(private httpService: HttpService, private utilsService:UtilsService) {
+  constructor(private httpService: HttpService, private utilsService: UtilsService) {
   }
 
   submitCSR() {
@@ -38,7 +38,7 @@ export class HttpsCsrGenComponent {
       (error) => {
         if (error.status === 201) {
           const errorText = error.error.text;
-          this.utilsService.saveAs(new Blob([errorText], { type: 'application/octet-stream' }), "csr.pem");
+          this.utilsService.saveAs(new Blob([errorText], {type: "application/octet-stream"}), "csr.pem");
         }
       }
     );

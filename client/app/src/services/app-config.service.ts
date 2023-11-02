@@ -219,11 +219,11 @@ export class AppConfigService {
       if (event instanceof NavigationEnd) {
         this.onValidateInitialConfiguration();
         const lastChildRoute = this.findLastChildRoute(this.router.routerState.root);
-        if (lastChildRoute && lastChildRoute.snapshot.data && lastChildRoute.snapshot.data['pageTitle']) {
-          this.header_title = lastChildRoute.snapshot.data['pageTitle'];
-          this.sidebar = lastChildRoute.snapshot.data['sidebar'];
+        if (lastChildRoute && lastChildRoute.snapshot.data && lastChildRoute.snapshot.data["pageTitle"]) {
+          this.header_title = lastChildRoute.snapshot.data["pageTitle"];
+          this.sidebar = lastChildRoute.snapshot.data["sidebar"];
           this.setTitle();
-        }else{
+        } else {
           this.header_title = "";
           this.sidebar = "";
           this.setTitle();

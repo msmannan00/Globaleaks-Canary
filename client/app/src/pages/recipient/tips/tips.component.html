@@ -88,7 +88,7 @@
               <span class="dropdown-multi-select-container" *ngIf="RTips.dataModel.length > 0">
                 <i class="fa-solid fa-filter" [ngClass]="{ filterSelected: checkFilter(dropdownContextModel) }" (click)="toggleChannelDropdown()"></i>
                 <span [class.hidden]="!channelDropdownVisible">
-                  <ng-multiselect-dropdown [class.dropdown-visible]="channelDropdownVisible" [settings]="dropdownSettings" [data]="dropdownContextData" [(ngModel)]="dropdownContextModel" (ngModelChange)="on_changed(dropdownContextModel,'Channel')">
+                  <ng-multiselect-dropdown [class.dropdown-visible]="channelDropdownVisible" [settings]="dropdownSettings" [data]="dropdownContextData" [(ngModel)]="dropdownContextModel" (ngModelChange)="onChanged(dropdownContextModel,'Channel')">
                   </ng-multiselect-dropdown>
                 </span>
               </span>
@@ -116,7 +116,7 @@
                 <i class="fa-solid fa-filter" [ngClass]="{ filterSelected: checkFilter(dropdownStatusModel) }" (click)="toggleStatusDropdown()"></i>
                 <span [class.hidden]="!statusDropdownVisible">
                   <ng-multiselect-dropdown [class.dropdown-visible]="statusDropdownVisible" [settings]="dropdownSettings" [data]="dropdownStatusData"
-                    [(ngModel)]="dropdownStatusModel" (ngModelChange)="on_changed(dropdownStatusModel,'Status')">
+                    [(ngModel)]="dropdownStatusModel" (ngModelChange)="onChanged(dropdownStatusModel,'Status')">
                   </ng-multiselect-dropdown>
                 </span>
               </span>
@@ -192,7 +192,7 @@
                 <i class="fa-solid fa-filter" [ngClass]="{ filterSelected: checkFilter(dropdownScoreModel) }" (click)="toggleScoreDropdown()"></i>
                 <span [class.hidden]="!scoreDropdownVisible">
                   <ng-multiselect-dropdown [class.dropdown-visible]="scoreDropdownVisible" [settings]="dropdownSettings" [data]="dropdownScoreData"
-                                           [(ngModel)]="dropdownScoreModel" (ngModelChange)="on_changed(dropdownScoreModel,'Score')">
+                                           [(ngModel)]="dropdownScoreModel" (ngModelChange)="onChanged(dropdownScoreModel,'Score')">
                   </ng-multiselect-dropdown>
                 </span>
               </span>

@@ -14,6 +14,18 @@ export class SitesTab1Component implements OnInit {
   itemsPerPage: number = 10;
   currentPage: number = 1;
 
+  ngOnInit(): void {
+    this.newTenant.active = true;
+    this.newTenant.name = "";
+    this.newTenant.mode = "default";
+    this.newTenant.subdomain = "";
+    this.httpService.fetchTenant().subscribe(
+      tenant => {
+        this.tenants = tenant;
+      }
+    );
+  }
+
   toggleAddTenant() {
     this.showAddTenant = !this.showAddTenant;
   }
@@ -25,17 +37,5 @@ export class SitesTab1Component implements OnInit {
     this.httpService.addTenant(this.newTenant).subscribe(_ => {
       this.utilsService.reloadCurrentRoute();
     });
-  }
-
-  ngOnInit(): void {
-    this.newTenant.active = true;
-    this.newTenant.name = "";
-    this.newTenant.mode = "default";
-    this.newTenant.subdomain = "";
-    this.httpService.fetchTenant().subscribe(
-      tenant => {
-        this.tenants = tenant;
-      }
-    );
   }
 }

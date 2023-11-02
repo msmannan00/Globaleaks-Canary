@@ -60,6 +60,7 @@ export class TipsComponent implements OnInit {
     allowSearchFilter: true,
     searchPlaceholderText: this.translateService.instant("Search")
   };
+
   constructor(private appConfigServices: AppConfigService, private router: Router, protected RTips: RTipsResolver, protected preference: PreferenceResolver, private modalService: NgbModal, protected utils: UtilsService, protected appDataService: AppDataService, private elementRef: ElementRef, private translateService: TranslateService, private tokenResourceService: TokenResource) {
 
   }
@@ -126,7 +127,8 @@ export class TipsComponent implements OnInit {
 
   tipDeleteSelected() {
     const modalRef = this.modalService.open(DeleteConfirmationComponent);
-    modalRef.componentInstance.confirmFunction = () => { };
+    modalRef.componentInstance.confirmFunction = () => {
+    };
     modalRef.componentInstance.selected_tips = this.selectedTips;
     modalRef.componentInstance.operation = "delete";
   }
@@ -141,10 +143,10 @@ export class TipsComponent implements OnInit {
 
   reload() {
     const reloadCallback = () => {
-      this.utils.reloadComponent()
+      this.utils.reloadComponent();
     };
 
-    this.appConfigServices.localInitialization(true, reloadCallback)
+    this.appConfigServices.localInitialization(true, reloadCallback);
   }
 
   tipSwitch(id: number): void {
@@ -179,18 +181,18 @@ export class TipsComponent implements OnInit {
       tip.submissionStatusStr = this.utils.getSubmissionStatusText(tip.status, this.appDataService.submissionStatuses);
       if (!uniqueKeys.includes(tip.submissionStatusStr)) {
         uniqueKeys.push(tip.submissionStatusStr);
-        this.dropdownStatusData.push({ id: this.dropdownStatusData.length + 1, label: tip.submissionStatusStr });
+        this.dropdownStatusData.push({id: this.dropdownStatusData.length + 1, label: tip.submissionStatusStr});
       }
       if (!uniqueKeys.includes(tip.context_name)) {
         uniqueKeys.push(tip.context_name);
-        this.dropdownContextData.push({ id: this.dropdownContextData.length + 1, label: tip.context_name });
+        this.dropdownContextData.push({id: this.dropdownContextData.length + 1, label: tip.context_name});
       }
 
       const scoreLabel = this.maskScore(tip.score);
 
       if (!uniqueKeys.includes(scoreLabel)) {
         uniqueKeys.push(scoreLabel);
-        this.dropdownScoreData.push({ id: this.dropdownScoreData.length + 1, label: scoreLabel });
+        this.dropdownScoreData.push({id: this.dropdownScoreData.length + 1, label: scoreLabel});
       }
     }
   }
@@ -206,7 +208,8 @@ export class TipsComponent implements OnInit {
       return this.translateService.instant("None");
     }
   }
-  on_changed(model: any, type: string) {    
+
+  onChanged(model: any, type: string) {
     this.processTips();
     if (model.length > 0 && type === "Score") {
       this.dropdownContextModel = [];
@@ -277,8 +280,8 @@ export class TipsComponent implements OnInit {
 
   onReportFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
     this.processTips();
-    const { fromDate, toDate } = event;
-    this.reportDateModel = { fromDate, toDate };
+    const {fromDate, toDate} = event;
+    this.reportDateModel = {fromDate, toDate};
     if (!fromDate && !toDate) {
       this.reportDateFilter = null;
       this.closeAllDatePickers();
@@ -290,8 +293,8 @@ export class TipsComponent implements OnInit {
 
   onUpdateFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
     this.processTips();
-    const { fromDate, toDate } = event;
-    this.updateDateModel = { fromDate, toDate };
+    const {fromDate, toDate} = event;
+    this.updateDateModel = {fromDate, toDate};
     if (!fromDate && !toDate) {
       this.updateDateFilter = null;
       this.closeAllDatePickers();
@@ -303,8 +306,8 @@ export class TipsComponent implements OnInit {
 
   onExpiryFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
     this.processTips();
-    const { fromDate, toDate } = event;
-    this.expiryDateModel = { fromDate, toDate };
+    const {fromDate, toDate} = event;
+    this.expiryDateModel = {fromDate, toDate};
     if (!fromDate && !toDate) {
       this.expiryDateFilter = null;
       this.closeAllDatePickers();

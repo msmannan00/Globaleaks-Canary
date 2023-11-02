@@ -1,4 +1,4 @@
-export class WBTipData {
+export class WbTipData {
   id: string;
   creation_date: string;
   update_date: string;

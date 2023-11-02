@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
         this.authentication.login(0, "", "", "", token);
       } else {
         if (this.authentication.session && this.authentication.session.homepage) {
-          this.router.navigateByUrl(this.authentication.session.homepage);
+          this.router.navigateByUrl(this.authentication.session.homepage).then();
         }
       }
     });

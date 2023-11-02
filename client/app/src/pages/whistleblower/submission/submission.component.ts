@@ -12,7 +12,7 @@ import {NgForm} from "@angular/forms";
   templateUrl: "./submission.component.html",
   providers: [SubmissionService]
 })
-export class SubmissionComponent{
+export class SubmissionComponent {
   @ViewChild("submissionForm") public submissionForm: NgForm;
   @ViewChildren("stepform") stepForms: QueryList<NgForm>;
 
@@ -34,13 +34,13 @@ export class SubmissionComponent{
   show_steps_navigation_bar = false;
   receivedData: any;
 
-  constructor(private whistleblowerLoginResolver:WhistleblowerLoginResolver, protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, public submissionService: SubmissionService) {
+  constructor(private whistleblowerLoginResolver: WhistleblowerLoginResolver, protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, public submissionService: SubmissionService) {
     this.selectable_contexts = [];
     this.receivedData = this.submissionService.getSharedData();
 
-    if(!this.whistleblowerLoginResolver.loggedIn){
+    if (!this.whistleblowerLoginResolver.loggedIn) {
       this.utilsService.reloadCurrentRoute();
-    }else {
+    } else {
       this.resetForm();
       this.initializeSubmission();
       this.whistleblowerLoginResolver.loggedIn = false;
@@ -79,7 +79,7 @@ export class SubmissionComponent{
     return Object.keys(this.submissionService.selected_receivers).length < this.submissionService.context.maximum_selectable_receivers;
   };
 
-  switch_selection(receiver: any) {
+  switchSelection(receiver: any) {
     if (receiver.forcefully_selected) {
       return;
     }

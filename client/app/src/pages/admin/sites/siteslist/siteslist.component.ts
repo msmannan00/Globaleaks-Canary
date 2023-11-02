@@ -40,7 +40,7 @@ export class SiteslistComponent {
 
   deleteTenant(event: any, tenant: any) {
     event.stopPropagation();
-    this.openConfirmableModalDialog(tenant, "");
+    this.openConfirmableModalDialog(tenant, "").then();
   }
 
   configureTenant($event: Event, tid: number): void {

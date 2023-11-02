@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {Resolve} from "@angular/router";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {Observable, of} from "rxjs";
-import {WBTipData} from "@app/models/whistleblower/WBTipData";
+import {WbTipData} from "@app/models/whistleblower/wb-tip-data";
 import {HttpService} from "@app/shared/services/http.service";
 import {map} from "rxjs/operators";
 
@@ -11,14 +11,14 @@ import {map} from "rxjs/operators";
 })
 export class WbTipResolver implements Resolve<boolean> {
 
-  dataModel: WBTipData;
+  dataModel: WbTipData;
 
   constructor(private authenticationService: AuthenticationService, private httpService: HttpService) {
   }
 
   onReload(callback: () => void) {
     this.httpService.whistleBlowerTip().subscribe(
-      (response: WBTipData) => {
+      (response: WbTipData) => {
         this.dataModel = response;
         callback();
       }
@@ -29,7 +29,7 @@ export class WbTipResolver implements Resolve<boolean> {
 
     if (!this.dataModel && this.authenticationService.session && this.authenticationService.session.role === "whistleblower") {
       return this.httpService.whistleBlowerTip().pipe(
-        map((response: WBTipData) => {
+        map((response: WbTipData) => {
           this.dataModel = response;
           return true;
         })

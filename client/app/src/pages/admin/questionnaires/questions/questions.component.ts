@@ -30,7 +30,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     this.questionnairesData = this.questionnairesResolver.dataModel;
     this.fields = this.fieldTemplates.dataModel;
     this.fields = this.fields.filter((field: { editable: boolean; }) => field.editable);
-
   }
 
   toggleAddQuestion() {

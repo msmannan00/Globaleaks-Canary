@@ -101,7 +101,7 @@
                         <span class="input-group-append btn btn-light border border-1" (click)="datepickerstart.toggle()"><i class="fa-solid fa-calendar"></i></span>
                     </div>
                 </span>
-                <span class="form-group mx-1" *ngIf="input_start_date d-inline-flex align-items-center">
+                <span class="form-group mx-1" *ngIf="input_start_date">
                     <label>{{'To'|translate}}</label>
                     <div class="input-group mx-1">
                         <input id="{{fieldEntry}}"
@@ -122,7 +122,7 @@
                         <span class="input-group-append btn btn-light border border-1" (click)="datepickerend.toggle()"><i class="fa-solid fa-calendar"></i></span>
                     </div>
                 </span>
-                <span class="ms-1 mt-2 d-inline-flex align-items-center" data-ng-if="daterange.start">
+                <span class="ms-1 mt-2 d-inline-flex align-items-center" *ngIf="input_start_date">
                     <button type="button" class="btn btn-outline-secondary" (click)="clearDateRange()"><i class="fa-solid fa-times-circle"></i></button>
                 </span>
             </div>

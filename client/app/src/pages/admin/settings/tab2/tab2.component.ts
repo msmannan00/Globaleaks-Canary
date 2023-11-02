@@ -94,12 +94,12 @@ export class Tab2Component implements OnInit {
     }
   }
 
-  delete_file(url: string): void {
+  deleteFile(url: string): void {
     this.utilsService.deleteFile(url).subscribe(
       () => {
         this.updateFiles();
         this.utilsService.init();
-        this.utilsService.reloadCurrentRoute()
+        this.utilsService.reloadCurrentRoute();
       }
     );
   }
@@ -126,7 +126,7 @@ export class Tab2Component implements OnInit {
         () => {
           this.authenticationData.session.permissions.can_upload_files = false;
           status.checked = false;
-          status.click()
+          status.click();
         }
       );
     } else {

@@ -1,13 +1,11 @@
-export class new_field {
+export class fieldTemplate {
   id = "";
-  key = "";
-  instance = "instance";
-  descriptor_id = "";
+  instance = "template";
   label = "";
   type = "inputbox";
   description = "";
-  hint = "";
   placeholder = "";
+  hint = "";
   multi_entry = false;
   required = false;
   preview = false;

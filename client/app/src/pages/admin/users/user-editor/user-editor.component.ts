@@ -91,7 +91,7 @@ export class UserEditorComponent implements OnInit {
   }
 
   deleteUser(user: any) {
-    this.openConfirmableModalDialog(user, "");
+    this.openConfirmableModalDialog(user, "").then();
   }
 
   openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
@@ -112,7 +112,8 @@ export class UserEditorComponent implements OnInit {
   resetUserPassword(user: any) {
     this.utilsService.runAdminOperation("send_password_reset_email", {"value": user.id}, true).subscribe();
   }
-  loadPublicKeyFile (files: any){
+
+  loadPublicKeyFile(files: any) {
     if (files && files.length > 0) {
       this.utilsService.readFileAsText(files[0])
         .then((txt: string) => {
@@ -120,6 +121,7 @@ export class UserEditorComponent implements OnInit {
         });
     }
   };
+
   toggleUserEscrow(user: any) {
     this.user.escrow = !this.user.escrow;
     this.utilsService.runAdminOperation("toggle_user_escrow", {"value": user.id}, true).subscribe();

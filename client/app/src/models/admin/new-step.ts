@@ -1,4 +1,4 @@
-export class new_step {
+export class newStep {
   id = "";
   label = "";
   description = "";

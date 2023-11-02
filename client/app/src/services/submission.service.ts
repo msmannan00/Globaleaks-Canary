@@ -76,7 +76,7 @@ export class SubmissionService {
       }
     }
 
-    if (!this._submission.identity_provided){
+    if (!this._submission.identity_provided) {
       this._submission.identity_provided = false;
     }
 

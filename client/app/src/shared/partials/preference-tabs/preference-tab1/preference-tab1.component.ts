@@ -1,4 +1,5 @@
 import {Component, OnInit} from "@angular/core";
+import {Constants} from "@app/shared/constants/constants";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AuthenticationService} from "@app/services/authentication.service";
@@ -19,6 +20,8 @@ import {ConfirmationWith2faComponent} from "@app/shared/modals/confirmation-with
 })
 export class PreferenceTab1Component implements OnInit {
 
+  protected readonly Constants = Constants;
+
   editingName: boolean;
   editingPublicName: boolean;
   editingEmailAddress: boolean;
@@ -29,7 +32,7 @@ export class PreferenceTab1Component implements OnInit {
   }
 
   ngOnInit(): void {
-    this.role = this.utilsService.role_l10n(this.authenticationService.session.role);
+    this.role = this.utilsService.rolel10n(this.authenticationService.session.role);
     this.role = this.translateService.instant(this.role);
     setTimeout(() => {
       this.languageModel = this.preferenceResolver.dataModel.language;
@@ -143,7 +146,7 @@ export class PreferenceTab1Component implements OnInit {
     );
   };
 
-  loadPublicKeyFile (files: any){
+  loadPublicKeyFile(files: any) {
     if (files && files.length > 0) {
       this.utilsService.readFileAsText(files[0])
         .then((txt: string) => {
@@ -151,6 +154,7 @@ export class PreferenceTab1Component implements OnInit {
         });
     }
   };
+
   onlanguagechange() {
     this.preferenceResolver.dataModel.language = this.languageModel;
   }

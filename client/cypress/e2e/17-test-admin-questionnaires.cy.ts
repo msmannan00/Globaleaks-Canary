@@ -8,8 +8,8 @@ describe("admin add, configure and delete questionnaires", () => {
 
   const add_question = async (question_type:string, step_trigger:boolean) => {
     cy.get(".show-add-question-btn").first().click();
-    cy.get("input[name='new_field.label']").first().type(question_type);
-    cy.get("select[name='new_field.type']").first().select(question_type);
+    cy.get("input[name='newField.label']").first().type(question_type);
+    cy.get("select[name='newField.type']").first().select(question_type);
 
     cy.get("#add-field-btn").first().click();
 
@@ -32,7 +32,7 @@ describe("admin add, configure and delete questionnaires", () => {
 
   const add_step = async (step_label:string) => {
     cy.get(".show-add-step-btn").click();
-    cy.get("input[name='new_step.label']").type(step_label);
+    cy.get("input[name='newStep.label']").type(step_label);
     cy.get("#add-step-btn").click();
     cy.contains(step_label).should("be.visible");
   };

@@ -44,7 +44,7 @@ export class TipComponent implements AfterViewInit {
   tabs: any[];
   active: string;
 
-  constructor(private appConfigServices: AppConfigService, private router: Router,private cdr: ChangeDetectorRef, private cryptoService: CryptoService, protected utils: UtilsService, protected preferencesService: PreferenceResolver, protected modalService: NgbModal, private activatedRoute: ActivatedRoute, protected httpService: HttpService, protected http: HttpClient, protected appDataService: AppDataService, protected RTipService: ReceiverTipService, protected fieldUtilities: FieldUtilitiesService, protected authenticationService: AuthenticationService) {
+  constructor(private appConfigServices: AppConfigService, private router: Router, private cdr: ChangeDetectorRef, private cryptoService: CryptoService, protected utils: UtilsService, protected preferencesService: PreferenceResolver, protected modalService: NgbModal, private activatedRoute: ActivatedRoute, protected httpService: HttpService, protected http: HttpClient, protected appDataService: AppDataService, protected RTipService: ReceiverTipService, protected fieldUtilities: FieldUtilitiesService, protected authenticationService: AuthenticationService) {
   }
 
   ngAfterViewInit(): void {
@@ -177,7 +177,7 @@ export class TipComponent implements AfterViewInit {
                 this.http
                   .put(`api/recipient/rtips/${this.tip.id}`, req)
                   .subscribe(() => {
-                    this.router.navigate(['recipient', 'reports']);
+                    this.router.navigate(["recipient", "reports"]);
                   });
               }
             },
@@ -191,10 +191,10 @@ export class TipComponent implements AfterViewInit {
 
   reload(): void {
     const reloadCallback = () => {
-      this.utils.reloadComponent()
+      this.utils.reloadComponent();
     };
 
-    this.appConfigServices.localInitialization(true, reloadCallback)
+    this.appConfigServices.localInitialization(true, reloadCallback);
   }
 
   filterNotTriggeredField(parent: any, field: any, answers: any): void {
@@ -267,7 +267,8 @@ export class TipComponent implements AfterViewInit {
 
   tipDelete() {
     const modalRef = this.modalService.open(DeleteConfirmationComponent);
-    modalRef.componentInstance.confirmFunction = () => { };
+    modalRef.componentInstance.confirmFunction = () => {
+    };
     modalRef.componentInstance.args = {
       tip: this.RTipService.tip,
       operation: "delete"
@@ -289,7 +290,7 @@ export class TipComponent implements AfterViewInit {
     };
   }
 
-  tip_postpone() {
+  tipPostpone() {
     const modalRef = this.modalService.open(TipOperationPostponeComponent);
     modalRef.componentInstance.args = {
       tip: this.RTipService.tip,

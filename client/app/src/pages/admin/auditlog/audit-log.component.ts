@@ -11,6 +11,7 @@ export class AuditLogComponent implements AfterViewInit {
   @ViewChild("tab2") tab2!: TemplateRef<any>;
   @ViewChild("tab3") tab3!: TemplateRef<any>;
   @ViewChild("tab4") tab4!: TemplateRef<any>;
+
   tabs: any[];
   nodeData: any;
   active: string;

@@ -9,15 +9,12 @@ import {AuthenticationService} from "@app/services/authentication.service";
 export class SitesComponent implements OnInit, AfterViewInit {
   @ViewChild("tab1") tab1!: TemplateRef<any>;
   @ViewChild("tab2") tab2!: TemplateRef<any>;
+
   tabs: any[];
   nodeData: any;
   active: string;
 
-  constructor(
-    public node: NodeResolver,
-    public authenticationService: AuthenticationService,
-    private cdr: ChangeDetectorRef
-  ) {
+  constructor(public node: NodeResolver, public authenticationService: AuthenticationService, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() {

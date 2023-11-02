@@ -76,7 +76,7 @@ const routes: Routes = [
     },
     loadChildren: () => CustodianRoutingModule,
     data: {
-      sidebar: "custodian-sidebar" , pageTitle: "Home"
+      sidebar: "custodian-sidebar", pageTitle: "Home"
     },
   },
   {

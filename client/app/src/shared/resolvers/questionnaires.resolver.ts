@@ -3,7 +3,7 @@ import {Resolve} from "@angular/router";
 import {Observable, of} from "rxjs";
 import {HttpService} from "@app/shared/services/http.service";
 import {AuthenticationService} from "@app/services/authentication.service";
-import {questionnaireResolverModel} from "@app/models/resolvers/questionnaireModel";
+import {questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
 import {map} from "rxjs/operators";
 
 @Injectable({

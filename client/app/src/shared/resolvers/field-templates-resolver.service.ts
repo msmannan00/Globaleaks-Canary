@@ -4,7 +4,7 @@ import {Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
 import {HttpService} from "@app/shared/services/http.service";
 import {AuthenticationService} from "@app/services/authentication.service";
-import {fieldtemplatesResolverModel} from "@app/models/resolvers/fieldtemplateModel";
+import {fieldtemplatesResolverModel} from "@app/models/resolvers/field-template-model";
 
 @Injectable({
   providedIn: "root"

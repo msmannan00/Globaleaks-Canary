@@ -27,12 +27,12 @@ export class TippageComponent {
   private submission: any;
   protected tip: any;
 
-  constructor(private router: Router, private wbTipResolver:WbTipResolver, private fieldUtilitiesService: FieldUtilitiesService, protected utilsService: UtilsService, protected appDataService: AppDataService, private fieldUtilities: FieldUtilitiesService, private activatedRoute: ActivatedRoute, private httpService: HttpService, protected wbTipService: WbtipService) {
+  constructor(private router: Router, private wbTipResolver: WbTipResolver, private fieldUtilitiesService: FieldUtilitiesService, protected utilsService: UtilsService, protected appDataService: AppDataService, private fieldUtilities: FieldUtilitiesService, private activatedRoute: ActivatedRoute, private httpService: HttpService, protected wbTipService: WbtipService) {
   }
 
   ngOnInit() {
-    let wpTip = this.wbTipResolver.dataModel
-    if(wpTip){
+    let wpTip = this.wbTipResolver.dataModel;
+    if (wpTip) {
       this.wbTipService.initialize(wpTip);
       this.tip = this.wbTipService.tip;
 
@@ -54,8 +54,8 @@ export class TippageComponent {
       if (this.tip.receivers.length === 1 && this.tip.msg_receiver_selected === null) {
         this.tip.msg_receiver_selected = this.tip.msg_receivers_selector[0].key;
       }
-    }else {
-      this.utilsService.reloadCurrentRoute()
+    } else {
+      this.utilsService.reloadCurrentRoute();
     }
   }
 
@@ -158,7 +158,7 @@ export class TippageComponent {
       (
         {
           next: _ => {
-            clearInterval(intervalId); 
+            clearInterval(intervalId);
             this.utilsService.reloadCurrentRoute();
           },
           error: (_: any) => {
@@ -172,11 +172,12 @@ export class TippageComponent {
 
   }
 
-  onReload(){
+  onReload() {
     this.wbTipResolver.onReload(() => {
       this.utilsService.reloadCurrentRoute();
-    })
+    });
   }
+
   onFormChange() {
     this.fieldUtilitiesService.onAnswersUpdate(this);
   }

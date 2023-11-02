@@ -11,7 +11,8 @@ import {NavigationEnd, Router} from "@angular/router";
 })
 export class AppComponent {
   showSidebar: boolean = true;
-  isNavCollapsed:boolean = true;
+  isNavCollapsed: boolean = true;
+
   constructor(private router: Router, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService) {
   }
 
@@ -33,6 +34,6 @@ export class AppComponent {
   }
 
   public openGithubReport() {
-    window.open("https://github.com/msmannan00/globaleaks-angular-fork/issues", '_blank');
+    window.open("https://github.com/msmannan00/globaleaks-angular-fork/issues", "_blank");
   }
 }

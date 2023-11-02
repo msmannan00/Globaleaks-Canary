@@ -3,7 +3,7 @@ import {Resolve,} from "@angular/router";
 import {Observable, of} from "rxjs";
 import {HttpService} from "@app/shared/services/http.service";
 import {AuthenticationService} from "app/src/services/authentication.service";
-import {redirectResolverModel} from "app/src/models/resolvers/redirectResolverModel";
+import {redirectResolverModel} from "@app/models/resolvers/redirect-resolver-model";
 import {map} from "rxjs/operators";
 
 @Injectable({

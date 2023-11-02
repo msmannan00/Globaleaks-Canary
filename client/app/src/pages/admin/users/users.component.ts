@@ -12,11 +12,9 @@ export class UsersComponent implements AfterViewInit {
   nodeData: any;
   active: string;
 
-  constructor(
-    public node: NodeResolver,
-    private cdr: ChangeDetectorRef
-  ) {
+  constructor(public node: NodeResolver, private cdr: ChangeDetectorRef) {
   }
+
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.active = "Users";

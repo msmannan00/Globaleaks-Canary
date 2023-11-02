@@ -41,9 +41,6 @@ export class ContextEditorComponent implements OnInit {
     this.editing = !this.editing;
   }
 
-  onReminderChanged() {
-  }
-
   swap($event: any, index: number, n: number): void {
     $event.stopPropagation();
 
@@ -102,7 +99,7 @@ export class ContextEditorComponent implements OnInit {
   }
 
   deleteContext(context: any): void {
-    this.openConfirmableModalDialog(context, "");
+    this.openConfirmableModalDialog(context, "").then();
   }
 
   openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
@@ -118,7 +115,7 @@ export class ContextEditorComponent implements OnInit {
     return modalRef.result;
   }
 
-  save_context(context: any) {
+  saveContext(context: any) {
     if (context.additional_questionnaire_id === null) {
       context.additional_questionnaire_id = "";
     }

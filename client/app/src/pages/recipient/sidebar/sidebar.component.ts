@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router } from "@angular/router";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 
 @Component({
@@ -9,10 +9,15 @@ import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 export class SidebarComponent {
   message: string;
 
-  constructor(private router: Router, private route: ActivatedRoute,protected preferenceResolver: PreferenceResolver) {
+  constructor(private router: Router, protected preferenceResolver: PreferenceResolver) {
   }
 
   isActive(route: string): boolean {
-    return this.router.isActive(route, {paths: 'subset', queryParams: 'subset', fragment: 'ignored', matrixParams: 'ignored'});
+    return this.router.isActive(route, {
+      paths: "subset",
+      queryParams: "subset",
+      fragment: "ignored",
+      matrixParams: "ignored"
+    });
   }
 }

@@ -1,10 +1,14 @@
-import { Injectable } from "@angular/core";
-import { Constants } from "@app/shared/constants/constants";
+import {Injectable} from "@angular/core";
+import {Constants} from "@app/shared/constants/constants";
 
 @Injectable({
   providedIn: "root"
 })
 export class FieldUtilitiesService {
+
+  constructor() {
+  }
+
   parseQuestionnaire(questionnaire: any, parsedFields: any) {
     const self = this;
 
@@ -336,9 +340,5 @@ export class FieldUtilitiesService {
     }
 
     return parsedFields;
-  }
-
-
-  constructor() {
   }
 }

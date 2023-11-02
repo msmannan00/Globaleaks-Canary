@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {auditlogResolverModel} from "@app/models/resolvers/auditlogResolverModel";
+import {auditlogResolverModel} from "@app/models/resolvers/auditlog-resolver-model";
 import {AuditLogResolver} from "@app/shared/resolvers/audit-log-resolver.service";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";

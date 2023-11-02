@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {Resolve} from "@angular/router";
 import {Observable, of} from "rxjs";
 import {HttpService} from "@app/shared/services/http.service";
-import {nodeResolverModel} from "@app/models/resolvers/nodeResolverModel";
+import {nodeResolverModel} from "@app/models/resolvers/node-resolver-model";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {map} from "rxjs/operators";
 

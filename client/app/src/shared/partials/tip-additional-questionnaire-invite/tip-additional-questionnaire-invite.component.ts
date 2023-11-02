@@ -17,7 +17,7 @@ export class TipAdditionalQuestionnaireInviteComponent {
   constructor(protected utilsService: UtilsService, private modalService: NgbModal) {
   }
 
-  tip_open_additional_questionnaire() {
+  tipOpenAdditionalQuestionnaire() {
     this.modalService.open(TipAdditionalQuestionnaireFormComponent, {windowClass: "custom-modal-width"});
   }
 }

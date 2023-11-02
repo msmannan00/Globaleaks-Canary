@@ -85,7 +85,7 @@ export class SubStatusManagerComponent {
   }
 
   deleteSubmissionStatus(submissionsStatus: any): void {
-    this.openConfirmableModalDialog(submissionsStatus, "");
+    this.openConfirmableModalDialog(submissionsStatus, "").then();
   }
 
   saveSubmissionsStatus(submissionsStatus: any): void {
