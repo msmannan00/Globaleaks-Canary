@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Resolve} from "@angular/router";
+
 import {Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
 import {HttpService} from "@app/shared/services/http.service";
@@ -9,7 +9,7 @@ import {fieldtemplatesResolverModel} from "@app/models/resolvers/field-template-
 @Injectable({
   providedIn: "root"
 })
-export class FieldTemplatesResolver implements Resolve<boolean> {
+export class FieldTemplatesResolver  {
   dataModel: fieldtemplatesResolverModel = new fieldtemplatesResolverModel();
 
   constructor(private httpService: HttpService, private authenticationService: AuthenticationService) {

@@ -25,7 +25,6 @@ export class nodeResolverModel {
   name: string;
   password_change_period: number;
   pgp: boolean;
-  receipt_salt: string;
   rootdomain: string;
   show_contexts_in_alphabetical_order: boolean;
   signup_tos1_enable: boolean;
@@ -42,7 +41,6 @@ export class nodeResolverModel {
   unread_reminder_time: number;
   uuid: string;
   version: string;
-  version_db: number;
   viewer: boolean;
   wizard_done: boolean;
   changelog: string;
@@ -54,14 +52,13 @@ export class nodeResolverModel {
   }[];
   languages_enabled: string[];
   root_tenant: boolean;
-  https_possible: boolean;
-  encryption_possible: boolean;
   update_available: boolean;
   contexts_clarification: string;
   custom_privacy_badge_text: string;
   disclaimer_text: string;
   footer_whistleblowing_policy: string;
   footer_privacy_policy: string;
+  user_privacy_policy_text: string;
   footer: string;
   footer_accessibility_declaration: string;
   header_title_homepage: string;

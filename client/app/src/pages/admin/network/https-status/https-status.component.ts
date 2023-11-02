@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ConfirmationComponent} from "@app/shared/modals/confirmation/confirmation.component";
 import {NetworkResolver} from "@app/shared/resolvers/network.resolver";
@@ -15,7 +15,7 @@ export class HttpsStatusComponent implements OnInit {
   @Input() tlsConfig: any;
   nodeData: any;
 
-  constructor(private authenticationService: AuthenticationService, protected networkResolver: NetworkResolver, private nodeResolver: NodeResolver, private httpService: HttpService, private modalService: NgbModal) {
+  constructor(private utilsService: UtilsService, protected networkResolver: NetworkResolver, private nodeResolver: NodeResolver, private httpService: HttpService, private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
@@ -23,17 +23,7 @@ export class HttpsStatusComponent implements OnInit {
   }
 
   toggleCfg() {
-    if (this.tlsConfig.enabled) {
-      const authHeader = this.authenticationService.getHeader();
-      this.httpService.disableTLSConfig(this.tlsConfig, authHeader).subscribe(() => {
-        this.dataToParent.emit();
-      });
-    } else {
-      const authHeader = this.authenticationService.getHeader();
-      this.httpService.enableTLSConfig(this.tlsConfig, authHeader).subscribe(() => {
-        window.location.href = "https://" + this.nodeData.hostname;
-      });
-    }
+    this.utilsService.toggleCfg(this.tlsConfig, this.dataToParent);
   }
 
   resetCfg() {

@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {newUser} from "@app/models/admin/new-user";
+import {NewUser} from "@app/models/admin/new-user";
 import {Constants} from "@app/shared/constants/constants";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {TenantsResolver} from "@app/shared/resolvers/tenants.resolver";
@@ -37,7 +37,7 @@ export class UsersTab1Component implements OnInit {
   }
 
   addUser(): void {
-    const user: newUser = new newUser();
+    const user: NewUser = new NewUser();
 
     user.username = typeof this.new_user.username !== "undefined" ? this.new_user.username : "";
     user.role = this.new_user.role;

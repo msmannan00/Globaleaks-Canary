@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Resolve} from "@angular/router";
+
 import {Observable, of} from "rxjs";
 import {HttpService} from "@app/shared/services/http.service";
 import {AuthenticationService} from "@app/services/authentication.service";
@@ -9,7 +9,7 @@ import {map} from "rxjs/operators";
 @Injectable({
   providedIn: "root"
 })
-export class QuestionnairesResolver implements Resolve<boolean> {
+export class QuestionnairesResolver  {
   dataModel: any = new questionnaireResolverModel();
 
   constructor(private httpService: HttpService, private authenticationService: AuthenticationService) {

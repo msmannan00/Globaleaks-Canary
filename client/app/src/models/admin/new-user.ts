@@ -1,4 +1,4 @@
-export class newUser {
+export class NewUser {
   id = "";
   username = "";
   role = "receiver";

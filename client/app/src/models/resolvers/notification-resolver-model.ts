@@ -45,8 +45,6 @@ export class notificationResolverModel {
   password_reset_validation_mail_title: string;
   pgp_alert_mail_template: string;
   pgp_alert_mail_title: string;
-  receiver_notification_limit_reached_mail_template: string;
-  receiver_notification_limit_reached_mail_title: string;
   signup_mail_template: string;
   signup_mail_title: string;
   software_update_available_mail_template: string;

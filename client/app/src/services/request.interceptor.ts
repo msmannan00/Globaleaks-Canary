@@ -1,12 +1,12 @@
 import {Injectable} from "@angular/core";
 import {HttpInterceptor, HttpEvent, HttpRequest, HttpHandler, HttpClient, HttpErrorResponse,} from "@angular/common/http";
 import {catchError, finalize, from, Observable, switchMap, throwError} from "rxjs";
-import {tokenResponse} from "@app/models/authentication/token-response";
+import {TokenResponse} from "@app/models/authentication/token-response";
 import {CryptoService} from "@app/crypto.service";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {AppDataService} from "@app/app-data.service";
 import {TranslationService} from "@app/services/translation.service";
-import {errorCodes} from "@app/models/app/error-code";
+import {ErrorCodes} from "@app/models/app/error-code";
 import { of } from 'rxjs';
 import { timer } from 'rxjs';
 
@@ -56,9 +56,9 @@ export class RequestInterceptor implements HttpInterceptor {
 
     if (httpRequest.url.includes("api/signup") || httpRequest.url.endsWith("api/auth/receiptauth") && !this.authenticationService.session || protectedUrls.includes(httpRequest.url)) {
       return this.httpClient.post("api/auth/token", {}).pipe(
-        switchMap((response) => from(this.cryptoService.proofOfWork(Object.assign(new tokenResponse(), response).id)).pipe(
+        switchMap((response) => from(this.cryptoService.proofOfWork(Object.assign(new TokenResponse(), response).id)).pipe(
           switchMap((ans) => next.handle(httpRequest.clone({
-            headers: httpRequest.headers.set("x-token", Object.assign(new tokenResponse(), response).id + ":" + ans)
+            headers: httpRequest.headers.set("x-token", Object.assign(new TokenResponse(), response).id + ":" + ans)
               .set("Accept-Language", this.getAcceptLanguageHeader() || ""),
           })))
         ))
@@ -89,7 +89,7 @@ export class ErrorCatchingInterceptor implements HttpInterceptor {
               location.pathname = this.authenticationService.session.homepage;
             }
           }
-          this.appDataService.errorCodes = new errorCodes(error.error["error_message"], error.error["error_code"], error.error["arguments"]);
+          this.appDataService.errorCodes = new ErrorCodes(error.error["error_message"], error.error["error_code"], error.error["arguments"]);
           return throwError(() => error);
         })
       );

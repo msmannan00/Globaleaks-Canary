@@ -7,10 +7,11 @@ import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 })
 export class ConfirmationComponent {
   @Input() arg: any;
-  confirmFunction: (secret: string) => void;
 
   constructor(private modalService: NgbModal, private activeModal: NgbActiveModal) {
   }
+
+  confirmFunction: (secret: string) => void;
 
   confirm(arg: any) {
     this.confirmFunction(arg);

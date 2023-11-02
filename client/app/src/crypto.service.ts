@@ -12,6 +12,12 @@ export class CryptoService {
   counter: number = 0;
   resolver: any;
 
+  constructor(private utilsService: UtilsService) {
+  }
+
+  init() {
+  }
+
   getWebCrypto() {
     if (typeof window === "undefined" || !window.isSecureContext) {
       return;
@@ -70,6 +76,4 @@ export class CryptoService {
     return this.deferred;
   }
 
-  constructor(public utilsService: UtilsService) {
-  }
 }

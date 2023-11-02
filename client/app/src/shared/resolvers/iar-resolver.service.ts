@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Resolve} from "@angular/router";
+
 import {Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
 import {HttpService} from "@app/shared/services/http.service";
@@ -9,7 +9,7 @@ import {IarData} from "@app/models/reciever/Iar-data";
 @Injectable({
   providedIn: "root"
 })
-export class IarResolver implements Resolve<boolean> {
+export class IarResolver  {
   dataModel: IarData[] = [];
 
   constructor(

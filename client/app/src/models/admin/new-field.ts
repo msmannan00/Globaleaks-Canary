@@ -1,4 +1,4 @@
-export class newField {
+export class NewField {
   id = "";
   key = "";
   instance = "instance";

@@ -1,4 +1,4 @@
-export class newStep {
+export class NewStep {
   id = "";
   label = "";
   description = "";

@@ -1,5 +1,5 @@
-import {HttpClient} from "@angular/common/http";
 import {Component, Input} from "@angular/core";
+import {UtilsService} from "@app/shared/services/utils.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
@@ -24,7 +24,7 @@ export class StepsListComponent {
     sufficient: true,
   };
 
-  constructor(private questionnaireService: QuestionnaireService, private modalService: NgbModal, private fieldUtilities: FieldUtilitiesService, protected nodeResolver: NodeResolver, private httpClient: HttpClient, private httpService: HttpService) {
+  constructor(private utilsService: UtilsService, private questionnaireService: QuestionnaireService, private modalService: NgbModal, private fieldUtilities: FieldUtilitiesService, protected nodeResolver: NodeResolver, private httpService: HttpService) {
   }
 
   ngOnInit(): void {
@@ -32,23 +32,7 @@ export class StepsListComponent {
   }
 
   swap($event: any, index: number, n: number): void {
-    $event.stopPropagation();
-
-    const target = index + n;
-    if (target < 0 || target >= this.questionnaire.steps.length) {
-      return;
-    }
-
-    [this.questionnaire.steps[index], this.questionnaire.steps[target]] =
-      [this.questionnaire.steps[target], this.questionnaire.steps[index]];
-
-    this.httpClient.put("api/admin/steps", {
-      operation: "order_elements",
-      args: {
-        ids: this.questionnaire.steps.map((c: { id: any; }) => c.id),
-        questionnaire_id: this.questionnaire.id
-      },
-    }).subscribe();
+    this.utilsService.swap($event, index,n , this.questionnaire)
   }
 
   moveUp(e: any, idx: number): void {
@@ -74,8 +58,7 @@ export class StepsListComponent {
   }
 
   deleteStep(step: any) {
-    this.openConfirmableModalDialog(step, "");
-
+    this.openConfirmableModalDialog(step, "").then();
   }
 
   openConfirmableModalDialog(arg: any, scope: any): Promise<any> {

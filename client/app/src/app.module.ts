@@ -1,11 +1,11 @@
 import {HostListener, NgModule, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {AppRoutingModule} from "@app/app-routing.module";
+import {CryptoService} from "@app/crypto.service";
 import {AppComponent} from "@app/pages/app/app.component";
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import {AuthModule} from "@app/pages/auth/auth.module";
 import {APP_BASE_HREF, HashLocationStrategy, LocationStrategy,} from "@angular/common";
-import {OrderModule} from "ngx-order-pipe";
 import {AppConfigService} from "@app/services/app-config.service";
 import {SharedModule} from "@app/shared.module";
 import {HeaderComponent} from "@app/shared/partials/header/header.component";
@@ -55,7 +55,6 @@ export function createTranslateLoader(http: HttpClient) {
     AuthModule,
     SignupModule,
     ActionModule,
-    OrderModule,
     WizardModule,
     AdminModule,
     RecipientModule,
@@ -91,18 +90,20 @@ export class AppModule {
   timedOut = false;
   title = "angular-idle-timeout";
 
-  constructor(private serviceInstanceService: ServiceInstanceService, private submissionService: SubmissionService, private authenticationService: AuthenticationService, private translationService: TranslationService, private utilsService: UtilsService, private appConfigService: AppConfigService, private idle: Idle, private keepalive: Keepalive) {
+  constructor(private serviceInstanceService: ServiceInstanceService, private cryptoService: CryptoService, private submissionService: SubmissionService, private authenticationService: AuthenticationService, private translationService: TranslationService, private utilsService: UtilsService, private appConfigService: AppConfigService, private idle: Idle, private keepalive: Keepalive) {
     serviceInstanceService.setUtilsService(utilsService);
     serviceInstanceService.setAuthenticationService(authenticationService);
     serviceInstanceService.setTranslationService(translationService);
     serviceInstanceService.setSubmissionService(submissionService);
     serviceInstanceService.setAppConfigService(appConfigService);
+    serviceInstanceService.setCryptoService(cryptoService);
 
     this.appConfigService.init();
     this.utilsService.init();
     this.authenticationService.init();
     this.translationService.init();
     this.submissionService.init();
+    this.cryptoService.init();
 
     this.initIdleState();
   }

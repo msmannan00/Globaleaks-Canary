@@ -5,7 +5,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {AppDataService} from "@app/app-data.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {Router} from "@angular/router";
-import {errorCodes} from "@app/models/app/error-code";
+import {ErrorCodes} from "@app/models/app/error-code";
 
 @Component({
   selector: "src-password-change",
@@ -30,11 +30,11 @@ export class PasswordChangeComponent {
       {
         next: _ => {
           this.preferencesService.dataModel.password_change_needed = false;
-          this.router.navigate([this.authenticationService.session.homepage]);
+          this.router.navigate([this.authenticationService.session.homepage]).then();
         },
         error: (error: any) => {
           this.passwordStrengthScore = 0;
-          this.rootDataService.errorCodes = new errorCodes(error.error.error_message, error.error.error_code, error.error.arguments);
+          this.rootDataService.errorCodes = new ErrorCodes(error.error.error_message, error.error.error_code, error.error.arguments);
           this.appDataService.showLoadingPanel = false;
           return this.passwordStrengthScore;
         }

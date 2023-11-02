@@ -1,6 +1,6 @@
 import {AfterViewChecked, Component} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
-import {errorCodes} from "@app/models/app/error-code";
+import {ErrorCodes} from "@app/models/app/error-code";
 
 @Component({
   selector: "messageconsole",
@@ -16,7 +16,7 @@ export class MessageConsoleComponent implements AfterViewChecked {
   dismissError() {
     clearTimeout(this.timeoutId);
     this.timeoutRunning = false;
-    this.appDataService.errorCodes = new errorCodes();
+    this.appDataService.errorCodes = new ErrorCodes();
   }
 
   ngAfterViewChecked(): void {

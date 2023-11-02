@@ -91,17 +91,7 @@ export class HttpsFilesComponent implements OnInit {
   }
 
   toggleCfg() {
-    if (this.tlsConfig.enabled) {
-      const authHeader = this.authenticationService.getHeader();
-      this.httpService.disableTLSConfig(this.tlsConfig, authHeader).subscribe(() => {
-        this.dataToParent.emit();
-      });
-    } else {
-      const authHeader = this.authenticationService.getHeader();
-      this.httpService.enableTLSConfig(this.tlsConfig, authHeader).subscribe(() => {
-        window.location.href = "https://" + this.nodeData.hostname;
-      });
-    }
+    this.utilsService.toggleCfg(this.tlsConfig, this.dataToParent);
   }
 
   resetCfg() {

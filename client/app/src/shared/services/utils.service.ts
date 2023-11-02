@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {AppDataService} from "@app/app-data.service";
+import * as Flow from "@flowjs/flow.js";
 import {TranslateService} from "@ngx-translate/core";
 import {Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -134,7 +135,7 @@ export class UtilsService {
   reloadCurrentRoute() {
     const currentUrl = this.router.url;
     this.router.navigateByUrl("blank", {skipLocationChange: true, replaceUrl: true}).then(() => {
-      this.router.navigate([currentUrl]);
+      this.router.navigate([currentUrl]).then();
     });
   }
 
@@ -148,8 +149,53 @@ export class UtilsService {
     this.router.navigateByUrl(currentUrl)
       .then(() => {
         this.router.navigated = false;
-        this.router.navigate([this.router.url]);
+        this.router.navigate([this.router.url]).then();
       });
+  }
+  onFlowUpload(flowJsInstance:Flow, file:any){
+    const fileNameParts = file.name.split(".");
+    const fileExtension = fileNameParts.pop();
+    const fileNameWithoutExtension = fileNameParts.join(".");
+    const timestamp = new Date().getTime();
+    const fileNameWithTimestamp = `${fileNameWithoutExtension}_${timestamp}.${fileExtension}`;
+    const modifiedFile = new File([file], fileNameWithTimestamp, {type: file.type});
+
+    flowJsInstance.addFile(modifiedFile);
+    flowJsInstance.upload();
+  }
+
+  swap($event: any, index: number, n: number, questionnaire:any): void {
+    $event.stopPropagation();
+
+    const target = index + n;
+    if (target < 0 || target >= questionnaire.steps.length) {
+      return;
+    }
+
+    [questionnaire.steps[index], questionnaire.steps[target]] =
+      [questionnaire.steps[target], questionnaire.steps[index]];
+
+    this.http.put("api/admin/steps", {
+      operation: "order_elements",
+      args: {
+        ids: questionnaire.steps.map((c: { id: any; }) => c.id),
+        questionnaire_id: questionnaire.id
+      },
+    }).subscribe();
+  }
+
+  toggleCfg(tlsConfig:any, dataToParent:any) {
+    if (tlsConfig.enabled) {
+      const authHeader = this.authenticationService.getHeader();
+      this.httpService.disableTLSConfig(tlsConfig, authHeader).subscribe(() => {
+        dataToParent.emit();
+      });
+    } else {
+      const authHeader = this.authenticationService.getHeader();
+      this.httpService.enableTLSConfig(tlsConfig, authHeader).subscribe(() => {
+        window.location.href = "https://" + tlsConfig.hostname;
+      });
+    }
   }
 
   reloadCurrentRouteFresh(removeQueryParam = false) {
@@ -160,7 +206,7 @@ export class UtilsService {
     }
 
     this.router.navigateByUrl("/blank", {skipLocationChange: true}).then(() => {
-      this.router.navigateByUrl(currentUrl, {replaceUrl: true});
+      this.router.navigateByUrl(currentUrl, {replaceUrl: true}).then();
     });
   }
 
@@ -172,8 +218,7 @@ export class UtilsService {
     return this.appDataService.public.node.wizard_done &&
       this.appDataService.page !== "homepage" &&
       this.appDataService.page !== "submissionpage" &&
-      this.authenticationService.session &&
-      !this.authenticationService.session.require_password_change;
+      this.authenticationService.session;
   }
 
   isWhistleblowerPage() {
@@ -249,7 +294,7 @@ export class UtilsService {
 
   copyToClipboard(data: string) {
     if (window.navigator.clipboard && window.isSecureContext) {
-      window.navigator.clipboard.writeText(data);
+      window.navigator.clipboard.writeText(data).then();
     }
   }
 
@@ -314,7 +359,7 @@ export class UtilsService {
   }
 
   go(path: string): void {
-    this.router.navigateByUrl(path);
+    this.router.navigateByUrl(path).then();
   }
 
   maskScore(score: number) {
@@ -457,18 +502,19 @@ export class UtilsService {
       return new Observable((observer) => {
         this.getConfirmation().subscribe((secret: string) => {
           const headers = new HttpHeaders({"X-Confirmation": this.encodeString(secret)});
-          this.http.put(api, {"operation": operation, "args": args}, {headers}).subscribe(
-            (response: any) => {
-              if (refresh) {
-                this.reloadCurrentRoute();
+
+          this.http.put(api, {"operation": operation, "args": args}, {headers}).subscribe(  {
+              next: (response: any) => {
+                if (refresh) {
+                  this.reloadCurrentRoute();
+                }
+                observer.next(response)
+              },
+              error: (error: any) => {
+                observer.error(error);
               }
-              observer.next(response);
-              observer.complete();
-            },
-            (error: any) => {
-              observer.error(error);
             }
-          );
+          )
         });
       });
     } else {

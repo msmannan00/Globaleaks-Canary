@@ -21,5 +21,4 @@ export class SimpleLoginComponent implements OnInit{
       this.loginData.loginUsername = this.appDataService.public.receivers[0].id
     }
   }
-
 }

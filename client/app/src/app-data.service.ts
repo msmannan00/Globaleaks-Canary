@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {errorCodes} from "@app/models/app/error-code";
+import {ErrorCodes} from "@app/models/app/error-code";
 import {Root} from "@app/models/app/public-model";
 
 @Injectable({
@@ -10,7 +10,7 @@ export class AppDataService {
   public = <Root>{};
   started = false;
   showLoadingPanel = false;
-  errorCodes = new errorCodes();
+  errorCodes = new ErrorCodes();
   pageTitle = "Globaleaks";
   projectTitle = "";
   header_title = "";

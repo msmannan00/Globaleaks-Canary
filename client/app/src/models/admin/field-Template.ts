@@ -1,4 +1,4 @@
-export class fieldTemplate {
+export class FieldTemplate {
   id = "";
   instance = "template";
   label = "";
