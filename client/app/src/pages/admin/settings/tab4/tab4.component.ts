@@ -1,5 +1,6 @@
 import {Component, Input} from "@angular/core";
 import {NgForm} from "@angular/forms";
+import {LanguageUtils} from "@app/pages/admin/settings/helper-methods/language-utils";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
 
@@ -15,10 +16,8 @@ export class Tab4Component {
   default_texts: any = {};
   custom_texts_selector: any[] = [];
   customTextsExist: boolean = false;
+  languageUtils:LanguageUtils
 
-  languages_enabled: any = {};
-  languages_enabled_selector: any[] = [];
-  languages_supported: any = {};
 
   constructor(protected utilsService: UtilsService, protected nodeResolver: NodeResolver) {
   }
@@ -28,17 +27,9 @@ export class Tab4Component {
   }
 
   initLanguages(): void {
-    this.languages_supported = {};
-    this.languages_enabled = {};
-    this.languages_enabled_selector = [];
-    this.nodeResolver.dataModel.languages_supported.forEach((lang: any) => {
-      this.languages_supported[lang.code] = lang;
+    this.languageUtils = new LanguageUtils(this.nodeResolver);
+    this.languageUtils.updateLanguages();
 
-      if (this.nodeResolver.dataModel.languages_enabled.indexOf(lang.code) !== -1) {
-        this.languages_enabled[lang.code] = lang;
-        this.languages_enabled_selector.push(lang);
-      }
-    });
     this.vars = {
       "language_to_customize": this.nodeResolver.dataModel.default_language
     };
