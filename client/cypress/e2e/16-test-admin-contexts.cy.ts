@@ -30,7 +30,7 @@ describe("admin configure, add, and delete contexts", () => {
     cy.visit("#/admin/contexts");
     const add_context = async (context_name:string) => {
       cy.get(".show-add-context-btn").click();
-      cy.get("[name='new_context.name']").type(context_name);
+      cy.get("[name='newContext.name']").type(context_name);
       cy.get("#add-btn").click();
       cy.contains(context_name, { timeout: 10000 }).should("be.visible");
     };

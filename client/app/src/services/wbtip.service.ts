@@ -1,19 +1,18 @@
 import {Injectable} from "@angular/core";
 import {HttpService} from "@app/shared/services/http.service";
-import {WBTipData} from "@app/models/whistleblower/WBTipData";
+import {WbTipData} from "@app/models/whistleblower/wb-tip-data";
 import {AppDataService} from "@app/app-data.service";
-import {UtilsService} from "@app/shared/services/utils.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class WbtipService {
-  tip: WBTipData = new WBTipData();
+  tip: WbTipData = new WbTipData();
 
-  constructor(private httpService: HttpService, private appDataService: AppDataService, private utilsService: UtilsService) {
+  constructor(private httpService: HttpService, private appDataService: AppDataService) {
   }
 
-  initialize(response: WBTipData) {
+  initialize(response: WbTipData) {
     this.tip = response;
     this.tip.context = this.appDataService.contexts_by_id[this.tip.context_id];
     this.tip.questionnaire = this.appDataService.questionnaires_by_id[this.tip.context["questionnaire_id"]];

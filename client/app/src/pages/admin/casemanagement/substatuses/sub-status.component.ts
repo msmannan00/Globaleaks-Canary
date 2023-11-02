@@ -77,7 +77,7 @@ export class SubStatusComponent implements OnInit {
   }
 
   deleteSubSubmissionStatus(subStatusParam: any): void {
-    this.openConfirmableModalDialog(subStatusParam, "");
+    this.openConfirmableModalDialog(subStatusParam, "").then();
   }
 
   openConfirmableModalDialog(arg: any, scope: any): Promise<any> {

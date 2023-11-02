@@ -7,7 +7,7 @@ import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 @Component({
   selector: "src-form-field-input",
   templateUrl: "./form-field-input.component.html",
-  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
+  viewProviders: [{provide: ControlContainer, useExisting: NgForm}]
 })
 export class FormFieldInputComponent implements OnInit {
 
@@ -43,6 +43,7 @@ export class FormFieldInputComponent implements OnInit {
   dateOptions1: any = {};
   dateOptions2: any = {};
   dateOptions: any = {};
+
   constructor(private fieldUtilitiesService: FieldUtilitiesService) {
   }
 
@@ -61,7 +62,7 @@ export class FormFieldInputComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.entry['value'] = '';
+    this.entry["value"] = "";
     this.fieldFormVarName = this.fieldUtilitiesService.fieldFormName(this.field.id + "$" + this.index);
     this.initializeFormNames();
     this.fieldEntry = this.fieldId + "-input-" + this.index;
@@ -91,8 +92,7 @@ export class FormFieldInputComponent implements OnInit {
   }
 
   onDateSelection() {
-    const formattedDate = this.convertNgbDateToISOString(this.input_date);
-    this.entry.value = formattedDate;
+    this.entry.value = this.convertNgbDateToISOString(this.input_date);
   }
 
   convertNgbDateToISOString(date: NgbDateStruct): string {
@@ -102,15 +102,13 @@ export class FormFieldInputComponent implements OnInit {
 
   onStartDateSelection(date: NgbDateStruct): void {
     const startDate = new Date(date.year, date.month - 1, date.day);
-    const formattedStartDate = startDate.getTime().toString();
-    this.dateRange.start = formattedStartDate;
+    this.dateRange.start = startDate.getTime().toString();
     this.entry.value = `${this.dateRange.start}:${this.dateRange.end}`;
   }
 
   onEndDateSelection(date: NgbDateStruct): void {
     const endDate = new Date(date.year, date.month - 1, date.day);
-    const formattedEndDate = endDate.getTime().toString();
-    this.dateRange.end = formattedEndDate;
+    this.dateRange.end = endDate.getTime().toString();
     this.entry.value = `${this.dateRange.start}:${this.dateRange.end}`;
   }
 

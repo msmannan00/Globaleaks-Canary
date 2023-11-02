@@ -42,11 +42,11 @@ export class Tab4Component {
     this.vars = {
       "language_to_customize": this.nodeResolver.dataModel.default_language
     };
-    this.get_l10n(this.vars.language_to_customize);
+    this.getl10n(this.vars.language_to_customize);
   }
 
 
-  get_l10n(lang: any): void {
+  getl10n(lang: any): void {
     if (!lang) {
       return;
     }

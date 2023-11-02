@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {new_field} from "@app/models/admin/new_field";
-import {field_template} from "@app/models/admin/fieldTemplate";
+import {newField} from "@app/models/admin/new-field";
+import {fieldTemplate} from "@app/models/admin/field-template";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 
 @Component({
@@ -29,10 +29,10 @@ export class AddFieldComponent implements OnInit {
     }
   }
 
-  add_field() {
+  addField() {
     if (this.type === "step") {
 
-      const field = new new_field();
+      const field = new newField();
       field.step_id = this.step.id;
       field.template_id = "";
       field.label = this.new_field.label;
@@ -53,7 +53,7 @@ export class AddFieldComponent implements OnInit {
       });
     }
     if (this.type === "template") {
-      const field = new field_template();
+      const field = new fieldTemplate();
       field.fieldgroup_id = this.fields ? this.fields.id : "";
       field.instance = "template";
       field.label = this.new_field.label;
@@ -69,7 +69,7 @@ export class AddFieldComponent implements OnInit {
     }
     if (this.type === "field") {
 
-      const field = new new_field();
+      const field = new newField();
       field.fieldgroup_id = this.step.id;
       field.template_id = "";
 

@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {ngxCsv} from "ngx-csv";
 import {JobResolver} from "@app/shared/resolvers/job.resolver";
-import {jobResolverModel} from "@app/models/resolvers/jobResolverModel";
+import {jobResolverModel} from "@app/models/resolvers/job-resolver-model";
 
 @Component({
   selector: "src-auditlog-tab4",

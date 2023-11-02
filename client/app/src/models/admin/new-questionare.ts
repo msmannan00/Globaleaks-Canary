@@ -1,4 +1,4 @@
-export class new_questionare {
+export class newQuestionare {
   id = "";
   key = "";
   name = "";

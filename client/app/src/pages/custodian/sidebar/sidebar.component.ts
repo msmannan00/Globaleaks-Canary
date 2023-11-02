@@ -10,6 +10,11 @@ export class SidebarComponent {
   }
 
   isActive(route: string): boolean {
-    return this.router.isActive(route, {paths: 'subset', queryParams: 'subset', fragment: 'ignored', matrixParams: 'ignored'});
+    return this.router.isActive(route, {
+      paths: "subset",
+      queryParams: "subset",
+      fragment: "ignored",
+      matrixParams: "ignored"
+    });
   }
 }

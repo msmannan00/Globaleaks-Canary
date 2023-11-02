@@ -26,7 +26,7 @@ export class adminHomeComponent implements OnInit {
       this.preferenceData = this.preference.dataModel;
     }
     if (this.nodeData.user_privacy_policy_text && this.preferenceData.accepted_privacy_policy === "1970-01-01T00:00:00Z") {
-      this.acceptPrivacyPolicyDialog();
+      this.acceptPrivacyPolicyDialog().then();
     }
   }
 

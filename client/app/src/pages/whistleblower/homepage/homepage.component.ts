@@ -15,12 +15,12 @@ export class HomepageComponent {
 
   openSubmission() {
     if (this.nodeResolver.dataModel.disclaimer_text) {
-      return this.open_disclaimer_modal();
+      return this.openDisclaimerModal();
     }
     return this.appDataService.page = "submissionpage";
   }
 
-  open_disclaimer_modal(): Promise<any> {
+  openDisclaimerModal(): Promise<any> {
     const modalRef = this.modalService.open(DisclaimerComponent);
     modalRef.componentInstance.confirmFunction = () => {
       return this.appDataService.page = "submissionpage";

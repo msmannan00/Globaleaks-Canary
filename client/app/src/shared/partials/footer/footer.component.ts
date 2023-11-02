@@ -6,6 +6,6 @@ import {AppDataService} from "@app/app-data.service";
   templateUrl: "./footer.component.html"
 })
 export class FooterComponent {
-  constructor(protected appDataService:AppDataService) {
+  constructor(protected appDataService: AppDataService) {
   }
 }

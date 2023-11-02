@@ -9,10 +9,15 @@ import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 })
 export class SidebarComponent {
 
-  constructor(private router: Router,protected nodeResolver: NodeResolver) {
+  constructor(private router: Router, protected nodeResolver: NodeResolver) {
   }
 
- isActive(route: string): boolean {
-    return this.router.isActive(route, {paths: 'subset', queryParams: 'subset', fragment: 'ignored', matrixParams: 'ignored'});
+  isActive(route: string): boolean {
+    return this.router.isActive(route, {
+      paths: "subset",
+      queryParams: "subset",
+      fragment: "ignored",
+      matrixParams: "ignored"
+    });
   }
 }

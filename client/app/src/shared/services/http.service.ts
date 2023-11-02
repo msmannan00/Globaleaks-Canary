@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {password_recovery_response_model} from "@app/models/authentication/password_recovery_response_model";
+import {passwordRecoveryResponseModel} from "@app/models/authentication/password-recovery-response-model";
 import {Router} from "@angular/router";
 
 
@@ -22,8 +22,8 @@ export class HttpService {
     return this.httpClient.post("api/auth/authentication", param);
   }
 
-  requestWhistleBlowerLogin(param: string, authHeader:any): Observable<any> {
-    return this.httpClient.post("api/auth/receiptauth", param, { headers: authHeader });
+  requestWhistleBlowerLogin(param: string, authHeader: any): Observable<any> {
+    return this.httpClient.post("api/auth/receiptauth", param, {headers: authHeader});
   }
 
   requestDeleteUserSession(): Observable<any> {
@@ -60,7 +60,7 @@ export class HttpService {
   }
 
   requestChangePassword(param: string): Observable<any> {
-    return this.httpClient.put<password_recovery_response_model>("api/user/reset/password", param);
+    return this.httpClient.put<passwordRecoveryResponseModel>("api/user/reset/password", param);
   }
 
   requestToken(param: string): Observable<any> {
@@ -167,16 +167,16 @@ export class HttpService {
     return this.httpClient.delete("api/admin/redirects/" + id);
   }
 
-  requestUpdateTlsConfigFilesResource(name: any, authHeader:any, data: any): Observable<any> {
-    return this.httpClient.put("api/admin/config/tls/files/" + name, data, { headers: authHeader });
+  requestUpdateTlsConfigFilesResource(name: any, authHeader: any, data: any): Observable<any> {
+    return this.httpClient.put("api/admin/config/tls/files/" + name, data, {headers: authHeader});
   }
 
   requestDeleteTlsConfigFilesResource(name: string): Observable<any> {
     return this.httpClient.delete("api/admin/config/tls/files/" + name);
   }
 
-  requestAdminAcmeResource(param: any, authHeader:any): Observable<any> {
-     return this.httpClient.post("api/admin/config/acme/run", param,{ headers: authHeader });
+  requestAdminAcmeResource(param: any, authHeader: any): Observable<any> {
+    return this.httpClient.post("api/admin/config/acme/run", param, {headers: authHeader});
   }
 
   requestCSRContentResource(name: any, param: any): Observable<any> {
@@ -192,14 +192,14 @@ export class HttpService {
     return this.httpClient.get(url, {responseType: "blob"});
   }
 
-  disableTLSConfig(tls:any, authHeader:any): Observable<any> {
+  disableTLSConfig(tls: any, authHeader: any): Observable<any> {
     const url = "api/admin/config/tls";
-    return this.httpClient.put(url, tls, { headers: authHeader });
+    return this.httpClient.put(url, tls, {headers: authHeader});
   }
 
-  enableTLSConfig(tls:any, authHeader:any): Observable<any> {
+  enableTLSConfig(tls: any, authHeader: any): Observable<any> {
     const url = "api/admin/config/tls";
-    return this.httpClient.post(url, tls, { headers: authHeader });
+    return this.httpClient.post(url, tls, {headers: authHeader});
   }
 
   whistleBlowerTip(): Observable<any> {
@@ -207,7 +207,7 @@ export class HttpService {
   }
 
   whistleBlowerTipUpdate(param: any): Observable<any> {
-    return this.httpClient.post("api/whistleblower/wbtip/fillform" , param);
+    return this.httpClient.post("api/whistleblower/wbtip/fillform", param);
   }
 
   whistleBlowerIdentityUpdate(param: any): Observable<any> {

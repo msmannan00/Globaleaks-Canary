@@ -52,7 +52,7 @@ export class HttpsFilesComponent implements OnInit {
     );
   }
 
-  gen_key() {
+  genKey() {
     const authHeader = this.authenticationService.getHeader();
     this.httpService.requestUpdateTlsConfigFilesResource("key", authHeader, this.fileResources.key).subscribe(() => {
       this.dataToParent.emit();

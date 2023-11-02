@@ -48,7 +48,7 @@ export class QuestionnairesListComponent {
   }
 
   deleteQuestionnaire(questionnaire: any) {
-    this.openConfirmableModalDialog(questionnaire, "");
+    this.openConfirmableModalDialog(questionnaire, "").then();
   }
 
   openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
@@ -63,5 +63,4 @@ export class QuestionnairesListComponent {
     };
     return modalRef.result;
   }
-
 }

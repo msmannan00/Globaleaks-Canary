@@ -4,7 +4,7 @@ import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {new_step} from "@app/models/admin/new_step";
+import {newStep} from "@app/models/admin/new-step";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 
 @Component({
@@ -37,8 +37,8 @@ export class StepsComponent implements OnInit {
     this.showAddStep = !this.showAddStep;
   }
 
-  add_step() {
-    const step = new new_step();
+  addStep() {
+    const step = new newStep();
     step.questionnaire_id = this.questionnaire.id;
     step.label = this.new_step.label;
     step.order = this.utilsService.newItemOrder(this.questionnaire.steps, "order");

@@ -3,7 +3,7 @@
         <div class="form-group">
             <label>{{'Language' | translate}}:</label>
             <select class="form-select" name="vars.language_to_customize" [(ngModel)]="vars.language_to_customize"
-                    (ngModelChange)="get_l10n(vars.language_to_customize)">
+                    (ngModelChange)="getl10n(vars.language_to_customize)">
                 <option *ngFor="let item of languages_enabled_selector" [value]="item.code">{{item.name}}</option>
             </select>
         </div>

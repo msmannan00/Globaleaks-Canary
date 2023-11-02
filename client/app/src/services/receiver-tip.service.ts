@@ -1,8 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpService} from "@app/shared/services/http.service";
 import {AppDataService} from "@app/app-data.service";
-import {UtilsService} from "@app/shared/services/utils.service";
-import {RecieverTipData} from "@app/models/reciever/RecieverTipData";
+import {RecieverTipData} from "@app/models/reciever/reciever-tip-data";
 
 @Injectable({
   providedIn: "root"
@@ -10,7 +9,7 @@ import {RecieverTipData} from "@app/models/reciever/RecieverTipData";
 export class ReceiverTipService {
   tip: RecieverTipData = new RecieverTipData();
 
-  constructor(private httpService: HttpService, private appDataService: AppDataService, private utilsService: UtilsService) {
+  constructor(private httpService: HttpService, private appDataService: AppDataService) {
   }
 
   initialize(response: RecieverTipData) {

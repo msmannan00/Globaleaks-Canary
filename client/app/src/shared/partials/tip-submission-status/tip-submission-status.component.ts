@@ -20,7 +20,8 @@ export class TipSubmissionStatusComponent {
     const args = {"status": this.tipService.tip.status, "substatus": ""};
     this.httpService.tipOperation("update_status", args, this.tipService.tip.id)
       .subscribe(
-        () => {}
+        () => {
+        }
       );
   };
 
@@ -31,8 +32,8 @@ export class TipSubmissionStatusComponent {
     };
     this.httpService.tipOperation("update_status", args, this.tipService.tip.id)
       .subscribe(
-        () => {}
+        () => {
+        }
       );
   };
-
 }

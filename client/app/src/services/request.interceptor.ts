@@ -100,7 +100,8 @@ export class ErrorCatchingInterceptor implements HttpInterceptor {
 export class CompletedInterceptor implements HttpInterceptor {
   count = 0;
 
-  constructor(private authenticationService: AuthenticationService, private appDataService: AppDataService) {}
+  constructor(private authenticationService: AuthenticationService, private appDataService: AppDataService) {
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.count++;
@@ -110,7 +111,7 @@ export class CompletedInterceptor implements HttpInterceptor {
       finalize(() => {
         this.count--;
 
-        if (this.count === 0 && (req.url !== 'api/auth/token' || this.authenticationService.session)) {
+        if (this.count === 0 && (req.url !== "api/auth/token" || this.authenticationService.session)) {
           timer(100).pipe(
             switchMap(() => {
               this.appDataService.showLoadingPanel = false;

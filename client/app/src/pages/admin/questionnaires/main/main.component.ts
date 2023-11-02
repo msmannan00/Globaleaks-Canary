@@ -1,10 +1,10 @@
 import {HttpClient} from "@angular/common/http";
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from "@angular/core";
-import {questionnaireResolverModel} from "@app/models/resolvers/questionnaireModel";
+import {questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
 import {QuestionnairesResolver} from "@app/shared/resolvers/questionnaires.resolver";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {new_questionare} from "@app/models/admin/new_questionare";
+import {newQuestionare} from "@app/models/admin/new-questionare";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 import {Subject, takeUntil} from "rxjs";
 
@@ -14,10 +14,10 @@ import {Subject, takeUntil} from "rxjs";
 })
 export class MainComponent implements OnInit, OnDestroy {
 
+  private destroy$ = new Subject<void>();
   questionnairesData: any = [];
   new_questionnaire: { name: string } = {name: ""};
   showAddQuestionnaire: boolean = false;
-  private destroy$ = new Subject<void>();
 
   constructor(private http: HttpClient, private questionnaireService: QuestionnaireService, private httpService: HttpService, private utilsService: UtilsService, private cdr: ChangeDetectorRef, protected questionnairesResolver: QuestionnairesResolver) {
   }
@@ -30,8 +30,8 @@ export class MainComponent implements OnInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  add_questionnaire() {
-    const questionnaire: new_questionare = new new_questionare();
+  addQuestionnaire() {
+    const questionnaire: newQuestionare = new newQuestionare();
     questionnaire.name = this.new_questionnaire.name;
     this.httpService.addQuestionnaire(questionnaire).subscribe(res => {
       this.questionnairesData.push(res);

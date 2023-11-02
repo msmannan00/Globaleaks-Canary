@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {ngxCsv} from "ngx-csv";
 import {TipsResolver} from "@app/shared/resolvers/tips.resolver";
-import {tipsResolverModel} from "@app/models/resolvers/tipsResolverModel";
+import {tipsResolverModel} from "@app/models/resolvers/tips-resolver-model";
 import {AppDataService} from "@app/app-data.service";
 
 @Component({

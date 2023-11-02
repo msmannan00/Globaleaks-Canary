@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {new_context} from "@app/models/admin/new_context";
+import {newContext} from "@app/models/admin/new-context";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {ContextsResolver} from "@app/shared/resolvers/contexts.resolver";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
@@ -31,8 +31,8 @@ export class ContextsComponent implements OnInit {
     }
   }
 
-  add_context() {
-    const context: new_context = new new_context();
+  addContext() {
+    const context: newContext = new newContext();
     context.name = this.new_context.name;
     context.questionnaire_id = this.node.dataModel.default_questionnaire;
     context.order = this.newItemOrder(this.contextsData, "order");
@@ -60,5 +60,4 @@ export class ContextsComponent implements OnInit {
 
     return max + 1;
   }
-
 }

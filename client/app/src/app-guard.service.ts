@@ -13,7 +13,7 @@ export class SessionGuard implements CanActivate {
 
   canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (!this.authentication.session) {
-      this.router.navigateByUrl("/login");
+      this.router.navigateByUrl("/login").then();
       return false;
     } else {
       this.appDataService.page = this.router.url;

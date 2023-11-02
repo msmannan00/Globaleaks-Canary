@@ -4,7 +4,7 @@ import {Observable, of} from "rxjs";
 import {switchMap} from "rxjs/operators";
 import {HttpService} from "@app/shared/services/http.service";
 import {AuthenticationService} from "@app/services/authentication.service";
-import {auditlogResolverModel} from "@app/models/resolvers/auditlogResolverModel";
+import {auditlogResolverModel} from "@app/models/resolvers/auditlog-resolver-model";
 
 @Injectable({
   providedIn: "root"

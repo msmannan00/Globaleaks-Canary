@@ -45,12 +45,12 @@ export class TipUploadWbFileComponent {
       flowJsInstance.on("fileSuccess", (_) => {
         this.appConfigService.reinit(false);
         this.utilsService.reloadCurrentRoute();
-        this.errorFile = null
+        this.errorFile = null;
       });
       flowJsInstance.on("fileError", (file, message) => {
-        this.showError = true
-        this.errorFile = file
-        this.cdr.detectChanges()
+        this.showError = true;
+        this.errorFile = file;
+        this.cdr.detectChanges();
       });
 
       const fileNameParts = file.name.split(".");
@@ -64,7 +64,8 @@ export class TipUploadWbFileComponent {
       flowJsInstance.upload();
     }
   }
-  protected dismissError(){
+
+  protected dismissError() {
     this.showError = false;
   }
 }

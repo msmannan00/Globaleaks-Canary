@@ -57,7 +57,7 @@ export class UtilsService {
     return max + 1;
   }
 
-  role_l10n(role: string) {
+  rolel10n(role: string) {
     let ret = "";
 
     if (role) {
@@ -138,7 +138,7 @@ export class UtilsService {
     });
   }
 
-  reloadComponent(){
+  reloadComponent() {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
@@ -151,6 +151,7 @@ export class UtilsService {
         this.router.navigate([this.router.url]);
       });
   }
+
   reloadCurrentRouteFresh(removeQueryParam = false) {
 
     let currentUrl = this.router.url;

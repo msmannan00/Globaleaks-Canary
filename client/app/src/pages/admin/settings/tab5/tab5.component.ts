@@ -45,14 +45,12 @@ export class Tab5Component {
               this.authenticationService.logout();
             }
           );
-        },
-        () => {
         }
       );
     }
   }
 
-  toggleEscrow(escrow:any) {
+  toggleEscrow(escrow: any) {
     this.nodeResolver.dataModel.escrow = !this.nodeResolver.dataModel.escrow;
     escrow.checked = this.nodeResolver.dataModel.escrow;
     this.utilsService.runAdminOperation("toggle_escrow", {}, true).subscribe(

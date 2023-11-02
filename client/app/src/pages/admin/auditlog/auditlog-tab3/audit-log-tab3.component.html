@@ -21,7 +21,7 @@
             <td>{{data.expiration_date | date:'dd-MM-yyyy'}}</td>
             <td>{{appDataService.contexts_by_id[data.context_id]['name']}}</td>
             <td>{{utilsService.getSubmissionStatusText(data.status, appDataService.submissionStatuses)}}</td>
-            <td><i data-ng-if="itip.tor" class="fa-solid fa-check"></i></td>
+            <td><i *ngIf="data.tor" class="fa-solid fa-check"></i></td>
             <td>{{data.comments}}</td>
             <td>{{data.files}}</td>
             <td>{{data.last_access | date:'dd-MM-yyyy HH:mm'}}</td>

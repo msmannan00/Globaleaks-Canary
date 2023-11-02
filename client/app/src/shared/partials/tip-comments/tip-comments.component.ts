@@ -19,14 +19,14 @@ export class TipCommentsComponent {
   newCommentContent = "";
   currentCommentsPage: number = 1;
   itemsPerPage = 5;
-  comments:any[];
+  comments: any[];
 
   constructor(private rTipService: ReceiverTipService, protected authenticationService: AuthenticationService, protected utilsService: UtilsService, private cdr: ChangeDetectorRef) {
 
   }
 
   ngOnInit() {
-    this.comments = this.tipService.tip.comments
+    this.comments = this.tipService.tip.comments;
   }
 
   public toggleCollapse() {
@@ -39,10 +39,10 @@ export class TipCommentsComponent {
 
     response.subscribe(
       (data) => {
-        this.comments = this.tipService.tip.comments
+        this.comments = this.tipService.tip.comments;
         this.tipService.tip.comments.push(data);
         this.comments = [...this.comments, []];
-        console.log(this.comments)
+        console.log(this.comments);
         this.cdr.detectChanges();
       }
     );

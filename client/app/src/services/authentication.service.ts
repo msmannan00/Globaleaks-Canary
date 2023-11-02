@@ -107,7 +107,7 @@ export class AuthenticationService {
     requestObservable.subscribe(
       {
         next: (response: any) => {
-          this.specialPermission = response['permissions']['can_edit_general_settings']
+          this.specialPermission = response["permissions"]["can_edit_general_settings"];
           this.rootDataService.showLoadingPanel = false;
           this.reset();
           this.setSession(response);

@@ -27,20 +27,29 @@ export class RFileUploadButtonComponent implements AfterViewInit, OnInit {
   @Input() uploads: any;
   @Input() field: any = undefined;
   @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
-  @ViewChild('flow') flow: FlowDirective;
+  @ViewChild("flow") flow: FlowDirective;
 
   autoUploadSubscription: Subscription;
   fileInput: any;
   showError: boolean = false;
   errorFile: Transfer;
   confirmButton = false;
-  flowConfig:FlowOptions
+  flowConfig: FlowOptions;
+
   constructor(private cdr: ChangeDetectorRef, protected authenticationService: AuthenticationService, protected appDataService: AppDataService) {
   }
 
   ngOnInit(): void {
-    if(this.authenticationService.session.id){      
-      this.flowConfig ={target: this.fileUploadUrl, speedSmoothingFactor:0.01 , singleFile:(this.field !== undefined && !this.field.multi_entry), allowDuplicateUploads:false, testChunks:false, permanentErrors : [ 500, 501 ], headers : {'X-Session':this.authenticationService.session.id}};
+    if (this.authenticationService.session.id) {
+      this.flowConfig = {
+        target: this.fileUploadUrl,
+        speedSmoothingFactor: 0.01,
+        singleFile: (this.field !== undefined && !this.field.multi_entry),
+        allowDuplicateUploads: false,
+        testChunks: false,
+        permanentErrors: [500, 501],
+        headers: {"X-Session": this.authenticationService.session.id}
+      };
     }
     this.fileInput = this.field ? this.field.id : "status_page";
   }
@@ -52,28 +61,28 @@ export class RFileUploadButtonComponent implements AfterViewInit, OnInit {
       self.confirmButton = false;
       self.showError = false;
 
-      if(!self.uploads){
+      if (!self.uploads) {
         self.uploads = {};
       }
-      if(self.uploads && !self.uploads[self.fileInput]){
+      if (self.uploads && !self.uploads[self.fileInput]) {
         self.uploads[self.fileInput] = [];
       }
-      event.transfers.forEach(function(file){
+      event.transfers.forEach(function (file) {
 
-        if(file.paused && self.errorFile){
+        if (file.paused && self.errorFile) {
           self.errorFile.flowFile.cancel();
-          return
+          return;
         }
-        if(self.appDataService.public.node.maximum_filesize < (file.size/1000000)){
+        if (self.appDataService.public.node.maximum_filesize < (file.size / 1000000)) {
           self.showError = true;
           self.cdr.detectChanges();
           file.flowFile.pause();
           self.errorFile = file;
-        }else if(!file.complete){
+        } else if (!file.complete) {
           self.confirmButton = true;
         }
       });
-      self.uploads[self.fileInput]=self.flow;
+      self.uploads[self.fileInput] = self.flow;
       this.notifyFileUpload.emit(self.uploads);
     });
   }
@@ -82,13 +91,14 @@ export class RFileUploadButtonComponent implements AfterViewInit, OnInit {
   ngOnDestroy() {
     this.autoUploadSubscription.unsubscribe();
   }
+
   onConfirmClick() {
-    if(!this.flow.flowJs.isUploading()){
+    if (!this.flow.flowJs.isUploading()) {
       this.flow.upload();
     }
   }
 
-  protected dismissError(){
+  protected dismissError() {
     this.showError = false;
   }
 }

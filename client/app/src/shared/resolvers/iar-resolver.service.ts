@@ -4,7 +4,7 @@ import {Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
 import {HttpService} from "@app/shared/services/http.service";
 import {AuthenticationService} from "@app/services/authentication.service";
-import {IarData} from "@app/models/reciever/IarData";
+import {IarData} from "@app/models/reciever/Iar-data";
 
 @Injectable({
   providedIn: "root"

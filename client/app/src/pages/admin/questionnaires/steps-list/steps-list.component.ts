@@ -17,7 +17,6 @@ export class StepsListComponent {
   @Input() index: any;
   editing: boolean = false;
   showAddTrigger: boolean = false;
-  new_step: { label: string } = {label: ""};
   parsedFields: any;
   new_trigger: { field: string; option: string; sufficient: boolean } = {
     field: "",

@@ -30,7 +30,7 @@
                     </div>
                     <div id="step-receiver-selection" *ngIf="submissionService.context.allow_recipients_selection">
                         <div *ngIf="navigation === -1">
-                            <src-receiver-selection (switchSelection)="switch_selection($event)" [receiversOrderPredicate]="receiversOrderPredicate" [submission]="submissionService" [show_steps_navigation_bar]="show_steps_navigation_bar"></src-receiver-selection>
+                            <src-receiver-selection (switchSelection)="switchSelection($event)" [receiversOrderPredicate]="receiversOrderPredicate" [submission]="submissionService" [show_steps_navigation_bar]="show_steps_navigation_bar"></src-receiver-selection>
                         </div>
                     </div>
                     <div *ngIf="navigation !== -1">
