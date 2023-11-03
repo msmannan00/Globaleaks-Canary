@@ -61,7 +61,7 @@ const routes: Routes = [
     path: "recipient",
     canActivate: [SessionGuard],
     resolve: {
-      PreferenceResolver, NodeResolver, RtipsResolver: RTipsResolver
+      PreferenceResolver, RtipsResolver: RTipsResolver
     },
     loadChildren: () => RecipientRoutingModule,
     data: {

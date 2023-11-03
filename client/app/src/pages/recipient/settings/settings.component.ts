@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, TemplateRef, ViewChild} from "@angular/core";
+import {AfterViewInit, ChangeDetectorRef, Component, TemplateRef, ViewChild} from "@angular/core";
 
 @Component({
   selector: "src-settings",
@@ -10,6 +10,9 @@ export class SettingsComponent implements AfterViewInit {
   nodeData: any;
   active: string;
 
+  constructor(private cdr: ChangeDetectorRef) {
+  }
+
   ngAfterViewInit(): void {
     this.active = "Settings";
 
@@ -19,6 +22,7 @@ export class SettingsComponent implements AfterViewInit {
         component: this.tab1
       },
     ];
+    this.cdr.detectChanges();
   }
 }
 

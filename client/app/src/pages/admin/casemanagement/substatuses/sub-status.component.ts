@@ -1,9 +1,11 @@
 import {Component, Input, OnInit} from "@angular/core";
+import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {HttpClient} from "@angular/common/http";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AppConfigService} from "@app/services/app-config.service";
 import {HttpService} from "@app/shared/services/http.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: "src-substatuses",
@@ -76,7 +78,23 @@ export class SubStatusComponent implements OnInit {
   }
 
   deleteSubSubmissionStatus(subStatusParam: any): void {
-    this.utilsService.openConfirmableModalDialog(subStatusParam, "").subscribe();
+    this.openConfirmableModalDialog(subStatusParam, "").subscribe();
+  }
+
+  openConfirmableModalDialog(arg: any, scope: any): Observable<string> {
+    scope = !scope ? this : scope;
+    return new Observable((observer) => {
+      let modalRef = this.modalService.open(DeleteConfirmationComponent, {});
+      modalRef.componentInstance.arg = arg;
+      modalRef.componentInstance.scope = scope;
+      modalRef.componentInstance.confirmFunction = () => {
+        observer.complete()
+        const url = "api/admin/statuses/" + this.submissionsStatus.id + "/substatuses/" + arg.id;
+        return this.utilsService.deleteSubStatus(url).subscribe(_ => {
+          this.appConfigService.reinit();
+        });
+      };
+    });
   }
 
   moveSsUp(e: any, idx: number): void {
