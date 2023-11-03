@@ -15,6 +15,7 @@ import {Observable} from "rxjs";
 })
 export class QuestionnairesListComponent {
   @Input() questionnaire: any;
+  @Input() questionnaires: any;
   @Input() editQuestionnaire: NgForm;
   showAddQuestion: boolean = false;
   editing: boolean = false;
@@ -63,7 +64,7 @@ export class QuestionnairesListComponent {
       modalRef.componentInstance.confirmFunction = () => {
         observer.complete()
         return this.httpService.requestDeleteAdminQuestionnaire(arg.id).subscribe(_ => {
-          return this.questionnaireService.sendData();
+          this.utilsService.deleteResource(this.questionnaires,arg);
         });
       };
     });

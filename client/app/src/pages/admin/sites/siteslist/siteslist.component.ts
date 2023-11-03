@@ -12,6 +12,7 @@ import {AppConfigService} from "@app/services/app-config.service";
 })
 export class SiteslistComponent {
   @Input() tenant: any;
+  @Input() tenants: any;
   @Input() index: any;
   editing = false;
 
@@ -60,8 +61,7 @@ export class SiteslistComponent {
 
       const url = "api/admin/tenants/" + arg.id;
       return this.httpService.requestDeleteTenant(url).subscribe(_ => {
-        this.appConfigService.reinit();
-        this.utilsService.reloadCurrentRoute();
+         this.utilsService.deleteResource(this.tenants,arg);
       });
     };
     return modalRef.result;

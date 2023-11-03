@@ -15,6 +15,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
 })
 export class UserEditorComponent implements OnInit {
   @Input() user: any;
+  @Input() users: any;
   @Input() index: any;
   @Input() editUser: NgForm;
   @Output() dataToParent = new EventEmitter<string>();
@@ -102,8 +103,7 @@ export class UserEditorComponent implements OnInit {
     modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = () => {
       return this.utilsService.deleteAdminUser(arg.id).subscribe(_ => {
-        this.sendDataToParent();
-        this.utilsService.reloadCurrentRoute();
+        this.utilsService.deleteResource(this.users,arg);
       });
     };
     return modalRef.result;

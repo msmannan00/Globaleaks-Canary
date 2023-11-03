@@ -28,6 +28,6 @@
         </div>
     </div>
     <div *ngFor="let submissions_status of appDataServices.submissionStatuses; let index = index;let first = first; let last = last;">
-        <src-substatusmanager [submissionsStatus]="submissions_status" [index]="index" [first]="first" [last]="last"></src-substatusmanager>
+        <src-substatusmanager [submissionsStatus]="submissions_status" [submissionStatuses]="appDataServices.submissionStatuses" [index]="index" [first]="first" [last]="last"></src-substatusmanager>
     </div>
 </div>
