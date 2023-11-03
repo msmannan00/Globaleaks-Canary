@@ -91,7 +91,7 @@ export class VoiceRecorderComponent implements OnInit {
       }
     }, 1000);
 
-
+    await this.enableNoiseSuppression(stream);
     const mediaStreamDestination = this.audioContext.createMediaStreamDestination();
     const source = this.audioContext.createMediaStreamSource(stream);
     const anonymizationFilter = this.anonymizeSpeaker(this.audioContext);
@@ -173,7 +173,7 @@ export class VoiceRecorderComponent implements OnInit {
 
   deleteRecording(): void {
     if (this.flow) {
-      this.flow = new Flow
+       this.flow.cancel();
     }
     this.chunks = [];
     this.mediaRecorder = null;
