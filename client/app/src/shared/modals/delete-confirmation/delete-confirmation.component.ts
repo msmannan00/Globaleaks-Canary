@@ -1,6 +1,6 @@
 import {HttpClient} from "@angular/common/http";
 import {Component, Input} from "@angular/core";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {Router} from "@angular/router";
 
@@ -16,7 +16,7 @@ export class DeleteConfirmationComponent {
   @Input() operation: any;
   confirmFunction: () => void;
 
-  constructor(private modalService: NgbModal, private http: HttpClient, private utils: UtilsService, private router: Router) {
+  constructor(private modalService: NgbActiveModal, private http: HttpClient, private utils: UtilsService, private router: Router) {
   }
 
   confirm() {
@@ -54,7 +54,7 @@ export class DeleteConfirmationComponent {
   }
 
   cancel() {
-    this.modalService.dismissAll();
+    this.modalService.dismiss();
   }
 
 }

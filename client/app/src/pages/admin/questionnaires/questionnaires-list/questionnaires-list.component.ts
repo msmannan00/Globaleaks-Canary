@@ -1,11 +1,13 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {NgForm} from "@angular/forms";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {AssignScorePointsComponent} from "@app/shared/modals/assign-score-points/assign-score-points.component";
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {QuestionnaireDuplicationComponent} from "@app/shared/modals/questionnaire-duplication/questionnaire-duplication.component";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: "src-questionnaires-list",
@@ -48,19 +50,22 @@ export class QuestionnairesListComponent {
   }
 
   deleteQuestionnaire(questionnaire: any) {
-    this.openConfirmableModalDialog(questionnaire, "").then();
+    this.openConfirmableModalDialog(questionnaire, "").subscribe();
   }
 
-  openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
+  openConfirmableModalDialog(arg: any, scope: any): Observable<string> {
     scope = !scope ? this : scope;
-    const modalRef = this.modalService.open(DeleteConfirmationComponent);
-    modalRef.componentInstance.arg = arg;
-    modalRef.componentInstance.scope = scope;
-    modalRef.componentInstance.confirmFunction = () => {
-      return this.httpService.requestDeleteAdminQuestionnaire(arg.id).subscribe(_ => {
-        return this.questionnaireService.sendData();
-      });
-    };
-    return modalRef.result;
+    return new Observable((observer) => {
+      let modalRef = this.modalService.open(DeleteConfirmationComponent, {});
+      modalRef.componentInstance.arg = arg;
+      modalRef.componentInstance.scope = scope;
+
+      modalRef.componentInstance.confirmFunction = () => {
+        observer.complete()
+        return this.httpService.requestDeleteAdminQuestionnaire(arg.id).subscribe(_ => {
+          return this.questionnaireService.sendData();
+        });
+      };
+    });
   }
 }

@@ -1,4 +1,4 @@
-<div class="audio-box">
+<div class="audio-box" *ngIf="authenticationService.session">
     <ng-container #flowAdvanced="flow"
         [flowConfig]="{target: fileUploadUrl, speedSmoothingFactor:0.01 , singleFile:(field !== undefined && !field.multi_entry), allowDuplicateUploads:false, testChunks:false, permanentErrors : [ 500, 501 ], headers : {'X-Session':authenticationService.session.id}}"></ng-container>
     <div class="row">

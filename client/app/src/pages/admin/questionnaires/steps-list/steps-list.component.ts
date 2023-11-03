@@ -1,11 +1,13 @@
 import {Component, Input} from "@angular/core";
+import {AssignScorePointsComponent} from "@app/shared/modals/assign-score-points/assign-score-points.component";
+import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: "src-steps-list",
@@ -58,20 +60,23 @@ export class StepsListComponent {
   }
 
   deleteStep(step: any) {
-    this.openConfirmableModalDialog(step, "").then();
+    this.openConfirmableModalDialog(step, "").subscribe();
   }
 
-  openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
+  openConfirmableModalDialog(arg: any, scope: any): Observable<string> {
     scope = !scope ? this : scope;
-    const modalRef = this.modalService.open(DeleteConfirmationComponent);
-    modalRef.componentInstance.arg = arg;
-    modalRef.componentInstance.scope = scope;
-    modalRef.componentInstance.confirmFunction = () => {
-      return this.httpService.requestDeleteAdminQuestionareStep(arg.id).subscribe(_ => {
-        return this.questionnaireService.sendData();
-      });
-    };
-    return modalRef.result;
+    return new Observable((observer) => {
+      let modalRef = this.modalService.open(DeleteConfirmationComponent, {});
+      modalRef.componentInstance.arg = arg;
+      modalRef.componentInstance.scope = scope;
+
+      modalRef.componentInstance.confirmFunction = () => {
+        observer.complete()
+        return this.httpService.requestDeleteAdminQuestionareStep(arg.id).subscribe(_ => {
+          return this.questionnaireService.sendData();
+        });
+      };
+    });
   }
 
   addTrigger() {

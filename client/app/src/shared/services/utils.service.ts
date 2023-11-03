@@ -541,7 +541,6 @@ export class UtilsService {
         observer.complete();
       };
     });
-
   }
 
   getFiles(): Observable<any[]> {

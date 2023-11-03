@@ -7,7 +7,8 @@
   <div class="modal-body">
     <span>{{ 'Name' | translate }}</span>
     <div class="form-group">
-      <input name="name" class="form-control" [(ngModel)]="duplicate_questionnaire.name" type="text" #name="ngModel" [ngClass]="{ 'is-invalid': name?.errors?.['required'] }" required />
+      {{name?.errors?.['required']}}
+      <input name="name" class="form-control" [(ngModel)]="duplicate_questionnaire.name" type="text" #name="ngModel" />
     </div>
   </div>
   <div class="modal-footer">
