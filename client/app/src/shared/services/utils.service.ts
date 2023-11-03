@@ -222,7 +222,8 @@ export class UtilsService {
   }
 
   isWhistleblowerPage() {
-    return ["/", "/submission"].indexOf(this.router.url.split("?")[0]) !== -1;
+    const currentUrl = this.router.url;
+    return currentUrl === '/' || currentUrl === '/submission' || currentUrl === '/blank';
   }
 
   stopPropagation(event: Event) {
@@ -243,18 +244,6 @@ export class UtilsService {
     });
 
     return btoa(result);
-  }
-
-  openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
-    scope = !scope ? this : scope;
-
-    const modalRef = this.modalService.open(DeleteConfirmationComponent);
-    modalRef.componentInstance.arg = arg;
-    modalRef.componentInstance.scope = scope;
-    modalRef.componentInstance.confirmFunction = () => {
-      return this.runAdminOperation("reset_submissions", {}, true);
-    };
-    return modalRef.result;
   }
 
   openSupportModal() {
@@ -475,7 +464,7 @@ export class UtilsService {
   }
 
   deleteDialog() {
-    return this.openConfirmableModalDialog("", "");
+    return this.openConfirmableModalDialogReport("", "").subscribe();
   }
 
 
@@ -539,6 +528,46 @@ export class UtilsService {
       modalRef.componentInstance.confirmFunction = (secret: string) => {
         observer.next(secret);
         observer.complete();
+      };
+    });
+  }
+
+  openConfirmableModalDialogReport(arg: any, scope: any): Observable<string> {
+    scope = !scope ? this : scope;
+    return new Observable((observer) => {
+      let modalRef = this.modalService.open(DeleteConfirmationComponent, {});
+      modalRef.componentInstance.arg = arg;
+      modalRef.componentInstance.scope = scope;
+      modalRef.componentInstance.confirmFunction = () => {
+        observer.complete()
+        this.openPasswordConfirmableDialog(arg, scope);
+      };
+    });
+  }
+
+  openPasswordConfirmableDialog(arg: any, scope: any){
+    return this.runAdminOperation("reset_submissions", {}, true).subscribe({
+      next: (_) => {
+      },
+      error: (_: any) => {
+        this.openPasswordConfirmableDialog(arg, scope)
+      }
+    });
+  }
+
+  openConfirmableModalDialog(arg: any, scope: any): Observable<string> {
+    scope = !scope ? this : scope;
+    let self = this
+    return new Observable((observer) => {
+      let modalRef = this.modalService.open(DeleteConfirmationComponent, {});
+      modalRef.componentInstance.arg = arg;
+      modalRef.componentInstance.scope = scope;
+      modalRef.componentInstance.confirmFunction = () => {
+        observer.complete()
+        const url = "api/admin/statuses/" + arg.id;
+        return self.deleteStatus(url).subscribe(_ => {
+          self.serviceInstanceService.appConfigService.reinit();
+        });
       };
     });
   }

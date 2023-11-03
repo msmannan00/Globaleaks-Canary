@@ -1,12 +1,14 @@
 import {HttpClient} from "@angular/common/http";
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {NgForm} from "@angular/forms";
+import {AcceptAgreementComponent} from "@app/shared/modals/accept-agreement/accept-agreement.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {QuestionnairesResolver} from "@app/shared/resolvers/questionnaires.resolver";
 import {UsersResolver} from "@app/shared/resolvers/users.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: "src-context-editor",
@@ -99,20 +101,22 @@ export class ContextEditorComponent implements OnInit {
   }
 
   deleteContext(context: any): void {
-    this.openConfirmableModalDialog(context, "").then();
+    this.openConfirmableModalDialog(context, "").subscribe();
   }
 
-  openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
+  openConfirmableModalDialog(arg: any, scope: any): Observable<string> {
     scope = !scope ? this : scope;
-    const modalRef = this.modalService.open(DeleteConfirmationComponent);
-    modalRef.componentInstance.arg = arg;
-    modalRef.componentInstance.scope = scope;
-    modalRef.componentInstance.confirmFunction = () => {
-      return this.utilsService.deleteAdminContext(arg.id).subscribe(_ => {
-        this.utilsService.deleteResource(this.contextsData,arg);
-      });
-    };
-    return modalRef.result;
+    return new Observable((observer) => {
+      let modalRef = this.modalService.open(DeleteConfirmationComponent, {});
+      modalRef.componentInstance.arg = arg;
+      modalRef.componentInstance.scope = scope;
+      modalRef.componentInstance.confirmFunction = () => {
+        observer.complete()
+        return this.utilsService.deleteAdminContext(arg.id).subscribe(_ => {
+          this.utilsService.deleteResource(this.contextsData,arg);
+        });
+      };
+    });
   }
 
   saveContext(context: any) {

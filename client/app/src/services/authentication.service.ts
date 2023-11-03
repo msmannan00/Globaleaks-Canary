@@ -124,7 +124,6 @@ export class AuthenticationService {
               if (password) {
                 this.rootDataService.receipt = password;
                 this.rootDataService.page = "tippage";
-                this.router.navigate(["/"]).then();
               }
             } else {
               if (!callback) {
