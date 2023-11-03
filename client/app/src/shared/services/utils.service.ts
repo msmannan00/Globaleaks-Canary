@@ -464,7 +464,7 @@ export class UtilsService {
   }
 
   deleteDialog() {
-    return this.openConfirmableModalDialog("", "").subscribe();
+    return this.openConfirmableModalDialogReport("", "").subscribe();
   }
 
 
@@ -529,6 +529,29 @@ export class UtilsService {
         observer.next(secret);
         observer.complete();
       };
+    });
+  }
+
+  openConfirmableModalDialogReport(arg: any, scope: any): Observable<string> {
+    scope = !scope ? this : scope;
+    return new Observable((observer) => {
+      let modalRef = this.modalService.open(DeleteConfirmationComponent, {});
+      modalRef.componentInstance.arg = arg;
+      modalRef.componentInstance.scope = scope;
+      modalRef.componentInstance.confirmFunction = () => {
+        observer.complete()
+        this.openPasswordConfirmableDialog(arg, scope);
+      };
+    });
+  }
+
+  openPasswordConfirmableDialog(arg: any, scope: any){
+    return this.runAdminOperation("reset_submissions", {}, true).subscribe({
+      next: (_) => {
+      },
+      error: (_: any) => {
+        this.openPasswordConfirmableDialog(arg, scope)
+      }
     });
   }
 
