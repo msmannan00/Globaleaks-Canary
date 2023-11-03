@@ -241,19 +241,6 @@ export class SubmissionComponent {
 
   };
 
-  checkForInvalidFields() {
-    for (let counter = 0; counter <= this.navigation; counter++) {
-      this.validate[counter] = true;
-      if (this.questionnaire.steps[counter].enabled) {
-        if (this.stepForms.get(counter)?.invalid) {
-          this.navigation = counter;
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
   completeSubmission() {
     this.receivedData = this.submissionService.getSharedData();
     if (this.receivedData !== null && this.receivedData !== undefined) {
@@ -297,6 +284,31 @@ export class SubmissionComponent {
 
   };
 
+  checkForInvalidFields() {
+    for (let counter = 0; counter <= this.navigation; counter++) {
+      this.validate[counter] = true;
+      if (this.questionnaire.steps[counter].enabled) {
+        if (this.stepForms.get(counter)?.invalid) {
+          this.navigation = counter;
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  decrementStep() {
+    if (this.hasPreviousStep()) {
+      for (let i = this.navigation - 1; i >= this.firstStepIndex(); i--) {
+        if (i === -1 || this.fieldUtilitiesService.isFieldTriggered(null, this.questionnaire.steps[i], this.answers, this.score)) {
+          this.navigation = i;
+          this.utilsService.scrollToTop();
+          return;
+        }
+      }
+    }
+  };
+
   incrementStep() {
     if (!this.runValidation()) {
       return;
@@ -318,18 +330,6 @@ export class SubmissionComponent {
       this.submissionForm.reset();
     }
   }
-
-  decrementStep() {
-    if (this.hasPreviousStep()) {
-      for (let i = this.navigation - 1; i >= this.firstStepIndex(); i--) {
-        if (i === -1 || this.fieldUtilitiesService.isFieldTriggered(null, this.questionnaire.steps[i], this.answers, this.score)) {
-          this.navigation = i;
-          this.utilsService.scrollToTop();
-          return;
-        }
-      }
-    }
-  };
 
   onFormChange() {
     this.fieldUtilitiesService.onAnswersUpdate(this);

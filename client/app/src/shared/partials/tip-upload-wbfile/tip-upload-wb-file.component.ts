@@ -47,21 +47,13 @@ export class TipUploadWbFileComponent {
         this.utilsService.reloadCurrentRoute();
         this.errorFile = null;
       });
-      flowJsInstance.on("fileError", (file, message) => {
+      flowJsInstance.on("fileError", (file, _) => {
         this.showError = true;
         this.errorFile = file;
         this.cdr.detectChanges();
       });
 
-      const fileNameParts = file.name.split(".");
-      const fileExtension = fileNameParts.pop();
-      const fileNameWithoutExtension = fileNameParts.join(".");
-      const timestamp = new Date().getTime();
-      const fileNameWithTimestamp = `${fileNameWithoutExtension}_${timestamp}.${fileExtension}`;
-      const modifiedFile = new File([file], fileNameWithTimestamp, {type: file.type});
-
-      flowJsInstance.addFile(modifiedFile);
-      flowJsInstance.upload();
+      this.utilsService.onFlowUpload(flowJsInstance, file);
     }
   }
 

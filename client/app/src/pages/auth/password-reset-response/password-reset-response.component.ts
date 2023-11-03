@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {passwordRecoveryModel} from "@app/models/authentication/password-recovery-model";
+import {PasswordRecoveryModel} from "@app/models/authentication/password-recovery-model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -10,7 +10,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
 })
 export class PasswordResetResponseComponent implements OnInit {
   state = "start";
-  request = new passwordRecoveryModel();
+  request = new PasswordRecoveryModel();
 
   constructor(private route: ActivatedRoute, private httpService: HttpService, private router: Router, protected utilsService: UtilsService) {
   }
@@ -26,7 +26,7 @@ export class PasswordResetResponseComponent implements OnInit {
         next: response => {
 
           if (response.status === "success") {
-            this.router.navigate([("/login")], {queryParams: {token: response.token}});
+            this.router.navigate([("/login")], {queryParams: {token: response.token}}).then();
           } else {
             if (response.status === "require_recovery_key") {
               this.request.recovery_key = "";

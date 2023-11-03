@@ -67,7 +67,7 @@ export class TipsComponent implements OnInit {
 
   ngOnInit() {
     if (!this.RTips.dataModel) {
-      this.router.navigate(["/recipient/home"]);
+      this.router.navigate(["/recipient/home"]).then();
     } else {
       this.filteredTips = this.RTips.dataModel;
       this.processTips();

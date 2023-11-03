@@ -1,10 +1,9 @@
-import {HttpClient} from "@angular/common/http";
 import {Component, Input, OnInit} from "@angular/core";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {newStep} from "@app/models/admin/new-step";
+import {NewStep} from "@app/models/admin/new-step";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 
 @Component({
@@ -25,7 +24,7 @@ export class StepsComponent implements OnInit {
     sufficient: true,
   };
 
-  constructor(private questionnaireService: QuestionnaireService, private fieldUtilities: FieldUtilitiesService, protected node: NodeResolver, private http: HttpClient, protected utilsService: UtilsService, private httpService: HttpService) {
+  constructor(private questionnaireService: QuestionnaireService, private fieldUtilities: FieldUtilitiesService, protected node: NodeResolver, protected utilsService: UtilsService, private httpService: HttpService) {
   }
 
   ngOnInit(): void {
@@ -38,7 +37,7 @@ export class StepsComponent implements OnInit {
   }
 
   addStep() {
-    const step = new newStep();
+    const step = new NewStep();
     step.questionnaire_id = this.questionnaire.id;
     step.label = this.new_step.label;
     step.order = this.utilsService.newItemOrder(this.questionnaire.steps, "order");
@@ -51,22 +50,7 @@ export class StepsComponent implements OnInit {
   }
 
   swap($event: any, index: number, n: number): void {
-    $event.stopPropagation();
-    const target = index + n;
-    if (target < 0 || target >= this.questionnaire.steps.length) {
-      return;
-    }
-
-    [this.questionnaire.steps[index], this.questionnaire.steps[target]] =
-      [this.questionnaire.steps[target], this.questionnaire.steps[index]];
-
-    this.http.put("api/admin/steps", {
-      operation: "order_elements",
-      args: {
-        ids: this.questionnaire.steps.map((c: { id: any; }) => c.id),
-        questionnaire_id: this.questionnaire.id
-      },
-    }).subscribe();
+    this.utilsService.swap($event, index,n , this.questionnaire)
   }
 
   moveUp(e: any, idx: number): void {

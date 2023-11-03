@@ -1,4 +1,5 @@
 import {Injectable} from "@angular/core";
+import {CryptoService} from "@app/crypto.service";
 import {UtilsService} from "./utils.service";
 import {TranslationService} from "@app/services/translation.service";
 import {SubmissionService} from "@app/services/submission.service";
@@ -15,6 +16,7 @@ export class ServiceInstanceService {
   public authenticationService: AuthenticationService;
   public translationService: TranslationService;
   public submissionService: SubmissionService;
+  public cryptoService: CryptoService;
 
   constructor() {
 
@@ -38,5 +40,9 @@ export class ServiceInstanceService {
 
   setSubmissionService(instance: SubmissionService): void {
     this.submissionService = instance;
+  }
+
+  setCryptoService(instance: CryptoService): void {
+    this.cryptoService = instance;
   }
 }

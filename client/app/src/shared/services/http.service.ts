@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {passwordRecoveryResponseModel} from "@app/models/authentication/password-recovery-response-model";
+import {PasswordRecoveryResponseModel} from "@app/models/authentication/password-recovery-response-model";
 import {Router} from "@angular/router";
 
 
@@ -60,7 +60,7 @@ export class HttpService {
   }
 
   requestChangePassword(param: string): Observable<any> {
-    return this.httpClient.put<passwordRecoveryResponseModel>("api/user/reset/password", param);
+    return this.httpClient.put<PasswordRecoveryResponseModel>("api/user/reset/password", param);
   }
 
   requestToken(param: string): Observable<any> {
@@ -366,7 +366,7 @@ export class HttpService {
       setTimeout(() => {
         const currentUrl = this.router.url;
         this.router.navigateByUrl("routing", {skipLocationChange: true, replaceUrl: true}).then(() => {
-          this.router.navigate([currentUrl]);
+          this.router.navigate([currentUrl]).then();
         });
       }, 150);
     }

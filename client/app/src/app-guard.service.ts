@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {CanActivate, Router, UrlTree} from "@angular/router";
+import { Router, UrlTree } from "@angular/router";
 import {Observable} from "rxjs";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {AppDataService} from "@app/app-data.service";
@@ -7,7 +7,7 @@ import {AppDataService} from "@app/app-data.service";
 @Injectable({
   providedIn: "root"
 })
-export class SessionGuard implements CanActivate {
+export class SessionGuard  {
   constructor(private router: Router, private appDataService: AppDataService, public authentication: AuthenticationService) {
   }
 

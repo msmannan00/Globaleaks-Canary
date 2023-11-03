@@ -1,4 +1,4 @@
-export class passwordRecoveryResponseModel {
+export class PasswordRecoveryResponseModel {
   status: string = "";
   token: string = "";
 }

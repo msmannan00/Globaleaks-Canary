@@ -11,6 +11,7 @@ import {FieldUtilitiesService} from "@app/shared/services/field-utilities.servic
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: "src-fields",
@@ -66,22 +67,22 @@ export class FieldsComponent implements OnInit {
   }
 
   delField(field: any) {
-    this.openConfirmableModalDialog(field, "").then();
+    this.openConfirmableModalDialog(field, "").subscribe();
   }
 
-  openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
-    scope = !scope ? this : scope;
-    const modalRef = this.modalService.open(DeleteConfirmationComponent);
-    modalRef.componentInstance.arg = arg;
-    modalRef.componentInstance.scope = scope;
-    modalRef.componentInstance.confirmFunction = () => {
-      return this.httpService.requestDeleteAdminQuestionareField(arg.id).subscribe(() => {
-        this.dataToParent.emit();
-        return this.questionnaireService.sendData();
-      });
-    };
-    return modalRef.result;
+  openConfirmableModalDialog(arg: any, scope: any): Observable<string> {
+    return new Observable((observer) => {
+      let modalRef = this.modalService.open(DeleteConfirmationComponent, {});
+      modalRef.componentInstance.arg = arg;
+      modalRef.componentInstance.scope = scope;
 
+      modalRef.componentInstance.confirmFunction = () => {
+        observer.complete()
+        return this.httpService.requestDeleteAdminQuestionareField(arg.id).subscribe(() => {
+          return this.questionnaireService.sendData();
+        });
+      };
+    });
   }
 
   moveUpAndSave(field: any): void {
@@ -190,16 +191,19 @@ export class FieldsComponent implements OnInit {
   }
 
   addOptionHintDialog(option: any) {
-    this.openOptionHintDialog(option).then();
+    this.openOptionHintDialog(option).subscribe();
 
   }
 
-  openOptionHintDialog(arg: any): Promise<any> {
-    const modalRef = this.modalService.open(AddOptionHintComponent);
-    modalRef.componentInstance.arg = arg;
-    modalRef.componentInstance.confirmFunction = (_: any) => {
-    };
-    return modalRef.result;
+  openOptionHintDialog(arg: any): Observable<string> {
+    return new Observable((observer) => {
+      let modalRef = this.modalService.open(AddOptionHintComponent, {});
+      modalRef.componentInstance.arg = arg;
+
+      modalRef.componentInstance.confirmFunction = () => {
+        observer.complete()
+      };
+    });
   }
 
   private swapOption(index: number, n: number): void {
@@ -217,28 +221,34 @@ export class FieldsComponent implements OnInit {
   }
 
   triggerReceiverDialog(option: any): void {
-    this.openTriggerReceiverDialog(option).then();
+    this.openTriggerReceiverDialog(option).subscribe();
 
   }
 
-  openTriggerReceiverDialog(arg: any): Promise<any> {
-    const modalRef = this.modalService.open(TriggerReceiverComponent);
-    modalRef.componentInstance.arg = arg;
-    modalRef.componentInstance.confirmFunction = (_: any) => {
-    };
-    return modalRef.result;
+  openTriggerReceiverDialog(arg: any): Observable<string> {
+    return new Observable((observer) => {
+      let modalRef = this.modalService.open(TriggerReceiverComponent, {});
+      modalRef.componentInstance.arg = arg;
+
+      modalRef.componentInstance.confirmFunction = () => {
+        observer.complete()
+      };
+    });
   }
 
   assignScorePointsDialog(option: any) {
-    this.openAssignScorePointsDialog(option).then();
+    this.openAssignScorePointsDialog(option).subscribe();
   }
 
-  openAssignScorePointsDialog(arg: any): Promise<any> {
-    const modalRef = this.modalService.open(AssignScorePointsComponent);
-    modalRef.componentInstance.arg = arg;
-    modalRef.componentInstance.confirmFunction = (_: any) => {
-    };
-    return modalRef.result;
+  openAssignScorePointsDialog(arg: any): Observable<string> {
+    return new Observable((observer) => {
+      let modalRef = this.modalService.open(AssignScorePointsComponent, {});
+      modalRef.componentInstance.arg = arg;
+
+      modalRef.componentInstance.confirmFunction = () => {
+        observer.complete()
+      };
+    });
   }
 
   toggleAddQuestionFromTemplate() {

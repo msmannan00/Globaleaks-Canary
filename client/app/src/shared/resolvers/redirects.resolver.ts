@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Resolve,} from "@angular/router";
+
 import {Observable, of} from "rxjs";
 import {HttpService} from "@app/shared/services/http.service";
 import {AuthenticationService} from "app/src/services/authentication.service";
@@ -9,7 +9,7 @@ import {map} from "rxjs/operators";
 @Injectable({
   providedIn: "root"
 })
-export class RedirectsResolver implements Resolve<boolean> {
+export class RedirectsResolver  {
   dataModel: redirectResolverModel = new redirectResolverModel();
 
   constructor(

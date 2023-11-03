@@ -4,7 +4,7 @@ import {questionnaireResolverModel} from "@app/models/resolvers/questionnaire-mo
 import {QuestionnairesResolver} from "@app/shared/resolvers/questionnaires.resolver";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {newQuestionare} from "@app/models/admin/new-questionare";
+import {NewQuestionare} from "@app/models/admin/new-questionare";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 import {Subject, takeUntil} from "rxjs";
 
@@ -31,7 +31,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   addQuestionnaire() {
-    const questionnaire: newQuestionare = new newQuestionare();
+    const questionnaire: NewQuestionare = new NewQuestionare();
     questionnaire.name = this.new_questionnaire.name;
     this.httpService.addQuestionnaire(questionnaire).subscribe(res => {
       this.questionnairesData.push(res);

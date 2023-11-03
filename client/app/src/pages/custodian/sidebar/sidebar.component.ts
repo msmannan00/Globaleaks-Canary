@@ -1,12 +1,12 @@
 import {Component} from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "src-custodian-sidebar",
   templateUrl: "./sidebar.component.html"
 })
 export class SidebarComponent {
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(private router: Router) {
   }
 
   isActive(route: string): boolean {

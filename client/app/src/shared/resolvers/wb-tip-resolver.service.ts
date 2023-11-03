@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Resolve} from "@angular/router";
+
 import {AuthenticationService} from "@app/services/authentication.service";
 import {Observable, of} from "rxjs";
 import {WbTipData} from "@app/models/whistleblower/wb-tip-data";
@@ -9,7 +9,7 @@ import {map} from "rxjs/operators";
 @Injectable({
   providedIn: "root"
 })
-export class WbTipResolver implements Resolve<boolean> {
+export class WbTipResolver  {
 
   dataModel: WbTipData;
 

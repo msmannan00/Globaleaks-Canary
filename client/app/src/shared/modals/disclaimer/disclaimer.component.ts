@@ -7,11 +7,12 @@ import {NodeResolver} from "@app/shared/resolvers/node.resolver";
   templateUrl: "./disclaimer.component.html",
 })
 export class DisclaimerComponent implements OnInit {
-  confirmFunction: () => void;
   nodeData: any = [];
 
   constructor(private activeModal: NgbActiveModal, private modalService: NgbModal, protected nodeResolver: NodeResolver) {
   }
+
+  confirmFunction: () => void;
 
   ngOnInit(): void {
     if (this.nodeResolver.dataModel) {

@@ -1,4 +1,4 @@
-export class newContext {
+export class NewContext {
   id = "";
   hidden = true;
   name = "";

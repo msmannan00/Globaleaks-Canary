@@ -1,11 +1,13 @@
-import {HttpClient} from "@angular/common/http";
 import {Component, Input} from "@angular/core";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {AssignScorePointsComponent} from "@app/shared/modals/assign-score-points/assign-score-points.component";
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
+import {UtilsService} from "@app/shared/services/utils.service";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: "src-steps-list",
@@ -24,7 +26,7 @@ export class StepsListComponent {
     sufficient: true,
   };
 
-  constructor(private questionnaireService: QuestionnaireService, private modalService: NgbModal, private fieldUtilities: FieldUtilitiesService, protected nodeResolver: NodeResolver, private httpClient: HttpClient, private httpService: HttpService) {
+  constructor(private utilsService: UtilsService, private questionnaireService: QuestionnaireService, private modalService: NgbModal, private fieldUtilities: FieldUtilitiesService, protected nodeResolver: NodeResolver, private httpService: HttpService) {
   }
 
   ngOnInit(): void {
@@ -32,23 +34,7 @@ export class StepsListComponent {
   }
 
   swap($event: any, index: number, n: number): void {
-    $event.stopPropagation();
-
-    const target = index + n;
-    if (target < 0 || target >= this.questionnaire.steps.length) {
-      return;
-    }
-
-    [this.questionnaire.steps[index], this.questionnaire.steps[target]] =
-      [this.questionnaire.steps[target], this.questionnaire.steps[index]];
-
-    this.httpClient.put("api/admin/steps", {
-      operation: "order_elements",
-      args: {
-        ids: this.questionnaire.steps.map((c: { id: any; }) => c.id),
-        questionnaire_id: this.questionnaire.id
-      },
-    }).subscribe();
+    this.utilsService.swap($event, index,n , this.questionnaire)
   }
 
   moveUp(e: any, idx: number): void {
@@ -74,21 +60,23 @@ export class StepsListComponent {
   }
 
   deleteStep(step: any) {
-    this.openConfirmableModalDialog(step, "");
-
+    this.openConfirmableModalDialog(step, "").subscribe();
   }
 
-  openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
+  openConfirmableModalDialog(arg: any, scope: any): Observable<string> {
     scope = !scope ? this : scope;
-    const modalRef = this.modalService.open(DeleteConfirmationComponent);
-    modalRef.componentInstance.arg = arg;
-    modalRef.componentInstance.scope = scope;
-    modalRef.componentInstance.confirmFunction = () => {
-      return this.httpService.requestDeleteAdminQuestionareStep(arg.id).subscribe(_ => {
-        return this.questionnaireService.sendData();
-      });
-    };
-    return modalRef.result;
+    return new Observable((observer) => {
+      let modalRef = this.modalService.open(DeleteConfirmationComponent, {});
+      modalRef.componentInstance.arg = arg;
+      modalRef.componentInstance.scope = scope;
+
+      modalRef.componentInstance.confirmFunction = () => {
+        observer.complete()
+        return this.httpService.requestDeleteAdminQuestionareStep(arg.id).subscribe(_ => {
+          return this.questionnaireService.sendData();
+        });
+      };
+    });
   }
 
   addTrigger() {

@@ -4,7 +4,7 @@ import {HttpService} from "@app/shared/services/http.service";
 import {Observable} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AppDataService} from "@app/app-data.service";
-import {errorCodes} from "@app/models/app/error-code";
+import {ErrorCodes} from "@app/models/app/error-code";
 import {AppConfigService} from "@app/services/app-config.service";
 import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
 
@@ -131,7 +131,7 @@ export class AuthenticationService {
                 this.router.navigate([this.session.homepage], {
                   queryParams: this.activatedRoute.snapshot.queryParams,
                   queryParamsHandling: "merge"
-                });
+                }).then();
               }
             }
           }
@@ -150,7 +150,7 @@ export class AuthenticationService {
             }
           }
 
-          this.rootDataService.errorCodes = new errorCodes(error.error.error_message, error.error.error_code, error.error.arguments);
+          this.rootDataService.errorCodes = new ErrorCodes(error.error.error_message, error.error.error_code, error.error.arguments);
           if (callback) {
             callback();
           }

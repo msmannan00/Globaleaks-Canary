@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Resolve,} from "@angular/router";
+
 import {Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
 import {HttpService} from "@app/shared/services/http.service";
@@ -9,7 +9,7 @@ import {jobResolverModel} from "@app/models/resolvers/job-resolver-model";
 @Injectable({
   providedIn: "root"
 })
-export class JobResolver implements Resolve<boolean> {
+export class JobResolver  {
   dataModel: jobResolverModel = new jobResolverModel();
 
   constructor(private httpService: HttpService, private authenticationService: AuthenticationService) {

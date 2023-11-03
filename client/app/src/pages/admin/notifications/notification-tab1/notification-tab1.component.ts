@@ -23,12 +23,7 @@ export class NotificationTab1Component {
   }
 
   updateThenTestMail(notification: any): void {
-    this.utilsService.updateAdminNotification(notification)
-      .toPromise()
-      .then(() => this.utilsService.runAdminOperation("test_mail", {}, true)
-      )
-      .catch(() => {
-      });
+    this.utilsService.updateAdminNotification(notification).subscribe(() => this.utilsService.runAdminOperation("test_mail", {}, true));
   }
 
   resetSMTPSettings() {

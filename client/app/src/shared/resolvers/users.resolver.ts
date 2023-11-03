@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Resolve} from "@angular/router";
+
 import {Observable, of} from "rxjs";
 import {HttpService} from "@app/shared/services/http.service";
 import {userResolverModel} from "@app/models/resolvers/user-resolver-model";
@@ -9,7 +9,7 @@ import {map} from "rxjs/operators";
 @Injectable({
   providedIn: "root"
 })
-export class UsersResolver implements Resolve<boolean> {
+export class UsersResolver  {
   dataModel: userResolverModel = new userResolverModel();
 
   constructor(

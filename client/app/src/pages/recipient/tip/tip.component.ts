@@ -1,6 +1,7 @@
 import {AfterViewInit, ChangeDetectorRef, Component, TemplateRef, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AppConfigService} from "@app/services/app-config.service";
+import {TipService} from "@app/shared/services/tip-service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AppDataService} from "@app/app-data.service";
 import {ReceiverTipService} from "@app/services/receiver-tip.service";
@@ -44,7 +45,7 @@ export class TipComponent implements AfterViewInit {
   tabs: any[];
   active: string;
 
-  constructor(private appConfigServices: AppConfigService, private router: Router, private cdr: ChangeDetectorRef, private cryptoService: CryptoService, protected utils: UtilsService, protected preferencesService: PreferenceResolver, protected modalService: NgbModal, private activatedRoute: ActivatedRoute, protected httpService: HttpService, protected http: HttpClient, protected appDataService: AppDataService, protected RTipService: ReceiverTipService, protected fieldUtilities: FieldUtilitiesService, protected authenticationService: AuthenticationService) {
+  constructor(private tipService: TipService, private appConfigServices: AppConfigService, private router: Router, private cdr: ChangeDetectorRef, private cryptoService: CryptoService, protected utils: UtilsService, protected preferencesService: PreferenceResolver, protected modalService: NgbModal, private activatedRoute: ActivatedRoute, protected httpService: HttpService, protected http: HttpClient, protected appDataService: AppDataService, protected RTipService: ReceiverTipService, protected fieldUtilities: FieldUtilitiesService, protected authenticationService: AuthenticationService) {
   }
 
   ngAfterViewInit(): void {
@@ -177,7 +178,7 @@ export class TipComponent implements AfterViewInit {
                 this.http
                   .put(`api/recipient/rtips/${this.tip.id}`, req)
                   .subscribe(() => {
-                    this.router.navigate(["recipient", "reports"]);
+                    this.router.navigate(["recipient", "reports"]).then();
                   });
               }
             },
@@ -197,55 +198,8 @@ export class TipComponent implements AfterViewInit {
     this.appConfigServices.localInitialization(true, reloadCallback);
   }
 
-  filterNotTriggeredField(parent: any, field: any, answers: any): void {
-    let i;
-    if (this.fieldUtilities.isFieldTriggered(parent, field, answers, this.tip.score)) {
-      for (i = 0; i < field.children.length; i++) {
-        this.filterNotTriggeredField(field, field.children[i], answers);
-      }
-    }
-  }
-
   preprocessTipAnswers(tip: any) {
-    let x, i, j, k, step;
-
-    for (x = 0; x < tip.questionnaires.length; x++) {
-      this.questionnaire = tip.questionnaires[x];
-      this.fieldUtilities.parseQuestionnaire(this.questionnaire, {});
-
-      for (i = 0; i < this.questionnaire.steps.length; i++) {
-        step = this.questionnaire.steps[i];
-        if (this.fieldUtilities.isFieldTriggered(null, step, this.questionnaire.answers, this.tip.score)) {
-          for (j = 0; j < step.children.length; j++) {
-            this.filterNotTriggeredField(step, step.children[j], this.questionnaire.answers);
-          }
-        }
-      }
-
-      for (i = 0; i < this.questionnaire.steps.length; i++) {
-        step = this.questionnaire.steps[i];
-        j = step.children.length;
-        while (j--) {
-          if (step.children[j]["template_id"] === "whistleblower_identity") {
-            this.tip.whistleblower_identity_field = step.children[j];
-            this.tip.whistleblower_identity_field.enabled = true;
-            step.children.splice(j, 1);
-
-            this.questionnaire = {
-              steps: [{...this.tip.whistleblower_identity_field}]
-            };
-
-            this.tip.fields = this.questionnaire.steps[0].children;
-            this.rows = this.fieldUtilities.splitRows(this.tip.fields);
-            this.fieldUtilities.onAnswersUpdate(this);
-
-            for (k = 0; k < this.tip.whistleblower_identity_field.children.length; k++) {
-              this.filterNotTriggeredField(this.tip.whistleblower_identity_field, this.tip.whistleblower_identity_field.children[k], this.tip.data.whistleblower_identity);
-            }
-          }
-        }
-      }
-    }
+    this.tipService.preprocessTipAnswers(tip);
   }
 
   tipToggleStar() {

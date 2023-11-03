@@ -1,7 +1,5 @@
 import {Injectable} from "@angular/core";
-import {
-  Resolve,
-} from "@angular/router";
+
 import {AppDataService} from "@app/app-data.service";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {Observable, of} from "rxjs";
@@ -9,7 +7,7 @@ import {Observable, of} from "rxjs";
 @Injectable({
   providedIn: "root"
 })
-export class WhistleblowerLoginResolver implements Resolve<boolean> {
+export class WhistleblowerLoginResolver  {
   loggedIn = false;
 
   constructor(private appDataService: AppDataService, private authenticationService: AuthenticationService) {

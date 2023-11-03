@@ -1,5 +1,6 @@
 import {Component, Input, OnInit, ViewChild} from "@angular/core";
 import {NgForm} from "@angular/forms";
+import {LanguageUtils} from "@app/pages/admin/settings/helper-methods/language-utils";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppConfigService} from "@app/services/app-config.service";
@@ -17,9 +18,7 @@ export class Tab3Component implements OnInit {
 
   showLangSelect = false;
   selected = {value: null};
-  languages_enabled: any = {};
-  languages_enabled_selector: any[] = [];
-  languages_supported: any = {};
+  languageUtils:LanguageUtils
 
   constructor(private appDataService: AppDataService, private translationService: TranslationService, private appConfigService: AppConfigService, private utilsService: UtilsService, protected nodeResolver: NodeResolver) {
   }
@@ -29,18 +28,8 @@ export class Tab3Component implements OnInit {
   }
 
   updateLanguages(): void {
-    this.languages_supported = {};
-    this.languages_enabled = {};
-    this.languages_enabled_selector = [];
-
-    this.nodeResolver.dataModel.languages_supported.forEach((lang: any) => {
-      this.languages_supported[lang.code] = lang;
-
-      if (this.nodeResolver.dataModel.languages_enabled.indexOf(lang.code) !== -1) {
-        this.languages_enabled[lang.code] = lang;
-        this.languages_enabled_selector.push(lang);
-      }
-    });
+    this.languageUtils = new LanguageUtils(this.nodeResolver);
+    this.languageUtils.updateLanguages();
   }
 
   toggleLangSelect() {
