@@ -1,7 +1,7 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import * as Flow from "@flowjs/flow.js";
-import {AuthenticationService} from "@app/services/authentication.service";
-import {SubmissionService} from "@app/services/submission.service";
+import { AuthenticationService } from "@app/services/authentication.service";
+import { SubmissionService } from "@app/services/submission.service";
 
 @Component({
   selector: "src-voice-recorder",
@@ -30,31 +30,29 @@ export class VoiceRecorderComponent implements OnInit {
   stopButton: boolean;
   recordButton: boolean;
   chunks: never[];
-
+ 
   @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
   private audioContext: AudioContext;
   entry: any;
-
   constructor(private cd: ChangeDetectorRef, protected authenticationService: AuthenticationService, private submissionService: SubmissionService) {
   }
 
   ngOnInit(): void {
     this.fileInput = this.field ? this.field.id : "status_page";
-    this.uploads[this.fileInput] = {files: []};
-    this.initAudioContext();
+    this.uploads[this.fileInput] = { files: [] };
+    this.initAudioContext()
   }
-
   private initAudioContext() {
     this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
   }
-
+  
   triggerRecording(fileId: string): void {
     this.activeButton = "record";
 
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({audio: true})
+      navigator.mediaDevices.getUserMedia({ audio: true })
         .then((stream) => {
-          this.startRecording(fileId, stream).then();
+          this.startRecording(fileId, stream);
         })
         .catch(() => {
           this.activeButton = null;
@@ -64,8 +62,8 @@ export class VoiceRecorderComponent implements OnInit {
 
   startRecording = async (fileId: string, stream: MediaStream) => {
     this.isRecording = true;
-    this.audioPlayer = "";
-    this.activeButton = "record";
+    this.audioPlayer = '';
+    this.activeButton = 'record';
     this.seconds = 0;
     this.startTime = Date.now();
 
@@ -76,7 +74,7 @@ export class VoiceRecorderComponent implements OnInit {
       allowDuplicateUploads: false,
       testChunks: false,
       permanentErrors: [500, 501],
-      headers: {"X-Session": this.authenticationService.session.id},
+      headers: { "X-Session": this.authenticationService.session.id },
       query: {
         type: "audio.webm",
         reference_id: fileId,
@@ -93,7 +91,7 @@ export class VoiceRecorderComponent implements OnInit {
       }
     }, 1000);
 
-
+    await this.enableNoiseSuppression(stream);
     const mediaStreamDestination = this.audioContext.createMediaStreamDestination();
     const source = this.audioContext.createMediaStreamSource(stream);
     const anonymizationFilter = this.anonymizeSpeaker(this.audioContext);
@@ -144,12 +142,12 @@ export class VoiceRecorderComponent implements OnInit {
       return;
     }
 
-    if (this.mediaRecorder && (this.mediaRecorder.state === "recording" || this.mediaRecorder.state === "paused")) {
+    if (this.mediaRecorder && (this.mediaRecorder.state === 'recording' || this.mediaRecorder.state === 'paused')) {
       this.mediaRecorder.stop();
     }
   }
-
-  async onRecorderStop(): Promise<void> {
+ 
+  async onRecorderStop() : Promise<void> {
     this.flow.files = [];
 
     if (this.uploads.hasOwnProperty(this.fileInput)) {
@@ -157,10 +155,10 @@ export class VoiceRecorderComponent implements OnInit {
     }
 
     if (this.seconds >= parseInt(this.field.attrs.min_len.value) && this.seconds <= parseInt(this.field.attrs.max_len.value)) {
-
+    
       this.flow.addFile(this.recording_blob);
 
-      this.audioPlayer = URL.createObjectURL(this.recording_blob);
+      this.audioPlayer = URL.createObjectURL(this.recording_blob)
       this.uploads[this.fileInput] = this.flow;
       this.submissionService.setSharedData(this.flow);
       if (this.entry) {
@@ -175,7 +173,7 @@ export class VoiceRecorderComponent implements OnInit {
 
   deleteRecording(): void {
     if (this.flow) {
-      this.flow = new Flow;
+       this.flow.cancel();
     }
     this.chunks = [];
     this.mediaRecorder = null;
@@ -191,7 +189,7 @@ export class VoiceRecorderComponent implements OnInit {
   async enableNoiseSuppression(stream: MediaStream): Promise<void> {
     const supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
     if ("noiseSuppression" in supportedConstraints) {
-      const settings = {noiseSuppression: true};
+      const settings = { noiseSuppression: true };
       stream.getAudioTracks().forEach(track => {
         track.applyConstraints(settings);
       });
@@ -209,7 +207,7 @@ export class VoiceRecorderComponent implements OnInit {
       const bw: number = hi - lo;
       const Q: number = fc / bw;
 
-      vocoderBands.push({freq: fc, Q: Q});
+      vocoderBands.push({ freq: fc, Q: Q });
     }
 
     return vocoderBands;
@@ -227,19 +225,19 @@ export class VoiceRecorderComponent implements OnInit {
     const output: GainNode = audioContext.createGain();
     input.gain.value = output.gain.value = 1;
     const vocoderBands = this.generateVocoderBands(200, 16000, 128);
-    const vocoderPitchShift: number = -(1 / 12 - Math.random() / 24);
+    const vocoderPitchShift: number = -(1 / 12 - Math.random() * 1 / 24);
 
     for (let i = 0; i < vocoderBands.length; i++) {
       const carrier: OscillatorNode = audioContext.createOscillator();
       carrier.frequency.value = vocoderBands[i].freq * Math.pow(2, vocoderPitchShift);
       const modulatorBandFilter: BiquadFilterNode = audioContext.createBiquadFilter();
-      modulatorBandFilter.type = "bandpass";
+      modulatorBandFilter.type = 'bandpass';
       modulatorBandFilter.frequency.value = vocoderBands[i].freq;
       modulatorBandFilter.Q.value = vocoderBands[i].Q;
       const rectifier: WaveShaperNode = audioContext.createWaveShaper();
       rectifier.curve = this.generateRectifierCurve();
       const postRectifierBandFilter: BiquadFilterNode = audioContext.createBiquadFilter();
-      postRectifierBandFilter.type = "lowpass";
+      postRectifierBandFilter.type = 'lowpass';
       postRectifierBandFilter.frequency.value = 20;
       postRectifierBandFilter.gain.value = 1;
       const postRectifierGain: GainNode = audioContext.createGain();
@@ -256,7 +254,7 @@ export class VoiceRecorderComponent implements OnInit {
 
       if (carrier) carrier.start();
     }
-    return {input: input, output: output};
+    return { input: input, output: output };
   }
 
 
