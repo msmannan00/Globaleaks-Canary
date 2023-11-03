@@ -49,6 +49,7 @@ export class FieldsComponent implements OnInit {
     this.fieldIsMarkableSubjectToPreview = this.isMarkableSubjectToPreview(this.field);
     this.parsedFields = this.fieldUtilities.parseFields(this.fieldTemplates.dataModel, {});
     this.children = this.field.children;
+    console.log(this.field)
   }
 
   saveField(field: any) {
