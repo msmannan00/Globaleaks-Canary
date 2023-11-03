@@ -20,6 +20,7 @@ import {Observable} from "rxjs";
 export class FieldsComponent implements OnInit {
   @Input() editField: NgForm;
   @Input() field: any;
+  @Input() fields: any;
   @Input() type: any;
   @Output() dataToParent = new EventEmitter<string>();
 
@@ -54,7 +55,6 @@ export class FieldsComponent implements OnInit {
   saveField(field: any) {
     this.utilsService.assignUniqueOrderIndex(field.options);
     return this.httpService.requestUpdateAdminQuestionnaireField(field.id, field).subscribe(_ => {
-      return this.questionnaireService.sendData();
     });
   }
 
@@ -79,7 +79,7 @@ export class FieldsComponent implements OnInit {
       modalRef.componentInstance.confirmFunction = () => {
         observer.complete()
         return this.httpService.requestDeleteAdminQuestionareField(arg.id).subscribe(() => {
-          return this.questionnaireService.sendData();
+          return this.utilsService.deleteResource(this.fields,arg);
         });
       };
     });

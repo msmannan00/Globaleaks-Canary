@@ -650,4 +650,12 @@ export class UtilsService {
       });
     }
   }
+
+  deleteResource( list: any[], res: any): void {
+    console.log(list,"list");
+    console.log(res,"res");
+    
+      list.splice(list.indexOf(res), 1);
+  }
+  
 }
