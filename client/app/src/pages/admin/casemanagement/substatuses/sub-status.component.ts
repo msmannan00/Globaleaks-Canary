@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {HttpClient} from "@angular/common/http";
-import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AppConfigService} from "@app/services/app-config.service";
 import {HttpService} from "@app/shared/services/http.service";
@@ -77,22 +76,7 @@ export class SubStatusComponent implements OnInit {
   }
 
   deleteSubSubmissionStatus(subStatusParam: any): void {
-    this.openConfirmableModalDialog(subStatusParam, "").then();
-  }
-
-  openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
-    scope = !scope ? this : scope;
-    const modalRef = this.modalService.open(DeleteConfirmationComponent);
-    modalRef.componentInstance.arg = arg;
-    modalRef.componentInstance.scope = scope;
-    modalRef.componentInstance.confirmFunction = () => {
-
-      const url = "api/admin/statuses/" + this.submissionsStatus.id + "/substatuses/" + arg.id;
-      return this.utilsService.deleteSubStatus(url).subscribe(_ => {
-        this.appConfigService.reinit();
-      });
-    };
-    return modalRef.result;
+    this.utilsService.openConfirmableModalDialog(subStatusParam, "").subscribe();
   }
 
   moveSsUp(e: any, idx: number): void {

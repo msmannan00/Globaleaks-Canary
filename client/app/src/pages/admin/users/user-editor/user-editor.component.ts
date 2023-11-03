@@ -8,6 +8,7 @@ import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmatio
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: "src-user-editor",
@@ -91,22 +92,24 @@ export class UserEditorComponent implements OnInit {
   }
 
   deleteUser(user: any) {
-    this.openConfirmableModalDialog(user, "").then();
+    this.openConfirmableModalDialog(user, "").subscribe();
   }
 
-  openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
+  openConfirmableModalDialog(arg: any, scope: any): Observable<string> {
     scope = !scope ? this : scope;
+    return new Observable((observer) => {
+      let modalRef = this.modalService.open(DeleteConfirmationComponent, {});
+      modalRef.componentInstance.arg = arg;
+      modalRef.componentInstance.scope = scope;
 
-    const modalRef = this.modalService.open(DeleteConfirmationComponent);
-    modalRef.componentInstance.arg = arg;
-    modalRef.componentInstance.scope = scope;
-    modalRef.componentInstance.confirmFunction = () => {
-      return this.utilsService.deleteAdminUser(arg.id).subscribe(_ => {
-        this.sendDataToParent();
-        this.utilsService.reloadCurrentRoute();
-      });
-    };
-    return modalRef.result;
+      modalRef.componentInstance.confirmFunction = () => {
+        observer.complete()
+        return this.utilsService.deleteAdminUser(arg.id).subscribe(_ => {
+          this.sendDataToParent();
+          this.utilsService.reloadCurrentRoute();
+        });
+      };
+    });
   }
 
   resetUserPassword(user: any) {

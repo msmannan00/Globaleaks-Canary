@@ -68,6 +68,6 @@ export class Tab5Component {
   }
 
   resetSubmissions() {
-    this.utilsService.deleteDialog().then();
+    this.utilsService.deleteDialog().unsubscribe();
   }
 }

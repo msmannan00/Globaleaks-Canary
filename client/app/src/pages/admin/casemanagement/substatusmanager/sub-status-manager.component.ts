@@ -1,7 +1,6 @@
 import {Component, Input} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {HttpService} from "@app/shared/services/http.service";
-import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppConfigService} from "@app/services/app-config.service";
@@ -85,7 +84,7 @@ export class SubStatusManagerComponent {
   }
 
   deleteSubmissionStatus(submissionsStatus: any): void {
-    this.openConfirmableModalDialog(submissionsStatus, "").then();
+    this.utilsService.openConfirmableModalDialog(submissionsStatus, "").subscribe();
   }
 
   saveSubmissionsStatus(submissionsStatus: any): void {
@@ -93,19 +92,5 @@ export class SubStatusManagerComponent {
     this.httpService.requestUpdateStatus(url, submissionsStatus).subscribe(_ => {
       this.appConfigService.reinit();
     });
-  }
-
-  openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
-    scope = !scope ? this : scope;
-    const modalRef = this.modalService.open(DeleteConfirmationComponent);
-    modalRef.componentInstance.arg = arg;
-    modalRef.componentInstance.scope = scope;
-    modalRef.componentInstance.confirmFunction = () => {
-      const url = "api/admin/statuses/" + arg.id;
-      return this.utilsService.deleteStatus(url).subscribe(_ => {
-        this.appConfigService.reinit();
-      });
-    };
-    return modalRef.result;
   }
 }
