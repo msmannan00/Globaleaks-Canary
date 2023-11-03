@@ -39,7 +39,7 @@
         <ng-container *ngIf="questionnairesData.length > 0">
             <div *ngFor="let questionnaire of questionnairesData | orderBy:'name'; let index = index;trackBy: trackByFn">
                 <form id=" questionnaire-{{ index }}" class="config-item" #editQuestionnaire="ngForm" novalidate>
-                <src-questionnaires-list [questionnaire]="questionnaire" [editQuestionnaire]="editQuestionnaire"
+                <src-questionnaires-list [questionnaire]="questionnaire" [editQuestionnaire]="editQuestionnaire" [questionnaires]="questionnairesData"
                     (deleteRequestData)="deleteRequest($event)"></src-questionnaires-list>
                 </form>
             </div>

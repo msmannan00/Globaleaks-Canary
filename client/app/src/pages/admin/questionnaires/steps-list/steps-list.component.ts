@@ -15,6 +15,7 @@ import {Observable} from "rxjs";
 })
 export class StepsListComponent {
   @Input() step: any;
+  @Input() steps: any;
   @Input() questionnaire: any;
   @Input() index: any;
   editing: boolean = false;
@@ -73,7 +74,7 @@ export class StepsListComponent {
       modalRef.componentInstance.confirmFunction = () => {
         observer.complete()
         return this.httpService.requestDeleteAdminQuestionareStep(arg.id).subscribe(_ => {
-          return this.questionnaireService.sendData();
+          this.utilsService.deleteResource(this.steps,arg);
         });
       };
     });

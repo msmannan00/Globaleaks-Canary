@@ -113,7 +113,7 @@ export class ContextEditorComponent implements OnInit {
       modalRef.componentInstance.confirmFunction = () => {
         observer.complete()
         return this.utilsService.deleteAdminContext(arg.id).subscribe(_ => {
-          this.sendDataToParent();
+          this.utilsService.deleteResource(this.contextsData,arg);
         });
       };
     });

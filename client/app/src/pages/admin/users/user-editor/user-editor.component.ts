@@ -16,6 +16,7 @@ import {Observable} from "rxjs";
 })
 export class UserEditorComponent implements OnInit {
   @Input() user: any;
+  @Input() users: any;
   @Input() index: any;
   @Input() editUser: NgForm;
   @Output() dataToParent = new EventEmitter<string>();
@@ -105,8 +106,7 @@ export class UserEditorComponent implements OnInit {
       modalRef.componentInstance.confirmFunction = () => {
         observer.complete()
         return this.utilsService.deleteAdminUser(arg.id).subscribe(_ => {
-          this.sendDataToParent();
-          this.utilsService.reloadCurrentRoute();
+          this.utilsService.deleteResource(this.users,arg);
         });
       };
     });

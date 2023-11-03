@@ -678,4 +678,9 @@ export class UtilsService {
       });
     }
   }
+
+  deleteResource( list: any[], res: any): void {
+      list.splice(list.indexOf(res), 1);
+  }
+  
 }

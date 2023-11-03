@@ -45,7 +45,7 @@
 <div class="row">
     <div class="col-md-12" *ngIf="tenants" >
         <div *ngFor="let tenant of tenants | orderBy:'id' | filter:'name':search | slice: (currentPage - 1) * itemsPerPage : currentPage * itemsPerPage; let index = index">
-            <src-siteslist [index]="(currentPage - 1) * itemsPerPage + index" [tenant]="tenant"></src-siteslist>
+            <src-siteslist [index]="(currentPage - 1) * itemsPerPage + index" [tenant]="tenant" [tenants]="tenants"></src-siteslist>
         </div>
 
         <div class="text-center" *ngIf="(tenants | filter:'name':search).length > 10">

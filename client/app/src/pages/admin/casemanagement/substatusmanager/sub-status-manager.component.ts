@@ -12,6 +12,7 @@ import {AppConfigService} from "@app/services/app-config.service";
 export class SubStatusManagerComponent {
   editing = false;
   @Input() submissionsStatus: any;
+  @Input() submissionStatuses: any;
   @Input() index: number;
   @Input() first: boolean;
   @Input() last: boolean;
@@ -90,7 +91,7 @@ export class SubStatusManagerComponent {
   saveSubmissionsStatus(submissionsStatus: any): void {
     const url = "api/admin/statuses/" + submissionsStatus.id;
     this.httpService.requestUpdateStatus(url, submissionsStatus).subscribe(_ => {
-      this.appConfigService.reinit();
+      this.utilsService.deleteResource(this.submissionStatuses,submissionsStatus);
     });
   }
 }

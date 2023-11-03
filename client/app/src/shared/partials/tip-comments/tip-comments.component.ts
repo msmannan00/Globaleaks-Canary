@@ -42,7 +42,6 @@ export class TipCommentsComponent {
         this.comments = this.tipService.tip.comments;
         this.tipService.tip.comments.push(data);
         this.comments = [...this.comments, []];
-        console.log(this.comments);
         this.cdr.detectChanges();
       }
     );
