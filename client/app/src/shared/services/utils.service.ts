@@ -16,6 +16,7 @@ import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
+import {ClipboardService} from "ngx-clipboard";
 
 @Injectable({
   providedIn: "root"
@@ -24,7 +25,7 @@ export class UtilsService {
 
   public authenticationService: AuthenticationService;
 
-  constructor(private serviceInstanceService: ServiceInstanceService, private nodeResolver: NodeResolver, private http: HttpClient, private httpService: HttpService, private modalService: NgbModal, private translateService: TranslateService, private appDataService: AppDataService, private preferenceResolver: PreferenceResolver, private tokenResourceService: TokenResource, private router: Router) {
+  constructor(private clipboardService: ClipboardService, private serviceInstanceService: ServiceInstanceService, private nodeResolver: NodeResolver, private http: HttpClient, private httpService: HttpService, private modalService: NgbModal, private translateService: TranslateService, private appDataService: AppDataService, private preferenceResolver: PreferenceResolver, private tokenResourceService: TokenResource, private router: Router) {
   }
 
   init() {
@@ -282,9 +283,7 @@ export class UtilsService {
   }
 
   copyToClipboard(data: string) {
-    if (window.navigator.clipboard && window.isSecureContext) {
-      window.navigator.clipboard.writeText(data).then();
-    }
+    this.clipboardService.copyFromContent(data);
   }
 
   getSubmissionStatusText(status: any, submission_statuses: any) {

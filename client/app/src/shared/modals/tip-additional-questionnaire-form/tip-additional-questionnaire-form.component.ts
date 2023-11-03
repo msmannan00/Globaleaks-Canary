@@ -1,4 +1,5 @@
 import {Component, OnInit, QueryList, ViewChild, ViewChildren} from "@angular/core";
+import {WbTipResolver} from "@app/shared/resolvers/wb-tip-resolver.service";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {NgForm} from "@angular/forms";
 import {WbtipService} from "@app/services/wbtip.service";
@@ -25,7 +26,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit {
   uploads: any = {};
   file_upload_url = "api/whistleblower/wbtip/rfile";
 
-  constructor(private httpService: HttpService, private fieldUtilitiesService: FieldUtilitiesService, private utilsService: UtilsService, protected wbTipService: WbtipService, protected activeModal: NgbActiveModal) {
+  constructor(private wbTipResolver: WbTipResolver, private httpService: HttpService, private fieldUtilitiesService: FieldUtilitiesService, private utilsService: UtilsService, protected wbTipService: WbtipService, protected activeModal: NgbActiveModal) {
   }
 
   ngOnInit(): void {
@@ -197,7 +198,9 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit {
       (
         {
           next: _ => {
-            this.utilsService.reloadCurrentRoute();
+            this.wbTipResolver.onReload(() => {
+              this.utilsService.reloadCurrentRoute();
+            });
           }
         }
       );

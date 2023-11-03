@@ -12,19 +12,18 @@
         <markdown *ngIf="field.description" class="description" [data]="field.description | stripHtml"></markdown>
         <div class="form-group">
             <div class="field-answer-entry" *ngFor="let entry of entries; let entryIndex = index;let first = first;let last = last;" [ngClass]="{'fieldAnswerEntryFirst': first, 'fieldAnswerEntryLast': last}">
-                    <div class="field-answer-entry-label clearfix" *ngIf="entries.length > 1">
-                        <span class="float-start">
-                            <label class="text-muted">
-                              <span>#{{entryIndex + 1}}</span>
-                            </label>
-                        </span>
-                        <span class="float-end">
-                            <span class="text-danger" data-toggle="tooltip" title="{{'Remove' | translate}}" [attr.aria-label]="'Remove' | translate" (click)="utilsService.deleteFromList(entries, entry)">
-                              <i class="fa-solid fa-times"></i>
-                            </span>
-                        </span>
-                    </div>
-
+               <div class="field-answer-entry-label clearfix" *ngIf="entries.length > 1">
+                   <span class="float-start">
+                       <label class="text-muted">
+                         <span>#{{entryIndex + 1}}</span>
+                       </label>
+                   </span>
+                   <span class="float-end">
+                       <span class="text-danger" data-toggle="tooltip" title="{{'Remove' | translate}}" [attr.aria-label]="'Remove' | translate" (click)="utilsService.deleteFromList(entries, entry)">
+                         <i class="fa-solid fa-times"></i>
+                       </span>
+                   </span>
+               </div>
                <src-form-field-input [fileUploadUrl]="fileUploadUrl" (notifyFileUpload)="notifyFileUpload.emit()" [identity_provided] = identity_provided [uploads]="uploads" [fields]="fields" [step]="step" [answers]="answers" [fieldId]="fieldId" [displayErrors]="displayErrors" [entry]="entry" [entryIndex]="entryIndex" [fieldEntry]="fieldEntry" [submission]="submission" [field]="field" [index]="entryIndex"></src-form-field-input>
             </div>
             <div *ngIf="field.multi_entry && field.type === 'fieldgroup'" class="float-end">
