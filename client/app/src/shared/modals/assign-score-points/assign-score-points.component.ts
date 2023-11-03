@@ -8,7 +8,7 @@ import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 export class AssignScorePointsComponent {
   @Input() arg = {
     score_points: 0,
-    score_type: 0
+    score_type: 'addition'
   };
 
   constructor(private activeModal: NgbActiveModal, private modalService: NgbModal) {
