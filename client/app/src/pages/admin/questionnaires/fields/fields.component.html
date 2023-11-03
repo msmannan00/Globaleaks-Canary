@@ -182,7 +182,7 @@
                                 [disabled]="!field.editable" />
                             <div>{{ 'Set the value to 0 to disable this feature.' | translate }}</div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" *ngIf="field.attrs.input_validation">
                             <label>{{ 'Input validation' | translate }}</label>
                             <select name="type" class="form-select" [(ngModel)]="field.attrs.input_validation.value"
                                 required>
@@ -193,7 +193,7 @@
                                 <option value="custom">{{ 'Custom' | translate }}</option>
                             </select>
                         </div>
-                        <div class="form-group" *ngIf="field.attrs.input_validation.value === 'custom'">
+                        <div class="form-group" *ngIf="field.attrs.input_validation?.value === 'custom'">
                             <label>{{ 'Regular expression' | translate }}</label>
                             <input [(ngModel)]="field.attrs.regexp.value" type="text" class="form-control"
                                 [disabled]="!field.editable" />
