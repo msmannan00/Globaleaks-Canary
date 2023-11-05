@@ -24,7 +24,7 @@
                 </span>
                 <div class="mt-md-1 text-center">{{'Use the 16 digit receipt to log in. It will allow you to view any messages we sent you, and also to add extra info.' | translate}}</div>
                 <div class="mt-md-3 clearfix" *ngIf="appDataService.page === 'receiptpage'">
-                    <button id="ReceiptButton" class="btn btn-primary float-end" (click)="authenticationService.login(0, 'whistleblower', receipt)">{{'View your report' | translate}}</button>
+                    <button id="ReceiptButton" class="btn btn-primary float-end" (click)="viewReport()">{{'View your report' | translate}}</button>
                 </div>
             </div>
         </div>

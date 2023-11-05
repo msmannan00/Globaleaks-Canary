@@ -71,7 +71,7 @@ export class TippageComponent {
   preprocessTipAnswers(tip: any) {
     let x, i, j, k, step;
 
-    for (x = 0; x < tip.questionnaires.length; x++) {
+    for (let x = tip.questionnaires.length - 1; x >= 0; x--) {
       this.questionnaire = tip.questionnaires[x];
       this.fieldUtilities.parseQuestionnaire(this.questionnaire, {});
 

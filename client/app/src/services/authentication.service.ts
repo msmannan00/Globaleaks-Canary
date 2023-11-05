@@ -122,7 +122,6 @@ export class AuthenticationService {
             if (this.session.role === "whistleblower") {
               if (password) {
                 this.rootDataService.receipt = password;
-                this.rootDataService.page = "tippage";
               }
             } else {
               if (!callback) {
