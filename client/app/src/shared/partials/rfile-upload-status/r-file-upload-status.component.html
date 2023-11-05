@@ -5,10 +5,11 @@
                 <div class="img-preview">
                     <img alt="preview picture" [flowSrc]="file" *ngIf="utilsService.showFilePreview(file.flowFile.file.type)" />
                 </div>
-
                 <div class="file-buttons" *ngIf="!formUploader || (!file.flowFile.isComplete() && !file.flowFile.isUploading())">
                     <div *ngIf="appDataService.page === 'submissionpage' || !file.complete" class="removeFileButton text-danger">
-                        <div class="btn btn-sm btn-danger" (click)="file.flowFile.cancel()"><i class="fa-solid fa-times" aria-label="{'Remove' | translate}"></i></div>
+                        <div class="btn btn-sm btn-danger" (click)="file.flowFile.cancel()">
+                            <i class="fa-solid fa-times" aria-label="{'Remove' | translate}"></i>
+                        </div>
                     </div>
                 </div>
                 <div class="file-upload">
@@ -36,7 +37,8 @@
                 </div>
                 <div>
                     <label class="fileSize">
-                        <span>{{'Size:'|translate}}</span> <span>{{file.size | byteFmt:2}}</span>
+                        <span>{{'Size:'|translate}}</span>
+                        <span>{{file.size | byteFmt:2}}</span>
                     </label>
                 </div>
                 <br />
@@ -44,4 +46,3 @@
         </div>
     </div>
 </div>
-

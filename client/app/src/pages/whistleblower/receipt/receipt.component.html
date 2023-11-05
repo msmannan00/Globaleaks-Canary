@@ -5,7 +5,6 @@
         <span>{{'We will try to get back to you as soon as possible.' | translate}}</span>
     </div>
 </div>
-
 <div class="row">
     <div class="col-md-12">
         <div class="card card-secondary">
@@ -16,10 +15,10 @@
                         <div class="input-group">
                             <input id="ReceiptCode" class="form-control text-center" type="text" maxlength="19" name="formatted_receipt" size="19" [(ngModel)]="receiptId" [readOnly]="appDataService.page !== 'tippage'">
                             <span class="input-group-append">
-                <button id="ReceiptButton" (click)="utilsService.copyToClipboard(receipt)" class="btn btn-primary rounded-start-0" type="button" [attr.aria-label]="'Copy to clipboard' | translate">
-                  <i class="fa-solid fa-copy"></i>
-                </button>
-              </span>
+                                <button id="ReceiptButton" (click)="utilsService.copyToClipboard(receipt)" class="btn btn-primary rounded-start-0" type="button" [attr.aria-label]="'Copy to clipboard' | translate">
+                                    <i class="fa-solid fa-copy"></i>
+                                </button>
+                            </span>
                         </div>
                     </div>
                 </span>

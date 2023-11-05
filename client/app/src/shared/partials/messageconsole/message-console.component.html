@@ -6,14 +6,12 @@
             <div *ngSwitchCase="1">
                 <span>{{ 'Error on input validation' | translate }}</span>
                 <span *ngIf="appDataService.errorCodes.arguments && appDataService.errorCodes.arguments.length > 0">
-                  {{ appDataService.errorCodes.arguments[0] }}
+                    {{ appDataService.errorCodes.arguments[0] }}
                 </span>
             </div>
             <div *ngSwitchCase="3">
                 <span>{{ 'Error on input validation' | translate }}</span>
-                <span *ngIf="appDataService.errorCodes.arguments && appDataService.errorCodes.arguments.length > 0">
-                  [{{ appDataService.errorCodes.arguments[0] }}]
-                </span>
+                <span *ngIf="appDataService.errorCodes.arguments && appDataService.errorCodes.arguments.length > 0"> [{{ appDataService.errorCodes.arguments[0] }}] </span>
             </div>
             <div *ngSwitchCase="6">
                 <span>{{'Resource not found'|translate}}</span>

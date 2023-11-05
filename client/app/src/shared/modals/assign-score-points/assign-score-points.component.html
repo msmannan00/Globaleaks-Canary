@@ -12,7 +12,8 @@
             <option value="addition">{{ 'Addition' | translate }}</option>
             <option value="multiplier">{{ 'Multiplier' | translate }}</option>
         </select>
-        <br><div *ngIf="arg.score_type !== 'none'">
+        <br>
+        <div *ngIf="arg.score_type !== 'none'">
             <span>{{ 'Value' | translate }}</span>
             <input id="score_points" class="form-control" [(ngModel)]="arg.score_points" type="number" />
         </div>

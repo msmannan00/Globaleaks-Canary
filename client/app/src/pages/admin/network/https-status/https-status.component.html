@@ -2,13 +2,14 @@
     <div class="info-section">
         <div>
             <div>
-                <span>{{'Status'|translate}}</span><span>: </span>
+                <span>{{'Status'|translate}}</span>
+                <span>: </span>
                 <span *ngIf="tlsConfig.enabled">
-            <span>{{'Enabled'|translate}}</span>
-            </span>
+                    <span>{{'Enabled'|translate}}</span>
+                </span>
                 <span *ngIf="!tlsConfig.enabled">
-            <span>{{'Disabled'|translate}}</span>
-            </span>
+                    <span>{{'Disabled'|translate}}</span>
+                </span>
             </div>
             <div *ngIf="tlsConfig.acme">
                 <span>{{'Auto - renewal'|translate}}</span>: <span>{{'Enabled'|translate}}</span>
@@ -16,9 +17,9 @@
         </div>
         <div class="hostname">
             <div *ngIf="tlsConfig.enabled">
-                <span>{{'URL'|translate}}</span><span>:</span>
-                <a href="https://{{networkResolver.dataModel.hostname}}" rel="noreferrer"
-                   target="_blank">https://{{networkResolver.dataModel.hostname}}</a>
+                <span>{{'URL'|translate}}</span>
+                <span>:</span>
+                <a href="https://{{networkResolver.dataModel.hostname}}" rel="noreferrer" target="_blank">https://{{networkResolver.dataModel.hostname}}</a>
             </div>
         </div>
     </div>
