@@ -44,6 +44,7 @@ export class TipComponent implements AfterViewInit {
   showEditLabelInput: boolean;
   tabs: any[];
   active: string;
+  loading = true;
 
   constructor(private tipService: TipService, private appConfigServices: AppConfigService, private router: Router, private cdr: ChangeDetectorRef, private cryptoService: CryptoService, protected utils: UtilsService, protected preferencesService: PreferenceResolver, protected modalService: NgbModal, private activatedRoute: ActivatedRoute, protected httpService: HttpService, protected http: HttpClient, protected appDataService: AppDataService, protected RTipService: ReceiverTipService, protected fieldUtilities: FieldUtilitiesService, protected authenticationService: AuthenticationService) {
   }
@@ -73,9 +74,11 @@ export class TipComponent implements AfterViewInit {
   loadTipDate() {
     this.tip_id = this.activatedRoute.snapshot.paramMap.get("tip_id");
     const requestObservable: Observable<any> = this.httpService.receiverTip(this.tip_id);
+    this.loading = true;
     requestObservable.subscribe(
       {
         next: (response: any) => {
+          this.loading = false;
           this.RTipService.initialize(response);
           this.tip = this.RTipService.tip;
           this.activatedRoute.queryParams.subscribe((params: { [x: string]: any; }) => {

@@ -114,8 +114,6 @@ const routes: Routes = [
     component: TipComponent,
     canActivate: [SessionGuard],
     pathMatch: "full",
-    resolve: {
-    },
   }
 ];
 
