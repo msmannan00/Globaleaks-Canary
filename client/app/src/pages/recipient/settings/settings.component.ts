@@ -1,4 +1,6 @@
 import {AfterViewInit, ChangeDetectorRef, Component, TemplateRef, ViewChild} from "@angular/core";
+import {Router} from "@angular/router";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 
 @Component({
   selector: "src-settings",
@@ -10,7 +12,10 @@ export class SettingsComponent implements AfterViewInit {
   nodeData: any;
   active: string;
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor(private cdr: ChangeDetectorRef, private preferenceResolver: PreferenceResolver, private router: Router) {
+    if(!this.preferenceResolver.dataModel.can_edit_general_settings){
+      this.router.navigate(['recipient/home']);
+    }
   }
 
   ngAfterViewInit(): void {

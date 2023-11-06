@@ -25,6 +25,9 @@ const routes: Routes = [
     path: "reports",
     component: TipsComponent,
     pathMatch: "full",
+    resolve: {
+      PreferenceResolver, RTipsResolver
+    },
     data: {pageTitle: "Reports"},
   },
   {
