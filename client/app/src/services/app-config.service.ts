@@ -5,7 +5,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {AppDataService} from "@app/app-data.service";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {TranslationService} from "@app/services/translation.service";
-import {Router, NavigationEnd, ActivatedRoute} from "@angular/router";
+import {Router, NavigationEnd, ActivatedRoute, NavigationStart, NavigationError} from "@angular/router";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
 
@@ -216,7 +216,11 @@ export class AppConfigService {
 
   routeChangeListener() {
     this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.appDataService.showLoadingPanel = true;
+      }
       if (event instanceof NavigationEnd) {
+        this.appDataService.showLoadingPanel = false;
         this.onValidateInitialConfiguration();
         const lastChildRoute = this.findLastChildRoute(this.router.routerState.root);
         if (lastChildRoute && lastChildRoute.snapshot.data && lastChildRoute.snapshot.data["pageTitle"]) {
@@ -228,6 +232,8 @@ export class AppConfigService {
           this.sidebar = "";
           this.setTitle();
         }
+      }else if(event instanceof NavigationError) {
+        this.appDataService.showLoadingPanel = false;
       }
     });
   }
