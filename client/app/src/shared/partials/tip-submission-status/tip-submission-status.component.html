@@ -8,12 +8,12 @@
                 </ng-option>
             </ng-select>
         </span>
-        <ng-container *ngIf="appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()] && appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()].substatuses.length"> &nbsp;&nbsp; <span>
-                <ng-select class="status-box-list" *ngIf="tipService.tip.status && appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()]" [clearable]="false" [ngModelOptions]="{standalone: true}" [(ngModel)]="tipSubStatus" [hidden]="!appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()].substatuses.length" (change)="updateSubmissionSubStatus()">
-                    <ng-option *ngFor="let item of appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()].substatuses" [value]="item.id">{{item.label}}</ng-option>
-                    <ng-option value=""></ng-option>
-                </ng-select>
-            </span>
-        </ng-container>
+<!--        <ng-container *ngIf="appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()] && appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()].substatuses.length"> &nbsp;&nbsp; <span>-->
+<!--                <ng-select class="status-box-list" *ngIf="tipService.tip.status && appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()]" [clearable]="false" [ngModelOptions]="{standalone: true}" [(ngModel)]="tipSubStatus" [hidden]="!appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()].substatuses.length" (change)="updateSubmissionSubStatus()">-->
+<!--                    <ng-option *ngFor="let item of appDataService.submission_statuses_by_id[tipService.tip.status.toLowerCase()].substatuses" [value]="item.id">{{item.label}}</ng-option>-->
+<!--                    <ng-option value=""></ng-option>-->
+<!--                </ng-select>-->
+<!--            </span>-->
+<!--        </ng-container>-->
     </span>
 </span>

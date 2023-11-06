@@ -15,16 +15,18 @@ export class TipSubmissionStatusComponent implements OnInit{
   tipSubStatus = ""
 
   constructor(protected httpService: HttpService, protected utilsService: UtilsService, protected appDataService: AppDataService) {
-   }
+  }
 
   public ngOnInit(): void {
 
-    if(this.appDataService.submission_statuses_by_id[this.tipService.tip.status.toLowerCase()]){
-      this.tipStatus = this.tipService.tip.status;
-    }
+    if(this.tipService.tip.status){
+      if(this.appDataService.submission_statuses_by_id[this.tipService.tip.status.toLowerCase()]){
+        this.tipStatus = this.tipService.tip.status;
+      }
 
-    if(this.appDataService.submission_statuses_by_id[this.tipService.tip.status.toLowerCase()] && this.appDataService.submission_statuses_by_id[this.tipService.tip.status.toLowerCase()].substatuses.find((item: { id: any; }) => item.id === this.tipService.tip.substatus)){
-      this.tipSubStatus = this.tipService.tip.substatus;
+      if(this.appDataService.submission_statuses_by_id[this.tipService.tip.status.toLowerCase()] && this.appDataService.submission_statuses_by_id[this.tipService.tip.status.toLowerCase()].substatuses.find((item: { id: any; }) => item.id === this.tipService.tip.substatus)){
+        this.tipSubStatus = this.tipService.tip.substatus;
+      }
     }
 
   }

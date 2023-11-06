@@ -75,6 +75,7 @@ export class TipComponent implements AfterViewInit {
     this.tip_id = this.activatedRoute.snapshot.paramMap.get("tip_id");
     const requestObservable: Observable<any> = this.httpService.receiverTip(this.tip_id);
     this.loading = true;
+    this.RTipService.reset();
     requestObservable.subscribe(
       {
         next: (response: any) => {

@@ -46,7 +46,7 @@
     </div>
     <div class="row mt-2">
         <div class="col-md-12">
-            <src-tip-info *ngIf="RTipService.tip.status" [loading]="loading" [tipService]="RTipService"></src-tip-info>
+            <src-tip-info [loading]="loading" [tipService]="RTipService"></src-tip-info>
         </div>
     </div>
     <ng-container *ngIf="tip.receivers">

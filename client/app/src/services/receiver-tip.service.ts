@@ -12,6 +12,10 @@ export class ReceiverTipService {
   constructor(private httpService: HttpService, private appDataService: AppDataService) {
   }
 
+  reset(){
+    this.tip = new RecieverTipData();
+  }
+
   initialize(response: RecieverTipData) {
     this.tip = response;
     this.tip.context = this.appDataService.contexts_by_id[this.tip.context_id];

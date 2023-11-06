@@ -14,8 +14,13 @@
                 </div>
             </div>
             <div class="col-md-3 p-0 status-box-container">
-                <div *ngIf="authenticationService.session.role === 'receiver' && !loading">
-                    <src-tip-submission-status [tipService]="tipService"></src-tip-submission-status>
+                <div *ngIf="authenticationService.session.role === 'receiver'">
+                    <ng-container *ngIf="loading">
+                        <src-tip-submission-status [tipService]="tipService"></src-tip-submission-status>
+                    </ng-container>
+                    <ng-container *ngIf="!loading">
+                        <src-tip-submission-status [tipService]="tipService"></src-tip-submission-status>
+                    </ng-container>
                 </div>
             </div>
         </div>
@@ -70,43 +75,48 @@
             </thead>
             <tbody>
             <tr>
-                <td class="TipInfoID" *ngIf="authenticationService.session.role === 'receiver'">
-                    {{tipService.tip.progressive}}
-                </td>
-                <td class="TipInfoContext" *ngIf="appDataService.public.contexts.length > 1">
-                    <ng-container *ngIf="tipService.tip.context">
-                        {{tipService.tip.context.name}}
-                    </ng-container>
-                </td>
-                <td class="TipInfoCreationDate">{{tipService.tip.creation_date | date:'dd-MM-yyyy HH:mm'}}</td>
-                <td class="TipInfoUpdateDate">{{tipService.tip.update_date | date:'dd-MM-yyyy HH:mm'}}</td>
-                <td class="TipInfoExpirationDate">
-                    <span *ngIf="!utilsService.isNever(tipService.tip.expiration_date)">{{tipService.tip.expiration_date | date:'dd-MM-yyyy'}}</span>
-                    <span *ngIf="utilsService.isNever(tipService.tip.expiration_date)">-</span>
-                </td>
-                <td class="TipInfoReminderDate" *ngIf="authenticationService.session.role === 'receiver'">
+                <ng-container *ngIf="loading">
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </ng-container>
+                <ng-container *ngIf="!loading">
+                    <td class="TipInfoID" *ngIf="authenticationService.session.role === 'receiver'">
+                        {{tipService.tip.progressive}}
+                    </td>
+                    <td class="TipInfoContext" *ngIf="appDataService.public.contexts.length > 1">
+                        <ng-container *ngIf="tipService.tip.context">
+                            {{tipService.tip.context.name}}
+                        </ng-container>
+                    </td>
+                    <td class="TipInfoCreationDate">{{tipService.tip.creation_date | date:'dd-MM-yyyy HH:mm'}}</td>
+                    <td class="TipInfoUpdateDate">{{tipService.tip.update_date | date:'dd-MM-yyyy HH:mm'}}</td>
+                    <td class="TipInfoExpirationDate">
+                        <span *ngIf="!utilsService.isNever(tipService.tip.expiration_date)">{{tipService.tip.expiration_date | date:'dd-MM-yyyy'}}</span>
+                        <span *ngIf="utilsService.isNever(tipService.tip.expiration_date)">-</span>
+                    </td>
+                    <td class="TipInfoReminderDate" *ngIf="authenticationService.session.role === 'receiver'">
                         <span *ngIf="!utilsService.isNever(tipService.tip.reminder_date)">
                             <span>{{tipService.tip.reminder_date | date:'dd-MM-yyyy'}}</span>
                             <i *ngIf="markReportStatus(tipService.tip.reminder_date)" class="reminder fa-solid fa-bell"></i>
                         </span>
-                    <i *ngIf="utilsService.isNever(tipService.tip.reminder_date)" class="fa-solid fa-minus"></i>
-                </td>
-                <td class="TipInfoLastAccess" *ngIf="authenticationService.session.role === 'receiver'">
-                    <i *ngIf="tipService.tip.last_access >= tipService.tip.update_date" class="fa-solid fa-check" data-toggle="tooltip" title="{{'The whistleblower has already read the last update' | translate}} ({{tipService.tip.last_access | date:'dd-MM-yyyy HH:mm'}})"></i>
-                    <i *ngIf="tipService.tip.last_access < tipService.tip.update_date" class="fa-solid fa-times" data-toggle="tooltip" title="{{'The whistleblower has not read the last update yet' | translate}}">
-                    </i>
-                </td>
-                <td class="TipInfoConnection" *ngIf="authenticationService.session.role === 'receiver'">
-                    <i *ngIf="tipService.tip.tor" class="fa-solid fa-check"></i>
-                    <i *ngIf="!tipService.tip.tor" class="fa-solid fa-times"></i>
-                </td>
-                <td class="TipInfoSubmissionStatus">{{tipService.tip.submissionStatusStr}}</td>
-                <td class="TipInfoScore" *ngIf="authenticationService.session.role === 'receiver' && appDataService.public.node.enable_scoring_system" [ngSwitch]="tipService.tip.score">
-                    <span *ngSwitchCase="0">-</span>
-                    <span class="badge bg-primary" *ngSwitchCase="1">{{'Low'|translate}}</span>
-                    <span class="badge bg-primary" *ngSwitchCase="2">{{'Medium'|translate}}</span>
-                    <span class="badge bg-primary" *ngSwitchCase="3">{{'High'|translate}}</span>
-                </td>
+                        <i *ngIf="utilsService.isNever(tipService.tip.reminder_date)" class="fa-solid fa-minus"></i>
+                    </td>
+                    <td class="TipInfoLastAccess" *ngIf="authenticationService.session.role === 'receiver'">
+                        <i *ngIf="tipService.tip.last_access >= tipService.tip.update_date" class="fa-solid fa-check" data-toggle="tooltip" title="{{'The whistleblower has already read the last update' | translate}} ({{tipService.tip.last_access | date:'dd-MM-yyyy HH:mm'}})"></i>
+                        <i *ngIf="tipService.tip.last_access < tipService.tip.update_date" class="fa-solid fa-times" data-toggle="tooltip" title="{{'The whistleblower has not read the last update yet' | translate}}">
+                        </i>
+                    </td>
+                    <td class="TipInfoConnection" *ngIf="authenticationService.session.role === 'receiver'">
+                        <i *ngIf="tipService.tip.tor" class="fa-solid fa-check"></i>
+                        <i *ngIf="!tipService.tip.tor" class="fa-solid fa-times"></i>
+                    </td>
+                    <td class="TipInfoSubmissionStatus">{{tipService.tip.submissionStatusStr}}</td>
+                    <td class="TipInfoScore" *ngIf="authenticationService.session.role === 'receiver' && appDataService.public.node.enable_scoring_system" [ngSwitch]="tipService.tip.score">
+                        <span *ngSwitchCase="0">-</span>
+                        <span class="badge bg-primary" *ngSwitchCase="1">{{'Low'|translate}}</span>
+                        <span class="badge bg-primary" *ngSwitchCase="2">{{'Medium'|translate}}</span>
+                        <span class="badge bg-primary" *ngSwitchCase="3">{{'High'|translate}}</span>
+                    </td>
+                </ng-container>
             </tr>
             </tbody>
         </table>
