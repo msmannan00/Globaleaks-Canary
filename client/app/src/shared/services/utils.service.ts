@@ -194,7 +194,7 @@ export class UtilsService {
     } else {
       const authHeader = this.authenticationService.getHeader();
       this.httpService.enableTLSConfig(tlsConfig, authHeader).subscribe(() => {
-        window.location.href = "https://" + tlsConfig.hostname;
+        window.location.href = "https://" + window.location.hostname + "/#/login";
       });
     }
   }
@@ -284,6 +284,10 @@ export class UtilsService {
 
   copyToClipboard(data: string) {
     this.clipboardService.copyFromContent(data);
+  }
+
+  openNewTab(){
+    window.open('https://'+ window.location.hostname, '_blank');
   }
 
   getSubmissionStatusText(status: any, submission_statuses: any) {
