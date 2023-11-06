@@ -1,5 +1,6 @@
-import {Component, Input, OnInit} from "@angular/core";
-import {FieldTemplatesResolver} from "@app/shared/resolvers/field-templates-resolver.service";
+import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
+import { FieldTemplatesResolver } from "@app/shared/resolvers/field-templates-resolver.service";
+import { HttpService } from "@app/shared/services/http.service";
 
 @Component({
   selector: "src-step",
@@ -11,7 +12,7 @@ export class StepComponent implements OnInit {
   showAddQuestionFromTemplate: boolean = false;
   fieldTemplatesData: any = [];
 
-  constructor(protected fieldTemplates: FieldTemplatesResolver) {
+  constructor(private cdr: ChangeDetectorRef, private httpService: HttpService, protected fieldTemplates: FieldTemplatesResolver) {
   }
 
   ngOnInit(): void {
@@ -34,5 +35,23 @@ export class StepComponent implements OnInit {
 
   listenToAddFieldFormTemplate() {
     this.showAddQuestionFromTemplate = false;
+  }
+  listenToFields() {
+    this.getResolver()
+  }
+  
+  getResolver() {
+    return this.httpService.requestQuestionnairesResource().subscribe(response => {
+      response.forEach((step: any) => {
+        if (step.id == this.step.questionnaire_id) {
+          step.steps.forEach((innerStep: any) => {
+            if (innerStep.id == this.step.id) {
+              this.step = innerStep;
+            }
+          })
+          this.cdr.markForCheck();
+        }
+      });
+    });
   }
 }
