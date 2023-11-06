@@ -7,6 +7,7 @@ import {HomeComponent} from "@app/pages/dashboard/home/home.component";
 import {PasswordResetResponseComponent} from "@app/pages/auth/password-reset-response/password-reset-response.component";
 import {RecipientRoutingModule} from "@app/pages/recipient/recipient-routing.module";
 import {AdminGuard} from "@app/shared/guards/admin.guard";
+import {CustodianGuard} from "@app/shared/guards/custodian.guard";
 import {ReceiverGuard} from "@app/shared/guards/receiver.guard";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {ActionRoutingModule} from "@app/pages/action/action-routing.module";
@@ -72,7 +73,7 @@ const routes: Routes = [
   },
   {
     path: "custodian",
-    canActivate: [SessionGuard],
+    canActivate: [CustodianGuard],
     resolve: {
       PreferenceResolver, NodeResolver, RtipsResolver: RTipsResolver, IarsResolver: IarResolver
     },
