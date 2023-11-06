@@ -114,12 +114,8 @@ export class CompletedInterceptor implements HttpInterceptor {
       finalize(() => {
         if(req.url != "api/auth/authentication"){
           this.count--;
-          if (this.count === 0) {
-            let delay = 100;
-            if(req.url === "api/auth/token"){
-              delay = 1000
-            }
-            timer(delay).pipe(
+          if (this.count === 0 && (req.url !== "api/auth/token")) {
+            timer(100).pipe(
               switchMap(() => {
                 this.appDataService.showLoadingPanel = false;
                 return of(null);
