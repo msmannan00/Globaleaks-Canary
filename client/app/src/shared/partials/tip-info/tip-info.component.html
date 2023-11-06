@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="col-md-3 p-0 status-box-container">
-                <div *ngIf="authenticationService.session.role === 'receiver'">
+                <div *ngIf="authenticationService.session.role === 'receiver' && !loading">
                     <src-tip-submission-status [tipService]="tipService"></src-tip-submission-status>
                 </div>
             </div>
