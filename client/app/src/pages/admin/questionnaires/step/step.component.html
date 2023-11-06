@@ -29,7 +29,7 @@
         <div class="col-md-12" *ngFor="let field of step.children | orderBy:['y', 'x']; let index = index">
             <div id="field-{{index}}" class="fieldBox">
                 <form #editField="ngForm">
-                    <src-fields [editField]="editField" [field]="field" [fields]="step.children" [type]="'step'"></src-fields>
+                    <src-fields (dataToParent)="listenToFields()" [editField]="editField" [field]="field" [fields]="step.children" [type]="'step'"></src-fields>
                 </form>
             </div>
         </div>

@@ -55,9 +55,9 @@ export class FieldsComponent implements OnInit {
   saveField(field: any) {
     this.utilsService.assignUniqueOrderIndex(field.options);
     return this.httpService.requestUpdateAdminQuestionnaireField(field.id, field).subscribe(_ => {
+        this.dataToParent.emit()
     });
   }
-
   toggleEditing() {
     this.editing = !this.editing;
   }
