@@ -120,7 +120,7 @@ export class AuthenticationService {
               }
             } else {
               if (!callback) {
-                // this.rootDataService.showLoadingPanel = true;
+                this.rootDataService.showLoadingPanel = true;
                 this.router.navigate([this.session.homepage], {
                   queryParams: this.activatedRoute.snapshot.queryParams,
                   queryParamsHandling: "merge"

@@ -216,11 +216,7 @@ export class AppConfigService {
 
   routeChangeListener() {
     this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        this.appDataService.showLoadingPanel = true;
-      }
       if (event instanceof NavigationEnd) {
-        this.appDataService.showLoadingPanel = false;
         this.onValidateInitialConfiguration();
         const lastChildRoute = this.findLastChildRoute(this.router.routerState.root);
         if (lastChildRoute && lastChildRoute.snapshot.data && lastChildRoute.snapshot.data["pageTitle"]) {
@@ -232,8 +228,6 @@ export class AppConfigService {
           this.sidebar = "";
           this.setTitle();
         }
-      }else if(event instanceof NavigationError) {
-        this.appDataService.showLoadingPanel = false;
       }
     });
   }
