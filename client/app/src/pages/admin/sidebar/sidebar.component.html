@@ -26,11 +26,11 @@
     <i class="fa fa-envelope"></i>
     <span>{{'Notifications'|translate}}</span>
 </a>
-<a routerLink="/admin/network" routerLinkActive="active" *ngIf="nodeResolver.dataModel.root_tenant" [attr.aria-current]="isActive('/admin/network') ? 'page' : 'false'">
+<a routerLink="/admin/network" routerLinkActive="active" *ngIf="nodeResolver.dataModel.root_tenant || authenticationService.session.properties.management_session" [attr.aria-current]="isActive('/admin/network') ? 'page' : 'false'">
     <i class="fa fa-network-wired"></i>
     <span>{{'Network'|translate}}</span>
 </a>
-<a routerLink="/admin/sites" routerLinkActive="active" *ngIf="nodeResolver.dataModel.root_tenant || authenticationService.session.properties.management_session" [attr.aria-current]="isActive('/admin/sites') ? 'page' : 'false'">
+<a routerLink="/admin/sites" routerLinkActive="active" *ngIf="nodeResolver.dataModel.root_tenant" [attr.aria-current]="isActive('/admin/sites') ? 'page' : 'false'">
     <i class="fa-solid fa-sitemap"></i>
     <span>{{'Sites'|translate}}</span>
 </a>
