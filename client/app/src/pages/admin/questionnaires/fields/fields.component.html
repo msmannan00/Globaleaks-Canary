@@ -428,7 +428,7 @@
                             <div *ngFor="let childField of children | orderBy:['y', 'x']; let index = index">
                                 <div id="field-{{index}}" class="fieldBox">
                                     <form #editField="ngForm">
-                                        <src-fields [editField]="editField" [field]="childField" [fields]="children" [type]="'field'"></src-fields>
+                                        <src-fields (dataToParent)="listenToFields()" [editField]="editField" [field]="childField" [fields]="children" [type]="'field'"></src-fields>
                                     </form>
                                 </div>
                             </div>
