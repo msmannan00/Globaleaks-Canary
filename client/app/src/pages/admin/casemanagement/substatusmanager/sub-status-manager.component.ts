@@ -4,6 +4,8 @@ import {HttpService} from "@app/shared/services/http.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppConfigService} from "@app/services/app-config.service";
+import { DeleteConfirmationComponent } from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "src-substatusmanager",
@@ -76,22 +78,34 @@ export class SubStatusManagerComponent {
           .map((c: any) => c.id)
           .filter((c: number | string) => c)
       };
-      const data = {
-        "operation": "order_elements",
-        "args": reorderedIds,
-      };
-      this.httpService.runOperation("api/admin/statuses", "order_elements", data, false);
+      this.httpService.runOperation("api/admin/statuses", "order_elements", reorderedIds, false).subscribe();
     }
   }
 
   deleteSubmissionStatus(submissionsStatus: any): void {
-    this.utilsService.openConfirmableModalDialog(submissionsStatus, "").subscribe();
+    this.openConfirmableModalDialog(submissionsStatus, "").subscribe();
   }
 
   saveSubmissionsStatus(submissionsStatus: any): void {
     const url = "api/admin/statuses/" + submissionsStatus.id;
     this.httpService.requestUpdateStatus(url, submissionsStatus).subscribe(_ => {
-      this.utilsService.deleteResource(this.submissionStatuses,submissionsStatus);
+    });
+  }
+
+  openConfirmableModalDialog(arg: any, scope: any): Observable<string> {
+    scope = !scope ? this : scope;
+    let self = this
+    return new Observable((observer) => {
+      let modalRef = this.modalService.open(DeleteConfirmationComponent, {});
+      modalRef.componentInstance.arg = arg;
+      modalRef.componentInstance.scope = scope;
+      modalRef.componentInstance.confirmFunction = () => {
+        observer.complete()
+        const url = "api/admin/statuses/" + arg.id;
+        return self.utilsService.deleteStatus(url).subscribe(_ => {
+        this.utilsService.deleteResource(this.submissionStatuses,arg);
+        });
+      };
     });
   }
 }

@@ -555,23 +555,6 @@ export class UtilsService {
     });
   }
 
-  openConfirmableModalDialog(arg: any, scope: any): Observable<string> {
-    scope = !scope ? this : scope;
-    let self = this
-    return new Observable((observer) => {
-      let modalRef = this.modalService.open(DeleteConfirmationComponent, {});
-      modalRef.componentInstance.arg = arg;
-      modalRef.componentInstance.scope = scope;
-      modalRef.componentInstance.confirmFunction = () => {
-        observer.complete()
-        const url = "api/admin/statuses/" + arg.id;
-        return self.deleteStatus(url).subscribe(_ => {
-          self.serviceInstanceService.appConfigService.reinit();
-        });
-      };
-    });
-  }
-
   getFiles(): Observable<any[]> {
     return this.http.get<any[]>("api/admin/files");
   }

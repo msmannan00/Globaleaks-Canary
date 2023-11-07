@@ -22,6 +22,7 @@ export class FieldsComponent implements OnInit {
   @Input() field: any;
   @Input() fields: any;
   @Input() type: any;
+  @Input() step: any;
   @Output() dataToParent = new EventEmitter<string>();
 
   editing: boolean = false;
@@ -55,9 +56,39 @@ export class FieldsComponent implements OnInit {
   saveField(field: any) {
     this.utilsService.assignUniqueOrderIndex(field.options);
     return this.httpService.requestUpdateAdminQuestionnaireField(field.id, field).subscribe(_ => {
-        this.dataToParent.emit()
+      this.dataToParent.emit()
     });
   }
+
+  listenToFields(): any {
+    if (this.type === "step") {
+      return this.httpService.requestQuestionnairesResource().subscribe(response => {
+        response.forEach((step: any) => {
+          if (step.id == this.step.questionnaire_id) {
+            step.steps.forEach((innerStep: any) => {
+              if (innerStep.id == this.step.id) {
+                innerStep.children.forEach((field: any) => {
+                  if (field.id == this.field.id && field.step_id == this.field.step_id) {
+                    this.children = field.children
+                  }
+                })
+              }
+            })
+          }
+        });
+      });
+    }
+    if (this.type === "template") {
+      return this.httpService.requestAdminFieldTemplateResource().subscribe(response => {
+        response.forEach((field: any) => {
+          if (field.id == this.field.id) {
+            this.children = field.children;
+          }
+        });
+      });
+    }
+  }
+
   toggleEditing() {
     this.editing = !this.editing;
   }
@@ -79,7 +110,7 @@ export class FieldsComponent implements OnInit {
       modalRef.componentInstance.confirmFunction = () => {
         observer.complete()
         return this.httpService.requestDeleteAdminQuestionareField(arg.id).subscribe(() => {
-          return this.utilsService.deleteResource(this.fields,arg);
+          return this.utilsService.deleteResource(this.fields, arg);
         });
       };
     });
@@ -147,7 +178,7 @@ export class FieldsComponent implements OnInit {
   addTrigger() {
     this.field.triggered_by_options.push(this.new_trigger);
     this.toggleAddTrigger();
-    this.new_trigger = {"field": "", "option": "", "sufficient": false};
+    this.new_trigger = { "field": "", "option": "", "sufficient": false };
   }
 
   showOptions(field: any): boolean {

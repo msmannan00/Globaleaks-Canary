@@ -4,6 +4,8 @@ import {HttpClient} from "@angular/common/http";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AppConfigService} from "@app/services/app-config.service";
 import {HttpService} from "@app/shared/services/http.service";
+import { DeleteConfirmationComponent } from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "src-substatuses",
@@ -70,13 +72,11 @@ export class SubStatusComponent implements OnInit {
 
   saveSubmissionsSubStatus(subStatusParam: any): void {
     const url = "api/admin/statuses/" + this.submissionsStatus.id + "/substatuses/" + subStatusParam.id;
-    this.httpService.requestUpdateStatus(url, subStatusParam).subscribe(_ => {
-      this.appConfigService.reinit();
-    });
+    this.httpService.requestUpdateStatus(url, subStatusParam).subscribe(_ => { });
   }
 
   deleteSubSubmissionStatus(subStatusParam: any): void {
-    this.utilsService.openConfirmableModalDialog(subStatusParam, "").subscribe();
+    this.openConfirmableModalDialog(subStatusParam, "").subscribe();
   }
 
   moveSsUp(e: any, idx: number): void {
@@ -89,5 +89,22 @@ export class SubStatusComponent implements OnInit {
 
   toggleSubstatusEditing(index: number): void {
     this.subStatusEditing[index] = !this.subStatusEditing[index];
+  }
+
+  openConfirmableModalDialog(arg: any, scope: any): Observable<string> {
+    scope = !scope ? this : scope;
+    let self = this
+    return new Observable((observer) => {
+      let modalRef = this.modalService.open(DeleteConfirmationComponent, {});
+      modalRef.componentInstance.arg = arg;
+      modalRef.componentInstance.scope = scope;
+      modalRef.componentInstance.confirmFunction = () => {
+        observer.complete()
+        const url = "api/admin/statuses/"+arg.submissionstatus_id+"/substatuses/"+arg.id;
+        return self.utilsService.deleteSubStatus(url).subscribe(_ => {
+          this.utilsService.deleteResource(this.submissionsStatus.substatuses,arg);
+        });
+      };
+    });
   }
 }
