@@ -272,6 +272,7 @@ export class TipComponent implements AfterViewInit {
         next: async token => {
           const ans = await this.cryptoService.proofOfWork(token.id);
           window.open("api/recipient/rtips/" + tipId + "/export" + "?token=" + token.id + ":" + ans);
+          this.appDataService.showLoadingPanel =false;
         }
       }
     );
