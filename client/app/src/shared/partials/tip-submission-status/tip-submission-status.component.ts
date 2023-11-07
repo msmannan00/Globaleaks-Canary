@@ -11,15 +11,17 @@ import {HttpService} from "@app/shared/services/http.service";
 })
 export class TipSubmissionStatusComponent implements OnInit{
   @Input() tipService: ReceiverTipService | WbtipService;
+  @Input() loading: boolean;
   tipStatus = ""
   tipSubStatus = ""
+
 
   constructor(protected httpService: HttpService, protected utilsService: UtilsService, protected appDataService: AppDataService) {
   }
 
   public ngOnInit(): void {
 
-    if(this.tipService.tip.status){
+    if(!this.loading){
       if(this.appDataService.submission_statuses_by_id[this.tipService.tip.status.toLowerCase()]){
         this.tipStatus = this.tipService.tip.status;
       }
@@ -27,6 +29,8 @@ export class TipSubmissionStatusComponent implements OnInit{
       if(this.appDataService.submission_statuses_by_id[this.tipService.tip.status.toLowerCase()] && this.appDataService.submission_statuses_by_id[this.tipService.tip.status.toLowerCase()].substatuses.find((item: { id: any; }) => item.id === this.tipService.tip.substatus)){
         this.tipSubStatus = this.tipService.tip.substatus;
       }
+    }else {
+      this.tipStatus = "";
     }
 
   }

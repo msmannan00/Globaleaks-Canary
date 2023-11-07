@@ -16,10 +16,10 @@
             <div class="col-md-3 p-0 status-box-container">
                 <div *ngIf="authenticationService.session.role === 'receiver'">
                     <ng-container *ngIf="loading">
-                        <src-tip-submission-status [tipService]="tipService"></src-tip-submission-status>
+                        <src-tip-submission-status [tipService]="tipService" [loading] = loading></src-tip-submission-status>
                     </ng-container>
                     <ng-container *ngIf="!loading">
-                        <src-tip-submission-status [tipService]="tipService"></src-tip-submission-status>
+                        <src-tip-submission-status [tipService]="tipService" [loading] = loading></src-tip-submission-status>
                     </ng-container>
                 </div>
             </div>
