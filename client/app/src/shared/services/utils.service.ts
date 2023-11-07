@@ -290,7 +290,7 @@ export class UtilsService {
     window.open('https://'+ window.location.hostname, '_blank');
   }
 
-  getSubmissionStatusText(status: any, submission_statuses: any) {
+  getSubmissionStatusText(status: any,substatus:any, submission_statuses: any) {
     let text;
     for (let i = 0; i < submission_statuses.length; i++) {
       if (submission_statuses[i].id === status) {
@@ -299,7 +299,7 @@ export class UtilsService {
 
         const subStatus = submission_statuses[i].substatuses;
         for (let j = 0; j < subStatus.length; j++) {
-          if (subStatus[j].id === subStatus) {
+          if (subStatus[j].id === substatus) {
             text += "(" + subStatus[j].label + ")";
             break;
           }
