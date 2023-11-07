@@ -5,7 +5,6 @@ import {ActivatedRoute} from "@angular/router";
 import {HttpService} from "@app/shared/services/http.service";
 import {WbtipService} from "@app/services/wbtip.service";
 import {AppDataService} from "@app/app-data.service";
-import {TipService} from "@app/shared/services/tip-service";
 import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({
@@ -28,7 +27,7 @@ export class TippageComponent {
   private submission: any;
   protected tip: any;
 
-  constructor(private tipService: TipService, private wbTipResolver: WbTipResolver, private fieldUtilitiesService: FieldUtilitiesService, protected utilsService: UtilsService, protected appDataService: AppDataService, private activatedRoute: ActivatedRoute, private httpService: HttpService, protected wbTipService: WbtipService) {
+  constructor(private fieldUtilities: FieldUtilitiesService, private wbTipResolver: WbTipResolver, private fieldUtilitiesService: FieldUtilitiesService, protected utilsService: UtilsService, protected appDataService: AppDataService, private activatedRoute: ActivatedRoute, private httpService: HttpService, protected wbTipService: WbtipService) {
   }
 
   ngOnInit() {
@@ -60,8 +59,55 @@ export class TippageComponent {
     }
   }
 
+  filterNotTriggeredField(parent: any, field: any, answers: any) {
+    let i;
+    if (this.fieldUtilities.isFieldTriggered(parent, field, answers, this.score)) {
+      for (i = 0; i < field.children.length; i++) {
+        this.filterNotTriggeredField(field, field.children[i], answers);
+      }
+    }
+  };
+
   preprocessTipAnswers(tip: any) {
-    this.tipService.preprocessTipAnswers(tip);
+    let x, i, j, k, step;
+
+    for (let x = tip.questionnaires.length - 1; x >= 0; x--) {
+      this.questionnaire = tip.questionnaires[x];
+      this.fieldUtilities.parseQuestionnaire(this.questionnaire, {});
+
+      for (i = 0; i < this.questionnaire.steps.length; i++) {
+        step = this.questionnaire.steps[i];
+        if (this.fieldUtilities.isFieldTriggered(null, step, this.questionnaire.answers, this.tip.score)) {
+          for (j = 0; j < step.children.length; j++) {
+            this.filterNotTriggeredField(step, step.children[j], this.questionnaire.answers);
+          }
+        }
+      }
+
+      for (i = 0; i < this.questionnaire.steps.length; i++) {
+        step = this.questionnaire.steps[i];
+        j = step.children.length;
+        while (j--) {
+          if (step.children[j]["template_id"] === "whistleblower_identity") {
+            this.tip.whistleblower_identity_field = step.children[j];
+            this.tip.whistleblower_identity_field.enabled = true;
+            step.children.splice(j, 1);
+
+            this.questionnaire = {
+              steps: [{...this.tip.whistleblower_identity_field}]
+            };
+
+            this.tip.fields = this.questionnaire.steps[0].children;
+            this.rows = this.fieldUtilities.splitRows(this.tip.fields);
+            this.fieldUtilities.onAnswersUpdate(this);
+
+            for (k = 0; k < this.tip.whistleblower_identity_field.children.length; k++) {
+              this.filterNotTriggeredField(this.tip.whistleblower_identity_field, this.tip.whistleblower_identity_field.children[k], this.tip.data.whistleblower_identity);
+            }
+          }
+        }
+      }
+    }
   }
 
   uploading() {
@@ -113,16 +159,16 @@ export class TippageComponent {
         {
           next: _ => {
             clearInterval(intervalId);
-            this.utilsService.reloadCurrentRoute();
+            this.onReload();
           },
           error: (_: any) => {
             clearInterval(intervalId);
-            this.utilsService.reloadCurrentRoute();
+            this.onReload();
           }
         }
       );
 
-    }, 1000);
+    }, 100);
 
   }
 

@@ -18,9 +18,8 @@ export class AuthenticationService {
   loginInProgress: boolean = false;
   requireAuthCode: boolean = false;
   loginData: LoginDataRef = new LoginDataRef();
-  specialPermission = false;
 
-  constructor(private serviceInstanceService: ServiceInstanceService, private activatedRoute: ActivatedRoute, private httpService: HttpService, private rootDataService: AppDataService, private router: Router) {
+  constructor(private appDataService: AppDataService, private serviceInstanceService: ServiceInstanceService, private activatedRoute: ActivatedRoute, private httpService: HttpService, private rootDataService: AppDataService, private router: Router) {
   }
 
   init() {
@@ -85,8 +84,6 @@ export class AuthenticationService {
     }
 
     let requestObservable: Observable<any>;
-    this.loginInProgress = true;
-    this.rootDataService.showLoadingPanel = true;
     if (authtoken) {
       requestObservable = this.httpService.requestAuthTokenLogin(JSON.stringify({"authtoken": authtoken}));
     } else {
@@ -107,9 +104,6 @@ export class AuthenticationService {
     requestObservable.subscribe(
       {
         next: (response: any) => {
-          this.specialPermission = response["permissions"]["can_edit_general_settings"];
-          this.rootDataService.showLoadingPanel = false;
-          this.reset();
           this.setSession(response);
 
           if ("redirect" in response) {
@@ -123,10 +117,11 @@ export class AuthenticationService {
             if (this.session.role === "whistleblower") {
               if (password) {
                 this.rootDataService.receipt = password;
-                this.rootDataService.page = "tippage";
               }
             } else {
               if (!callback) {
+                this.reset();
+                this.rootDataService.showLoadingPanel = true;
                 this.router.navigate([this.session.homepage], {
                   queryParams: this.activatedRoute.snapshot.queryParams,
                   queryParamsHandling: "merge"
@@ -177,6 +172,7 @@ export class AuthenticationService {
     requestObservable.subscribe(
       {
         next: () => {
+          this.reset();
           if (this.session.role === "whistleblower") {
             this.deleteSession();
             this.rootDataService.page = "homepage";

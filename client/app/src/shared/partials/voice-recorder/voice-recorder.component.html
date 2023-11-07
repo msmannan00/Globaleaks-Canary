@@ -1,8 +1,7 @@
 <div class="audio-box" *ngIf="authenticationService.session">
     <div class="row">
         <div class="col-md-6">
-            <button class="btn" [ngClass]="{'text-secondary': !activeButton, 'text-danger': activeButton === 'record' }"
-                [disabled]="isRecording || uploads[fileInput]?.files.length" (click)="triggerRecording(field.id)">
+            <button class="btn" [ngClass]="{'text-secondary': !activeButton, 'text-danger': activeButton === 'record' }" [disabled]="isRecording || uploads[fileInput]?.files.length" (click)="triggerRecording(field.id)">
                 <i class="fas fa-microphone"></i>
             </button>
             <button class="btn" *ngIf="activeButton === 'record'" (click)="stopRecording()">
@@ -20,10 +19,8 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <input class="inputelem d-none" [id]="'customFile-' + fileInput" [(ngModel)]="_fakeModel" #uploader [required]="field && field.required" [name]="'input-' + entryIndex"
-                   type="file" />
-            <div [id]="fieldEntry + '-audio'" class="audio-player-wrapper"
-                [ngClass]="{ 'disabled': isRecording || seconds < field.attrs.min_len }">
+            <input class="inputelem d-none" [id]="'customFile-' + fileInput" [(ngModel)]="_fakeModel" #uploader [required]="field && field.required" [name]="'input-' + entryIndex" type="file" />
+            <div [id]="fieldEntry + '-audio'" class="audio-player-wrapper" [ngClass]="{ 'disabled': isRecording || seconds < field.attrs.min_len }">
                 <audio *ngIf="audioPlayer" [src]="audioPlayer" controls class="audio-player"></audio>
             </div>
         </div>
@@ -35,5 +32,4 @@
             </div>
         </div>
     </div>
-
 </div>

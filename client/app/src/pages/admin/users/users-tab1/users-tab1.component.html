@@ -38,18 +38,14 @@
                 <label>{{ 'Email address' | translate }}</label>
                 <span class="text-danger" [ngbTooltip]="'This field is mandatory' | translate">*</span>
                 <div>
-                    <input class="form-control" [(ngModel)]="new_user.email" #email="ngModel" name="email"
-                        [pattern]="Constants.emailRegexp"
-                        [ngClass]="{'is-invalid': email.invalid && (email.dirty || email.touched)}" type="email"
-                        required />
+                    <input class="form-control" [(ngModel)]="new_user.email" #email="ngModel" name="email" [pattern]="Constants.emailRegexp" [ngClass]="{'is-invalid': email.invalid && (email.dirty || email.touched)}" type="email" required />
                 </div>
                 <div class="text-danger" *ngIf="email?.errors?.['pattern'] && email.invalid && (email.dirty || email.touched)">
                     {{ 'Invalid email address' | translate }}
                 </div>
             </div>
             <div class="form-group">
-                <button id="add-btn" class="btn btn-primary" [disabled]="newUser.invalid"
-                        (click)="addUser(); toggleAddUser()" type="submit">
+                <button id="add-btn" class="btn btn-primary" [disabled]="newUser.invalid" (click)="addUser(); toggleAddUser()" type="submit">
                     <i class="fa-solid fa-plus"></i>
                     <span>{{ 'Add' | translate }}</span>
                 </button>
@@ -60,8 +56,7 @@
 <ng-container *ngIf="usersData.length > 0">
     <div class="userList" *ngFor="let user of usersData | orderBy:'name'; let index = index">
         <form [id]="'user-' + index" name="editUser" #editUser="ngForm" novalidate>
-            <src-user-editor [user]="user" [editUser]="editUser" [index]="index" [users]="usersData"
-                             (dataToParent)="handleDataFromChild()"></src-user-editor>
+            <src-user-editor [user]="user" [editUser]="editUser" [index]="index" [users]="usersData" (dataToParent)="handleDataFromChild()"></src-user-editor>
         </form>
     </div>
 </ng-container>

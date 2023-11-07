@@ -1,4 +1,5 @@
-import {Component, OnInit} from "@angular/core";
+import {ChangeDetectorRef, Component, OnInit} from "@angular/core";
+import {AppConfigService} from "@app/services/app-config.service";
 import {Constants} from "@app/shared/constants/constants";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -28,7 +29,8 @@ export class PreferenceTab1Component implements OnInit {
   languageModel = "";
   role = "";
 
-  constructor(private translationService: TranslationService, private translateService: TranslateService, private httpService: HttpService, private twoFactorAuthData: TwoFactorAuthData, private modalService: NgbModal, public appDataService: AppDataService, protected preferenceResolver: PreferenceResolver, private utilsService: UtilsService, protected authenticationService: AuthenticationService) {
+  constructor(private translationService: TranslationService, protected appConfigService: AppConfigService, private cdr: ChangeDetectorRef, private translateService: TranslateService, private httpService: HttpService, private twoFactorAuthData: TwoFactorAuthData, private modalService: NgbModal, public appDataService: AppDataService, protected preferenceResolver: PreferenceResolver, private utilsService: UtilsService, protected authenticationService: AuthenticationService) {
+    this.languageModel = this.preferenceResolver.dataModel.language;
   }
 
   ngOnInit(): void {
@@ -141,6 +143,11 @@ export class PreferenceTab1Component implements OnInit {
       {
         next: _ => {
           this.translationService.onChange(this.preferenceResolver.dataModel.language);
+          this.cdr.detectChanges();
+          localStorage.removeItem("default_language");
+          this.translationService.onChange(this.languageModel);
+          this.appConfigService.reinit(false);
+          this.utilsService.reloadCurrentRouteFresh(true);
         }
       }
     );

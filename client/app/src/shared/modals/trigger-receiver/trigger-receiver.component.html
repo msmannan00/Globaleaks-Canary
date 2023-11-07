@@ -6,9 +6,7 @@
 </div>
 <div class="modal-body">
     <div>{{ 'Recipients' | translate }}</div>
-    <ng-select [items]="userData | filter: 'role': 'receiver'"
-        [(ngModel)]="selected.value" [virtualScroll]="true" [placeholder]="'Search' | translate" bindValue="name"
-        (change)="addReceiver($event)">
+    <ng-select [items]="userData | filter: 'role': 'receiver'" [(ngModel)]="selected.value" [virtualScroll]="true" [placeholder]="'Search' | translate" bindValue="name" (change)="addReceiver($event)">
         <ng-template ng-label-tmp let-item="item">
             {{ item.name }}
         </ng-template>

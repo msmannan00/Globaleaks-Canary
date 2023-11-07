@@ -103,6 +103,7 @@
     "istanbul-api": "^3.0.0",
     "istanbul-lib-coverage": "^3.2.0",
     "istanbul-reports": "^3.1.6",
+    "ngx-clipboard": "^16.0.0",
     "nyc": "^15.1.0",
     "ts-node": "^10.9.1",
     "webpack": "^5.89.0",

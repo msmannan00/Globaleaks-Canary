@@ -1,4 +1,6 @@
 import {Injectable} from "@angular/core";
+import {AppDataService} from "@app/app-data.service";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 
 import {Observable, of} from "rxjs";
 import {HttpService} from "@app/shared/services/http.service";
@@ -12,11 +14,11 @@ import {map} from "rxjs/operators";
 export class NodeResolver  {
   dataModel: nodeResolverModel = new nodeResolverModel();
 
-  constructor(private httpService: HttpService, private authenticationService: AuthenticationService) {
+  constructor(private httpService: HttpService, private authenticationService: AuthenticationService, private preferenceResolver: PreferenceResolver) {
   }
 
   resolve(): Observable<boolean> {
-    if (this.authenticationService.session.role === "admin" || "recipient" && this.authenticationService.specialPermission) {
+    if (this.authenticationService.session.role === "admin" || ( this.authenticationService.session.role === "receiver" && this.preferenceResolver.dataModel.can_edit_general_settings)) {
       return this.httpService.requestNodeResource().pipe(
         map((response: nodeResolverModel) => {
           this.dataModel = response;

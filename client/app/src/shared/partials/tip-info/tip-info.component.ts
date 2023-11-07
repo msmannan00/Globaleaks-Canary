@@ -12,6 +12,7 @@ import {HttpService} from "@app/shared/services/http.service";
 })
 export class TipInfoComponent {
   @Input() tipService: ReceiverTipService | WbtipService;
+  @Input() loading: boolean;
 
   constructor(protected authenticationService: AuthenticationService, protected appDataService: AppDataService, protected utilsService: UtilsService, private rTipService: ReceiverTipService, private httpService: HttpService,) {
   }

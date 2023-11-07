@@ -18,7 +18,8 @@
     </div>
     <div class="row">
         <div class="col-md-6 form-group">
-            <label>{{'Phone number'|translate}}</label> <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
+            <label>{{'Phone number'|translate}}</label>
+            <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
             <input name="phonenumber" #phone="ngModel" class="form-control" [(ngModel)]="signup.phone" type="text" [pattern]="Constants.Constants.phoneNumberRegexp" required>
             <div class="text-danger" *ngIf="phone?.errors?.['pattern']">
                 <span>{{'Invalid phone number'|translate}}</span>
@@ -40,8 +41,7 @@
         </div>
         <div class="col-md-6 form-group">
             <label>
-                <span>{{'Email address'|translate}}</span> (<span>{{'Confirm'|translate}}</span>)
-                <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
+                <span>{{'Email address'|translate}}</span> ( <span>{{'Confirm'|translate}}</span>) <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
             </label>
             <div>
                 <input name="emails" class="form-control" [(ngModel)]="confirmation_email" disableCcp type="email" required>
@@ -74,14 +74,12 @@
         <div class="col-md-6 form-group">
             <label>{{'Fiscal code'|translate}}</label>
             <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
-            <input name="tax_code" class="form-control" [(ngModel)]="signup.organization_tax_code" type="text"
-                   [required]="!signup.organization_tax_code && !signup.organization_vat_code">
+            <input name="tax_code" class="form-control" [(ngModel)]="signup.organization_tax_code" type="text" [required]="!signup.organization_tax_code && !signup.organization_vat_code">
         </div>
         <div class="col-md-6 form-group">
             <label>{{'Tax code'|translate}}</label>
             <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
-            <input name="vat_code" class="form-control" [(ngModel)]="signup.organization_vat_code" type="text"
-                   [required]="!signup.organization_tax_code && !signup.organization_vat_code">
+            <input name="vat_code" class="form-control" [(ngModel)]="signup.organization_vat_code" type="text" [required]="!signup.organization_tax_code && !signup.organization_vat_code">
         </div>
     </div>
     <div class="row">
@@ -90,14 +88,15 @@
                 <span>{{'Site'|translate}}</span>
                 <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
             </label>
-
             <div class="input-group">
-                <input name="subdomain" class="form-control" [(ngModel)]="signup.subdomain" type="text" [pattern]="domainPattern" subdomainvalidators required >
-                <span class="input-group-append"><span class="input-group-text">.{{appDataService.public.node.rootdomain}}</span></span>
+                <input name="subdomain" class="form-control" [(ngModel)]="signup.subdomain" type="text" [pattern]="domainPattern" subdomainvalidators required>
+                <span class="input-group-append">
+                    <span class="input-group-text">.{{appDataService.public.node.rootdomain}}</span>
+                </span>
             </div>
         </div>
     </div>
-    <src-tos [signup]="signup" ></src-tos>
+    <src-tos [signup]="signup"></src-tos>
     <div class="row">
         <div class="col-md-12">
             <button class="ButtonNext btn btn-primary" (click)="(validated = true) && !signupform.invalid && complete.emit()">

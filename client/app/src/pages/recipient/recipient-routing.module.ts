@@ -4,6 +4,9 @@ import {HomeComponent} from "@app/pages/recipient/home/home.component";
 import {TipsComponent} from "@app/pages/recipient/tips/tips.component";
 import {SettingsComponent} from "@app/pages/recipient/settings/settings.component";
 import {PreferencesComponent} from "@app/shared/partials/preferences/preferences.component";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
+import {RTipsResolver} from "@app/shared/resolvers/r-tips-resolver.service";
 
 const routes: Routes = [
   {
@@ -22,11 +25,17 @@ const routes: Routes = [
     path: "reports",
     component: TipsComponent,
     pathMatch: "full",
+    resolve: {
+      PreferenceResolver, RTipsResolver
+    },
     data: {pageTitle: "Reports"},
   },
   {
     path: "settings",
     component: SettingsComponent,
+    resolve: {
+      NodeResolver
+    },
     pathMatch: "full",
     data: {pageTitle: "Settings"},
   },

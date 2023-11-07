@@ -773,8 +773,26 @@
     "f": {},
     "b": {}
   },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/guards/admin.guard.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/guards/admin.guard.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
   "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/guards/pageguard.service.ts": {
     "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/guards/pageguard.service.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/guards/receiver.guard.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/guards/receiver.guard.ts",
     "statementMap": {},
     "fnMap": {},
     "branchMap": {},
