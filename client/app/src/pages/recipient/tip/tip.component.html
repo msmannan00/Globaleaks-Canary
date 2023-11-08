@@ -83,7 +83,7 @@
     <div class="row">
         <ng-template #tab1>
             <div class="col-md-12">
-                <src-tip-upload-wbfile [tip]="tip" [key]="'public'"></src-tip-upload-wbfile>
+                <src-tip-upload-wbfile [tip]="tip" (dataToParent)="listenToFields()" [key]="'public'"></src-tip-upload-wbfile>
                 <ng-container *ngIf="tip.context">
                     <src-tip-comments [tipService]="RTipService" [key]="'public'"></src-tip-comments>
                 </ng-container>
@@ -91,7 +91,7 @@
         </ng-template>
         <ng-template #tab2>
             <div class="col-md-12">
-                <src-tip-upload-wbfile [tip]="tip" [key]="'internal'"></src-tip-upload-wbfile>
+                <src-tip-upload-wbfile [tip]="tip" (dataToParent)="listenToFields()" [key]="'internal'"></src-tip-upload-wbfile>
                 <ng-container *ngIf="tip.context">
                     <src-tip-comments [tipService]="RTipService" [key]="'internal'"></src-tip-comments>
                 </ng-container>
@@ -99,7 +99,7 @@
         </ng-template>
         <ng-template #tab3>
             <div class="col-md-12">
-                <src-tip-upload-wbfile [tip]="tip" [key]="'personal'"></src-tip-upload-wbfile>
+                <src-tip-upload-wbfile [tip]="tip" (dataToParent)="listenToFields()" [key]="'personal'"></src-tip-upload-wbfile>
                 <ng-container *ngIf="tip.context">
                     <src-tip-comments [tipService]="RTipService" [key]="'personal'"></src-tip-comments>
                 </ng-container>

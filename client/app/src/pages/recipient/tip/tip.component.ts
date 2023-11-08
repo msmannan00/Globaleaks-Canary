@@ -277,4 +277,7 @@ export class TipComponent implements AfterViewInit {
       }
     );
   }
+  listenToFields(){
+    this.loadTipDate();
+  }
 }
