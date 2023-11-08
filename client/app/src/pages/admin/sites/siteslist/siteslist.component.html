@@ -1,7 +1,6 @@
-<form id="tenant-{{index}}" novalidate>
     <div class="config-item">
-        <div class="editorHeader row" (click)="tenant.id !== 1 && toggleEditing($event)">
-            <div class="col-md-6">
+        <div class="editorHeader row">
+            <div class="col-md-6" (click)="toggleEditing($event)">
                 <div>
                     <span class="badge bg-secondary">{{tenant.id}}</span>
                     <span>{{tenant.name}}</span>
@@ -15,7 +14,7 @@
                     <a class="badge bg-primary" *ngIf="tenant.hostname" [href]="'https://' + tenant.hostname" rel="noreferrer" target="_blank"> {{ tenant.hostname }} </a>
                 </div>
             </div>
-            <div class="col-md-6 clearfix" *ngIf="tenant.id !== 1">
+            <div class="col-md-6 clearfix" *ngIf="tenant.id !== 1" (click)="toggleEditing($event)">
                 <span class="float-end">
                     <span *ngIf="tenant.active" class="btn btn-sm btn-primary" (click)="toggleActivation($event)">{{'Enabled'|translate}} </span>
                     <span *ngIf="!tenant.active" class="btn btn-sm btn-danger" (click)="toggleActivation($event)">{{'Disabled'|translate}} </span>
@@ -63,4 +62,3 @@
             </div>
         </div>
     </div>
-</form>

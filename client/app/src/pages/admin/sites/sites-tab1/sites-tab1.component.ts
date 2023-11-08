@@ -34,8 +34,9 @@ export class SitesTab1Component implements OnInit {
   }
 
   addTenant() {
-    this.httpService.addTenant(this.newTenant).subscribe(_ => {
-      this.utilsService.reloadCurrentRoute();
+    this.httpService.addTenant(this.newTenant).subscribe(res => {
+      this.tenants.push(res);
+      this.newTenant.name = "";
     });
   }
 }
