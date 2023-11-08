@@ -85,10 +85,13 @@ fi
 
 if [ "$1" == "legacy" ]; then
   shift
-  cd client-deprecated
+  rm -rf client
+  mv client-deprecated client
+  cd client
   npm install -d
   ./node_modules/grunt/bin/grunt build
 else
+  rm -rf client-deprecated client
   cd client
   npm install -d
   ./node_modules/grunt/bin/grunt build
