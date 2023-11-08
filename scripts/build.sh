@@ -91,7 +91,7 @@ if [ "$1" == "legacy" ]; then
   npm install -d
   ./node_modules/grunt/bin/grunt build
 else
-  rm -rf client-deprecated client
+  rm -rf client-deprecated
   cd client
   npm install -d
   ./node_modules/grunt/bin/grunt build
