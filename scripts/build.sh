@@ -91,7 +91,7 @@ if [ "$1" == "legacy" ]; then
   npm install -d
   ./node_modules/grunt/bin/grunt build
 else
-  rm -rf client-client
+  rm -rf client-legacy
   cd client
   npm install -d
   ./node_modules/grunt/bin/grunt build
