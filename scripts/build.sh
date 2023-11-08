@@ -83,8 +83,8 @@ else
   git clone --branch="$TAG" --depth=1 https://github.com/msmannan00/globaleaks-angular-fork.git .
 fi
 
-# Conditional behavior for "client" directory based on the --legacy flag
-if [ "$1" == "--legacy" ]; then
+if [ "$1" == "legacy" ]; then
+  shift
   cd client-deprecated
   npm install -d
   ./node_modules/grunt/bin/grunt build
