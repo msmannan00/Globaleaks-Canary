@@ -5,12 +5,14 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppConfigService} from "@app/services/app-config.service";
+import { NgForm } from "@angular/forms";
 
 @Component({
   selector: "src-siteslist",
   templateUrl: "./siteslist.component.html"
 })
 export class SiteslistComponent {
+  @Input() editTenant: NgForm;
   @Input() tenant: any;
   @Input() tenants: any;
   @Input() index: any;
@@ -34,9 +36,7 @@ export class SiteslistComponent {
 
   saveTenant() {
     const url = "api/admin/tenants/" + this.tenant.id;
-    this.httpService.requestUpdateTenant(url, this.tenant).subscribe(_ => {
-      this.utilsService.reloadCurrentRoute();
-    });
+    this.httpService.requestUpdateTenant(url, this.tenant).subscribe(_ => { });
   }
 
   deleteTenant(event: any, tenant: any) {
@@ -69,6 +69,8 @@ export class SiteslistComponent {
 
   toggleEditing(event: Event): void {
     event.stopPropagation();
-    this.editing = !this.editing;
+    if(this.tenant.id !== 1){
+      this.editing = !this.editing;
+    }
   }
 }
