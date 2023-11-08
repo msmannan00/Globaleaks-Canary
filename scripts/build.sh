@@ -14,7 +14,7 @@ usage() {
   echo "Valid options:"
   echo " -h"
   echo -e " -t tagname (build specific release/branch)"
-  echo -e " -l (Use local repository & enviroment)"
+  echo -e " -l (Use local repository & environment)"
   echo -e " -d distribution (available: bionic, bullseye, buster, focal, jammy)"
   echo -e " -n (do not sign)"
   echo -e " -p (push on repository)"
@@ -57,10 +57,10 @@ echo "Checking preliminary GlobaLeaks Build requirements"
 for REQ in git npm debuild dput
 do
   if which $REQ >/dev/null; then
-    echo " + $REQ requirement meet"
+    echo " + $REQ requirement met"
   else
     ERR=$((ERR+1))
-    echo " - $REQ requirement not meet"
+    echo " - $REQ requirement not met"
   fi
 done
 
@@ -83,7 +83,16 @@ else
   git clone --branch="$TAG" --depth=1 https://github.com/msmannan00/globaleaks-angular-fork.git .
 fi
 
-cd client && npm install -d && ./node_modules/grunt/bin/grunt build
+# Conditional behavior for "client" directory based on the --legacy flag
+if [ "$1" == "--legacy" ]; then
+  cd client-deprecated
+  npm install -d
+  ./node_modules/grunt/bin/grunt build
+else
+  cd client
+  npm install -d
+  ./node_modules/grunt/bin/grunt build
+fi
 
 cd $ROOTDIR
 
