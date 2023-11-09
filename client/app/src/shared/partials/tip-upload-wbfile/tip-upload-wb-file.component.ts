@@ -55,7 +55,10 @@ export class TipUploadWbFileComponent {
       this.utilsService.onFlowUpload(flowJsInstance, file);
     }
   }
-
+  listenToWbfiles(files:any){
+    this.utilsService.deleteResource(this.tip.rfiles, files);
+    this.dataToParent.emit()
+  }
   protected dismissError() {
     this.showError = false;
   }

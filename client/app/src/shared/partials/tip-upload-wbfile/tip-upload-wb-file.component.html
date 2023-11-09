@@ -9,7 +9,7 @@
     <div class="card-body" *ngIf="!collapsed">
         <div *ngFor="let rfile of tip.rfiles | filter : 'visibility' : key | orderBy: 'creation_date' as index">
             <div id="wbfile-{{index}}" data-wbfile data-ctx="'rtip'">
-                <src-wbfiles [ctx]="'rtip'" [receivers_by_id]="''" [wbFile]="rfile"></src-wbfiles>
+                <src-wbfiles [ctx]="'rtip'" (dataToParent)="listenToWbfiles($event)" [receivers_by_id]="''" [wbFile]="rfile"></src-wbfiles>
             </div>
         </div>
         <div *ngIf="tip.status !== 'closed'">
