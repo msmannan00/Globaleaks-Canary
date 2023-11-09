@@ -115,7 +115,8 @@ const routes: Routes = [
     component: TipComponent,
     canActivate: [SessionGuard],
     pathMatch: "full",
-  }
+  },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
