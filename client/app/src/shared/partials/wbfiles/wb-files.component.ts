@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {HttpService} from "@app/shared/services/http.service";
@@ -12,7 +12,8 @@ export class WbFilesComponent implements OnInit {
   @Input() wbFile: any;
   @Input() ctx: any;
   @Input() receivers_by_id: any;
-
+  @Output() dataToParent = new EventEmitter<string>();
+  
   constructor(private cryptoService: CryptoService, private httpService: HttpService, private utilsService: UtilsService, protected authenticationService: AuthenticationService) {
   }
 
@@ -25,7 +26,7 @@ export class WbFilesComponent implements OnInit {
       (
         {
           next: async _ => {
-            this.utilsService.reloadCurrentRoute();
+            this.dataToParent.emit(wbFile)
           }
         }
       );

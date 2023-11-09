@@ -17,7 +17,7 @@
                     <i class="fa-solid fa-comment"></i>
                     <span>{{'Send'|translate}}</span>
                 </button>
-                <div *ngIf="authenticationService.session.role === 'receiver' && !tipService.tip.context.enable_two_way_comments" class="form-group">
+                <div *ngIf="authenticationService.session.role === 'receiver' && !tipService.tip.context?.enable_two_way_comments" class="form-group">
                     <label class="inline-checkbox">
                         <input [(ngModel)]="tipService.tip.enable_two_way_comments" (ngModelChange)="onEnableTwoWayCommentsChange()" type="checkbox" />
                         <span>{{'Allow the whistleblower to write comments'|translate}}</span>

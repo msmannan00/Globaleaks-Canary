@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild, ElementRef, ChangeDetectorRef} from "@angular/core";
+import {Component, Input, ViewChild, ElementRef, ChangeDetectorRef, EventEmitter, Output} from "@angular/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppDataService} from "@app/app-data.service";
 import {AuthenticationService} from "@app/services/authentication.service";
@@ -13,7 +13,7 @@ export class TipUploadWbFileComponent {
   @ViewChild("uploader") uploaderElementRef!: ElementRef<HTMLInputElement>;
   @Input() tip: any = {};
   @Input() key: any;
-
+  @Output() dataToParent = new EventEmitter<string>();
   collapsed = false;
   file_upload_description: string = "";
   fileInput: any = "fileinput";
@@ -43,8 +43,7 @@ export class TipUploadWbFileComponent {
         headers: {"X-Session": this.authenticationService.session.id}
       });
       flowJsInstance.on("fileSuccess", (_) => {
-        this.appConfigService.reinit(false);
-        this.utilsService.reloadCurrentRoute();
+        this.dataToParent.emit()
         this.errorFile = null;
       });
       flowJsInstance.on("fileError", (file, _) => {
@@ -56,7 +55,10 @@ export class TipUploadWbFileComponent {
       this.utilsService.onFlowUpload(flowJsInstance, file);
     }
   }
-
+  listenToWbfiles(files:any){
+    this.utilsService.deleteResource(this.tip.rfiles, files);
+    this.dataToParent.emit()
+  }
   protected dismissError() {
     this.showError = false;
   }
