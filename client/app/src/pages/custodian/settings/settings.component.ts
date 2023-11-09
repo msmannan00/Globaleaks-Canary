@@ -1,7 +1,7 @@
 import {Component, TemplateRef, ViewChild} from "@angular/core";
 
 @Component({
-  selector: "src-settings",
+  selector: "src-custodian-settings",
   templateUrl: "./settings.component.html"
 })
 export class SettingsComponent {

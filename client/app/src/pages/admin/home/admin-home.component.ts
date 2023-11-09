@@ -9,7 +9,7 @@ import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {Observable} from "rxjs";
 
 @Component({
-  selector: "src-home",
+  selector: "src-admin-home",
   templateUrl: "./admin-home.component.html"
 })
 export class adminHomeComponent implements OnInit {

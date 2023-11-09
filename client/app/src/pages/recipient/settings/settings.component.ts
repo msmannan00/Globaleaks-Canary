@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 
 @Component({
-  selector: "src-settings",
+  selector: "src-recipient-settings",
   templateUrl: "./settings.component.html"
 })
 export class SettingsComponent implements AfterViewInit {
