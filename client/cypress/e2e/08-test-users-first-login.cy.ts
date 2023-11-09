@@ -52,6 +52,7 @@ describe("Recipient2 first login", () => {
 describe("Custodian first login", () => {
   it("should require password change upon successful authentication", () => {
     cy.login_custodian("Custodian", Cypress.env("init_password"), "#/login", true);
+    cy.waitForLoader()
     cy.get('[name="changePasswordArgs.password"]').type(Cypress.env("user_password"));
     cy.get('[name="changePasswordArgs.confirm"]').type(Cypress.env("user_password"));
     cy.get('button[name="submit"]').click();
