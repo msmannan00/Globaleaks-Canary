@@ -1,7 +1,7 @@
 <div class="devMode" (click)="openGithubReport()">
     <p>Globaleaks Beta Version 〡 Report Bug at https://github.com/msmannan00/globaleaks-angular-fork</p>
 </div>
-<div class="container" id="browser-not-supported" *ngIf="!appDataService.started || appDataService.showLoadingPanel">
+<div class="container" id="browser-not-supported" *ngIf="!appDataService.started || showLoadingPanel">
     <h1>Error!</h1>
     <br />
     <br />
@@ -23,7 +23,7 @@
         </ul>
     </div>
 </div>
-<div id="page-overlay" *ngIf="appDataService.showLoadingPanel">
+<div id="page-overlay" *ngIf="showLoadingPanel">
     <div id="loader"></div>
 </div>
 <div [dir]="translate.currentLang === 'ar' ? 'rtl' : 'ltr'" *ngIf="appDataService.started">

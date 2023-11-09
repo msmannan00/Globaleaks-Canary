@@ -40,7 +40,7 @@ export class TipFilesReceiverComponent implements OnInit {
         next: async token => {
           const ans = await this.cryptoService.proofOfWork(token.id);
           window.open("api/recipient/wbfiles/" + file.id + "?token=" + token.id + ":" + ans);
-          this.appDataService.showLoadingPanel = false;
+          this.appDataService.updateShowLoadingPanel(false);
         }
       }
     );

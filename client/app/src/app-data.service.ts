@@ -1,15 +1,21 @@
 import {Injectable} from "@angular/core";
 import {ErrorCodes} from "@app/models/app/error-code";
 import {Root} from "@app/models/app/public-model";
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
   providedIn: "root"
 })
 export class AppDataService {
 
+  private showLoadingPanelSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  showLoadingPanel$: Observable<boolean> = this.showLoadingPanelSubject.asObservable();
+  updateShowLoadingPanel(newValue: boolean) {
+    this.showLoadingPanelSubject.next(newValue);
+  }
+
   public = <Root>{};
   started = false;
-  showLoadingPanel = false;
   errorCodes = new ErrorCodes();
   pageTitle = "Globaleaks";
   projectTitle = "";

@@ -121,7 +121,7 @@ export class AuthenticationService {
             } else {
               if (!callback) {
                 this.reset();
-                this.rootDataService.showLoadingPanel = true;
+                this.rootDataService.updateShowLoadingPanel(true);
                 this.router.navigate([this.session.homepage], {
                   queryParams: this.activatedRoute.snapshot.queryParams,
                   queryParamsHandling: "merge"
@@ -135,7 +135,7 @@ export class AuthenticationService {
         },
         error: (error: any) => {
           this.loginInProgress = false;
-          this.rootDataService.showLoadingPanel = false;
+          this.rootDataService.updateShowLoadingPanel(false);
           if (error.error && error.error.error_code) {
             if (error.error.error_code === 4) {
               this.requireAuthCode = true;

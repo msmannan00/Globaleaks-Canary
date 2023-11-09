@@ -107,7 +107,7 @@ export class CompletedInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if(req.url != "api/auth/authentication"){
       this.count++;
-      this.appDataService.showLoadingPanel = true;
+      this.appDataService.updateShowLoadingPanel(true);
     }
 
     return next.handle(req).pipe(
@@ -117,7 +117,7 @@ export class CompletedInterceptor implements HttpInterceptor {
           if (this.count === 0 && (req.url !== "api/auth/token")) {
             timer(100).pipe(
               switchMap(() => {
-                this.appDataService.showLoadingPanel = false;
+                this.appDataService.updateShowLoadingPanel(false);
                 return of(null);
               })
             ).subscribe();
