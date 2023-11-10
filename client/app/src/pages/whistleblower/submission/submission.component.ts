@@ -276,6 +276,20 @@ export class SubmissionComponent {
     }, 1000);
   }
 
+  replaceReceivers(receivers: string[]): void {
+    Object.keys(this.submissionService.selected_receivers).forEach((key) => {
+      if (receivers.indexOf(key) === -1) {
+        delete this.submissionService.selected_receivers[key];
+      }
+    });
+  
+    receivers.forEach((receiverId) => {
+      if (receiverId in this.appDataService.receivers_by_id) {
+        this.submissionService.selected_receivers[receiverId] = true;
+      }
+    });
+  }
+
   runValidation() {
     this.validate[this.navigation] = true;
 
