@@ -3,7 +3,7 @@ import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
 import {AuthenticationService} from "@app/services/authentication.service";
 
 @Component({
-  selector: "src-settings",
+  selector: "src-admin-settings",
   templateUrl: "./settings.component.html"
 })
 export class SettingsComponent implements AfterViewInit {

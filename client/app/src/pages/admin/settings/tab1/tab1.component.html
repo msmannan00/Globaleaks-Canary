@@ -26,13 +26,13 @@
                 <textarea class="form-control" name="node.dataModel.presentation" [(ngModel)]="nodeResolver.dataModel.presentation"></textarea>
             </div>
         </div>
-        <div class="form-group" *ngIf="authenticationService.session.role === 'admin'">
+        <div class="form-group" *ngIf="authenticationService.session?.role === 'admin'">
             <label>{{ 'Question to solicit possible whistleblowers' | translate }}</label>
             <div>
                 <textarea name="node.dataModel.whistleblowing_question" class="form-control" [(ngModel)]="nodeResolver.dataModel.whistleblowing_question"></textarea>
             </div>
         </div>
-        <div class="form-group" *ngIf="authenticationService.session.role === 'admin'">
+        <div class="form-group" *ngIf="authenticationService.session?.role === 'admin'">
             <label>{{ 'Whistleblowing button' | translate }}</label>
             <input name="nodeResolver.dataModel.whistleblowing_button" class="form-control" [(ngModel)]="nodeResolver.dataModel.whistleblowing_button" type="text" />
         </div>

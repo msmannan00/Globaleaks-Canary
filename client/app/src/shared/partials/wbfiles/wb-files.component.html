@@ -11,7 +11,7 @@
                     <span class="download-button btn btn-sm btn-primary" (click)="downloadWBFile(wbFile)">
                         <i class="fa-solid fa-download"></i>
                     </span>
-                    <button *ngIf="authenticationService.session.role === 'receiver'" class="btn btn-sm btn-danger" (click)="deleteWBFile(wbFile)">
+                    <button *ngIf="authenticationService.session?.role === 'receiver'" class="btn btn-sm btn-danger" (click)="deleteWBFile(wbFile)">
                         <i class="fa-solid fa-trash"></i>
                     </button>
                 </span>
