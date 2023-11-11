@@ -498,7 +498,7 @@ export class UtilsService {
           this.http.put(api, {"operation": operation, "args": args}, {headers}).subscribe(  {
               next: (response: any) => {
                 if (refresh) {
-                  this.reloadCurrentRoute();
+                  this.reloadComponent();
                 }
                 observer.next(response)
               },
