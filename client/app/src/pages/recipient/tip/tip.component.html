@@ -1,7 +1,7 @@
 <ng-container *ngIf="tip">
     <div class="row">
         <div class="col-md-12">
-            <a id="link-tiplist" routerLink="/recipient/reports" data-toggle="tooltip" title="{{'Reports' | translate}}" class="btn btn-outline-secondary">
+            <a id="link-tiplist" href="#/recipient/reports" data-toggle="tooltip" title="{{'Reports' | translate}}" class="btn btn-outline-secondary">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
             <span id="tip-action-star" (click)="tipToggleStar()" data-toggle="tooltip" title="{{'Mark as important' | translate}}" class="btn btn-outline-secondary">
