@@ -29,7 +29,7 @@ export class QuestionnaireDuplicationComponent {
         }
       ).subscribe(() => {
         this.modalService.dismissAll();
-        this.utilsService.reloadCurrentRoute();
+        this.utilsService.reloadComponent();
       });
     }else {
       this.modalService.dismissAll();
