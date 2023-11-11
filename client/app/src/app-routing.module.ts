@@ -63,7 +63,6 @@ const routes: Routes = [
   {
     path: "recipient",
     canActivate: [ReceiverGuard],
-    resolve: {},
     loadChildren: () => RecipientRoutingModule,
     data: {
       sidebar: "recipient-sidebar"
