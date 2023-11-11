@@ -292,10 +292,7 @@ export class SubmissionComponent {
 
   runValidation() {
     this.validate[this.navigation] = true;
-
-    return !(!this.areReceiversSelected() || !this.checkForInvalidFields());
-
-
+    return !((!this.areReceiversSelected() && this.firstStepIndex() && this.navigation==-1) || !this.checkForInvalidFields());
   };
 
   checkForInvalidFields() {
