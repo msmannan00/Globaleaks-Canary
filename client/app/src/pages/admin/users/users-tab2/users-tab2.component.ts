@@ -20,7 +20,7 @@ export class UsersTab2Component implements OnInit {
 
   updateNode() {
     this.utilsService.update(this.nodeData).subscribe(_ => {
-      this.utilsService.reloadCurrentRoute();
+      this.utilsService.reloadComponent();
     });
   }
 }

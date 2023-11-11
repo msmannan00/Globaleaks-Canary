@@ -25,7 +25,7 @@ export class TorComponent implements OnInit {
 
   updateTor(network: any) {
     this.httpService.requestUpdateNetworkResource(network).subscribe(() => {
-      this.utilsService.reloadCurrentRoute();
+      this.utilsService.reloadComponent();
     });
   }
 }

@@ -21,7 +21,7 @@ export class Tab1Component {
   updateNode() {
     this.utilsService.update(this.nodeResolver.dataModel).subscribe(_ => {
       this.appConfigService.reinit(false);
-      this.utilsService.reloadCurrentRoute();
+      this.utilsService.reloadComponent();
     });
   }
 }

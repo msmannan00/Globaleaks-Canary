@@ -39,7 +39,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   importQuestion(file: any): void {
     this.utilsService.readFileAsText(file[0]).then((txt) => {
       return this.httpClient.post("api/admin/fieldtemplates?multilang=1", txt).subscribe(() => {
-        this.utilsService.reloadCurrentRoute();
+        this.utilsService.reloadComponent();
       });
     });
   }

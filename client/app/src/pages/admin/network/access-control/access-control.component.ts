@@ -19,7 +19,7 @@ export class AccessControlComponent implements OnInit {
 
   updateAccessControl(network: any) {
     this.httpService.requestUpdateNetworkResource(network).subscribe(() => {
-      this.utilsService.reloadCurrentRoute();
+      this.utilsService.reloadComponent();
     });
   }
 }

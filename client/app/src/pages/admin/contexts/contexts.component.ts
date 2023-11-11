@@ -43,7 +43,7 @@ export class ContextsComponent implements OnInit {
   }
 
   handleDataFromChild() {
-    this.utilsService.reloadCurrentRoute();
+    this.utilsService.reloadComponent();
   }
 
   newItemOrder(objects: any[], key: string): number {

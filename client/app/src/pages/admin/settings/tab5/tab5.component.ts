@@ -63,7 +63,7 @@ export class Tab5Component {
   updateNode() {
     this.utilsService.update(this.nodeResolver.dataModel).subscribe(_ => {
       this.appConfigService.reinit();
-      this.utilsService.reloadCurrentRoute();
+      this.utilsService.reloadComponent();
     });
   }
 

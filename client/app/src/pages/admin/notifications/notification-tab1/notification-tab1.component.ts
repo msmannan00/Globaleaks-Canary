@@ -18,7 +18,7 @@ export class NotificationTab1Component {
 
   updateNotification(notification: any) {
     this.utilsService.updateAdminNotification(notification).subscribe(_ => {
-      this.utilsService.reloadCurrentRoute();
+      this.utilsService.reloadComponent();
     });
   }
 
