@@ -41,6 +41,14 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "l10n/", "");
 }
 
+const translationModule = TranslateModule.forRoot({
+  loader: {
+    provide: TranslateLoader,
+    useFactory: createTranslateLoader,
+    deps: [HttpClient],
+  },
+})
+;
 @NgModule({
   declarations: [AppComponent, HeaderComponent, UserComponent, HomeComponent],
   imports: [
@@ -58,14 +66,7 @@ export function createTranslateLoader(http: HttpClient) {
     WizardModule,
     AdminModule,
     RecipientModule,
-    SharedModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: createTranslateLoader,
-        deps: [HttpClient],
-      },
-    }),
+    translationModule,
     NgSelectModule,
     FormsModule,
     WhistleblowerModule,

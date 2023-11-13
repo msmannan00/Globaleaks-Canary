@@ -1,25 +1,18 @@
 import {NgModule} from "@angular/core";
-import {AuthRoutingModule} from "@app/pages/auth/auth-routing.module";
-import {AdminRoutingModule} from "@app/pages/admin/admin-routing.module";
 import {RouterModule, Routes} from "@angular/router";
 import {SessionGuard} from "@app/app-guard.service";
 import {HomeComponent} from "@app/pages/dashboard/home/home.component";
 import {PasswordResetResponseComponent} from "@app/pages/auth/password-reset-response/password-reset-response.component";
-import {RecipientRoutingModule} from "@app/pages/recipient/recipient-routing.module";
 import {AdminGuard} from "@app/shared/guards/admin.guard";
 import {CustodianGuard} from "@app/shared/guards/custodian.guard";
 import {ReceiverGuard} from "@app/shared/guards/receiver.guard";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
-import {ActionRoutingModule} from "@app/pages/action/action-routing.module";
-import {SignupRoutingModule} from "@app/pages/signup/signup-routing.module";
 import {Pageguard} from "@app/shared/guards/pageguard.service";
 import {ActivationComponent} from "@app/pages/signup/templates/activation/activation.component";
-import {WizardRoutingModule} from "@app/pages/wizard/wizard-routing.module";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {RTipsResolver} from "@app/shared/resolvers/r-tips-resolver.service";
 import {TipComponent} from "@app/pages/recipient/tip/tip.component";
 import {TitleResolver} from "@app/shared/resolvers/title-resolver.resolver";
-import {CustodianRoutingModule} from "@app/pages/custodian/custodian-routing.module";
 import {IarResolver} from "@app/shared/resolvers/iar-resolver.service";
 import {BlankComponent} from "@app/shared/blank/blank.component";
 import {WbTipResolver} from "@app/shared/resolvers/wb-tip-resolver.service";
@@ -45,7 +38,7 @@ const routes: Routes = [
   {
     path: "login",
     data: {pageTitle: "Log in"},
-    loadChildren: () => AuthRoutingModule,
+    loadChildren: () => import('./pages/auth/auth-routing.module').then(m => m.AuthRoutingModule)
   },
   {
     path: "signup",
@@ -53,17 +46,17 @@ const routes: Routes = [
     resolve: {
       PreferenceResolver
     },
-    loadChildren: () => SignupRoutingModule,
+    loadChildren: () => import('./pages/signup/signup-routing.module').then(m => m.SignupRoutingModule)
 
   },
   {
     path: "action",
-    loadChildren: () => ActionRoutingModule,
+    loadChildren: () => import('./pages/action/action-routing.module').then(m => m.ActionRoutingModule)
   },
   {
     path: "recipient",
     canActivate: [ReceiverGuard],
-    loadChildren: () => RecipientRoutingModule,
+    loadChildren: () => import('./pages/recipient/recipient-routing.module').then(m => m.RecipientRoutingModule),
     data: {
       sidebar: "recipient-sidebar"
     }
@@ -74,17 +67,19 @@ const routes: Routes = [
     resolve: {
       PreferenceResolver, NodeResolver, RtipsResolver: RTipsResolver, IarsResolver: IarResolver
     },
-    loadChildren: () => CustodianRoutingModule,
+    loadChildren: () => import('./pages/custodian/custodian-routing.module').then(m => m.CustodianRoutingModule),
     data: {
-      sidebar: "custodian-sidebar", pageTitle: "Home"
+      sidebar: 'custodian-sidebar',
+      pageTitle: 'Home',
     },
   },
   {
-    path: "admin",
+    path: 'admin',
     canActivate: [AdminGuard],
-    loadChildren: () => AdminRoutingModule,
+    loadChildren: () => import('./pages/admin/admin-routing.module').then(m => m.AdminRoutingModule),
     data: {
-      sidebar: "admin-sidebar", pageTitle: "Log in"
+      sidebar: 'admin-sidebar',
+      pageTitle: 'Log in',
     },
   },
   {
@@ -104,7 +99,7 @@ const routes: Routes = [
       PreferenceResolver,
       title: TitleResolver
     },
-    loadChildren: () => WizardRoutingModule,
+    loadChildren: () => import('./pages/wizard/wizard-routing.module').then(m => m.WizardRoutingModule)
   },
   {
     path: "status/:tip_id",
