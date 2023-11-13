@@ -58,11 +58,9 @@
           },
           "configurations": {
             "production": {
-              "extractLicenses": false,
-              "buildOptimizer": true
+              "extractLicenses": false
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
               "extractLicenses": false,
