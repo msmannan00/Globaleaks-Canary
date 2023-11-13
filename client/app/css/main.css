@@ -9,6 +9,10 @@
   text-decoration: none;
 }
 
+.js-disabled-message {
+  display: none;
+}
+
 #browser-not-supported {
   display: none;
 }
