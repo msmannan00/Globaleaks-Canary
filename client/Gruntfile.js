@@ -88,7 +88,7 @@ module.exports = function (grunt) {
           {dest: "tmp/js/runtime.js.map", cwd: ".", src: ["dist/runtime.js.map"], expand: false, flatten: true},
 
           {dest: "tmp/js/scripts.js", cwd: ".", src: ["dist/scripts.js"], expand: false, flatten: true},
-          {dest: "tmp/js/scripts.js.map", cwd: ".", src: ["dist/scripts.js.map"], expand: false, flatten: true}
+          {dest: "tmp/js/scripts.js.map", cwd: ".", src: ["dist/scripts.js.map"], expand: false, flatten: true},
         ]
       },
       package: {
@@ -103,6 +103,14 @@ module.exports = function (grunt) {
           {dest: "build/assets/favicon.ico", cwd: ".", src: ["tmp/assets/favicon.ico"], expand: false, flatten: true},
           {dest: "build/license.txt", cwd: ".", src: ["tmp/assets/license.txt"], expand: false, flatten: true},
           {dest: "build/loader.js", cwd: ".", src: ["tmp/assets/loader.js"], expand: false, flatten: true},
+          {dest: "build/loader.js", cwd: ".", src: ["tmp/assets/loader.js"], expand: false, flatten: true},
+          {
+            dest: 'build/',
+            cwd: 'tmp/',
+            src: ['**/*.js', '!main.js', '!polyfills.js', '!runtime.js', '!scripts/*.js'],
+            expand: true,
+            flatten: true
+          }
         ]
       },
       instrument: {
@@ -1040,7 +1048,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask("updateTranslations", ["fetchTranslations", "makeAppData", "verifyAppData"]);
 
-  grunt.registerTask("build", ["clean", "concat:fontsource", "concat:fontawesome", "string-replace:initFonts", "copy:sources", "shell:build", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
+  grunt.registerTask("build", ["clean", "concat:fontsource", "concat:fontawesome", "string-replace:initFonts", "copy:sources", "shell:build", "copy:build", "string-replace", "copy:package"]);
 
   grunt.registerTask("serve", ["shell:serve"]);
 

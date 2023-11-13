@@ -50,7 +50,7 @@ const translationModule = TranslateModule.forRoot({
 })
 ;
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, UserComponent, HomeComponent],
+  declarations: [AppComponent, HomeComponent, HeaderComponent, UserComponent],
   imports: [
     NgbModule,
     HttpClientModule,
