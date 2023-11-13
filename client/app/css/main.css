@@ -875,8 +875,8 @@ htmlinput[type="email"] {
   direction: ltr;
 }
 
-.fa,
-.fas {
+[dir="rtl"] .fa,
+[dir="rtl"] .fa-solid {
   transform: scaleX(-1);
 }
 
