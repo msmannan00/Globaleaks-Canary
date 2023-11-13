@@ -26,7 +26,9 @@ export class TranslationService {
     this.language = changedLanguage;
     this.translateService.use(this.language).subscribe(() => {
       this.translateService.setDefaultLang(this.language);
-      this.translateService.getTranslation(this.language).subscribe();
+      if(this.translateService.getBrowserLang() != this.language){
+        this.translateService.getTranslation(this.language).subscribe();
+      }
     });
   }
 }
