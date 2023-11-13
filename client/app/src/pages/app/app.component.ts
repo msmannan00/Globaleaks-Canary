@@ -9,7 +9,7 @@ import {NavigationEnd, Router} from "@angular/router";
   selector: "app-root",
   templateUrl: "./app.component.html"
 })
-export class AppComponent implements AfterViewInit{
+export class AppComponent implements AfterViewInit {
   showSidebar: boolean = true;
   isNavCollapsed: boolean = true;
   showLoadingPanel = false;

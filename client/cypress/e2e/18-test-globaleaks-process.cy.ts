@@ -19,7 +19,6 @@ describe("globaleaks process", function () {
     });
 
     it("Recipient actions ", function () {
-      cy.wait(3000);
       cy.login_receiver();
       cy.visit("/#/recipient/reports");
 
@@ -64,7 +63,6 @@ describe("globaleaks process", function () {
 
       cy.takeScreenshot("whistleblower/report", 0);
 
-      cy.wait(5000);
       cy.fixture("files/evidence-3.txt").then(fileContent => {
         cy.get('input[type="file"]').then(input => {
           const blob = new Blob([fileContent], { type: "text/plain" });

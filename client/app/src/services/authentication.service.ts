@@ -180,7 +180,7 @@ export class AuthenticationService {
             this.deleteSession();
             this.loginRedirect();
           }
-          if (callback) {
+          if (callback && this.session) {
             callback();
           }
         }
