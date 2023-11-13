@@ -13,6 +13,7 @@ export class AppComponent implements AfterViewInit {
   showSidebar: boolean = true;
   isNavCollapsed: boolean = true;
   showLoadingPanel = false;
+  loading = true;
 
   constructor(private changeDetectorRef: ChangeDetectorRef, private router: Router, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService) {
   }
@@ -41,6 +42,7 @@ export class AppComponent implements AfterViewInit {
   public ngAfterViewInit(): void {
     this.appDataService.showLoadingPanel$.subscribe((value) => {
       this.showLoadingPanel = value;
+      this.loading = false;
       this.changeDetectorRef.detectChanges();
     });
   }
