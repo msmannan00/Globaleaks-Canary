@@ -29,7 +29,7 @@ module.exports = function (grunt) {
     },
     shell: {
       build: {
-        command: "npx ng build --configuration=production && echo \"Build completed\""
+        command: "npx ng build --aot --configuration=production && echo \"Build completed\""
       },
       babel: {
         command: "npx ng build --configuration=production --source-map && nyc instrument dist instrument"
