@@ -4,6 +4,7 @@ import {AppDataService} from "@app/app-data.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {TranslateService} from "@ngx-translate/core";
 import {NavigationEnd, Router} from "@angular/router";
+import {BrowserCheckService} from "@app/shared/services/browser-check.service";
 
 @Component({
   selector: "app-root",
@@ -13,9 +14,9 @@ export class AppComponent implements AfterViewInit {
   showSidebar: boolean = true;
   isNavCollapsed: boolean = true;
   showLoadingPanel = false;
-  loading = true;
+  supportedBrowser = true;
 
-  constructor(private changeDetectorRef: ChangeDetectorRef, private router: Router, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService) {
+  constructor(protected browserCheckService: BrowserCheckService, private changeDetectorRef: ChangeDetectorRef, private router: Router, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService) {
   }
 
   checkToShowSidebar() {
@@ -42,7 +43,7 @@ export class AppComponent implements AfterViewInit {
   public ngAfterViewInit(): void {
     this.appDataService.showLoadingPanel$.subscribe((value) => {
       this.showLoadingPanel = value;
-      this.loading = false;
+      this.supportedBrowser = this.browserCheckService.checkBrowserSupport();
       this.changeDetectorRef.detectChanges();
     });
   }
