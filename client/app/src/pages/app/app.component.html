@@ -1,25 +1,24 @@
-<div class="devMode" (click)="openGithubReport()">
-    <p>Globaleaks Beta Version 〡 Report Bug at https://github.com/msmannan00/globaleaks-angular-fork</p>
-</div>
-<div *ngIf="!supportedBrowser">
-    <h1>Error!</h1><br/> <br/>
-    <div> You are running an unsupported and potentially vulnerable browser. <br/> <br/> In order to use GlobaLeaks you
-        are strongly advised to download and install the Tor Browser. <br/> The Tor Browser includes various privacy and
-        security enhancements not present in other browsers. <br/> <br/>
-        <a href="https://www.torproject.org/download/" rel="noreferrer" target="_blank" class="text-center">[ Download
-            the Tor Browser ]</a> <br/> <br/> This is the list of the other supported browsers: <br/>
-        <ul>
-            <li>Mozilla Firefox &gt;= 38</li>
-            <li>Google Chrome &gt;= 45</li>
-            <li>Brave &gt;= 1.20.110</li>
-            <li>Edge (any)</li>
-            <li>Internet Explorer 11</li>
-            <li>Safari: &gt;= 8</li>
-            <li>iOS &gt;= 9</li>
-            <li>Android &gt;= 4.4</li>
-        </ul>
+<ng-container *ngIf="!supportedBrowser">
+    <div>
+        <h1>Error!</h1><br/> <br/>
+        <div> You are running an unsupported and potentially vulnerable browser. <br/> <br/> In order to use GlobaLeaks you
+            are strongly advised to download and install the Tor Browser. <br/> The Tor Browser includes various privacy and
+            security enhancements not present in other browsers. <br/> <br/>
+            <a href="https://www.torproject.org/download/" rel="noreferrer" target="_blank" class="text-center">[ Download
+                the Tor Browser ]</a> <br/> <br/> This is the list of the other supported browsers: <br/>
+            <ul>
+                <li>Mozilla Firefox &gt;= 38</li>
+                <li>Google Chrome &gt;= 45</li>
+                <li>Brave &gt;= 1.20.110</li>
+                <li>Edge (any)</li>
+                <li>Internet Explorer 11</li>
+                <li>Safari: &gt;= 8</li>
+                <li>iOS &gt;= 9</li>
+                <li>Android &gt;= 4.4</li>
+            </ul>
+        </div>
     </div>
-</div>
+</ng-container>
 <div id="page-overlay" *ngIf="showLoadingPanel">
     <div id="loader"></div>
 </div>
