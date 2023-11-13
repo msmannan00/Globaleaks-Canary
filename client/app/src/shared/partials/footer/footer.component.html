@@ -10,4 +10,7 @@
         </div>
         <div id="AttributionClause" class="vcenter">Powered by <a href="https://www.globaleaks.org/" title="GlobaLeaks - Secure Whistleblowing Software" rel="noreferrer" target="_blank">GlobaLeaks</a></div>
     </ng-container>
+    <ng-container *ngIf="!appDataService.public.node">
+        Powered by GlobaLeaks
+    </ng-container>
 </footer>
