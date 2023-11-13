@@ -837,6 +837,17 @@ text.axis-worktime {
   white-space: pre-wrap;
 }
 
+.disclaimer-text, .tos-text {
+  display: block;
+  padding: 1em;
+  font-family: monospace;
+  font-size: 0.8rem;
+  max-height: 40em;
+  max-width: 80rem;
+  overflow-y: scroll;
+  white-space: pre-wrap;
+}
+
 .non-default-language,
 .disabled-icon {
   opacity: 0.2;
