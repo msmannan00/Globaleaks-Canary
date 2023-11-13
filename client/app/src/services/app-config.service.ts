@@ -28,11 +28,14 @@ export class AppConfigService {
     this.authenticationService = this.serviceInstanceService.authenticationService;
     this.utilsService = this.serviceInstanceService.utilsService;
 
-    this.activatedRoute.paramMap.subscribe(_ => {
-      const currentURL = window.location.hash.substring(2).split("?")[0];
-      this.initRoutes(currentURL);
-      this.localInitialization();
-    });
+    const currentURL = window.location.hash.substring(2).split("?")[0];
+    this.initRoutes(currentURL);
+    this.localInitialization();
+    // this.activatedRoute.paramMap.subscribe(_ => {
+    //   const currentURL = window.location.hash.substring(2).split("?")[0];
+    //   this.initRoutes(currentURL);
+    //   this.localInitialization();
+    // });
   }
 
   initRoutes(currentURL: string) {
@@ -60,6 +63,7 @@ export class AppConfigService {
   };
 
   public localInitialization(languageInit = true, callback?: () => void) {
+    this.appDataService.started = true;
     this.appServices.getPublicResource().subscribe({
       next: data => {
         this.appDataService.public = data.body;
@@ -143,7 +147,6 @@ export class AppConfigService {
 
 
         this.setTitle();
-        this.appDataService.started = true;
         this.onValidateInitialConfiguration();
         if (callback) {
           callback();
@@ -153,83 +156,83 @@ export class AppConfigService {
   }
 
   setTitle() {
-    const {public: rootData} = this.appDataService;
-
-    if (!rootData || !rootData.node) {
-      return;
-    }
-
-    const projectTitle = rootData.node.name;
-    let pageTitle = rootData.node.header_title_homepage;
-
-
-    if (this.header_title && this.router.url !== "/") {
-      pageTitle = this.header_title;
-    } else if (this.appDataService.page === "receiptpage") {
-      pageTitle = "Your report was successful.";
-    }
-
-    if (pageTitle && pageTitle.length > 0) {
-      pageTitle = this.translateService.instant(pageTitle);
-    }
-
-    this.appDataService.projectTitle = projectTitle !== "GLOBALEAKS" ? projectTitle : "";
-    this.appDataService.pageTitle = pageTitle !== projectTitle ? pageTitle : "";
-
-    if (pageTitle) {
-      const finalPageTitle = pageTitle.length > 0 ? this.translateService.instant(pageTitle) : projectTitle;
-      window.document.title = `${projectTitle} - ${finalPageTitle}`;
-
-      const element = window.document.querySelector("meta[name=\"description\"]");
-      if (element instanceof HTMLMetaElement) {
-        element.content = rootData.node.description;
-      }
-    } else {
-      window.document.title = projectTitle;
-    }
+    // const {public: rootData} = this.appDataService;
+    //
+    // if (!rootData || !rootData.node) {
+    //   return;
+    // }
+    //
+    // const projectTitle = rootData.node.name;
+    // let pageTitle = rootData.node.header_title_homepage;
+    //
+    //
+    // if (this.header_title && this.router.url !== "/") {
+    //   pageTitle = this.header_title;
+    // } else if (this.appDataService.page === "receiptpage") {
+    //   pageTitle = "Your report was successful.";
+    // }
+    //
+    // if (pageTitle && pageTitle.length > 0) {
+    //   pageTitle = this.translateService.instant(pageTitle);
+    // }
+    //
+    // this.appDataService.projectTitle = projectTitle !== "GLOBALEAKS" ? projectTitle : "";
+    // this.appDataService.pageTitle = pageTitle !== projectTitle ? pageTitle : "";
+    //
+    // if (pageTitle) {
+    //   const finalPageTitle = pageTitle.length > 0 ? this.translateService.instant(pageTitle) : projectTitle;
+    //   window.document.title = `${projectTitle} - ${finalPageTitle}`;
+    //
+    //   const element = window.document.querySelector("meta[name=\"description\"]");
+    //   if (element instanceof HTMLMetaElement) {
+    //     element.content = rootData.node.description;
+    //   }
+    // } else {
+    //   window.document.title = projectTitle;
+    // }
   }
 
   onValidateInitialConfiguration() {
-    if (this.appDataService.public.node) {
-      if (!this.appDataService.public.node.wizard_done) {
-        location.replace("/#/wizard");
-      } else if ((this.router.url === "/" || this.router.url === "/submission") && this.appDataService.public.node.adminonly && !this.authenticationService.session) {
-        location.replace("/#/admin/home");
-      } else if (this.router.url === "/" && this.appDataService.public.node.enable_signup && !location.href.endsWith("admin/home")) {
-        location.replace("/#/signup");
-      } else if (this.router.url === "/signup" && !this.appDataService.public.node.enable_signup) {
-        location.replace("/#/");
-      }
-    }
+    // if (this.appDataService.public.node) {
+    //   if (!this.appDataService.public.node.wizard_done) {
+    //     location.replace("/#/wizard");
+    //   } else if ((this.router.url === "/" || this.router.url === "/submission") && this.appDataService.public.node.adminonly && !this.authenticationService.session) {
+    //     location.replace("/#/admin/home");
+    //   } else if (this.router.url === "/" && this.appDataService.public.node.enable_signup && !location.href.endsWith("admin/home")) {
+    //     location.replace("/#/signup");
+    //   } else if (this.router.url === "/signup" && !this.appDataService.public.node.enable_signup) {
+    //     location.replace("/#/");
+    //   }
+    // }
   }
 
   loadAdminRoute(newPath: string) {
-    this.appDataService.public.node.wizard_done = true;
-    this.appDataService.public.node.languages_enabled = [];
-    this.appDataService.public.node.name = "Globaleaks";
-
-    this.router.navigateByUrl(newPath).then(() => {
-      this.sidebar = "admin-sidebar";
-      this.setTitle();
-    });
+    // this.appDataService.public.node.wizard_done = true;
+    // this.appDataService.public.node.languages_enabled = [];
+    // this.appDataService.public.node.name = "Globaleaks";
+    //
+    // this.router.navigateByUrl(newPath).then(() => {
+    //   this.sidebar = "admin-sidebar";
+    //   this.setTitle();
+    // });
   }
 
   routeChangeListener() {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.onValidateInitialConfiguration();
-        const lastChildRoute = this.findLastChildRoute(this.router.routerState.root);
-        if (lastChildRoute && lastChildRoute.snapshot.data && lastChildRoute.snapshot.data["pageTitle"]) {
-          this.header_title = lastChildRoute.snapshot.data["pageTitle"];
-          this.sidebar = lastChildRoute.snapshot.data["sidebar"];
-          this.setTitle();
-        } else {
-          this.header_title = "";
-          this.sidebar = "";
-          this.setTitle();
-        }
-      }
-    });
+    // this.router.events.subscribe((event) => {
+    //   if (event instanceof NavigationEnd) {
+    //     this.onValidateInitialConfiguration();
+    //     const lastChildRoute = this.findLastChildRoute(this.router.routerState.root);
+    //     if (lastChildRoute && lastChildRoute.snapshot.data && lastChildRoute.snapshot.data["pageTitle"]) {
+    //       this.header_title = lastChildRoute.snapshot.data["pageTitle"];
+    //       this.sidebar = lastChildRoute.snapshot.data["sidebar"];
+    //       this.setTitle();
+    //     } else {
+    //       this.header_title = "";
+    //       this.sidebar = "";
+    //       this.setTitle();
+    //     }
+    //   }
+    // });
   }
 
   findLastChildRoute(route: ActivatedRoute): ActivatedRoute {
