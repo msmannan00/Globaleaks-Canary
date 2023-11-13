@@ -58,18 +58,8 @@
           },
           "configurations": {
             "production": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "5mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "5mb",
-                  "maximumError": "5mb"
-                }
-              ],
+              "vendorChunk": true,
+              "buildOptimizer": true,
               "extractLicenses": false
             },
             "development": {
