@@ -41,9 +41,9 @@ export class AppComponent implements AfterViewInit {
   }
 
   public ngAfterViewInit(): void {
-    this.supportedBrowser = this.browserCheckService.checkBrowserSupport();
     this.appDataService.showLoadingPanel$.subscribe((value) => {
       this.showLoadingPanel = value;
+      this.supportedBrowser = this.browserCheckService.checkBrowserSupport();
       this.changeDetectorRef.detectChanges();
     });
   }
