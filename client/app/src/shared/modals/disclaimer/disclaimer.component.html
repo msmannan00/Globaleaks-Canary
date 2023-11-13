@@ -4,7 +4,7 @@
     </button>
 </div>
 <div class="modal-body">
-    <markdown class="disclaimer-text" [data]="nodeData.disclaimer_text | stripHtml"></markdown>
+    <markdown class="disclaimer-text" [data]="appDataService.public.node.disclaimer_text | stripHtml"></markdown>
 </div>
 <div class="modal-footer">
     <button (click)="confirm()" class="btn btn-primary">{{ 'Proceed' | translate }}</button>
