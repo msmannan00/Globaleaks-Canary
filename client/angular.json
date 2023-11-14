@@ -58,7 +58,8 @@
           },
           "configurations": {
             "production": {
-              "extractLicenses": false
+              "extractLicenses": false,
+              "vendorChunk": true,
             },
             "development": {
               "optimization": false,
