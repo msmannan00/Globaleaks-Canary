@@ -143,7 +143,6 @@ export class AppConfigService {
 
 
         this.setTitle();
-        this.appDataService.started = true;
         this.onValidateInitialConfiguration();
         if (callback) {
           callback();

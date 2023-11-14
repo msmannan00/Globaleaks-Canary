@@ -15,7 +15,6 @@ export class AppDataService {
   }
 
   public = <Root>{};
-  started = false;
   errorCodes = new ErrorCodes();
   pageTitle = "Globaleaks";
   projectTitle = "";

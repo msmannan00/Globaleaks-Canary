@@ -13,6 +13,25 @@
   display: none;
 }
 
+#Skip a {
+  position: absolute;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+  opacity: 0;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+#Skip a:focus {
+  position: static;
+  width: auto;
+  height: auto;
+}
+
 #browser-not-supported {
   display: none;
 }
