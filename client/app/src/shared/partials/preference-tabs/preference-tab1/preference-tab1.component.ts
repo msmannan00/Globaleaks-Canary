@@ -9,7 +9,6 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Enable2faComponent} from "@app/shared/modals/enable2fa/enable2fa.component";
 import {TwoFactorAuthData} from "@app/services/2fa.data.service";
 import {HttpService} from "@app/shared/services/http.service";
-import {ConfirmationWithPasswordComponent} from "@app/shared/modals/confirmation-with-password/confirmation-with-password.component";
 import {EncryptionRecoveryKeyComponent} from "@app/shared/modals/encryption-recovery-key/encryption-recovery-key.component";
 import {TranslationService} from "@app/services/translation.service";
 import {TranslateService} from "@ngx-translate/core";
@@ -100,7 +99,7 @@ export class PreferenceTab1Component implements OnInit {
 
   getEncryptionRecoveryKey() {
 
-    const modalRef = this.modalService.open(ConfirmationWithPasswordComponent);
+    const modalRef = this.modalService.open(ConfirmationWith2faComponent);
     modalRef.componentInstance.confirmFunction = (result: any) => {
       const data = {
         "operation": "get_recovery_key",
