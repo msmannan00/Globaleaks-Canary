@@ -6,6 +6,7 @@ import {AcceptAgreementComponent} from "@app/shared/modals/accept-agreement/acce
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {Observable} from "rxjs";
+import { AppDataService } from "@app/app-data.service";
 
 @Component({
   selector: "src-admin-home",
@@ -16,7 +17,7 @@ export class adminHomeComponent implements OnInit {
   nodeData: any = [];
   preferenceData: any = [];
 
-  constructor(private http: HttpClient, private modalService: NgbModal, private preference: PreferenceResolver, protected nodeResolver: NodeResolver, private router: Router) {
+  constructor(private appDataService: AppDataService,private http: HttpClient, private modalService: NgbModal, private preference: PreferenceResolver, protected nodeResolver: NodeResolver, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -26,7 +27,7 @@ export class adminHomeComponent implements OnInit {
     if (this.preference.dataModel) {
       this.preferenceData = this.preference.dataModel;
     }
-    if (this.nodeData.user_privacy_policy_text && this.preferenceData.accepted_privacy_policy === "1970-01-01T00:00:00Z") {
+    if (this.appDataService.public.node.user_privacy_policy_text && this.preferenceData.accepted_privacy_policy === "1970-01-01T00:00:00Z") {
       this.acceptPrivacyPolicyDialog().subscribe();
     }
   }

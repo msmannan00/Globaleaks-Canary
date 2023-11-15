@@ -64,6 +64,8 @@ export class Node {
   logo: any;
   footer_accessibility_declaration: any;
   footer_privacy_policy: any;
+  user_privacy_policy_text:any;
+  user_privacy_policy_url:any;
 }
 
 export interface LanguagesSupported {
