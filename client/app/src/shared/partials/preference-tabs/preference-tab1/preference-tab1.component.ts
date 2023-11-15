@@ -83,7 +83,7 @@ export class PreferenceTab1Component implements OnInit {
                 this.utilsService.reloadCurrentRoute();
               },
               error: (_: any) => {
-                this.utilsService.reloadCurrentRoute();
+                this.toggle2FA(event);
               }
             }
           );
@@ -97,40 +97,42 @@ export class PreferenceTab1Component implements OnInit {
     return false;
   }
 
-  getEncryptionRecoveryKey() {
-
+  getEncryptionRecoveryKey(event: Event) {
     const modalRef = this.modalService.open(ConfirmationWith2faComponent);
-    modalRef.componentInstance.confirmFunction = (result: any) => {
-      const data = {
-        "operation": "get_recovery_key",
-        "args": {
-          "secret": this.twoFactorAuthData.totp.secret,
-          "token": this.twoFactorAuthData.totp.token
-        }
-      };
-
-      const requestObservable = this.httpService.requestOperationsRecovery(data, this.utilsService.encodeString(result));
-      requestObservable.subscribe(
-        {
-          next: response => {
-            this.preferenceResolver.dataModel.clicked_recovery_key = true;
-            const erk = response.data["text"].match(/.{1,4}/g).join("-");
-            const modalRef = this.modalService.open(EncryptionRecoveryKeyComponent);
-            modalRef.componentInstance.erk = erk;
-          },
-          error: (error: any) => {
-            if (error.error["error_message"] === "Authentication Failed") {
-              this.getEncryptionRecoveryKey();
-            } else {
-              this.preferenceResolver.dataModel.clicked_recovery_key = true;
-              const erk = error.error["text"].match(/.{1,4}/g).join("-");
-              const modalRef = this.modalService.open(EncryptionRecoveryKeyComponent);
-              modalRef.componentInstance.erk = erk;
+    modalRef.result.then(
+        (result) => {
+          const data = {
+            "operation": "get_recovery_key",
+            "args": {
+              "secret": this.twoFactorAuthData.totp.secret,
+              "token": this.twoFactorAuthData.totp.token
             }
-          }
+          };
+
+          this.httpService.requestOperationsRecovery(data, this.utilsService.encodeString(result)).subscribe(
+              {
+                next: response => {
+                  this.preferenceResolver.dataModel.clicked_recovery_key = true;
+                  const erk = response.data["text"].match(/.{1,4}/g).join("-");
+                  const modalRef = this.modalService.open(EncryptionRecoveryKeyComponent);
+                  modalRef.componentInstance.erk = erk;
+                },
+                error: (error: any) => {
+                  if (error.error["error_message"] === "Authentication Failed" || error.error["error_message"] === "Two Factor authentication required") {
+                    this.toggle2FA(event);
+                  } else {
+                    this.preferenceResolver.dataModel.clicked_recovery_key = true;
+                    const erk = error.error["text"].match(/.{1,4}/g).join("-");
+                    const modalRef = this.modalService.open(EncryptionRecoveryKeyComponent);
+                    modalRef.componentInstance.erk = erk;
+                  }
+                }
+              }
+          );
+        },
+        (_) => {
         }
-      );
-    };
+    );
   }
 
   save() {

@@ -19,6 +19,7 @@ export class Tab5Component {
   @Input() contentForm: NgForm;
   userData: any = {};
   questionnaireData: any = {};
+  routeReload = false;
 
   constructor(private authenticationService: AuthenticationService, private modalService: NgbModal, private appConfigService: AppConfigService, private utilsService: UtilsService, protected nodeResolver: NodeResolver, protected preferenceResolver: PreferenceResolver, private usersResolver: UsersResolver, private questionnairesResolver: QuestionnairesResolver) {
 
@@ -63,11 +64,19 @@ export class Tab5Component {
   updateNode() {
     this.utilsService.update(this.nodeResolver.dataModel).subscribe(_ => {
       this.appConfigService.reinit();
-      this.utilsService.reloadComponent();
+      if(this.routeReload){
+        this.utilsService.reloadCurrentRoute();
+      }else {
+        this.utilsService.reloadComponent();
+      }
     });
   }
 
   resetSubmissions() {
     this.utilsService.deleteDialog();
+  }
+
+  enableRouteReload(){
+    this.routeReload = true;
   }
 }
