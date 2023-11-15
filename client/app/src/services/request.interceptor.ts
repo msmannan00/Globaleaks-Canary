@@ -41,7 +41,7 @@ export class RequestInterceptor implements HttpInterceptor {
 
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if (httpRequest.url.endsWith("/data/i18n/.json") || httpRequest.url.endsWith("api/public") || httpRequest.url.endsWith("l10n/en")) {
+    if (httpRequest.url.endsWith("/data/i18n/.json") || httpRequest.url.endsWith("api/public")) {
       return next.handle(httpRequest);
     }
 
