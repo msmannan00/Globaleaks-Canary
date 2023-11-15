@@ -37,7 +37,7 @@ export class Tab5Component {
     const node = this.nodeResolver.dataModel;
     node.encryption = false;
     if (!node.encryption) {
-      const modalRef = this.modalService.open(EnableEncryptionComponent, {});
+      const modalRef = this.modalService.open(EnableEncryptionComponent,{backdrop: 'static',keyboard: false});
       modalRef.result.then(
         () => {
           this.utilsService.runAdminOperation("enable_encryption", {}, false).subscribe(

@@ -47,6 +47,7 @@ export class TriggerReceiverComponent {
 
   resetRecipients() {
     this.arg.trigger_receiver = [];
+    this.modalService.dismissAll();
   }
 
 }

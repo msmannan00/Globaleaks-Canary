@@ -24,7 +24,7 @@ export class HomepageComponent {
 
   openDisclaimerModal(): Observable<string> {
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(DisclaimerComponent, {});
+      let modalRef = this.modalService.open(DisclaimerComponent,{backdrop: 'static',keyboard: false});
       modalRef.componentInstance.confirmFunction = () => {
         observer.complete()
         modalRef.componentInstance.confirmFunction = () => {

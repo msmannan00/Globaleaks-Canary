@@ -103,7 +103,7 @@ export class FieldsComponent implements OnInit {
 
   openConfirmableModalDialog(arg: any, scope: any): Observable<string> {
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(DeleteConfirmationComponent, {});
+      let modalRef = this.modalService.open(DeleteConfirmationComponent,{backdrop: 'static',keyboard: false});
       modalRef.componentInstance.arg = arg;
       modalRef.componentInstance.scope = scope;
 
@@ -228,7 +228,7 @@ export class FieldsComponent implements OnInit {
 
   openOptionHintDialog(arg: any): Observable<string> {
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(AddOptionHintComponent, {});
+      let modalRef = this.modalService.open(AddOptionHintComponent,{backdrop: 'static',keyboard: false});
       modalRef.componentInstance.arg = arg;
 
       modalRef.componentInstance.confirmFunction = () => {
@@ -258,7 +258,7 @@ export class FieldsComponent implements OnInit {
 
   openTriggerReceiverDialog(arg: any): Observable<string> {
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(TriggerReceiverComponent, {});
+      let modalRef = this.modalService.open(TriggerReceiverComponent,{backdrop: 'static',keyboard: false});
       modalRef.componentInstance.arg = arg;
 
       modalRef.componentInstance.confirmFunction = () => {
@@ -273,7 +273,7 @@ export class FieldsComponent implements OnInit {
 
   openAssignScorePointsDialog(arg: any): Observable<string> {
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(AssignScorePointsComponent, {});
+      let modalRef = this.modalService.open(AssignScorePointsComponent,{backdrop: 'static',keyboard: false});
       modalRef.componentInstance.arg = arg;
 
       modalRef.componentInstance.confirmFunction = () => {

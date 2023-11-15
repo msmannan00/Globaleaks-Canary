@@ -24,7 +24,7 @@ export class TipFilesReceiverComponent implements OnInit {
   }
 
   public viewRFile(file: any) {
-    const modalRef = this.modalService.open(FileViewComponent);
+    const modalRef = this.modalService.open(FileViewComponent,{backdrop: 'static',keyboard: false});
     modalRef.componentInstance.args = {
       file: file,
       loaded: false,

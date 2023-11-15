@@ -54,7 +54,7 @@ export class SiteslistComponent {
 
   openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
     scope = !scope ? this : scope;
-    const modalRef = this.modalService.open(DeleteConfirmationComponent);
+    const modalRef = this.modalService.open(DeleteConfirmationComponent,{backdrop: 'static',keyboard: false});
     modalRef.componentInstance.arg = arg;
     modalRef.componentInstance.scope = scope;
     modalRef.componentInstance.confirmFunction = () => {
