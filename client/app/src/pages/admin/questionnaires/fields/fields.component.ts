@@ -60,6 +60,16 @@ export class FieldsComponent implements OnInit {
     });
   }
 
+  minDateFormat(value: any) {
+    const dateString = `${value.year}-${value.month}-${value.day}`;
+    return dateString;
+  }
+
+  maxDateFormat(value: any) {
+    const dateString = `${value.year}-${value.month}-${value.day}`;
+    return dateString;
+  }
+  
   listenToFields(): any {
     if (this.type === "step") {
       return this.httpService.requestQuestionnairesResource().subscribe(response => {

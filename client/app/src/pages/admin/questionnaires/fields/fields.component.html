@@ -242,7 +242,7 @@
                                 <input class="form-control" placeholder="yyyy-mm-dd" name="minDate" [(ngModel)]="field.attrs.min_date.value" ngbDatepicker #minDate="ngbDatepicker" (click)="toggleMinDate() ; minDate.toggle()" />
                                 <label>{{ 'Earliest selectable date' | translate }}:</label>
                                 <span *ngIf="field.attrs.min_date.value">
-                                    <span>{{ field.attrs.min_date.value | date:'dd-MM-yyyy' }}</span>
+                                    <span>{{minDateFormat(field.attrs.min_date.value) | date:'dd-MM-yyyy'}}</span>
                                     <button class="btn btn-sm btn-danger" (click)="field.attrs.min_date.value = ''; $event.stopPropagation();">
                                         <i class="fa-solid fa-times"></i>
                                     </button>
@@ -255,7 +255,7 @@
                                 <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="field.attrs.max_date.value" ngbDatepicker #d="ngbDatepicker" (click)="toggleMaxDate() ; d.toggle()" />
                                 <label>{{ 'Latest selectable date' | translate }}:</label>
                                 <span *ngIf="field.attrs.max_date.value">
-                                    <span>{{ field.attrs.max_date.value | date:'dd-MM-yyyy' }}</span>
+                                    <span>{{maxDateFormat(field.attrs.max_date.value) | date:'dd-MM-yyyy' }}</span>
                                     <button class="btn btn-sm btn-danger" (click)="field.attrs.max_date.value = ''">
                                         <i class="fa-solid fa-times"></i>
                                     </button>
