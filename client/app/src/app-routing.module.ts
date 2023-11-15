@@ -17,6 +17,7 @@ import {IarResolver} from "@app/shared/resolvers/iar-resolver.service";
 import {BlankComponent} from "@app/shared/blank/blank.component";
 import {WbTipResolver} from "@app/shared/resolvers/wb-tip-resolver.service";
 import {WhistleblowerLoginResolver} from "@app/shared/resolvers/whistleblower-login.resolver";
+import {SubmissionComponent} from "@app/pages/whistleblower/submission/submission.component";
 
 
 const routes: Routes = [
@@ -29,6 +30,15 @@ const routes: Routes = [
     path: "",
     canActivate: [Pageguard],
     component: HomeComponent,
+    data: {pageTitle: ""},
+    pathMatch: "full",
+    resolve: {
+      WbTipResolver, WhistleblowerLoginResolver
+    }
+  },
+  {
+    path: "submission",
+    component: SubmissionComponent,
     data: {pageTitle: ""},
     pathMatch: "full",
     resolve: {

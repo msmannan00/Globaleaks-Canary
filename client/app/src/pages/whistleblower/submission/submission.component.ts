@@ -38,6 +38,7 @@ export class SubmissionComponent {
     this.selectable_contexts = [];
     this.receivedData = this.submissionService.getSharedData();
 
+    this.appDataService.page = "submissionpage";
     if (!this.whistleblowerLoginResolver.loggedIn) {
       this.utilsService.reloadCurrentRoute();
     } else {

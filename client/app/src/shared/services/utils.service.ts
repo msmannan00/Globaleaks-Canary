@@ -212,7 +212,7 @@ export class UtilsService {
   }
 
   showWBLoginBox() {
-    return location.pathname === "/submission";
+    return this.router.url === "/submission";
   }
 
   showUserStatusBox() {

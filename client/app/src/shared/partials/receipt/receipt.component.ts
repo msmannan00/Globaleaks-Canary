@@ -5,6 +5,7 @@ import {AppDataService} from "@app/app-data.service";
 import {WbTipResolver} from "@app/shared/resolvers/wb-tip-resolver.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: "src-receipt",
@@ -13,21 +14,17 @@ import {UtilsService} from "@app/shared/services/utils.service";
 export class ReceiptComponent implements OnInit {
   formattedReceipt = "";
 
-  constructor(private httpService: HttpService, private wbTipResolver: WbTipResolver, protected utilsService: UtilsService, protected authenticationService: AuthenticationService, protected appDataService: AppDataService) {
+  constructor(private router: Router, private httpService: HttpService, private wbTipResolver: WbTipResolver, protected utilsService: UtilsService, protected authenticationService: AuthenticationService, protected appDataService: AppDataService) {
   }
 
   ngOnInit(): void {
-    // const receipt = this.appDataService.receipt;
-    // if (receipt && receipt.length === 16) {
-    //   this.formattedReceipt = receipt.substring(0, 4) + " " + receipt.substring(4, 8) + " " + receipt.substring(8, 12) + " " + receipt.substring(12, 16);
-    //   return;
-    // }
   }
 
   viewReport(){
     const promise = () => {
       this.httpService.whistleBlowerTip().subscribe(
         (response: WbTipData) => {
+          this.router.navigate(["/"]).then();
           this.wbTipResolver.dataModel = response;
           this.appDataService.page = "tippage";
         }
