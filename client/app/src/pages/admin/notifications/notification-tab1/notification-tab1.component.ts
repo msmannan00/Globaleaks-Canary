@@ -4,6 +4,7 @@ import {Constants} from "@app/shared/constants/constants";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {NotificationsResolver} from "@app/shared/resolvers/notifications.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
+import { switchMap } from "rxjs";
 
 @Component({
   selector: "src-notification-tab1",
@@ -23,14 +24,19 @@ export class NotificationTab1Component {
   }
 
   updateThenTestMail(notification: any): void {
-    this.utilsService.updateAdminNotification(notification).subscribe(() => this.utilsService.runAdminOperation("test_mail", {}, true));
+    this.utilsService
+      .updateAdminNotification(notification)
+      .pipe(
+        switchMap(() => this.utilsService.runAdminOperation("test_mail", {}, true))
+      )
+      .subscribe();
   }
-
+  
   resetSMTPSettings() {
-    this.utilsService.runAdminOperation("reset_smtp_settings", {}, true);
+    this.utilsService.runAdminOperation("reset_smtp_settings", {}, true).subscribe();
   }
 
   resetTemplates() {
-    this.utilsService.runAdminOperation("reset_templates", {}, true);
+    this.utilsService.runAdminOperation("reset_templates", {}, true).subscribe();
   }
 }
