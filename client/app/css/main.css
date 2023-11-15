@@ -26,6 +26,17 @@
   overflow: hidden;
 }
 
+.disclaimer-text, .tos-text {
+  display: block;
+  padding: 1em;
+  font-family: monospace;
+  font-size: 0.8rem;
+  max-height: 40em;
+  max-width: 80rem;
+  overflow-y: scroll;
+  white-space: pre-wrap;
+}
+
 #Skip a:focus {
   position: static;
   width: auto;

@@ -16,7 +16,7 @@ export class HomepageComponent {
   }
 
   openSubmission() {
-    if (this.nodeResolver.dataModel.disclaimer_text) {
+    if (this.appDataService.public.node.disclaimer_text) {
       return this.openDisclaimerModal().subscribe();
     }
     return this.appDataService.page = "submissionpage";
@@ -27,9 +27,7 @@ export class HomepageComponent {
       let modalRef = this.modalService.open(DisclaimerComponent, {});
       modalRef.componentInstance.confirmFunction = () => {
         observer.complete()
-        modalRef.componentInstance.confirmFunction = () => {
-          return this.appDataService.page = "submissionpage";
-        };
+        return this.appDataService.page = "submissionpage";
       };
     });
   }
