@@ -106,7 +106,7 @@ export class TipComponent implements AfterViewInit {
           selectableRecipients.push(receiver);
         }
       });
-      const modalRef = this.modalService.open(GrantAccessComponent);
+      const modalRef = this.modalService.open(GrantAccessComponent,{backdrop: 'static',keyboard: false});
       modalRef.componentInstance.usersNames = response;
       modalRef.componentInstance.selectableRecipients = selectableRecipients;
       modalRef.componentInstance.confirmFun = (receiver_id: any) => {
@@ -136,7 +136,7 @@ export class TipComponent implements AfterViewInit {
               selectableRecipients.push(receiver);
             }
           });
-          const modalRef = this.modalService.open(RevokeAccessComponent);
+          const modalRef = this.modalService.open(RevokeAccessComponent,{backdrop: 'static',keyboard: false});
           modalRef.componentInstance.usersNames = response;
           modalRef.componentInstance.selectableRecipients = selectableRecipients;
           modalRef.componentInstance.confirmFun = (receiver_id: any) => {
@@ -167,7 +167,7 @@ export class TipComponent implements AfterViewInit {
               selectableRecipients.push(receiver);
             }
           });
-          const modalRef = this.modalService.open(TransferAccessComponent);
+          const modalRef = this.modalService.open(TransferAccessComponent,{backdrop: 'static',keyboard: false});
           modalRef.componentInstance.usersNames = response;
           modalRef.componentInstance.selectableRecipients = selectableRecipients;
           modalRef.result.then(
@@ -224,7 +224,7 @@ export class TipComponent implements AfterViewInit {
   }
 
   tipDelete() {
-    const modalRef = this.modalService.open(DeleteConfirmationComponent);
+    const modalRef = this.modalService.open(DeleteConfirmationComponent,{backdrop: 'static',keyboard: false});
     modalRef.componentInstance.confirmFunction = () => {
     };
     modalRef.componentInstance.args = {
@@ -234,7 +234,7 @@ export class TipComponent implements AfterViewInit {
   }
 
   setReminder() {
-    const modalRef = this.modalService.open(TipOperationSetReminderComponent);
+    const modalRef = this.modalService.open(TipOperationSetReminderComponent,{backdrop: 'static',keyboard: false});
     modalRef.componentInstance.args = {
       tip: this.RTipService.tip,
       operation: "set_reminder",
@@ -249,7 +249,7 @@ export class TipComponent implements AfterViewInit {
   }
 
   tipPostpone() {
-    const modalRef = this.modalService.open(TipOperationPostponeComponent);
+    const modalRef = this.modalService.open(TipOperationPostponeComponent,{backdrop: 'static',keyboard: false});
     modalRef.componentInstance.args = {
       tip: this.RTipService.tip,
       operation: "postpone",

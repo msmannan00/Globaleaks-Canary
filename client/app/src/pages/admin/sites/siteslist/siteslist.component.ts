@@ -6,7 +6,6 @@ import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppConfigService} from "@app/services/app-config.service";
 import { NgForm } from "@angular/forms";
-import {Observable} from "rxjs";
 
 @Component({
   selector: "src-siteslist",
@@ -42,7 +41,7 @@ export class SiteslistComponent {
 
   deleteTenant(event: any, tenant: any) {
     event.stopPropagation();
-    this.openConfirmableModalDialog(tenant, "").subscribe();
+    this.openConfirmableModalDialog(tenant, "").then();
   }
 
   configureTenant($event: Event, tid: number): void {
@@ -53,20 +52,19 @@ export class SiteslistComponent {
     });
   }
 
-  openConfirmableModalDialog(arg: any, scope: any): Observable<string> {
+  openConfirmableModalDialog(arg: any, scope: any): Promise<any> {
     scope = !scope ? this : scope;
-    return new Observable((observer) => {
-      let modalRef = this.modalService.open(DeleteConfirmationComponent, {});
-      modalRef.componentInstance.arg = arg;
-      modalRef.componentInstance.scope = scope;
-      modalRef.componentInstance.confirmFunction = () => {
-        observer.complete()
-        const url = "api/admin/tenants/" + arg.id;
-        return this.httpService.requestDeleteTenant(url).subscribe(_ => {
-          this.utilsService.deleteResource(this.tenants,arg);
-        });
-      };
-    });
+    const modalRef = this.modalService.open(DeleteConfirmationComponent,{backdrop: 'static',keyboard: false});
+    modalRef.componentInstance.arg = arg;
+    modalRef.componentInstance.scope = scope;
+    modalRef.componentInstance.confirmFunction = () => {
+
+      const url = "api/admin/tenants/" + arg.id;
+      return this.httpService.requestDeleteTenant(url).subscribe(_ => {
+         this.utilsService.deleteResource(this.tenants,arg);
+      });
+    };
+    return modalRef.result;
   }
 
   toggleEditing(event: Event): void {

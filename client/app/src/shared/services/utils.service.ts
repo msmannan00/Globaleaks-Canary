@@ -251,7 +251,7 @@ export class UtilsService {
     if (this.appDataService.public.node.custom_support_url) {
       window.open(this.appDataService.public.node.custom_support_url, "_blank");
     } else {
-      this.modalService.open(RequestSupportComponent);
+      this.modalService.open(RequestSupportComponent,{backdrop: 'static',keyboard: false});
     }
   }
 
@@ -523,9 +523,9 @@ export class UtilsService {
 
   getConfirmation(): Observable<string> {
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(ConfirmationWithPasswordComponent, {});
+      let modalRef = this.modalService.open(ConfirmationWithPasswordComponent,{backdrop: 'static',keyboard: false});
       if (this.preferenceResolver.dataModel.two_factor) {
-        modalRef = this.modalService.open(ConfirmationWith2faComponent, {});
+        modalRef = this.modalService.open(ConfirmationWith2faComponent,{backdrop: 'static',keyboard: false});
       }
 
       modalRef.componentInstance.confirmFunction = (secret: string) => {
@@ -538,7 +538,7 @@ export class UtilsService {
   openConfirmableModalDialogReport(arg: any, scope: any): Observable<string> {
     scope = !scope ? this : scope;
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(DeleteConfirmationComponent, {});
+      let modalRef = this.modalService.open(DeleteConfirmationComponent,{backdrop: 'static',keyboard: false});
       modalRef.componentInstance.arg = arg;
       modalRef.componentInstance.scope = scope;
       modalRef.componentInstance.confirmFunction = () => {

@@ -28,7 +28,7 @@ export class IdentityAccessRequestsComponent {
   }
 
   fileDeniedIdentityAccessReply(iar_id: string) {
-    const modalRef = this.modalService.open(TipOperationFileIdentityAccessReplyComponent);
+    const modalRef = this.modalService.open(TipOperationFileIdentityAccessReplyComponent,{backdrop: 'static',keyboard: false});
     modalRef.componentInstance.iar_id = iar_id;
   }
 
