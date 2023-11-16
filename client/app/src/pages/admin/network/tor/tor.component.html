@@ -1,11 +1,11 @@
 <div class="form-group">
     <div class="input-group">
         <span class="input-group-prepend">
-            <span class="input-group-text">{{ 'Tor Onion Service' | translate }}</span>
+            <span class="input-group-text rounded-end-0">{{ 'Tor Onion Service' | translate }}</span>
         </span>
         <input name="onionservice" class="form-control" type="text" [value]="networkData.onionservice" disabled />
         <span class="input-group-append">
-            <button class="btn btn-danger" [disabled]="torOnionResetInProgress" (click)="resetOnionPrivateKey()">
+            <button class="btn btn-danger rounded-start-0" [disabled]="torOnionResetInProgress" (click)="resetOnionPrivateKey()">
                 <i class="fa-solid fa-sync"></i>
                 <span>{{ 'Regenerate' | translate }}</span>
             </button>

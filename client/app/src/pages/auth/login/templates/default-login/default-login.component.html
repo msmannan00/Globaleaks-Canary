@@ -30,7 +30,7 @@
     <div class="input-group">
         <input class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="authentication.loginData.loginAuthCode" name="authentication.loginData.loginAuthCode" type="text" size="6" maxlength="6" required />
         <div class="input-group-btn">
-            <button id="login-button" class="btn btn-primary" [disabled]="authentication.loginInProgress  || loginValidator.invalid || authentication.loginData.loginAuthCode.length !=6" (click)="authentication.login(0, authentication.loginData.loginUsername, authentication.loginData.loginPassword, authentication.loginData.loginAuthCode)" type="submit">
+            <button id="login-button" class="btn btn-primary rounded-start-0" [disabled]="authentication.loginInProgress  || loginValidator.invalid || authentication.loginData.loginAuthCode.length !=6" (click)="authentication.login(0, authentication.loginData.loginUsername, authentication.loginData.loginPassword, authentication.loginData.loginAuthCode)" type="submit">
                 <i class="fa-solid fa-sign-in-alt"></i>
                 <span>{{'Log in'|translate}}</span>
             </button>

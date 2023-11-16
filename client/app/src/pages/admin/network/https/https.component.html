@@ -2,7 +2,7 @@
     <form name="adminNetForm" #adminNetForm="ngForm" novalidate>
         <p class="input-group">
             <span class="input-group-prepend">
-                <span class="input-group-text">{{ 'Hostname' | translate }}</span>
+                <span class="input-group-text rounded-end-0">{{ 'Hostname' | translate }}</span>
             </span>
             <input name="hostname" class="form-control" type="text" [(ngModel)]="nodeResolver.dataModel.hostname" #hostname="ngModel" [pattern]="Constants.hostnameRegexp" [ngClass]="{'is-invalid': hostname.errors?.['pattern']}" />
             <span class="input-group-append">
