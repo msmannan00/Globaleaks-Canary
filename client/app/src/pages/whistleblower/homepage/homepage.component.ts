@@ -1,10 +1,9 @@
 import {Component} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
-import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {DisclaimerComponent} from "@app/shared/modals/disclaimer/disclaimer.component";
 import {Observable} from "rxjs";
+import {AppConfigService} from "@app/services/app-config.service";
 
 @Component({
   selector: "src-homepage",
@@ -12,14 +11,15 @@ import {Observable} from "rxjs";
 })
 export class HomepageComponent {
 
-  constructor(protected appDataService: AppDataService, private modalService: NgbModal, private nodeResolver: NodeResolver) {
+  constructor(protected appConfigService: AppConfigService, protected appDataService: AppDataService, private modalService: NgbModal) {
   }
 
   openSubmission() {
     if (this.appDataService.public.node.disclaimer_text) {
       return this.openDisclaimerModal().subscribe();
     }
-    return this.appDataService.page = "submissionpage";
+    this.appConfigService.setPage("submissionpage");
+    return this.appDataService.page;
   }
 
   openDisclaimerModal(): Observable<string> {
@@ -27,7 +27,8 @@ export class HomepageComponent {
       let modalRef = this.modalService.open(DisclaimerComponent,{backdrop: 'static',keyboard: false});
       modalRef.componentInstance.confirmFunction = () => {
         observer.complete()
-        return this.appDataService.page = "submissionpage";
+        this.appConfigService.setPage("submissionpage");
+        return this.appDataService.page;
       };
     });
   }

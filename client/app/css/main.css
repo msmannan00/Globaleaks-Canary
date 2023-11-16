@@ -34,7 +34,6 @@
   max-height: 40em;
   max-width: 80rem;
   overflow-y: scroll;
-  white-space: pre-wrap;
 }
 
 #Skip a:focus {
@@ -406,9 +405,19 @@ table tr td {
 }
 
 .custom-close-button {
-  font-size: 11px;
-  background-color: #b80d0d;
-  border-color: #b80d0d;
+  font-size: 23px;
+  font-weight: bold;
+  color: #737373;
+  background: #00000000;
+  border: none;
+  position: absolute;
+  right: 10px;
+  top: 0;
+}
+
+.alert-danger-console{
+  color: black;
+  border: 1px solid #c8d1e0;
 }
 
 .recovery-key-input {
@@ -869,17 +878,6 @@ text.axis-worktime {
   max-height: 20rem;
   max-width: 80rem;
   overflow: auto;
-  white-space: pre-wrap;
-}
-
-.disclaimer-text, .tos-text {
-  display: block;
-  padding: 1em;
-  font-family: monospace;
-  font-size: 0.8rem;
-  max-height: 40em;
-  max-width: 80rem;
-  overflow-y: scroll;
   white-space: pre-wrap;
 }
 

@@ -6,6 +6,7 @@ import {SubmissionService} from "@app/services/submission.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {NgForm} from "@angular/forms";
+import {AppConfigService} from "@app/services/app-config.service";
 
 @Component({
   selector: "src-submission",
@@ -34,11 +35,11 @@ export class SubmissionComponent {
   show_steps_navigation_bar = false;
   receivedData: any;
 
-  constructor(private whistleblowerLoginResolver: WhistleblowerLoginResolver, protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, public submissionService: SubmissionService) {
+  constructor(private appConfigService: AppConfigService, private whistleblowerLoginResolver: WhistleblowerLoginResolver, protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, public submissionService: SubmissionService) {
     this.selectable_contexts = [];
     this.receivedData = this.submissionService.getSharedData();
 
-    this.appDataService.page = "submissionpage";
+    this.appConfigService.setPage("submissionpage");
     if (!this.whistleblowerLoginResolver.loggedIn) {
       this.utilsService.reloadCurrentRoute();
     } else {

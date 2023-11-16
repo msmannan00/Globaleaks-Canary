@@ -5,6 +5,7 @@ import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {AppDataService} from "@app/app-data.service";
+import {AppConfigService} from "@app/services/app-config.service";
 
 @Component({
   selector: "src-receipt-whistleblower",
@@ -14,7 +15,7 @@ export class ReceiptComponent implements OnInit {
   receipt: any;
   receiptId: string = "";
 
-  constructor(private httpService: HttpService, private wbTipResolver: WbTipResolver, protected utilsService: UtilsService, protected authenticationService: AuthenticationService, protected appDataService: AppDataService) {
+  constructor(private appConfigService: AppConfigService, private httpService: HttpService, private wbTipResolver: WbTipResolver, protected utilsService: UtilsService, protected authenticationService: AuthenticationService, protected appDataService: AppDataService) {
   }
 
   public ngOnInit(): void {
@@ -31,7 +32,7 @@ export class ReceiptComponent implements OnInit {
       this.httpService.whistleBlowerTip().subscribe(
         (response: WbTipData) => {
           this.wbTipResolver.dataModel = response;
-          this.appDataService.page = "tippage";
+          this.appConfigService.setPage("tippage");
         }
       );
     };

@@ -5,6 +5,7 @@ import {SubmissionResourceService} from "@app/services/submission-resource.servi
 import {HttpService} from "@app/shared/services/http.service";
 import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
 import {Router} from "@angular/router";
+import {AppConfigService} from "@app/services/app-config.service";
 
 @Injectable({
   providedIn: "root",
@@ -20,7 +21,7 @@ export class SubmissionService {
   uploads: any = {};
   private sharedData: any;
 
-  constructor(private router: Router, protected authenticationService: AuthenticationService, private serviceInstanceService: ServiceInstanceService, private httpService: HttpService, private appDataService: AppDataService, private submissionResourceService: SubmissionResourceService) {
+  constructor(private appConfigService: AppConfigService, private router: Router, protected authenticationService: AuthenticationService, private serviceInstanceService: ServiceInstanceService, private httpService: HttpService, private appDataService: AppDataService, private submissionResourceService: SubmissionResourceService) {
   }
 
   init() {
@@ -95,7 +96,7 @@ export class SubmissionService {
       next: (response) => {
         this.router.navigate(["/"]).then();
         this.authenticationService.session.receipt = response.receipt;
-        this.appDataService.page = "receiptpage";
+        this.appConfigService.setPage("receiptpage");
       }
     });
   }

@@ -6,6 +6,7 @@ import {WbTipResolver} from "@app/shared/resolvers/wb-tip-resolver.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {Router} from "@angular/router";
+import {AppConfigService} from "@app/services/app-config.service";
 
 @Component({
   selector: "src-receipt",
@@ -14,7 +15,7 @@ import {Router} from "@angular/router";
 export class ReceiptComponent implements OnInit {
   formattedReceipt = "";
 
-  constructor(private router: Router, private httpService: HttpService, private wbTipResolver: WbTipResolver, protected utilsService: UtilsService, protected authenticationService: AuthenticationService, protected appDataService: AppDataService) {
+  constructor(private appConfigService: AppConfigService, private router: Router, private httpService: HttpService, private wbTipResolver: WbTipResolver, protected utilsService: UtilsService, protected authenticationService: AuthenticationService, protected appDataService: AppDataService) {
   }
 
   ngOnInit(): void {
@@ -26,7 +27,7 @@ export class ReceiptComponent implements OnInit {
         (response: WbTipData) => {
           this.router.navigate(["/"]).then();
           this.wbTipResolver.dataModel = response;
-          this.appDataService.page = "tippage";
+          this.appConfigService.setPage("tippage");
         }
       );
     };

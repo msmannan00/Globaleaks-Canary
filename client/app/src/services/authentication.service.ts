@@ -19,7 +19,7 @@ export class AuthenticationService {
   requireAuthCode: boolean = false;
   loginData: LoginDataRef = new LoginDataRef();
 
-  constructor(private appDataService: AppDataService, private serviceInstanceService: ServiceInstanceService, private activatedRoute: ActivatedRoute, private httpService: HttpService, private rootDataService: AppDataService, private router: Router) {
+  constructor(private serviceInstanceService: ServiceInstanceService, private activatedRoute: ActivatedRoute, private httpService: HttpService, private rootDataService: AppDataService, private router: Router) {
   }
 
   init() {
@@ -175,7 +175,7 @@ export class AuthenticationService {
           this.reset();
           if (this.session.role === "whistleblower") {
             this.deleteSession();
-            this.rootDataService.page = "homepage";
+            this.appConfigService.setPage("homepage");
           } else {
             this.deleteSession();
             this.loginRedirect();

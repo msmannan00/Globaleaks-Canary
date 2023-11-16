@@ -7,6 +7,21 @@
   margin: 0;
 }
 
+.btn-primary:hover{
+  background-color: #377abc;
+  border-color: #9fc9f1;
+}
+
+.btn-primary:hover{
+  background-color: #377abc;
+  border-color: #9fc9f1;
+}
+
+.btn-danger:hover{
+  background-color: #de1b1b;
+  border-color: #fab6b6;
+}
+
 .form-control{
   background-color: #f5f7fa;
   border-color: #c8d1e0;
@@ -21,6 +36,10 @@
 .was-validated .form-control:focus {
   border-color: #86b7fe !important;
   box-shadow: 0 0 0 .25rem #0d6efd40 !important;
+}
+
+.form-control:hover{
+  background: #fff;
 }
 
 body .dropdown-visible>div.multiselect-dropdown>div.dropdown-list {

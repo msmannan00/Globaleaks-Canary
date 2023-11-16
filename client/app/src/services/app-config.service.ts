@@ -59,6 +59,11 @@ export class AppConfigService {
     location.replace("/");
   };
 
+  public setPage(page:string) {
+    this.appDataService.page = page;
+    this.setTitle();
+  };
+
   public localInitialization(languageInit = true, callback?: () => void) {
     this.appServices.getPublicResource().subscribe({
       next: data => {
