@@ -913,7 +913,7 @@ text.axis-worktime {
 }
 
 #search-filter {
-  margin: 0 0.5em;
+  margin: 0 0 0;
 }
 
 htmlinput[type="email"],

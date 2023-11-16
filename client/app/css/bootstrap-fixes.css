@@ -1,5 +1,10 @@
 .alert-secondary {
-  background-color: #f0f0f0;
+  background-color: #f5f7fa;
+  border-color: #c8d1e0;
+}
+
+.btn-outline-secondary{
+  margin: 0;
 }
 
 .form-control{
