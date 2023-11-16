@@ -46,6 +46,9 @@ const routes: Routes = [
     path: "preferences",
     component: PreferencesComponent,
     pathMatch: "full",
+    resolve: {
+      PreferenceResolver, RTipsResolver
+    },
     data: {pageTitle: "Preferences"},
   }
 ];

@@ -927,6 +927,7 @@ htmlinput[type="email"] {
 .input-group-append span {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+  border-color: #c8d1e0;
 }
 
 .calendar-active {
