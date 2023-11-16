@@ -3,6 +3,11 @@
   border-color: #2866a2;
 }
 
+.btn-danger {
+  background-color: #b80d0d;
+  border-color: #b80d0d;
+}
+
 .btn-primary:disabled {
   background-color: #2866a2;
   border-color: #2866a2;

@@ -2,6 +2,16 @@
   background-color: #f0f0f0;
 }
 
+.form-control{
+  background-color: #f5f7fa;
+  border-color: #c8d1e0;
+}
+
+.form-control:disabled{
+  background-color: #f5f7fa;
+  border-color: #c8d1e0;
+}
+
 .form-control.is-valid:focus,
 .was-validated .form-control:focus {
   border-color: #86b7fe !important;

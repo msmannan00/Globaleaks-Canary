@@ -407,7 +407,8 @@ table tr td {
 
 .custom-close-button {
   font-size: 11px;
-  color: red;
+  background-color: #b80d0d;
+  border-color: #b80d0d;
 }
 
 .recovery-key-input {
