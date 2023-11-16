@@ -79,7 +79,7 @@
         </div>
         <div class="form-group">
             <label>
-                <input [(ngModel)]="nodeResolver.dataModel.two_factor" name="two_factor" type="checkbox" />
+                <input [(ngModel)]="nodeResolver.dataModel.two_factor" name="two_factor" (click)="enableRouteReload()" type="checkbox" />
                 <span>{{ 'Require two factor authentication' | translate }}</span>
             </label>
         </div>

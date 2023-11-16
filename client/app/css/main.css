@@ -13,6 +13,35 @@
   display: none;
 }
 
+#Skip a {
+  position: absolute;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+  opacity: 0;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.disclaimer-text, .tos-text {
+  display: block;
+  padding: 1em;
+  font-family: monospace;
+  font-size: 0.8rem;
+  max-height: 40em;
+  max-width: 80rem;
+  overflow-y: scroll;
+}
+
+#Skip a:focus {
+  position: static;
+  width: auto;
+  height: auto;
+}
+
 #browser-not-supported {
   display: none;
 }
@@ -376,8 +405,19 @@ table tr td {
 }
 
 .custom-close-button {
-  font-size: 11px;
-  color: red;
+  font-size: 23px;
+  font-weight: bold;
+  color: #737373;
+  background: #00000000;
+  border: none;
+  position: absolute;
+  right: 10px;
+  top: 0;
+}
+
+.alert-danger-console{
+  color: black;
+  border: 1px solid #c8d1e0;
 }
 
 .recovery-key-input {
@@ -871,7 +911,7 @@ text.axis-worktime {
 }
 
 #search-filter {
-  margin: 0 0.5em;
+  margin: 0 0 0;
 }
 
 htmlinput[type="email"],
@@ -879,8 +919,8 @@ htmlinput[type="email"] {
   direction: ltr;
 }
 
-.fa,
-.fas {
+[dir="rtl"] .fa,
+[dir="rtl"] .fa-solid {
   transform: scaleX(-1);
 }
 
@@ -916,13 +956,13 @@ htmlinput[type="email"] {
 
 [dir="ltr"] #Sidebar .fa,
 [dir="ltr"] #Sidebar .fa-solid {
-  margin-right: 0.5em;
+  margin-right: 0.6em;
   width: 16px;
 }
 
 [dir="rtl"] #Sidebar .fa,
 [dir="rtl"] #Sidebar .fa-solid {
-  margin-left: 0.5em;
+  margin-left: 0.6em;
   width: 16px;
 }
 

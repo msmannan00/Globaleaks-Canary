@@ -45,7 +45,7 @@
         </div>
     </div>
     <div *ngIf="editingEmailAddress">
-        <input class="form-control" name="mail_address" [(ngModel)]="preferenceResolver.dataModel.mail_address" [pattern]="Constants.emailRegexp" type="email" [ngClass]="{'is-invalid': preferenceForm.controls['mail_address'].errors?.['pattern']}" />
+        <input class="form-control" name="mail_address" [(ngModel)]="preferenceResolver.dataModel.mail_address" [pattern]="Constants.emailRegexp" type="email" [ngClass]="{'is-invalid': preferenceForm.form.get('mail_address')?.errors?.['pattern']}"/>
     </div>
     <div *ngIf="!editingEmailAddress && preferenceResolver.dataModel.change_email_address" class="alert alert-secondary">
         <div>{{'Validation of email address change in progress.'|translate}}</div>
@@ -111,11 +111,11 @@
             <i class="fa-solid fa-check"></i>
             <span>{{'Save'|translate}}</span>
         </button>
-        <button *ngIf="preferenceResolver.dataModel.encryption" class="btn btn-outline-secondary" (click)="getEncryptionRecoveryKey()">{{'Account recovery key'|translate}}</button>
+        <button *ngIf="preferenceResolver.dataModel.encryption" class="btn btn-outline-secondary" (click)="getEncryptionRecoveryKey($event)">{{'Account recovery key'|translate}}</button>
     </div>
     <button *ngIf="!appDataService.public.node.pgp" type="submit" class="btn btn-primary" (click)="save()" [disabled]="preferenceForm.invalid">
         <i class="fa-solid fa-check"></i>
         <span>{{'Save'|translate}}</span>
     </button>
-    <button *ngIf="!appDataService.public.node.pgp && preferenceResolver.dataModel.encryption" class="btn btn-outline-secondary" (click)="getEncryptionRecoveryKey()">{{'Account recovery key'|translate}}</button>
+    <button *ngIf="!appDataService.public.node.pgp && preferenceResolver.dataModel.encryption" class="btn btn-outline-secondary" (click)="getEncryptionRecoveryKey($event)">{{'Account recovery key'|translate}}</button>
 </form>

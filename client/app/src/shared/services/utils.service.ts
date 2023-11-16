@@ -17,6 +17,7 @@ import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmatio
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
 import {ClipboardService} from "ngx-clipboard";
+import {AppConfigService} from "@app/services/app-config.service";
 
 @Injectable({
   providedIn: "root"
@@ -25,7 +26,7 @@ export class UtilsService {
 
   public authenticationService: AuthenticationService;
 
-  constructor(private clipboardService: ClipboardService, private serviceInstanceService: ServiceInstanceService, private nodeResolver: NodeResolver, private http: HttpClient, private httpService: HttpService, private modalService: NgbModal, private translateService: TranslateService, private appDataService: AppDataService, private preferenceResolver: PreferenceResolver, private tokenResourceService: TokenResource, private router: Router) {
+  constructor(private appConfigService: AppConfigService, private clipboardService: ClipboardService, private serviceInstanceService: ServiceInstanceService, private nodeResolver: NodeResolver, private http: HttpClient, private httpService: HttpService, private modalService: NgbModal, private translateService: TranslateService, private appDataService: AppDataService, private preferenceResolver: PreferenceResolver, private tokenResourceService: TokenResource, private router: Router) {
   }
 
   init() {
@@ -212,7 +213,7 @@ export class UtilsService {
   }
 
   showWBLoginBox() {
-    return location.pathname === "/submission";
+    return this.router.url === "/submission";
   }
 
   showUserStatusBox() {
@@ -251,14 +252,14 @@ export class UtilsService {
     if (this.appDataService.public.node.custom_support_url) {
       window.open(this.appDataService.public.node.custom_support_url, "_blank");
     } else {
-      this.modalService.open(RequestSupportComponent);
+      this.modalService.open(RequestSupportComponent,{backdrop: 'static',keyboard: false});
     }
   }
 
   routeCheck() {
     const path = location.pathname;
     if (path !== "/") {
-      this.appDataService.page = "";
+      this.appConfigService.setPage("");
     }
 
     if (!this.appDataService.public) {
@@ -266,7 +267,7 @@ export class UtilsService {
     }
 
     if (path === "/" && this.appDataService.public.node.enable_signup) {
-      this.appDataService.page = "signuppage";
+      this.appConfigService.setPage("signuppage");
     } else if ((path === "/" || path === "/submission") && this.appDataService.public.node.adminonly && !this.authenticationService.session) {
       location.replace("/admin");
     }
@@ -523,9 +524,9 @@ export class UtilsService {
 
   getConfirmation(): Observable<string> {
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(ConfirmationWithPasswordComponent, {});
+      let modalRef = this.modalService.open(ConfirmationWithPasswordComponent,{backdrop: 'static',keyboard: false});
       if (this.preferenceResolver.dataModel.two_factor) {
-        modalRef = this.modalService.open(ConfirmationWith2faComponent, {});
+        modalRef = this.modalService.open(ConfirmationWith2faComponent,{backdrop: 'static',keyboard: false});
       }
 
       modalRef.componentInstance.confirmFunction = (secret: string) => {
@@ -538,7 +539,7 @@ export class UtilsService {
   openConfirmableModalDialogReport(arg: any, scope: any): Observable<string> {
     scope = !scope ? this : scope;
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(DeleteConfirmationComponent, {});
+      let modalRef = this.modalService.open(DeleteConfirmationComponent,{backdrop: 'static',keyboard: false});
       modalRef.componentInstance.arg = arg;
       modalRef.componentInstance.scope = scope;
       modalRef.componentInstance.confirmFunction = () => {

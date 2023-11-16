@@ -17,12 +17,12 @@
             <div class="form">
                 <div class="input-group">
                     <span class="input-group-prepend">
-                        <span class="input-group-text" data-translate>Description</span>
+                        <span class="input-group-text rounded-end-0" data-translate>Description</span>
                     </span>
                     <input type="text" class="form-control" [(ngModel)]="file_upload_description" />
                     <span class="input-group-append" [ngClass]="{'disabled': !file_upload_description}">
                         <input #uploader [attr.id]="fileInput" id="customFile-{{fileInput}}" type="file" flowButton [style.display]="'none'" class="custom-file-input inputelem" (change)="onFileSelected(uploader.files)" />
-                        <label [attr.for]="fileInput" class="btn btn-primary">
+                        <label [attr.for]="fileInput" class="btn btn-primary rounded-start-0">
                             <i class="fa-solid fa-upload "></i>
                             <span>{{'Upload'|translate}}</span>
                         </label>

@@ -27,7 +27,7 @@ export class HttpsStatusComponent implements OnInit {
   }
 
   resetCfg() {
-    const modalRef = this.modalService.open(ConfirmationComponent);
+    const modalRef = this.modalService.open(ConfirmationComponent,{backdrop: 'static',keyboard: false});
     modalRef.componentInstance.arg = null;
     modalRef.componentInstance.confirmFunction = (_: any) => {
       return this.httpService.requestDeleteTlsConfigResource().subscribe(() => {

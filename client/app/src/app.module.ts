@@ -52,14 +52,10 @@ const translationModule = TranslateModule.forRoot({
 @NgModule({
   declarations: [AppComponent, HomeComponent, HeaderComponent, UserComponent],
   imports: [
+    AppRoutingModule,
     NgbModule,
     HttpClientModule,
-    AppRoutingModule,
-    SharedModule,
     BrowserModule,
-    NgxFlowModule,
-    NgIdleKeepaliveModule.forRoot(),
-    MarkdownModule.forRoot(),
     AuthModule,
     SignupModule,
     ActionModule,
@@ -71,6 +67,10 @@ const translationModule = TranslateModule.forRoot({
     FormsModule,
     WhistleblowerModule,
     CustodianModule,
+    SharedModule,
+    NgIdleKeepaliveModule.forRoot(),
+    MarkdownModule.forRoot(),
+    NgxFlowModule
   ],
   providers: [
     ReceiptValidatorDirective,

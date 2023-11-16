@@ -44,7 +44,7 @@ export class QuestionnairesListComponent {
   }
 
   duplicateQuestionnaire(questionnaire: any) {
-    const modalRef = this.modalService.open(QuestionnaireDuplicationComponent);
+    const modalRef = this.modalService.open(QuestionnaireDuplicationComponent,{backdrop: 'static',keyboard: false});
     modalRef.componentInstance.questionnaire = questionnaire;
     modalRef.componentInstance.operation = "duplicate";
     return modalRef.result;
@@ -57,7 +57,7 @@ export class QuestionnairesListComponent {
   openConfirmableModalDialog(arg: any, scope: any): Observable<string> {
     scope = !scope ? this : scope;
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(DeleteConfirmationComponent, {});
+      let modalRef = this.modalService.open(DeleteConfirmationComponent,{backdrop: 'static',keyboard: false});
       modalRef.componentInstance.arg = arg;
       modalRef.componentInstance.scope = scope;
 

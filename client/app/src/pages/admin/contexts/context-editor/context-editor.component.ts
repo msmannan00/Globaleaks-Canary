@@ -1,7 +1,6 @@
 import {HttpClient} from "@angular/common/http";
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {NgForm} from "@angular/forms";
-import {AcceptAgreementComponent} from "@app/shared/modals/accept-agreement/accept-agreement.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
@@ -107,7 +106,7 @@ export class ContextEditorComponent implements OnInit {
   openConfirmableModalDialog(arg: any, scope: any): Observable<string> {
     scope = !scope ? this : scope;
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(DeleteConfirmationComponent, {});
+      let modalRef = this.modalService.open(DeleteConfirmationComponent,{backdrop: 'static',keyboard: false});
       modalRef.componentInstance.arg = arg;
       modalRef.componentInstance.scope = scope;
       modalRef.componentInstance.confirmFunction = () => {

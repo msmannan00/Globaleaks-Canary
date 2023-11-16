@@ -89,7 +89,7 @@ export class TipsComponent implements OnInit {
     this.utils.runUserOperation("get_users_names", {}, true).subscribe(
       {
         next: response => {
-          const modalRef = this.modalService.open(GrantAccessComponent);
+          const modalRef = this.modalService.open(GrantAccessComponent,{backdrop: 'static',keyboard: false});
           modalRef.componentInstance.args = {
             users_names: response
           };
@@ -109,7 +109,7 @@ export class TipsComponent implements OnInit {
     this.utils.runUserOperation("get_users_names", {}, true).subscribe(
       {
         next: response => {
-          const modalRef = this.modalService.open(RevokeAccessComponent);
+          const modalRef = this.modalService.open(RevokeAccessComponent,{backdrop: 'static',keyboard: false});
           modalRef.componentInstance.args = {
             users_names: response
           };
@@ -126,7 +126,7 @@ export class TipsComponent implements OnInit {
   }
 
   tipDeleteSelected() {
-    const modalRef = this.modalService.open(DeleteConfirmationComponent);
+    const modalRef = this.modalService.open(DeleteConfirmationComponent,{backdrop: 'static',keyboard: false});
     modalRef.componentInstance.confirmFunction = () => {
     };
     modalRef.componentInstance.selected_tips = this.selectedTips;

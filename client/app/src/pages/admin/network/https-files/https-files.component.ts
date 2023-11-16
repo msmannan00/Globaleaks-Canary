@@ -60,7 +60,7 @@ export class HttpsFilesComponent implements OnInit {
   }
 
   deleteFile(fileResource: any) {
-    const modalRef = this.modalService.open(ConfirmationComponent);
+    const modalRef = this.modalService.open(ConfirmationComponent,{backdrop: 'static',keyboard: false});
     modalRef.componentInstance.arg = fileResource.name;
     modalRef.componentInstance.confirmFunction = (arg: any) => {
       return this.httpService.requestDeleteTlsConfigFilesResource(arg).subscribe(() => {
@@ -95,7 +95,7 @@ export class HttpsFilesComponent implements OnInit {
   }
 
   resetCfg() {
-    const modalRef = this.modalService.open(ConfirmationComponent);
+    const modalRef = this.modalService.open(ConfirmationComponent,{backdrop: 'static',keyboard: false});
     modalRef.componentInstance.arg = null;
     modalRef.componentInstance.confirmFunction = (_: any) => {
       return this.httpService.requestDeleteTlsConfigResource().subscribe(() => {

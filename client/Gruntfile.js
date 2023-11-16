@@ -29,7 +29,7 @@ module.exports = function (grunt) {
     },
     shell: {
       build: {
-        command: "npx ng build --configuration=production && echo \"Build completed\""
+        command: "npx ng build --configuration=production --aot && echo \"Build completed\""
       },
       babel: {
         command: "npx ng build --configuration=production --source-map && nyc instrument dist instrument"
@@ -89,6 +89,9 @@ module.exports = function (grunt) {
 
           {dest: "tmp/js/scripts.js", cwd: ".", src: ["dist/scripts.js"], expand: false, flatten: true},
           {dest: "tmp/js/scripts.js.map", cwd: ".", src: ["dist/scripts.js.map"], expand: false, flatten: true},
+
+          {dest: "tmp/js/vendor.js", cwd: ".", src: ["dist/vendor.js"], expand: false, flatten: true},
+          {dest: "tmp/js/vendor.js.map", cwd: ".", src: ["dist/vendor.js.map"], expand: false, flatten: true},
         ]
       },
       package: {
@@ -102,12 +105,10 @@ module.exports = function (grunt) {
           {dest: "build/index.html", cwd: ".", src: ["tmp/index.html"], expand: false, flatten: true},
           {dest: "build/assets/favicon.ico", cwd: ".", src: ["tmp/assets/favicon.ico"], expand: false, flatten: true},
           {dest: "build/license.txt", cwd: ".", src: ["tmp/assets/license.txt"], expand: false, flatten: true},
-          {dest: "build/loader.js", cwd: ".", src: ["tmp/assets/loader.js"], expand: false, flatten: true},
-          {dest: "build/loader.js", cwd: ".", src: ["tmp/assets/loader.js"], expand: false, flatten: true},
           {
             dest: 'build/',
             cwd: 'tmp/',
-            src: ['**/*.js', '!main.js', '!polyfills.js', '!runtime.js', '!scripts/*.js'],
+            src: ['**/[0-9]*.js'],
             expand: true,
             flatten: true
           }
@@ -388,27 +389,27 @@ module.exports = function (grunt) {
           replacements: [
             {
               pattern: "<script src=\"runtime.js\" type=\"module\"></script>",
-              replacement: ""
+              replacement: "<script src=\"js/runtime.js\" type=\"module\"></script>"
             },
             {
               pattern: "<script src=\"polyfills.js\" type=\"module\"></script>",
-              replacement: ""
+              replacement: "<script src=\"js/polyfills.js\" type=\"module\"></script>"
             },
             {
               pattern: "<script src=\"main.js\" type=\"module\"></script>",
-              replacement: ""
+              replacement: "<script src=\"js/main.js\" type=\"module\"></script>"
             },
             {
               pattern: "<script src=\"scripts.js\" defer></script>",
               replacement: ""
             },
             {
-              pattern: "<link rel=\"stylesheet\" href=\"styles.css\"></head>",
-              replacement: ""
+              pattern: "<script src=\"vendor.js\" type=\"module\"></script>",
+              replacement: "<script src=\"js/vendor.js\" type=\"module\"></script>"
             },
             {
-              pattern: "<noscript>",
-              replacement: "<script src=\"loader.js\"></script><noscript>"
+              pattern: "<link rel=\"stylesheet\" href=\"styles.css\"></head>",
+              replacement: "<link rel=\"stylesheet\" href=\"css/styles.css\"></head>"
             }
           ]
         }

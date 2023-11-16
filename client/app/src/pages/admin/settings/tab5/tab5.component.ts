@@ -19,6 +19,7 @@ export class Tab5Component {
   @Input() contentForm: NgForm;
   userData: any = {};
   questionnaireData: any = {};
+  routeReload = false;
 
   constructor(private authenticationService: AuthenticationService, private modalService: NgbModal, private appConfigService: AppConfigService, private utilsService: UtilsService, protected nodeResolver: NodeResolver, protected preferenceResolver: PreferenceResolver, private usersResolver: UsersResolver, private questionnairesResolver: QuestionnairesResolver) {
 
@@ -37,7 +38,7 @@ export class Tab5Component {
     const node = this.nodeResolver.dataModel;
     node.encryption = false;
     if (!node.encryption) {
-      const modalRef = this.modalService.open(EnableEncryptionComponent, {});
+      const modalRef = this.modalService.open(EnableEncryptionComponent,{backdrop: 'static',keyboard: false});
       modalRef.result.then(
         () => {
           this.utilsService.runAdminOperation("enable_encryption", {}, false).subscribe(
@@ -63,11 +64,19 @@ export class Tab5Component {
   updateNode() {
     this.utilsService.update(this.nodeResolver.dataModel).subscribe(_ => {
       this.appConfigService.reinit();
-      this.utilsService.reloadComponent();
+      if(this.routeReload){
+        this.utilsService.reloadCurrentRoute();
+      }else {
+        this.utilsService.reloadComponent();
+      }
     });
   }
 
   resetSubmissions() {
     this.utilsService.deleteDialog();
+  }
+
+  enableRouteReload(){
+    this.routeReload = true;
   }
 }

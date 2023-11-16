@@ -11,6 +11,8 @@ import {Router} from "@angular/router";
 })
 export class ForcedTwoFactorComponent {
   constructor(protected twoFactorAuthData: TwoFactorAuthData, private httpService: HttpService, private preferenceResolver: PreferenceResolver, private authenticationService: AuthenticationService, private router: Router) {
+    this.twoFactorAuthData.totp.secret = ""
+    this.twoFactorAuthData.totp.token = ""
   }
 
   enable2FA() {

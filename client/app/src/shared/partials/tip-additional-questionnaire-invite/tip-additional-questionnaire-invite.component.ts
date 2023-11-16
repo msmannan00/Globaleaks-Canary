@@ -18,6 +18,6 @@ export class TipAdditionalQuestionnaireInviteComponent {
   }
 
   tipOpenAdditionalQuestionnaire() {
-    this.modalService.open(TipAdditionalQuestionnaireFormComponent, {windowClass: "custom-modal-width"});
+    this.modalService.open(TipAdditionalQuestionnaireFormComponent,{windowClass: "custom-modal-width",backdrop: 'static',keyboard: false});
   }
 }
