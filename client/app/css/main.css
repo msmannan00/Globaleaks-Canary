@@ -912,13 +912,13 @@ htmlinput[type="email"] {
 
 [dir="ltr"] #Sidebar .fa,
 [dir="ltr"] #Sidebar .fa-solid {
-  margin-right: 0.5em;
+  margin-right: 0.6em;
   width: 16px;
 }
 
 [dir="rtl"] #Sidebar .fa,
 [dir="rtl"] #Sidebar .fa-solid {
-  margin-left: 0.5em;
+  margin-left: 0.6em;
   width: 16px;
 }
 
