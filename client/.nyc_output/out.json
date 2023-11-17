@@ -8,8 +8,80 @@
     "f": {},
     "b": {}
   },
-  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/loader.js": {
-    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/loader.js",
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/319.js": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/319.js",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/425.js": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/425.js",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/484.js": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/484.js",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/686.js": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/686.js",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/798.js": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/798.js",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/806.js": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/806.js",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/865.js": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/865.js",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/950.js": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/950.js",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/951.js": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/951.js",
     "statementMap": {},
     "fnMap": {},
     "branchMap": {},
@@ -82,6 +154,15 @@
   },
   "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/js/scripts.js": {
     "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/js/scripts.js",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/js/vendor.js": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/js/vendor.js",
     "statementMap": {},
     "fnMap": {},
     "branchMap": {},
@@ -1045,6 +1126,15 @@
   },
   "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/resolvers/whistleblower-login.resolver.ts": {
     "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/resolvers/whistleblower-login.resolver.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/services/browser-check.service.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/services/browser-check.service.ts",
     "statementMap": {},
     "fnMap": {},
     "branchMap": {},

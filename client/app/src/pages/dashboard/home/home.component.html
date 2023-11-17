@@ -1,4 +1,6 @@
 <ng-container [ngSwitch]="appDataService.page">
+    <div *ngSwitchCase="'blank'">
+    </div>
     <div *ngSwitchCase="'tippage'">
         <src-tippage></src-tippage>
     </div>

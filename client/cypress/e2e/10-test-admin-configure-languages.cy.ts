@@ -20,16 +20,14 @@ describe("admin configure languages", () => {
     cy.get('div.ng-option').contains('German [de]').click();
     cy.get('ul.selection-list li').should('contain', 'German [de]');
 
-
     cy.contains("button", "Save").click();
     cy.visit("/#/admin/settings");
     cy.contains("button", "Languages").click();
 
-    cy.get(".non-default-language").eq(0).click();
+    cy.get(".non-default-language").eq(1).click();
     cy.contains("button", "Save").click();
     cy.contains("button", "Sprachen").click();
 
-    cy.get(".non-default-language").eq(0).click();
     cy.get(".remove-lang-btn").eq(1).click();
     cy.contains("button", "Speichern").click();
     cy.waitForLoader()
@@ -42,6 +40,10 @@ describe("admin configure languages", () => {
     cy.get('button.btn.btn-primary').eq(0).contains('Speichern').click();
 
     cy.get('#language-picker-box').find('ng-select').last().click().get('ng-dropdown-panel').contains('English').click();
+    cy.visit("/#/admin/settings");
+    cy.contains("button", "Languages").click();
+    cy.get(".non-default-language").eq(0).click();
+    cy.contains("button", "Save").click();
 
     cy.logout();
   });

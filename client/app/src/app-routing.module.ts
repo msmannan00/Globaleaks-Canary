@@ -38,6 +38,7 @@ const routes: Routes = [
   },
   {
     path: "submission",
+    canActivate: [Pageguard],
     component: SubmissionComponent,
     data: {pageTitle: ""},
     pathMatch: "full",
@@ -47,6 +48,7 @@ const routes: Routes = [
   },
   {
     path: "login",
+    canActivate: [Pageguard],
     data: {pageTitle: "Log in"},
     loadChildren: () => import('./pages/auth/auth-routing.module').then(m => m.AuthRoutingModule)
   },

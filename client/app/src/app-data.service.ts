@@ -19,7 +19,7 @@ export class AppDataService {
   pageTitle = "Globaleaks";
   projectTitle = "";
   header_title = "";
-  page = "homepage";
+  page = "blank";
   languages_enabled = new Map<number, any>();
   sidebar = "";
 
