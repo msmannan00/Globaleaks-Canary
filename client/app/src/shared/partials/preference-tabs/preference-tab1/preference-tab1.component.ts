@@ -62,10 +62,10 @@ export class PreferenceTab1Component implements OnInit {
       this.twoFactorAuthData.totp.qrcode_string = "";
       this.twoFactorAuthData.totp.edit = false;
 
-      this.modalService.open(Enable2faComponent);
+      this.modalService.open(Enable2faComponent,{backdrop: 'static',keyboard: false});
 
     } else {
-      const modalRef = this.modalService.open(ConfirmationWith2faComponent);
+      const modalRef = this.modalService.open(ConfirmationWith2faComponent,{backdrop: 'static',keyboard: false});
       modalRef.result.then(
         (result) => {
           const data = {
@@ -98,7 +98,7 @@ export class PreferenceTab1Component implements OnInit {
   }
 
   getEncryptionRecoveryKey(event: Event) {
-    const modalRef = this.modalService.open(ConfirmationWith2faComponent);
+    const modalRef = this.modalService.open(ConfirmationWith2faComponent,{backdrop: 'static',keyboard: false});
     modalRef.result.then(
         (result) => {
           const data = {
@@ -114,7 +114,7 @@ export class PreferenceTab1Component implements OnInit {
                 next: response => {
                   this.preferenceResolver.dataModel.clicked_recovery_key = true;
                   const erk = response.data["text"].match(/.{1,4}/g).join("-");
-                  const modalRef = this.modalService.open(EncryptionRecoveryKeyComponent);
+                  const modalRef = this.modalService.open(EncryptionRecoveryKeyComponent,{backdrop: 'static',keyboard: false});
                   modalRef.componentInstance.erk = erk;
                 },
                 error: (error: any) => {
@@ -123,7 +123,7 @@ export class PreferenceTab1Component implements OnInit {
                   } else {
                     this.preferenceResolver.dataModel.clicked_recovery_key = true;
                     const erk = error.error["text"].match(/.{1,4}/g).join("-");
-                    const modalRef = this.modalService.open(EncryptionRecoveryKeyComponent);
+                    const modalRef = this.modalService.open(EncryptionRecoveryKeyComponent,{backdrop: 'static',keyboard: false});
                     modalRef.componentInstance.erk = erk;
                   }
                 }
