@@ -23,6 +23,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.questionnaireService.sharedData = "template";
     this.questionnaireService.getQuestionnairesData().pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.getResolver();
       return this.getQuestionnairesResolver();

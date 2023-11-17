@@ -8,6 +8,7 @@ import { HttpService } from "@app/shared/services/http.service";
 })
 export class StepComponent implements OnInit {
   @Input() step: any;
+  @Input() parsedFields: any;
   showAddQuestion: boolean = false;
   showAddQuestionFromTemplate: boolean = false;
   fieldTemplatesData: any = [];

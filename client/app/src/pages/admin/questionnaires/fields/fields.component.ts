@@ -23,6 +23,7 @@ export class FieldsComponent implements OnInit {
   @Input() fields: any;
   @Input() type: any;
   @Input() step: any;
+  @Input() parsedFields: any;
   @Output() dataToParent = new EventEmitter<string>();
 
   editing: boolean = false;
@@ -40,7 +41,7 @@ export class FieldsComponent implements OnInit {
     option: "",
     sufficient: false,
   };
-  parsedFields: any;
+  instance:any
 
   constructor(private questionnaireService: QuestionnaireService, private modalService: NgbModal, public nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService, private fieldTemplates: FieldTemplatesResolver, private fieldUtilities: FieldUtilitiesService,) {
   }
@@ -49,7 +50,10 @@ export class FieldsComponent implements OnInit {
     this.fieldTemplatesData = this.fieldTemplates.dataModel;
     this.fieldIsMarkableSubjectToStats = this.isMarkableSubjectToStats(this.field);
     this.fieldIsMarkableSubjectToPreview = this.isMarkableSubjectToPreview(this.field);
-    this.parsedFields = this.fieldUtilities.parseFields(this.fieldTemplates.dataModel, {});
+    this.instance = this.questionnaireService.sharedData;
+    if(this.instance === "template"){
+      this.parsedFields = this.fieldUtilities.parseFields(this.fieldTemplates.dataModel, {});
+    }
     this.children = this.field.children;
   }
 
