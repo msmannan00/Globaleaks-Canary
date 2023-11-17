@@ -23,6 +23,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.questionnaireService.sharedData = "step";
     this.questionnaireService.getData().pipe(takeUntil(this.destroy$)).subscribe(() => {
       return this.getResolver();
     });
