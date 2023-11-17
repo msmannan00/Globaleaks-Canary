@@ -1056,3 +1056,6 @@ i.fa-solid.fa-chevron-right {
 .was-validated .form-check-input:valid:checked, .form-check-input.is-valid:checked {
   background-color: #0d6efd;
 }
+.was-validated .admin-escrow:valid~.form-check-label {
+  color: #2866a2;
+}
