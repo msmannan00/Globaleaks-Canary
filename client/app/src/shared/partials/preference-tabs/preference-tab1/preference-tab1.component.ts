@@ -5,7 +5,7 @@ import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {AppDataService} from "@app/app-data.service";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {Enable2faComponent} from "@app/shared/modals/enable2fa/enable2fa.component";
 import {TwoFactorAuthData} from "@app/services/2fa.data.service";
 import {HttpService} from "@app/shared/services/http.service";
@@ -13,6 +13,10 @@ import {EncryptionRecoveryKeyComponent} from "@app/shared/modals/encryption-reco
 import {TranslationService} from "@app/services/translation.service";
 import {TranslateService} from "@ngx-translate/core";
 import {ConfirmationWith2faComponent} from "@app/shared/modals/confirmation-with2fa/confirmation-with2fa.component";
+import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import {
+  ConfirmationWithPasswordComponent
+} from "@app/shared/modals/confirmation-with-password/confirmation-with-password.component";
 
 @Component({
   selector: "src-preference-tab1",
@@ -28,7 +32,7 @@ export class PreferenceTab1Component implements OnInit {
   languageModel = "";
   role = "";
 
-  constructor(private translationService: TranslationService, protected appConfigService: AppConfigService, private cdr: ChangeDetectorRef, private translateService: TranslateService, private httpService: HttpService, private twoFactorAuthData: TwoFactorAuthData, private modalService: NgbModal, public appDataService: AppDataService, protected preferenceResolver: PreferenceResolver, private utilsService: UtilsService, protected authenticationService: AuthenticationService) {
+  constructor(private nodeResolver: NodeResolver, private translationService: TranslationService, protected appConfigService: AppConfigService, private cdr: ChangeDetectorRef, private translateService: TranslateService, private httpService: HttpService, private twoFactorAuthData: TwoFactorAuthData, private modalService: NgbModal, public appDataService: AppDataService, protected preferenceResolver: PreferenceResolver, private utilsService: UtilsService, protected authenticationService: AuthenticationService) {
     this.languageModel = this.preferenceResolver.dataModel.language;
   }
 
@@ -97,42 +101,57 @@ export class PreferenceTab1Component implements OnInit {
     return false;
   }
 
-  getEncryptionRecoveryKey(event: Event) {
-    const modalRef = this.modalService.open(ConfirmationWith2faComponent,{backdrop: 'static',keyboard: false});
-    modalRef.result.then(
-        (result) => {
-          const data = {
-            "operation": "get_recovery_key",
-            "args": {
-              "secret": this.twoFactorAuthData.totp.secret,
-              "token": this.twoFactorAuthData.totp.token
-            }
-          };
+  getEncryptionRecoveryKeyTrigger(result:any, event: Event){
+    const data = {
+      "operation": "get_recovery_key",
+      "args": {
+        "secret": this.twoFactorAuthData.totp.secret,
+        "token": this.twoFactorAuthData.totp.token
+      }
+    };
 
-          this.httpService.requestOperationsRecovery(data, this.utilsService.encodeString(result)).subscribe(
-              {
-                next: response => {
-                  this.preferenceResolver.dataModel.clicked_recovery_key = true;
-                  const erk = response.data["text"].match(/.{1,4}/g).join("-");
-                  const modalRef = this.modalService.open(EncryptionRecoveryKeyComponent,{backdrop: 'static',keyboard: false});
-                  modalRef.componentInstance.erk = erk;
-                },
-                error: (error: any) => {
-                  if (error.error["error_message"] === "Authentication Failed" || error.error["error_message"] === "Two Factor authentication required") {
-                    this.toggle2FA(event);
-                  } else {
-                    this.preferenceResolver.dataModel.clicked_recovery_key = true;
-                    const erk = error.error["text"].match(/.{1,4}/g).join("-");
-                    const modalRef = this.modalService.open(EncryptionRecoveryKeyComponent,{backdrop: 'static',keyboard: false});
-                    modalRef.componentInstance.erk = erk;
-                  }
-                }
-              }
-          );
-        },
-        (_) => {
+    this.httpService.requestOperationsRecovery(data, this.utilsService.encodeString(result)).subscribe(
+        {
+          next: response => {
+            this.preferenceResolver.dataModel.clicked_recovery_key = true;
+            const erk = response.data["text"].match(/.{1,4}/g).join("-");
+            const modalRef = this.modalService.open(EncryptionRecoveryKeyComponent,{backdrop: 'static',keyboard: false});
+            modalRef.componentInstance.erk = erk;
+          },
+          error: (error: any) => {
+            if (error.error["error_message"] === "Authentication Failed" || error.error["error_message"] === "Two Factor authentication required") {
+              this.getEncryptionRecoveryKey(event);
+            } else {
+              this.preferenceResolver.dataModel.clicked_recovery_key = true;
+              const erk = error.error["text"].match(/.{1,4}/g).join("-");
+              const modalRef = this.modalService.open(EncryptionRecoveryKeyComponent,{backdrop: 'static',keyboard: false});
+              modalRef.componentInstance.erk = erk;
+            }
+          }
         }
     );
+  }
+
+  getEncryptionRecoveryKey(event: Event) {
+
+    let modalRef: NgbModalRef;
+    if (this.preferenceResolver.dataModel.two_factor) {
+      modalRef = this.modalService.open(ConfirmationWith2faComponent, {backdrop: 'static', keyboard: false});
+      modalRef.result.then(
+          (result) => {
+            this.getEncryptionRecoveryKeyTrigger(result, event);
+          }
+      );
+    } else {
+      let modalRef = this.modalService.open(ConfirmationWithPasswordComponent,{backdrop: 'static',keyboard: false});
+      if (this.preferenceResolver.dataModel.two_factor) {
+        modalRef = this.modalService.open(ConfirmationWith2faComponent,{backdrop: 'static',keyboard: false});
+      }
+
+      modalRef.componentInstance.confirmFunction = (secret: string) => {
+        this.getEncryptionRecoveryKeyTrigger(secret, event);
+      };
+    }
   }
 
   save() {
