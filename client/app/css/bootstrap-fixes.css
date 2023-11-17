@@ -22,6 +22,18 @@
   border-color: #fab6b6;
 }
 
+.bg-danger{
+  background-color: #b80d0d !important;
+}
+
+.bg-primary{
+  background-color: #2866a2 !important;
+}
+
+.progress{
+  background-color: #f5f7fa;
+}
+
 .form-control{
   background-color: #f5f7fa;
   border-color: #c8d1e0;
