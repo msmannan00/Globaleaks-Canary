@@ -13,7 +13,7 @@
     </div>
     <div id="whistleblower-submit-box" class="mb-4" *ngIf="!appDataService.public.node.disable_submissions && (appDataService.public.node.https_whistleblower || appDataService.connection.tor)">
         <markdown id="whistle-blowing-question" *ngIf="appDataService.public.node.whistleblowing_question" [data]="appDataService.public.node.whistleblowing_question | stripHtml"></markdown>
-        <button id="WhistleblowingButton" (click)="openSubmission()" class="btn btn-primary">{{appDataService.public.node.whistleblowing_button|translate}}</button>
+        <button id="WhistleblowingButton" (click)="openSubmission()" class="btn btn-primary"><span *ngIf="appDataService.public.node.whistleblowing_button">{{appDataService.public.node.whistleblowing_button|translate}}</span></button>
     </div>
     <br>
     <div id="whistle-blower-login-box" *ngIf="appDataService.public.node.https_whistleblower || appDataService.connection.tor">
