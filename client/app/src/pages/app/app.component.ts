@@ -42,12 +42,12 @@ export class AppComponent implements AfterViewInit {
   }
 
   isWhistleblowerPage() {
-    if(this.showLoadingPanel && this.loading){
-      console.log(":: 1 :: true")
+    console.log(location.hash)
+    let temp = this.utilsService.isWhistleblowerPage()
+    if((location.hash === "#/" || location.hash === "#/submission") && this.loading){
       return true;
     }else {
-      this.loading = this.utilsService.isWhistleblowerPage()
-      console.log(":: 1 :: " + this.loading)
+      this.loading = temp;
       return this.loading;
     }
   }
