@@ -15,6 +15,7 @@ export class AppComponent implements AfterViewInit {
   isNavCollapsed: boolean = true;
   showLoadingPanel = false;
   supportedBrowser = true;
+  loading = false;
 
   constructor(protected browserCheckService: BrowserCheckService, private changeDetectorRef: ChangeDetectorRef, private router: Router, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService) {
   }
@@ -38,6 +39,14 @@ export class AppComponent implements AfterViewInit {
 
   public openGithubReport() {
     window.open("https://github.com/msmannan00/globaleaks-angular-fork/issues", "_blank");
+  }
+
+  isWhistleblowerPage() {
+    if(this.showLoadingPanel && this.loading){
+      return true;
+    }else {
+      return this.utilsService.isWhistleblowerPage();
+    }
   }
 
   public ngAfterViewInit(): void {
