@@ -42,9 +42,8 @@ export class AppComponent implements AfterViewInit {
   }
 
   isWhistleblowerPage() {
-    console.log(location.hash)
     let temp = this.utilsService.isWhistleblowerPage()
-    if((location.hash === "#/" || location.hash === "#/submission") && this.loading){
+    if((this.router.url === "/" || this.router.url === "/submission") && this.loading){
       return true;
     }else {
       this.loading = temp;
