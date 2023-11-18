@@ -43,9 +43,12 @@ export class AppComponent implements AfterViewInit {
 
   isWhistleblowerPage() {
     if(this.showLoadingPanel && this.loading){
+      console.log(":: 1 :: true")
       return true;
     }else {
-      return this.utilsService.isWhistleblowerPage();
+      this.loading = this.utilsService.isWhistleblowerPage()
+      console.log(":: 1 :: " + this.loading)
+      return this.loading;
     }
   }
 
