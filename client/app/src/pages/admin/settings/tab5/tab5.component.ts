@@ -56,7 +56,7 @@ export class Tab5Component {
     escrow.checked = this.nodeResolver.dataModel.escrow;
     this.utilsService.runAdminOperation("toggle_escrow", {}, true).subscribe(
       () => {
-        this.preferenceResolver.dataModel.escrow = !this.preferenceResolver.dataModel.escrow;
+        this.nodeResolver.dataModel.escrow = !this.nodeResolver.dataModel.escrow;
       }
     );
   }

@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: "orderBy"
+  name: 'orderBy'
 })
 export class OrderByPipe implements PipeTransform {
   transform(value: any[], propertyName: string | string[], reverse: boolean = false): any[] {
@@ -9,14 +9,17 @@ export class OrderByPipe implements PipeTransform {
       return value;
     }
 
-    let propertyNames = typeof propertyName === "string" ? [propertyName] : propertyName;
+    let propertyNames = typeof propertyName === 'string' ? [propertyName] : propertyName;
 
     return value.sort((a, b) => {
       for (let prop of propertyNames) {
-        if (a[prop] < b[prop]) {
+        const valA = a[prop].toLowerCase();
+        const valB = b[prop].toLowerCase();
+
+        if (valA < valB) {
           return reverse ? 1 : -1;
         }
-        if (a[prop] > b[prop]) {
+        if (valA > valB) {
           return reverse ? -1 : 1;
         }
       }

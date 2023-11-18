@@ -22,7 +22,7 @@ export class Pageguard  {
         this.router.navigate(["/signup"]).then();
       }
     }else if(state.url == "/submission"){
-      if (this.appDataService.public.node.enable_signup) {
+      if (this.appDataService.public.node && this.appDataService.public.node.enable_signup) {
         this.router.navigate(["/signup"]).then();
       }
     }
