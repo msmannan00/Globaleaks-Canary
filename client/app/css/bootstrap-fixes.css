@@ -21,7 +21,9 @@
 
 .btn-primary:active {
     background-color: #9fc9f1 !important;
-    border-color: #79b0e6 !important;
+    outline: 0;
+    border-color: #9fc9f1 !important;
+    box-shadow: 0 0 0 .2rem rgba(38,143,255,.5);
 }
 
 .btn-danger:active {
