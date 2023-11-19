@@ -5,10 +5,19 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {TranslateService} from "@ngx-translate/core";
 import {NavigationEnd, Router} from "@angular/router";
 import {BrowserCheckService} from "@app/shared/services/browser-check.service";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: "app-root",
-  templateUrl: "./app.component.html"
+  templateUrl: "./app.component.html",
+  animations: [
+    trigger('fadeInOut', [
+      state('void', style({
+        opacity: 0
+      })),
+      transition(':enter, :leave', animate(250)),
+    ])
+  ]
 })
 export class AppComponent implements AfterViewInit {
   showSidebar: boolean = true;
