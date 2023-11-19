@@ -15,7 +15,7 @@
 
 .reveal {
   opacity: 0;
-  animation: fadeIn 0.35s forwards; /* Adjust the duration as needed */
+  animation: fadeIn 0.25s forwards;
 }
 
 @keyframes fadeIn {
