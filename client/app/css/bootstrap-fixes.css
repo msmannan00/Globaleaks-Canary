@@ -7,6 +7,14 @@
     margin: 0;
 }
 
+.card-header{
+  background-color: #f5f7fa;
+}
+
+[dir] .table thead th {
+    border-bottom: 2px solid #c8d1e0;
+}
+
 .btn-primary:hover,
 .btn-primary:focus {
     background-color: #377abc;
