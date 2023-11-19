@@ -752,6 +752,10 @@ p:last-child {
   min-height: 5rem;
 }
 
+.fadeInOut {
+  opacity: 0;
+}
+
 #title-box {
   font-size: 1.6rem;
   font-weight: bold;
