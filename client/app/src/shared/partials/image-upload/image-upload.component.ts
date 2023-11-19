@@ -23,7 +23,6 @@ export class ImageUploadComponent implements AfterViewInit, OnDestroy {
   autoUploadSubscription: Subscription;
   filemodel:any;
   currentTImestamp = new Date().getTime();
-  fileUpdated = false;
 
   constructor(private utilsService: UtilsService, private http: HttpClient, protected authenticationService: AuthenticationService) {
   }
@@ -53,16 +52,10 @@ export class ImageUploadComponent implements AfterViewInit, OnDestroy {
 
       flowJsInstance.addFile(modifiedFile);
       flowJsInstance.upload();
-      this.fileUpdated = true;
       this.filemodel = modifiedFile;
-    }
-  }
 
-  getUploadedFileUrl(): string | null {
-    if (this.fileUpdated) {
-      return URL.createObjectURL(this.filemodel);
+      this.currentTImestamp = new Date().getTime();
     }
-    return null;
   }
 
   triggerFileInputClick() {

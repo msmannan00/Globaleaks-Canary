@@ -371,14 +371,35 @@ table tr td {
   white-space: pre-wrap;
 }
 
-.image-upload {
-  position: relative;
+.logo-image {
   border: 1px dashed #c8d1e0;
+  height: 10.4rem;
+  max-width: 20.4rem;
+  max-height: 155px;
+  min-width: 10.4rem;
+  padding: 10px 10px 20px;
+  object-fit: contain;
+}
+
+.logo-image-empty{
+  border: 1px dashed #c8d1e0 !important;
+  position: relative;
   z-index: 0;
-  text-align: center;
   height: 10.4rem;
   width: 10.4rem;
+  text-align: left;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+.image-upload {
+  position: relative;
+  z-index: 0;
+  height: 10.4rem;
   min-height: 10.4rem;
+  text-align: left;
+  width: auto;
+  margin: 0 auto;
 }
 
 .image-upload .change-picture-button {
@@ -756,9 +777,6 @@ p:last-child {
   opacity: 0;
 }
 
-#logo-image{
-  max-height: 145px;
-}
 
 #title-box {
   font-size: 1.6rem;
