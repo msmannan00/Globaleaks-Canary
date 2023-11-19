@@ -15,7 +15,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
       state('void', style({
         opacity: 0
       })),
-      transition(':enter, :leave', animate(250)),
+      transition(':enter, :leave', animate(150)),
     ])
   ]
 })
