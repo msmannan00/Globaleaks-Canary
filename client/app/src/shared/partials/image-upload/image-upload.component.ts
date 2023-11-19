@@ -52,9 +52,8 @@ export class ImageUploadComponent implements AfterViewInit, OnDestroy {
 
       flowJsInstance.addFile(modifiedFile);
       flowJsInstance.upload();
-      this.filemodel = modifiedFile;
-
       this.currentTImestamp = new Date().getTime();
+      this.filemodel = modifiedFile;
     }
   }
 
