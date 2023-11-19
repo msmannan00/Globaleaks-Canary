@@ -20,6 +20,6 @@
     </div>
 </ng-container>
 <div id="Skip"><a href="#Content" tabindex="0">{{'Skip to content'|translate}}</a></div>
-<div id="page-overlay" *ngIf="showLoadingPanel">
+<div id="page-overlay" *ngIf="showLoadingPanel" [@fadeInOut]="!showLoadingPanel ? 'void' : ''">
     <div id="loader"></div>
 </div>
