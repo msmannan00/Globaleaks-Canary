@@ -24,7 +24,7 @@
     <div id="loader"></div>
 </div>
 <ng-container *ngIf="appDataService.public.node">
-    <div [dir]="translate.currentLang === 'ar' ? 'rtl' : 'ltr'" appFade>
+    <div [dir]="translate.currentLang === 'ar' ? 'rtl' : 'ltr'" class="reveal">
         <div *ngIf="!appDataService.public.node.root_tenant && appDataService.public.node.mode === 'demo'">
             <src-demo></src-demo>
         </div>
@@ -53,7 +53,7 @@
                         </nav>
                     </div>
                     <main id="Content" [ngClass]="{'col-lg-10 col-md-8 col-sm-12': appConfig.sidebar && showSidebar , 'col-md-12': !appConfig.sidebar}">
-                        <router-outlet appFade></router-outlet>
+                        <router-outlet class="reveal"></router-outlet>
                     </main>
                 </div>
             </div>

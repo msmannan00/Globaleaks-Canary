@@ -1,16 +1,16 @@
 <ng-container [ngSwitch]="appDataService.page">
-    <div *ngSwitchCase="'blank'" appFade>
+    <div *ngSwitchCase="'blank'" class="reveal">
     </div>
     <div *ngSwitchCase="'tippage'">
-        <src-tippage appFade></src-tippage>
+        <src-tippage class="reveal"></src-tippage>
     </div>
     <div *ngSwitchCase="'submissionpage'">
-        <src-submission appFade></src-submission>
+        <src-submission class="reveal"></src-submission>
     </div>
     <div *ngSwitchCase="'receiptpage'">
-        <src-receipt-whistleblower appFade></src-receipt-whistleblower>
+        <src-receipt-whistleblower class="reveal"></src-receipt-whistleblower>
     </div>
     <div *ngSwitchDefault>
-        <src-homepage appFade></src-homepage>
+        <src-homepage class="reveal"></src-homepage>
     </div>
 </ng-container>
