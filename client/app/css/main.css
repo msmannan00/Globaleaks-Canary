@@ -756,6 +756,10 @@ p:last-child {
   opacity: 0;
 }
 
+#logo-image{
+  max-height: 145px;
+}
+
 #title-box {
   font-size: 1.6rem;
   font-weight: bold;

@@ -1,4 +1,4 @@
-<form action="">
+<form action="" >
     <div id="projectImageLoader" class="image-upload">
         <ng-container #flowAdvanced="flow" flowDrop [flowConfig]="{target: 'api/admin/files/'+imageUploadId, speedSmoothingFactor:0.01, singleFile:true ,allowDuplicateUploads:false, testChunks:false, permanentErrors : [ 500, 501 ], headers : {'X-Session':authenticationService.session?.id}}"></ng-container>
         <input #uploader id="projectImageLoader" (change)="onFileSelected(uploader.files)" type="file" flowButton [style.display]="'none'" [flowAttributes]="{ accept: 'image/*' }" class="custom-file-input inputelem" />
@@ -8,8 +8,10 @@
         <label [attr.id]="'projectImageLoader'" class="change-picture-button text-danger" (click)="deletePicture()" *ngIf="imageUploadModel[imageUploadModelAttr] || imageUploadObj.files.length" [attr.uibTooltip]="'Delete' | translate">
             <i class="fa-solid fa-times"></i>
         </label>
-        <div class="image-upload-thumbnail">
-            <img *ngIf="imageUploadModel[imageUploadModelAttr]" [src]="'s/' + imageUploadId">
+        <div *ngIf="!fileUpdated" class="embed-responsive embed-responsive-16by9 p-2">
+            <img id="logo-image" *ngIf="filemodel" [src]="'s/' + imageUploadId + '?timestamp=' + getCurrentTimestamp()" class="embed-responsive-item">        </div>
+        <div *ngIf="fileUpdated" class="embed-responsive embed-responsive-16by9 p-2">
+            <img id="logo-image" *ngIf="filemodel" [src]="getUploadedFileUrl()" class="embed-responsive-item">
         </div>
     </div>
 </form>

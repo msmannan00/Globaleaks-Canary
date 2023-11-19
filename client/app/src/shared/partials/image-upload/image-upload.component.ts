@@ -3,6 +3,7 @@ import {AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild} from 
 import {FlowDirective} from "@flowjs/ngx-flow";
 import {Subscription} from "rxjs";
 import {AuthenticationService} from "@app/services/authentication.service";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({
   selector: "src-image-upload",
@@ -20,11 +21,15 @@ export class ImageUploadComponent implements AfterViewInit, OnDestroy {
     files: [],
   };
   autoUploadSubscription: Subscription;
+  filemodel:any;
+  currentTImestamp = new Date().getTime();
+  fileUpdated = false;
 
-  constructor(private http: HttpClient, protected authenticationService: AuthenticationService) {
+  constructor(private utilsService: UtilsService, private http: HttpClient, protected authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
+    this.filemodel = this.imageUploadModel[this.imageUploadModelAttr];
   }
 
   ngAfterViewInit() {
@@ -48,7 +53,16 @@ export class ImageUploadComponent implements AfterViewInit, OnDestroy {
 
       flowJsInstance.addFile(modifiedFile);
       flowJsInstance.upload();
+      this.fileUpdated = true;
+      this.filemodel = modifiedFile;
     }
+  }
+
+  getUploadedFileUrl(): string | null {
+    if (this.fileUpdated) {
+      return URL.createObjectURL(this.filemodel);
+    }
+    return null;
   }
 
   triggerFileInputClick() {
@@ -67,6 +81,12 @@ export class ImageUploadComponent implements AfterViewInit, OnDestroy {
           this.imageUploadModel[this.imageUploadModelAttr] = "";
         }
         this.imageUploadObj.files = [];
+        this.filemodel = ""
       });
   }
+
+  getCurrentTimestamp(): number {
+    return this.currentTImestamp;
+  }
+
 }
