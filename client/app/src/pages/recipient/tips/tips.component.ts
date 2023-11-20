@@ -144,7 +144,7 @@ export class TipsComponent implements OnInit {
 
   reload() {
     const reloadCallback = () => {
-      this.utils.reloadComponent();
+      this.RTips.reload();
     };
 
     this.appConfigServices.localInitialization(true, reloadCallback);

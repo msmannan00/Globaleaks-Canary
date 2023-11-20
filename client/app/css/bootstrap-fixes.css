@@ -101,3 +101,7 @@ body .dropdown-visible > div.multiselect-dropdown > div > span.dropdown-btn {
     color: #fff !important;
     background: #66b0ff !important;
 }
+
+.input-group > .btn-outline-secondary{
+    border: 1px solid #c8d1e0;
+}

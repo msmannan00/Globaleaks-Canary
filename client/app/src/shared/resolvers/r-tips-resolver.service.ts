@@ -5,6 +5,8 @@ import {HttpService} from "@app/shared/services/http.service";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {map} from "rxjs/operators";
 import {rtipResolverModel} from "@app/models/resolvers/rtips-resolver-model";
+import {IarData} from "@app/models/reciever/Iar-data";
+import {UtilsService} from "@app/shared/services/utils.service";
 
 @Injectable({
   providedIn: "root"
@@ -12,7 +14,16 @@ import {rtipResolverModel} from "@app/models/resolvers/rtips-resolver-model";
 export class RTipsResolver  {
   dataModel: rtipResolverModel[] = [];
 
-  constructor(private httpService: HttpService, private authenticationService: AuthenticationService) {
+  reload(){
+    this.httpService.receiverTipResource().subscribe(
+        (response: any) => {
+          this.dataModel = response;
+          this.utilsService.reloadComponent();
+        }
+    );
+  }
+
+  constructor(private utilsService: UtilsService, private httpService: HttpService, private authenticationService: AuthenticationService) {
   }
 
   resolve(): Observable<boolean> {
