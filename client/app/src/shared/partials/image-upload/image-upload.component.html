@@ -10,7 +10,7 @@
         </label>
         <div class="embed-responsive embed-responsive-16by9">
             <img *ngIf="filemodel" [src]="'s/' + imageUploadId + '?timestamp=' + getCurrentTimestamp()" class="embed-responsive-item logo-image">
-            <img *ngIf="!filemodel" [src]="" class="embed-responsive-item logo-image-empty">
+            <div *ngIf="!filemodel" class="logo-image-empty"></div>
         </div>
     </div>
 </form>
