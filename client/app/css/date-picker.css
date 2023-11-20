@@ -2,17 +2,28 @@ ngb-datepicker {
 	border: 1px solid var(--bs-border-color) !important;
 	border-radius: 0.25rem !important;
 	display: inline-block !important;
+	font-weight: normal !important;
 }
+
+.input-group > ngb-datepicker {
+	margin-top: 5px !important;
+	border: 1px solid var(--bs-border-color) !important;
+	border-radius: 0.3rem !important;
+	padding: 4px !important;
+	box-shadow: 0 1px 5px #959595;
+	display: inline-block !important;
+	font-weight: normal !important;
+	box-sizing: border-box;
+}
+
 
 ngb-datepicker-month {
 	pointer-events: auto;
 }
 
-.dropdown-menu{
-	padding:0;
-}
 
-.ngb-datepicker.dropdown-menu {
+
+.ngb-datepicker .dropdown-menu {
 	padding: 0;
 }
 
@@ -232,6 +243,7 @@ button.ngb-dp-arrow-btn {
 	display: inline-block;
 	height: 2rem;
 	width: 2rem;
+	font-size: 1rem;
 }
 
 .custom-day.focused {
@@ -240,7 +252,7 @@ button.ngb-dp-arrow-btn {
 
 .custom-day.range,
 .custom-day:hover {
-	background-color: rgb(2, 117, 216);
+	background-color: #205282;
 	color: white;
 }
 
