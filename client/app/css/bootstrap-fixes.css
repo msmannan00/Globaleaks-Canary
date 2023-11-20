@@ -7,8 +7,8 @@
     margin: 0;
 }
 
-.card-header{
-  background-color: #f5f7fa;
+.card-header {
+    background-color: #f5f7fa;
 }
 
 [dir] .table thead th {
@@ -29,8 +29,8 @@
 
 .btn-primary:active {
     background-color: #9fc9f1 !important;
-    border-color: rgba(38,143,255,.5) !important;
-    box-shadow: 0 0 0 .2rem rgba(38,143,255,.5);
+    border-color: rgba(38, 143, 255, .5) !important;
+    box-shadow: 0 0 0 .2rem rgba(38, 143, 255, .5);
 }
 
 .btn-danger:active {
@@ -102,6 +102,11 @@ body .dropdown-visible > div.multiselect-dropdown > div > span.dropdown-btn {
     background: #66b0ff !important;
 }
 
-.input-group > .btn-outline-secondary{
+.form-check-input:checked {
+    background-color: #2866a2;
+    border-color: #205282;
+}
+
+.input-group > .btn-outline-secondary {
     border: 1px solid #c8d1e0;
 }

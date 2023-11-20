@@ -20,7 +20,7 @@
             <div class="form-group">
                 <label>
                     <span>{{'Name'|translate}}</span>
-                    <span class="text-danger" [ngbTooltip]="'This field is mandatory' | translate">*</span>
+                    <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
                 </label>
                 <div>
                     <input name="newTenant.name" class="form-control" [(ngModel)]="newTenant.name" maxlength="120" type="text" required />
