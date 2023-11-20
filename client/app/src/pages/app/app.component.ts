@@ -67,4 +67,9 @@ export class AppComponent implements AfterViewInit {
       this.changeDetectorRef.detectChanges();
     });
   }
+
+  public getDirection(): string {
+    const rtlLanguages = ['ar', 'dv', 'fa', 'fa_AF', 'he', 'ps', 'ug', 'ur'];
+    return rtlLanguages.includes(this.translate.currentLang) ? 'rtl' : 'ltr';
+  }
 }
