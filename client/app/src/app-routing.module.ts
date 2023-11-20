@@ -112,8 +112,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/wizard/wizard-routing.module').then(m => m.WizardRoutingModule)
   },
   {
-    path: "status/:tip_id",
+    path: "reports/:tip_id",
     data: {pageTitle: "Report"},
+    resolve: {
+      PreferenceResolver,
+    },
     component: TipComponent,
     canActivate: [SessionGuard],
     pathMatch: "full",
