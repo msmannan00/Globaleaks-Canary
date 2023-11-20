@@ -247,3 +247,9 @@ button.ngb-dp-arrow-btn {
 .custom-day.faded {
 	background-color: rgba(2, 117, 216, 0.5);
 }
+
+.ngb-dp-arrow-next .ngb-dp-navigation-chevron {
+    transform: rotate(45deg);
+    margin-left: 0.15em;
+    margin-right: 0.25em;
+}
