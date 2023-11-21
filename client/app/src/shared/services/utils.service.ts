@@ -515,6 +515,8 @@ export class UtilsService {
         map((response: any) => {
           if (refresh) {
             this.reloadCurrentRoute();
+          }else {
+            this.reloadComponent();
           }
           return response;
         })
