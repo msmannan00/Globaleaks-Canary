@@ -188,6 +188,13 @@ ngb-datepicker-navigation {
 	outline-style: auto;
 }
 
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+	.ngb-dp-arrow-btn:focus {
+		outline-style: solid;
+	}
+}
+
 .ngb-dp-month-name {
 	font-size: larger;
 	height: 2rem;

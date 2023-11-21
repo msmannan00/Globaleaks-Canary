@@ -375,6 +375,12 @@ table tr td {
   white-space: pre-wrap;
 }
 
+.badge-warning-custom{
+  padding: .25em .4em;
+  text-align: center;
+  border-radius: .25rem;
+}
+
 .wb-image-upload{
   height: 10.4rem;
   max-width: 20.4rem;
@@ -804,7 +810,7 @@ p:last-child {
 #title-box {
   font-size: 1.6rem;
   font-weight: bold;
-  margin: 0.8em 0;
+  margin: 0.78em 0;
 }
 
 #login-status-box {
