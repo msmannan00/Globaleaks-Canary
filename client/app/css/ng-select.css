@@ -75,13 +75,6 @@
 .ng-select-container
 .ng-value-container
 .ng-input
-> input::-ms-clear {
-  display: none;
-}
-.ng-select
-.ng-select-container
-.ng-value-container
-.ng-input
 > input[readonly] {
   user-select: none;
   width: 0;
