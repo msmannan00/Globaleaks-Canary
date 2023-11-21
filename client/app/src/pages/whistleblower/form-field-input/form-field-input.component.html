@@ -31,16 +31,14 @@
             </div>
             <div *ngSwitchCase="'multichoice'">
                 <div *ngFor="let option of field.options | orderBy:'order';let innerindex = index">
-                    <input [name]="'input-' +  entryIndex" class="form-control-input inputelem" type="radio" id="{{fieldId}}-input-{{entryIndex}}-option-{{innerindex}}" [(ngModel)]="entry['value']" value="{{option.id}}" [required]="field.required" />
-                    <span data-toggle="tooltip" title="{{option.hint1}}" class="form-control-label" [ngClass]="{'text-underline': option.hint1}">{{option.label}}</span>
+                    <input [name]="'input-' +  entryIndex" id="{{fieldEntry + '-option-' + innerindex}}" class="form-control-input inputelem" type="radio" [(ngModel)]="entry['value']" value="{{option.id}}" [required]="field.required" />
+                    <label for="{{fieldEntry + '-option-' + innerindex}}" data-toggle="tooltip" title="{{option.hint1}}" class="form-control-label" [ngClass]="{'text-underline': option.hint1}">{{option.label}}</label>
                 </div>
             </div>
             <div *ngSwitchCase="'checkbox'">
                 <div *ngFor="let option of field.options | orderBy:field.attrs.display_alphabetically.value ? 'label' : 'order'; let index = index">
-                    <label>
-                        <input id="{{fieldEntry}}" [name]="'input-' + index + '-option-' + entryIndex" class="form-control-input inputelinem" [(ngModel)]="entry[option.id]" [required]="entry.required_status" type="checkbox" />
-                        <span data-toggle="tooltip" title="{{option.hint1}}" class="form-control-label" [ngClass]="{'text-underline': option.hint1}">{{option.label}}</span>
-                    </label>
+                        <input id="{{fieldEntry + '-option-' + index}}" [name]="'input-' + index + '-option-' + entryIndex" class="form-control-input inputelinem" [(ngModel)]="entry[option.id]" [required]="entry.required_status" type="checkbox" />
+                        <label for="{{fieldEntry + '-option-' + index}}" data-toggle="tooltip" title="{{option.hint1}}" class="form-control-label" [ngClass]="{'text-underline': option.hint1}">{{option.label}}</label>
                 </div>
             </div>
             <div *ngSwitchCase="'date'">
@@ -82,10 +80,8 @@
                     <a [href]="field.attrs.attachment_url.value" rel="noreferrer" target="_blank">{{field.attrs.attachment_text.value}}</a>
                 </div>
                 <div class="form-check">
-                    <label>
                         <input id="{{fieldEntry}}" [name]="'input-'+entryIndex" class="inputelem" [(ngModel)]="entry['value']" [required]="entry.required_status" value="{{field.value}}" type="checkbox" />
-                        <span class="form-check-label">{{field.attrs.checkbox_label.value}}</span>
-                    </label>
+                        <label for="{{fieldEntry}}" class="form-check-label">{{field.attrs.checkbox_label.value}}</label>
                 </div>
             </div>
             <div id="{{fieldEntry}}" *ngSwitchCase="'voice'">
