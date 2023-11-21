@@ -103,15 +103,15 @@ body .dropdown-visible > div.multiselect-dropdown > div > span.dropdown-btn {
 }
 
 .btn-secondary {
-    color: rgb(255, 255, 255);
-    background-color: rgb(108, 117, 125);
-    border-color: rgb(108, 117, 125);
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
 }
 
-btn-secondary:hover {
-    color: rgb(255, 255, 255);
-    background-color: rgb(90, 98, 104);
-    border-color: rgb(84, 91, 98);
+.btn-secondary:hover {
+    color: #fff;
+    background-color: #5a6268;
+    border-color: #545b62;
 }
 
 .form-check-input:checked {
