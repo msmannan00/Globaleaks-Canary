@@ -645,8 +645,12 @@ p:last-child {
   background-color: #f2dede;
 }
 
-.select-card {
+[dir="ltr"] .select-card  {
   text-align: left;
+}
+
+[dir="rtl"] .select-card  {
+  text-align: right;
 }
 
 .field-answer-entry {

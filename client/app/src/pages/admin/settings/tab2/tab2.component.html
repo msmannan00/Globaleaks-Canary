@@ -41,8 +41,8 @@
     </div>
     <div class="col-md-2">
         <div class="form-check form-switch">
-            <input #status class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="authenticationData.session.permissions.can_upload_files" [(ngModel)]="authenticationData.session.permissions.can_upload_files" (ngModelChange)="togglePermissionUploadFiles(status)">
-            <label class="form-check-label" for="flexSwitchCheckChecked">{{preferenceData.permissions.can_upload_files ? 'Enabled' : 'Disabled'}}</label>
+            <input #status class="form-check-input" type="checkbox" role="switch" id="toggleSwitch" name="authenticationData.session.permissions.can_upload_files" [(ngModel)]="authenticationData.session.permissions.can_upload_files" (ngModelChange)="togglePermissionUploadFiles(status)">
+            <label class="form-check-label" for="toggleSwitch">{{preferenceData.permissions.can_upload_files ? 'Enabled' : 'Disabled'}}</label>
         </div>
     </div>
 </div>

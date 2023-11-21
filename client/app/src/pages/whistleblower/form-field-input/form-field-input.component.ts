@@ -45,6 +45,8 @@ export class FormFieldInputComponent implements OnInit {
   dateOptions: any = {};
 
   constructor(private fieldUtilitiesService: FieldUtilitiesService) {
+    console.log("aaaa");
+    
   }
 
   clearDateRange() {
