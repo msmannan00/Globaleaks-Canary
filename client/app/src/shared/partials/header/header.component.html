@@ -1,9 +1,9 @@
 <header id="header-box" class="p-3">
     <div class="d-flex flex-wrap justify-content-between">
         <div id="HeaderBox1">
-            <a href="#" id="logo-box" (click)="appConfig.setHomepage()">
+            <div id="logo-box" (click)="appConfig.setHomepage()">
                 <img class="img-fluid pointer" alt="project logo" src="{{appDataService.public.node.logo ? 's/logo' : 'data/logo.png'}}" />
-            </a>
+            </div>
             <div id="title-box">
                 <ng-container *ngIf="appDataService.projectTitle || appDataService.pageTitle">
                     <h1>

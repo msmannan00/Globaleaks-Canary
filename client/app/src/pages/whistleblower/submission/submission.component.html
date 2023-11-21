@@ -12,7 +12,7 @@
             </div>
         </div>
         <form #submissionForm="ngForm" [ngClass]="{'was-validated': displayErrors()}" autocomplete="off" novalidate>
-            <div class="tabbable tabs-below">
+            <div class="tabbable tabs-below mb-3">
                 <ul id="SubmissionTabsNavigationBox" class="nav nav-tabs" *ngIf="submissionService.context.show_steps_navigation_interface && submissionService.context.questionnaire.steps.length > 1">
                     <li *ngIf="submissionService.context.allow_recipients_selection" [attr.aria-selected]="navigation === -1" [attr.aria-current]="navigation === -1 ? 'step' : 'false'" aria-controls="tab-recipient-selection" class="nav-item">
                         <a href="#" id="receiver-selection-link" [ngClass]="{active: navigation === -1}" class="nav-link nav-link-custom" (click)="goToStep(-1)">

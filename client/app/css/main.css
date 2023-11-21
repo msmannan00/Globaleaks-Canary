@@ -814,7 +814,7 @@ p:last-child {
 #title-box {
   font-size: 1.6rem;
   font-weight: bold;
-  margin: 0.78em 0;
+  margin: 0 0;
 }
 
 #login-status-box {
