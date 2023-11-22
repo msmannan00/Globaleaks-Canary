@@ -1,10 +1,8 @@
-// switch.component.ts
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-switch',
-  templateUrl: './switch.component.html',
-  styleUrls: ['./switch.component.css']
+  templateUrl: './switch.component.html'
 })
 export class SwitchComponent {
   @Input() label: string = 'Switch';

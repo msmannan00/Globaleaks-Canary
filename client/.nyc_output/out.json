@@ -1772,6 +1772,15 @@
     "f": {},
     "b": {}
   },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/components/switch/switch.component.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/components/switch/switch.component.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
   "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/modals/accept-agreement/accept-agreement.component.ts": {
     "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/modals/accept-agreement/accept-agreement.component.ts",
     "statementMap": {},
