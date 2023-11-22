@@ -91,6 +91,7 @@ describe("Admin configure custom CSS", () => {
     cy.get(".modal .btn-primary").click();
 
     cy.get("[name='authenticationData.session.permissions.can_upload_files']").should("be.checked").click();
+    cy.contains("button", "Files").click();
     cy.get("[name='authenticationData.session.permissions.can_upload_files']").should("not.be.checked");
 
     cy.logout();
