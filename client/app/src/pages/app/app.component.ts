@@ -29,6 +29,7 @@ export class AppComponent implements AfterViewInit {
   constructor(protected browserCheckService: BrowserCheckService, private changeDetectorRef: ChangeDetectorRef, private router: Router, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService) {
   }
 
+
   checkToShowSidebar() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
