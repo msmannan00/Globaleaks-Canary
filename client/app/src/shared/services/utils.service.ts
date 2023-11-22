@@ -514,8 +514,6 @@ export class UtilsService {
       return this.http.put(api, {"operation": operation, "args": args}).pipe(
         map((response: any) => {
           if (refresh) {
-            this.reloadCurrentRoute();
-          }else {
             this.reloadComponent();
           }
           return response;
