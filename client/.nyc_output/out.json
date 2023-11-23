@@ -80,15 +80,6 @@
     "f": {},
     "b": {}
   },
-  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/951.js": {
-    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/951.js",
-    "statementMap": {},
-    "fnMap": {},
-    "branchMap": {},
-    "s": {},
-    "f": {},
-    "b": {}
-  },
   "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/assets/loader.js": {
     "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/assets/loader.js",
     "statementMap": {},
@@ -1774,6 +1765,15 @@
   },
   "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/components/password-meter/password-meter.component.ts": {
     "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/components/password-meter/password-meter.component.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/components/switch/switch.component.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/components/switch/switch.component.ts",
     "statementMap": {},
     "fnMap": {},
     "branchMap": {},

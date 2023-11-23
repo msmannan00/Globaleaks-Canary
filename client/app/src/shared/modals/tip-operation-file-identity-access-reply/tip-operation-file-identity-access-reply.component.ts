@@ -12,12 +12,13 @@ export class TipOperationFileIdentityAccessReplyComponent {
   reply_motivation = "";
   @Input() iar_id = "";
 
-  constructor(private httpService: HttpService, private modalService: NgbModal, private utilsService: UtilsService) {
+  constructor(private httpService: HttpService, private modalService: NgbModal) {
   }
 
   cancel() {
     this.modalService.dismissAll();
   }
+  confirmFunction: () => void;
 
   confirm() {
     this.httpService.authorizeIdentity("api/custodian/iars/" + this.iar_id, {
@@ -26,7 +27,7 @@ export class TipOperationFileIdentityAccessReplyComponent {
     }).subscribe(
       {
         next: () => {
-          this.utilsService.reloadCurrentRoute();
+          this.confirmFunction();
         }
       }
     );

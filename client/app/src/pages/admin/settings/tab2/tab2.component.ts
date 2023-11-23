@@ -25,6 +25,7 @@ export class Tab2Component implements OnInit {
   autoUploadSubscription: Subscription;
   preferenceData: any = [];
   authenticationData: any = [];
+  permissionStatus = false;
 
   admin_files: any[] = [
     {
@@ -60,6 +61,7 @@ export class Tab2Component implements OnInit {
       can_upload_files: false
     };
     this.updateFiles();
+    this.permissionStatus = this.authenticationData.session.permissions.can_upload_files;
   }
 
   onFileSelected(files: FileList | null) {
@@ -103,28 +105,24 @@ export class Tab2Component implements OnInit {
     );
   }
 
-  togglePermissionUploadFiles(status: any): void {
-
-    this.authenticationData.session.permissions.can_upload_files = !this.authenticationData.session.permissions.can_upload_files;
-    status.checked = this.authenticationData.session.permissions.can_upload_files;
-
+  togglePermissionUploadFiles(): void {
     if (!this.authenticationData.session.permissions.can_upload_files) {
       this.utilsService.runAdminOperation("enable_user_permission_file_upload", {}, false).subscribe({
         next: (_) => {
           this.authenticationData.session.permissions.can_upload_files = true;
-          status.checked = true;
+          this.permissionStatus = true;
         },
         error: (_: any) => {
           this.authenticationData.session.permissions.can_upload_files = false;
-          status.checked = false;
-          status.click();
+          this.togglePermissionUploadFiles();
+          this.permissionStatus = false;
         }
       });
     } else {
       this.utilsService.runAdminOperation("disable_user_permission_file_upload", {}, false).subscribe(
         () => {
           this.authenticationData.session.permissions.can_upload_files = false;
-          status.checked = false;
+          this.permissionStatus = false;
         }
       );
     }

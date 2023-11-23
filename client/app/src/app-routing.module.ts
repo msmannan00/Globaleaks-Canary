@@ -18,6 +18,7 @@ import {BlankComponent} from "@app/shared/blank/blank.component";
 import {WbTipResolver} from "@app/shared/resolvers/wb-tip-resolver.service";
 import {WhistleblowerLoginResolver} from "@app/shared/resolvers/whistleblower-login.resolver";
 import {SubmissionComponent} from "@app/pages/whistleblower/submission/submission.component";
+import {AuthRoutingModule} from "@app/pages/auth/auth-routing.module";
 
 
 const routes: Routes = [
@@ -50,7 +51,7 @@ const routes: Routes = [
     path: "login",
     canActivate: [Pageguard],
     data: {pageTitle: "Log in"},
-    loadChildren: () => import('./pages/auth/auth-routing.module').then(m => m.AuthRoutingModule)
+    loadChildren: () => AuthRoutingModule,
   },
   {
     path: "signup",
@@ -114,8 +115,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/wizard/wizard-routing.module').then(m => m.WizardRoutingModule)
   },
   {
-    path: "status/:tip_id",
+    path: "reports/:tip_id",
     data: {pageTitle: "Report"},
+    resolve: {
+      PreferenceResolver,
+    },
     component: TipComponent,
     canActivate: [SessionGuard],
     pathMatch: "full",

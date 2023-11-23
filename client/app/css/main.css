@@ -13,6 +13,17 @@
   display: none;
 }
 
+.reveal {
+  opacity: 0.3;
+  animation: fadeIn 0.3s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
 #Skip a {
   position: absolute;
   margin: 0 auto;
@@ -324,6 +335,10 @@ table tr td {
   background-color: #205282;
 }
 
+#assignLabelInput{
+  margin-left: 5px;
+}
+
 .badge.bg-primary:hover {
   background-color: #c2d9f0;
 }
@@ -360,14 +375,52 @@ table tr td {
   white-space: pre-wrap;
 }
 
-.image-upload {
-  position: relative;
-  border: 1px dashed #c8d1e0;
-  z-index: 0;
+.badge-warning-custom{
+  padding: .25em .4em;
   text-align: center;
+  border-radius: .25rem;
+}
+
+.wb-image-upload{
+  height: 10.4rem;
+  max-width: 20.4rem;
+  max-height: 9.5rem;
+  min-width: 10.4rem;
+  padding: 10px 10px 20px;
+  object-fit: contain;
+}
+
+.logo-image {
+  border: 1px dashed #c8d1e0;
+  height: 10.4rem;
+  max-width: 20.4rem;
+  max-height: 10rem;
+  min-width: 10.4rem;
+  padding: 10px 10px 20px;
+  object-fit: contain;
+  border-radius: 5px;
+}
+
+.logo-image-empty{
+  border: 1px dashed #c8d1e0;
+  position: relative;
+  z-index: 0;
   height: 10.4rem;
   width: 10.4rem;
+  text-align: left;
+  margin: 0;
+  border-radius: 5px;
+  padding: 0;
+}
+
+.image-upload {
+  position: relative;
+  z-index: 0;
+  height: 10.4rem;
   min-height: 10.4rem;
+  text-align: left;
+  width: auto;
+  margin: 0 auto;
 }
 
 .image-upload .change-picture-button {
@@ -441,6 +494,12 @@ table tr td {
 .img-preview {
   height: 10rem;
   width: 10rem;
+  object-fit: contain;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .img-preview img {
@@ -454,17 +513,19 @@ table tr td {
   z-index: 100;
   height: 10rem;
   width: 10rem;
-  text-align: center;
-  line-height: 10rem;
+  text-align: right;
+  line-height: 1rem;
   border: 1px solid #c8d1e0;
+  padding-bottom: 9rem
 }
 
 .file-upload-icon {
   font-size: 2rem;
+  padding: 10px;
 }
 
 .file-upload-progress {
-  margin-top: 1em;
+  margin-top: 5.6rem;
 }
 
 .message,
@@ -480,10 +541,6 @@ table tr td {
 #logo-box img {
   max-height: 5rem;
   max-width: 20rem;
-  margin: 0;
-}
-
-logo-box {
   margin: 0;
 }
 
@@ -645,8 +702,12 @@ p:last-child {
   background-color: #f2dede;
 }
 
-.select-card {
+[dir="ltr"] .select-card  {
   text-align: left;
+}
+
+[dir="rtl"] .select-card  {
+  text-align: right;
 }
 
 .field-answer-entry {
@@ -716,7 +777,7 @@ p:last-child {
   z-index: 666;
   height: 10rem;
   width: 10rem;
-  padding: 1em;
+  padding: 0.6em;
 }
 
 .config-section {
@@ -741,10 +802,19 @@ p:last-child {
   margin: 0;
 }
 
+#logo-box{
+  min-height: 5rem;
+}
+
+.fadeInOut {
+  opacity: 0;
+}
+
+
 #title-box {
   font-size: 1.6rem;
   font-weight: bold;
-  margin: 0.8em 0;
+  margin: 0 0;
 }
 
 #login-status-box {
