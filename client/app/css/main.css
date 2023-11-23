@@ -1050,6 +1050,10 @@ htmlinput[type="email"] {
   width: max-content;
 }
 
+.was-validated .tos-agreement-input:valid~.form-check-label {
+  color: #2866a2;
+}
+
 .navbar-toggler {
   --bs-navbar-toggler-border-color: none;
   --bs-navbar-toggler-border-radius: none;
