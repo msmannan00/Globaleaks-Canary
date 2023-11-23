@@ -1,15 +1,22 @@
-    <div class="config-item">
-        <div class="editorHeader row">
-            <div class="col-md-6" (click)="toggleEditing($event)">
-                <div>
-                    <span class="badge bg-secondary">{{tenant.id}}</span>
-                    <span>{{tenant.name}}</span>
-                </div>
-                <div class="tenant-badge" *ngIf="tenant.active && (tenant.onionservice || tenant.hostname || (tenant.subdomain || appDataService.public.node.rootdomain))">
-                    <a class="badge bg-primary" *ngIf="tenant.onionservice" [href]="'http://' + tenant.onionservice" rel="noreferrer" target="_blank">{{tenant.onionservice}}</a>
-                    <span *ngIf="tenant.subdomain">
-                        <a *ngIf="appDataService.public.node.rootdomain" class="badge bg-primary" [href]="'https://' + tenant.subdomain + '.' + appDataService.public.node.rootdomain" target="_blank">{{ tenant.subdomain }} .{{ appDataService.public.node.rootdomain }}</a>
-                        <a *ngIf="appDataService.public.node.onionservice && tenant.subdomain" class="badge bg-primary" [href]="'http://' + tenant.subdomain + '.' + appDataService.public.node.onionservice" rel="noreferrer" target="_blank">{{ tenant.subdomain }} .{{ appDataService.public.node.onionservice }}</a>
+<div class="config-item reveal">
+    <div class="editorHeader row">
+        <div class="col-md-6" (click)="toggleEditing($event)">
+            <div>
+                <span class="badge bg-secondary">{{tenant.id}}</span>
+                <span>{{tenant.name}}</span>
+            </div>
+            <div class="tenant-badge"
+                 *ngIf="tenant.active && (tenant.onionservice || tenant.hostname || (tenant.subdomain || nodeResolver.dataModel.rootdomain))">
+                <a class="badge bg-primary" *ngIf="tenant.onionservice" [href]="'http://' + tenant.onionservice"
+                   rel="noreferrer" target="_blank">{{tenant.onionservice}}</a>
+                <span *ngIf="tenant.subdomain">
+                        <a *ngIf="nodeResolver.dataModel.rootdomain" class="badge bg-primary"
+                           [href]="'https://' + tenant.subdomain + '.' + nodeResolver.dataModel.rootdomain"
+                           target="_blank">{{ tenant.subdomain }} .{{ appDataService.public.node.rootdomain }}</a>
+                        <a *ngIf="nodeResolver.dataModel.onionservice && tenant.subdomain" class="badge bg-primary"
+                           [href]="'http://' + tenant.subdomain + '.' + nodeResolver.dataModel.onionservice"
+                           rel="noreferrer" target="_blank">{{ tenant.subdomain }}
+                            .{{ appDataService.public.node.onionservice }}</a>
                     </span>
                     <a class="badge bg-primary" *ngIf="tenant.hostname" [href]="'https://' + tenant.hostname" rel="noreferrer" target="_blank"> {{ tenant.hostname }} </a>
                 </div>

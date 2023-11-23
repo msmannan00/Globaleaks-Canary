@@ -75,4 +75,5 @@ export class nodeResolverModel {
   favicon: any;
   logo: any;
   script: any;
+  onionservice:any;
 }
