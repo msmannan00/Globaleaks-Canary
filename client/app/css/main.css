@@ -1055,10 +1055,6 @@ htmlinput[type="email"] {
   --bs-navbar-toggler-border-radius: none;
 }
 
-tr:last-child {
-  border-bottom: #fff;
-}
-
 th:not(:first-child):not(:nth-last-child(-n+4)) {
   cursor: pointer;
 }
