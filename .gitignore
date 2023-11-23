@@ -2,6 +2,7 @@ backend/env
 client/node_modules
 client/.angular/cache
 scripts/
+dist/
 client/build
 client/app/lib
 backend/workingdir
