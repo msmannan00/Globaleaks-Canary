@@ -6,6 +6,7 @@ import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppConfigService} from "@app/services/app-config.service";
 import { NgForm } from "@angular/forms";
+import { NodeResolver } from "@app/shared/resolvers/node.resolver";
 
 @Component({
   selector: "src-siteslist",
@@ -18,7 +19,7 @@ export class SiteslistComponent {
   @Input() index: any;
   editing = false;
 
-  constructor(private appConfigService: AppConfigService, protected appDataService: AppDataService, private modalService: NgbModal, private httpService: HttpService, private utilsService: UtilsService) {
+  constructor(protected nodeResolver: NodeResolver,private appConfigService: AppConfigService, protected appDataService: AppDataService, private modalService: NgbModal, private httpService: HttpService, private utilsService: UtilsService) {
   }
 
   toggleActivation(event: Event): void {
