@@ -6,6 +6,7 @@ export class WbTipData {
   progressive: number;
   context_id: string;
   questionnaires: Questionnaire[];
+  enable_whistleblower_download: boolean;
   tor: boolean;
   mobile: boolean;
   reminder_date: string;

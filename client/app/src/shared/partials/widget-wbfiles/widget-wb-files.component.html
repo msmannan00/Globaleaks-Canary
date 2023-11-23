@@ -1,4 +1,4 @@
-<div id="AttachedWBFile" class="card card-default">
+<div id="AttachedWBFile" class="card card-default" *ngIf="wbTipService.tip.rfiles.length>0">
     <div class="card-header clearfix" (click)="toggleCollapse(); utilsService.stopPropagation($event);">
         <span>{{'Files attached by recipients'|translate}}</span>
         <span class="float-end">

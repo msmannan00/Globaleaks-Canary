@@ -70,7 +70,7 @@ export class UserEditorComponent implements OnInit {
   }
 
   setPassword(setPasswordArgs: any) {
-    this.utilsService.runAdminOperation("set_user_password", setPasswordArgs, true).subscribe();
+    this.utilsService.runAdminOperation("set_user_password", setPasswordArgs, false).subscribe();
     this.user.newpassword = false;
     this.setPasswordArgs.password = "";
   }

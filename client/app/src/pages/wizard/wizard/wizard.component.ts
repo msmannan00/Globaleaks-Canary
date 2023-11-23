@@ -19,6 +19,7 @@ export class WizardComponent implements OnInit {
   admin_check_password = "";
   recipientDuplicate = false;
   recipient_check_password = "";
+  proxiedServer = false;
   tosAccept: any;
   license = "";
   completed = false;
@@ -53,6 +54,7 @@ export class WizardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.verifyProxiedWizard();
     if (this.appDataService.public.node.wizard_done) {
       this.router.navigate(["/"]).then(_ => {
       });
@@ -92,6 +94,16 @@ export class WizardComponent implements OnInit {
         }
       }
     );
+  }
+
+  verifyProxiedWizard(){
+    if (!this.appDataService.public.node.wizard_done && window.location.host === 'localhost:4200') {
+      this.proxiedServer = true;
+    }
+  }
+
+  openLocalhost() {
+    window.location.href = 'https://127.0.0.1:8443/';
   }
 
   validateDuplicateRecipient() {

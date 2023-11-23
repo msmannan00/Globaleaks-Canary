@@ -12,7 +12,7 @@
         <div *ngIf="showError">
             <br>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <div>
+                <div *ngIf="errorFile">
                     <span>{{'File size not accepted.' | translate}}</span> {{errorFile.flowFile.name}} {{'Maximum file size is:' | translate}} {{appDataService.public.node.maximum_filesize}} MB
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="dismissError();errorFile.flowFile.cancel(); showError=false"></button>

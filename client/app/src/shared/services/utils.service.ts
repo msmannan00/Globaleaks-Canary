@@ -225,7 +225,7 @@ export class UtilsService {
 
   isWhistleblowerPage() {
     const currentUrl = this.router.url;
-    return currentUrl === '/' || currentUrl === '/submission' || currentUrl === '/blank';
+    return this.appDataService.public.node.wizard_done && (!this.authenticationService.session || (location.hash==='#/' || location.hash.startsWith('#/submission'))) && ((currentUrl === '/' && !this.appDataService.public.node.enable_signup) || currentUrl === '/submission' || currentUrl === '/blank');
   }
 
   stopPropagation(event: Event) {
@@ -514,7 +514,7 @@ export class UtilsService {
       return this.http.put(api, {"operation": operation, "args": args}).pipe(
         map((response: any) => {
           if (refresh) {
-            this.reloadCurrentRoute();
+            this.reloadComponent();
           }
           return response;
         })

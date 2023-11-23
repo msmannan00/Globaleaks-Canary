@@ -36,6 +36,7 @@ import {ServiceInstanceService} from "@app/shared/services/service-instance.serv
 import {UtilsService} from "@app/shared/services/utils.service";
 import {TranslationService} from "@app/services/translation.service";
 import {SubmissionService} from "@app/services/submission.service";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "l10n/", "");
@@ -56,6 +57,7 @@ const translationModule = TranslateModule.forRoot({
     NgbModule,
     HttpClientModule,
     BrowserModule,
+    BrowserAnimationsModule,
     AuthModule,
     SignupModule,
     ActionModule,

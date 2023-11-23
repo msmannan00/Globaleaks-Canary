@@ -15,7 +15,7 @@ export class WbFilesComponent implements OnInit {
   @Input() receivers_by_id: any;
   @Output() dataToParent = new EventEmitter<string>();
   
-  constructor(private appDataService: AppDataService, private cryptoService: CryptoService, private httpService: HttpService, private utilsService: UtilsService, protected authenticationService: AuthenticationService) {
+  constructor(private appDataService: AppDataService, private cryptoService: CryptoService, private httpService: HttpService, protected authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {

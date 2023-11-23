@@ -39,8 +39,9 @@ export class UserComponent {
     event.preventDefault();
     const promise = () => {
       localStorage.removeItem("default_language");
-      this.appConfigService.reinit(false);
       this.translationService.onChange(this.appDataService.public.node.default_language);
+      this.appConfigService.reinit(false);
+      this.appConfigService.onValidateInitialConfiguration();
     };
 
     this.authentication.logout(promise);

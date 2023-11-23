@@ -11,6 +11,7 @@ import {Tab4Component} from "@app/pages/admin/settings/tab4/tab4.component";
 import {Tab5Component} from "@app/pages/admin/settings/tab5/tab5.component";
 import {FormsModule} from "@angular/forms";
 import {NgSelectModule} from "@ng-select/ng-select";
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -20,10 +21,10 @@ import {NgSelectModule} from "@ng-select/ng-select";
     Tab4Component,
     Tab5Component
   ],
-  imports: [
-    CommonModule,
-    SettingsRoutingModule, SharedModule, NgbNavModule, NgbModule, RouterModule, FormsModule, NgSelectModule
-  ]
+    imports: [
+        CommonModule,
+        SettingsRoutingModule, SharedModule, NgbNavModule, NgbModule, RouterModule, FormsModule, NgSelectModule, TranslateModule
+    ]
 })
 export class SettingsModule {
 }
