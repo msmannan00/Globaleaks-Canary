@@ -49,7 +49,7 @@ export class AppComponent implements AfterViewInit {
     }
 
     const lang = this.translate.currentLang;
-    const bootstrapCssFilename = lang === 'ar' ? 'bootstrap.rtl.css' : 'bootstrap.css';
+    const bootstrapCssFilename = ['ar', 'dv', 'fa', 'fa_AF', 'he', 'ps', 'ug', 'ur'].includes(lang) ? 'bootstrap.rtl.css' : 'bootstrap.css';
     const bootstrapCssPath = `./lib/bootstrap/${bootstrapCssFilename}`;
     const newLinkElement = this.renderer.createElement('link');
     this.renderer.setAttribute(newLinkElement, 'rel', 'stylesheet');
