@@ -5,7 +5,7 @@
         </span>
         <input name="onionservice" class="form-control" type="text" [value]="networkData.onionservice" disabled />
         <span class="input-group-append">
-            <button class="btn btn-danger rounded-start-0" [disabled]="torOnionResetInProgress" (click)="resetOnionPrivateKey()">
+            <button class="btn btn-danger rounded-start-0 m-0" [disabled]="torOnionResetInProgress" (click)="resetOnionPrivateKey()">
                 <i class="fa-solid fa-sync"></i>
                 <span>{{ 'Regenerate' | translate }}</span>
             </button>
