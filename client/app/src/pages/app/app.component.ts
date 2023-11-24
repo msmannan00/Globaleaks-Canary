@@ -26,18 +26,23 @@ export class AppComponent implements AfterViewInit {
   showLoadingPanel = false;
   supportedBrowser = true;
   loading = false;
-  firstTimeLanguageChange = true;
+  currentDirection: string;
 
   constructor(private renderer: Renderer2, @Inject(DOCUMENT) private document: Document, protected browserCheckService: BrowserCheckService, private changeDetectorRef: ChangeDetectorRef, private router: Router, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService) {
     this.watchLanguage();
   }
 
   watchLanguage() {
-    this.translate.onLangChange.subscribe((_: LangChangeEvent) => {
-      if(this.firstTimeLanguageChange){
-        this.firstTimeLanguageChange = false
-      }else {
-        this.loadBootstrapStyles();
+    this.currentDirection = this.getDirection();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      const newDirection = this.getCurrentDirection(event.lang);
+      if (newDirection !== this.currentDirection) {
+        const currentUrl = this.router.url;
+        this.router.navigate(['blank']).then(() => {
+          this.loadBootstrapStyles();
+          this.router.navigate([currentUrl]).then()
+        });
+        this.currentDirection = newDirection;
       }
     });
   }
@@ -97,6 +102,11 @@ export class AppComponent implements AfterViewInit {
       this.supportedBrowser = this.browserCheckService.checkBrowserSupport();
       this.changeDetectorRef.detectChanges();
     });
+  }
+
+  getCurrentDirection(language: string): string {
+    const rtlLanguages = ['ar', 'he', 'fa', 'ur'];
+    return rtlLanguages.includes(language) ? 'rtl' : 'ltr';
   }
 
   public getDirection(): string {
