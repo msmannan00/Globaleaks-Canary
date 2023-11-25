@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Renderer2} from "@angular/core";
+import {AfterViewInit, ChangeDetectorRef, Component, Inject, Renderer2} from "@angular/core";
 import {AppConfigService} from "@app/services/app-config.service";
 import {AppDataService} from "@app/app-data.service";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -7,6 +7,7 @@ import {NavigationEnd, Router} from "@angular/router";
 import {BrowserCheckService} from "@app/shared/services/browser-check.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {TranslationService} from "@app/services/translation.service";
+import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: "app-root",
@@ -26,15 +27,18 @@ export class AppComponent implements AfterViewInit {
   showLoadingPanel = false;
   supportedBrowser = true;
   loading = false;
-  waitForLoader = false;
 
-  constructor(private renderer: Renderer2, protected browserCheckService: BrowserCheckService, private changeDetectorRef: ChangeDetectorRef, private router: Router, protected translationService: TranslationService, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService) {
+  constructor(@Inject(DOCUMENT) private document: Document, private renderer: Renderer2, protected browserCheckService: BrowserCheckService, private changeDetectorRef: ChangeDetectorRef, private router: Router, protected translationService: TranslationService, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService) {
     this.watchLanguage();
   }
 
   watchLanguage() {
+    let defaultBootstrapLink = this.document.head.querySelector('link[href="./lib/bootstrap/bootstrap.rtl.css"]');
+    if (defaultBootstrapLink) {
+      this.renderer.removeChild(this.document.head, defaultBootstrapLink);
+    }
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      this.waitForLoader = this.translationService.loadBootstrapStyles(event, this.renderer);
+      this.translationService.loadBootstrapStyles(event, this.renderer);
     });
   }
 
@@ -72,9 +76,6 @@ export class AppComponent implements AfterViewInit {
   public ngAfterViewInit(): void {
     this.appDataService.showLoadingPanel$.subscribe((value) => {
       this.showLoadingPanel = value;
-      if(!value){
-        this.waitForLoader = value;
-      }
       this.supportedBrowser = this.browserCheckService.checkBrowserSupport();
       this.changeDetectorRef.detectChanges();
     });

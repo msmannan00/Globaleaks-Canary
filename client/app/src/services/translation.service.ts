@@ -24,7 +24,7 @@ export class TranslationService {
     const newDirection = this.serviceInstanceService.utilsService.getDirection(event.lang);
     if (newDirection !== this.currentDirection) {
       waitForLoader = true;
-      const defaultBootstrapLink = this.document.head.querySelector('link[href*="./lib/bootstrap/bootstrap.css"], link[href*="./lib/bootstrap/bootstrap.rtl.css"]');
+      let defaultBootstrapLink = this.document.head.querySelector('link[href*="./lib/bootstrap/bootstrap.css"], link[href*="./lib/bootstrap/bootstrap.rtl.css"]');
       if (defaultBootstrapLink) {
         renderer.removeChild(this.document.head, defaultBootstrapLink);
       }
