@@ -37,11 +37,7 @@ export class AppComponent implements AfterViewInit {
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       const newDirection = this.getCurrentDirection(event.lang);
       if (newDirection !== this.currentDirection) {
-        const currentUrl = this.router.url;
-        this.router.navigate(['blank']).then(() => {
-          this.loadBootstrapStyles();
-          this.router.navigate([currentUrl]).then()
-        });
+        this.loadBootstrapStyles();
         this.currentDirection = newDirection;
       }
     });
@@ -49,9 +45,6 @@ export class AppComponent implements AfterViewInit {
 
   loadBootstrapStyles() {
     const defaultBootstrapLink = this.document.head.querySelector('link[href*="./lib/bootstrap/bootstrap.css"], link[href*="./lib/bootstrap/bootstrap.rtl.css"]');
-    if (defaultBootstrapLink) {
-      this.renderer.removeChild(this.document.head, defaultBootstrapLink);
-    }
 
     const lang = this.translate.currentLang;
     const bootstrapCssFilename = ['ar', 'dv', 'fa', 'fa_AF', 'he', 'ps', 'ug', 'ur'].includes(lang) ? 'bootstrap.rtl.css' : 'bootstrap.css';
@@ -62,6 +55,9 @@ export class AppComponent implements AfterViewInit {
     this.renderer.setAttribute(newLinkElement, 'href', bootstrapCssPath);
     const firstLink = this.document.head.querySelector('link');
     this.renderer.insertBefore(this.document.head, newLinkElement, firstLink);
+    if (defaultBootstrapLink) {
+      this.renderer.removeChild(this.document.head, defaultBootstrapLink);
+    }
   }
 
 
