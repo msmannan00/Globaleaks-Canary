@@ -1,4 +1,4 @@
-import {Injectable, Renderer2} from "@angular/core";
+import {Inject, Injectable, Renderer2} from "@angular/core";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {AppDataService} from "@app/app-data.service";
 import * as Flow from "@flowjs/flow.js";
@@ -18,6 +18,7 @@ import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
 import {ClipboardService} from "ngx-clipboard";
 import {AppConfigService} from "@app/services/app-config.service";
+import {DOCUMENT} from "@angular/common";
 
 @Injectable({
   providedIn: "root"
@@ -92,6 +93,14 @@ export class UtilsService {
     }
     return false;
   }
+
+  removeBootstrap(renderer: Renderer2, document:any, link:string){
+    let defaultBootstrapLink = document.head.querySelector(`link[href="${link}"]`);
+    if (defaultBootstrapLink) {
+      renderer.removeChild(document.head, defaultBootstrapLink);
+    }
+  }
+
 
   resumeFileUploads(uploads: any) {
     if (uploads) {

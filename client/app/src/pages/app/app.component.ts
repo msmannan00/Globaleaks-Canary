@@ -33,10 +33,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   watchLanguage() {
-    let defaultBootstrapLink = this.document.head.querySelector('link[href="./lib/bootstrap/bootstrap.rtl.css"]');
-    if (defaultBootstrapLink) {
-      this.renderer.removeChild(this.document.head, defaultBootstrapLink);
-    }
+    this.utilsService.removeBootstrap(this.renderer, this.document, "./lib/bootstrap/bootstrap.rtl.css");
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.translationService.loadBootstrapStyles(event, this.renderer);
     });
