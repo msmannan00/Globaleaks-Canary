@@ -24,7 +24,7 @@
     <div id="loader"></div>
 </div>
 <ng-container *ngIf="appDataService.public.node">
-    <div [dir]="getDirection()" class="reveal">
+    <div [dir]="utilsService.getDirection(translate.currentLang)" class="reveal">
         <div *ngIf="!appDataService.public.node.root_tenant && appDataService.public.node.mode === 'demo'">
             <src-demo></src-demo>
         </div>

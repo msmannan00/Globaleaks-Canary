@@ -1,11 +1,13 @@
-import {AfterViewInit, ChangeDetectorRef, Component} from "@angular/core";
+import {AfterViewInit, ChangeDetectorRef, Component, Inject, Renderer2} from "@angular/core";
 import {AppConfigService} from "@app/services/app-config.service";
 import {AppDataService} from "@app/app-data.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {TranslateService} from "@ngx-translate/core";
+import {LangChangeEvent, TranslateService} from "@ngx-translate/core";
 import {NavigationEnd, Router} from "@angular/router";
 import {BrowserCheckService} from "@app/shared/services/browser-check.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {TranslationService} from "@app/services/translation.service";
+import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: "app-root",
@@ -26,9 +28,16 @@ export class AppComponent implements AfterViewInit {
   supportedBrowser = true;
   loading = false;
 
-  constructor(protected browserCheckService: BrowserCheckService, private changeDetectorRef: ChangeDetectorRef, private router: Router, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService) {
+  constructor(@Inject(DOCUMENT) private document: Document, private renderer: Renderer2, protected browserCheckService: BrowserCheckService, private changeDetectorRef: ChangeDetectorRef, private router: Router, protected translationService: TranslationService, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService) {
+    this.watchLanguage();
   }
 
+  watchLanguage() {
+    this.utilsService.removeBootstrap(this.renderer, this.document, "./lib/bootstrap/bootstrap.rtl.css");
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.translationService.loadBootstrapStyles(event, this.renderer);
+    });
+  }
 
   checkToShowSidebar() {
     this.router.events.subscribe(event => {
@@ -67,10 +76,5 @@ export class AppComponent implements AfterViewInit {
       this.supportedBrowser = this.browserCheckService.checkBrowserSupport();
       this.changeDetectorRef.detectChanges();
     });
-  }
-
-  public getDirection(): string {
-    const rtlLanguages = ['ar', 'dv', 'fa', 'fa_AF', 'he', 'ps', 'ug', 'ur'];
-    return rtlLanguages.includes(this.translate.currentLang) ? 'rtl' : 'ltr';
   }
 }

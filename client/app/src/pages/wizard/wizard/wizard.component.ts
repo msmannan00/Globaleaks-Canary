@@ -7,6 +7,7 @@ import {HttpService} from "@app/shared/services/http.service";
 import {AppDataService} from "@app/app-data.service";
 import {TranslationService} from "@app/services/translation.service";
 import {AppConfigService} from "@app/services/app-config.service";
+import {BrowserCheckService} from "@app/shared/services/browser-check.service";
 
 @Component({
   selector: "src-wizard",
@@ -50,7 +51,7 @@ export class WizardComponent implements OnInit {
     }
   ];
 
-  constructor(private translationService: TranslationService, private router: Router, private http: HttpClient, private authenticationService: AuthenticationService, private httpService: HttpService, protected appDataService: AppDataService, protected appConfigService: AppConfigService) {
+  constructor(protected browserCheckService: BrowserCheckService, private translationService: TranslationService, private router: Router, private http: HttpClient, private authenticationService: AuthenticationService, private httpService: HttpService, protected appDataService: AppDataService, protected appConfigService: AppConfigService) {
   }
 
   ngOnInit() {
@@ -98,7 +99,10 @@ export class WizardComponent implements OnInit {
 
   verifyProxiedWizard(){
     if (!this.appDataService.public.node.wizard_done && window.location.host === 'localhost:4200') {
-      this.proxiedServer = true;
+      console.log(window.navigator.userAgent);
+      if(!window.navigator.userAgent.includes('Electron')){
+        this.proxiedServer = true;
+      }
     }
   }
 
