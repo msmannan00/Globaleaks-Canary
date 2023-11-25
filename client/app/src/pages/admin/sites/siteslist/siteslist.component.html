@@ -12,11 +12,11 @@
                 <span *ngIf="tenant.subdomain">
                         <a *ngIf="nodeResolver.dataModel.rootdomain" class="badge bg-primary"
                            [href]="'https://' + tenant.subdomain + '.' + nodeResolver.dataModel.rootdomain"
-                           target="_blank">{{ tenant.subdomain }} .{{ appDataService.public.node.rootdomain }}</a>
+                           target="_blank">{{ tenant.subdomain }} .{{ nodeResolver.dataModel.rootdomain }}</a>
                         <a *ngIf="nodeResolver.dataModel.onionservice && tenant.subdomain" class="badge bg-primary"
                            [href]="'http://' + tenant.subdomain + '.' + nodeResolver.dataModel.onionservice"
                            rel="noreferrer" target="_blank">{{ tenant.subdomain }}
-                            .{{ appDataService.public.node.onionservice }}</a>
+                            .{{ nodeResolver.dataModel.onionservice }}</a>
                     </span>
                     <a class="badge bg-primary" *ngIf="tenant.hostname" [href]="'https://' + tenant.hostname" rel="noreferrer" target="_blank"> {{ tenant.hostname }} </a>
                 </div>
