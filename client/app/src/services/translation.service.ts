@@ -1,8 +1,9 @@
-import {Injectable} from "@angular/core";
-import {TranslateService} from "@ngx-translate/core";
+import {Inject, Injectable, Renderer2} from "@angular/core";
+import {LangChangeEvent, TranslateService} from "@ngx-translate/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppConfigService} from "@app/services/app-config.service";
 import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
+import {DOCUMENT} from "@angular/common";
 
 @Injectable({
   providedIn: "root",
@@ -13,13 +14,39 @@ export class TranslationService {
 
   public utilsService: UtilsService;
   public appConfigService: AppConfigService;
+  public currentDirection: string;
 
-  constructor(private serviceInstanceService: ServiceInstanceService, private translateService: TranslateService) {
+  constructor(protected translate: TranslateService, @Inject(DOCUMENT) private document: Document, private serviceInstanceService: ServiceInstanceService, private translateService: TranslateService) {
+  }
+
+  loadBootstrapStyles(event: LangChangeEvent, renderer: Renderer2) {
+    let waitForLoader = false;
+    const newDirection = this.serviceInstanceService.utilsService.getDirection(event.lang);
+    if (newDirection !== this.currentDirection) {
+      waitForLoader = true;
+      const defaultBootstrapLink = this.document.head.querySelector('link[href*="./lib/bootstrap/bootstrap.css"], link[href*="./lib/bootstrap/bootstrap.rtl.css"]');
+      if (defaultBootstrapLink) {
+        renderer.removeChild(this.document.head, defaultBootstrapLink);
+      }
+
+      const lang = this.translate.currentLang;
+      const bootstrapCssFilename = ['ar', 'dv', 'fa', 'fa_AF', 'he', 'ps', 'ug', 'ur'].includes(lang) ? 'bootstrap.rtl.css' : 'bootstrap.css';
+      const bootstrapCssPath = `./lib/bootstrap/${bootstrapCssFilename}`;
+      const newLinkElement = renderer.createElement('link');
+      renderer.setAttribute(newLinkElement, 'rel', 'stylesheet');
+      renderer.setAttribute(newLinkElement, 'type', 'text/css');
+      renderer.setAttribute(newLinkElement, 'href', bootstrapCssPath);
+      const firstLink = this.document.head.querySelector('link');
+      renderer.insertBefore(this.document.head, newLinkElement, firstLink);
+      this.currentDirection = newDirection;
+    }
+    return waitForLoader;
   }
 
   init() {
     this.utilsService = this.serviceInstanceService.utilsService;
     this.appConfigService = this.serviceInstanceService.appConfigService;
+    this.currentDirection = this.serviceInstanceService.utilsService.getDirection(this.translate.currentLang);
   }
 
   onChange(changedLanguage: string) {

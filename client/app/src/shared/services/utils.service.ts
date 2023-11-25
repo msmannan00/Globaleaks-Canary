@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {Injectable, Renderer2} from "@angular/core";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {AppDataService} from "@app/app-data.service";
 import * as Flow from "@flowjs/flow.js";
@@ -101,6 +101,11 @@ export class UtilsService {
         }
       }
     }
+  }
+
+  getDirection(language: string): string {
+    const rtlLanguages = ['ar', 'dv', 'fa', 'fa_AF', 'he', 'ps', 'ug', 'ur'];
+    return rtlLanguages.includes(language) ? 'rtl' : 'ltr';
   }
 
   view(url: string, _: string, callback: (blob: Blob) => void): void {
