@@ -1,3 +1,5 @@
+import {Option,TriggeredByOption} from "@app/models/app/shared-public-model";
+
 export interface FieldAttrs {
   [key: string]: {
     name: string;
@@ -23,8 +25,8 @@ export interface Field {
   y: number;
   width: number;
   triggered_by_score: number;
-  triggered_by_options: any[];
-  options: any[];
+  triggered_by_options: TriggeredByOption[];
+  options: Option[];
   children: Field[];
   label: string;
   description: string;
@@ -49,8 +51,8 @@ export class fieldtemplatesResolverModel {
   y: number;
   width: number;
   triggered_by_score: number;
-  triggered_by_options: any[];
-  options: any[];
+  triggered_by_options: TriggeredByOption[];
+  options: Option[];
   children: Field[];
   label: string;
   description: string;

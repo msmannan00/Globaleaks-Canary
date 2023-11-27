@@ -1,3 +1,5 @@
+import {RFile, WbFile, WhistleblowerIdentity,Comment} from "@app/models/app/shared-public-model";
+
 export class WbTipData {
   id: string;
   creation_date: string;
@@ -16,21 +18,21 @@ export class WbTipData {
   last_access: string;
   score: number;
   status: string;
-  substatus: any;
+  substatus: string;
   receivers: Receiver[];
-  comments: any[];
-  rfiles: any[];
-  wbfiles: any[];
+  comments: Comment[];
+  rfiles: RFile[];
+  wbfiles: WbFile[];
   data: Data;
   context: any = {};
   questionnaire: any;
   additional_questionnaire: any;
-  msg_receiver_selected: any;
-  msg_receivers_selector: any[];
-  tip_id: any;
-  receivers_by_id: any;
+  msg_receiver_selected: string | null;
+  msg_receivers_selector: MsgReceiversSelector[];
+  tip_id: string;
+  receivers_by_id: ReceiversById;
   submissionStatusStr: any;
-  label: any;
+  label: string;
   fields: any;
   whistleblower_identity_field: any;
   answers = {};
@@ -47,7 +49,7 @@ export class Step {
   order: number;
   enabled = true;
   triggered_by_score: number;
-  triggered_by_options: any[];
+  triggered_by_options: TriggeredByOption[];
   children: Children[];
   label: string;
   description: string;
@@ -129,7 +131,7 @@ export class Option {
   block_submission: boolean;
   score_points: number;
   score_type: string;
-  trigger_receiver: any[];
+  trigger_receiver: string[];
   hint1: string;
   hint2: string;
   label: string;
@@ -141,6 +143,17 @@ export class Receiver {
 }
 
 export class Data {
-  whistleblower_identity: any;
+  whistleblower_identity: WhistleblowerIdentity;
   whistleblower_identity_provided: boolean = false;
+}
+
+export interface MsgReceiversSelector {
+  key: string;
+  value: string;
+}
+
+export interface ReceiversById {
+  [key: string]: {
+    name: string;
+  };
 }
