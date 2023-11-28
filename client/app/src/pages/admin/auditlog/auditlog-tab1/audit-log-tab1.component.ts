@@ -12,7 +12,7 @@ import {ngxCsv} from "ngx-csv";
 export class AuditLogTab1Component implements OnInit {
   currentPage = 1;
   pageSize = 20;
-  auditLog: any = new auditlogResolverModel();
+  auditLog:auditlogResolverModel[] = [];
 
   constructor(private auditLogResolver: AuditLogResolver, protected nodeResolver: NodeResolver, protected utilsService: UtilsService) {
   }
@@ -22,10 +22,15 @@ export class AuditLogTab1Component implements OnInit {
   }
 
   loadAuditLogData() {
-    this.auditLog = this.auditLogResolver.dataModel;
+    if (Array.isArray(this.auditLogResolver.dataModel)) {
+      this.auditLog = this.auditLogResolver.dataModel;
+    } else {
+      this.auditLog = [this.auditLogResolver.dataModel];
+    }
   }
+  
 
-  getPaginatedData(): any[] {
+  getPaginatedData():auditlogResolverModel[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     return this.auditLog.slice(startIndex, endIndex);

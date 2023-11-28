@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, TemplateRef, ViewChild, ChangeDetectorRef} from "@angular/core";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {AuthenticationService} from "@app/services/authentication.service";
+import { Tab } from "@app/models/component-model/tab";
 
 @Component({
   selector: "src-auditlog",
@@ -12,8 +13,8 @@ export class AuditLogComponent implements AfterViewInit {
   @ViewChild("tab3") tab3!: TemplateRef<any>;
   @ViewChild("tab4") tab4!: TemplateRef<any>;
 
-  tabs: any[];
-  nodeData: any;
+  tabs: Tab[] = [];
+  nodeData: NodeResolver;
   active: string;
 
   constructor(private nodeResolver: NodeResolver, private authenticationService: AuthenticationService, private cdr: ChangeDetectorRef) {

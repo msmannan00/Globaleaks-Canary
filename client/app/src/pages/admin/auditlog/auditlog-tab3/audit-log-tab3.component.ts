@@ -12,7 +12,7 @@ import {AppDataService} from "@app/app-data.service";
 export class AuditLogTab3Component {
   currentPage = 1;
   pageSize = 20;
-  tips: any = new tipsResolverModel();
+  tips:tipsResolverModel[]=[];
 
   constructor(private tipsResolver: TipsResolver, protected utilsService: UtilsService, protected appDataService: AppDataService) {
   }
@@ -22,10 +22,14 @@ export class AuditLogTab3Component {
   }
 
   loadAuditLogData() {
-    this.tips = this.tipsResolver.dataModel;
+    if (Array.isArray(this.tipsResolver.dataModel)) {
+      this.tips = this.tipsResolver.dataModel;
+    } else {
+      this.tips = [this.tipsResolver.dataModel];
+    }
   }
 
-  getPaginatedData(): any[] {
+  getPaginatedData(): tipsResolverModel[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     return this.tips.slice(startIndex, endIndex);
