@@ -6,6 +6,8 @@ import {WbtipService} from "@app/services/wbtip.service";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {HttpService} from "@app/shared/services/http.service";
+import { SubmissionService } from "@app/services/submission.service";
+import { AppDataService } from "@app/app-data.service";
 
 @Component({
   selector: "src-tip-additional-questionnaire-form",
@@ -26,7 +28,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit {
   uploads: any = {};
   file_upload_url = "api/whistleblower/wbtip/rfile";
 
-  constructor(private wbTipResolver: WbTipResolver, private httpService: HttpService, private fieldUtilitiesService: FieldUtilitiesService, private utilsService: UtilsService, protected wbTipService: WbtipService, protected activeModal: NgbActiveModal) {
+  constructor(private submissionService: SubmissionService,private appDataService: AppDataService,private wbTipResolver: WbTipResolver, private httpService: HttpService, private fieldUtilitiesService: FieldUtilitiesService, private utilsService: UtilsService, protected wbTipService: WbtipService, protected activeModal: NgbActiveModal) {
   }
 
   ngOnInit(): void {
@@ -244,5 +246,19 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit {
       this.uploads = upload;
       this.fieldUtilitiesService.onAnswersUpdate(this);
     }
+  }
+
+  public replaceReceivers(receivers: string[]): void {
+    Object.keys(this.submissionService.selected_receivers).forEach((key) => {
+      if (receivers.indexOf(key) === -1) {
+        delete this.submissionService.selected_receivers[key];
+      }
+    });
+  
+    receivers.forEach((receiverId) => {
+      if (receiverId in this.appDataService.receivers_by_id) {
+        this.submissionService.selected_receivers[receiverId] = true;
+      }
+    });
   }
 }
