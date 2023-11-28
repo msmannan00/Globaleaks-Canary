@@ -37,7 +37,7 @@ export class RecieverTipData {
   msg_receivers_selector: MsgReceiversSelector[];
   receivers_by_id: ReceiversById;
   submissionStatusStr: string;
-  whistleblower_identity_field: any;
+  whistleblower_identity_field: Children;
 }
 
 export interface Questionnaire {
@@ -126,7 +126,7 @@ export interface Children2 {
   triggered_by_score: number;
   triggered_by_options: TriggeredByOption2[];
   options: Option2[];
-  children: any[];
+  children: Children[];
   label: string;
   description: string;
   hint: string;
@@ -226,7 +226,7 @@ export interface Children3 {
   triggered_by_score: number;
   triggered_by_options: TriggeredByOption3[];
   options: Option3[];
-  children: any[];
+  children: Children[];
   label: string;
   description: string;
   hint: string;

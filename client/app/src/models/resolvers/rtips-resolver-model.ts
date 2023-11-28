@@ -1,6 +1,6 @@
 export interface rtipResolverModel {
-  submissionStatusStr?: any;
-  context_name?: any;
+  submissionStatusStr: string;
+  context_name: string;
   context?: any;
   id: string;
   itip_id: string;

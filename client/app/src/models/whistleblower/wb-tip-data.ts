@@ -1,4 +1,5 @@
 import {RFile, WbFile, WhistleblowerIdentity,Comment} from "@app/models/app/shared-public-model";
+import {Context,Answers,Questionnaire3,Questionnaire} from "@app/models/reciever/reciever-tip-data";
 
 export class WbTipData {
   id: string;
@@ -24,23 +25,18 @@ export class WbTipData {
   rfiles: RFile[];
   wbfiles: WbFile[];
   data: Data;
-  context: any = {};
-  questionnaire: any;
-  additional_questionnaire: any;
+  context: Context;
+  questionnaire: Questionnaire3;
+  additional_questionnaire: Questionnaire3;
   msg_receiver_selected: string | null;
   msg_receivers_selector: MsgReceiversSelector[];
   tip_id: string;
   receivers_by_id: ReceiversById;
-  submissionStatusStr: any;
+  submissionStatusStr: string;
   label: string;
-  fields: any;
-  whistleblower_identity_field: any;
-  answers = {};
-}
-
-export class Questionnaire {
-  steps: Step[];
-  answers = {};
+  fields: Children[];
+  whistleblower_identity_field: Children;
+  answers:Answers;
 }
 
 export class Step {
@@ -74,7 +70,7 @@ export class Children {
   triggered_by_score: number;
   triggered_by_options: TriggeredByOption[];
   options: Option[];
-  children: any[];
+  children: Children[];
   label: string;
   description: string;
   hint: string;

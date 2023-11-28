@@ -28,7 +28,7 @@ export interface Children {
   triggered_by_score: number;
   triggered_by_options: TriggeredByOption[];
   options: Option[];
-  children: any[];
+  children: Children[];
   label: string;
   description: string;
   hint: string;
