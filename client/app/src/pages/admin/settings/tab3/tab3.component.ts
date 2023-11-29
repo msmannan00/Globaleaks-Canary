@@ -14,10 +14,8 @@ import {NgSelectComponent} from "@ng-select/ng-select";
 })
 export class Tab3Component implements OnInit {
   @Input() contentForm: NgForm;
-  @ViewChild("langSelect") langSelect: NgSelectComponent;
-
   showLangSelect = false;
-  selected = {value: null};
+  selected = {value: []};
   languageUtils:LanguageUtils
 
   constructor(private appDataService: AppDataService, private translationService: TranslationService, private appConfigService: AppConfigService, private utilsService: UtilsService, protected nodeResolver: NodeResolver) {
@@ -44,7 +42,7 @@ export class Tab3Component implements OnInit {
     if (language && (this.nodeResolver.dataModel.languages_enabled.indexOf(language.code) === -1)) {
       this.nodeResolver.dataModel.languages_enabled.push(language.code);
     }
-    this.langSelect.clearModel();
+    this.selected.value=[]
   }
 
   removeLang(index: number, lang_code: string) {
