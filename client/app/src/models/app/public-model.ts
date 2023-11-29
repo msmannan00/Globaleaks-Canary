@@ -84,6 +84,7 @@ export interface Questionnaire {
 export interface Status {
   id: string;
   order: number;
+  system_defined:boolean;
   substatuses: Substatus[];
   label: string;
 }

@@ -8,22 +8,25 @@ import {QuestionnairesResolver} from "@app/shared/resolvers/questionnaires.resol
 import {UsersResolver} from "@app/shared/resolvers/users.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {Observable} from "rxjs";
+import { contextResolverModel } from "@app/models/resolvers/context-resolver-model";
+import { questionnaireResolverModel } from "@app/models/resolvers/questionnaire-model";
+import { userResolverModel } from "@app/models/resolvers/user-resolver-model";
 
 @Component({
   selector: "src-context-editor",
   templateUrl: "./context-editor.component.html"
 })
 export class ContextEditorComponent implements OnInit {
-  @Input() contextsData: any[];
-  @Input() context: any;
-  @Input() index: any;
+  @Input() contextsData: contextResolverModel[];
+  @Input() context: contextResolverModel;
+  @Input() index: number;
   @Input() editContext: NgForm;
   @Output() dataToParent = new EventEmitter<string>();
   editing: boolean = false;
   showAdvancedSettings: boolean = false;
   showSelect: boolean = false;
-  questionnairesData: any = [];
-  usersData: any = [];
+  questionnairesData: questionnaireResolverModel[] = [];
+  usersData: userResolverModel[] = [];
   nodeData: any = [];
   selected = {value: null};
   adminReceiversById: any;
@@ -33,7 +36,11 @@ export class ContextEditorComponent implements OnInit {
 
   ngOnInit(): void {
     this.questionnairesData = this.questionnairesResolver.dataModel;
-    this.usersData = this.usersResolver.dataModel;
+    if (Array.isArray(this.usersResolver.dataModel)) {
+      this.usersData = this.usersResolver.dataModel;
+    } else {
+      this.usersData = [this.usersResolver.dataModel];
+    }
     this.nodeData = this.nodeResolver.dataModel;
     this.adminReceiversById = this.utilsService.array_to_map(this.usersResolver.dataModel);
   }
@@ -42,7 +49,7 @@ export class ContextEditorComponent implements OnInit {
     this.editing = !this.editing;
   }
 
-  swap($event: any, index: number, n: number): void {
+  swap($event: Event, index: number, n: number): void {
     $event.stopPropagation();
 
     const target = index + n;
@@ -59,11 +66,11 @@ export class ContextEditorComponent implements OnInit {
     }).subscribe();
   }
 
-  moveUp(e: any, idx: number): void {
+  moveUp(e: Event, idx: number): void {
     this.swap(e, idx, -1);
   }
 
-  moveDown(e: any, idx: number): void {
+  moveDown(e: Event, idx: number): void {
     this.swap(e, idx, 1);
   }
 
