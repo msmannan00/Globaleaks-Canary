@@ -182,6 +182,23 @@ export class PreferenceTab1Component implements OnInit {
     }
   };
 
+  downloadPublicKey() {
+    const publicKey = this.preferenceResolver.dataModel.pgp_key_public;
+
+    if (publicKey) {
+      const blob = new Blob([publicKey], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'public_key.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }
+  }
+
+
   onlanguagechange() {
     this.preferenceResolver.dataModel.language = this.languageModel;
   }
