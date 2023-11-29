@@ -106,14 +106,6 @@
                 </div>
             </div>
         </div>
-
-        <div *ngIf="preferenceResolver.dataModel.pgp_key_fingerprint">
-            <button class="btn btn-sm btn-outline-secondary" (click)="downloadPublicKey()">
-                <i class="fa-solid fa-download"></i>
-                <span>{{ 'Download' | translate }}</span>
-            </button>
-        </div>
-
         <br />
         <button type="submit" class="btn btn-primary" (click)="save()" [disabled]="preferenceForm.invalid || pgpkeyForm.invalid">
             <i class="fa-solid fa-check"></i>
