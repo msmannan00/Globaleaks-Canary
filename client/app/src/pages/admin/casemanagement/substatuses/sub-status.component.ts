@@ -6,15 +6,16 @@ import {AppConfigService} from "@app/services/app-config.service";
 import {HttpService} from "@app/shared/services/http.service";
 import { DeleteConfirmationComponent } from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import { Observable } from "rxjs";
+import { Status } from "@app/models/app/public-model";
 
 @Component({
   selector: "src-substatuses",
   templateUrl: "./sub-status.component.html"
 })
 export class SubStatusComponent implements OnInit {
-  @Input() submissionsStatus: any;
+  @Input() submissionsStatus: Status;
   subStatusEditing: boolean[] = [];
-  newSubStatus: any;
+  newSubStatus:{ label: string;} = { label: "" };
   showAddSubStatus: boolean = false;
 
   toggleAddSubStatus(): void {
@@ -25,7 +26,7 @@ export class SubStatusComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subStatusEditing = new Array(this.submissionsStatus.length).fill(false);
+    this.subStatusEditing = new Array(this.submissionsStatus.substatuses.length).fill(false);
   }
 
   addSubmissionSubStatus(): void {
@@ -41,7 +42,7 @@ export class SubStatusComponent implements OnInit {
     ).subscribe(
       result => {
         this.submissionsStatus.substatuses.push(result);
-        this.newSubStatus = "";
+        this.newSubStatus.label = "";
       }
     );
   }
