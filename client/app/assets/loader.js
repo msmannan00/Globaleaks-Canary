@@ -15,7 +15,7 @@ function createAndAppendScript(src) {
 
 
 createAndAppendLink("css/styles.css");
-const scriptFiles = ["js/scripts.js", "js/polyfills.js", "js/runtime.js", "js/main.js"];
+const scriptFiles = ["js/polyfills.js", "js/runtime.js", "js/main.js"];
 for (const scriptFile of scriptFiles) {
   createAndAppendScript(scriptFile);
 }

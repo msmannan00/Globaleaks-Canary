@@ -24,11 +24,11 @@ export class TranslationService {
     const newDirection = this.serviceInstanceService.utilsService.getDirection(event.lang);
     if (newDirection !== this.currentDirection) {
       waitForLoader = true;
-      this.utilsService.removeBootstrap(renderer, this.document, "./lib/bootstrap/bootstrap.css");
-      this.utilsService.removeBootstrap(renderer, this.document, "./lib/bootstrap/bootstrap.rtl.css");
+      this.utilsService.removeBootstrap(renderer, this.document, "./lib/bootstrap/bootstrap.min.css");
+      this.utilsService.removeBootstrap(renderer, this.document, "./lib/bootstrap/bootstrap.rtl.min.css");
 
       const lang = this.translate.currentLang;
-      const bootstrapCssFilename = ['ar', 'dv', 'fa', 'fa_AF', 'he', 'ps', 'ug', 'ur'].includes(lang) ? 'bootstrap.rtl.css' : 'bootstrap.css';
+      const bootstrapCssFilename = ['ar', 'dv', 'fa', 'fa_AF', 'he', 'ps', 'ug', 'ur'].includes(lang) ? 'bootstrap.rtl.min.css' : 'bootstrap.min.css';
       const bootstrapCssPath = `./lib/bootstrap/${bootstrapCssFilename}`;
       const newLinkElement = renderer.createElement('link');
       renderer.setAttribute(newLinkElement, 'rel', 'stylesheet');
