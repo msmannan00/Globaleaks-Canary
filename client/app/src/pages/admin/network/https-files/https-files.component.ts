@@ -5,6 +5,8 @@ import {ConfirmationComponent} from "@app/shared/modals/confirmation/confirmatio
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
+import { nodeResolverModel } from "@app/models/resolvers/node-resolver-model";
+import { TlsConfig } from "@app/models/component-model/tls-confiq";
 
 @Component({
   selector: "src-https-files",
@@ -12,10 +14,10 @@ import {UtilsService} from "@app/shared/services/utils.service";
 })
 export class HttpsFilesComponent implements OnInit {
   @Output() dataToParent = new EventEmitter<string>();
-  @Input() tlsConfig: any;
+  @Input() tlsConfig: TlsConfig;
   @Input() state: number = 0;
   menuState: string;
-  nodeData: any;
+  nodeData: nodeResolverModel;
   fileResources: {
     key: any,
     cert: any,

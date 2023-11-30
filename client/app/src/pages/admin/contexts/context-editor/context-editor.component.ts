@@ -11,6 +11,7 @@ import {Observable} from "rxjs";
 import { contextResolverModel } from "@app/models/resolvers/context-resolver-model";
 import { questionnaireResolverModel } from "@app/models/resolvers/questionnaire-model";
 import { userResolverModel } from "@app/models/resolvers/user-resolver-model";
+import { nodeResolverModel } from "@app/models/resolvers/node-resolver-model";
 
 @Component({
   selector: "src-context-editor",
@@ -27,9 +28,9 @@ export class ContextEditorComponent implements OnInit {
   showSelect: boolean = false;
   questionnairesData: questionnaireResolverModel[] = [];
   usersData: userResolverModel[] = [];
-  nodeData: any = [];
-  selected = {value: null};
-  adminReceiversById: any;
+  nodeData: nodeResolverModel;
+  selected = {value: []};
+  adminReceiversById: { [userId: string]: userResolverModel } = {};
 
   constructor(private http: HttpClient, private modalService: NgbModal, protected nodeResolver: NodeResolver, private usersResolver: UsersResolver, private questionnairesResolver: QuestionnairesResolver, private utilsService: UtilsService) {
   }
@@ -83,7 +84,7 @@ export class ContextEditorComponent implements OnInit {
     }
   }
 
-  receiverNotSelectedFilter(item: any): boolean {
+  receiverNotSelectedFilter(item: userResolverModel): boolean {
     return this.context.receivers.indexOf(item.id) === -1;
   }
 
@@ -99,18 +100,18 @@ export class ContextEditorComponent implements OnInit {
     this.showSelect = true;
   }
 
-  moveReceiver(rec: any): void {
+  moveReceiver(rec: userResolverModel): void {
     if (rec && this.context.receivers.indexOf(rec.id) === -1) {
       this.context.receivers.push(rec.id);
       this.showSelect = false;
     }
   }
 
-  deleteContext(context: any): void {
+  deleteContext(context: contextResolverModel): void {
     this.openConfirmableModalDialog(context, "").subscribe();
   }
 
-  openConfirmableModalDialog(arg: any, scope: any): Observable<string> {
+  openConfirmableModalDialog(arg: contextResolverModel, scope: any): Observable<string> {
     scope = !scope ? this : scope;
     return new Observable((observer) => {
       let modalRef = this.modalService.open(DeleteConfirmationComponent,{backdrop: 'static',keyboard: false});
@@ -125,7 +126,7 @@ export class ContextEditorComponent implements OnInit {
     });
   }
 
-  saveContext(context: any) {
+  saveContext(context: contextResolverModel) {
     if (context.additional_questionnaire_id === null) {
       context.additional_questionnaire_id = "";
     }
