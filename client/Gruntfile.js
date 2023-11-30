@@ -66,7 +66,12 @@ module.exports = function (grunt) {
           {
             dest: "app/assets/lib/bootstrap",
             cwd: ".",
-            src: ["node_modules/bootstrap/dist/css/*"],
+            src: [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css.map",
+              "node_modules/bootstrap/dist/css/bootstrap.rtl.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.rtl.min.css.map"
+            ],
             expand: true,
             flatten: true
           },
