@@ -26,9 +26,6 @@ export class HttpsComponent implements OnInit {
   initFunction() {
     this.httpService.requestTlsConfigResource().subscribe(
       (config: TlsConfig) => {
-        console.log(config,"config");
-        console.log(typeof(config),"config");
-        
         this.parseTLSConfig(config);
       }
     );

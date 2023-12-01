@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
+import { FileResources } from "@app/models/component-model/file-resources";
 import {Constants} from "@app/shared/constants/constants";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -9,7 +10,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
 })
 export class HttpsCsrGenComponent {
   @Output() dataToParent = new EventEmitter<string>();
-  @Input() fileResources: any;
+  @Input() fileResources: FileResources;
   protected readonly Constants = Constants;
   csr_cfg: {
     country: string;

@@ -1,5 +1,6 @@
 import {Component, Input} from "@angular/core";
 import {NgForm} from "@angular/forms";
+import { notificationResolverModel } from "@app/models/resolvers/notification-resolver-model";
 import {Constants} from "@app/shared/constants/constants";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {NotificationsResolver} from "@app/shared/resolvers/notifications.resolver";
@@ -17,13 +18,13 @@ export class NotificationTab1Component {
   constructor(protected nodeResolver: NodeResolver, protected notificationResolver: NotificationsResolver, private utilsService: UtilsService) {
   }
 
-  updateNotification(notification: any) {
+  updateNotification(notification: notificationResolverModel) {
     this.utilsService.updateAdminNotification(notification).subscribe(_ => {
       this.utilsService.reloadComponent();
     });
   }
 
-  updateThenTestMail(notification: any): void {
+  updateThenTestMail(notification: notificationResolverModel): void {
     this.utilsService
       .updateAdminNotification(notification)
       .pipe(

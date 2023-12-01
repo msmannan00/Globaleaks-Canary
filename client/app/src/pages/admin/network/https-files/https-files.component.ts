@@ -7,6 +7,7 @@ import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import { nodeResolverModel } from "@app/models/resolvers/node-resolver-model";
 import { TlsConfig } from "@app/models/component-model/tls-confiq";
+import { FileResource, FileResources } from "@app/models/component-model/file-resources";
 
 @Component({
   selector: "src-https-files",
@@ -18,40 +19,37 @@ export class HttpsFilesComponent implements OnInit {
   @Input() state: number = 0;
   menuState: string;
   nodeData: nodeResolverModel;
-  fileResources: {
-    key: any,
-    cert: any,
-    chain: any,
-    csr: any,
+  fileResources:FileResources = {
+    key: {name: "key"},
+    cert: {name: "cert"},
+    chain: {name: "chain"},
+    csr: {name: "csr"},
   };
   csr_state = {
     open: false
   };
 
   constructor(private authenticationService: AuthenticationService, private nodeResolver: NodeResolver, private httpService: HttpService, private modalService: NgbModal, private utilsService: UtilsService) {
-    this.fileResources = {
-      key: {name: "key"},
-      cert: {name: "cert"},
-      chain: {name: "chain"},
-      csr: {name: "csr"},
-    };
   }
 
   ngOnInit(): void {
     this.nodeData = this.nodeResolver.dataModel;
   }
 
-  postFile(file: any, resource: any) {
-    this.utilsService.readFileAsText(file[0]).then(
-      (str: string) => {
-        resource.content = str;
-        this.httpService.requestCSRContentResource(resource.name, resource).subscribe(
-          () => {
-            this.dataToParent.emit();
-          }
-        );
-      },
-    );
+  postFile(files: FileList | null, resource: FileResource) {
+    if (files && files.length > 0) {
+      const file = files[0];
+      this.utilsService.readFileAsText(file).then(
+        (str: string) => {
+          resource.content = str;
+          this.httpService.requestCSRContentResource(resource.name, resource).subscribe(
+            () => {
+              this.dataToParent.emit();
+            }
+          );
+        },
+      );
+    }
   }
 
   genKey() {
@@ -61,10 +59,10 @@ export class HttpsFilesComponent implements OnInit {
     });
   }
 
-  deleteFile(fileResource: any) {
+  deleteFile(fileResource: FileResource) {
     const modalRef = this.modalService.open(ConfirmationComponent,{backdrop: 'static',keyboard: false});
     modalRef.componentInstance.arg = fileResource.name;
-    modalRef.componentInstance.confirmFunction = (arg: any) => {
+    modalRef.componentInstance.confirmFunction = (arg: string) => {
       return this.httpService.requestDeleteTlsConfigFilesResource(arg).subscribe(() => {
         this.dataToParent.emit();
       });
@@ -99,7 +97,7 @@ export class HttpsFilesComponent implements OnInit {
   resetCfg() {
     const modalRef = this.modalService.open(ConfirmationComponent,{backdrop: 'static',keyboard: false});
     modalRef.componentInstance.arg = null;
-    modalRef.componentInstance.confirmFunction = (_: any) => {
+    modalRef.componentInstance.confirmFunction = () => {
       return this.httpService.requestDeleteTlsConfigResource().subscribe(() => {
         this.dataToParent.emit();
       });

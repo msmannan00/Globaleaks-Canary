@@ -1,4 +1,5 @@
 import {Component, OnInit} from "@angular/core";
+import { redirectResolverModel } from "@app/models/resolvers/redirect-resolver-model";
 import {RedirectsResolver} from "@app/shared/resolvers/redirects.resolver";
 import {HttpService} from "@app/shared/services/http.service";
 
@@ -7,17 +8,21 @@ import {HttpService} from "@app/shared/services/http.service";
   templateUrl: "./url-redirects.component.html"
 })
 export class UrlRedirectsComponent implements OnInit {
-  redirectData: any = [];
-  new_redirect: any = {
-    path1: null,
-    path2: null
+  redirectData: redirectResolverModel[] = [];
+  new_redirect = {
+    path1: "",
+    path2: ""
   };
 
   constructor(private redirects: RedirectsResolver, private httpService: HttpService) {
   }
 
   ngOnInit(): void {
-    this.redirectData = this.redirects.dataModel;
+    if (Array.isArray(this.redirects.dataModel)) {
+      this.redirectData = this.redirects.dataModel;
+    } else {
+      this.redirectData = [this.redirects.dataModel];
+    }
   }
 
   addRedirect() {
@@ -39,7 +44,7 @@ export class UrlRedirectsComponent implements OnInit {
     });
   }
 
-  deleteRedirect(redirect: any) {
+  deleteRedirect(redirect: redirectResolverModel) {
     this.httpService.requestDeleteRedirectsResource(redirect.id).subscribe(() => {
       this.getResolver();
     });
