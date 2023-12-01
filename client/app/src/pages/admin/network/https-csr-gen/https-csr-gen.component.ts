@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import { FileResources } from "@app/models/component-model/file-resources";
 import {Constants} from "@app/shared/constants/constants";
 import {HttpService} from "@app/shared/services/http.service";
@@ -9,7 +9,6 @@ import {UtilsService} from "@app/shared/services/utils.service";
   templateUrl: "./https-csr-gen.component.html"
 })
 export class HttpsCsrGenComponent {
-  @Output() dataToParent = new EventEmitter<string>();
   @Input() fileResources: FileResources;
   protected readonly Constants = Constants;
   csr_cfg: {

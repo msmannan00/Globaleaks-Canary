@@ -70,12 +70,6 @@ export class HttpsFilesComponent implements OnInit {
     return modalRef.result;
   }
 
-  httpsCsr(data: any) {
-    this.fileResources = data;
-    this.csr_state.open = false;
-    this.dataToParent.emit();
-  }
-
   downloadCSR() {
     this.httpService.downloadCSRFile().subscribe(
       (response: any) => {

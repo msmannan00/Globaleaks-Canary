@@ -12,7 +12,7 @@ interface Option {
   label: string;
 }
 
-interface Step {
+export interface Step {
   id: string;
   instance: string;
   editable: boolean;
