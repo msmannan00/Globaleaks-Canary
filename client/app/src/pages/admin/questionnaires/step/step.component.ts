@@ -1,4 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
+import { ParsedFields } from "@app/models/component-model/parsedFields";
+import { fieldtemplatesResolverModel } from "@app/models/resolvers/field-template-model";
 import { FieldTemplatesResolver } from "@app/shared/resolvers/field-templates-resolver.service";
 import { HttpService } from "@app/shared/services/http.service";
 
@@ -8,16 +10,20 @@ import { HttpService } from "@app/shared/services/http.service";
 })
 export class StepComponent implements OnInit {
   @Input() step: any;
-  @Input() parsedFields: any;
+  @Input() parsedFields: ParsedFields;
   showAddQuestion: boolean = false;
   showAddQuestionFromTemplate: boolean = false;
-  fieldTemplatesData: any = [];
+  fieldTemplatesData: fieldtemplatesResolverModel[] = [];
 
   constructor(private cdr: ChangeDetectorRef, private httpService: HttpService, protected fieldTemplates: FieldTemplatesResolver) {
   }
 
   ngOnInit(): void {
-    this.fieldTemplatesData = this.fieldTemplates.dataModel;
+    if (Array.isArray(this.fieldTemplates.dataModel)) {
+      this.fieldTemplatesData = this.fieldTemplates.dataModel;
+    } else {
+      this.fieldTemplatesData = [this.fieldTemplates.dataModel];
+    }
   }
 
   toggleAddQuestion(): void {
