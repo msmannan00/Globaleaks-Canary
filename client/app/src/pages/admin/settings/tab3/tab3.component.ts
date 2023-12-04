@@ -7,6 +7,7 @@ import {AppConfigService} from "@app/services/app-config.service";
 import {TranslationService} from "@app/services/translation.service";
 import {AppDataService} from "@app/app-data.service";
 import {NgSelectComponent} from "@ng-select/ng-select";
+import { LanguagesSupported } from "@app/models/app/public-model";
 
 @Component({
   selector: "src-tab3",
@@ -36,11 +37,11 @@ export class Tab3Component implements OnInit {
     this.showLangSelect = !this.showLangSelect;
   }
 
-  langNotEnabledFilter(language: any) {
+  langNotEnabledFilter(language: LanguagesSupported) {
     return this.nodeResolver.dataModel.languages_enabled.indexOf(language.code) === -1;
   }
 
-  enableLanguage(language: any) {
+  enableLanguage(language: LanguagesSupported) {
     if (language && (this.nodeResolver.dataModel.languages_enabled.indexOf(language.code) === -1)) {
       this.nodeResolver.dataModel.languages_enabled.push(language.code);
     }

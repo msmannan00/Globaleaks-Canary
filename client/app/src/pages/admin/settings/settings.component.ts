@@ -1,6 +1,7 @@
 import {Component, TemplateRef, ViewChild, AfterViewInit, ChangeDetectorRef} from "@angular/core";
 import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
 import {AuthenticationService} from "@app/services/authentication.service";
+import { Tab } from "@app/models/component-model/tab";
 
 @Component({
   selector: "src-admin-settings",
@@ -12,8 +13,8 @@ export class SettingsComponent implements AfterViewInit {
   @ViewChild("tab3") tab3!: TemplateRef<any>;
   @ViewChild("tab4") tab4!: TemplateRef<any>;
   @ViewChild("tab5") tab5!: TemplateRef<any>;
-  tabs: any[];
-  nodeData: any;
+  tabs: Tab[];
+  nodeData: NodeResolver;
   active: string;
 
   constructor(protected node: NodeResolver, protected authenticationService: AuthenticationService, private cdr: ChangeDetectorRef) {

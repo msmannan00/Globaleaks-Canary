@@ -1,16 +1,19 @@
-export class LanguageUtils {
-  public languages_supported: any = {};
-  public languagesEnabled: any = {};
-  public languages_enabled_selector: any[] = [];
+import { LanguagesSupported } from "@app/models/app/public-model";
+import { NodeResolver } from "@app/shared/resolvers/node.resolver";
 
-  constructor(private nodeResolver: any) {}
+export class LanguageUtils {
+  public languages_supported: { [code: string]: LanguagesSupported } = {};
+  public languagesEnabled: { [code: string]: LanguagesSupported } = {};
+  public languages_enabled_selector: LanguagesSupported[] = [];
+
+  constructor(private nodeResolver: NodeResolver) {}
 
   updateLanguages() {
     this.languages_supported = {};
     this.languagesEnabled = {};
     this.languages_enabled_selector = [];
 
-    this.nodeResolver.dataModel.languages_supported.forEach((lang: any) => {
+    this.nodeResolver.dataModel.languages_supported.forEach((lang: LanguagesSupported) => {
       this.languages_supported[lang.code] = lang;
 
       if (this.nodeResolver.dataModel.languages_enabled.indexOf(lang.code) !== -1) {

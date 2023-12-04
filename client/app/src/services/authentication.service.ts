@@ -14,7 +14,7 @@ import {ServiceInstanceService} from "@app/shared/services/service-instance.serv
 export class AuthenticationService {
   public session: any = undefined;
   public appConfigService: AppConfigService;
-
+  permissions:{can_upload_files:boolean}
   loginInProgress: boolean = false;
   requireAuthCode: boolean = false;
   loginData: LoginDataRef = new LoginDataRef();

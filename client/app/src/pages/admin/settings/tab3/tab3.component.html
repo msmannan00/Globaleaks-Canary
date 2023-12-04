@@ -35,7 +35,7 @@
                             </span>
                             <i *ngIf="lang_code === nodeResolver.dataModel.default_language" class="fa-solid fa-times disabled-icon"></i>
                         </span>
-                        <label>{{ this.languageUtils.languages_supported[lang_code]?.name }} [{{ lang_code }}]</label>
+                        <label>{{ this.languageUtils.languages_supported[lang_code].name }} [{{ lang_code }}]</label>
                     </li>
                 </ul>
             </div>

@@ -35,4 +35,5 @@ export class preferenceResolverModel {
   clicked_recovery_key: boolean;
   accepted_privacy_policy:string;
   contexts: string[];
+  permissions:{can_upload_files:boolean}
 }
