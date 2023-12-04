@@ -1,4 +1,4 @@
-import {Option,TriggeredByOption} from "@app/models/app/shared-public-model";
+import {Attrs, Option,TriggeredByOption} from "@app/models/app/shared-public-model";
 
 export interface FieldAttrs {
   [key: string]: {
@@ -10,6 +10,7 @@ export interface FieldAttrs {
 
 export interface Field {
   id: string;
+  questionnaire_id:string;
   instance: string;
   editable: boolean;
   type: string;

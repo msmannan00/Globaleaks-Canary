@@ -41,6 +41,32 @@ export interface Attrs {
   min_len?: MinLen;
   regexp?: Regexp;
   display_alphabetically?: DisplayAlphabetically;
+  text_shown_upon_negative_answer?: LocalizedSetting;
+  min_date?: UnicodeSetting;
+  max_date?: UnicodeSetting;
+  text?: LocalizedSetting;
+  checkbox_label?: LocalizedSetting;
+  attachment?: BoolSetting;
+  attachment_text?: LocalizedSetting;
+  attachment_url?: LocalizedSetting;
+  multimedia?: BoolSetting;
+  multimedia_type?: UnicodeSetting;
+  multimedia_url?: UnicodeSetting;
+}
+
+export interface BoolSetting {
+  type: string;
+  value: boolean;
+}
+
+export interface UnicodeSetting {
+  type: string;
+  value: string;
+}
+
+export interface LocalizedSetting {
+  type: string;
+  value: string;
 }
 
 export interface InputValidation {

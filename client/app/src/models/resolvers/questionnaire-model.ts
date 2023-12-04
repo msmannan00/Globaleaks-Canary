@@ -28,6 +28,7 @@ export interface Step {
   x: number;
   y: number;
   width: number;
+  questionnaire_id:string;
   triggered_by_score: number;
   triggered_by_options: TriggeredByOption[];
   options: Option[];

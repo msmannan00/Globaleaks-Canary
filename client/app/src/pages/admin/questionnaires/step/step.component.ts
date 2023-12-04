@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
+import { Questionnaire } from "@app/models/app/public-model";
 import { ParsedFields } from "@app/models/component-model/parsedFields";
 import { fieldtemplatesResolverModel } from "@app/models/resolvers/field-template-model";
+import { Step } from "@app/models/resolvers/questionnaire-model";
 import { FieldTemplatesResolver } from "@app/shared/resolvers/field-templates-resolver.service";
 import { HttpService } from "@app/shared/services/http.service";
 
@@ -9,7 +11,7 @@ import { HttpService } from "@app/shared/services/http.service";
   templateUrl: "./step.component.html"
 })
 export class StepComponent implements OnInit {
-  @Input() step: any;
+  @Input() step: Step;
   @Input() parsedFields: ParsedFields;
   showAddQuestion: boolean = false;
   showAddQuestionFromTemplate: boolean = false;
@@ -49,7 +51,7 @@ export class StepComponent implements OnInit {
   
   getResolver() {
     return this.httpService.requestQuestionnairesResource().subscribe(response => {
-      response.forEach((step: any) => {
+      response.forEach((step: Questionnaire) => {
         if (step.id == this.step.questionnaire_id) {
           step.steps.forEach((innerStep: any) => {
             if (innerStep.id == this.step.id) {
