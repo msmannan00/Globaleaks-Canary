@@ -21,7 +21,7 @@ export interface Field {
   multi_entry: boolean;
   required: boolean;
   preview: boolean;
-  attrs: FieldAttrs;
+  attrs: Attrs;
   x: number;
   y: number;
   width: number;
@@ -41,13 +41,14 @@ export class fieldtemplatesResolverModel {
   editable: boolean;
   type: string;
   template_id: string;
+  questionnaire_id:string;
   template_override_id: string;
   step_id: string;
   fieldgroup_id: string;
   multi_entry: boolean;
   required: boolean;
   preview: boolean;
-  attrs: FieldAttrs;
+  attrs: Attrs;
   x: number;
   y: number;
   width: number;

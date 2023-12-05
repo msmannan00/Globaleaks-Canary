@@ -17,6 +17,7 @@ import { ParsedFields } from "@app/models/component-model/parsedFields";
 import { Field, fieldtemplatesResolverModel } from "@app/models/resolvers/field-template-model";
 import { Children, Option, TriggeredByOption } from "@app/models/app/shared-public-model";
 import { Questionnaire } from "@app/models/app/public-model";
+import { Step as Steps } from "@app/models/app/shared-public-model";
 
 @Component({
   selector: "src-fields",
@@ -24,13 +25,13 @@ import { Questionnaire } from "@app/models/app/public-model";
 })
 export class FieldsComponent implements OnInit {
   @Input() editField: NgForm;
-  @Input() field: any ;
+  @Input() field: Children | Step | Field ;
   @Input() fields: Children[] | Field[] | Step[];
   @Input() type: string;
   @Input() step: Step;
   @Input() parsedFields: ParsedFields;
   @Output() dataToParent = new EventEmitter<string>();
-
+  custom:string="custom";
   editing: boolean = false;
   openMinDate: boolean = false;
   openMaxDate: boolean = false;
@@ -73,12 +74,12 @@ export class FieldsComponent implements OnInit {
     });
   }
 
-  minDateFormat(value: { year: number; month: number; day: number }): string {
+  minDateFormat(value: any): string {
     const dateString = `${value.year}-${value.month}-${value.day}`;
     return dateString;
   }
 
-  maxDateFormat(value: { year: number; month: number; day: number }): string {
+  maxDateFormat(value: any): string {
     const dateString = `${value.year}-${value.month}-${value.day}`;
     return dateString;
   }
@@ -89,7 +90,7 @@ export class FieldsComponent implements OnInit {
         map(response => {
           response.forEach((step: Questionnaire) => {
             if (step.id == this.step.questionnaire_id) {
-              step.steps.forEach((innerStep: any) => {
+              step.steps.forEach((innerStep: Steps) => {
                 if (innerStep.id == this.step.id) {
                   innerStep.children.forEach((field: Step | Field) => {
                     if (field.id == this.field.id && field.step_id == this.field.step_id) {

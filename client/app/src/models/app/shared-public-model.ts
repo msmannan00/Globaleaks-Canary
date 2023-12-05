@@ -18,6 +18,7 @@ export interface Children {
   template_override_id: string;
   step_id: string;
   fieldgroup_id: string;
+  questionnaire_id:string;
   multi_entry: boolean;
   required: boolean;
   preview: boolean;
@@ -36,22 +37,24 @@ export interface Children {
 }
 
 export interface Attrs {
-  input_validation?: InputValidation;
-  max_len?: MaxLen;
-  min_len?: MinLen;
-  regexp?: Regexp;
-  display_alphabetically?: DisplayAlphabetically;
-  text_shown_upon_negative_answer?: LocalizedSetting;
-  min_date?: UnicodeSetting;
-  max_date?: UnicodeSetting;
-  text?: LocalizedSetting;
-  checkbox_label?: LocalizedSetting;
-  attachment?: BoolSetting;
-  attachment_text?: LocalizedSetting;
-  attachment_url?: LocalizedSetting;
-  multimedia?: BoolSetting;
-  multimedia_type?: UnicodeSetting;
-  multimedia_url?: UnicodeSetting;
+  input_validation: InputValidation;
+  max_len: MaxLen;
+  min_len: MinLen;
+  min_time:LocalizedSetting;
+  max_time:LocalizedSetting;
+  regexp: Regexp;
+  display_alphabetically: DisplayAlphabetically;
+  text_shown_upon_negative_answer: LocalizedSetting;
+  min_date: UnicodeSetting;
+  max_date: UnicodeSetting;
+  text: LocalizedSetting;
+  checkbox_label: LocalizedSetting;
+  attachment: BoolSetting;
+  attachment_text: LocalizedSetting;
+  attachment_url: LocalizedSetting;
+  multimedia: BoolSetting;
+  multimedia_type: UnicodeSetting;
+  multimedia_url: UnicodeSetting;
 }
 
 export interface BoolSetting {
