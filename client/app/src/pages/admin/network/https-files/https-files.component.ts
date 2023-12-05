@@ -72,7 +72,7 @@ export class HttpsFilesComponent implements OnInit {
 
   downloadCSR() {
     this.httpService.downloadCSRFile().subscribe(
-      (response: any) => {
+      (response: Blob) => {
         const blob = new Blob([response], {type: "application/octet-stream"});
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement("a");

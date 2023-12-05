@@ -76,4 +76,9 @@ export class nodeResolverModel {
   logo: string[];
   script: string[];
   onionservice:string;
+  user_privacy_policy_url:string;
+  disable_admin_notification:boolean;
+  disable_custodian_notification:boolean;
+  can_postpone_expiration:boolean;
+  disable_receiver_notification:boolean;
 }

@@ -33,4 +33,6 @@ export class userResolverModel {
   can_privilege_mask_information: boolean;
   clicked_recovery_key: boolean;
   contexts: string[];
+  newpassword:boolean;
+  can_transfer_access_to_reports:boolean;
 }

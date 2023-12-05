@@ -91,7 +91,7 @@ export class FieldsComponent implements OnInit {
             if (step.id == this.step.questionnaire_id) {
               step.steps.forEach((innerStep: any) => {
                 if (innerStep.id == this.step.id) {
-                  innerStep.children.forEach((field: any) => {
+                  innerStep.children.forEach((field: Step | Field) => {
                     if (field.id == this.field.id && field.step_id == this.field.step_id) {
                       this.children = field.children;
                     }
@@ -106,7 +106,7 @@ export class FieldsComponent implements OnInit {
     if (this.type === "template") {
       return this.httpService.requestAdminFieldTemplateResource().pipe(
         map(response => {
-          response.forEach((field: any) => {
+          response.forEach((field: Step | Field) => {
             if (field.id == this.field.id) {
               this.children = field.children;
             }
