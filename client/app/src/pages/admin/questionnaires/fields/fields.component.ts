@@ -74,14 +74,22 @@ export class FieldsComponent implements OnInit {
     });
   }
 
-  minDateFormat(value: any): string {
-    const dateString = `${value.year}-${value.month}-${value.day}`;
-    return dateString;
+  minDateFormat(value: { year: number; month: number; day: number } | string): string {
+    if(typeof(value) !== "string"){
+      const dateString = `${value.year}-${value.month}-${value.day}`;
+      return dateString;
+    }else{
+      return value;
+    }
   }
 
-  maxDateFormat(value: any): string {
-    const dateString = `${value.year}-${value.month}-${value.day}`;
-    return dateString;
+  maxDateFormat(value: { year: number; month: number; day: number } | string): string {
+    if(typeof(value) !== "string"){
+      const dateString = `${value.year}-${value.month}-${value.day}`;
+      return dateString;
+    }else{
+      return value;
+    }
   }
   
   listenToFields(): Observable<void> {

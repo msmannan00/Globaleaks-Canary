@@ -45,8 +45,8 @@ export interface Attrs {
   regexp: Regexp;
   display_alphabetically: DisplayAlphabetically;
   text_shown_upon_negative_answer: LocalizedSetting;
-  min_date: UnicodeSetting;
-  max_date: UnicodeSetting;
+  min_date: MinMaxDate;
+  max_date: MinMaxDate;
   text: LocalizedSetting;
   checkbox_label: LocalizedSetting;
   attachment: BoolSetting;
@@ -65,6 +65,11 @@ export interface BoolSetting {
 export interface UnicodeSetting {
   type: string;
   value: string;
+}
+
+export interface MinMaxDate {
+  type: string;
+  value: { year: number; month: number; day: number } | string;
 }
 
 export interface LocalizedSetting {
