@@ -72,25 +72,27 @@ export class PreferenceTab1Component implements OnInit {
       const modalRef = this.modalService.open(ConfirmationWith2faComponent,{backdrop: 'static',keyboard: false});
       modalRef.result.then(
         (result) => {
-          const data = {
-            "operation": "disable_2fa",
-            "args": {
-              "secret": result,
-              "token": this.twoFactorAuthData.totp.token
-            }
-          };
-
-          this.httpService.requestOperationsRecovery(data, this.utilsService.encodeString(result)).subscribe(
-            {
-              next: _ => {
-                this.preferenceResolver.dataModel.two_factor = !this.preferenceResolver.dataModel.two_factor;
-                this.utilsService.reloadCurrentRoute();
-              },
-              error: (_: any) => {
-                this.toggle2FA(event);
+          if(result){
+            const data = {
+              "operation": "disable_2fa",
+              "args": {
+                "secret": result,
+                "token": this.twoFactorAuthData.totp.token
               }
-            }
-          );
+            };
+
+            this.httpService.requestOperationsRecovery(data, this.utilsService.encodeString(result)).subscribe(
+                {
+                  next: _ => {
+                    this.preferenceResolver.dataModel.two_factor = !this.preferenceResolver.dataModel.two_factor;
+                    this.utilsService.reloadCurrentRoute();
+                  },
+                  error: (_: any) => {
+                    this.toggle2FA(event);
+                  }
+                }
+            );
+          }
         },
         (_) => {
         }

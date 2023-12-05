@@ -11,9 +11,10 @@ export class ConfirmationWith2faComponent {
   constructor(private activeModal: NgbActiveModal) {
   }
   confirmFunction: (secret: string) => void;
+  close: () => void;
 
   dismiss() {
-    this.activeModal.dismiss();
+    this.activeModal.close();
   }
 
   confirm() {

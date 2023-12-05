@@ -1,4 +1,4 @@
-import {Inject, Injectable, Renderer2} from "@angular/core";
+import {Injectable, Renderer2} from "@angular/core";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {AppDataService} from "@app/app-data.service";
 import * as Flow from "@flowjs/flow.js";
@@ -18,7 +18,6 @@ import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
 import {ClipboardService} from "ngx-clipboard";
 import {AppConfigService} from "@app/services/app-config.service";
-import {DOCUMENT} from "@angular/common";
 
 @Injectable({
   providedIn: "root"
@@ -538,15 +537,24 @@ export class UtilsService {
 
   getConfirmation(): Observable<string> {
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(ConfirmationWithPasswordComponent,{backdrop: 'static',keyboard: false});
+      let modalRef;
       if (this.preferenceResolver.dataModel.two_factor) {
         modalRef = this.modalService.open(ConfirmationWith2faComponent,{backdrop: 'static',keyboard: false});
+        modalRef.result.then(
+            (result) => {
+              if(result){
+                observer.next(result);
+                observer.complete();
+              }
+            }
+        );
+      }else {
+        modalRef = this.modalService.open(ConfirmationWithPasswordComponent,{backdrop: 'static',keyboard: false});
+        modalRef.componentInstance.confirmFunction = (secret: string) => {
+          observer.next(secret);
+          observer.complete();
+        };
       }
-
-      modalRef.componentInstance.confirmFunction = (secret: string) => {
-        observer.next(secret);
-        observer.complete();
-      };
     });
   }
 
