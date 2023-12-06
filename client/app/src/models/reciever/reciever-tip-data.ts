@@ -38,6 +38,7 @@ export class RecieverTipData {
   receivers_by_id: ReceiversById;
   submissionStatusStr: string;
   whistleblower_identity_field: Children;
+  tip_id:string;
 }
 
 export interface Questionnaire {

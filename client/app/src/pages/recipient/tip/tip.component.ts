@@ -19,6 +19,8 @@ import {TipOperationPostponeComponent} from "@app/shared/modals/tip-operation-po
 import {CryptoService} from "@app/crypto.service";
 import {TransferAccessComponent} from "@app/shared/modals/transfer-access/transfer-access.component";
 import {AuthenticationService} from "@app/services/authentication.service";
+import { Tab } from "@app/models/component-model/tab";
+import { RecieverTipData } from "@app/models/reciever/reciever-tip-data";
 
 
 @Component({
@@ -31,18 +33,11 @@ export class TipComponent implements AfterViewInit {
   @ViewChild("tab3") tab3!: TemplateRef<any>;
 
   tip_id: string | null;
-  answers: any = {};
-  uploads: any = {};
-  questionnaire: any = {};
-  rows: any = {};
-  tip: any = {};
-  contexts_by_id: any;
-  submission_statuses: any;
-  score: any;
+  tip: RecieverTipData;
+  score: number;
   ctx: string;
-  submission: any;
   showEditLabelInput: boolean;
-  tabs: any[];
+  tabs: Tab[];
   active: string;
   loading = true;
 
@@ -92,7 +87,6 @@ export class TipComponent implements AfterViewInit {
           this.showEditLabelInput = this.tip.label === "";
           this.preprocessTipAnswers(this.tip);
           this.tip.submissionStatusStr = this.utils.getSubmissionStatusText(this.tip.status,this.tip.substatus,this.appDataService.submissionStatuses);
-          this.submission = {};
         }
       }
     );
@@ -238,7 +232,7 @@ export class TipComponent implements AfterViewInit {
     modalRef.componentInstance.args = {
       tip: this.RTipService.tip,
       operation: "set_reminder",
-      contexts_by_id: this.contexts_by_id,
+      contexts_by_id: this.appDataService.contexts_by_id,
       reminder_date: this.utils.getPostponeDate(this.appDataService.contexts_by_id[this.tip.context_id].tip_reminder),
       dateOptions: {
         minDate: new Date(this.tip.creation_date)
@@ -253,7 +247,7 @@ export class TipComponent implements AfterViewInit {
     modalRef.componentInstance.args = {
       tip: this.RTipService.tip,
       operation: "postpone",
-      contexts_by_id: this.contexts_by_id,
+      contexts_by_id: this.appDataService.contexts_by_id,
       expiration_date: this.utils.getPostponeDate(this.appDataService.contexts_by_id[this.tip.context_id].tip_timetolive),
       dateOptions: {
         minDate: new Date(this.tip.expiration_date),
