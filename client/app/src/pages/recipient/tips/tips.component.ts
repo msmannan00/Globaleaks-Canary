@@ -283,40 +283,40 @@ export class TipsComponent implements OnInit {
 
   }
 
-  onReportFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
+  onReportFilterChange(event:{ fromDate: string | null; toDate: string | null } ) {
     this.processTips();
     const {fromDate, toDate} = event;
-    this.reportDateModel = {fromDate, toDate};
     if (!fromDate && !toDate) {
       this.reportDateFilter = null;
       this.closeAllDatePickers();
-    } else {
+    } 
+    if (fromDate && toDate){
       this.reportDateFilter = [new Date(fromDate).getTime(), new Date(toDate).getTime()];
     }
     this.applyFilter();
   }
 
-  onUpdateFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
+  onUpdateFilterChange(event:{ fromDate: string | null; toDate: string | null } ) {
     this.processTips();
     const {fromDate, toDate} = event;
-    this.updateDateModel = {fromDate, toDate};
     if (!fromDate && !toDate) {
       this.updateDateFilter = null;
       this.closeAllDatePickers();
-    } else {
+    } 
+    if (fromDate && toDate){
       this.updateDateFilter = [new Date(fromDate).getTime(), new Date(toDate).getTime()];
     }
     this.applyFilter();
   }
 
-  onExpiryFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
+  onExpiryFilterChange(event:{ fromDate: string | null; toDate: string | null } ) {
     this.processTips();
     const {fromDate, toDate} = event;
-    this.expiryDateModel = {fromDate, toDate};
     if (!fromDate && !toDate) {
       this.expiryDateFilter = null;
       this.closeAllDatePickers();
-    } else {
+    } 
+    if (fromDate && toDate){
       this.expiryDateFilter = [new Date(fromDate).getTime(), new Date(toDate).getTime()];
     }
     this.applyFilter();
