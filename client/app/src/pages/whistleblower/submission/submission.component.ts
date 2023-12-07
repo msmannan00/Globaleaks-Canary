@@ -7,6 +7,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {NgForm} from "@angular/forms";
 import {AppConfigService} from "@app/services/app-config.service";
+import { Context } from "@app/models/app/public-model";
 
 @Component({
   selector: "src-submission",
@@ -31,7 +32,7 @@ export class SubmissionComponent {
   field_id_map: any;
   questionnaire: any;
   contextsOrderPredicate = this.appDataService.public.node.show_contexts_in_alphabetical_order ? "name" : "order";
-  selectable_contexts: any[];
+  selectable_contexts: Context[];
   show_steps_navigation_bar = false;
   receivedData: any;
 
