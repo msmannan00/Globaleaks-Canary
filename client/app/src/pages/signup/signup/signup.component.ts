@@ -2,6 +2,7 @@ import {Component} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {AppConfigService} from "@app/services/app-config.service";
+import { Signup } from "@app/models/component-model/signup";
 
 @Component({
   selector: "src-signup",
@@ -11,7 +12,7 @@ export class SignupComponent {
   hostname = "";
   completed = false;
   step = 1;
-  signup = {
+  signup: Signup = {
     "subdomain": "",
     "name": "",
     "surname": "",
