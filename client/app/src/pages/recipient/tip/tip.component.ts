@@ -21,6 +21,7 @@ import {TransferAccessComponent} from "@app/shared/modals/transfer-access/transf
 import {AuthenticationService} from "@app/services/authentication.service";
 import { Tab } from "@app/models/component-model/tab";
 import { RecieverTipData } from "@app/models/reciever/reciever-tip-data";
+import { Receiver } from "@app/models/app/public-model";
 
 
 @Component({
@@ -73,11 +74,11 @@ export class TipComponent implements AfterViewInit {
     this.RTipService.reset();
     requestObservable.subscribe(
       {
-        next: (response: any) => {
+        next: (response: RecieverTipData) => {
           this.loading = false;
           this.RTipService.initialize(response);
           this.tip = this.RTipService.tip;
-          this.activatedRoute.queryParams.subscribe((params: { [x: string]: any; }) => {
+          this.activatedRoute.queryParams.subscribe((params: { [x: string]: string; }) => {
             this.tip.tip_id = params["tip_id"];
           });
 
@@ -93,9 +94,10 @@ export class TipComponent implements AfterViewInit {
   }
 
   openGrantTipAccessModal(): void {
-    this.utils.runUserOperation("get_users_names", {}, true).subscribe((response: any) => {
-      const selectableRecipients: any = [];
-      this.appDataService.public.receivers.forEach(async (receiver: { id: string | number; }) => {
+    this.utils.runUserOperation("get_users_names", {}, true).subscribe( {
+      next: response => {
+      const selectableRecipients: Receiver[] = [];
+      this.appDataService.public.receivers.forEach(async (receiver: Receiver) => {
         if (receiver.id !== this.authenticationService.session.user_id && !this.tip.receivers_by_id[receiver.id]) {
           selectableRecipients.push(receiver);
         }
@@ -103,7 +105,7 @@ export class TipComponent implements AfterViewInit {
       const modalRef = this.modalService.open(GrantAccessComponent,{backdrop: 'static',keyboard: false});
       modalRef.componentInstance.usersNames = response;
       modalRef.componentInstance.selectableRecipients = selectableRecipients;
-      modalRef.componentInstance.confirmFun = (receiver_id: any) => {
+      modalRef.componentInstance.confirmFun = (receiver_id: Receiver) => {
         const req = {
           operation: "grant",
           args: {
@@ -115,17 +117,17 @@ export class TipComponent implements AfterViewInit {
             this.reload();
           });
       };
-
       modalRef.componentInstance.cancelFun = null;
-    });
+    }
+  });
   }
 
   openRevokeTipAccessModal() {
     this.utils.runUserOperation("get_users_names", {}, true).subscribe(
       {
         next: response => {
-          const selectableRecipients: any = [];
-          this.appDataService.public.receivers.forEach(async (receiver: { id: string | number; }) => {
+          const selectableRecipients: Receiver[] = [];
+          this.appDataService.public.receivers.forEach(async (receiver: Receiver) => {
             if (receiver.id !== this.authenticationService.session.user_id && this.tip.receivers_by_id[receiver.id]) {
               selectableRecipients.push(receiver);
             }
@@ -133,7 +135,7 @@ export class TipComponent implements AfterViewInit {
           const modalRef = this.modalService.open(RevokeAccessComponent,{backdrop: 'static',keyboard: false});
           modalRef.componentInstance.usersNames = response;
           modalRef.componentInstance.selectableRecipients = selectableRecipients;
-          modalRef.componentInstance.confirmFun = (receiver_id: any) => {
+          modalRef.componentInstance.confirmFun = (receiver_id: Receiver) => {
             const req = {
               operation: "revoke",
               args: {
@@ -154,9 +156,9 @@ export class TipComponent implements AfterViewInit {
   openTipTransferModal() {
     this.utils.runUserOperation("get_users_names", {}, true).subscribe(
       {
-        next: (response: any) => {
-          const selectableRecipients: any = [];
-          this.appDataService.public.receivers.forEach(async (receiver: { id: string | number; }) => {
+        next: response  => {
+          const selectableRecipients: Receiver[] = [];
+          this.appDataService.public.receivers.forEach(async (receiver:Receiver) => {
             if (receiver.id !== this.authenticationService.session.user_id && !this.tip.receivers_by_id[receiver.id]) {
               selectableRecipients.push(receiver);
             }
@@ -196,7 +198,7 @@ export class TipComponent implements AfterViewInit {
     this.appConfigServices.localInitialization(true, reloadCallback);
   }
 
-  preprocessTipAnswers(tip: any) {
+  preprocessTipAnswers(tip: RecieverTipData) {
     this.tipService.preprocessTipAnswers(tip);
   }
 
@@ -258,7 +260,7 @@ export class TipComponent implements AfterViewInit {
     };
   }
 
-  exportTip(tipId: any) {
+  exportTip(tipId: string) {
     const param = JSON.stringify({});
     this.httpService.requestToken(param).subscribe
     (

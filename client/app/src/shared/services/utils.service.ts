@@ -408,7 +408,7 @@ export class UtilsService {
     }
   }
 
-  getDateFilter(Tips: any[], report_date_filter: number[], update_date_filter: number[], expiry_date_filter: number[]): any[] {
+  getDateFilter(Tips: any[], report_date_filter:[number, number] | null, update_date_filter: [number, number] | null, expiry_date_filter: [number, number] | null): any[] {
     const filteredTips: any[] = [];
     Tips.forEach(rows => {
       const m_row_rdate = new Date(rows.last_access).getTime();

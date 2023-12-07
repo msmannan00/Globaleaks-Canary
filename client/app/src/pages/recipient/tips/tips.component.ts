@@ -13,6 +13,7 @@ import { IDropdownSettings } from "ng-multiselect-dropdown";
 import { filter, orderBy } from "lodash";
 import { TokenResource } from "@app/shared/services/token-resource.service";
 import { Router } from "@angular/router";
+import { rtipResolverModel } from "@app/models/resolvers/rtips-resolver-model";
 
 
 @Component({
@@ -21,22 +22,22 @@ import { Router } from "@angular/router";
 })
 export class TipsComponent implements OnInit {
   search: string | undefined;
-  selectedTips: any[] = [];
-  filteredTips: any[];
+  selectedTips: string[] = [];
+  filteredTips: rtipResolverModel[];
   currentPage: number = 1;
   itemsPerPage: number = 20;
-  reportDateFilter: any = null;
-  updateDateFilter: any = null;
-  expiryDateFilter: any = null;
-  reportDateModel: any = null;
-  updateDateModel: any = null;
-  expiryDateModel: any = null;
-  dropdownStatusModel: any[] = [];
-  dropdownStatusData: any[] = [];
-  dropdownContextModel: any[] = [];
-  dropdownContextData: any[] = [];
-  dropdownScoreModel: any[] = [];
-  dropdownScoreData: any[] = [];
+  reportDateFilter: [number, number] | null = null;
+  updateDateFilter: [number, number] | null = null;
+  expiryDateFilter: [number, number] | null = null;
+  reportDateModel: {fromDate: NgbDate | null;toDate: NgbDate | null; } | null = null;
+  updateDateModel: {fromDate: NgbDate | null;toDate: NgbDate | null; } | null = null;
+  expiryDateModel: {fromDate: NgbDate | null;toDate: NgbDate | null; } | null = null;
+  dropdownStatusModel: string[] = [];
+  dropdownStatusData:{id: number;label: string;}[] = [];
+  dropdownContextModel: string[] = [];
+  dropdownContextData: {id: number;label: string;}[] = [];
+  dropdownScoreModel: string[] = [];
+  dropdownScoreData: {id: number;label: string;}[] = [];
   sortKey: string = "creation_date";
   sortReverse: boolean = true;
   channelDropdownVisible: boolean = false;
@@ -49,7 +50,7 @@ export class TipsComponent implements OnInit {
   expirationDatePicker: boolean = false;
   oneDayInMilliseconds = 24 * 60 * 60 * 1000;
 
-  dropdownDefaultText: any = {
+  dropdownDefaultText = {
     buttonDefaultText: "",
     searchPlaceholder: this.translateService.instant("Search")
   };
@@ -79,6 +80,8 @@ export class TipsComponent implements OnInit {
     this.filteredTips.forEach(tip => {
       this.selectedTips.push(tip.id);
     });
+    console.log(this.selectedTips,"this.selectedTips");
+    
   }
 
   deselectAll() {
@@ -93,7 +96,7 @@ export class TipsComponent implements OnInit {
           modalRef.componentInstance.args = {
             users_names: response
           };
-          modalRef.componentInstance.confirmFun = (receiver_id: any) => {
+          modalRef.componentInstance.confirmFun = (receiver_id: {id: number}) => {
             const args = {
               rtips: this.selectedTips,
               receiver: receiver_id
@@ -113,7 +116,7 @@ export class TipsComponent implements OnInit {
           modalRef.componentInstance.args = {
             users_names: response
           };
-          modalRef.componentInstance.confirmFun = (receiver_id: any) => {
+          modalRef.componentInstance.confirmFun = (receiver_id: {id: number}) => {
             const args = {
               rtips: this.selectedTips,
               receiver: receiver_id
@@ -136,7 +139,7 @@ export class TipsComponent implements OnInit {
 
   async tipsExport() {
     for (let i = 0; i < this.selectedTips.length; i++) {
-      const token: any = await this.tokenResourceService.getWithProofOfWork();
+      const token = await this.tokenResourceService.getWithProofOfWork();
       window.open(`api/recipient/rtips/${this.selectedTips[i]}/export?token=${token.id}:${token.answer}`);
       this.appDataService.updateShowLoadingPanel(false);
     }
@@ -150,7 +153,7 @@ export class TipsComponent implements OnInit {
     this.appConfigServices.localInitialization(true, reloadCallback);
   }
 
-  tipSwitch(id: number): void {
+  tipSwitch(id: string): void {
     this.index = this.selectedTips.indexOf(id);
     if (this.index > -1) {
       this.selectedTips.splice(this.index, 1);
@@ -159,11 +162,11 @@ export class TipsComponent implements OnInit {
     }
   }
 
-  isSelected(id: any): boolean {
+  isSelected(id: string): boolean {
     return this.selectedTips.indexOf(id) !== -1;
   }
 
-  exportTip(tipId: any) {
+  exportTip(tipId: string) {
     this.utils.download("api/recipient/rtips/" + tipId + "/export");
     this.appDataService.updateShowLoadingPanel(false);
   }
@@ -211,7 +214,7 @@ export class TipsComponent implements OnInit {
     }
   }
 
-  onChanged(model: any, type: string) {
+  onChanged(model: string[], type: string) {
     this.processTips();
     if (model.length > 0 && type === "Score") {
       this.dropdownContextModel = [];
@@ -231,7 +234,7 @@ export class TipsComponent implements OnInit {
     this.applyFilter();
   }
 
-  checkFilter(filter: any) {
+  checkFilter(filter: string[]) {
     return filter.length > 0;
   };
 

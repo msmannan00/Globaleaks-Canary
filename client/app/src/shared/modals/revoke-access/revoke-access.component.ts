@@ -15,7 +15,7 @@ export class RevokeAccessComponent {
   @Input() selectableRecipients: any;
   @Input() confirmFun: Function;
   @Input() cancelFun: Function;
-  receiver_id: any;
+  receiver_id: {id: number};
   receivers_by_id: any = {};
 
   constructor(private modalService: NgbModal, private utils: UtilsService, private appDataService: AppDataService) {
