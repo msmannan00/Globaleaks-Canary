@@ -6,6 +6,9 @@ import {HttpService} from "@app/shared/services/http.service";
 import {WbtipService} from "@app/services/wbtip.service";
 import {AppDataService} from "@app/app-data.service";
 import {UtilsService} from "@app/shared/services/utils.service";
+import { Children, WbTipData } from "@app/models/whistleblower/wb-tip-data";
+import { Answers, Questionnaire } from "@app/models/reciever/reciever-tip-data";
+import { WhistleblowerIdentity } from "@app/models/app/shared-public-model";
 
 @Component({
   selector: "src-tippage",
@@ -16,21 +19,21 @@ export class TippageComponent {
   fileUploadUrl: string;
   tip_id = null;
   answers = {};
-  uploads: any = {};
+  uploads: any={};
   score = 0;
   ctx: string;
-  rows: any;
+  rows: Children[];
   questionnaire: any;
-  questionnaires: any;
+  questionnaires: Questionnaire[];
   identity_provided = false;
 
-  private submission: any;
-  protected tip: any;
+  private submission: { _submission: WbTipData[] } = { _submission: [] };
+  protected tip: WbTipData;
 
   constructor(private fieldUtilities: FieldUtilitiesService, private wbTipResolver: WbTipResolver, private fieldUtilitiesService: FieldUtilitiesService, protected utilsService: UtilsService, protected appDataService: AppDataService, private activatedRoute: ActivatedRoute, private httpService: HttpService, protected wbTipService: WbtipService) {
   }
 
-  ngOnInit() {
+  ngOnInit() {    
     let wpTip = this.wbTipResolver.dataModel;
     if (wpTip) {
       this.wbTipService.initialize(wpTip);
@@ -49,8 +52,8 @@ export class TippageComponent {
       this.preprocessTipAnswers(this.tip);
 
       this.tip.submissionStatusStr = this.utilsService.getSubmissionStatusText(this.tip.status,this.tip.substatus,this.appDataService.submissionStatuses);
-      this.submission = {};
-      this.submission._submission = this.tip;
+      this.submission._submission = [];
+      this.submission._submission = [this.tip];
       if (this.tip.receivers.length === 1 && this.tip.msg_receiver_selected === null) {
         this.tip.msg_receiver_selected = this.tip.msg_receivers_selector[0].key;
       }
@@ -59,7 +62,7 @@ export class TippageComponent {
     }
   }
 
-  filterNotTriggeredField(parent: any, field: any, answers: any) {
+  filterNotTriggeredField(parent: Children, field: Children, answers: Answers | WhistleblowerIdentity) {
     let i;
     if (this.fieldUtilities.isFieldTriggered(parent, field, answers, this.score)) {
       for (i = 0; i < field.children.length; i++) {
@@ -68,7 +71,7 @@ export class TippageComponent {
     }
   };
 
-  preprocessTipAnswers(tip: any) {
+  preprocessTipAnswers(tip: WbTipData) {
     let x, i, j, k, step;
 
     for (let x = tip.questionnaires.length - 1; x >= 0; x--) {
@@ -157,11 +160,11 @@ export class TippageComponent {
       }).subscribe
       (
         {
-          next: _ => {
+          next: () => {
             clearInterval(intervalId);
             this.onReload();
           },
-          error: (_: any) => {
+          error: () => {
             clearInterval(intervalId);
             this.onReload();
           }

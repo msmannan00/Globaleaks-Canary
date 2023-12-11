@@ -3,6 +3,9 @@ import { FieldUtilitiesService } from "@app/shared/services/field-utilities.serv
 import { ControlContainer, NgForm } from "@angular/forms";
 import { SubmissionService } from "@app/services/submission.service";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
+import { Answers } from "@app/models/reciever/reciever-tip-data";
+import { Children, Step } from "@app/models/whistleblower/wb-tip-data";
+import { Field } from "@app/models/resolvers/field-template-model";
 
 @Component({
   selector: "src-form-field-input",
@@ -12,19 +15,19 @@ import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 export class FormFieldInputComponent implements OnInit {
 
   @Input() field: any;
-  @Input() index: any;
-  @Input() step: any;
+  @Input() index: number;
+  @Input() step: Step;
   @Input() submission: SubmissionService;
-  @Input() entryIndex: any;
-  @Input() fieldEntry: any;
+  @Input() entryIndex: number;
+  @Input() fieldEntry: string;
   @Input() entry: any;
-  @Input() fieldId: any;
+  @Input() fieldId: string;
   @Input() displayErrors: boolean;
-  @Input() answers: any;
-  @Input() fields: any;
+  @Input() answers: Answers;
+  @Input() fields: Field;
   @Input() uploads: any;
-  @Input() identity_provided: any;
-  @Input() fileUploadUrl: any;
+  @Input() identity_provided: boolean;
+  @Input() fileUploadUrl: string;
   @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
 
   entryValue: any = "";

@@ -1,4 +1,5 @@
 export interface Step {
+  enabled: boolean;
   id: string;
   questionnaire_id: string;
   order: number;

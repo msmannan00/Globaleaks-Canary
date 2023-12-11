@@ -75,6 +75,7 @@ export class Children {
   description: string;
   hint: string;
   placeholder: string;
+  enabled:boolean;
 }
 
 export class Attrs {

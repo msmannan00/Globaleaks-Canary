@@ -1,4 +1,5 @@
 import {Injectable} from "@angular/core";
+import { Children } from "@app/models/whistleblower/wb-tip-data";
 import {Constants} from "@app/shared/constants/constants";
 
 @Injectable({
@@ -85,7 +86,7 @@ export class FieldUtilitiesService {
     return r;
   }
 
-  splitRows(fields: any) {
+  splitRows(fields: Children[]) {
     const rows: any = [];
     let y: any = null;
 

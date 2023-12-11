@@ -10,7 +10,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
 export class ContextSelectionComponent {
 
   @Input() selectable_contexts: Context[];
-  @Input() contextsOrderPredicate: any;
+  @Input() contextsOrderPredicate: string;
   @Output() selectContext: EventEmitter<any> = new EventEmitter();
 
   constructor(protected appDataService: AppDataService, protected utilsService: UtilsService) {

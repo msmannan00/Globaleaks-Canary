@@ -12,7 +12,7 @@ import {AppConfigService} from "@app/services/app-config.service";
   templateUrl: "./receipt.component.html"
 })
 export class ReceiptComponent implements OnInit {
-  receipt: any;
+  receipt: string;
   receiptId: string = "";
 
   constructor(private appConfigService: AppConfigService, private httpService: HttpService, private wbTipResolver: WbTipResolver, protected utilsService: UtilsService, protected authenticationService: AuthenticationService, protected appDataService: AppDataService) {
