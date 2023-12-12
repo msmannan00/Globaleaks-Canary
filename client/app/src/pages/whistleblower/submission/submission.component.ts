@@ -7,10 +7,10 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {NgForm} from "@angular/forms";
 import {AppConfigService} from "@app/services/app-config.service";
-import { Context, Questionnaire } from "@app/models/app/public-model";
+import { Context, Questionnaire, Receiver } from "@app/models/app/public-model";
 import { Answers } from "@app/models/reciever/reciever-tip-data";
 import { Field } from "@app/models/resolvers/field-template-model";
-
+import * as Flow from "@flowjs/flow.js";
 @Component({
   selector: "src-submission",
   templateUrl: "./submission.component.html",
@@ -30,7 +30,7 @@ export class SubmissionComponent {
   validate: boolean[] = [];
   score = 0;
   done: boolean;
-  uploads: any = {};
+  uploads: { [key: string]: any } = {};
   field_id_map: { [key: string]: Field };
   questionnaire: Questionnaire;
   contextsOrderPredicate:string = this.appDataService.public.node.show_contexts_in_alphabetical_order ? "name" : "order";
@@ -84,7 +84,7 @@ export class SubmissionComponent {
     return Object.keys(this.submissionService.selected_receivers).length < this.submissionService.context.maximum_selectable_receivers;
   };
 
-  switchSelection(receiver: any) {
+  switchSelection(receiver: Receiver) {
     if (receiver.forcefully_selected) {
       return;
     }

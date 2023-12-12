@@ -4,7 +4,7 @@ import { ControlContainer, NgForm } from "@angular/forms";
 import { SubmissionService } from "@app/services/submission.service";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import { Answers } from "@app/models/reciever/reciever-tip-data";
-import { Children, Step } from "@app/models/whistleblower/wb-tip-data";
+import { Step } from "@app/models/whistleblower/wb-tip-data";
 import { Field } from "@app/models/resolvers/field-template-model";
 
 @Component({
@@ -25,34 +25,30 @@ export class FormFieldInputComponent implements OnInit {
   @Input() displayErrors: boolean;
   @Input() answers: Answers;
   @Input() fields: Field;
-  @Input() uploads: any;
+  @Input() uploads: { [key: string]: any };
   @Input() identity_provided: boolean;
   @Input() fileUploadUrl: string;
   @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
 
-  entryValue: any = "";
-  fieldFormVar: any = {};
-  fieldFormVarName: any;
+  entryValue: string = "";
+  fieldFormVarName: string;
   input_entryIndex = "";
   input_date: NgbDateStruct;
-  input_start_date: any;
-  input_end_date: any;
-  validator: any;
-  rows: any;
-  dateRange: any = {
-    "start": "",
-    "end": ""
-  };
-  dateOptions1: any = {};
-  dateOptions2: any = {};
-  dateOptions: any = {};
+  input_start_date: NgbDateStruct;
+  input_end_date: NgbDateStruct;
+  validator:string | RegExp;
+  rows: Step;
+  dateRange: { start: string, end: string } = {"start": "","end": ""};
+  dateOptions1: NgbDateStruct;
+  dateOptions2:NgbDateStruct;
+  dateOptions: {min_date:NgbDateStruct, max_date:NgbDateStruct}
 
   constructor(private fieldUtilitiesService: FieldUtilitiesService) {
   }
 
   clearDateRange() {
-    this.input_start_date = "";
-    this.input_end_date = "";
+    this.input_start_date = {year: 0, month: 0, day: 0 };
+    this.input_end_date = {year: 0, month: 0, day: 0 };
     this.dateRange = {
       "start": "",
       "end": ""

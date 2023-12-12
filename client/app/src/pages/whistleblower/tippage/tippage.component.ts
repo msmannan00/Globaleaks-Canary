@@ -19,7 +19,7 @@ export class TippageComponent {
   fileUploadUrl: string;
   tip_id = null;
   answers = {};
-  uploads: any={};
+  uploads: { [key: string]: any }={};
   score = 0;
   ctx: string;
   rows: Children[];

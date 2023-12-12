@@ -6,14 +6,15 @@ import {HttpService} from "@app/shared/services/http.service";
 import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
 import {Router} from "@angular/router";
 import {AppConfigService} from "@app/services/app-config.service";
+import { Context } from "@app/models/reciever/reciever-tip-data";
 
 @Injectable({
   providedIn: "root",
 })
 export class SubmissionService {
   _submission: any;
-  context: any;
-  receivers: any[] = [];
+  context: Context;
+  receivers: string[] = [];
   mandatory_receivers = 0;
   optional_receivers = 0;
   selected_receivers: any = {};
@@ -38,7 +39,7 @@ export class SubmissionService {
     this.selected_receivers = {};
     this.receivers = [];
 
-    this.context.receivers.forEach((receiver: any) => {
+    this.context.receivers.forEach((receiver: string) => {
       const r = this.appDataService.receivers_by_id[receiver];
 
       if (!r) {

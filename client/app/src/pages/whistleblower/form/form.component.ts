@@ -3,7 +3,6 @@ import {FieldUtilitiesService} from "@app/shared/services/field-utilities.servic
 import {ControlContainer, NgForm} from "@angular/forms";
 import { SubmissionService } from "@app/services/submission.service";
 import { Answers } from "@app/models/reciever/reciever-tip-data";
-import { WhistleblowerIdentity } from "@app/models/app/shared-public-model";
 import { Children, Step } from "@app/models/whistleblower/wb-tip-data";
 
 @Component({
@@ -15,7 +14,7 @@ export class FormComponent implements OnInit {
   @Input() step: Step;
   @Input() index: number;
   @Input() answers: Answers;
-  @Input() uploads: any;
+  @Input() uploads: { [key: string]: any };
   @Input() submission: SubmissionService;
   @Input() displayErrors: boolean;
   @Input() entry: string;
