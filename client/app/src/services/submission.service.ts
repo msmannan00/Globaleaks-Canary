@@ -102,11 +102,11 @@ export class SubmissionService {
     });
   }
 
-  setSharedData(data: any) {
+  setSharedData(data: Flow |null) {
     this.sharedData = data;
   }
 
-  getSharedData(): any {
+  getSharedData() {
     return this.sharedData;
   }
 
