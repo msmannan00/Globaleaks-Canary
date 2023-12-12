@@ -19,7 +19,7 @@ export class SubmissionErrorComponent {
   @Input() singleStepForm: boolean;
   @Input() context: Context;
   @Input() navigation: number;
-  @Input() uploads: number;
+  @Input() uploads: { [key: string]: any };
   @Input() submission: SubmissionService;
   @Input() stepForms: QueryList<NgForm>;
   @Input() field_id_map: { [key: string]: Field };

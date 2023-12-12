@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpService} from "@app/shared/services/http.service";
-import {WbTipData} from "@app/models/whistleblower/wb-tip-data";
+import {Receiver, WbTipData} from "@app/models/whistleblower/wb-tip-data";
 import {AppDataService} from "@app/app-data.service";
 
 @Injectable({
@@ -20,7 +20,7 @@ export class WbtipService {
     this.tip.msg_receiver_selected = null;
     this.tip.msg_receivers_selector = [];
 
-    this.tip.receivers.forEach((r: any) => {
+    this.tip.receivers.forEach((r: Receiver) => {
       const receiver = this.appDataService.receivers_by_id[r.id];
       if (receiver) {
         this.tip.msg_receivers_selector.push({

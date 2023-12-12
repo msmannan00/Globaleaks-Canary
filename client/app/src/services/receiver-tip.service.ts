@@ -25,7 +25,7 @@ export class ReceiverTipService {
   }
 
 
-  operation(url: string, operation: string, args: any) {
+  operation(url: string, operation: string, args: {key:string,value:boolean}) {
     return this.httpService.runOperation(url, operation, args, false).subscribe({});
   }
 

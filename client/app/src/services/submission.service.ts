@@ -12,15 +12,15 @@ import { Context } from "@app/models/reciever/reciever-tip-data";
   providedIn: "root",
 })
 export class SubmissionService {
-  _submission: any;
+  _submission: SubmissionResourceService;
   context: Context;
   receivers: string[] = [];
   mandatory_receivers = 0;
   optional_receivers = 0;
-  selected_receivers: any = {};
+  selected_receivers: { [key: string]: boolean } = {};
   blocked = false;
-  uploads: any = {};
-  private sharedData: any;
+  uploads: { [key: string]: any };
+  private sharedData: Flow|null;
 
   constructor(private appConfigService: AppConfigService, private router: Router, protected authenticationService: AuthenticationService, private serviceInstanceService: ServiceInstanceService, private httpService: HttpService, private appDataService: AppDataService, private submissionResourceService: SubmissionResourceService) {
   }

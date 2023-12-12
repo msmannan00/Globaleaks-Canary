@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {ErrorCodes} from "@app/models/app/error-code";
-import {Root} from "@app/models/app/public-model";
+import {LanguagesSupported, Root} from "@app/models/app/public-model";
 import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
@@ -20,11 +20,11 @@ export class AppDataService {
   projectTitle = "";
   header_title = "";
   page = "blank";
-  languages_enabled = new Map<number, any>();
+  languages_enabled = new Map<string, LanguagesSupported>();
   sidebar = "";
 
   privacy_badge_open: boolean;
-  languages_supported: Map<number, string>;
+  languages_supported: Map<string, LanguagesSupported>;
   connection: { tor: any };
   languages_enabled_selector: any[];
   ctx: string;

@@ -7,6 +7,7 @@ import {AppDataService} from "@app/app-data.service";
 import {ErrorCodes} from "@app/models/app/error-code";
 import {AppConfigService} from "@app/services/app-config.service";
 import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
+import { Session } from "@app/models/authentication/session";
 
 @Injectable({
   providedIn: "root"
@@ -52,7 +53,7 @@ export class AuthenticationService {
     this.loginRedirect();
   }
 
-  setSession(response: any) {
+  setSession(response: Session) {
     this.session = response;
     if (this.session.role !== "whistleblower") {
       const role = this.session.role === "receiver" ? "recipient" : this.session.role;
@@ -74,7 +75,7 @@ export class AuthenticationService {
     );
   }
 
-  login(tid?: any, username?: any, password?: any, authcode?: any, authtoken?: any, callback?: () => void) {
+  login(tid?: number, username?: string, password?: string|undefined, authcode?: string|null, authtoken?: string|null, callback?: () => void) {
 
     if (authtoken === undefined) {
       authtoken = "";
@@ -88,7 +89,7 @@ export class AuthenticationService {
       requestObservable = this.httpService.requestAuthTokenLogin(JSON.stringify({"authtoken": authtoken}));
     } else {
       if (username === "whistleblower") {
-        password = password.replace(/\D/g, "");
+        password = password?.replace(/\D/g, "");
         const authHeader = this.getHeader();
         requestObservable = this.httpService.requestWhistleBlowerLogin(JSON.stringify({"receipt": password}), authHeader);
       } else {
@@ -103,7 +104,7 @@ export class AuthenticationService {
 
     requestObservable.subscribe(
       {
-        next: (response: any) => {
+        next: (response) => {
           this.setSession(response);
 
           if ("redirect" in response) {
@@ -133,7 +134,7 @@ export class AuthenticationService {
             callback();
           }
         },
-        error: (error: any) => {
+        error: (error) => {
           this.loginInProgress = false;
           this.rootDataService.updateShowLoadingPanel(false);
           if (error.error && error.error.error_code) {

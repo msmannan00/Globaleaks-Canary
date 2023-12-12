@@ -36,7 +36,7 @@ export class SubmissionComponent {
   contextsOrderPredicate:string = this.appDataService.public.node.show_contexts_in_alphabetical_order ? "name" : "order";
   selectable_contexts: Context[];
   show_steps_navigation_bar = false;
-  receivedData: Flow;
+  receivedData: Flow|null;
 
   constructor(private appConfigService: AppConfigService, private whistleblowerLoginResolver: WhistleblowerLoginResolver, protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, public submissionService: SubmissionService) {
     this.selectable_contexts = [];

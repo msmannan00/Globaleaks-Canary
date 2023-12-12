@@ -7,7 +7,11 @@ export interface Session {
   properties: Properties;
   homepage: string;
   preferencespage: string;
+  receipt:any;
+  two_factor:boolean;
+  permissions:any;
 }
 
 export interface Properties {
+  management_session:any
 }
