@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, TemplateRef, ViewChild} from "@angular/core";
+import {ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AppConfigService} from "@app/services/app-config.service";
 import {TipService} from "@app/shared/services/tip-service";
@@ -28,7 +28,7 @@ import { Receiver } from "@app/models/app/public-model";
   selector: "src-tip",
   templateUrl: "./tip.component.html",
 })
-export class TipComponent implements AfterViewInit {
+export class TipComponent implements OnInit {
   @ViewChild("tab1") tab1!: TemplateRef<any>;
   @ViewChild("tab2") tab2!: TemplateRef<any>;
   @ViewChild("tab3") tab3!: TemplateRef<any>;
@@ -45,26 +45,9 @@ export class TipComponent implements AfterViewInit {
   constructor(private tipService: TipService, private appConfigServices: AppConfigService, private router: Router, private cdr: ChangeDetectorRef, private cryptoService: CryptoService, protected utils: UtilsService, protected preferencesService: PreferenceResolver, protected modalService: NgbModal, private activatedRoute: ActivatedRoute, protected httpService: HttpService, protected http: HttpClient, protected appDataService: AppDataService, protected RTipService: ReceiverTipService, protected fieldUtilities: FieldUtilitiesService, protected authenticationService: AuthenticationService) {
   }
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.active = "Everyone";
-      this.tabs = [
-        {
-          title: "Everyone",
-          component: this.tab1
-        },
-        {
-          title: "Recipients only",
-          component: this.tab2
-        },
-        {
-          title: "Only me",
-          component: this.tab3
-        },
-      ];
-      this.loadTipDate();
-      this.cdr.detectChanges();
-    });
+  ngOnInit() {
+    this.loadTipDate();
+    this.cdr.detectChanges();
   }
 
   loadTipDate() {
@@ -88,11 +71,30 @@ export class TipComponent implements AfterViewInit {
           this.showEditLabelInput = this.tip.label === "";
           this.preprocessTipAnswers(this.tip);
           this.tip.submissionStatusStr = this.utils.getSubmissionStatusText(this.tip.status,this.tip.substatus,this.appDataService.submissionStatuses);
+          this.initNavBar()
         }
       }
     );
   }
-
+  initNavBar(){
+    setTimeout(() => {
+      this.active = "Everyone";
+      this.tabs = [
+        {
+          title: "Everyone",
+          component: this.tab1
+        },
+        {
+          title: "Recipients only",
+          component: this.tab2
+        },
+        {
+          title: "Only me",
+          component: this.tab3
+        },
+      ];
+    });
+  }
   openGrantTipAccessModal(): void {
     this.utils.runUserOperation("get_users_names", {}, true).subscribe( {
       next: response => {
