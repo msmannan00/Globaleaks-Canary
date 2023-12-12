@@ -80,8 +80,6 @@ export class TipsComponent implements OnInit {
     this.filteredTips.forEach(tip => {
       this.selectedTips.push(tip.id);
     });
-    console.log(this.selectedTips,"this.selectedTips");
-    
   }
 
   deselectAll() {

@@ -118,7 +118,7 @@ export class PreferenceTab1Component implements OnInit {
             const modalRef = this.modalService.open(EncryptionRecoveryKeyComponent,{backdrop: 'static',keyboard: false});
             modalRef.componentInstance.erk = erk;
           },
-          error: (error: any) => {
+          error: (error) => {
             if (error.error["error_message"] === "Authentication Failed" || error.error["error_message"] === "Two Factor authentication required") {
               this.getEncryptionRecoveryKey(event);
             } else {

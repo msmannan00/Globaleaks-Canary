@@ -28,7 +28,7 @@ export class Enable2faComponent {
           this.preferenceResolver.dataModel.two_factor = true;
           this.activeModal.dismiss();
         },
-        error: (_: any) => {
+        error: _ => {
           this.utilsService.reloadCurrentRoute();
         }
       }
