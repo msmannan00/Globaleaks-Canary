@@ -32,7 +32,7 @@ export class PasswordChangeComponent {
           this.preferencesService.dataModel.password_change_needed = false;
           this.router.navigate([this.authenticationService.session.homepage]).then();
         },
-        error: (error: any) => {
+        error: (error) => {
           this.passwordStrengthScore = 0;
           this.rootDataService.errorCodes = new ErrorCodes(error.error.error_message, error.error.error_code, error.error.arguments);
           this.appDataService.updateShowLoadingPanel(false);

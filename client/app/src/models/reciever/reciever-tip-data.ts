@@ -1,4 +1,4 @@
-import {Step,TriggeredByOption,Children,RFile, WbFile, WhistleblowerIdentity} from "@app/models/app/shared-public-model";
+import {Step,TriggeredByOption,Children,RFile, WbFile, WhistleblowerIdentity,Comment} from "@app/models/app/shared-public-model";
 import {IarData} from "@app/models/reciever/Iar-data";
 
 export class RecieverTipData {

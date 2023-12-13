@@ -33,6 +33,7 @@ export interface Field {
   description: string;
   hint: string;
   placeholder: string;
+  enabled :boolean;
 }
 
 export class fieldtemplatesResolverModel {

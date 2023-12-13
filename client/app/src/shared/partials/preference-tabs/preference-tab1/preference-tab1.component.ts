@@ -86,7 +86,7 @@ export class PreferenceTab1Component implements OnInit {
                 this.preferenceResolver.dataModel.two_factor = !this.preferenceResolver.dataModel.two_factor;
                 this.utilsService.reloadCurrentRoute();
               },
-              error: (_: any) => {
+              error: _ => {
                 this.toggle2FA(event);
               }
             }
@@ -101,7 +101,7 @@ export class PreferenceTab1Component implements OnInit {
     return false;
   }
 
-  getEncryptionRecoveryKeyTrigger(result:any, event: Event){
+  getEncryptionRecoveryKeyTrigger(result:string, event: Event){
     const data = {
       "operation": "get_recovery_key",
       "args": {
@@ -173,7 +173,7 @@ export class PreferenceTab1Component implements OnInit {
     );
   };
 
-  loadPublicKeyFile(files: any) {
+  loadPublicKeyFile(files: FileList|null) {
     if (files && files.length > 0) {
       this.utilsService.readFileAsText(files[0])
         .then((txt: string) => {
