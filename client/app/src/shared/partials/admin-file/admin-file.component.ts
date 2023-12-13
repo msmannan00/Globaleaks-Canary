@@ -5,14 +5,15 @@ import {AuthenticationService} from "@app/services/authentication.service";
 import * as Flow from "@flowjs/flow.js";
 import {AppConfigService} from "@app/services/app-config.service";
 import {AppDataService} from "@app/app-data.service";
+import { AdminFile } from "@app/models/component-model/admin-file";
 
 @Component({
   selector: "src-admin-file",
   templateUrl: "./admin-file.component.html"
 })
 export class AdminFileComponent {
-  @Input() adminFile: any;
-  nodeData: any = [];
+  @Input() adminFile: AdminFile;
+  nodeData:{[key:string]:string[]|boolean};
   @ViewChild("uploader") uploaderElementRef!: ElementRef<HTMLInputElement>;
 
   constructor(protected node: NodeResolver, protected appConfigService: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService, protected authenticationService: AuthenticationService) {

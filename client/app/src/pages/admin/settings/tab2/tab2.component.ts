@@ -10,6 +10,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {Subscription} from "rxjs";
 import {AppConfigService} from "@app/services/app-config.service";
 import { preferenceResolverModel } from "@app/models/resolvers/preference-resolver-model";
+import { AdminFile } from "@app/models/component-model/admin-file";
 
 @Component({
   selector: "src-tab2",
@@ -27,7 +28,7 @@ export class Tab2Component implements OnInit {
   authenticationData: AuthenticationService;
   permissionStatus = false;
 
-  admin_files = [
+  admin_files:AdminFile[]= [
     {
       "title": "Favicon",
       "varname": "favicon",
