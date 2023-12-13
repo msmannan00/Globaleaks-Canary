@@ -2,14 +2,15 @@ import {HttpClient} from "@angular/common/http";
 import {Component, Input} from "@angular/core";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {UtilsService} from "@app/shared/services/utils.service";
+import { questionnaireResolverModel } from "@app/models/resolvers/questionnaire-model";
 
 @Component({
   selector: "src-questionnaire-duplication",
   templateUrl: "./questionnaire-duplication.component.html"
 })
 export class QuestionnaireDuplicationComponent {
-  @Input() questionnaire: any;
-  @Input() operation: any;
+  @Input() questionnaire: questionnaireResolverModel;
+  @Input() operation: string;
   duplicate_questionnaire: { name: string } = {name: ""};
 
   constructor(private utilsService: UtilsService, private http: HttpClient, private modalService: NgbModal) {

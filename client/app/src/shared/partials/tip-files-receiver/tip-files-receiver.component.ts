@@ -7,13 +7,14 @@ import {CryptoService} from "@app/crypto.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {FileViewComponent} from "@app/shared/modals/file-view/file-view.component";
 import {ReceiverTipService} from "@app/services/receiver-tip.service";
+import { WbFile } from "@app/models/app/shared-public-model";
 
 @Component({
   selector: "src-tip-files-receiver",
   templateUrl: "./tip-files-receiver.component.html"
 })
 export class TipFilesReceiverComponent implements OnInit {
-  @Input() fileUploadUrl: any;
+  @Input() fileUploadUrl: string;
   supportedViewTypes = ["application/pdf", "audio/mpeg", "image/gif", "image/jpeg", "image/png", "text/csv", "text/plain", "video/mp4"];
   collapsed = false;
 
@@ -23,7 +24,7 @@ export class TipFilesReceiverComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public viewRFile(file: any) {
+  public viewRFile(file: WbFile) {
     const modalRef = this.modalService.open(FileViewComponent,{backdrop: 'static',keyboard: false});
     modalRef.componentInstance.args = {
       file: file,
@@ -32,7 +33,7 @@ export class TipFilesReceiverComponent implements OnInit {
     };
   }
 
-  public downloadRFile(file: any) {
+  public downloadRFile(file: WbFile) {
     const param = JSON.stringify({});
     this.httpService.requestToken(param).subscribe
     (

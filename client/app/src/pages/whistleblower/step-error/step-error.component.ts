@@ -14,7 +14,7 @@ export class StepErrorComponent {
   @Input() stepForm: Function;
   @Input() submission: SubmissionService;
   @Input() stepForms: QueryList<NgForm>;
-  @Input() field_id_map: { [key: string]: Field };;
+  @Input() field_id_map: { [key: string]: Field };
   @Output() goToStep: EventEmitter<any> = new EventEmitter();
 
   getInnerGroupErrors(form: NgForm): string[] {

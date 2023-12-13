@@ -206,6 +206,7 @@ export interface Step3 {
   children: Children3[];
   label: string;
   description: string;
+  enabled:boolean;
 }
 
 export interface Children3 {

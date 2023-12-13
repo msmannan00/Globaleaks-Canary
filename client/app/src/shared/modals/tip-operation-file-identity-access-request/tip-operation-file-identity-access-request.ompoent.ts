@@ -10,7 +10,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
   templateUrl: "./tip-operation-file-identity-access-request.component.html"
 })
 export class TipOperationFileIdentityAccessRequestComponent {
-  request_motivation: any;
+  request_motivation: string;
   modal: NgbModalRef;
 
   constructor(private modalService: NgbModal, private tipsService: ReceiverTipService, private http: HttpClient, private utils: UtilsService) {
