@@ -36,7 +36,11 @@ export class Tab5Component {
       this.userData = [this.usersResolver.dataModel];
     }
     this.userData = this.userData.filter((user: { escrow: boolean; }) => user.escrow);
-    this.questionnaireData = this.questionnairesResolver.dataModel;
+    if (Array.isArray(this.questionnairesResolver.dataModel)) {
+      this.questionnaireData = this.questionnairesResolver.dataModel;
+    } else {
+      this.questionnaireData = [this.questionnairesResolver.dataModel];
+    }
   }
 
   enableEncryption() {

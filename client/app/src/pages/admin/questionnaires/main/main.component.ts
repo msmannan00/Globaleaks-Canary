@@ -27,7 +27,11 @@ export class MainComponent implements OnInit, OnDestroy {
     this.questionnaireService.getData().pipe(takeUntil(this.destroy$)).subscribe(() => {
       return this.getResolver();
     });
-    this.questionnairesData = this.questionnairesResolver.dataModel;
+    if (Array.isArray(this.questionnairesResolver.dataModel)) {
+      this.questionnairesData = this.questionnairesResolver.dataModel;
+    } else {
+      this.questionnairesData = [this.questionnairesResolver.dataModel];
+    }
     this.cdr.markForCheck();
   }
 

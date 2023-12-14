@@ -30,7 +30,11 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       this.getResolver();
       return this.getQuestionnairesResolver();
     });
-    this.questionnairesData = this.questionnairesResolver.dataModel;
+    if (Array.isArray(this.questionnairesResolver.dataModel)) {
+      this.questionnairesData = this.questionnairesResolver.dataModel;
+    } else {
+      this.questionnairesData = [this.questionnairesResolver.dataModel];
+    }
     if (Array.isArray(this.fieldTemplates.dataModel)) {
       this.fields = this.fieldTemplates.dataModel;
     } else {

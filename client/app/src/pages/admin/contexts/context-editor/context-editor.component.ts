@@ -36,7 +36,11 @@ export class ContextEditorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.questionnairesData = this.questionnairesResolver.dataModel;
+    if (Array.isArray(this.questionnairesResolver.dataModel)) {
+      this.questionnairesData = this.questionnairesResolver.dataModel;
+    } else {
+      this.questionnairesData = [this.questionnairesResolver.dataModel];
+    }
     if (Array.isArray(this.usersResolver.dataModel)) {
       this.usersData = this.usersResolver.dataModel;
     } else {
