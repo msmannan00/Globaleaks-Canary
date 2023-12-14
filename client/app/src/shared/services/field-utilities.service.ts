@@ -1,4 +1,6 @@
 import {Injectable} from "@angular/core";
+import { ParsedFields } from "@app/models/component-model/parsedFields";
+import { Step, questionnaireResolverModel } from "@app/models/resolvers/questionnaire-model";
 import { Children } from "@app/models/whistleblower/wb-tip-data";
 import {Constants} from "@app/shared/constants/constants";
 
@@ -10,21 +12,21 @@ export class FieldUtilitiesService {
   constructor() {
   }
 
-  parseQuestionnaire(questionnaire: any, parsedFields: any) {
+  parseQuestionnaire(questionnaire: questionnaireResolverModel, parsedFields: any) {
     const self = this;
 
-    questionnaire.steps.forEach(function (step: any) {
+    questionnaire.steps.forEach(function (step: Step) {
       parsedFields = self.parseFields(step.children, parsedFields);
     });
 
     return parsedFields;
   }
 
-  underscore(s: any) {
+  underscore(s: string) {
     return s.replace(new RegExp("-", "g"), "_");
   }
 
-  fieldFormName(id: any) {
+  fieldFormName(id: string) {
     return "fieldForm_" + this.underscore(id);
   }
 

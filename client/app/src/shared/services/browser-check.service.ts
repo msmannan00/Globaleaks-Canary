@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class BrowserCheckService {
-  private supportedBrowsers:any = {
+  private supportedBrowsers:{ [key: string]: number } = {
     Firefox: 38,
     Chrome: 45,
     Brave: 1.20,
