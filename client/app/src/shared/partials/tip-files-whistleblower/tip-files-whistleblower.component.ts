@@ -5,19 +5,20 @@ import {HttpService} from "@app/shared/services/http.service";
 import {AppDataService} from "@app/app-data.service";
 import {CryptoService} from "@app/crypto.service";
 import {AuthenticationService} from "@app/services/authentication.service";
+import { WbFile } from "@app/models/app/shared-public-model";
 
 @Component({
   selector: "src-tip-files-whistleblower",
   templateUrl: "./tip-files-whistleblower.component.html"
 })
 export class TipFilesWhistleblowerComponent {
-  @Input() fileUploadUrl: any;
+  @Input() fileUploadUrl: string;
   collapsed = false;
 
   constructor(private appDataService: AppDataService, private cryptoService: CryptoService, private httpService: HttpService, protected authenticationService: AuthenticationService, protected utilsService: UtilsService, protected wbTipService: WbtipService) {
   }
 
-  downloadWBFile(wbFile: any) {
+  downloadWBFile(wbFile: WbFile) {
 
     const param = JSON.stringify({});
     this.httpService.requestToken(param).subscribe

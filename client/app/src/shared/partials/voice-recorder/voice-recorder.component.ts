@@ -10,11 +10,11 @@ import { SubmissionService } from "@app/services/submission.service";
 export class VoiceRecorderComponent implements OnInit {
   @Input() uploads: any;
   @Input() field: any;
-  @Input() fileUploadUrl: any;
-  @Input() entryIndex: any;
-  @Input() fieldEntry: any;
-  _fakeModel: any;
-  fileInput: any;
+  @Input() fileUploadUrl: string;
+  @Input() entryIndex: number;
+  @Input() fieldEntry: string;
+  _fakeModel: File;
+  fileInput: string;
   seconds: number = 0;
   activeButton: string | null = null;
   isRecording: boolean = false;
@@ -25,7 +25,7 @@ export class VoiceRecorderComponent implements OnInit {
   recorder: MediaRecorder = new MediaRecorder(this.mediaStreamDestination.stream);
   recording_blob: any = null;
   flow: Flow;
-  secondsTracker: any = null;
+  secondsTracker: NodeJS.Timer|null = null;
   startTime: number;
   stopButton: boolean;
   recordButton: boolean;
@@ -85,7 +85,9 @@ export class VoiceRecorderComponent implements OnInit {
       this.seconds += 1;
       if (this.seconds > parseInt(this.field.attrs.max_len.value)) {
         this.isRecording = false;
-        clearInterval(this.secondsTracker);
+        if(this.secondsTracker){
+          clearInterval(this.secondsTracker);
+          }
         this.secondsTracker = null;
         this.stopRecording();
       }
@@ -134,7 +136,9 @@ export class VoiceRecorderComponent implements OnInit {
     this.recordButton = false;
     this.stopButton = true;
     this.activeButton = null;
+    if(this.secondsTracker){
     clearInterval(this.secondsTracker);
+    }
     this.secondsTracker = null;
 
     if (this.seconds < this.field.attrs.min_len.value) {
@@ -220,7 +224,7 @@ export class VoiceRecorderComponent implements OnInit {
     return rectifierCurve;
   }
 
-  public anonymizeSpeaker(audioContext: any): any {
+  public anonymizeSpeaker(audioContext: AudioContext) {
     const input: GainNode = audioContext.createGain();
     const output: GainNode = audioContext.createGain();
     input.gain.value = output.gain.value = 1;

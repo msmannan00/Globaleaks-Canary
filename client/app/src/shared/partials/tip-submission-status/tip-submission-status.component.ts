@@ -26,7 +26,7 @@ export class TipSubmissionStatusComponent implements OnInit{
         this.tipStatus = this.tipService.tip.status;
       }
 
-      if(this.appDataService.submission_statuses_by_id[this.tipService.tip.status.toLowerCase()] && this.appDataService.submission_statuses_by_id[this.tipService.tip.status.toLowerCase()].substatuses.find((item: { id: any; }) => item.id === this.tipService.tip.substatus)){
+      if(this.appDataService.submission_statuses_by_id[this.tipService.tip.status.toLowerCase()] && this.appDataService.submission_statuses_by_id[this.tipService.tip.status.toLowerCase()].substatuses.find((item: { id: string; }) => item.id === this.tipService.tip.substatus)){
         this.tipSubStatus = this.tipService.tip.substatus;
       }
     }else {

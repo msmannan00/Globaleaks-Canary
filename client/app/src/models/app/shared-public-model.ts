@@ -154,6 +154,8 @@ export interface RFile {
   description: string;
   visibility: string;
   error: boolean;
+  author:string;
+  downloads:number;
 }
 
 export interface QuestionWhistleblowerIdentityName {

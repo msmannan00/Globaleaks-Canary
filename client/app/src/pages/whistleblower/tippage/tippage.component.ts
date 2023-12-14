@@ -143,7 +143,7 @@ export class TippageComponent {
     return (100 - (progress / totalFiles) * 100);
   }
 
-  provideIdentityInformation(_: { param1: string, param2: number }) {
+  provideIdentityInformation(_: { param1: string, param2: Answers }) {
     const intervalId = setInterval(() => {
       if (this.uploads) {
         for (const key in this.uploads) {

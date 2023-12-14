@@ -4,6 +4,8 @@ import {AppDataService} from "@app/app-data.service";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {AppConfigService} from "@app/services/app-config.service";
 import * as Flow from "@flowjs/flow.js";
+import { RecieverTipData } from "@app/models/reciever/reciever-tip-data";
+import { FlowFile } from "@flowjs/flow.js";
 
 @Component({
   selector: "src-tip-upload-wbfile",
@@ -11,14 +13,14 @@ import * as Flow from "@flowjs/flow.js";
 })
 export class TipUploadWbFileComponent {
   @ViewChild("uploader") uploaderElementRef!: ElementRef<HTMLInputElement>;
-  @Input() tip: any = {};
-  @Input() key: any;
+  @Input() tip: RecieverTipData;
+  @Input() key: string;
   @Output() dataToParent = new EventEmitter<string>();
   collapsed = false;
   file_upload_description: string = "";
-  fileInput: any = "fileinput";
+  fileInput: string = "fileinput";
   showError: boolean = false;
-  errorFile: any;
+  errorFile: FlowFile|null;
 
   constructor(private cdr: ChangeDetectorRef, private appConfigService: AppConfigService, private authenticationService: AuthenticationService, protected utilsService: UtilsService, protected appDataService: AppDataService) {
 
@@ -55,7 +57,7 @@ export class TipUploadWbFileComponent {
       this.utilsService.onFlowUpload(flowJsInstance, file);
     }
   }
-  listenToWbfiles(files:any){
+  listenToWbfiles(files:string){
     this.utilsService.deleteResource(this.tip.rfiles, files);
     this.dataToParent.emit()
   }
