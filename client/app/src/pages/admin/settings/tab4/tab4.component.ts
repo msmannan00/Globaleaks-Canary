@@ -65,7 +65,7 @@ export class Tab4Component {
     return Object.keys(this.custom_texts).map(key => ({key}));
   }
 
-  updateCustomText(data: {[key: string]: string;}, lang: string) {
+  updateCustomText(data: {[key: string]: string}, lang: string) {
     this.utilsService.updateAdminL10NResource(data, lang).subscribe(_ => {
     });
   }

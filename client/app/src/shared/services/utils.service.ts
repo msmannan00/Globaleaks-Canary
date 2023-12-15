@@ -19,6 +19,13 @@ import {ServiceInstanceService} from "@app/shared/services/service-instance.serv
 import {ClipboardService} from "ngx-clipboard";
 import {AppConfigService} from "@app/services/app-config.service";
 import {DOCUMENT} from "@angular/common";
+import { TlsConfig } from "@app/models/component-model/tls-confiq";
+import { nodeResolverModel } from "@app/models/resolvers/node-resolver-model";
+import { NewUser } from "@app/models/admin/new-user";
+import { userResolverModel } from "@app/models/resolvers/user-resolver-model";
+import { NewContext } from "@app/models/admin/new-context";
+import { contextResolverModel } from "@app/models/resolvers/context-resolver-model";
+import { notificationResolverModel } from "@app/models/resolvers/notification-resolver-model";
 
 @Injectable({
   providedIn: "root"
@@ -200,7 +207,7 @@ export class UtilsService {
     }).subscribe();
   }
 
-  toggleCfg(tlsConfig:any, dataToParent:any) {
+  toggleCfg(tlsConfig:TlsConfig, dataToParent:any) {
     if (tlsConfig.enabled) {
       const authHeader = this.authenticationService.getHeader();
       this.httpService.disableTLSConfig(tlsConfig, authHeader).subscribe(() => {
@@ -461,19 +468,19 @@ export class UtilsService {
     return date;
   }
 
-  update(node: any) {
+  update(node: nodeResolverModel) {
     return this.httpService.requestUpdateAdminNodeResource(node);
   }
 
-  AdminL10NResource(lang: any) {
+  AdminL10NResource(lang: string) {
     return this.httpService.requestAdminL10NResource(lang);
   }
 
-  updateAdminL10NResource(data: any, lang: any) {
+  updateAdminL10NResource(data: {[key: string]: string}, lang: string) {
     return this.httpService.requestUpdateAdminL10NResource(data, lang);
   }
 
-  DefaultL10NResource(lang: any) {
+  DefaultL10NResource(lang: string) {
     return this.httpService.requestDefaultL10NResource(lang);
   }
 
@@ -597,23 +604,23 @@ export class UtilsService {
     return this.httpService.requestDeleteStatus(url);
   }
 
-  addAdminUser(user: any) {
+  addAdminUser(user: NewUser) {
     return this.httpService.requestAddAdminUser(user);
   }
 
-  updateAdminUser(id: any, user: any) {
+  updateAdminUser(id: string, user: userResolverModel) {
     return this.httpService.requestUpdateAdminUser(id, user);
   }
 
-  addAdminContext(context: any) {
+  addAdminContext(context: NewContext) {
     return this.httpService.requestAddAdminContext(context);
   }
 
-  updateAdminContext(context: any, id: any) {
+  updateAdminContext(context: contextResolverModel, id: string) {
     return this.httpService.requestUpdateAdminContext(context, id);
   }
 
-  updateAdminNotification(notification: any) {
+  updateAdminNotification(notification: notificationResolverModel) {
     return this.httpService.requestUpdateAdminNotification(notification);
   }
 
