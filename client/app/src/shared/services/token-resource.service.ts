@@ -8,15 +8,11 @@ import {ServiceInstanceService} from "@app/shared/services/service-instance.serv
 export class TokenResource {
 
   private baseUrl = "api/token/:id";
-  deferred: Promise<any>;
-  data: any;
-  counter: number = 0;
-  resolver: any;
 
   constructor(private http: HttpClient, private serviceInstanceService: ServiceInstanceService) {
   }
 
-  getToken(id: any) {
+  getToken(id: string) {
     this.http.post<any>(this.baseUrl.replace(":id", id), {}).subscribe();
   }
 

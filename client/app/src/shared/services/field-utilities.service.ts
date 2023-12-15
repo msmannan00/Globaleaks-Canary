@@ -15,7 +15,7 @@ export class FieldUtilitiesService {
   constructor() {
   }
 
-  parseQuestionnaire(questionnaire: questionnaireResolverModel, parsedFields: ParsedFields) {
+  parseQuestionnaire(questionnaire: any, parsedFields: ParsedFields) {
     const self = this;
 
     questionnaire.steps.forEach(function (step: Step) {

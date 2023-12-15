@@ -79,7 +79,7 @@ export class UtilsService {
     return ret;
   }
 
-  async load(url: any): Promise<string> {
+  async load(url: string): Promise<string> {
     const token = await this.tokenResourceService.getWithProofOfWork();
     return url + "?token=" + token.id + ":" + token.answer;
   }
@@ -518,13 +518,13 @@ export class UtilsService {
           const headers = new HttpHeaders({"X-Confirmation": this.encodeString(secret)});
 
           this.http.put(api, {"operation": operation, "args": args}, {headers}).subscribe(  {
-              next: (response: any) => {
+              next: (response) => {
                 if (refresh) {
                   this.reloadComponent();
                 }
                 observer.next(response)
               },
-              error: (error: any) => {
+              error: (error) => {
                 observer.error(error);
               }
             }
@@ -533,7 +533,7 @@ export class UtilsService {
       });
     } else {
       return this.http.put(api, {"operation": operation, "args": args}).pipe(
-        map((response: any) => {
+        map((response) => {
           if (refresh) {
             this.reloadComponent();
           }
@@ -574,7 +574,7 @@ export class UtilsService {
     return this.runAdminOperation("reset_submissions", {}, true).subscribe({
       next: (_) => {
       },
-      error: (_: any) => {
+      error: (_) => {
         this.openPasswordConfirmableDialog(arg, scope)
       }
     });
@@ -588,15 +588,15 @@ export class UtilsService {
     return this.http.delete<void>(url);
   }
 
-  deleteAdminUser(user_id: any) {
+  deleteAdminUser(user_id: string) {
     return this.httpService.requestDeleteAdminUser(user_id);
   }
 
-  deleteAdminContext(user_id: any) {
+  deleteAdminContext(user_id: string) {
     return this.httpService.requestDeleteAdminContext(user_id);
   }
 
-  deleteStatus(url: any) {
+  deleteStatus(url: string) {
     return this.httpService.requestDeleteStatus(url);
   }
 
