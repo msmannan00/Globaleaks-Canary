@@ -33,7 +33,7 @@ export class StepsListComponent {
   }
 
   ngOnInit(): void {
-    this.parsedFields = this.fieldUtilities.parseQuestionnaire(this.questionnaire, {});
+    this.parsedFields = this.fieldUtilities.parseQuestionnaire(this.questionnaire,{fields: [], fields_by_id: {}, options_by_id: {}});
   }
 
   swap($event:Event, index: number, n: number): void {

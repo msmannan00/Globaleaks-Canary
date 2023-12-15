@@ -108,7 +108,7 @@ export class AppConfigService {
         this.appDataService.submission_statuses_by_id = this.utilsService.array_to_map(this.appDataService.public.submission_statuses);
 
         for (const [key] of Object.entries(this.appDataService.questionnaires_by_id)) {
-          this.fieldUtilitiesService.parseQuestionnaire(this.appDataService.questionnaires_by_id[key], {});
+          this.fieldUtilitiesService.parseQuestionnaire(this.appDataService.questionnaires_by_id[key],{fields: [], fields_by_id: {}, options_by_id: {}});
           this.appDataService.questionnaires_by_id[key].steps = this.appDataService.questionnaires_by_id[key].steps.sort((a: { order: number; }, b: { order: number; }) => a.order > b.order);
         }
 

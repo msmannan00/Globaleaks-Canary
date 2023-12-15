@@ -35,6 +35,7 @@ export interface Children {
   description: string;
   hint: string;
   placeholder: string;
+  enabled:boolean;
 }
 
 export interface Attrs {

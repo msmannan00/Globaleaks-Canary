@@ -9,7 +9,7 @@
     <div class="card-body" *ngIf="!collapsed">
         <div *ngFor="let rfile of tip.rfiles | filter : 'visibility' : key | orderBy: 'creation_date' as index">
             <div id="wbfile-{{index}}" data-wbfile data-ctx="'rtip'">
-                <src-wbfiles [ctx]="'rtip'" (dataToParent)="listenToWbfiles($event)" [receivers_by_id]="''" [wbFile]="rfile"></src-wbfiles>
+                <src-wbfiles [ctx]="'rtip'" (dataToParent)="listenToWbfiles($event)" [receivers_by_id]="{}" [wbFile]="rfile"></src-wbfiles>
             </div>
         </div>
         <div *ngIf="tip.status !== 'closed'">
@@ -32,9 +32,9 @@
                     <br>
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <div>
-                            <span>{{'File size not accepted.' | translate}}</span> {{errorFile.flowFile.name}} {{'Maximum file size is:' | translate}} {{appDataService.public.node.maximum_filesize}} MB
+                            <span>{{'File size not accepted.' | translate}}</span> {{errorFile?.name}} {{'Maximum file size is:' | translate}} {{appDataService.public.node.maximum_filesize}} MB
                         </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="dismissError();errorFile.flowFile.cancel(); showError=false"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="dismissError();errorFile?.cancel(); showError=false"></button>
                     </div>
                 </div>
             </div>

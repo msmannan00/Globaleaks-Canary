@@ -13,7 +13,7 @@ import { AdminFile } from "@app/models/component-model/admin-file";
 })
 export class AdminFileComponent {
   @Input() adminFile: AdminFile;
-  nodeData:{[key:string]:string[]|boolean};
+  nodeData:{[key:string]:string[]|boolean}={};
   @ViewChild("uploader") uploaderElementRef!: ElementRef<HTMLInputElement>;
 
   constructor(protected node: NodeResolver, protected appConfigService: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService, protected authenticationService: AuthenticationService) {

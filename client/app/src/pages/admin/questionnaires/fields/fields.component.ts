@@ -62,7 +62,7 @@ export class FieldsComponent implements OnInit {
     this.fieldIsMarkableSubjectToPreview = this.isMarkableSubjectToPreview(this.field);
     this.instance = this.questionnaireService.sharedData;
     if(this.instance === "template"){
-      this.parsedFields = this.fieldUtilities.parseFields(this.fieldTemplates.dataModel, {});
+      this.parsedFields = this.fieldUtilities.parseFields(this.fieldTemplates.dataModel,{fields: [], fields_by_id: {}, options_by_id: {}});
     }
     this.children = this.field.children;
   }

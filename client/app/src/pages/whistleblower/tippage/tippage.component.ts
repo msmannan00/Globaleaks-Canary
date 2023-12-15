@@ -62,7 +62,7 @@ export class TippageComponent {
     }
   }
 
-  filterNotTriggeredField(parent: Children, field: Children, answers: Answers | WhistleblowerIdentity) {
+  filterNotTriggeredField(parent: any, field: any, answers: Answers | WhistleblowerIdentity) {
     let i;
     if (this.fieldUtilities.isFieldTriggered(parent, field, answers, this.score)) {
       for (i = 0; i < field.children.length; i++) {
@@ -76,7 +76,7 @@ export class TippageComponent {
 
     for (let x = tip.questionnaires.length - 1; x >= 0; x--) {
       this.questionnaire = tip.questionnaires[x];
-      this.fieldUtilities.parseQuestionnaire(this.questionnaire, {});
+      this.fieldUtilities.parseQuestionnaire(this.questionnaire,{fields: [], fields_by_id: {}, options_by_id: {}});
 
       for (i = 0; i < this.questionnaire.steps.length; i++) {
         step = this.questionnaire.steps[i];
