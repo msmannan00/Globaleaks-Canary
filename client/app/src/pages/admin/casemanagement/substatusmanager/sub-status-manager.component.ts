@@ -46,7 +46,7 @@ export class SubStatusManagerComponent {
     this.swap(e, idx, 1);
   }
 
-  ssIdx(ssID:Event): number | undefined {
+  ssIdx(ssID:string): number | undefined {
     for (let i = 0; i < this.appDataServices.submissionStatuses.length; i++) {
       const status = this.appDataServices.submissionStatuses[i];
       if (status.id === ssID) {

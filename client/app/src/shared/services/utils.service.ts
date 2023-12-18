@@ -30,6 +30,7 @@ import { questionnaireResolverModel } from "@app/models/resolvers/questionnaire-
 import { Field } from "@app/models/resolvers/field-template-model";
 import { rtipResolverModel } from "@app/models/resolvers/rtips-resolver-model";
 import { Option } from "@app/models/whistleblower/wb-tip-data";
+import { Status } from "@app/models/app/public-model";
 
 @Injectable({
   providedIn: "root"
@@ -316,7 +317,7 @@ export class UtilsService {
     window.open('https://'+ window.location.hostname, '_blank');
   }
 
-  getSubmissionStatusText(status: string,substatus:string, submission_statuses: any) {
+  getSubmissionStatusText(status: string,substatus:string, submission_statuses: Status[]) {
     let text;
     for (let i = 0; i < submission_statuses.length; i++) {
       if (submission_statuses[i].id === status) {
@@ -333,7 +334,7 @@ export class UtilsService {
         break;
       }
     }
-    return text;
+    return text?text:"";
   }
 
   isNever(time: string) {
