@@ -7,10 +7,9 @@ import {UtilsService} from "@app/shared/services/utils.service";
 })
 export class CryptoService {
 
-  deferred: Promise<any>;
-  data: any;
+  deferred: Promise<number>;
+  data: string;
   counter: number = 0;
-  resolver: any;
 
   constructor(private utilsService: UtilsService) {
   }
@@ -25,7 +24,7 @@ export class CryptoService {
     return window.crypto.subtle;
   };
 
-  calculateHash(hash: any, resolve: any) {
+  calculateHash(hash: any, resolve: (result: number) => void) {
     hash = new Uint8Array(hash);
     if (hash[31] === 0) {
       resolve(this.counter);
@@ -35,7 +34,7 @@ export class CryptoService {
     }
   };
 
-  work(resolve: any) {
+  work(resolve: (result: number) => void) {
     const webCrypto = this.getWebCrypto();
     const toHash = this.utilsService.str2Uint8Array(this.data + this.counter);
     let digestPremise;
@@ -65,7 +64,7 @@ export class CryptoService {
     return digestPremise;
   }
 
-  proofOfWork(data: any): Promise<any> {
+  proofOfWork(data: string): Promise<number> {
 
     this.deferred = new Promise((resolve, _) => {
       this.data = data;
