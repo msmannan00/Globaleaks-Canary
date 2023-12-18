@@ -1,4 +1,4 @@
-import {Inject, Injectable, Renderer2} from "@angular/core";
+import {EventEmitter, Inject, Injectable, Renderer2} from "@angular/core";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {AppDataService} from "@app/app-data.service";
 import * as Flow from "@flowjs/flow.js";
@@ -26,6 +26,10 @@ import { userResolverModel } from "@app/models/resolvers/user-resolver-model";
 import { NewContext } from "@app/models/admin/new-context";
 import { contextResolverModel } from "@app/models/resolvers/context-resolver-model";
 import { notificationResolverModel } from "@app/models/resolvers/notification-resolver-model";
+import { questionnaireResolverModel } from "@app/models/resolvers/questionnaire-model";
+import { Field } from "@app/models/resolvers/field-template-model";
+import { rtipResolverModel } from "@app/models/resolvers/rtips-resolver-model";
+import { Option } from "@app/models/whistleblower/wb-tip-data";
 
 @Injectable({
   providedIn: "root"
@@ -101,7 +105,7 @@ export class UtilsService {
     return false;
   }
 
-  removeBootstrap(renderer: Renderer2, document:any, link:string){
+  removeBootstrap(renderer: Renderer2, document:Document, link:string){
     let defaultBootstrapLink = document.head.querySelector(`link[href="${link}"]`);
     if (defaultBootstrapLink) {
       renderer.removeChild(document.head, defaultBootstrapLink);
@@ -175,7 +179,7 @@ export class UtilsService {
         this.router.navigate([this.router.url]).then();
       });
   }
-  onFlowUpload(flowJsInstance:Flow, file:any){
+  onFlowUpload(flowJsInstance:Flow, file:File){
     const fileNameParts = file.name.split(".");
     const fileExtension = fileNameParts.pop();
     const fileNameWithoutExtension = fileNameParts.join(".");
@@ -187,7 +191,7 @@ export class UtilsService {
     flowJsInstance.upload();
   }
 
-  swap($event: any, index: number, n: number, questionnaire:any): void {
+  swap($event: Event, index: number, n: number, questionnaire:questionnaireResolverModel): void {
     $event.stopPropagation();
 
     const target = index + n;
@@ -201,13 +205,13 @@ export class UtilsService {
     this.http.put("api/admin/steps", {
       operation: "order_elements",
       args: {
-        ids: questionnaire.steps.map((c: { id: any; }) => c.id),
+        ids: questionnaire.steps.map((c: { id: string; }) => c.id),
         questionnaire_id: questionnaire.id
       },
     }).subscribe();
   }
 
-  toggleCfg(tlsConfig:TlsConfig, dataToParent:any) {
+  toggleCfg(tlsConfig:TlsConfig, dataToParent:EventEmitter<string>) {
     if (tlsConfig.enabled) {
       const authHeader = this.authenticationService.getHeader();
       this.httpService.disableTLSConfig(tlsConfig, authHeader).subscribe(() => {
@@ -312,7 +316,7 @@ export class UtilsService {
     window.open('https://'+ window.location.hostname, '_blank');
   }
 
-  getSubmissionStatusText(status: any,substatus:any, submission_statuses: any) {
+  getSubmissionStatusText(status: string,substatus:string, submission_statuses: any) {
     let text;
     for (let i = 0; i < submission_statuses.length; i++) {
       if (submission_statuses[i].id === status) {
@@ -337,7 +341,7 @@ export class UtilsService {
     return date.getTime() === 32503680000000;
   }
 
-  deleteFromList(list: any, elem: any) {
+  deleteFromList(list:  { [key: string]: Field}[], elem: { [key: string]: Field}) {
     const idx = list.indexOf(elem);
     if (idx !== -1) {
       list.splice(idx, 1);
@@ -355,7 +359,7 @@ export class UtilsService {
     return content_types.indexOf(content_type) > -1;
   }
 
-  submitSupportRequest(arg: any) {
+  submitSupportRequest(arg: {mail_address: string,text: string} ) {
     const param = JSON.stringify({
       "mail_address": arg.mail_address,
       "text": arg.text,
@@ -368,7 +372,7 @@ export class UtilsService {
     return this.httpService.runOperation("api/user/operations", operation, args, refresh);
   }
 
-  runRecipientOperation(operation: string, args: any, refresh: boolean) {
+  runRecipientOperation(operation: string, args: {rtips:string[], receiver?: {id: number}}, refresh: boolean) {
     return this.httpService.runOperation("api/recipient/operations", operation, args, refresh);
   }
 
@@ -388,7 +392,7 @@ export class UtilsService {
     }
   }
 
-  getStaticFilter(data: any[], model: any[], key: string): any[] {
+  getStaticFilter(data: any[], model:{id: number;label: string;}[], key: string): any[] {
     if (model.length === 0) {
       return data;
     } else {
@@ -415,8 +419,8 @@ export class UtilsService {
     }
   }
 
-  getDateFilter(Tips: any[], report_date_filter:[number, number] | null, update_date_filter: [number, number] | null, expiry_date_filter: [number, number] | null): any[] {
-    const filteredTips: any[] = [];
+  getDateFilter(Tips: rtipResolverModel[], report_date_filter:[number, number] | null, update_date_filter: [number, number] | null, expiry_date_filter: [number, number] | null): rtipResolverModel[] {
+    const filteredTips: rtipResolverModel[] = [];
     Tips.forEach(rows => {
       const m_row_rdate = new Date(rows.last_access).getTime();
       const m_row_udate = new Date(rows.update_date).getTime();
@@ -461,7 +465,7 @@ export class UtilsService {
     );
   }
 
-  getPostponeDate(ttl: any): Date {
+  getPostponeDate(ttl: number): Date {
     const date = new Date();
     date.setDate(date.getDate() + ttl + 1);
     date.setUTCHours(0, 0, 0, 0);
@@ -484,7 +488,7 @@ export class UtilsService {
     return this.httpService.requestDefaultL10NResource(lang);
   }
 
-  runAdminOperation(operation: any, args: any, refresh: any) {
+  runAdminOperation(operation: string, args: {value: string}|{}, refresh: boolean) {
     return this.runOperation("api/admin/config", operation, args, refresh);
   }
 
@@ -493,7 +497,7 @@ export class UtilsService {
   }
 
 
-  runOperation(api: string, operation: string, args?: any, refresh?: boolean): Observable<any> {
+  runOperation(api: string, operation: string, args?: {value: string}|{}, refresh?: boolean): Observable<any> {
     const requireConfirmation = [
       "enable_encryption",
       "disable_2fa",
@@ -557,7 +561,7 @@ export class UtilsService {
     });
   }
 
-  openConfirmableModalDialogReport(arg: any, scope: any): Observable<string> {
+  openConfirmableModalDialogReport(arg: string, scope: any): Observable<string> {
     scope = !scope ? this : scope;
     return new Observable((observer) => {
       let modalRef = this.modalService.open(DeleteConfirmationComponent,{backdrop: 'static',keyboard: false});
@@ -570,7 +574,7 @@ export class UtilsService {
     });
   }
 
-  openPasswordConfirmableDialog(arg: any, scope: any){
+  openPasswordConfirmableDialog(arg: string, scope: any){
     return this.runAdminOperation("reset_submissions", {}, true).subscribe({
       next: (_) => {
       },
@@ -660,31 +664,27 @@ export class UtilsService {
     elem[this.getXOrderProperty(elem)] += 1;
   }
 
-  getXOrderProperty(_: any): string {
+  getXOrderProperty(_: Option[]): string {
     return "x";
   }
 
-  getYOrderProperty(elem: any): string {
-    let key = "order";
-    if (typeof elem[key] === "undefined") {
-      key = "y";
-    }
-    return key;
+  getYOrderProperty(elem: Option): keyof Option {
+    return ("order" in elem ? "order" : "y") as keyof Option;
   }
 
-  assignUniqueOrderIndex(elements: any[]): void {
+  assignUniqueOrderIndex(elements: Option[]): void {
     if (elements.length <= 0) {
-      return;
+        return;
     }
 
-    const key = this.getYOrderProperty(elements[0]);
+    const key: keyof Option = this.getYOrderProperty(elements[0]) as keyof Option;
     if (elements.length) {
-      let i = 0;
-      elements = elements.sort((a, b) => a[key] - b[key]);
-      elements.forEach((element) => {
-        element[key] = i;
-        i += 1;
-      });
+        let i = 0;
+        elements = elements.sort((a, b) => (a[key] as number) - (b[key] as number));
+        elements.forEach((element) => {
+            (element[key] as number) = i;
+            i += 1;
+        });
     }
   }
 

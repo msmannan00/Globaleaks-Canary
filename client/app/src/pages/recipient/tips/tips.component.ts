@@ -32,11 +32,11 @@ export class TipsComponent implements OnInit {
   reportDateModel: {fromDate: NgbDate | null;toDate: NgbDate | null; } | null = null;
   updateDateModel: {fromDate: NgbDate | null;toDate: NgbDate | null; } | null = null;
   expiryDateModel: {fromDate: NgbDate | null;toDate: NgbDate | null; } | null = null;
-  dropdownStatusModel: string[] = [];
+  dropdownStatusModel: {id: number;label: string;}[]= [];
   dropdownStatusData:{id: number;label: string;}[] = [];
-  dropdownContextModel: string[] = [];
+  dropdownContextModel:{id: number;label: string;}[] = [];
   dropdownContextData: {id: number;label: string;}[] = [];
-  dropdownScoreModel: string[] = [];
+  dropdownScoreModel:{id: number;label: string;}[]= [];
   dropdownScoreData: {id: number;label: string;}[] = [];
   sortKey: string = "creation_date";
   sortReverse: boolean = true;
@@ -212,7 +212,7 @@ export class TipsComponent implements OnInit {
     }
   }
 
-  onChanged(model: string[], type: string) {
+  onChanged(model: {id: number;label: string;}[], type: string) {
     this.processTips();
     if (model.length > 0 && type === "Score") {
       this.dropdownContextModel = [];
@@ -232,7 +232,7 @@ export class TipsComponent implements OnInit {
     this.applyFilter();
   }
 
-  checkFilter(filter: string[]) {
+  checkFilter(filter: {id: number;label: string;}[]) {
     return filter.length > 0;
   };
 

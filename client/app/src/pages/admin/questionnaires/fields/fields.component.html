@@ -181,7 +181,7 @@
                                 <option value="custom">{{ 'Custom' | translate }}</option>
                             </select>
                         </div>
-                        <div class="form-group" *ngIf="field.attrs.input_validation.value === custom">
+                        <div class="form-group" *ngIf="field.attrs.input_validation?.value === custom">
                             <label>{{ 'Regular expression' | translate }}</label>
                             <input [(ngModel)]="field.attrs.regexp.value" type="text" class="form-control" [disabled]="!field.editable" />
                         </div>
