@@ -6,7 +6,6 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {AppConfigService} from "@app/services/app-config.service";
 import {TranslationService} from "@app/services/translation.service";
 import {AppDataService} from "@app/app-data.service";
-import {NgSelectComponent} from "@ng-select/ng-select";
 import { LanguagesSupported } from "@app/models/app/public-model";
 
 @Component({
@@ -15,10 +14,9 @@ import { LanguagesSupported } from "@app/models/app/public-model";
 })
 export class Tab3Component implements OnInit {
   @Input() contentForm: NgForm;
-  @ViewChild("langSelect") langSelect: NgSelectComponent;
 
   showLangSelect = false;
-  selected = {value: null};
+  selected = {value: []};
   languageUtils:LanguageUtils
 
   constructor(private appDataService: AppDataService, private translationService: TranslationService, private appConfigService: AppConfigService, private utilsService: UtilsService, protected nodeResolver: NodeResolver) {
@@ -45,7 +43,7 @@ export class Tab3Component implements OnInit {
     if (language && (this.nodeResolver.dataModel.languages_enabled.indexOf(language.code) === -1)) {
       this.nodeResolver.dataModel.languages_enabled.push(language.code);
     }
-    this.langSelect.clearModel();
+    this.selected.value=[]
   }
 
   removeLang(index: number, lang_code: string) {
