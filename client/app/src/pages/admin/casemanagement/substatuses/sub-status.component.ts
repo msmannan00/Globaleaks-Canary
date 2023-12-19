@@ -32,7 +32,7 @@ export class SubStatusComponent implements OnInit {
   addSubmissionSubStatus(): void {
     const order = this.utilsService.newItemOrder(this.submissionsStatus.substatuses, "order");
     const newSubmissionsSubStatus = {
-      label: this.newSubStatus,
+      label: this.newSubStatus.label,
       order: order
     };
 
