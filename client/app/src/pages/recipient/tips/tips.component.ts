@@ -14,6 +14,10 @@ import { filter, orderBy } from "lodash";
 import { TokenResource } from "@app/shared/services/token-resource.service";
 import { Router } from "@angular/router";
 import { rtipResolverModel } from "@app/models/resolvers/rtips-resolver-model";
+import { Receiver } from "@app/models/reciever/reciever-tip-data";
+import { AuthenticationService } from "@app/services/authentication.service";
+import { ReceiverTipService } from "@app/services/receiver-tip.service";
+import { HttpService } from "@app/shared/services/http.service";
 
 
 @Component({
@@ -62,7 +66,7 @@ export class TipsComponent implements OnInit {
     searchPlaceholderText: this.translateService.instant("Search")
   };
 
-  constructor(private appConfigServices: AppConfigService, private router: Router, protected RTips: RTipsResolver, protected preference: PreferenceResolver, private modalService: NgbModal, protected utils: UtilsService, protected appDataService: AppDataService, private elementRef: ElementRef, private translateService: TranslateService, private tokenResourceService: TokenResource) {
+  constructor(protected authenticationService: AuthenticationService, protected httpService: HttpService, protected RTipService: ReceiverTipService,private appConfigServices: AppConfigService, private router: Router, protected RTips: RTipsResolver, protected preference: PreferenceResolver, private modalService: NgbModal, protected utils: UtilsService, protected appDataService: AppDataService, private elementRef: ElementRef, private translateService: TranslateService, private tokenResourceService: TokenResource) {
 
   }
 
@@ -86,41 +90,63 @@ export class TipsComponent implements OnInit {
     this.selectedTips = [];
   }
 
-  openGrantAccessModal() {
-    this.utils.runUserOperation("get_users_names", {}, true).subscribe(
-      {
-        next: response => {
-          const modalRef = this.modalService.open(GrantAccessComponent,{backdrop: 'static',keyboard: false});
-          modalRef.componentInstance.args = {
-            users_names: response
-          };
-          modalRef.componentInstance.confirmFun = (receiver_id: {id: number}) => {
-            const args = {
-              rtips: this.selectedTips,
-              receiver: receiver_id
-            };
-            return this.utils.runRecipientOperation("grant", args, true);
-          };
+  openGrantAccessModal(): void {
+    this.utils.runUserOperation("get_users_names", {}, false).subscribe( {
+      next: response => {
+      const selectableRecipients: Receiver[] = [];
+      this.appDataService.public.receivers.forEach(async (receiver: Receiver) => {
+        if (receiver.id !== this.authenticationService.session.user_id) {
+          selectableRecipients.push(receiver);
         }
+      });
+      const modalRef = this.modalService.open(GrantAccessComponent,{backdrop: 'static',keyboard: false});
+        modalRef.componentInstance.usersNames = response;
+        modalRef.componentInstance.selectableRecipients = selectableRecipients;
+        modalRef.componentInstance.confirmFun = (receiver_id: Receiver) => {
+        const req = {
+          operation: "grant",
+          args: {
+            rtips: this.selectedTips,
+            receiver: receiver_id.id
+          },
+        };
+        this.utils.runOperation("api/recipient/operations", req.operation, req.args, true)
+          .subscribe(() => {
+            this.reload();
+          });
+      };
+      modalRef.componentInstance.cancelFun = null;
       }
-    );
+    });
   }
 
   openRevokeAccessModal() {
-    this.utils.runUserOperation("get_users_names", {}, true).subscribe(
+    this.utils.runUserOperation("get_users_names", {}, false).subscribe(
       {
         next: response => {
+          const selectableRecipients: Receiver[] = [];
+          this.appDataService.public.receivers.forEach(async (receiver: Receiver) => {
+            if (receiver.id !== this.authenticationService.session.user_id) {
+              selectableRecipients.push(receiver);
+            }
+          });
           const modalRef = this.modalService.open(RevokeAccessComponent,{backdrop: 'static',keyboard: false});
-          modalRef.componentInstance.args = {
-            users_names: response
-          };
-          modalRef.componentInstance.confirmFun = (receiver_id: {id: number}) => {
-            const args = {
-              rtips: this.selectedTips,
-              receiver: receiver_id
+          modalRef.componentInstance.usersNames = response;
+          modalRef.componentInstance.selectableRecipients = selectableRecipients;
+          modalRef.componentInstance.confirmFun = (receiver_id: Receiver) => {
+            const req = {
+              operation: "revoke",
+              args: {
+                rtips: this.selectedTips,
+                receiver: receiver_id.id
+              },
             };
-            return this.utils.runRecipientOperation("revoke", args, true);
+            this.utils.runOperation("api/recipient/operations", req.operation, req.args, true)
+              .subscribe(() => {
+                this.reload();
+              });
           };
+          modalRef.componentInstance.cancelFun = null;
         }
       }
     );

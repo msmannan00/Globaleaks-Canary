@@ -96,7 +96,7 @@ export class TipComponent implements OnInit {
     });
   }
   openGrantTipAccessModal(): void {
-    this.utils.runUserOperation("get_users_names", {}, true).subscribe( {
+    this.utils.runUserOperation("get_users_names", {}, false).subscribe( {
       next: response => {
       const selectableRecipients: Receiver[] = [];
       this.appDataService.public.receivers.forEach(async (receiver: Receiver) => {
@@ -125,7 +125,7 @@ export class TipComponent implements OnInit {
   }
 
   openRevokeTipAccessModal() {
-    this.utils.runUserOperation("get_users_names", {}, true).subscribe(
+    this.utils.runUserOperation("get_users_names", {}, false).subscribe(
       {
         next: response => {
           const selectableRecipients: Receiver[] = [];
@@ -156,7 +156,7 @@ export class TipComponent implements OnInit {
   }
 
   openTipTransferModal() {
-    this.utils.runUserOperation("get_users_names", {}, true).subscribe(
+    this.utils.runUserOperation("get_users_names", {}, false).subscribe(
       {
         next: response  => {
           const selectableRecipients: Receiver[] = [];
