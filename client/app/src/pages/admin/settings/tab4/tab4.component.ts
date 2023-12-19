@@ -12,8 +12,8 @@ export class Tab4Component {
   @Input() contentForm: NgForm;
 
   vars: {language_to_customize:string, text_to_customize:string,custom_text:string} = {language_to_customize:"", text_to_customize:"",custom_text:""};
-  custom_texts:{[key: string]: string;};
-  default_texts:{[key: string]: string;};;
+  custom_texts:{[key: string]: string}={}
+  default_texts:{[key: string]: string}={}
   custom_texts_selector:{key: string; value: string;}[] = [];
   customTextsExist: boolean = false;
   languageUtils:LanguageUtils
