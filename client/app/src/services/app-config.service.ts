@@ -8,6 +8,7 @@ import {TranslationService} from "@app/services/translation.service";
 import {Router, NavigationEnd, ActivatedRoute} from "@angular/router";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
+import { LanguagesSupported } from "@app/models/app/public-model";
 
 @Injectable({
   providedIn: "root"
@@ -107,8 +108,8 @@ export class AppConfigService {
         this.appDataService.submission_statuses_by_id = this.utilsService.array_to_map(this.appDataService.public.submission_statuses);
 
         for (const [key] of Object.entries(this.appDataService.questionnaires_by_id)) {
-          this.fieldUtilitiesService.parseQuestionnaire(this.appDataService.questionnaires_by_id[key], {});
-          this.appDataService.questionnaires_by_id[key].steps = this.appDataService.questionnaires_by_id[key].steps.sort((a: any, b: any) => a.order > b.order);
+          this.fieldUtilitiesService.parseQuestionnaire(this.appDataService.questionnaires_by_id[key],{fields: [], fields_by_id: {}, options_by_id: {}});
+          this.appDataService.questionnaires_by_id[key].steps = this.appDataService.questionnaires_by_id[key].steps.sort((a: { order: number; }, b: { order: number; }) => a.order > b.order);
         }
 
         for (const [key] of Object.entries(this.appDataService.contexts_by_id)) {
@@ -123,12 +124,12 @@ export class AppConfigService {
         };
 
         this.appDataService.privacy_badge_open = !this.appDataService.connection.tor;
-        this.appDataService.languages_enabled = new Map<number, string>();
+        this.appDataService.languages_enabled = new Map<string, LanguagesSupported>();
         this.appDataService.languages_enabled_selector = [];
-        this.appDataService.languages_supported = new Map<number, string>();
+        this.appDataService.languages_supported = new Map<string, LanguagesSupported>();
 
         const self = this;
-        this.appDataService.public.node.languages_supported.forEach(function (lang: any) {
+        this.appDataService.public.node.languages_supported.forEach(function (lang: LanguagesSupported) {
           self.appDataService.languages_supported.set(lang.code, lang);
 
           if (self.appDataService.public.node.languages_enabled.includes(lang.code)) {

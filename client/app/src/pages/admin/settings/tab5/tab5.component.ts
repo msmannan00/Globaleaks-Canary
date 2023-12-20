@@ -10,6 +10,8 @@ import {UsersResolver} from "@app/shared/resolvers/users.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppConfigService} from "@app/services/app-config.service";
 import {AuthenticationService} from "@app/services/authentication.service";
+import { userResolverModel } from "@app/models/resolvers/user-resolver-model";
+import { questionnaireResolverModel } from "@app/models/resolvers/questionnaire-model";
 
 @Component({
   selector: "src-tab5",
@@ -17,8 +19,8 @@ import {AuthenticationService} from "@app/services/authentication.service";
 })
 export class Tab5Component {
   @Input() contentForm: NgForm;
-  userData: any = {};
-  questionnaireData: any = {};
+  userData: userResolverModel[];
+  questionnaireData: questionnaireResolverModel[];
   routeReload = false;
 
   constructor(private authenticationService: AuthenticationService, private modalService: NgbModal, private appConfigService: AppConfigService, private utilsService: UtilsService, protected nodeResolver: NodeResolver, protected preferenceResolver: PreferenceResolver, private usersResolver: UsersResolver, private questionnairesResolver: QuestionnairesResolver) {
@@ -28,10 +30,17 @@ export class Tab5Component {
   protected readonly Constants = Constants;
 
   ngOnInit(): void {
-    this.userData = this.usersResolver.dataModel;
+    if (Array.isArray(this.usersResolver.dataModel)) {
+      this.userData = this.usersResolver.dataModel;
+    } else {
+      this.userData = [this.usersResolver.dataModel];
+    }
     this.userData = this.userData.filter((user: { escrow: boolean; }) => user.escrow);
-    this.questionnaireData = this.questionnairesResolver.dataModel;
-
+    if (Array.isArray(this.questionnairesResolver.dataModel)) {
+      this.questionnaireData = this.questionnairesResolver.dataModel;
+    } else {
+      this.questionnaireData = [this.questionnairesResolver.dataModel];
+    }
   }
 
   enableEncryption() {
@@ -51,7 +60,7 @@ export class Tab5Component {
     }
   }
 
-  toggleEscrow(escrow: any) {
+  toggleEscrow(escrow: {checked: boolean}) {
     this.nodeResolver.dataModel.escrow = !this.nodeResolver.dataModel.escrow;
     escrow.checked = this.nodeResolver.dataModel.escrow;
     this.utilsService.runAdminOperation("toggle_escrow", {}, true).subscribe(

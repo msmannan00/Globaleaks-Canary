@@ -1,4 +1,5 @@
 import {Injectable} from "@angular/core";
+import { Answers } from "@app/models/reciever/reciever-tip-data";
 
 @Injectable({
   providedIn: "root"
@@ -6,9 +7,9 @@ import {Injectable} from "@angular/core";
 export class SubmissionResourceService {
 
   context_id: number;
-  receivers: [];
-  identity_provided: false;
-  answers: any;
+  receivers: string[];
+  identity_provided:boolean = false;
+  answers: Answers;
   answer: 0;
   score: 0;
 }

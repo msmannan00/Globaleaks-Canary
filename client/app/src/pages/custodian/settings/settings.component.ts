@@ -1,4 +1,5 @@
 import {Component, TemplateRef, ViewChild} from "@angular/core";
+import { Tab } from "@app/models/component-model/tab";
 
 @Component({
   selector: "src-custodian-settings",
@@ -6,8 +7,7 @@ import {Component, TemplateRef, ViewChild} from "@angular/core";
 })
 export class SettingsComponent {
   @ViewChild("tab1") tab1!: TemplateRef<any>;
-  tabs: any[];
-  nodeData: any;
+  tabs: Tab[];
   active: string;
 
   ngAfterViewInit(): void {

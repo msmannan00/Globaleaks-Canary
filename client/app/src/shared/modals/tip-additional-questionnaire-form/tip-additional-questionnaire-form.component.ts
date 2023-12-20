@@ -6,8 +6,8 @@ import {WbtipService} from "@app/services/wbtip.service";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {HttpService} from "@app/shared/services/http.service";
-import { SubmissionService } from "@app/services/submission.service";
-import { AppDataService } from "@app/app-data.service";
+import { Answers, Questionnaire3 } from "@app/models/reciever/reciever-tip-data";
+import { Field } from "@app/models/resolvers/field-template-model";
 
 @Component({
   selector: "src-tip-additional-questionnaire-form",
@@ -18,17 +18,17 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit {
   @ViewChild("submissionForm") public submissionForm: NgForm;
   @ViewChildren("stepform") stepForms: QueryList<NgForm>;
 
-  validate: any = {};
-  navigation = 0;
-  score = 0;
-  questionnaire: any;
-  answers: any = {};
-  field_id_map: any;
+  validate: boolean[] = [];
+  navigation:number = 0;
+  score :number= 0;
+  questionnaire: Questionnaire3;
+  answers: Answers = {};
+  field_id_map: { [key: string]: Field };
   done: boolean = false;
-  uploads: any = {};
-  file_upload_url = "api/whistleblower/wbtip/rfile";
+  uploads:{ [key: string]: any };
+  file_upload_url:string = "api/whistleblower/wbtip/rfile";
 
-  constructor(private submissionService: SubmissionService,private appDataService: AppDataService,private wbTipResolver: WbTipResolver, private httpService: HttpService, private fieldUtilitiesService: FieldUtilitiesService, private utilsService: UtilsService, protected wbTipService: WbtipService, protected activeModal: NgbActiveModal) {
+  constructor(private wbTipResolver: WbTipResolver, private httpService: HttpService, private fieldUtilitiesService: FieldUtilitiesService, private utilsService: UtilsService, protected wbTipService: WbtipService, protected activeModal: NgbActiveModal) {
   }
 
   ngOnInit(): void {
@@ -212,7 +212,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit {
     }, 1000);
   }
 
-  stepForm(index: any): any {
+  stepForm(index: number): any {
     if (this.stepForms && index !== -1) {
       return this.stepForms.get(index);
     }
@@ -246,19 +246,5 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit {
       this.uploads = upload;
       this.fieldUtilitiesService.onAnswersUpdate(this);
     }
-  }
-
-  public replaceReceivers(receivers: string[]): void {
-    Object.keys(this.submissionService.selected_receivers).forEach((key) => {
-      if (receivers.indexOf(key) === -1) {
-        delete this.submissionService.selected_receivers[key];
-      }
-    });
-  
-    receivers.forEach((receiverId) => {
-      if (receiverId in this.appDataService.receivers_by_id) {
-        this.submissionService.selected_receivers[receiverId] = true;
-      }
-    });
   }
 }

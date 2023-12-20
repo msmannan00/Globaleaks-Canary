@@ -7,7 +7,10 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {NgForm} from "@angular/forms";
 import {AppConfigService} from "@app/services/app-config.service";
-
+import { Context, Questionnaire, Receiver } from "@app/models/app/public-model";
+import { Answers } from "@app/models/reciever/reciever-tip-data";
+import { Field } from "@app/models/resolvers/field-template-model";
+import * as Flow from "@flowjs/flow.js";
 @Component({
   selector: "src-submission",
   templateUrl: "./submission.component.html",
@@ -17,23 +20,23 @@ export class SubmissionComponent {
   @ViewChild("submissionForm") public submissionForm: NgForm;
   @ViewChildren("stepform") stepForms: QueryList<NgForm>;
 
-  answers: any = {};
-  stepFormList: any = {};
+  answers: Answers = {};
+  stepFormList:{ [key: string]: NgForm } = {};
   identity_provided = false;
   context_id = "";
-  context: any = undefined;
-  receiversOrderPredicate: any;
+  context: Context | undefined = undefined;
+  receiversOrderPredicate: string;
   navigation = -1;
-  validate: any = [];
+  validate: boolean[] = [];
   score = 0;
   done: boolean;
-  uploads: any = {};
-  field_id_map: any;
-  questionnaire: any;
-  contextsOrderPredicate = this.appDataService.public.node.show_contexts_in_alphabetical_order ? "name" : "order";
-  selectable_contexts: any[];
+  uploads: { [key: string]: any } = {};
+  field_id_map: { [key: string]: Field };
+  questionnaire: Questionnaire;
+  contextsOrderPredicate:string = this.appDataService.public.node.show_contexts_in_alphabetical_order ? "name" : "order";
+  selectable_contexts: Context[];
   show_steps_navigation_bar = false;
-  receivedData: any;
+  receivedData: Flow|null;
 
   constructor(private appConfigService: AppConfigService, private whistleblowerLoginResolver: WhistleblowerLoginResolver, protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, public submissionService: SubmissionService) {
     this.selectable_contexts = [];
@@ -64,10 +67,10 @@ export class SubmissionComponent {
     this.fieldUtilitiesService.onAnswersUpdate(this);
 
     this.field_id_map = this.fieldUtilitiesService.build_field_id_map(this.questionnaire);
-    this.show_steps_navigation_bar = this.context.allow_recipients_selection || this.questionnaire.steps.length > 1;
-    this.receiversOrderPredicate = this.submissionService.context.show_receivers_in_alphabetical_order ? "name" : null;
+    this.show_steps_navigation_bar = this.context?.allow_recipients_selection || this.questionnaire.steps.length > 1;
+    this.receiversOrderPredicate = this.submissionService.context.show_receivers_in_alphabetical_order ? "name" : "";
 
-    if (this.context.allow_recipients_selection) {
+    if (this.context?.allow_recipients_selection) {
       this.navigation = -1;
     } else {
       this.navigation = 0;
@@ -81,7 +84,7 @@ export class SubmissionComponent {
     return Object.keys(this.submissionService.selected_receivers).length < this.submissionService.context.maximum_selectable_receivers;
   };
 
-  switchSelection(receiver: any) {
+  switchSelection(receiver: Receiver) {
     if (receiver.forcefully_selected) {
       return;
     }
@@ -96,7 +99,7 @@ export class SubmissionComponent {
   onFieldUpdated() {
   }
 
-  selectContext(context: any) {
+  selectContext(context: Context) {
     this.context = context;
     this.prepareSubmission(context);
   }
@@ -107,7 +110,7 @@ export class SubmissionComponent {
     this.selectable_contexts = this.appDataService.public.contexts.filter(context => !context.hidden);
 
     if (this.context_id) {
-      context = this.appDataService.public.contexts.find(context => context.id === this.context);
+      context = this.appDataService.public.contexts.find(context => context.id === this.context?.id);
       this.prepareSubmission(context);
     } else if (this.selectable_contexts.length === 1) {
       context = this.selectable_contexts[0];
@@ -140,11 +143,11 @@ export class SubmissionComponent {
     return this.firstStepIndex() === this.lastStepIndex();
   };
 
-  initStepForm(form: NgForm, id: any) {
+  initStepForm(form: NgForm, id: string) {
     this.stepFormList[id] = form;
   }
 
-  stepForm(index: any): any {
+  stepForm(index: number): any {
     if (this.stepForms && index !== -1) {
       return this.stepForms.get(index);
     }

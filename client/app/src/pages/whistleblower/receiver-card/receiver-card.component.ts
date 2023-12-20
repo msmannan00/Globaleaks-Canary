@@ -1,4 +1,6 @@
 import {Component, Input} from "@angular/core";
+import { Receiver } from "@app/models/app/public-model";
+import { SubmissionService } from "@app/services/submission.service";
 import {TranslateService} from "@ngx-translate/core";
 
 @Component({
@@ -6,8 +8,8 @@ import {TranslateService} from "@ngx-translate/core";
   templateUrl: "./receiver-card.component.html"
 })
 export class ReceiverCardComponent {
-  @Input() submission: any;
-  @Input() receiver: any;
+  @Input() submission: SubmissionService;
+  @Input() receiver: Receiver;
 
   constructor(protected translate: TranslateService) {
   }
@@ -19,7 +21,7 @@ export class ReceiverCardComponent {
     return Object.keys(this.submission.selected_receivers).length < this.submission.context.maximum_selectable_receivers;
   }
   
-  switchSelection(receiver: any): void {
+  switchSelection(receiver: Receiver): void {
     if (!this.submission.selected_receivers[receiver.id]) {
       delete this.submission.selected_receivers[receiver.id];
     } else if (this.selectable()) {

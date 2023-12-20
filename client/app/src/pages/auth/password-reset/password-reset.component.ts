@@ -8,7 +8,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
   templateUrl: "./password-reset.component.html"
 })
 export class PasswordResetComponent {
-  username: any = undefined;
+  username: string | undefined = undefined;
 
   constructor(private authenticationService: AuthenticationService, protected utilsService: UtilsService, protected appDataService: AppDataService) {
   }

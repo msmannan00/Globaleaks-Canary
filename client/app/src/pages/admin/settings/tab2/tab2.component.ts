@@ -9,6 +9,8 @@ import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {Subscription} from "rxjs";
 import {AppConfigService} from "@app/services/app-config.service";
+import { preferenceResolverModel } from "@app/models/resolvers/preference-resolver-model";
+import { AdminFile } from "@app/models/component-model/admin-file";
 
 @Component({
   selector: "src-tab2",
@@ -21,13 +23,12 @@ export class Tab2Component implements OnInit {
 
   files: FlowFile[] = [];
   flow: FlowDirective;
-  flowConfig: any = {};
   autoUploadSubscription: Subscription;
-  preferenceData: any = [];
-  authenticationData: any = [];
+  preferenceData: preferenceResolverModel;
+  authenticationData: AuthenticationService;
   permissionStatus = false;
 
-  admin_files: any[] = [
+  admin_files:AdminFile[]= [
     {
       "title": "Favicon",
       "varname": "favicon",
@@ -52,7 +53,7 @@ export class Tab2Component implements OnInit {
   }
 
   ngOnInit(): void {
-    this.preferenceData = this.preferenceResolver.dataModel;
+      this.preferenceData = this.preferenceResolver.dataModel;
     this.authenticationData = this.authenticationService;
     this.authenticationData.permissions = {
       can_upload_files: false
@@ -112,7 +113,7 @@ export class Tab2Component implements OnInit {
           this.authenticationData.session.permissions.can_upload_files = true;
           this.permissionStatus = true;
         },
-        error: (_: any) => {
+        error: (_) => {
           this.authenticationData.session.permissions.can_upload_files = false;
           this.togglePermissionUploadFiles();
           this.permissionStatus = false;

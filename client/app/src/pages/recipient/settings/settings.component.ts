@@ -1,5 +1,6 @@
 import {AfterViewInit, ChangeDetectorRef, Component, TemplateRef, ViewChild} from "@angular/core";
 import {Router} from "@angular/router";
+import { Tab } from "@app/models/component-model/tab";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 
 @Component({
@@ -8,8 +9,7 @@ import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 })
 export class SettingsComponent implements AfterViewInit {
   @ViewChild("tab1") tab1!: TemplateRef<any>;
-  tabs: any[];
-  nodeData: any;
+  tabs: Tab[];
   active: string;
 
   constructor(private cdr: ChangeDetectorRef, private preferenceResolver: PreferenceResolver, private router: Router) {

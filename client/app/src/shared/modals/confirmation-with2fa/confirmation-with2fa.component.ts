@@ -6,7 +6,7 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
   templateUrl: "./confirmation-with2fa.component.html"
 })
 export class ConfirmationWith2faComponent {
-  secret: any;
+  secret: string;
 
   constructor(private activeModal: NgbActiveModal) {
   }

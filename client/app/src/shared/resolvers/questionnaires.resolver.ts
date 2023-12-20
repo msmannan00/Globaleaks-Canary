@@ -10,7 +10,7 @@ import {map} from "rxjs/operators";
   providedIn: "root"
 })
 export class QuestionnairesResolver  {
-  dataModel: any = new questionnaireResolverModel();
+  dataModel: questionnaireResolverModel = new questionnaireResolverModel();
 
   constructor(private httpService: HttpService, private authenticationService: AuthenticationService) {
   }

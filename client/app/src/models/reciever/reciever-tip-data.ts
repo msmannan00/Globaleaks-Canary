@@ -1,4 +1,5 @@
-import {Step} from "@app/models/app/shared-public-model";
+import {Step,TriggeredByOption,Children,RFile, WbFile, WhistleblowerIdentity,Comment} from "@app/models/app/shared-public-model";
+import {IarData} from "@app/models/reciever/Iar-data";
 
 export class RecieverTipData {
   id: string;
@@ -17,11 +18,11 @@ export class RecieverTipData {
   last_access: string;
   score: number;
   status: string;
-  substatus: any;
+  substatus: string;
   receivers: Receiver[];
-  comments: any[];
-  rfiles: any[];
-  wbfiles: any[];
+  comments: Comment[];
+  rfiles: RFile[];
+  wbfiles: WbFile[];
   data: Data;
   internaltip_id: string;
   receiver_id: string;
@@ -29,14 +30,15 @@ export class RecieverTipData {
   important: boolean;
   label: string;
   enable_notifications: boolean;
-  iar: any;
+  iar: IarData;
   context: Context;
   questionnaire: Questionnaire3;
-  msg_receiver_selected: any;
+  msg_receiver_selected: string | null;
   msg_receivers_selector: MsgReceiversSelector[];
   receivers_by_id: ReceiversById;
-  submissionStatusStr: any;
-  whistleblower_identity_field: any;
+  submissionStatusStr: string;
+  whistleblower_identity_field: Children;
+  tip_id:string;
 }
 
 export interface Questionnaire {
@@ -58,7 +60,8 @@ export interface Receiver {
 
 export interface Data {
   whistleblower_identity_provided: boolean;
-  whistleblower_identity: any;
+  whistleblower_identity: WhistleblowerIdentity;
+  whistleblower_identity_date:string;
 }
 
 export interface Context {
@@ -99,7 +102,7 @@ export interface Step2 {
   questionnaire_id: string;
   order: number;
   triggered_by_score: number;
-  triggered_by_options: any[];
+  triggered_by_options: TriggeredByOption[];
   children: Children2[];
   label: string;
   description: string;
@@ -124,7 +127,7 @@ export interface Children2 {
   triggered_by_score: number;
   triggered_by_options: TriggeredByOption2[];
   options: Option2[];
-  children: any[];
+  children: Children[];
   label: string;
   description: string;
   hint: string;
@@ -181,7 +184,7 @@ export interface Option2 {
   block_submission: boolean;
   score_points: number;
   score_type: string;
-  trigger_receiver: any[];
+  trigger_receiver: string[];
   hint1: string;
   hint2: string;
   label: string;
@@ -199,10 +202,11 @@ export interface Step3 {
   questionnaire_id: string;
   order: number;
   triggered_by_score: number;
-  triggered_by_options: any[];
+  triggered_by_options: TriggeredByOption[];
   children: Children3[];
   label: string;
   description: string;
+  enabled:boolean;
 }
 
 export interface Children3 {
@@ -224,7 +228,7 @@ export interface Children3 {
   triggered_by_score: number;
   triggered_by_options: TriggeredByOption3[];
   options: Option3[];
-  children: any[];
+  children: Children[];
   label: string;
   description: string;
   hint: string;
@@ -281,7 +285,7 @@ export interface Option3 {
   block_submission: boolean;
   score_points: number;
   score_type: string;
-  trigger_receiver: any[];
+  trigger_receiver: string[];
   hint1: string;
   hint2: string;
   label: string;

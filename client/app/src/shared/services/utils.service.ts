@@ -1,4 +1,4 @@
-import {Injectable, Renderer2} from "@angular/core";
+import {EventEmitter, Inject, Injectable, Renderer2} from "@angular/core";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {AppDataService} from "@app/app-data.service";
 import * as Flow from "@flowjs/flow.js";
@@ -18,6 +18,19 @@ import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
 import {ClipboardService} from "ngx-clipboard";
 import {AppConfigService} from "@app/services/app-config.service";
+import {DOCUMENT} from "@angular/common";
+import { TlsConfig } from "@app/models/component-model/tls-confiq";
+import { nodeResolverModel } from "@app/models/resolvers/node-resolver-model";
+import { NewUser } from "@app/models/admin/new-user";
+import { userResolverModel } from "@app/models/resolvers/user-resolver-model";
+import { NewContext } from "@app/models/admin/new-context";
+import { contextResolverModel } from "@app/models/resolvers/context-resolver-model";
+import { notificationResolverModel } from "@app/models/resolvers/notification-resolver-model";
+import { questionnaireResolverModel } from "@app/models/resolvers/questionnaire-model";
+import { Field } from "@app/models/resolvers/field-template-model";
+import { rtipResolverModel } from "@app/models/resolvers/rtips-resolver-model";
+import { Option } from "@app/models/whistleblower/wb-tip-data";
+import { Status } from "@app/models/app/public-model";
 
 @Injectable({
   providedIn: "root"
@@ -71,7 +84,7 @@ export class UtilsService {
     return ret;
   }
 
-  async load(url: any): Promise<string> {
+  async load(url: string): Promise<string> {
     const token = await this.tokenResourceService.getWithProofOfWork();
     return url + "?token=" + token.id + ":" + token.answer;
   }
@@ -93,7 +106,7 @@ export class UtilsService {
     return false;
   }
 
-  removeBootstrap(renderer: Renderer2, document:any, link:string){
+  removeBootstrap(renderer: Renderer2, document:Document, link:string){
     let defaultBootstrapLink = document.head.querySelector(`link[href="${link}"]`);
     if (defaultBootstrapLink) {
       renderer.removeChild(document.head, defaultBootstrapLink);
@@ -167,7 +180,7 @@ export class UtilsService {
         this.router.navigate([this.router.url]).then();
       });
   }
-  onFlowUpload(flowJsInstance:Flow, file:any){
+  onFlowUpload(flowJsInstance:Flow, file:File){
     const fileNameParts = file.name.split(".");
     const fileExtension = fileNameParts.pop();
     const fileNameWithoutExtension = fileNameParts.join(".");
@@ -179,7 +192,7 @@ export class UtilsService {
     flowJsInstance.upload();
   }
 
-  swap($event: any, index: number, n: number, questionnaire:any): void {
+  swap($event: Event, index: number, n: number, questionnaire:questionnaireResolverModel): void {
     $event.stopPropagation();
 
     const target = index + n;
@@ -193,13 +206,13 @@ export class UtilsService {
     this.http.put("api/admin/steps", {
       operation: "order_elements",
       args: {
-        ids: questionnaire.steps.map((c: { id: any; }) => c.id),
+        ids: questionnaire.steps.map((c: { id: string; }) => c.id),
         questionnaire_id: questionnaire.id
       },
     }).subscribe();
   }
 
-  toggleCfg(tlsConfig:any, dataToParent:any) {
+  toggleCfg(tlsConfig:TlsConfig, dataToParent:EventEmitter<string>) {
     if (tlsConfig.enabled) {
       const authHeader = this.authenticationService.getHeader();
       this.httpService.disableTLSConfig(tlsConfig, authHeader).subscribe(() => {
@@ -304,7 +317,7 @@ export class UtilsService {
     window.open('https://'+ window.location.hostname, '_blank');
   }
 
-  getSubmissionStatusText(status: any,substatus:any, submission_statuses: any) {
+  getSubmissionStatusText(status: string,substatus:string, submission_statuses: Status[]) {
     let text;
     for (let i = 0; i < submission_statuses.length; i++) {
       if (submission_statuses[i].id === status) {
@@ -321,7 +334,7 @@ export class UtilsService {
         break;
       }
     }
-    return text;
+    return text?text:"";
   }
 
   isNever(time: string) {
@@ -329,7 +342,7 @@ export class UtilsService {
     return date.getTime() === 32503680000000;
   }
 
-  deleteFromList(list: any, elem: any) {
+  deleteFromList(list:  { [key: string]: Field}[], elem: { [key: string]: Field}) {
     const idx = list.indexOf(elem);
     if (idx !== -1) {
       list.splice(idx, 1);
@@ -347,7 +360,7 @@ export class UtilsService {
     return content_types.indexOf(content_type) > -1;
   }
 
-  submitSupportRequest(arg: any) {
+  submitSupportRequest(arg: {mail_address: string,text: string} ) {
     const param = JSON.stringify({
       "mail_address": arg.mail_address,
       "text": arg.text,
@@ -360,7 +373,7 @@ export class UtilsService {
     return this.httpService.runOperation("api/user/operations", operation, args, refresh);
   }
 
-  runRecipientOperation(operation: string, args: any, refresh: boolean) {
+  runRecipientOperation(operation: string, args: {rtips:string[], receiver?: {id: number}}, refresh: boolean) {
     return this.httpService.runOperation("api/recipient/operations", operation, args, refresh);
   }
 
@@ -380,7 +393,7 @@ export class UtilsService {
     }
   }
 
-  getStaticFilter(data: any[], model: any[], key: string): any[] {
+  getStaticFilter(data: any[], model:{id: number;label: string;}[], key: string): any[] {
     if (model.length === 0) {
       return data;
     } else {
@@ -407,8 +420,8 @@ export class UtilsService {
     }
   }
 
-  getDateFilter(Tips: any[], report_date_filter: number[], update_date_filter: number[], expiry_date_filter: number[]): any[] {
-    const filteredTips: any[] = [];
+  getDateFilter(Tips: rtipResolverModel[], report_date_filter:[number, number] | null, update_date_filter: [number, number] | null, expiry_date_filter: [number, number] | null): rtipResolverModel[] {
+    const filteredTips: rtipResolverModel[] = [];
     Tips.forEach(rows => {
       const m_row_rdate = new Date(rows.last_access).getTime();
       const m_row_udate = new Date(rows.update_date).getTime();
@@ -453,30 +466,30 @@ export class UtilsService {
     );
   }
 
-  getPostponeDate(ttl: any): Date {
+  getPostponeDate(ttl: number): Date {
     const date = new Date();
     date.setDate(date.getDate() + ttl + 1);
     date.setUTCHours(0, 0, 0, 0);
     return date;
   }
 
-  update(node: any) {
+  update(node: nodeResolverModel) {
     return this.httpService.requestUpdateAdminNodeResource(node);
   }
 
-  AdminL10NResource(lang: any) {
+  AdminL10NResource(lang: string) {
     return this.httpService.requestAdminL10NResource(lang);
   }
 
-  updateAdminL10NResource(data: any, lang: any) {
+  updateAdminL10NResource(data: {[key: string]: string}, lang: string) {
     return this.httpService.requestUpdateAdminL10NResource(data, lang);
   }
 
-  DefaultL10NResource(lang: any) {
+  DefaultL10NResource(lang: string) {
     return this.httpService.requestDefaultL10NResource(lang);
   }
 
-  runAdminOperation(operation: any, args: any, refresh: any) {
+  runAdminOperation(operation: string, args: {value: string}|{}, refresh: boolean) {
     return this.runOperation("api/admin/config", operation, args, refresh);
   }
 
@@ -485,7 +498,7 @@ export class UtilsService {
   }
 
 
-  runOperation(api: string, operation: string, args?: any, refresh?: boolean): Observable<any> {
+  runOperation(api: string, operation: string, args?: {value: string}|{}, refresh?: boolean): Observable<any> {
     const requireConfirmation = [
       "enable_encryption",
       "disable_2fa",
@@ -510,13 +523,13 @@ export class UtilsService {
           const headers = new HttpHeaders({"X-Confirmation": this.encodeString(secret)});
 
           this.http.put(api, {"operation": operation, "args": args}, {headers}).subscribe(  {
-              next: (response: any) => {
+              next: (response) => {
                 if (refresh) {
                   this.reloadComponent();
                 }
                 observer.next(response)
               },
-              error: (error: any) => {
+              error: (error) => {
                 observer.error(error);
               }
             }
@@ -525,7 +538,7 @@ export class UtilsService {
       });
     } else {
       return this.http.put(api, {"operation": operation, "args": args}).pipe(
-        map((response: any) => {
+        map((response) => {
           if (refresh) {
             this.reloadComponent();
           }
@@ -537,28 +550,19 @@ export class UtilsService {
 
   getConfirmation(): Observable<string> {
     return new Observable((observer) => {
-      let modalRef;
+      let modalRef = this.modalService.open(ConfirmationWithPasswordComponent,{backdrop: 'static',keyboard: false});
       if (this.preferenceResolver.dataModel.two_factor) {
         modalRef = this.modalService.open(ConfirmationWith2faComponent,{backdrop: 'static',keyboard: false});
-        modalRef.result.then(
-            (result) => {
-              if(result){
-                observer.next(result);
-                observer.complete();
-              }
-            }
-        );
-      }else {
-        modalRef = this.modalService.open(ConfirmationWithPasswordComponent,{backdrop: 'static',keyboard: false});
-        modalRef.componentInstance.confirmFunction = (secret: string) => {
-          observer.next(secret);
-          observer.complete();
-        };
       }
+
+      modalRef.componentInstance.confirmFunction = (secret: string) => {
+        observer.next(secret);
+        observer.complete();
+      };
     });
   }
 
-  openConfirmableModalDialogReport(arg: any, scope: any): Observable<string> {
+  openConfirmableModalDialogReport(arg: string, scope: any): Observable<string> {
     scope = !scope ? this : scope;
     return new Observable((observer) => {
       let modalRef = this.modalService.open(DeleteConfirmationComponent,{backdrop: 'static',keyboard: false});
@@ -571,11 +575,11 @@ export class UtilsService {
     });
   }
 
-  openPasswordConfirmableDialog(arg: any, scope: any){
+  openPasswordConfirmableDialog(arg: string, scope: any){
     return this.runAdminOperation("reset_submissions", {}, true).subscribe({
       next: (_) => {
       },
-      error: (_: any) => {
+      error: (_) => {
         this.openPasswordConfirmableDialog(arg, scope)
       }
     });
@@ -589,15 +593,15 @@ export class UtilsService {
     return this.http.delete<void>(url);
   }
 
-  deleteAdminUser(user_id: any) {
+  deleteAdminUser(user_id: string) {
     return this.httpService.requestDeleteAdminUser(user_id);
   }
 
-  deleteAdminContext(user_id: any) {
+  deleteAdminContext(user_id: string) {
     return this.httpService.requestDeleteAdminContext(user_id);
   }
 
-  deleteStatus(url: any) {
+  deleteStatus(url: string) {
     return this.httpService.requestDeleteStatus(url);
   }
 
@@ -605,23 +609,23 @@ export class UtilsService {
     return this.httpService.requestDeleteStatus(url);
   }
 
-  addAdminUser(user: any) {
+  addAdminUser(user: NewUser) {
     return this.httpService.requestAddAdminUser(user);
   }
 
-  updateAdminUser(id: any, user: any) {
+  updateAdminUser(id: string, user: userResolverModel) {
     return this.httpService.requestUpdateAdminUser(id, user);
   }
 
-  addAdminContext(context: any) {
+  addAdminContext(context: NewContext) {
     return this.httpService.requestAddAdminContext(context);
   }
 
-  updateAdminContext(context: any, id: any) {
+  updateAdminContext(context: contextResolverModel, id: string) {
     return this.httpService.requestUpdateAdminContext(context, id);
   }
 
-  updateAdminNotification(notification: any) {
+  updateAdminNotification(notification: notificationResolverModel) {
     return this.httpService.requestUpdateAdminNotification(notification);
   }
 
@@ -661,31 +665,27 @@ export class UtilsService {
     elem[this.getXOrderProperty(elem)] += 1;
   }
 
-  getXOrderProperty(_: any): string {
+  getXOrderProperty(_: Option[]): string {
     return "x";
   }
 
-  getYOrderProperty(elem: any): string {
-    let key = "order";
-    if (typeof elem[key] === "undefined") {
-      key = "y";
-    }
-    return key;
+  getYOrderProperty(elem: Option): keyof Option {
+    return ("order" in elem ? "order" : "y") as keyof Option;
   }
 
-  assignUniqueOrderIndex(elements: any[]): void {
+  assignUniqueOrderIndex(elements: Option[]): void {
     if (elements.length <= 0) {
-      return;
+        return;
     }
 
-    const key = this.getYOrderProperty(elements[0]);
+    const key: keyof Option = this.getYOrderProperty(elements[0]) as keyof Option;
     if (elements.length) {
-      let i = 0;
-      elements = elements.sort((a, b) => a[key] - b[key]);
-      elements.forEach((element) => {
-        element[key] = i;
-        i += 1;
-      });
+        let i = 0;
+        elements = elements.sort((a, b) => (a[key] as number) - (b[key] as number));
+        elements.forEach((element) => {
+            (element[key] as number) = i;
+            i += 1;
+        });
     }
   }
 

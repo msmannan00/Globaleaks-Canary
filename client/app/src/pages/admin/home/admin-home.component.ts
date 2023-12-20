@@ -7,15 +7,17 @@ import {AcceptAgreementComponent} from "@app/shared/modals/accept-agreement/acce
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {Observable} from "rxjs";
+import { nodeResolverModel } from "@app/models/resolvers/node-resolver-model";
+import { preferenceResolverModel } from "@app/models/resolvers/preference-resolver-model";
 
 @Component({
   selector: "src-admin-home",
   templateUrl: "./admin-home.component.html"
 })
 export class adminHomeComponent implements OnInit {
-  active: any = 0;
-  nodeData: any = [];
-  preferenceData: any = [];
+  active: number = 0;
+  nodeData: nodeResolverModel;
+  preferenceData: preferenceResolverModel;
 
   constructor(private http: HttpClient, private modalService: NgbModal, private preference: PreferenceResolver, protected nodeResolver: NodeResolver, private router: Router) {
   }

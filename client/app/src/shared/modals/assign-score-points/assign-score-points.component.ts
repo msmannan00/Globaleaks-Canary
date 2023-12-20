@@ -1,5 +1,6 @@
 import {Component, Input} from "@angular/core";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Option} from "@app/models/app/shared-public-model";
 
 @Component({
   selector: "src-assign-score-points",
@@ -14,7 +15,7 @@ export class AssignScorePointsComponent {
   constructor(private activeModal: NgbActiveModal, private modalService: NgbModal) {
   }
 
-  confirmFunction: (data: any) => void;
+  confirmFunction: (data: { score_points: number, score_type: string }) => void;
 
   confirm() {
     this.confirmFunction(this.arg);

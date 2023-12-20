@@ -1,4 +1,5 @@
 import {Component, TemplateRef, ViewChild, AfterViewInit, ChangeDetectorRef} from "@angular/core";
+import { Tab } from "@app/models/component-model/tab";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 
 @Component({
@@ -11,8 +12,8 @@ export class NetworkComponent implements AfterViewInit {
   @ViewChild("tab3") tab3!: TemplateRef<any>;
   @ViewChild("tab4") tab4!: TemplateRef<any>;
 
-  tabs: any[];
-  nodeData: any;
+  tabs: Tab[];
+  nodeData: NodeResolver;
   active: string;
 
   constructor(

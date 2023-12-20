@@ -1,4 +1,10 @@
 import {Injectable} from "@angular/core";
+import { Option, WhistleblowerIdentity } from "@app/models/app/shared-public-model";
+import { ParsedFields } from "@app/models/component-model/parsedFields";
+import { Answers, Step3 } from "@app/models/reciever/reciever-tip-data";
+import { Field } from "@app/models/resolvers/field-template-model";
+import { Step, questionnaireResolverModel } from "@app/models/resolvers/questionnaire-model";
+import { Children } from "@app/models/whistleblower/wb-tip-data";
 import {Constants} from "@app/shared/constants/constants";
 
 @Injectable({
@@ -9,21 +15,21 @@ export class FieldUtilitiesService {
   constructor() {
   }
 
-  parseQuestionnaire(questionnaire: any, parsedFields: any) {
+  parseQuestionnaire(questionnaire: any, parsedFields: ParsedFields) {
     const self = this;
 
-    questionnaire.steps.forEach(function (step: any) {
+    questionnaire.steps.forEach(function (step: Step) {
       parsedFields = self.parseFields(step.children, parsedFields);
     });
 
     return parsedFields;
   }
 
-  underscore(s: any) {
+  underscore(s: string) {
     return s.replace(new RegExp("-", "g"), "_");
   }
 
-  fieldFormName(id: any) {
+  fieldFormName(id: string) {
     return "fieldForm_" + this.underscore(id);
   }
 
@@ -85,11 +91,11 @@ export class FieldUtilitiesService {
     return r;
   }
 
-  splitRows(fields: any) {
+  splitRows(fields: Children[]) {
     const rows: any = [];
-    let y: any = null;
+    let y: number|null = null;
 
-    fields.forEach(function (f: any) {
+    fields.forEach(function (f: Children) {
       if (y !== f.y) {
         y = f.y;
         rows.push([]);
@@ -262,7 +268,7 @@ export class FieldUtilitiesService {
   }
 
 
-  isFieldTriggered(parent: any, field: any, answers: any, score: any) {
+  isFieldTriggered(parent: any, field: any, answers: Answers|WhistleblowerIdentity, score: number) {
     let count = 0;
     let i;
 
@@ -317,7 +323,7 @@ export class FieldUtilitiesService {
     return parsedFields;
   }
 
-  parseField(field: any, parsedFields: any) {
+  parseField(field: any, parsedFields: ParsedFields) {
     const self = this;
 
     if (!Object.keys(parsedFields).length) {
@@ -329,7 +335,7 @@ export class FieldUtilitiesService {
     if (["checkbox", "selectbox", "multichoice"].indexOf(field.type) > -1) {
       parsedFields.fields_by_id[field.id] = field;
       parsedFields.fields.push(field);
-      field.options.forEach(function (option: any) {
+      field.options.forEach(function (option: Option) {
         parsedFields.options_by_id[option.id] = option;
       });
 

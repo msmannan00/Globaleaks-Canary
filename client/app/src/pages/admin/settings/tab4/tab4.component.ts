@@ -11,10 +11,10 @@ import {UtilsService} from "@app/shared/services/utils.service";
 export class Tab4Component {
   @Input() contentForm: NgForm;
 
-  vars: any = {};
-  custom_texts: any = {};
-  default_texts: any = {};
-  custom_texts_selector: any[] = [];
+  vars: {language_to_customize:string, text_to_customize:string,custom_text:string} = {language_to_customize:"", text_to_customize:"",custom_text:""};
+  custom_texts:{[key: string]: string}={}
+  default_texts:{[key: string]: string}={}
+  custom_texts_selector:{key: string; value: string;}[] = [];
   customTextsExist: boolean = false;
   languageUtils:LanguageUtils
 
@@ -30,14 +30,12 @@ export class Tab4Component {
     this.languageUtils = new LanguageUtils(this.nodeResolver);
     this.languageUtils.updateLanguages();
 
-    this.vars = {
-      "language_to_customize": this.nodeResolver.dataModel.default_language
-    };
+    this.vars.language_to_customize = this.nodeResolver.dataModel.default_language
     this.getl10n(this.vars.language_to_customize);
   }
 
 
-  getl10n(lang: any): void {
+  getl10n(lang: string): void {
     if (!lang) {
       return;
     }
@@ -67,12 +65,12 @@ export class Tab4Component {
     return Object.keys(this.custom_texts).map(key => ({key}));
   }
 
-  updateCustomText(data: any, lang: any) {
+  updateCustomText(data: {[key: string]: string}, lang: string) {
     this.utilsService.updateAdminL10NResource(data, lang).subscribe(_ => {
     });
   }
 
-  deleteCustomText(dict: any, key: string): void {
+  deleteCustomText(dict: {[key: string]: string;}, key: string): void {
     delete dict[key];
   }
 

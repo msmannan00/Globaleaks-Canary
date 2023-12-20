@@ -1,6 +1,6 @@
 export interface rtipResolverModel {
-  submissionStatusStr?: any;
-  context_name?: any;
+  submissionStatusStr: string;
+  context_name: string;
   context?: any;
   id: string;
   itip_id: string;
@@ -17,10 +17,17 @@ export interface rtipResolverModel {
   context_id: string;
   tor: boolean;
   questionnaire: any;
-  answers: any;
+  answers: Answers;
   score: number;
   status: string;
-  substatus: any;
+  substatus: string;
   file_count: number;
   comment_count: number;
+}
+
+export interface Answers {
+  [key: string]: {
+    required_status: boolean;
+    value: string;
+  }[];
 }

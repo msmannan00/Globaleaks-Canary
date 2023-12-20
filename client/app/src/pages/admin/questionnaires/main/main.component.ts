@@ -15,7 +15,7 @@ import {Subject, takeUntil} from "rxjs";
 export class MainComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
-  questionnairesData: any = [];
+  questionnairesData: questionnaireResolverModel[] = [];
   new_questionnaire: { name: string } = {name: ""};
   showAddQuestionnaire: boolean = false;
 
@@ -27,7 +27,11 @@ export class MainComponent implements OnInit, OnDestroy {
     this.questionnaireService.getData().pipe(takeUntil(this.destroy$)).subscribe(() => {
       return this.getResolver();
     });
-    this.questionnairesData = this.questionnairesResolver.dataModel;
+    if (Array.isArray(this.questionnairesResolver.dataModel)) {
+      this.questionnairesData = this.questionnairesResolver.dataModel;
+    } else {
+      this.questionnairesData = [this.questionnairesResolver.dataModel];
+    }
     this.cdr.markForCheck();
   }
 
@@ -46,20 +50,14 @@ export class MainComponent implements OnInit, OnDestroy {
     this.showAddQuestionnaire = !this.showAddQuestionnaire;
   }
 
-  importQuestionnaire(file: any) {
-    this.utilsService.readFileAsText(file[0]).then((txt) => {
-      return this.http.post("api/admin/questionnaires?multilang=1", txt).subscribe(() => {
-        this.getResolver();
+  importQuestionnaire(files: FileList | null) {
+    if (files && files.length > 0) {
+      this.utilsService.readFileAsText(files[0]).then((txt) => {
+        return this.http.post("api/admin/questionnaires?multilang=1", txt).subscribe(() => {
+          this.getResolver();
       });
-    });
-  }
-
-  deleteRequest(questionnaire: any) {
-    if (questionnaire) {
-      this.questionnairesData.splice(this.questionnairesData.indexOf(questionnaire), 1);
+      });
     }
-    this.getResolver();
-    this.cdr.markForCheck();
   }
 
   listenToQuestionnairesList() {

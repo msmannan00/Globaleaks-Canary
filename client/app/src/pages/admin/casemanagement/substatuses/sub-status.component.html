@@ -10,13 +10,13 @@
     </div>
     <div id="SubstatusAddBox" class="row" *ngIf="showAddSubStatus">
         <div class="col-md-6">
-            <div ngForm="newSubstatus" #newSubStatusList="ngForm">
+            <div ngForm="newSubStatusList" #newSubStatusList="ngForm">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>{{'Label'|translate}}</label>
-                            <input name="label" class="form-control" [(ngModel)]="newSubStatus" type="text" required>
-                            <div class="text-danger" *ngIf="!newSubStatus || newSubStatus.length==0">
+                            <input name="label" class="form-control" [(ngModel)]="newSubStatus.label" type="text" required>
+                            <div class="text-danger" *ngIf="newSubStatusList.form.get('label')?.errors?.['required']">
                                 <span>{{'This field is mandatory'|translate}}</span>
                             </div>
                         </div>

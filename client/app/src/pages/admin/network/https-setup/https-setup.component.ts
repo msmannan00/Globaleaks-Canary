@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Output} from "@angular/core";
+import { FileResources } from "@app/models/component-model/file-resources";
 import {AuthenticationService} from "@app/services/authentication.service";
 import {HttpService} from "@app/shared/services/http.service";
 
@@ -8,20 +9,13 @@ import {HttpService} from "@app/shared/services/http.service";
 })
 export class HttpsSetupComponent {
   @Output() dataToParent = new EventEmitter<string>();
-  fileResources: {
-    key: any,
-    cert: any,
-    chain: any,
-    csr: any,
+  fileResources:FileResources = {
+    key: {name: "key"},
+    cert: {name: "cert"},
+    chain: {name: "chain"},
+    csr: {name: "csr"},
   };
-
   constructor(private httpService: HttpService, private authenticationService: AuthenticationService) {
-    this.fileResources = {
-      key: {name: "key"},
-      cert: {name: "cert"},
-      chain: {name: "chain"},
-      csr: {name: "csr"},
-    };
   }
 
   setupAcme() {

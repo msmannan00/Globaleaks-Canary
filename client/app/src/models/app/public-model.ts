@@ -4,17 +4,17 @@ export class Root {
   node: Node;
   questionnaires: Questionnaire[];
   submission_statuses: Status[];
-  receivers: any[];
+  receivers: Receiver[];
   contexts: Context[];
 }
 
 export class Node {
-  viewer: any;
+  viewer: boolean;
   acme: boolean;
   timezone: number;
   allow_indexing: boolean;
   adminonly: boolean;
-  pgp: any;
+  pgp: boolean;
   custom_support_url: string;
   disable_admin_notification: boolean;
   disable_receiver_notification: boolean;
@@ -45,7 +45,7 @@ export class Node {
   disclaimer_text: string;
   footer: string;
   header_title_homepage: string;
-  footer_whistleblowing_policy:any;
+  footer_whistleblowing_policy:string;
   presentation: string;
   signup_tos1_checkbox_label: string;
   signup_tos1_text: string;
@@ -59,13 +59,13 @@ export class Node {
   languages_enabled: string[];
   languages_supported: LanguagesSupported[];
   script: boolean;
-  css: any;
-  favicon: any;
-  logo: any;
-  footer_accessibility_declaration: any;
-  footer_privacy_policy: any;
-  user_privacy_policy_text:any;
-  user_privacy_policy_url:any;
+  css: string[];
+  favicon: string[];
+  logo: string[];
+  footer_accessibility_declaration: string;
+  footer_privacy_policy: string;
+  user_privacy_policy_text:string;
+  user_privacy_policy_url:string;
 }
 
 export interface LanguagesSupported {
@@ -84,7 +84,8 @@ export interface Questionnaire {
 export interface Status {
   id: string;
   order: number;
-  substatuses: any[];
+  system_defined:boolean;
+  substatuses: Substatus[];
   label: string;
 }
 
@@ -112,8 +113,23 @@ export interface Context {
   show_steps_navigation_interface: boolean;
   questionnaire_id: string;
   additional_questionnaire_id: string;
-  receivers: any[];
+  receivers: Receiver[];
   picture: boolean;
   name: string;
   description: string;
+}
+
+export interface Receiver {
+  id: string;
+  name: string;
+  forcefully_selected: boolean;
+  picture: boolean;
+  description: string;
+}
+
+export interface Substatus {
+  id: string;
+  submissionstatus_id: string;
+  order: number;
+  label: string;
 }

@@ -2,13 +2,18 @@ import {Component, ElementRef, Input, OnInit, ViewChild} from "@angular/core";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {UtilsService} from "@app/shared/services/utils.service";
+import { WbFile } from "@app/models/app/shared-public-model";
 
 @Component({
   selector: "src-file-view",
   templateUrl: "./file-view.component.html"
 })
 export class FileViewComponent implements OnInit {
-  @Input() args: any;
+  @Input() args: {
+    file: WbFile,
+    loaded: boolean,
+    iframeHeight:number
+  };
   @ViewChild("viewer") viewerFrame: ElementRef;
 
   iframeUrl: SafeResourceUrl;

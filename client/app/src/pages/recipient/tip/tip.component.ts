@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, TemplateRef, ViewChild} from "@angular/core";
+import {ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AppConfigService} from "@app/services/app-config.service";
 import {TipService} from "@app/shared/services/tip-service";
@@ -19,37 +19,64 @@ import {TipOperationPostponeComponent} from "@app/shared/modals/tip-operation-po
 import {CryptoService} from "@app/crypto.service";
 import {TransferAccessComponent} from "@app/shared/modals/transfer-access/transfer-access.component";
 import {AuthenticationService} from "@app/services/authentication.service";
+import { Tab } from "@app/models/component-model/tab";
+import { RecieverTipData } from "@app/models/reciever/reciever-tip-data";
+import { Receiver } from "@app/models/app/public-model";
 
 
 @Component({
   selector: "src-tip",
   templateUrl: "./tip.component.html",
 })
-export class TipComponent implements AfterViewInit {
+export class TipComponent implements OnInit {
   @ViewChild("tab1") tab1!: TemplateRef<any>;
   @ViewChild("tab2") tab2!: TemplateRef<any>;
   @ViewChild("tab3") tab3!: TemplateRef<any>;
 
   tip_id: string | null;
-  answers: any = {};
-  uploads: any = {};
-  questionnaire: any = {};
-  rows: any = {};
-  tip: any = {};
-  contexts_by_id: any;
-  submission_statuses: any;
-  score: any;
+  tip: RecieverTipData;
+  score: number;
   ctx: string;
-  submission: any;
   showEditLabelInput: boolean;
-  tabs: any[];
+  tabs: Tab[];
   active: string;
   loading = true;
 
   constructor(private tipService: TipService, private appConfigServices: AppConfigService, private router: Router, private cdr: ChangeDetectorRef, private cryptoService: CryptoService, protected utils: UtilsService, protected preferencesService: PreferenceResolver, protected modalService: NgbModal, private activatedRoute: ActivatedRoute, protected httpService: HttpService, protected http: HttpClient, protected appDataService: AppDataService, protected RTipService: ReceiverTipService, protected fieldUtilities: FieldUtilitiesService, protected authenticationService: AuthenticationService) {
   }
 
-  ngAfterViewInit(): void {
+  ngOnInit() {
+    this.loadTipDate();
+    this.cdr.detectChanges();
+  }
+
+  loadTipDate() {
+    this.tip_id = this.activatedRoute.snapshot.paramMap.get("tip_id");
+    const requestObservable: Observable<any> = this.httpService.receiverTip(this.tip_id);
+    this.loading = true;
+    this.RTipService.reset();
+    requestObservable.subscribe(
+      {
+        next: (response: RecieverTipData) => {
+          this.loading = false;
+          this.RTipService.initialize(response);
+          this.tip = this.RTipService.tip;
+          this.activatedRoute.queryParams.subscribe((params: { [x: string]: string; }) => {
+            this.tip.tip_id = params["tip_id"];
+          });
+
+          this.tip.receivers_by_id = this.utils.array_to_map(this.tip.receivers);
+          this.score = this.tip.score;
+          this.ctx = "rtip";
+          this.showEditLabelInput = this.tip.label === "";
+          this.preprocessTipAnswers(this.tip);
+          this.tip.submissionStatusStr = this.utils.getSubmissionStatusText(this.tip.status,this.tip.substatus,this.appDataService.submissionStatuses);
+          this.initNavBar()
+        }
+      }
+    );
+  }
+  initNavBar(){
     setTimeout(() => {
       this.active = "Everyone";
       this.tabs = [
@@ -66,42 +93,13 @@ export class TipComponent implements AfterViewInit {
           component: this.tab3
         },
       ];
-      this.loadTipDate();
-      this.cdr.detectChanges();
     });
   }
-
-  loadTipDate() {
-    this.tip_id = this.activatedRoute.snapshot.paramMap.get("tip_id");
-    const requestObservable: Observable<any> = this.httpService.receiverTip(this.tip_id);
-    this.loading = true;
-    this.RTipService.reset();
-    requestObservable.subscribe(
-      {
-        next: (response: any) => {
-          this.loading = false;
-          this.RTipService.initialize(response);
-          this.tip = this.RTipService.tip;
-          this.activatedRoute.queryParams.subscribe((params: { [x: string]: any; }) => {
-            this.tip.tip_id = params["tip_id"];
-          });
-
-          this.tip.receivers_by_id = this.utils.array_to_map(this.tip.receivers);
-          this.score = this.tip.score;
-          this.ctx = "rtip";
-          this.showEditLabelInput = this.tip.label === "";
-          this.preprocessTipAnswers(this.tip);
-          this.tip.submissionStatusStr = this.utils.getSubmissionStatusText(this.tip.status,this.tip.substatus,this.appDataService.submissionStatuses);
-          this.submission = {};
-        }
-      }
-    );
-  }
-
   openGrantTipAccessModal(): void {
-    this.utils.runUserOperation("get_users_names", {}, true).subscribe((response: any) => {
-      const selectableRecipients: any = [];
-      this.appDataService.public.receivers.forEach(async (receiver: { id: string | number; }) => {
+    this.utils.runUserOperation("get_users_names", {}, false).subscribe( {
+      next: response => {
+      const selectableRecipients: Receiver[] = [];
+      this.appDataService.public.receivers.forEach(async (receiver: Receiver) => {
         if (receiver.id !== this.authenticationService.session.user_id && !this.tip.receivers_by_id[receiver.id]) {
           selectableRecipients.push(receiver);
         }
@@ -109,7 +107,7 @@ export class TipComponent implements AfterViewInit {
       const modalRef = this.modalService.open(GrantAccessComponent,{backdrop: 'static',keyboard: false});
       modalRef.componentInstance.usersNames = response;
       modalRef.componentInstance.selectableRecipients = selectableRecipients;
-      modalRef.componentInstance.confirmFun = (receiver_id: any) => {
+      modalRef.componentInstance.confirmFun = (receiver_id: Receiver) => {
         const req = {
           operation: "grant",
           args: {
@@ -121,17 +119,17 @@ export class TipComponent implements AfterViewInit {
             this.reload();
           });
       };
-
       modalRef.componentInstance.cancelFun = null;
-    });
+    }
+  });
   }
 
   openRevokeTipAccessModal() {
-    this.utils.runUserOperation("get_users_names", {}, true).subscribe(
+    this.utils.runUserOperation("get_users_names", {}, false).subscribe(
       {
         next: response => {
-          const selectableRecipients: any = [];
-          this.appDataService.public.receivers.forEach(async (receiver: { id: string | number; }) => {
+          const selectableRecipients: Receiver[] = [];
+          this.appDataService.public.receivers.forEach(async (receiver: Receiver) => {
             if (receiver.id !== this.authenticationService.session.user_id && this.tip.receivers_by_id[receiver.id]) {
               selectableRecipients.push(receiver);
             }
@@ -139,7 +137,7 @@ export class TipComponent implements AfterViewInit {
           const modalRef = this.modalService.open(RevokeAccessComponent,{backdrop: 'static',keyboard: false});
           modalRef.componentInstance.usersNames = response;
           modalRef.componentInstance.selectableRecipients = selectableRecipients;
-          modalRef.componentInstance.confirmFun = (receiver_id: any) => {
+          modalRef.componentInstance.confirmFun = (receiver_id: Receiver) => {
             const req = {
               operation: "revoke",
               args: {
@@ -158,11 +156,11 @@ export class TipComponent implements AfterViewInit {
   }
 
   openTipTransferModal() {
-    this.utils.runUserOperation("get_users_names", {}, true).subscribe(
+    this.utils.runUserOperation("get_users_names", {}, false).subscribe(
       {
-        next: (response: any) => {
-          const selectableRecipients: any = [];
-          this.appDataService.public.receivers.forEach(async (receiver: { id: string | number; }) => {
+        next: response  => {
+          const selectableRecipients: Receiver[] = [];
+          this.appDataService.public.receivers.forEach(async (receiver:Receiver) => {
             if (receiver.id !== this.authenticationService.session.user_id && !this.tip.receivers_by_id[receiver.id]) {
               selectableRecipients.push(receiver);
             }
@@ -202,7 +200,7 @@ export class TipComponent implements AfterViewInit {
     this.appConfigServices.localInitialization(true, reloadCallback);
   }
 
-  preprocessTipAnswers(tip: any) {
+  preprocessTipAnswers(tip: RecieverTipData) {
     this.tipService.preprocessTipAnswers(tip);
   }
 
@@ -238,7 +236,7 @@ export class TipComponent implements AfterViewInit {
     modalRef.componentInstance.args = {
       tip: this.RTipService.tip,
       operation: "set_reminder",
-      contexts_by_id: this.contexts_by_id,
+      contexts_by_id: this.appDataService.contexts_by_id,
       reminder_date: this.utils.getPostponeDate(this.appDataService.contexts_by_id[this.tip.context_id].tip_reminder),
       dateOptions: {
         minDate: new Date(this.tip.creation_date)
@@ -253,7 +251,7 @@ export class TipComponent implements AfterViewInit {
     modalRef.componentInstance.args = {
       tip: this.RTipService.tip,
       operation: "postpone",
-      contexts_by_id: this.contexts_by_id,
+      contexts_by_id: this.appDataService.contexts_by_id,
       expiration_date: this.utils.getPostponeDate(this.appDataService.contexts_by_id[this.tip.context_id].tip_timetolive),
       dateOptions: {
         minDate: new Date(this.tip.expiration_date),
@@ -264,7 +262,7 @@ export class TipComponent implements AfterViewInit {
     };
   }
 
-  exportTip(tipId: any) {
+  exportTip(tipId: string) {
     const param = JSON.stringify({});
     this.httpService.requestToken(param).subscribe
     (

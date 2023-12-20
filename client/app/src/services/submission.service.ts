@@ -6,20 +6,21 @@ import {HttpService} from "@app/shared/services/http.service";
 import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
 import {Router} from "@angular/router";
 import {AppConfigService} from "@app/services/app-config.service";
+import { Context } from "@app/models/reciever/reciever-tip-data";
 
 @Injectable({
   providedIn: "root",
 })
 export class SubmissionService {
-  _submission: any;
-  context: any;
-  receivers: any[] = [];
+  _submission: SubmissionResourceService;
+  context: Context;
+  receivers: string[] = [];
   mandatory_receivers = 0;
   optional_receivers = 0;
-  selected_receivers: any = {};
+  selected_receivers: { [key: string]: boolean } = {};
   blocked = false;
-  uploads: any = {};
-  private sharedData: any;
+  uploads: { [key: string]: any };
+  private sharedData: Flow|null;
 
   constructor(private appConfigService: AppConfigService, private router: Router, protected authenticationService: AuthenticationService, private serviceInstanceService: ServiceInstanceService, private httpService: HttpService, private appDataService: AppDataService, private submissionResourceService: SubmissionResourceService) {
   }
@@ -38,7 +39,7 @@ export class SubmissionService {
     this.selected_receivers = {};
     this.receivers = [];
 
-    this.context.receivers.forEach((receiver: any) => {
+    this.context.receivers.forEach((receiver: string) => {
       const r = this.appDataService.receivers_by_id[receiver];
 
       if (!r) {
@@ -101,11 +102,11 @@ export class SubmissionService {
     });
   }
 
-  setSharedData(data: any) {
+  setSharedData(data: Flow |null) {
     this.sharedData = data;
   }
 
-  getSharedData(): any {
+  getSharedData() {
     return this.sharedData;
   }
 

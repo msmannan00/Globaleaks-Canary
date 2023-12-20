@@ -13,7 +13,7 @@ export class DefaultLoginComponent {
 
   @Input() loginData: LoginDataRef;
   @Input() loginValidator: NgForm;
-  loginAuthCode: any;
+  loginAuthCode: string;
 
   constructor(protected utils: UtilsService, protected authentication: AuthenticationService) {
   }

@@ -17,13 +17,13 @@ export class TipInfoComponent {
   constructor(protected authenticationService: AuthenticationService, protected appDataService: AppDataService, protected utilsService: UtilsService, private rTipService: ReceiverTipService, private httpService: HttpService,) {
   }
 
-  markReportStatus(date: any) {
+  markReportStatus(date: string) {
     const report_date = new Date(date);
     const current_date = new Date();
     return current_date > report_date;
   };
 
-  updateLabel(label: any) {
+  updateLabel(label: string) {
     this.httpService.tipOperation("set", {"key": "label", "value": label}, this.rTipService.tip.id).subscribe(() => {
     });
   }

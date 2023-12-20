@@ -24,7 +24,7 @@
         <div class="form-group">
             <label>{{'Questionnaire'|translate}}</label>
             <select class="form-select" [(ngModel)]="nodeResolver.dataModel.default_questionnaire">
-                <option *ngFor="let item of questionnairesResolver.dataModel" [ngValue]="item.id">{{item.name}}</option>
+                <option *ngFor="let item of [questionnairesResolver.dataModel]" [ngValue]="item.id">{{item.name}}</option>
             </select>
         </div>
         <div *ngIf="!nodeResolver.dataModel.adminonly">

@@ -1,4 +1,5 @@
 import {Component, TemplateRef, ViewChild, AfterViewInit, ChangeDetectorRef} from "@angular/core";
+import { Tab } from "@app/models/component-model/tab";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 
 @Component({
@@ -9,8 +10,8 @@ export class NotificationsComponent implements AfterViewInit {
   @ViewChild("tab1") tab1!: TemplateRef<any>;
   @ViewChild("tab2") tab2!: TemplateRef<any>;
 
-  tabs: any[];
-  nodeData: any;
+  tabs: Tab[];
+  nodeData: NodeResolver;
   active: string;
 
   constructor(protected node: NodeResolver, private cdr: ChangeDetectorRef) {

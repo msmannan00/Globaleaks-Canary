@@ -4,16 +4,18 @@ import {AuthenticationService} from "@app/services/authentication.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {CryptoService} from "@app/crypto.service";
+import { RFile } from "@app/models/app/shared-public-model";
+import { ReceiversById } from "@app/models/reciever/reciever-tip-data";
 
 @Component({
   selector: "src-wbfiles",
   templateUrl: "./wb-files.component.html"
 })
 export class WbFilesComponent implements OnInit {
-  @Input() wbFile: any;
-  @Input() ctx: any;
-  @Input() receivers_by_id: any;
-  @Output() dataToParent = new EventEmitter<string>();
+  @Input() wbFile: RFile;
+  @Input() ctx: string;
+  @Input() receivers_by_id: ReceiversById;
+  @Output() dataToParent = new EventEmitter<any>();
   
   constructor(private appDataService: AppDataService, private cryptoService: CryptoService, private httpService: HttpService, protected authenticationService: AuthenticationService) {
   }
@@ -21,7 +23,7 @@ export class WbFilesComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  deleteWBFile(wbFile: any) {
+  deleteWBFile(wbFile: RFile) {
     if (this.authenticationService.session.role === "receiver") {
       this.httpService.deleteDBFile(wbFile.id).subscribe
       (
@@ -34,7 +36,7 @@ export class WbFilesComponent implements OnInit {
     }
   }
 
-  downloadWBFile(wbFile: any) {
+  downloadWBFile(wbFile: RFile) {
 
     const param = JSON.stringify({});
     this.httpService.requestToken(param).subscribe
