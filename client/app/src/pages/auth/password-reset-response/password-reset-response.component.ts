@@ -3,6 +3,7 @@ import {PasswordRecoveryModel} from "@app/models/authentication/password-recover
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
+import {AppDataService} from "@app/app-data.service";
 
 @Component({
   selector: "src-password-reset-response",
@@ -12,7 +13,7 @@ export class PasswordResetResponseComponent implements OnInit {
   state = "start";
   request = new PasswordRecoveryModel();
 
-  constructor(private route: ActivatedRoute, private httpService: HttpService, private router: Router, protected utilsService: UtilsService) {
+  constructor(protected appDataService: AppDataService, private route: ActivatedRoute, private httpService: HttpService, private router: Router, protected utilsService: UtilsService) {
   }
 
   submit() {

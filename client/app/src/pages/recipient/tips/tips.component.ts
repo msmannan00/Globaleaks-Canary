@@ -1,8 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit } from "@angular/core";
-import {AppConfigService} from "@app/services/app-config.service";
+import {AppConfigService} from "@app/services/root/app-config.service";
 import { NgbDate, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AppDataService } from "@app/app-data.service";
-import { DeleteConfirmationComponent } from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import { GrantAccessComponent } from "@app/shared/modals/grant-access/grant-access.component";
 import { RevokeAccessComponent } from "@app/shared/modals/revoke-access/revoke-access.component";
 import { PreferenceResolver } from "@app/shared/resolvers/preference.resolver";
@@ -15,9 +14,10 @@ import { TokenResource } from "@app/shared/services/token-resource.service";
 import { Router } from "@angular/router";
 import { rtipResolverModel } from "@app/models/resolvers/rtips-resolver-model";
 import { Receiver } from "@app/models/reciever/reciever-tip-data";
-import { AuthenticationService } from "@app/services/authentication.service";
-import { ReceiverTipService } from "@app/services/receiver-tip.service";
+import { AuthenticationService } from "@app/services/helper/authentication.service";
+import { ReceiverTipService } from "@app/services/helper/receiver-tip.service";
 import { HttpService } from "@app/shared/services/http.service";
+import {CryptoService} from "@app/services/helper/crypto.service";
 
 
 @Component({
@@ -52,8 +52,6 @@ export class TipsComponent implements OnInit {
   reportDatePicker: boolean = false;
   lastUpdatePicker: boolean = false;
   expirationDatePicker: boolean = false;
-  oneDayInMilliseconds = 24 * 60 * 60 * 1000;
-
   dropdownDefaultText = {
     buttonDefaultText: "",
     searchPlaceholder: this.translateService.instant("Search")
@@ -152,15 +150,6 @@ export class TipsComponent implements OnInit {
     );
   }
 
-  tipDeleteSelected() {
-    const modalRef = this.modalService.open(DeleteConfirmationComponent,{backdrop: 'static',keyboard: false});
-    modalRef.componentInstance.confirmFunction = () => {
-    };
-    modalRef.componentInstance.selected_tips = this.selectedTips;
-    modalRef.componentInstance.operation = "delete";
-  }
-
-
   async tipsExport() {
     for (let i = 0; i < this.selectedTips.length; i++) {
       const token = await this.tokenResourceService.getWithProofOfWork();
@@ -191,7 +180,7 @@ export class TipsComponent implements OnInit {
   }
 
   exportTip(tipId: string) {
-    this.utils.download("api/recipient/rtips/" + tipId + "/export");
+    this.utils.download("api/recipient/rtips/" + tipId + "/export", this.tokenResourceService);
     this.appDataService.updateShowLoadingPanel(false);
   }
 
@@ -347,9 +336,9 @@ export class TipsComponent implements OnInit {
   }
 
   applyFilter() {
-    this.filteredTips = this.utils.getStaticFilter(this.RTips.dataModel, this.dropdownStatusModel, "submissionStatusStr");
-    this.filteredTips = this.utils.getStaticFilter(this.filteredTips, this.dropdownContextModel, "context_name");
-    this.filteredTips = this.utils.getStaticFilter(this.filteredTips, this.dropdownScoreModel, "score");
+    this.filteredTips = this.utils.getStaticFilter(this.RTips.dataModel, this.dropdownStatusModel, "submissionStatusStr", this.translateService);
+    this.filteredTips = this.utils.getStaticFilter(this.filteredTips, this.dropdownContextModel, "context_name", this.translateService);
+    this.filteredTips = this.utils.getStaticFilter(this.filteredTips, this.dropdownScoreModel, "score", this.translateService);
     this.filteredTips = this.utils.getDateFilter(this.filteredTips, this.reportDateFilter, this.updateDateFilter, this.expiryDateFilter);
   }
 

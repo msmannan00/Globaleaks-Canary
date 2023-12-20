@@ -1,34 +1,25 @@
 import {Injectable} from "@angular/core";
 import {HttpService} from "@app/shared/services/http.service";
-import {TranslateService} from "@ngx-translate/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppDataService} from "@app/app-data.service";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
-import {TranslationService} from "@app/services/translation.service";
+import {TranslationService} from "@app/services/helper/translation.service";
 import {Router, NavigationEnd, ActivatedRoute} from "@angular/router";
-import {AuthenticationService} from "@app/services/authentication.service";
-import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import { LanguagesSupported } from "@app/models/app/public-model";
+import {TitleService} from "@app/shared/services/title.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class AppConfigService {
   public sidebar: string = "";
-  public header_title: string = "";
 
-  private translationService: TranslationService;
-  public authenticationService: AuthenticationService;
-  public utilsService: UtilsService;
-
-  constructor(private serviceInstanceService: ServiceInstanceService, private router: Router, private activatedRoute: ActivatedRoute, private appServices: HttpService, private translateService: TranslateService, private appDataService: AppDataService, private fieldUtilitiesService: FieldUtilitiesService) {
+  constructor(private titleService:TitleService, public authenticationService: AuthenticationService, private translationService: TranslationService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private httpService: HttpService, private appDataService: AppDataService, private fieldUtilitiesService: FieldUtilitiesService) {
+    this.init();
   }
 
   init() {
-    this.translationService = this.serviceInstanceService.translationService;
-    this.authenticationService = this.serviceInstanceService.authenticationService;
-    this.utilsService = this.serviceInstanceService.utilsService;
-
     this.activatedRoute.paramMap.subscribe(_ => {
       const currentURL = window.location.hash.substring(2).split("?")[0];
       this.initRoutes(currentURL);
@@ -62,11 +53,11 @@ export class AppConfigService {
 
   public setPage(page:string) {
     this.appDataService.page = page;
-    this.setTitle();
+    this.titleService.setTitle();
   };
 
   public localInitialization(languageInit = true, callback?: () => void) {
-    this.appServices.getPublicResource().subscribe({
+    this.httpService.getPublicResource().subscribe({
       next: data => {
         this.appDataService.public = data.body;
         let elem;
@@ -148,50 +139,13 @@ export class AppConfigService {
         }
 
 
-        this.setTitle();
+        this.titleService.setTitle();
         this.onValidateInitialConfiguration();
         if (callback) {
           callback();
         }
       }
     });
-  }
-
-  setTitle() {
-    const {public: rootData} = this.appDataService;
-
-    if (!rootData || !rootData.node) {
-      return;
-    }
-
-    const projectTitle = rootData.node.name;
-    let pageTitle = rootData.node.header_title_homepage;
-
-
-    if (this.header_title && this.router.url !== "/") {
-      pageTitle = this.header_title;
-    } else if (this.appDataService.page === "receiptpage") {
-      pageTitle = "Your report was successful.";
-    }
-
-    if (pageTitle && pageTitle.length > 0) {
-      pageTitle = this.translateService.instant(pageTitle);
-    }
-
-    this.appDataService.projectTitle = projectTitle !== "GLOBALEAKS" ? projectTitle : "";
-    this.appDataService.pageTitle = pageTitle !== projectTitle ? pageTitle : "";
-
-    if (pageTitle) {
-      const finalPageTitle = pageTitle.length > 0 ? this.translateService.instant(pageTitle) : projectTitle;
-      window.document.title = `${projectTitle} - ${finalPageTitle}`;
-
-      const element = window.document.querySelector("meta[name=\"description\"]");
-      if (element instanceof HTMLMetaElement) {
-        element.content = rootData.node.description;
-      }
-    } else {
-      window.document.title = projectTitle;
-    }
   }
 
   onValidateInitialConfiguration() {
@@ -217,7 +171,7 @@ export class AppConfigService {
 
     this.router.navigateByUrl(newPath).then(() => {
       this.sidebar = "admin-sidebar";
-      this.setTitle();
+      this.titleService.setTitle();
     });
   }
 
@@ -227,13 +181,13 @@ export class AppConfigService {
         this.onValidateInitialConfiguration();
         const lastChildRoute = this.findLastChildRoute(this.router.routerState.root);
         if (lastChildRoute && lastChildRoute.snapshot.data && lastChildRoute.snapshot.data["pageTitle"]) {
-          this.header_title = lastChildRoute.snapshot.data["pageTitle"];
+          this.appDataService.header_title = lastChildRoute.snapshot.data["pageTitle"];
           this.sidebar = lastChildRoute.snapshot.data["sidebar"];
-          this.setTitle();
+          this.titleService.setTitle();
         } else {
-          this.header_title = "";
+          this.appDataService.header_title = "";
           this.sidebar = "";
-          this.setTitle();
+          this.titleService.setTitle();
         }
       }
     });

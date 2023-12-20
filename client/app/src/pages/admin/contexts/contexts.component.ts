@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {NewContext} from "@app/models/admin/new-context";
 import { contextResolverModel } from "@app/models/resolvers/context-resolver-model";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {ContextsResolver} from "@app/shared/resolvers/contexts.resolver";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";

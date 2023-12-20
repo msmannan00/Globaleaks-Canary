@@ -2,15 +2,17 @@ import {Component, QueryList, ViewChild, ViewChildren} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {WhistleblowerLoginResolver} from "@app/shared/resolvers/whistleblower-login.resolver";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
-import {SubmissionService} from "@app/services/submission.service";
+import {SubmissionService} from "@app/services/helper/submission.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {NgForm} from "@angular/forms";
-import {AppConfigService} from "@app/services/app-config.service";
+import {AppConfigService} from "@app/services/root/app-config.service";
 import { Context, Questionnaire, Receiver } from "@app/models/app/public-model";
 import { Answers } from "@app/models/reciever/reciever-tip-data";
 import { Field } from "@app/models/resolvers/field-template-model";
 import * as Flow from "@flowjs/flow.js";
+import {TitleService} from "@app/shared/services/title.service";
+import {Router} from "@angular/router";
 @Component({
   selector: "src-submission",
   templateUrl: "./submission.component.html",
@@ -38,7 +40,7 @@ export class SubmissionComponent {
   show_steps_navigation_bar = false;
   receivedData: Flow|null;
 
-  constructor(private appConfigService: AppConfigService, private whistleblowerLoginResolver: WhistleblowerLoginResolver, protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, public submissionService: SubmissionService) {
+  constructor(private titleService: TitleService, private router: Router, private appConfigService: AppConfigService, private whistleblowerLoginResolver: WhistleblowerLoginResolver, protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, public submissionService: SubmissionService) {
     this.selectable_contexts = [];
     this.receivedData = this.submissionService.getSharedData();
 
@@ -96,9 +98,6 @@ export class SubmissionComponent {
     }
   };
 
-  onFieldUpdated() {
-  }
-
   selectContext(context: Context) {
     this.context = context;
     this.prepareSubmission(context);
@@ -142,10 +141,6 @@ export class SubmissionComponent {
   singleStepForm() {
     return this.firstStepIndex() === this.lastStepIndex();
   };
-
-  initStepForm(form: NgForm, id: string) {
-    this.stepFormList[id] = form;
-  }
 
   stepForm(index: number): any {
     if (this.stepForms && index !== -1) {
@@ -276,7 +271,14 @@ export class SubmissionComponent {
         return;
       }
 
-      this.submissionService.submit();
+      this.submissionService.submit().subscribe({
+        next: (response) => {
+          this.router.navigate(["/"]).then();
+          this.authenticationService.session.receipt = response.receipt;
+          this.titleService.setPage("receiptpage");
+        }
+      });
+
       clearInterval(intervalId);
     }, 1000);
   }

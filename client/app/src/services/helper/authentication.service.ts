@@ -5,27 +5,24 @@ import {Observable} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AppDataService} from "@app/app-data.service";
 import {ErrorCodes} from "@app/models/app/error-code";
-import {AppConfigService} from "@app/services/app-config.service";
-import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
 import { Session } from "@app/models/authentication/session";
+import {TitleService} from "@app/shared/services/title.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthenticationService {
   public session: any = undefined;
-  public appConfigService: AppConfigService;
   permissions:{can_upload_files:boolean}
   loginInProgress: boolean = false;
   requireAuthCode: boolean = false;
   loginData: LoginDataRef = new LoginDataRef();
 
-  constructor(private serviceInstanceService: ServiceInstanceService, private activatedRoute: ActivatedRoute, private httpService: HttpService, private rootDataService: AppDataService, private router: Router) {
+  constructor(private titleService:TitleService, private activatedRoute: ActivatedRoute, private httpService: HttpService, private appDataService: AppDataService, private router: Router) {
+    this.init();
   }
 
   init() {
-    this.appConfigService = this.serviceInstanceService.appConfigService;
-
     const json = window.sessionStorage.getItem("session");
     if (json !== null) {
       this.session = JSON.parse(json);
@@ -117,12 +114,12 @@ export class AuthenticationService {
           } else {
             if (this.session.role === "whistleblower") {
               if (password) {
-                this.rootDataService.receipt = password;
+                this.appDataService.receipt = password;
               }
             } else {
               if (!callback) {
                 this.reset();
-                this.rootDataService.updateShowLoadingPanel(true);
+                this.appDataService.updateShowLoadingPanel(true);
                 this.router.navigate([this.session.homepage], {
                   queryParams: this.activatedRoute.snapshot.queryParams,
                   queryParamsHandling: "merge"
@@ -136,7 +133,7 @@ export class AuthenticationService {
         },
         error: (error) => {
           this.loginInProgress = false;
-          this.rootDataService.updateShowLoadingPanel(false);
+          this.appDataService.updateShowLoadingPanel(false);
           if (error.error && error.error.error_code) {
             if (error.error.error_code === 4) {
               this.requireAuthCode = true;
@@ -145,7 +142,7 @@ export class AuthenticationService {
             }
           }
 
-          this.rootDataService.errorCodes = new ErrorCodes(error.error.error_message, error.error.error_code, error.error.arguments);
+          this.appDataService.errorCodes = new ErrorCodes(error.error.error_message, error.error.error_code, error.error.arguments);
           if (callback) {
             callback();
           }
@@ -176,7 +173,7 @@ export class AuthenticationService {
           this.reset();
           if (this.session.role === "whistleblower") {
             this.deleteSession();
-            this.appConfigService.setPage("homepage");
+            this.titleService.setPage("homepage");
           } else {
             this.deleteSession();
             this.loginRedirect();

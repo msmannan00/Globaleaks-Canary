@@ -8,6 +8,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 import {Observable} from "rxjs";
 import { questionnaireResolverModel } from "@app/models/resolvers/questionnaire-model";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 
 @Component({
   selector: "src-questionnaires-list",
@@ -20,7 +21,7 @@ export class QuestionnairesListComponent {
   showAddQuestion: boolean = false;
   editing: boolean = false;
 
-  constructor(private questionnaireService: QuestionnaireService, private modalService: NgbModal, private httpService: HttpService, private utilsService: UtilsService) {
+  constructor(private authenticationService: AuthenticationService, private questionnaireService: QuestionnaireService, private modalService: NgbModal, private httpService: HttpService, private utilsService: UtilsService) {
   }
 
   toggleAddQuestion(): void {
@@ -39,7 +40,7 @@ export class QuestionnairesListComponent {
   }
 
   exportQuestionnaire(questionnaire: questionnaireResolverModel) {
-    this.utilsService.saveAs(questionnaire.name, "api/admin/questionnaires/" + questionnaire.id,);
+    this.utilsService.saveAs(this.authenticationService, questionnaire.name, "api/admin/questionnaires/" + questionnaire.id,);
   }
 
   duplicateQuestionnaire(questionnaire: questionnaireResolverModel) {

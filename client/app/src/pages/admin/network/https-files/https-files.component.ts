@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ConfirmationComponent} from "@app/shared/modals/confirmation/confirmation.component";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
@@ -85,7 +85,7 @@ export class HttpsFilesComponent implements OnInit {
   }
 
   toggleCfg() {
-    this.utilsService.toggleCfg(this.tlsConfig, this.dataToParent);
+    this.utilsService.toggleCfg(this.authenticationService, this.tlsConfig, this.dataToParent);
   }
 
   resetCfg() {

@@ -1,10 +1,10 @@
 import {ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AppConfigService} from "@app/services/app-config.service";
+import {AppConfigService} from "@app/services/root/app-config.service";
 import {TipService} from "@app/shared/services/tip-service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AppDataService} from "@app/app-data.service";
-import {ReceiverTipService} from "@app/services/receiver-tip.service";
+import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
 import {GrantAccessComponent} from "@app/shared/modals/grant-access/grant-access.component";
 import {RevokeAccessComponent} from "@app/shared/modals/revoke-access/revoke-access.component";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
@@ -16,12 +16,14 @@ import {TipOperationSetReminderComponent} from "@app/shared/modals/tip-operation
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {HttpClient} from "@angular/common/http";
 import {TipOperationPostponeComponent} from "@app/shared/modals/tip-operation-postpone/tip-operation-postpone.component";
-import {CryptoService} from "@app/crypto.service";
+import {CryptoService} from "@app/services/helper/crypto.service";
 import {TransferAccessComponent} from "@app/shared/modals/transfer-access/transfer-access.component";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import { Tab } from "@app/models/component-model/tab";
 import { RecieverTipData } from "@app/models/reciever/reciever-tip-data";
 import { Receiver } from "@app/models/app/public-model";
+import {TipUploadWbFileComponent} from "@app/shared/partials/tip-upload-wbfile/tip-upload-wb-file.component";
+import {TipCommentsComponent} from "@app/shared/partials/tip-comments/tip-comments.component";
 
 
 @Component({
@@ -29,9 +31,9 @@ import { Receiver } from "@app/models/app/public-model";
   templateUrl: "./tip.component.html",
 })
 export class TipComponent implements OnInit {
-  @ViewChild("tab1") tab1!: TemplateRef<any>;
-  @ViewChild("tab2") tab2!: TemplateRef<any>;
-  @ViewChild("tab3") tab3!: TemplateRef<any>;
+  @ViewChild("tab1") tab1!: TemplateRef<TipUploadWbFileComponent | TipCommentsComponent>;
+  @ViewChild("tab2") tab2!: TemplateRef<TipUploadWbFileComponent | TipCommentsComponent>;
+  @ViewChild("tab3") tab3!: TemplateRef<TipUploadWbFileComponent | TipCommentsComponent>;
 
   tip_id: string | null;
   tip: RecieverTipData;

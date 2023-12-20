@@ -3,7 +3,7 @@ import {WbTipResolver} from "@app/shared/resolvers/wb-tip-resolver.service";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {ActivatedRoute} from "@angular/router";
 import {HttpService} from "@app/shared/services/http.service";
-import {WbtipService} from "@app/services/wbtip.service";
+import {WbtipService} from "@app/services/helper/wbtip.service";
 import {AppDataService} from "@app/app-data.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import { Children, WbTipData } from "@app/models/whistleblower/wb-tip-data";

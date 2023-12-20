@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {ControlContainer, NgForm} from "@angular/forms";
-import { SubmissionService } from "@app/services/submission.service";
+import { SubmissionService } from "@app/services/helper/submission.service";
 import { Answers } from "@app/models/reciever/reciever-tip-data";
 import { Step } from "@app/models/whistleblower/wb-tip-data";
 import { Field } from "@app/models/resolvers/field-template-model";

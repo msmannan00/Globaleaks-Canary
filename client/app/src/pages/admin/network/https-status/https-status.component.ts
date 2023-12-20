@@ -7,6 +7,7 @@ import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {HttpService} from "@app/shared/services/http.service";
 import { nodeResolverModel } from "@app/models/resolvers/node-resolver-model";
 import { TlsConfig } from "@app/models/component-model/tls-confiq";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 
 @Component({
   selector: "src-https-status",
@@ -17,7 +18,7 @@ export class HttpsStatusComponent implements OnInit {
   @Input() tlsConfig: TlsConfig;
   nodeData: nodeResolverModel;
 
-  constructor(private utilsService: UtilsService, protected networkResolver: NetworkResolver, private nodeResolver: NodeResolver, private httpService: HttpService, private modalService: NgbModal) {
+  constructor(private authenticationService: AuthenticationService, private utilsService: UtilsService, protected networkResolver: NetworkResolver, private nodeResolver: NodeResolver, private httpService: HttpService, private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
@@ -25,7 +26,7 @@ export class HttpsStatusComponent implements OnInit {
   }
 
   toggleCfg() {
-    this.utilsService.toggleCfg(this.tlsConfig, this.dataToParent);
+    this.utilsService.toggleCfg(this.authenticationService, this.tlsConfig, this.dataToParent);
   }
 
   resetCfg() {

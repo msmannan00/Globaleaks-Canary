@@ -9,7 +9,7 @@ import {
   ViewChild
 } from "@angular/core";
 import {FlowDirective, Transfer} from "@flowjs/ngx-flow";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {AppDataService} from "@app/app-data.service";
 import {ControlContainer, NgForm} from "@angular/forms";
 import { Subscription } from "rxjs";

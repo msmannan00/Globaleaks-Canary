@@ -1,6 +1,4 @@
-import {EventEmitter, Inject, Injectable, Renderer2} from "@angular/core";
-import {AuthenticationService} from "@app/services/authentication.service";
-import {AppDataService} from "@app/app-data.service";
+import {EventEmitter, Injectable, Renderer2} from "@angular/core";
 import * as Flow from "@flowjs/flow.js";
 import {TranslateService} from "@ngx-translate/core";
 import {Router} from "@angular/router";
@@ -14,11 +12,7 @@ import {ConfirmationWithPasswordComponent} from "@app/shared/modals/confirmation
 import {ConfirmationWith2faComponent} from "@app/shared/modals/confirmation-with2fa/confirmation-with2fa.component";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
-import {NodeResolver} from "@app/shared/resolvers/node.resolver";
-import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
 import {ClipboardService} from "ngx-clipboard";
-import {AppConfigService} from "@app/services/app-config.service";
-import {DOCUMENT} from "@angular/common";
 import { TlsConfig } from "@app/models/component-model/tls-confiq";
 import { nodeResolverModel } from "@app/models/resolvers/node-resolver-model";
 import { NewUser } from "@app/models/admin/new-user";
@@ -31,23 +25,19 @@ import { Field } from "@app/models/resolvers/field-template-model";
 import { rtipResolverModel } from "@app/models/resolvers/rtips-resolver-model";
 import { Option } from "@app/models/whistleblower/wb-tip-data";
 import { Status } from "@app/models/app/public-model";
+import {AppDataService} from "@app/app-data.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class UtilsService {
 
-  public authenticationService: AuthenticationService;
-
-  constructor(private appConfigService: AppConfigService, private clipboardService: ClipboardService, private serviceInstanceService: ServiceInstanceService, private nodeResolver: NodeResolver, private http: HttpClient, private httpService: HttpService, private modalService: NgbModal, private translateService: TranslateService, private appDataService: AppDataService, private preferenceResolver: PreferenceResolver, private tokenResourceService: TokenResource, private router: Router) {
+  constructor(private clipboardService: ClipboardService, private http: HttpClient, private httpService: HttpService, private modalService: NgbModal, private preferenceResolver: PreferenceResolver, private router: Router) {
   }
 
-  init() {
-    this.authenticationService = this.serviceInstanceService.authenticationService;
-  }
-
-  updateNode() {
-    this.httpService.updateNodeResource(this.nodeResolver.dataModel).subscribe();
+  updateNode(nodeResolverModel:nodeResolverModel) {
+    this.httpService.updateNodeResource(nodeResolverModel).subscribe();
   }
 
   str2Uint8Array(str: string) {
@@ -84,13 +74,13 @@ export class UtilsService {
     return ret;
   }
 
-  async load(url: string): Promise<string> {
-    const token = await this.tokenResourceService.getWithProofOfWork();
+  async load(url: string, tokenResourceService: TokenResource): Promise<string> {
+    const token = await tokenResourceService.getWithProofOfWork();
     return url + "?token=" + token.id + ":" + token.answer;
   }
 
-  download(url: string): void {
-    this.tokenResourceService.getWithProofOfWork().then((token: any) => {
+  download(url: string, tokenResourceService: TokenResource): void {
+    tokenResourceService.getWithProofOfWork().then((token: any) => {
       window.open(`${url}?token=${token.id}:${token.answer}`);
     });
   }
@@ -129,9 +119,9 @@ export class UtilsService {
     return rtlLanguages.includes(language) ? 'rtl' : 'ltr';
   }
 
-  view(url: string, _: string, callback: (blob: Blob) => void): void {
+  view(authenticationService: AuthenticationService, url: string, _: string, callback: (blob: Blob) => void): void {
     const headers = new HttpHeaders({
-      "x-session": this.authenticationService.session.id
+      "x-session": authenticationService.session.id
     });
 
     this.http.get(url, {
@@ -212,14 +202,14 @@ export class UtilsService {
     }).subscribe();
   }
 
-  toggleCfg(tlsConfig:TlsConfig, dataToParent:EventEmitter<string>) {
+  toggleCfg(authenticationService: AuthenticationService, tlsConfig:TlsConfig, dataToParent:EventEmitter<string>) {
     if (tlsConfig.enabled) {
-      const authHeader = this.authenticationService.getHeader();
+      const authHeader = authenticationService.getHeader();
       this.httpService.disableTLSConfig(tlsConfig, authHeader).subscribe(() => {
         dataToParent.emit();
       });
     } else {
-      const authHeader = this.authenticationService.getHeader();
+      const authHeader = authenticationService.getHeader();
       this.httpService.enableTLSConfig(tlsConfig, authHeader).subscribe(() => {
         window.location.href = "https://" + window.location.hostname + "/#/login";
       });
@@ -242,16 +232,16 @@ export class UtilsService {
     return this.router.url === "/submission";
   }
 
-  showUserStatusBox() {
-    return this.appDataService.public.node.wizard_done &&
-      this.appDataService.page !== "homepage" &&
-      this.appDataService.page !== "submissionpage" &&
-      this.authenticationService.session;
+  showUserStatusBox(authenticationService: AuthenticationService, appDataService: AppDataService) {
+    return appDataService.public.node.wizard_done &&
+        appDataService.page !== "homepage" &&
+        appDataService.page !== "submissionpage" &&
+        authenticationService.session;
   }
 
-  isWhistleblowerPage() {
+  isWhistleblowerPage(authenticationService: AuthenticationService, appDataService: AppDataService) {
     const currentUrl = this.router.url;
-    return this.appDataService.public.node.wizard_done && (!this.authenticationService.session || (location.hash==='#/' || location.hash.startsWith('#/submission'))) && ((currentUrl === '/' && !this.appDataService.public.node.enable_signup) || currentUrl === '/submission' || currentUrl === '/blank');
+    return appDataService.public.node.wizard_done && (!authenticationService.session || (location.hash==='#/' || location.hash.startsWith('#/submission'))) && ((currentUrl === '/' && !appDataService.public.node.enable_signup) || currentUrl === '/submission' || currentUrl === '/blank');
   }
 
   stopPropagation(event: Event) {
@@ -274,31 +264,13 @@ export class UtilsService {
     return btoa(result);
   }
 
-  openSupportModal() {
-    if (this.appDataService.public.node.custom_support_url) {
-      window.open(this.appDataService.public.node.custom_support_url, "_blank");
+  openSupportModal(appDataService: AppDataService) {
+    if (appDataService.public.node.custom_support_url) {
+      window.open(appDataService.public.node.custom_support_url, "_blank");
     } else {
       this.modalService.open(RequestSupportComponent,{backdrop: 'static',keyboard: false});
     }
   }
-
-  routeCheck() {
-    const path = location.pathname;
-    if (path !== "/") {
-      this.appConfigService.setPage("");
-    }
-
-    if (!this.appDataService.public) {
-      return;
-    }
-
-    if (path === "/" && this.appDataService.public.node.enable_signup) {
-      this.appConfigService.setPage("signuppage");
-    } else if ((path === "/" || path === "/submission") && this.appDataService.public.node.adminonly && !this.authenticationService.session) {
-      location.replace("/admin");
-    }
-  }
-
   array_to_map(receivers: any) {
     const ret: any = {};
 
@@ -311,10 +283,6 @@ export class UtilsService {
 
   copyToClipboard(data: string) {
     this.clipboardService.copyFromContent(data);
-  }
-
-  openNewTab(){
-    window.open('https://'+ window.location.hostname, '_blank');
   }
 
   getSubmissionStatusText(status: string,substatus:string, submission_statuses: Status[]) {
@@ -381,19 +349,19 @@ export class UtilsService {
     this.router.navigateByUrl(path).then();
   }
 
-  maskScore(score: number) {
+  maskScore(score: number, translateService: TranslateService) {
     if (score === 1) {
-      return this.translateService.instant("Low");
+      return translateService.instant("Low");
     } else if (score === 2) {
-      return this.translateService.instant("Medium");
+      return translateService.instant("Medium");
     } else if (score === 3) {
-      return this.translateService.instant("High");
+      return translateService.instant("High");
     } else {
-      return this.translateService.instant("None");
+      return translateService.instant("None");
     }
   }
 
-  getStaticFilter(data: any[], model:{id: number;label: string;}[], key: string): any[] {
+  getStaticFilter(data: any[], model:{id: number;label: string;}[], key: string, translateService: TranslateService): any[] {
     if (model.length === 0) {
       return data;
     } else {
@@ -401,7 +369,7 @@ export class UtilsService {
       data.forEach(data_row => {
         model.forEach(selected_option => {
           if (key === "score") {
-            const scoreLabel = this.maskScore(data_row[key]);
+            const scoreLabel = this.maskScore(data_row[key], translateService);
             if (scoreLabel === selected_option.label) {
               rows.push(data_row);
             }
@@ -443,10 +411,10 @@ export class UtilsService {
     window.print();
   }
 
-  saveAs(filename: any, url: string): void {
+  saveAs(authenticationService: AuthenticationService, filename: any, url: string): void {
 
     const headers = new HttpHeaders({
-      "X-Session": this.authenticationService.session.id
+      "X-Session": authenticationService.session.id
     });
 
     this.http.get(url, {responseType: "blob", headers: headers}).subscribe(

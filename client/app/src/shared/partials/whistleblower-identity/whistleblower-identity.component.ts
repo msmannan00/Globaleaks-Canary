@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
 import { Answers } from "@app/models/reciever/reciever-tip-data";
-import {WbtipService} from "@app/services/wbtip.service";
+import {WbtipService} from "@app/services/helper/wbtip.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({
@@ -18,8 +18,8 @@ export class WhistleblowerIdentityComponent {
   @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() uploadEstimateTime: number;
-  @Input() isUploading:boolean|undefined;;
-  @Input() uploadProgress: number|undefined;;
+  @Input() isUploading:boolean|undefined;
+  @Input() uploadProgress: number|undefined;
   identity_provided: boolean = true;
 
   constructor(protected wbTipService: WbtipService, protected utilsService: UtilsService) {

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output, QueryList} from "@angular/core";
-import {SubmissionService} from "@app/services/submission.service";
+import {SubmissionService} from "@app/services/helper/submission.service";
 import {FormArray, FormGroup, NgForm} from "@angular/forms";
 import { Field } from "@app/models/resolvers/field-template-model";
 

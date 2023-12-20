@@ -3,8 +3,8 @@ import {NgForm} from "@angular/forms";
 import {LanguageUtils} from "@app/pages/admin/settings/helper-methods/language-utils";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {AppConfigService} from "@app/services/app-config.service";
-import {TranslationService} from "@app/services/translation.service";
+import {AppConfigService} from "@app/services/root/app-config.service";
+import {TranslationService} from "@app/services/helper/translation.service";
 import {AppDataService} from "@app/app-data.service";
 import { LanguagesSupported } from "@app/models/app/public-model";
 

@@ -1,12 +1,12 @@
 import {Component, OnInit} from "@angular/core";
 import {WbTipData} from "@app/models/whistleblower/wb-tip-data";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {AppDataService} from "@app/app-data.service";
 import {WbTipResolver} from "@app/shared/resolvers/wb-tip-resolver.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {Router} from "@angular/router";
-import {AppConfigService} from "@app/services/app-config.service";
+import {AppConfigService} from "@app/services/root/app-config.service";
 
 @Component({
   selector: "src-receipt",

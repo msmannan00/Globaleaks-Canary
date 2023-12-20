@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
+import {CryptoService} from "@app/services/helper/crypto.service";
 
 @Injectable({
   providedIn: "root"
@@ -9,7 +9,7 @@ export class TokenResource {
 
   private baseUrl = "api/token/:id";
 
-  constructor(private http: HttpClient, private serviceInstanceService: ServiceInstanceService) {
+  constructor(private cryptoService: CryptoService, private http: HttpClient) {
   }
 
   getToken(id: string) {
@@ -19,7 +19,7 @@ export class TokenResource {
   async getWithProofOfWork(): Promise<any> {
     const response: any = await this.http.post("api/auth/token", {}).toPromise();
     const token = response;
-    token.answer = await this.serviceInstanceService.cryptoService.proofOfWork(token.id);
+    token.answer = await this.cryptoService.proofOfWork(token.id);
     return token;
   }
 }

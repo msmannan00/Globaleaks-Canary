@@ -4,6 +4,7 @@ import {AuditLogResolver} from "@app/shared/resolvers/audit-log-resolver.service
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {ngxCsv} from "ngx-csv";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 
 @Component({
   selector: "src-auditlog-tab1",
@@ -14,7 +15,7 @@ export class AuditLogTab1Component implements OnInit {
   pageSize = 20;
   auditLog:auditlogResolverModel[] = [];
 
-  constructor(private auditLogResolver: AuditLogResolver, protected nodeResolver: NodeResolver, protected utilsService: UtilsService) {
+  constructor(protected authenticationService:AuthenticationService, private auditLogResolver: AuditLogResolver, protected nodeResolver: NodeResolver, protected utilsService: UtilsService) {
   }
 
   ngOnInit() {

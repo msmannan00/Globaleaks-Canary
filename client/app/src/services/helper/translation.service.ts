@@ -1,8 +1,6 @@
 import {Inject, Injectable, Renderer2} from "@angular/core";
 import {LangChangeEvent, TranslateService} from "@ngx-translate/core";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {AppConfigService} from "@app/services/app-config.service";
-import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
 import {DOCUMENT} from "@angular/common";
 
 @Injectable({
@@ -11,17 +9,15 @@ import {DOCUMENT} from "@angular/common";
 export class TranslationService {
 
   language = "";
-
-  public utilsService: UtilsService;
-  public appConfigService: AppConfigService;
   public currentDirection: string;
 
-  constructor(protected translate: TranslateService, @Inject(DOCUMENT) private document: Document, private serviceInstanceService: ServiceInstanceService, private translateService: TranslateService) {
+  constructor(private utilsService: UtilsService, protected translate: TranslateService, @Inject(DOCUMENT) private document: Document) {
+    this.currentDirection = this.utilsService.getDirection(this.translate.currentLang);
   }
 
   loadBootstrapStyles(event: LangChangeEvent, renderer: Renderer2) {
     let waitForLoader = false;
-    const newDirection = this.serviceInstanceService.utilsService.getDirection(event.lang);
+    const newDirection = this.utilsService.getDirection(event.lang);
     if (newDirection !== this.currentDirection) {
       waitForLoader = true;
       this.utilsService.removeBootstrap(renderer, this.document, "./lib/bootstrap/bootstrap.min.css");
@@ -41,18 +37,12 @@ export class TranslationService {
     return waitForLoader;
   }
 
-  init() {
-    this.utilsService = this.serviceInstanceService.utilsService;
-    this.appConfigService = this.serviceInstanceService.appConfigService;
-    this.currentDirection = this.serviceInstanceService.utilsService.getDirection(this.translate.currentLang);
-  }
-
   onChange(changedLanguage: string) {
     this.language = changedLanguage;
-    this.translateService.use(this.language).subscribe(() => {
-      this.translateService.setDefaultLang(this.language);
-      if(this.translateService.getBrowserLang() != this.language){
-        this.translateService.getTranslation(this.language).subscribe();
+    this.translate.use(this.language).subscribe(() => {
+      this.translate.setDefaultLang(this.language);
+      if(this.translate.getBrowserLang() != this.language){
+        this.translate.getTranslation(this.language).subscribe();
       }
     });
   }

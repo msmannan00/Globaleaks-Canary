@@ -3,6 +3,7 @@ import { FileResources } from "@app/models/component-model/file-resources";
 import {Constants} from "@app/shared/constants/constants";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 
 @Component({
   selector: "src-https-csr-gen",
@@ -27,18 +28,18 @@ export class HttpsCsrGenComponent {
     email: ""
   };
 
-  constructor(private httpService: HttpService, private utilsService: UtilsService) {
+  constructor(private authenticationService:AuthenticationService, private httpService: HttpService, private utilsService: UtilsService) {
   }
 
   submitCSR() {
     this.httpService.requestCSRDirectContentResource(this.csr_cfg).subscribe({
       next: (response) => {
-        this.utilsService.saveAs(new Blob([response.data], {type: "text/plain;charset=utf-8"}), "csr.pem");
+        this.utilsService.saveAs(this.authenticationService, new Blob([response.data], {type: "text/plain;charset=utf-8"}), "csr.pem");
       },
       error: (error: any) => {
         if (error.status === 201) {
           const errorText = error.error.text;
-          this.utilsService.saveAs(new Blob([errorText], {type: "application/octet-stream"}), "csr.pem");
+          this.utilsService.saveAs(this.authenticationService, new Blob([errorText], {type: "application/octet-stream"}), "csr.pem");
         }
       }
     });

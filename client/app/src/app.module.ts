@@ -1,21 +1,19 @@
 import {HostListener, NgModule, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {AppRoutingModule} from "@app/app-routing.module";
-import {CryptoService} from "@app/crypto.service";
 import {AppComponent} from "@app/pages/app/app.component";
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import {AuthModule} from "@app/pages/auth/auth.module";
 import {APP_BASE_HREF, HashLocationStrategy, LocationStrategy,} from "@angular/common";
-import {AppConfigService} from "@app/services/app-config.service";
 import {SharedModule} from "@app/shared.module";
 import {HeaderComponent} from "@app/shared/partials/header/header.component";
 import {UserComponent} from "@app/shared/partials/header/template/user/user.component";
 import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import {CompletedInterceptor, ErrorCatchingInterceptor, RequestInterceptor} from "@app/services/request.interceptor";
+import {CompletedInterceptor, ErrorCatchingInterceptor, appInterceptor} from "@app/services/root/app-interceptor.service";
 import {Keepalive, NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {HomeComponent} from "@app/pages/dashboard/home/home.component";
 import {TranslatorPipe} from "@app/shared/pipes/translate";
 import {NgSelectModule} from "@ng-select/ng-select";
@@ -32,10 +30,6 @@ import {WizardModule} from "@app/pages/wizard/wizard.module";
 import {RecipientModule} from "@app/pages/recipient/recipient.module";
 import {AdminModule} from "@app/pages/admin/admin.module";
 import {CustodianModule} from "@app/pages/custodian/custodian.module";
-import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
-import {UtilsService} from "@app/shared/services/utils.service";
-import {TranslationService} from "@app/services/translation.service";
-import {SubmissionService} from "@app/services/submission.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 export function createTranslateLoader(http: HttpClient) {
@@ -77,7 +71,7 @@ const translationModule = TranslateModule.forRoot({
   providers: [
     ReceiptValidatorDirective,
     TranslatorPipe, TranslateService,
-    {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: appInterceptor, multi: true},
     {provide: APP_BASE_HREF, useValue: "/"},
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true},
@@ -93,21 +87,7 @@ export class AppModule {
   timedOut = false;
   title = "angular-idle-timeout";
 
-  constructor(private serviceInstanceService: ServiceInstanceService, private cryptoService: CryptoService, private submissionService: SubmissionService, private authenticationService: AuthenticationService, private translationService: TranslationService, private utilsService: UtilsService, private appConfigService: AppConfigService, private idle: Idle, private keepalive: Keepalive) {
-    serviceInstanceService.setUtilsService(utilsService);
-    serviceInstanceService.setAuthenticationService(authenticationService);
-    serviceInstanceService.setTranslationService(translationService);
-    serviceInstanceService.setSubmissionService(submissionService);
-    serviceInstanceService.setAppConfigService(appConfigService);
-    serviceInstanceService.setCryptoService(cryptoService);
-
-    this.appConfigService.init();
-    this.utilsService.init();
-    this.authenticationService.init();
-    this.translationService.init();
-    this.submissionService.init();
-    this.cryptoService.init();
-
+  constructor(private authenticationService: AuthenticationService, private idle: Idle, private keepalive: Keepalive) {
     this.initIdleState();
   }
 

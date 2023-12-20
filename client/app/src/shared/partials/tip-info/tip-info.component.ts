@@ -1,9 +1,9 @@
 import {Component, Input} from "@angular/core";
-import {AuthenticationService} from "@app/services/authentication.service";
-import {WbtipService} from "@app/services/wbtip.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
+import {WbtipService} from "@app/services/helper/wbtip.service";
 import {AppDataService} from "@app/app-data.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {ReceiverTipService} from "@app/services/receiver-tip.service";
+import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
 import {HttpService} from "@app/shared/services/http.service";
 
 @Component({

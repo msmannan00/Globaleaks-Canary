@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({

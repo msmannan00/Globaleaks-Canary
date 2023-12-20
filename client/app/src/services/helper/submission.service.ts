@@ -1,18 +1,14 @@
 import {Injectable} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
-import {AuthenticationService} from "@app/services/authentication.service";
-import {SubmissionResourceService} from "@app/services/submission-resource.service";
 import {HttpService} from "@app/shared/services/http.service";
-import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
-import {Router} from "@angular/router";
-import {AppConfigService} from "@app/services/app-config.service";
 import { Context } from "@app/models/reciever/reciever-tip-data";
+import {submissionResourceModel} from "@app/models/whistleblower/submission-resource";
 
 @Injectable({
   providedIn: "root",
 })
 export class SubmissionService {
-  _submission: SubmissionResourceService;
+  _submission: submissionResourceModel;
   context: Context;
   receivers: string[] = [];
   mandatory_receivers = 0;
@@ -22,13 +18,8 @@ export class SubmissionService {
   uploads: { [key: string]: any };
   private sharedData: Flow|null;
 
-  constructor(private appConfigService: AppConfigService, private router: Router, protected authenticationService: AuthenticationService, private serviceInstanceService: ServiceInstanceService, private httpService: HttpService, private appDataService: AppDataService, private submissionResourceService: SubmissionResourceService) {
+  constructor(private httpService: HttpService, private appDataService: AppDataService) {
   }
-
-  init() {
-    this.authenticationService = this.serviceInstanceService.authenticationService;
-  }
-
   setContextReceivers(context_id: number) {
     this.context = this.appDataService.contexts_by_id[context_id];
 
@@ -66,8 +57,7 @@ export class SubmissionService {
 
   create(context_id: number) {
     this.setContextReceivers(context_id);
-    this.submissionResourceService.context_id = context_id;
-    this._submission = this.submissionResourceService;
+    this._submission.context_id = context_id;
   }
 
   submit() {
@@ -93,13 +83,7 @@ export class SubmissionService {
     };
 
     const param = JSON.stringify(_submission_data);
-    this.httpService.requestReportSubmission(param).subscribe({
-      next: (response) => {
-        this.router.navigate(["/"]).then();
-        this.authenticationService.session.receipt = response.receipt;
-        this.appConfigService.setPage("receiptpage");
-      }
-    });
+    return this.httpService.requestReportSubmission(param);
   }
 
   setSharedData(data: Flow |null) {

@@ -3,12 +3,11 @@ import {NgForm} from "@angular/forms";
 import * as Flow from "@flowjs/flow.js";
 import type {FlowFile} from "@flowjs/flow.js";
 import {FlowDirective} from "@flowjs/ngx-flow";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {Subscription} from "rxjs";
-import {AppConfigService} from "@app/services/app-config.service";
+import {AppConfigService} from "@app/services/root/app-config.service";
 import { preferenceResolverModel } from "@app/models/resolvers/preference-resolver-model";
 import { AdminFile } from "@app/models/component-model/admin-file";
 
@@ -23,7 +22,6 @@ export class Tab2Component implements OnInit {
 
   files: FlowFile[] = [];
   flow: FlowDirective;
-  autoUploadSubscription: Subscription;
   preferenceData: preferenceResolverModel;
   authenticationData: AuthenticationService;
   permissionStatus = false;
@@ -92,7 +90,6 @@ export class Tab2Component implements OnInit {
     this.utilsService.deleteFile(url).subscribe(
       () => {
         this.updateFiles();
-        this.utilsService.init();
         this.utilsService.reloadComponent();
       }
     );

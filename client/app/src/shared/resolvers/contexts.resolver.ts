@@ -3,7 +3,7 @@ import {Injectable} from "@angular/core";
 import {Observable, of} from "rxjs";
 import {switchMap} from "rxjs/operators";
 import {HttpService} from "@app/shared/services/http.service";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {contextResolverModel} from "@app/models/resolvers/context-resolver-model";
 
 @Injectable({

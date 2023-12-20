@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
-import { SubmissionService } from "@app/services/submission.service";
+import { SubmissionService } from "@app/services/helper/submission.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({

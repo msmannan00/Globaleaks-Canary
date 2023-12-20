@@ -1,8 +1,8 @@
 import {Component, Input, ViewChild, ElementRef, ChangeDetectorRef, EventEmitter, Output} from "@angular/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppDataService} from "@app/app-data.service";
-import {AuthenticationService} from "@app/services/authentication.service";
-import {AppConfigService} from "@app/services/app-config.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
+import {AppConfigService} from "@app/services/root/app-config.service";
 import * as Flow from "@flowjs/flow.js";
 import { RecieverTipData } from "@app/models/reciever/reciever-tip-data";
 import { FlowFile } from "@flowjs/flow.js";

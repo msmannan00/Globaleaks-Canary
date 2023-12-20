@@ -14,9 +14,6 @@ export class CryptoService {
   constructor(private utilsService: UtilsService) {
   }
 
-  init() {
-  }
-
   getWebCrypto() {
     if (typeof window === "undefined" || !window.isSecureContext) {
       return;

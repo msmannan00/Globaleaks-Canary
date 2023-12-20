@@ -3,7 +3,7 @@ import {AppDataService} from "@app/app-data.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DisclaimerComponent} from "@app/shared/modals/disclaimer/disclaimer.component";
 import {Observable} from "rxjs";
-import {AppConfigService} from "@app/services/app-config.service";
+import {AppConfigService} from "@app/services/root/app-config.service";
 
 @Component({
   selector: "src-homepage",

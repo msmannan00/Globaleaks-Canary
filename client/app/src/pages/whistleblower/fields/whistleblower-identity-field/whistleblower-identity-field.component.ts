@@ -4,7 +4,7 @@ import { WhistleblowerIdentity } from "@app/models/app/shared-public-model";
 import { Answers } from "@app/models/reciever/reciever-tip-data";
 import { Field } from "@app/models/resolvers/field-template-model";
 import { Step } from "@app/models/whistleblower/wb-tip-data";
-import { SubmissionService } from "@app/services/submission.service";
+import { SubmissionService } from "@app/services/helper/submission.service";
 
 @Component({
   selector: "src-whistleblower-identity-field",

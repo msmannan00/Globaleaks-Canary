@@ -2,10 +2,10 @@ import {Injectable} from "@angular/core";
 import {HttpInterceptor, HttpEvent, HttpRequest, HttpHandler, HttpClient, HttpErrorResponse,} from "@angular/common/http";
 import {catchError, finalize, from, Observable, switchMap, throwError} from "rxjs";
 import {TokenResponse} from "@app/models/authentication/token-response";
-import {CryptoService} from "@app/crypto.service";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {CryptoService} from "@app/services/helper/crypto.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {AppDataService} from "@app/app-data.service";
-import {TranslationService} from "@app/services/translation.service";
+import {TranslationService} from "@app/services/helper/translation.service";
 import {ErrorCodes} from "@app/models/app/error-code";
 import { of } from 'rxjs';
 import { timer } from 'rxjs';
@@ -20,7 +20,7 @@ const protectedUrls = [
 ];
 
 @Injectable()
-export class RequestInterceptor implements HttpInterceptor {
+export class appInterceptor implements HttpInterceptor {
   constructor(private authenticationService: AuthenticationService, private httpClient: HttpClient, private cryptoService: CryptoService, private translationService: TranslationService) {
   }
 

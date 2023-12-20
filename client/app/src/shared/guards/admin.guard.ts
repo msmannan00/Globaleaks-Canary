@@ -1,9 +1,9 @@
 import {Injectable} from "@angular/core";
 import { Router, UrlTree } from "@angular/router";
 import {Observable} from "rxjs";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {AppDataService} from "@app/app-data.service";
-import {AppConfigService} from "@app/services/app-config.service";
+import {AppConfigService} from "@app/services/root/app-config.service";
 
 @Injectable({
   providedIn: "root"

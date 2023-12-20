@@ -1,8 +1,9 @@
 import {Component, Input} from "@angular/core";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {LoginDataRef} from "@app/pages/auth/login/model/login-model";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {ControlContainer, NgForm} from "@angular/forms";
+import {AppDataService} from "@app/app-data.service";
 
 @Component({
   selector: "app-default-login",
@@ -15,6 +16,6 @@ export class DefaultLoginComponent {
   @Input() loginValidator: NgForm;
   loginAuthCode: string;
 
-  constructor(protected utils: UtilsService, protected authentication: AuthenticationService) {
+  constructor(protected utils: UtilsService, protected authentication: AuthenticationService, protected appDataService:AppDataService) {
   }
 }

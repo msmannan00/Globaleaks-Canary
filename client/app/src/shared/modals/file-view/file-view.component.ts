@@ -3,6 +3,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {UtilsService} from "@app/shared/services/utils.service";
 import { WbFile } from "@app/models/app/shared-public-model";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 
 @Component({
   selector: "src-file-view",
@@ -18,7 +19,7 @@ export class FileViewComponent implements OnInit {
 
   iframeUrl: SafeResourceUrl;
 
-  constructor(private sanitizer: DomSanitizer, private utilsService: UtilsService, private modalService: NgbModal) {
+  constructor(private authenticationService: AuthenticationService, private sanitizer: DomSanitizer, private utilsService: UtilsService, private modalService: NgbModal) {
 
   }
 
@@ -29,7 +30,7 @@ export class FileViewComponent implements OnInit {
   }
 
   viewFile() {
-    this.utilsService.view("api/recipient/wbfiles/" + this.args.file.id, this.args.file.type, (blob: Blob) => {
+    this.utilsService.view(this.authenticationService, "api/recipient/wbfiles/" + this.args.file.id, this.args.file.type, (blob: Blob) => {
       this.args.loaded = true;
       window.addEventListener("message", () => {
         const data = {

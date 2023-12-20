@@ -2,7 +2,7 @@ import {HttpClient} from "@angular/common/http";
 import {AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild} from "@angular/core";
 import {FlowDirective} from "@flowjs/ngx-flow";
 import {Subscription} from "rxjs";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 
 @Component({
   selector: "src-image-upload",

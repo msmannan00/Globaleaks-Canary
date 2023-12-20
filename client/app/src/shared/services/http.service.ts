@@ -28,6 +28,9 @@ import { notificationResolverModel } from "@app/models/resolvers/notification-re
 })
 export class HttpService {
 
+  constructor(private httpClient: HttpClient, private router: Router) {
+  }
+
   getPublicResource(): Observable<any> {
     return this.httpClient.get<any>("api/public", {observe: "response"});
   }
@@ -93,7 +96,7 @@ export class HttpService {
     return this.httpClient.post("api/signup", param);
   }
 
-  requestWizard(param: string): Observable<any> {
+  requestWizard(param: string): Observable<object> {
     return this.httpClient.post("api/wizard", param);
   }
 
@@ -116,11 +119,6 @@ export class HttpService {
   requestNewComment(param: string): Observable<any> {
     return this.httpClient.post("api/whistleblower/wbtip/comments", param);
   }
-
-  requestPreferenceResource(): Observable<any> {
-    return this.httpClient.get("api/admin/preferences");
-  }
-
   requestUserPreferenceResource(): Observable<any> {
     return this.httpClient.get("api/user/preferences");
   }
@@ -400,6 +398,4 @@ export class HttpService {
     return this.httpClient.put("api/recipient/rtips/" + tipId, req);
   };
 
-  constructor(private httpClient: HttpClient, private router: Router) {
-  }
 }

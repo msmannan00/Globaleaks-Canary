@@ -3,7 +3,7 @@ import {Injectable} from "@angular/core";
 import {Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
 import {HttpService} from "@app/shared/services/http.service";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {jobResolverModel} from "@app/models/resolvers/job-resolver-model";
 
 @Injectable({

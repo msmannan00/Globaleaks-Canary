@@ -11,13 +11,14 @@ import {FieldUtilitiesService} from "@app/shared/services/field-utilities.servic
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
-import {Observable, map, of} from "rxjs";
-import { Step } from "@app/models/resolvers/questionnaire-model";
-import { ParsedFields } from "@app/models/component-model/parsedFields";
-import { Field, fieldtemplatesResolverModel } from "@app/models/resolvers/field-template-model";
-import { Children, Option, TriggeredByOption } from "@app/models/app/shared-public-model";
-import { Questionnaire } from "@app/models/app/public-model";
-import { Step as Steps } from "@app/models/app/shared-public-model";
+import {map, Observable, of} from "rxjs";
+import {Step} from "@app/models/resolvers/questionnaire-model";
+import {ParsedFields} from "@app/models/component-model/parsedFields";
+import {Field, fieldtemplatesResolverModel} from "@app/models/resolvers/field-template-model";
+import {Children, Option, Step as Steps, TriggeredByOption} from "@app/models/app/shared-public-model";
+import {Questionnaire} from "@app/models/app/public-model";
+import {TokenResource} from "@app/shared/services/token-resource.service";
+import {CryptoService} from "@app/services/helper/crypto.service";
 
 @Component({
   selector: "src-fields",
@@ -49,7 +50,7 @@ export class FieldsComponent implements OnInit {
   };
   instance:string;
 
-  constructor(private questionnaireService: QuestionnaireService, private modalService: NgbModal, public nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService, private fieldTemplates: FieldTemplatesResolver, private fieldUtilities: FieldUtilitiesService,) {
+  constructor(private cryptoService: CryptoService, private questionnaireService: QuestionnaireService, private tokenResourceService: TokenResource, private modalService: NgbModal, public nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService, private fieldTemplates: FieldTemplatesResolver, private fieldUtilities: FieldUtilitiesService,) {
   }
 
   ngOnInit(): void {
@@ -76,8 +77,7 @@ export class FieldsComponent implements OnInit {
 
   minDateFormat(value: { year: number; month: number; day: number } | string): string {
     if(typeof(value) !== "string"){
-      const dateString = `${value.year}-${value.month}-${value.day}`;
-      return dateString;
+      return `${value.year}-${value.month}-${value.day}`;
     }else{
       return value;
     }
@@ -85,8 +85,7 @@ export class FieldsComponent implements OnInit {
 
   maxDateFormat(value: { year: number; month: number; day: number } | string): string {
     if(typeof(value) !== "string"){
-      const dateString = `${value.year}-${value.month}-${value.day}`;
-      return dateString;
+      return `${value.year}-${value.month}-${value.day}`;
     }else{
       return value;
     }
@@ -131,7 +130,7 @@ export class FieldsComponent implements OnInit {
   }
 
   exportQuestion(field: Step | Field) {
-    this.utilsService.download("api/admin/fieldtemplates/" + field.id);
+    this.utilsService.download("api/admin/fieldtemplates/" + field.id, this.tokenResourceService);
   }
 
   delField(field: Step | Field) {

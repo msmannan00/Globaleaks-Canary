@@ -22,7 +22,6 @@ export class AppDataService {
   page = "blank";
   languages_enabled = new Map<string, LanguagesSupported>();
   sidebar = "";
-
   privacy_badge_open: boolean;
   languages_supported: Map<string, LanguagesSupported>;
   connection: { tor: any };
@@ -30,7 +29,6 @@ export class AppDataService {
   ctx: string;
   receipt: string;
   score: number;
-
   receivers_by_id: any = {};
   submissionStatuses:Status[];
   submission_statuses_by_id: any;
