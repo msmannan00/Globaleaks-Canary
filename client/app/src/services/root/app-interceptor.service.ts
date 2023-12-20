@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpInterceptor, HttpEvent, HttpRequest, HttpHandler, HttpClient, HttpErrorResponse,} from "@angular/common/http";
 import {catchError, finalize, from, Observable, switchMap, throwError} from "rxjs";
 import {TokenResponse} from "@app/models/authentication/token-response";
-import {CryptoService} from "@app/services/helper/crypto.service";
+import {CryptoService} from "@app/shared/services/crypto.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {AppDataService} from "@app/app-data.service";
 import {TranslationService} from "@app/services/helper/translation.service";

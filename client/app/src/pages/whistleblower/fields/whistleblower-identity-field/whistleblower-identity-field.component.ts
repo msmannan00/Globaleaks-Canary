@@ -31,14 +31,14 @@ export class WhistleblowerIdentityFieldComponent implements OnInit {
     this.identity_provided = true;
     this.stateChanged.emit(true);
     if (this.submission) {
-      this.submission._submission.identity_provided = true;
+      this.submission.submission.identity_provided = true;
     }
   }
 
   changeIdentitySetting(status: boolean): void {
     this.identity_provided = status;
     if (this.submission) {
-      this.submission._submission.identity_provided = status;
+      this.submission.submission.identity_provided = status;
     }
     this.stateChanged.emit(status);
   }

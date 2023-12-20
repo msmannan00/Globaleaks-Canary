@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {CryptoService} from "@app/services/helper/crypto.service";
+import {CryptoService} from "@app/shared/services/crypto.service";
 
 @Injectable({
   providedIn: "root"

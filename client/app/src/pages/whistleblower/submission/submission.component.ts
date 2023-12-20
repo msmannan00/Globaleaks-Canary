@@ -253,7 +253,7 @@ export class SubmissionComponent {
       return;
     }
 
-    this.submissionService._submission.answers = this.answers;
+    this.submissionService.submission.answers = this.answers;
 
     this.utilsService.resumeFileUploads(this.uploads);
     this.done = true;

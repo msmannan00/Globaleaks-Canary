@@ -17,7 +17,7 @@ import { Receiver } from "@app/models/reciever/reciever-tip-data";
 import { AuthenticationService } from "@app/services/helper/authentication.service";
 import { ReceiverTipService } from "@app/services/helper/receiver-tip.service";
 import { HttpService } from "@app/shared/services/http.service";
-import {CryptoService} from "@app/services/helper/crypto.service";
+import {CryptoService} from "@app/shared/services/crypto.service";
 
 
 @Component({

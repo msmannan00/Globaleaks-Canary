@@ -3,7 +3,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {AppDataService} from "@app/app-data.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {HttpService} from "@app/shared/services/http.service";
-import {CryptoService} from "@app/services/helper/crypto.service";
+import {CryptoService} from "@app/shared/services/crypto.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {FileViewComponent} from "@app/shared/modals/file-view/file-view.component";
 import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";

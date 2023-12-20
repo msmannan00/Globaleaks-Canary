@@ -16,7 +16,7 @@ import {TipOperationSetReminderComponent} from "@app/shared/modals/tip-operation
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {HttpClient} from "@angular/common/http";
 import {TipOperationPostponeComponent} from "@app/shared/modals/tip-operation-postpone/tip-operation-postpone.component";
-import {CryptoService} from "@app/services/helper/crypto.service";
+import {CryptoService} from "@app/shared/services/crypto.service";
 import {TransferAccessComponent} from "@app/shared/modals/transfer-access/transfer-access.component";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import { Tab } from "@app/models/component-model/tab";

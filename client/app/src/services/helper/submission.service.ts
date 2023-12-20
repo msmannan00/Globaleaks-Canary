@@ -8,7 +8,7 @@ import {submissionResourceModel} from "@app/models/whistleblower/submission-reso
   providedIn: "root",
 })
 export class SubmissionService {
-  _submission: submissionResourceModel;
+  submission: submissionResourceModel = new submissionResourceModel();
   context: Context;
   receivers: string[] = [];
   mandatory_receivers = 0;
@@ -57,29 +57,29 @@ export class SubmissionService {
 
   create(context_id: number) {
     this.setContextReceivers(context_id);
-    this._submission.context_id = context_id;
+    this.submission.context_id = context_id;
   }
 
   submit() {
-    this._submission.receivers = [];
+    this.submission.receivers = [];
 
     for (const key in this.selected_receivers) {
       if (Object.prototype.hasOwnProperty.call(this.selected_receivers, key)) {
-        this._submission.receivers.push(key);
+        this.submission.receivers.push(key);
       }
     }
 
-    if (!this._submission.identity_provided) {
-      this._submission.identity_provided = false;
+    if (!this.submission.identity_provided) {
+      this.submission.identity_provided = false;
     }
 
     const _submission_data = {
-      context_id: this._submission.context_id,
-      receivers: this._submission.receivers,
-      identity_provided: this._submission.identity_provided,
-      answers: this._submission.answers,
-      answer: this._submission.answer,
-      score: this._submission.score,
+      context_id: this.submission.context_id,
+      receivers: this.submission.receivers,
+      identity_provided: this.submission.identity_provided,
+      answers: this.submission.answers,
+      answer: this.submission.answer,
+      score: this.submission.score,
     };
 
     const param = JSON.stringify(_submission_data);
@@ -93,6 +93,4 @@ export class SubmissionService {
   getSharedData() {
     return this.sharedData;
   }
-
-
 }

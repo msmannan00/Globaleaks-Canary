@@ -18,7 +18,7 @@ import {Field, fieldtemplatesResolverModel} from "@app/models/resolvers/field-te
 import {Children, Option, Step as Steps, TriggeredByOption} from "@app/models/app/shared-public-model";
 import {Questionnaire} from "@app/models/app/public-model";
 import {TokenResource} from "@app/shared/services/token-resource.service";
-import {CryptoService} from "@app/services/helper/crypto.service";
+import {CryptoService} from "@app/shared/services/crypto.service";
 
 @Component({
   selector: "src-fields",
