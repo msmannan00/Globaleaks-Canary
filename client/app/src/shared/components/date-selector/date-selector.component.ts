@@ -16,13 +16,6 @@ export class DateRangeSelectorComponent {
   fromDate: NgbDate | null = null;
   toDate: NgbDate | null = null;
 
-  ngOnInit() {
-    if (this.currentDates) {
-      this.fromDate = this.currentDates.fromDate;
-      this.toDate = this.currentDates.toDate;
-    }
-  }
-
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
