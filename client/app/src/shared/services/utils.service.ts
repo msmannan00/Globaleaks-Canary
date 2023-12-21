@@ -33,19 +33,11 @@ import {AuthenticationService} from "@app/services/helper/authentication.service
 })
 export class UtilsService {
 
-  constructor(private clipboardService: ClipboardService, private http: HttpClient, private httpService: HttpService, private modalService: NgbModal, private preferenceResolver: PreferenceResolver, private router: Router) {
+  constructor(private tokenResource: TokenResource, private clipboardService: ClipboardService, private http: HttpClient, private httpService: HttpService, private modalService: NgbModal, private preferenceResolver: PreferenceResolver, private router: Router) {
   }
 
   updateNode(nodeResolverModel:nodeResolverModel) {
     this.httpService.updateNodeResource(nodeResolverModel).subscribe();
-  }
-
-  str2Uint8Array(str: string) {
-    const result = new Uint8Array(str.length);
-    for (let i = 0; i < str.length; i++) {
-      result[i] = str.charCodeAt(i);
-    }
-    return result;
   }
 
   newItemOrder(objects: any[], key: string): number {
@@ -74,13 +66,13 @@ export class UtilsService {
     return ret;
   }
 
-  async load(url: string, tokenResourceService: TokenResource): Promise<string> {
-    const token = await tokenResourceService.getWithProofOfWork();
+  async load(url: string): Promise<string> {
+    const token = await this.tokenResource.getWithProofOfWork();
     return url + "?token=" + token.id + ":" + token.answer;
   }
 
-  download(url: string, tokenResourceService: TokenResource): void {
-    tokenResourceService.getWithProofOfWork().then((token: any) => {
+  download(url: string): void {
+    this.tokenResource.getWithProofOfWork().then((token: any) => {
       window.open(`${url}?token=${token.id}:${token.answer}`);
     });
   }

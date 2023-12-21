@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import sha256, {} from "fast-sha256";
-import {UtilsService} from "@app/shared/services/utils.service";
 
 @Injectable({
   providedIn: "root"
@@ -10,9 +9,6 @@ export class CryptoService {
   deferred: Promise<number>;
   data: string;
   counter: number = 0;
-
-  constructor(private utilsService: UtilsService) {
-  }
 
   getWebCrypto() {
     if (typeof window === "undefined" || !window.isSecureContext) {
@@ -31,9 +27,17 @@ export class CryptoService {
     }
   };
 
+  str2Uint8Array(str: string) {
+    const result = new Uint8Array(str.length);
+    for (let i = 0; i < str.length; i++) {
+      result[i] = str.charCodeAt(i);
+    }
+    return result;
+  }
+
   work(resolve: (result: number) => void) {
     const webCrypto = this.getWebCrypto();
-    const toHash = this.utilsService.str2Uint8Array(this.data + this.counter);
+    const toHash = this.str2Uint8Array(this.data + this.counter);
     let digestPremise;
 
     if (webCrypto) {

@@ -17,8 +17,6 @@ import {ParsedFields} from "@app/models/component-model/parsedFields";
 import {Field, fieldtemplatesResolverModel} from "@app/models/resolvers/field-template-model";
 import {Children, Option, Step as Steps, TriggeredByOption} from "@app/models/app/shared-public-model";
 import {Questionnaire} from "@app/models/app/public-model";
-import {TokenResource} from "@app/shared/services/token-resource.service";
-import {CryptoService} from "@app/shared/services/crypto.service";
 
 @Component({
   selector: "src-fields",
@@ -50,7 +48,7 @@ export class FieldsComponent implements OnInit {
   };
   instance:string;
 
-  constructor(private cryptoService: CryptoService, private questionnaireService: QuestionnaireService, private tokenResourceService: TokenResource, private modalService: NgbModal, public nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService, private fieldTemplates: FieldTemplatesResolver, private fieldUtilities: FieldUtilitiesService,) {
+  constructor(private questionnaireService: QuestionnaireService, private modalService: NgbModal, public nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService, private fieldTemplates: FieldTemplatesResolver, private fieldUtilities: FieldUtilitiesService,) {
   }
 
   ngOnInit(): void {
@@ -130,7 +128,7 @@ export class FieldsComponent implements OnInit {
   }
 
   exportQuestion(field: Step | Field) {
-    this.utilsService.download("api/admin/fieldtemplates/" + field.id, this.tokenResourceService);
+    this.utilsService.download("api/admin/fieldtemplates/" + field.id);
   }
 
   delField(field: Step | Field) {

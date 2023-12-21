@@ -17,7 +17,6 @@ import { Receiver } from "@app/models/reciever/reciever-tip-data";
 import { AuthenticationService } from "@app/services/helper/authentication.service";
 import { ReceiverTipService } from "@app/services/helper/receiver-tip.service";
 import { HttpService } from "@app/shared/services/http.service";
-import {CryptoService} from "@app/shared/services/crypto.service";
 
 
 @Component({
@@ -180,7 +179,7 @@ export class TipsComponent implements OnInit {
   }
 
   exportTip(tipId: string) {
-    this.utils.download("api/recipient/rtips/" + tipId + "/export", this.tokenResourceService);
+    this.utils.download("api/recipient/rtips/" + tipId + "/export");
     this.appDataService.updateShowLoadingPanel(false);
   }
 
