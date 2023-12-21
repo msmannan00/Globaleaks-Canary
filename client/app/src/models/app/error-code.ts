@@ -3,9 +3,13 @@ export class ErrorCodes {
   arguments = [];
   code: number = -1;
 
-  constructor(protected messageParam?: any,protected codeParam?: any,protected  argumentParam?: any) {
-    this.message = messageParam;
-    this.arguments = argumentParam;
+  constructor(protected messageParam?: string,protected codeParam?: number,protected  argumentParam?: []) {
+    if(argumentParam){
+      this.arguments = argumentParam;
+    }
+    if(messageParam){
+      this.message = messageParam;
+    }
     if (codeParam) {
       this.code = codeParam;
     }

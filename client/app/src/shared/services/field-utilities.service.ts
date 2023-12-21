@@ -261,7 +261,7 @@ export class FieldUtilitiesService {
     });
 
     if (scope.context) {
-      scope.submissionService._submission.score = scope.score;
+      scope.submissionService.submission.score = scope.score;
       scope.submissionService.blocked = scope.block_submission;
     }
   }
