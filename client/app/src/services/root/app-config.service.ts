@@ -36,7 +36,7 @@ export class AppConfigService {
       }
 
       if (this.authenticationService.session.role === "admin") {
-        this.router.navigate(["/" + this.authenticationService.session.role], {queryParams}).then();
+        this.router.navigate(["/admin"], {queryParams}).then();
       } else if (this.authenticationService.session.role === "receiver") {
         this.router.navigate(["/recipient"], {queryParams}).then();
       } else if (this.authenticationService.session.role === "custodian") {

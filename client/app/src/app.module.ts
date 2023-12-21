@@ -93,7 +93,7 @@ export class AppModule {
 
   @HostListener("window:beforeunload")
   async ngOnDestroy() {
-    // this.reset();
+    this.reset();
   }
 
   initIdleState() {
