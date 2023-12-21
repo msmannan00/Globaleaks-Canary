@@ -20,7 +20,7 @@ import {FormFieldInputComponent} from "@app/pages/whistleblower/form-field-input
 import {WhistleblowerIdentityFieldComponent} from "./fields/whistleblower-identity-field/whistleblower-identity-field.component";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {NgbInputDatepicker} from "@ng-bootstrap/ng-bootstrap";
-import {ReceiptComponent} from "./receipt/receipt.component";
+import {ReceiptComponent} from "@app/pages/whistleblower/receipt/receipt.component";
 import {TipAdditionalQuestionnaireFormComponent} from "@app/shared/modals/tip-additional-questionnaire-form/tip-additional-questionnaire-form.component";
 
 

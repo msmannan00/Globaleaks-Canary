@@ -107,8 +107,8 @@ export class UtilsService {
   }
 
   getDirection(language: string): string {
-    const rtlLanguages = ['ar', 'dv', 'fa', 'fa_AF', 'he', 'ps', 'ug', 'ur'];
-    return rtlLanguages.includes(language) ? 'rtl' : 'ltr';
+    const rtlLanguages = ["ar", "dv", "fa", "fa_AF", "he", "ps", "ug", "ur"];
+    return rtlLanguages.includes(language) ? "rtl" : "ltr";
   }
 
   view(authenticationService: AuthenticationService, url: string, _: string, callback: (blob: Blob) => void): void {
@@ -233,7 +233,7 @@ export class UtilsService {
 
   isWhistleblowerPage(authenticationService: AuthenticationService, appDataService: AppDataService) {
     const currentUrl = this.router.url;
-    return appDataService.public.node.wizard_done && (!authenticationService.session || (location.hash==='#/' || location.hash.startsWith('#/submission'))) && ((currentUrl === '/' && !appDataService.public.node.enable_signup) || currentUrl === '/submission' || currentUrl === '/blank');
+    return appDataService.public.node.wizard_done && (!authenticationService.session || (location.hash==="#/" || location.hash.startsWith("#/submission"))) && ((currentUrl === "/" && !appDataService.public.node.enable_signup) || currentUrl === "/submission" || currentUrl === "/blank");
   }
 
   stopPropagation(event: Event) {
@@ -260,7 +260,7 @@ export class UtilsService {
     if (appDataService.public.node.custom_support_url) {
       window.open(appDataService.public.node.custom_support_url, "_blank");
     } else {
-      this.modalService.open(RequestSupportComponent,{backdrop: 'static',keyboard: false});
+      this.modalService.open(RequestSupportComponent,{backdrop: "static",keyboard: false});
     }
   }
   array_to_map(receivers: any) {
@@ -510,9 +510,9 @@ export class UtilsService {
 
   getConfirmation(): Observable<string> {
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(ConfirmationWithPasswordComponent,{backdrop: 'static',keyboard: false});
+      let modalRef = this.modalService.open(ConfirmationWithPasswordComponent,{backdrop: "static",keyboard: false});
       if (this.preferenceResolver.dataModel.two_factor) {
-        modalRef = this.modalService.open(ConfirmationWith2faComponent,{backdrop: 'static',keyboard: false});
+        modalRef = this.modalService.open(ConfirmationWith2faComponent,{backdrop: "static",keyboard: false});
       }
 
       modalRef.componentInstance.confirmFunction = (secret: string) => {
@@ -525,7 +525,7 @@ export class UtilsService {
   openConfirmableModalDialogReport(arg: string, scope: any): Observable<string> {
     scope = !scope ? this : scope;
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(DeleteConfirmationComponent,{backdrop: 'static',keyboard: false});
+      let modalRef = this.modalService.open(DeleteConfirmationComponent,{backdrop: "static",keyboard: false});
       modalRef.componentInstance.arg = arg;
       modalRef.componentInstance.scope = scope;
       modalRef.componentInstance.confirmFunction = () => {

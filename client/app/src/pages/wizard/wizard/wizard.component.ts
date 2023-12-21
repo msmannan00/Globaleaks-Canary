@@ -99,16 +99,16 @@ export class WizardComponent implements OnInit {
   }
 
   verifyProxiedWizard(){
-    if (!this.appDataService.public.node.wizard_done && window.location.host === 'localhost:4200') {
+    if (!this.appDataService.public.node.wizard_done && window.location.host === "localhost:4200") {
       console.log(window.navigator.userAgent);
-      if(!window.navigator.userAgent.includes('Electron')){
+      if(!window.navigator.userAgent.includes("Electron")){
         this.proxiedServer = true;
       }
     }
   }
 
   openLocalhost() {
-    window.location.href = 'https://127.0.0.1:8443/';
+    window.location.href = "https://127.0.0.1:8443/";
   }
 
   validateDuplicateRecipient() {
