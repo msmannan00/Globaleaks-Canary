@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FieldUtilitiesService } from "@app/shared/services/field-utilities.service";
-import { ControlContainer, NgForm } from "@angular/forms";
-import { SubmissionService } from "@app/services/helper/submission.service";
-import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
-import { Answers } from "@app/models/reciever/reciever-tip-data";
-import { Step } from "@app/models/whistleblower/wb-tip-data";
-import { Field } from "@app/models/resolvers/field-template-model";
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
+import {ControlContainer, NgForm} from "@angular/forms";
+import {SubmissionService} from "@app/services/helper/submission.service";
+import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
+import {Answers} from "@app/models/reciever/reciever-tip-data";
+import {Step} from "@app/models/whistleblower/wb-tip-data";
+import {Field} from "@app/models/resolvers/field-template-model";
 
 @Component({
   selector: "src-form-field-input",

@@ -6,7 +6,7 @@ import {FieldUtilitiesService} from "@app/shared/services/field-utilities.servic
 import {TranslationService} from "@app/services/helper/translation.service";
 import {Router, NavigationEnd, ActivatedRoute} from "@angular/router";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
-import { LanguagesSupported } from "@app/models/app/public-model";
+import {LanguagesSupported} from "@app/models/app/public-model";
 import {TitleService} from "@app/shared/services/title.service";
 
 @Injectable({

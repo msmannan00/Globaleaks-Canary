@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, TemplateRef, ViewChild, ChangeDetectorRef} from "@angular/core";
-import { Tab } from "@app/models/component-model/tab";
+import {Tab} from "@app/models/component-model/tab";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {UsersTab1Component} from "@app/pages/admin/users/users-tab1/users-tab1.component";
 import {UsersTab2Component} from "@app/pages/admin/users/users-tab2/users-tab2.component";

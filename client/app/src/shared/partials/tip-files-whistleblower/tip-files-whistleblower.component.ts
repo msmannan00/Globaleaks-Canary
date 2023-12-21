@@ -5,7 +5,7 @@ import {HttpService} from "@app/shared/services/http.service";
 import {AppDataService} from "@app/app-data.service";
 import {CryptoService} from "@app/shared/services/crypto.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
-import { WbFile } from "@app/models/app/shared-public-model";
+import {WbFile} from "@app/models/app/shared-public-model";
 
 @Component({
   selector: "src-tip-files-whistleblower",

@@ -5,7 +5,7 @@ import {Observable} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AppDataService} from "@app/app-data.service";
 import {ErrorCodes} from "@app/models/app/error-code";
-import { Session } from "@app/models/authentication/session";
+import {Session} from "@app/models/authentication/session";
 import {TitleService} from "@app/shared/services/title.service";
 
 @Injectable({

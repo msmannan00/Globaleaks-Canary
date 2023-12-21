@@ -2,11 +2,10 @@ import {Component, Input, OnInit} from "@angular/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {HttpClient} from "@angular/common/http";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {AppConfigService} from "@app/services/root/app-config.service";
 import {HttpService} from "@app/shared/services/http.service";
-import { DeleteConfirmationComponent } from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
-import { Observable } from "rxjs";
-import { Status, Substatus } from "@app/models/app/public-model";
+import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
+import {Observable} from "rxjs";
+import {Status, Substatus} from "@app/models/app/public-model";
 
 @Component({
   selector: "src-substatuses",
@@ -22,7 +21,7 @@ export class SubStatusComponent implements OnInit {
     this.showAddSubStatus = !this.showAddSubStatus;
   }
 
-  constructor(private httpService: HttpService, private appConfigService: AppConfigService, protected modalService: NgbModal, protected utilsService: UtilsService, private http: HttpClient) {
+  constructor(private httpService: HttpService, protected modalService: NgbModal, protected utilsService: UtilsService, private http: HttpClient) {
   }
 
   ngOnInit(): void {

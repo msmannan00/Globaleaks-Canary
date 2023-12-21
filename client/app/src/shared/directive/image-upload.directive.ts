@@ -1,7 +1,7 @@
 import {ComponentFactoryResolver, Directive, Input, ViewContainerRef} from "@angular/core";
-import { contextResolverModel } from "@app/models/resolvers/context-resolver-model";
-import { nodeResolverModel } from "@app/models/resolvers/node-resolver-model";
-import { userResolverModel } from "@app/models/resolvers/user-resolver-model";
+import {contextResolverModel} from "@app/models/resolvers/context-resolver-model";
+import {nodeResolverModel} from "@app/models/resolvers/node-resolver-model";
+import {userResolverModel} from "@app/models/resolvers/user-resolver-model";
 import {ImageUploadComponent} from "@app/shared/partials/image-upload/image-upload.component";
 
 @Directive({

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
-import { Context } from "@app/models/app/public-model";
+import {Context} from "@app/models/app/public-model";
 import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({

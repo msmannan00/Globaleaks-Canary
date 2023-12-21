@@ -1,6 +1,6 @@
 import {Component, Input} from "@angular/core";
-import { Receiver } from "@app/models/app/public-model";
-import { SubmissionService } from "@app/services/helper/submission.service";
+import {Receiver} from "@app/models/app/public-model";
+import {SubmissionService} from "@app/services/helper/submission.service";
 import {TranslateService} from "@ngx-translate/core";
 
 @Component({

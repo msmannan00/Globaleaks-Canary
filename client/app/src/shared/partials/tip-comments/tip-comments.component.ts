@@ -4,7 +4,7 @@ import {AuthenticationService} from "@app/services/helper/authentication.service
 import {UtilsService} from "@app/shared/services/utils.service";
 import {ScrollToBottomDirective} from "@app/shared/directive/scroll-to-bottom.directive";
 import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
-import { Comment } from "@app/models/app/shared-public-model";
+import {Comment} from "@app/models/app/shared-public-model";
 
 @Component({
   selector: "src-tip-comments",

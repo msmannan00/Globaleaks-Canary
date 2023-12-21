@@ -1,14 +1,13 @@
 import {HttpClient} from "@angular/common/http";
 import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AcceptAgreementComponent} from "@app/shared/modals/accept-agreement/accept-agreement.component";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {Observable} from "rxjs";
-import { nodeResolverModel } from "@app/models/resolvers/node-resolver-model";
-import { preferenceResolverModel } from "@app/models/resolvers/preference-resolver-model";
+import {nodeResolverModel} from "@app/models/resolvers/node-resolver-model";
+import {preferenceResolverModel} from "@app/models/resolvers/preference-resolver-model";
 
 @Component({
   selector: "src-admin-home",

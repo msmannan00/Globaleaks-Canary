@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {NgForm} from "@angular/forms";
-import { Field } from "@app/models/resolvers/field-template-model";
+import {Field} from "@app/models/resolvers/field-template-model";
 
 @Component({
   selector: "src-step-error-entry",

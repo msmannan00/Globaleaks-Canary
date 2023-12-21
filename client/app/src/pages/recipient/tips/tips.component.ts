@@ -1,22 +1,22 @@
-import { Component, ElementRef, HostListener, OnInit } from "@angular/core";
+import {Component, ElementRef, HostListener, OnInit} from "@angular/core";
 import {AppConfigService} from "@app/services/root/app-config.service";
-import { NgbDate, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { AppDataService } from "@app/app-data.service";
-import { GrantAccessComponent } from "@app/shared/modals/grant-access/grant-access.component";
-import { RevokeAccessComponent } from "@app/shared/modals/revoke-access/revoke-access.component";
-import { PreferenceResolver } from "@app/shared/resolvers/preference.resolver";
-import { RTipsResolver } from "@app/shared/resolvers/r-tips-resolver.service";
-import { UtilsService } from "@app/shared/services/utils.service";
-import { TranslateService } from "@ngx-translate/core";
-import { IDropdownSettings } from "ng-multiselect-dropdown";
-import { filter, orderBy } from "lodash";
-import { TokenResource } from "@app/shared/services/token-resource.service";
-import { Router } from "@angular/router";
-import { rtipResolverModel } from "@app/models/resolvers/rtips-resolver-model";
-import { Receiver } from "@app/models/reciever/reciever-tip-data";
-import { AuthenticationService } from "@app/services/helper/authentication.service";
-import { ReceiverTipService } from "@app/services/helper/receiver-tip.service";
-import { HttpService } from "@app/shared/services/http.service";
+import {NgbDate, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {AppDataService} from "@app/app-data.service";
+import {GrantAccessComponent} from "@app/shared/modals/grant-access/grant-access.component";
+import {RevokeAccessComponent} from "@app/shared/modals/revoke-access/revoke-access.component";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
+import {RTipsResolver} from "@app/shared/resolvers/r-tips-resolver.service";
+import {UtilsService} from "@app/shared/services/utils.service";
+import {TranslateService} from "@ngx-translate/core";
+import {IDropdownSettings} from "ng-multiselect-dropdown";
+import {filter, orderBy} from "lodash";
+import {TokenResource} from "@app/shared/services/token-resource.service";
+import {Router} from "@angular/router";
+import {rtipResolverModel} from "@app/models/resolvers/rtips-resolver-model";
+import {Receiver} from "@app/models/reciever/reciever-tip-data";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
+import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
+import {HttpService} from "@app/shared/services/http.service";
 
 
 @Component({

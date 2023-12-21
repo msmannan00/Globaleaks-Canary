@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import { networkResolverModel } from "@app/models/resolvers/network-resolver-model";
+import {networkResolverModel} from "@app/models/resolvers/network-resolver-model";
 import {NetworkResolver} from "@app/shared/resolvers/network.resolver";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {HttpService} from "@app/shared/services/http.service";

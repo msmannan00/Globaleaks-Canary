@@ -1,7 +1,6 @@
 import {Component, OnInit} from "@angular/core";
-import { tenantResolverModel } from "@app/models/resolvers/tenant-resolver-model";
+import {tenantResolverModel} from "@app/models/resolvers/tenant-resolver-model";
 import {HttpService} from "@app/shared/services/http.service";
-import {UtilsService} from "@app/shared/services/utils.service";
 
 @Component({
   selector: "src-sites-tab1",

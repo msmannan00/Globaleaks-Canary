@@ -1,11 +1,11 @@
 import {Component, Input} from "@angular/core";
 import {NgForm} from "@angular/forms";
-import { notificationResolverModel } from "@app/models/resolvers/notification-resolver-model";
+import {notificationResolverModel} from "@app/models/resolvers/notification-resolver-model";
 import {Constants} from "@app/shared/constants/constants";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {NotificationsResolver} from "@app/shared/resolvers/notifications.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
-import { switchMap } from "rxjs";
+import {switchMap} from "rxjs";
 
 @Component({
   selector: "src-notification-tab1",

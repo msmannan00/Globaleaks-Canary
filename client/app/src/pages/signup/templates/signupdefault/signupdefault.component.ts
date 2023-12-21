@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
-import { Signup } from "@app/models/component-model/signup";
+import {Signup} from "@app/models/component-model/signup";
 import * as Constants from "@app/shared/constants/constants";
 
 @Component({

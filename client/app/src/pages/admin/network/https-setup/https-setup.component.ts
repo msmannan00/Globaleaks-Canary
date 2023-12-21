@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output} from "@angular/core";
-import { FileResources } from "@app/models/component-model/file-resources";
+import {FileResources} from "@app/models/component-model/file-resources";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {HttpService} from "@app/shared/services/http.service";
 

@@ -1,5 +1,5 @@
 import {Component, TemplateRef, ViewChild, AfterViewInit, ChangeDetectorRef} from "@angular/core";
-import { Tab } from "@app/models/component-model/tab";
+import {Tab} from "@app/models/component-model/tab";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {NotificationTab1Component} from "@app/pages/admin/notifications/notification-tab1/notification-tab1.component";
 import {NotificationTab2Component} from "@app/pages/admin/notifications/notification-tab2/notification-tab2.component";

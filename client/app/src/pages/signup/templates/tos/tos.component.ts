@@ -1,7 +1,7 @@
 import {Component, Input} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {ControlContainer, NgForm} from "@angular/forms";
-import { Signup } from "@app/models/component-model/signup";
+import {Signup} from "@app/models/component-model/signup";
 
 @Component({
   selector: "src-tos",

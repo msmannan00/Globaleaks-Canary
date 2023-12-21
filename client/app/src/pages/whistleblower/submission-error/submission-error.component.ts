@@ -2,8 +2,8 @@ import {Component, EventEmitter, Input, Output, QueryList} from "@angular/core";
 import {NgForm} from "@angular/forms";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {SubmissionService} from "@app/services/helper/submission.service";
-import { Field } from "@app/models/resolvers/field-template-model";
-import { Context } from "@app/models/reciever/reciever-tip-data";
+import {Field} from "@app/models/resolvers/field-template-model";
+import {Context} from "@app/models/reciever/reciever-tip-data";
 
 @Component({
   selector: "src-submission-error",

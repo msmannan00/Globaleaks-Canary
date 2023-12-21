@@ -3,8 +3,8 @@ import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {NewField} from "@app/models/admin/new-field";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
-import { Step } from "@app/models/resolvers/questionnaire-model";
-import { Field, fieldtemplatesResolverModel } from "@app/models/resolvers/field-template-model";
+import {Step} from "@app/models/resolvers/questionnaire-model";
+import {Field, fieldtemplatesResolverModel} from "@app/models/resolvers/field-template-model";
 
 @Component({
   selector: "src-add-field-from-template",

@@ -1,10 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {ControlContainer, NgForm} from "@angular/forms";
-import { WhistleblowerIdentity } from "@app/models/app/shared-public-model";
-import { Answers } from "@app/models/reciever/reciever-tip-data";
-import { Field } from "@app/models/resolvers/field-template-model";
-import { Step } from "@app/models/whistleblower/wb-tip-data";
-import { SubmissionService } from "@app/services/helper/submission.service";
+import {Answers} from "@app/models/reciever/reciever-tip-data";
+import {Field} from "@app/models/resolvers/field-template-model";
+import {Step} from "@app/models/whistleblower/wb-tip-data";
+import {SubmissionService} from "@app/services/helper/submission.service";
 
 @Component({
   selector: "src-whistleblower-identity-field",

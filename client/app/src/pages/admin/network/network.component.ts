@@ -1,5 +1,5 @@
 import {Component, TemplateRef, ViewChild, AfterViewInit, ChangeDetectorRef} from "@angular/core";
-import { Tab } from "@app/models/component-model/tab";
+import {Tab} from "@app/models/component-model/tab";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {HttpsComponent} from "@app/pages/admin/network/https/https.component";
 import {TorComponent} from "@app/pages/admin/network/tor/tor.component";

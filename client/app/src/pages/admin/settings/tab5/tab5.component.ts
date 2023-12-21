@@ -10,8 +10,8 @@ import {UsersResolver} from "@app/shared/resolvers/users.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppConfigService} from "@app/services/root/app-config.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
-import { userResolverModel } from "@app/models/resolvers/user-resolver-model";
-import { questionnaireResolverModel } from "@app/models/resolvers/questionnaire-model";
+import {userResolverModel} from "@app/models/resolvers/user-resolver-model";
+import {questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
 
 @Component({
   selector: "src-tab5",

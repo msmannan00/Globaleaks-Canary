@@ -5,8 +5,8 @@ import {ConfirmationComponent} from "@app/shared/modals/confirmation/confirmatio
 import {NetworkResolver} from "@app/shared/resolvers/network.resolver";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {HttpService} from "@app/shared/services/http.service";
-import { nodeResolverModel } from "@app/models/resolvers/node-resolver-model";
-import { TlsConfig } from "@app/models/component-model/tls-confiq";
+import {nodeResolverModel} from "@app/models/resolvers/node-resolver-model";
+import {TlsConfig} from "@app/models/component-model/tls-confiq";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 
 @Component({

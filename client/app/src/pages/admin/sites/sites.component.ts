@@ -1,7 +1,7 @@
 import {Component, TemplateRef, ViewChild, OnInit, AfterViewInit, ChangeDetectorRef} from "@angular/core";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
-import { Tab } from "@app/models/component-model/tab";
+import {Tab} from "@app/models/component-model/tab";
 import {SitesTab1Component} from "@app/pages/admin/sites/sites-tab1/sites-tab1.component";
 import {SitesTab2Component} from "@app/pages/admin/sites/sites-tab2/sites-tab2.component";
 

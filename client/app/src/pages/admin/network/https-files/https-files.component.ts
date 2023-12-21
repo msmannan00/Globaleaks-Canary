@@ -5,9 +5,9 @@ import {ConfirmationComponent} from "@app/shared/modals/confirmation/confirmatio
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import { nodeResolverModel } from "@app/models/resolvers/node-resolver-model";
-import { TlsConfig } from "@app/models/component-model/tls-confiq";
-import { FileResource, FileResources } from "@app/models/component-model/file-resources";
+import {nodeResolverModel} from "@app/models/resolvers/node-resolver-model";
+import {TlsConfig} from "@app/models/component-model/tls-confiq";
+import {FileResource, FileResources} from "@app/models/component-model/file-resources";
 
 @Component({
   selector: "src-https-files",

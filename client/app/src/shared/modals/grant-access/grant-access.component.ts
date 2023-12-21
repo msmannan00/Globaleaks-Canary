@@ -1,7 +1,7 @@
 import {Component, Input} from "@angular/core";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {UtilsService} from "@app/shared/services/utils.service";
-import { Receiver } from "@app/models/app/public-model";
+import {Receiver} from "@app/models/app/public-model";
 
 @Component({
   selector: "src-grant-access",

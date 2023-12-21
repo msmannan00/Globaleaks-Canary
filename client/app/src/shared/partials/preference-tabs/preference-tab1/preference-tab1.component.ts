@@ -13,10 +13,7 @@ import {EncryptionRecoveryKeyComponent} from "@app/shared/modals/encryption-reco
 import {TranslationService} from "@app/services/helper/translation.service";
 import {TranslateService} from "@ngx-translate/core";
 import {ConfirmationWith2faComponent} from "@app/shared/modals/confirmation-with2fa/confirmation-with2fa.component";
-import {NodeResolver} from "@app/shared/resolvers/node.resolver";
-import {
-  ConfirmationWithPasswordComponent
-} from "@app/shared/modals/confirmation-with-password/confirmation-with-password.component";
+import {ConfirmationWithPasswordComponent} from "@app/shared/modals/confirmation-with-password/confirmation-with-password.component";
 
 @Component({
   selector: "src-preference-tab1",
@@ -32,7 +29,7 @@ export class PreferenceTab1Component implements OnInit {
   languageModel = "";
   role = "";
 
-  constructor(private nodeResolver: NodeResolver, private translationService: TranslationService, protected appConfigService: AppConfigService, private cdr: ChangeDetectorRef, private translateService: TranslateService, private httpService: HttpService, private twoFactorAuthData: TwoFactorAuthData, private modalService: NgbModal, public appDataService: AppDataService, protected preferenceResolver: PreferenceResolver, private utilsService: UtilsService, protected authenticationService: AuthenticationService) {
+  constructor(private translationService: TranslationService, protected appConfigService: AppConfigService, private cdr: ChangeDetectorRef, private translateService: TranslateService, private httpService: HttpService, private twoFactorAuthData: TwoFactorAuthData, private modalService: NgbModal, public appDataService: AppDataService, protected preferenceResolver: PreferenceResolver, private utilsService: UtilsService, protected authenticationService: AuthenticationService) {
     this.languageModel = this.preferenceResolver.dataModel.language;
   }
 
@@ -183,23 +180,6 @@ export class PreferenceTab1Component implements OnInit {
         });
     }
   };
-
-  downloadPublicKey() {
-    const publicKey = this.preferenceResolver.dataModel.pgp_key_public;
-
-    if (publicKey) {
-      const blob = new Blob([publicKey], { type: 'text/plain' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'public_key.txt';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-    }
-  }
-
 
   onlanguagechange() {
     this.preferenceResolver.dataModel.language = this.languageModel;

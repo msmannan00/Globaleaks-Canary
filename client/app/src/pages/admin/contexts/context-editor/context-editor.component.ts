@@ -8,10 +8,10 @@ import {QuestionnairesResolver} from "@app/shared/resolvers/questionnaires.resol
 import {UsersResolver} from "@app/shared/resolvers/users.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {Observable} from "rxjs";
-import { contextResolverModel } from "@app/models/resolvers/context-resolver-model";
-import { questionnaireResolverModel } from "@app/models/resolvers/questionnaire-model";
-import { userResolverModel } from "@app/models/resolvers/user-resolver-model";
-import { nodeResolverModel } from "@app/models/resolvers/node-resolver-model";
+import {contextResolverModel} from "@app/models/resolvers/context-resolver-model";
+import {questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
+import {userResolverModel} from "@app/models/resolvers/user-resolver-model";
+import {nodeResolverModel} from "@app/models/resolvers/node-resolver-model";
 
 @Component({
   selector: "src-context-editor",

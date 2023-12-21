@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import { TlsConfig } from "@app/models/component-model/tls-confiq";
+import {TlsConfig} from "@app/models/component-model/tls-confiq";
 import {Constants} from "@app/shared/constants/constants";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {HttpService} from "@app/shared/services/http.service";

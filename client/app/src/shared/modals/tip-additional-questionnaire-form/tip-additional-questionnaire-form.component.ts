@@ -6,8 +6,8 @@ import {WbtipService} from "@app/services/helper/wbtip.service";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {HttpService} from "@app/shared/services/http.service";
-import { Answers, Questionnaire3 } from "@app/models/reciever/reciever-tip-data";
-import { Field } from "@app/models/resolvers/field-template-model";
+import {Answers, Questionnaire3} from "@app/models/reciever/reciever-tip-data";
+import {Field} from "@app/models/resolvers/field-template-model";
 
 @Component({
   selector: "src-tip-additional-questionnaire-form",

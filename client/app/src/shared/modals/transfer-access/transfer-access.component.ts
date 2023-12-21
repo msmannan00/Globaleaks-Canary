@@ -1,5 +1,5 @@
 import {Component, Input} from "@angular/core";
-import { Receiver } from "@app/models/app/public-model";
+import {Receiver} from "@app/models/app/public-model";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
@@ -7,7 +7,7 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
   templateUrl: "./transfer-access.component.html",
 })
 export class TransferAccessComponent {
-  @Input() usersNames:  Record<string, string>|undefined;;
+  @Input() usersNames:  Record<string, string>|undefined;
   @Input() selectableRecipients: Receiver[];
   receiverId:{id: number};
 

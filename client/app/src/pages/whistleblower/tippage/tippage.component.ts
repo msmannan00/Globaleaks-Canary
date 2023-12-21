@@ -6,9 +6,9 @@ import {HttpService} from "@app/shared/services/http.service";
 import {WbtipService} from "@app/services/helper/wbtip.service";
 import {AppDataService} from "@app/app-data.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import { Children, WbTipData } from "@app/models/whistleblower/wb-tip-data";
-import { Answers, Questionnaire } from "@app/models/reciever/reciever-tip-data";
-import { WhistleblowerIdentity } from "@app/models/app/shared-public-model";
+import {Children, WbTipData} from "@app/models/whistleblower/wb-tip-data";
+import {Answers, Questionnaire} from "@app/models/reciever/reciever-tip-data";
+import {WhistleblowerIdentity} from "@app/models/app/shared-public-model";
 
 @Component({
   selector: "src-tippage",
@@ -72,7 +72,7 @@ export class TippageComponent {
   };
 
   preprocessTipAnswers(tip: WbTipData) {
-    let x, i, j, k, step;
+    let i, j, k, step;
 
     for (let x = tip.questionnaires.length - 1; x >= 0; x--) {
       this.questionnaire = tip.questionnaires[x];

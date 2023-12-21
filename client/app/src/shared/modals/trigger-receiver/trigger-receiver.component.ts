@@ -3,7 +3,7 @@ import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {UsersResolver} from "@app/shared/resolvers/users.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {Option} from "@app/models/app/shared-public-model";
-import { userResolverModel } from "@app/models/resolvers/user-resolver-model";
+import {userResolverModel} from "@app/models/resolvers/user-resolver-model";
 
 @Component({
   selector: "src-trigger-receiver",

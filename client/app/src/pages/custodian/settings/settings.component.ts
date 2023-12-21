@@ -1,5 +1,5 @@
 import {Component, TemplateRef, ViewChild} from "@angular/core";
-import { Tab } from "@app/models/component-model/tab";
+import {Tab} from "@app/models/component-model/tab";
 import {Tab1Component} from "@app/pages/admin/settings/tab1/tab1.component";
 
 @Component({

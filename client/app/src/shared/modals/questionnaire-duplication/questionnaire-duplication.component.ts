@@ -2,7 +2,7 @@ import {HttpClient} from "@angular/common/http";
 import {Component, Input} from "@angular/core";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {UtilsService} from "@app/shared/services/utils.service";
-import { questionnaireResolverModel } from "@app/models/resolvers/questionnaire-model";
+import {questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
 
 @Component({
   selector: "src-questionnaire-duplication",

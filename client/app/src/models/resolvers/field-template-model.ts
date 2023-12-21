@@ -1,13 +1,5 @@
 import {Attrs, Option,TriggeredByOption} from "@app/models/app/shared-public-model";
 
-export interface FieldAttrs {
-  [key: string]: {
-    name: string;
-    type: string;
-    value: string | number | boolean;
-  };
-}
-
 export interface Field {
   id: string;
   questionnaire_id:string;

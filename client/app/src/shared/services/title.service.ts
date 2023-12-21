@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AppDataService} from "@app/app-data.service";
 import {TranslateService} from "@ngx-translate/core";
 import {Router} from "@angular/router";

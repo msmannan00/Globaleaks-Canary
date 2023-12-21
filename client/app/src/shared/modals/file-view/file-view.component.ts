@@ -2,7 +2,7 @@ import {Component, ElementRef, Input, OnInit, ViewChild} from "@angular/core";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {UtilsService} from "@app/shared/services/utils.service";
-import { WbFile } from "@app/models/app/shared-public-model";
+import {WbFile} from "@app/models/app/shared-public-model";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 
 @Component({

@@ -1,6 +1,6 @@
 import {AfterViewInit, ChangeDetectorRef, Component, TemplateRef, ViewChild} from "@angular/core";
 import {Router} from "@angular/router";
-import { Tab } from "@app/models/component-model/tab";
+import {Tab} from "@app/models/component-model/tab";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {Tab1Component} from "@app/pages/admin/settings/tab1/tab1.component";
 

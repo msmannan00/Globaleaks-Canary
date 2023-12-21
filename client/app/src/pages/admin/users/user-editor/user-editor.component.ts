@@ -9,9 +9,9 @@ import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {Observable} from "rxjs";
-import { userResolverModel } from "@app/models/resolvers/user-resolver-model";
-import { nodeResolverModel } from "@app/models/resolvers/node-resolver-model";
-import { preferenceResolverModel } from "@app/models/resolvers/preference-resolver-model";
+import {userResolverModel} from "@app/models/resolvers/user-resolver-model";
+import {nodeResolverModel} from "@app/models/resolvers/node-resolver-model";
+import {preferenceResolverModel} from "@app/models/resolvers/preference-resolver-model";
 
 @Component({
   selector: "src-user-editor",

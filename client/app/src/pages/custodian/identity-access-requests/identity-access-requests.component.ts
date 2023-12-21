@@ -4,7 +4,6 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {TipOperationFileIdentityAccessReplyComponent} from "@app/shared/modals/tip-operation-file-identity-access-reply/tip-operation-file-identity-access-reply.component";
-import {AppConfigService} from "@app/services/root/app-config.service";
 
 @Component({
   selector: "src-identity-access-requests",
@@ -12,7 +11,7 @@ import {AppConfigService} from "@app/services/root/app-config.service";
 })
 export class IdentityAccessRequestsComponent {
 
-  constructor(private appConfigService: AppConfigService, private modalService: NgbModal, private httpService: HttpService, protected iarResolver: IarResolver, protected utilsService: UtilsService) {
+  constructor(private modalService: NgbModal, private httpService: HttpService, protected iarResolver: IarResolver, protected utilsService: UtilsService) {
   }
 
   authorizeIdentityAccessRequest(iar_id: string) {

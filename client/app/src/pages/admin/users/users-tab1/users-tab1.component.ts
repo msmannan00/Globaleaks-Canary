@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {NewUser} from "@app/models/admin/new-user";
-import { tenantResolverModel } from "@app/models/resolvers/tenant-resolver-model";
-import { userResolverModel } from "@app/models/resolvers/user-resolver-model";
+import {tenantResolverModel} from "@app/models/resolvers/tenant-resolver-model";
+import {userResolverModel} from "@app/models/resolvers/user-resolver-model";
 import {Constants} from "@app/shared/constants/constants";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {TenantsResolver} from "@app/shared/resolvers/tenants.resolver";

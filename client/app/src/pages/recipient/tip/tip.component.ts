@@ -19,9 +19,9 @@ import {TipOperationPostponeComponent} from "@app/shared/modals/tip-operation-po
 import {CryptoService} from "@app/shared/services/crypto.service";
 import {TransferAccessComponent} from "@app/shared/modals/transfer-access/transfer-access.component";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
-import { Tab } from "@app/models/component-model/tab";
-import { RecieverTipData } from "@app/models/reciever/reciever-tip-data";
-import { Receiver } from "@app/models/app/public-model";
+import {Tab} from "@app/models/component-model/tab";
+import {RecieverTipData} from "@app/models/reciever/reciever-tip-data";
+import {Receiver} from "@app/models/app/public-model";
 import {TipUploadWbFileComponent} from "@app/shared/partials/tip-upload-wbfile/tip-upload-wb-file.component";
 import {TipCommentsComponent} from "@app/shared/partials/tip-comments/tip-comments.component";
 

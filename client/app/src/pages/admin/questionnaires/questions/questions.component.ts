@@ -6,8 +6,8 @@ import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 import {Subject, takeUntil} from "rxjs";
-import { fieldtemplatesResolverModel } from "@app/models/resolvers/field-template-model";
-import { Step, questionnaireResolverModel } from "@app/models/resolvers/questionnaire-model";
+import {fieldtemplatesResolverModel} from "@app/models/resolvers/field-template-model";
+import {Step, questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
 
 @Component({
   selector: "src-questions",

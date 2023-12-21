@@ -1,11 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
-import {UtilsService} from "@app/shared/services/utils.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {CryptoService} from "@app/shared/services/crypto.service";
-import { RFile } from "@app/models/app/shared-public-model";
-import { ReceiversById } from "@app/models/reciever/reciever-tip-data";
+import {RFile} from "@app/models/app/shared-public-model";
+import {ReceiversById} from "@app/models/reciever/reciever-tip-data";
 
 @Component({
   selector: "src-wbfiles",

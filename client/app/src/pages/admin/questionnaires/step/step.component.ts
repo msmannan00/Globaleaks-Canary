@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
-import { Questionnaire } from "@app/models/app/public-model";
-import { ParsedFields } from "@app/models/component-model/parsedFields";
-import { fieldtemplatesResolverModel } from "@app/models/resolvers/field-template-model";
-import { Step } from "@app/models/resolvers/questionnaire-model";
-import { FieldTemplatesResolver } from "@app/shared/resolvers/field-templates-resolver.service";
-import { HttpService } from "@app/shared/services/http.service";
+import {ChangeDetectorRef, Component, Input, OnInit} from "@angular/core";
+import {Questionnaire} from "@app/models/app/public-model";
+import {ParsedFields} from "@app/models/component-model/parsedFields";
+import {fieldtemplatesResolverModel} from "@app/models/resolvers/field-template-model";
+import {Step} from "@app/models/resolvers/questionnaire-model";
+import {FieldTemplatesResolver} from "@app/shared/resolvers/field-templates-resolver.service";
+import {HttpService} from "@app/shared/services/http.service";
 
 @Component({
   selector: "src-step",

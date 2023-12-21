@@ -7,7 +7,7 @@ import {CryptoService} from "@app/shared/services/crypto.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {FileViewComponent} from "@app/shared/modals/file-view/file-view.component";
 import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
-import { WbFile } from "@app/models/app/shared-public-model";
+import {WbFile} from "@app/models/app/shared-public-model";
 
 @Component({
   selector: "src-tip-files-receiver",

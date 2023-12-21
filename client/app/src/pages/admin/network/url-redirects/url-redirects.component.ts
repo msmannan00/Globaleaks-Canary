@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import { redirectResolverModel } from "@app/models/resolvers/redirect-resolver-model";
+import {redirectResolverModel} from "@app/models/resolvers/redirect-resolver-model";
 import {RedirectsResolver} from "@app/shared/resolvers/redirects.resolver";
 import {HttpService} from "@app/shared/services/http.service";
 

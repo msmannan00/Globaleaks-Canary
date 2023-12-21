@@ -4,8 +4,8 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {NewField} from "@app/models/admin/new-field";
 import {FieldTemplate} from "@app/models/admin/field-Template";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
-import { Step } from "@app/models/resolvers/questionnaire-model";
-import { Field } from "@app/models/resolvers/field-template-model";
+import {Step} from "@app/models/resolvers/questionnaire-model";
+import {Field} from "@app/models/resolvers/field-template-model";
 
 @Component({
   selector: "src-add-field",

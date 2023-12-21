@@ -60,9 +60,6 @@ export class MainComponent implements OnInit, OnDestroy {
     }
   }
 
-  listenToQuestionnairesList() {
-  }
-
   getResolver() {
     return this.httpService.requestQuestionnairesResource().subscribe(response => {
       this.questionnairesResolver.dataModel = response;

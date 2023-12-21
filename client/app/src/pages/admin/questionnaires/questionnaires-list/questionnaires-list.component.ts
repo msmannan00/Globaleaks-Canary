@@ -1,4 +1,4 @@
-import {Component,Input} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {NgForm} from "@angular/forms";
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -7,7 +7,7 @@ import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 import {Observable} from "rxjs";
-import { questionnaireResolverModel } from "@app/models/resolvers/questionnaire-model";
+import {questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 
 @Component({

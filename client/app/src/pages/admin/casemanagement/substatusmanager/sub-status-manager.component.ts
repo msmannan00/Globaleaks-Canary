@@ -3,10 +3,9 @@ import {AppDataService} from "@app/app-data.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {AppConfigService} from "@app/services/root/app-config.service";
-import { DeleteConfirmationComponent } from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
-import { Observable } from "rxjs";
-import { Status } from "@app/models/app/public-model";
+import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
+import {Observable} from "rxjs";
+import {Status} from "@app/models/app/public-model";
 
 @Component({
   selector: "src-substatusmanager",
@@ -21,7 +20,7 @@ export class SubStatusManagerComponent {
   @Input() last: boolean;
 
 
-  constructor(private appConfigService: AppConfigService, private appDataServices: AppDataService, private httpService: HttpService, private modalService: NgbModal, private utilsService: UtilsService) {
+  constructor(private appDataServices: AppDataService, private httpService: HttpService, private modalService: NgbModal, private utilsService: UtilsService) {
 
   }
   isSystemDefined(state: Status): boolean {

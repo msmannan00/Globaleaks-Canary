@@ -1,7 +1,7 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import * as Flow from "@flowjs/flow.js";
-import { AuthenticationService } from "@app/services/helper/authentication.service";
-import { SubmissionService } from "@app/services/helper/submission.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
+import {SubmissionService} from "@app/services/helper/submission.service";
 
 @Component({
   selector: "src-voice-recorder",

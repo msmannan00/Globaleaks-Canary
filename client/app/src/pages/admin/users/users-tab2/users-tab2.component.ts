@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import { nodeResolverModel } from "@app/models/resolvers/node-resolver-model";
+import {nodeResolverModel} from "@app/models/resolvers/node-resolver-model";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
 

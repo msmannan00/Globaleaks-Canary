@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
 import * as Constants from "@app/shared/constants/constants";
 import {AppDataService} from "@app/app-data.service";
-import { Signup } from "@app/models/component-model/signup";
+import {Signup} from "@app/models/component-model/signup";
 
 @Component({
   selector: "src-wbpa",

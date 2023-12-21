@@ -5,8 +5,6 @@ export class IarData {
   request_user_name: string;
   request_motivation: string;
   reply: string;
-  reply_date:string;
-  reply_user_name:string;
   reply_motivation: string;
   submission_progressive: number;
   submission_date: string;
