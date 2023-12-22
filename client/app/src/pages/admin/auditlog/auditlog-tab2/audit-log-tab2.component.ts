@@ -20,11 +20,7 @@ export class AuditLogTab2Component {
   }
 
   loadAuditLogData() {
-    if (Array.isArray(this.usersResolver.dataModel)) {
-      this.users = this.usersResolver.dataModel;
-    } else {
-      this.users = [this.usersResolver.dataModel];
-    }
+    this.users = this.usersResolver.dataModel;
   }
 
   getPaginatedData(): userResolverModel[] {

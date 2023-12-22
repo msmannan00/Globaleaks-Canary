@@ -27,11 +27,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.questionnaireService.getData().pipe(takeUntil(this.destroy$)).subscribe(() => {
       return this.getResolver();
     });
-    if (Array.isArray(this.questionnairesResolver.dataModel)) {
-      this.questionnairesData = this.questionnairesResolver.dataModel;
-    } else {
-      this.questionnairesData = [this.questionnairesResolver.dataModel];
-    }
+    this.questionnairesData = this.questionnairesResolver.dataModel;
     this.cdr.markForCheck();
   }
 
@@ -61,7 +57,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   getResolver() {
-    return this.httpService.requestQuestionnairesResource().subscribe(response => {
+    return this.httpService.requestQuestionnairesResource().subscribe((response:questionnaireResolverModel[]) => {
       this.questionnairesResolver.dataModel = response;
       this.questionnairesData = response;
       this.cdr.markForCheck();

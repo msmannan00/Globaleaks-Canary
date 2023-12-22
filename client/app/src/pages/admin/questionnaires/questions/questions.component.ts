@@ -30,11 +30,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       this.getResolver();
       return this.getQuestionnairesResolver();
     });
-    if (Array.isArray(this.questionnairesResolver.dataModel)) {
-      this.questionnairesData = this.questionnairesResolver.dataModel;
-    } else {
-      this.questionnairesData = [this.questionnairesResolver.dataModel];
-    }
+    this.questionnairesData = this.questionnairesResolver.dataModel;
     if (Array.isArray(this.fieldTemplates.dataModel)) {
       this.fields = this.fieldTemplates.dataModel;
     } else {
@@ -58,7 +54,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   }
 
   getQuestionnairesResolver() {
-    return this.httpService.requestQuestionnairesResource().subscribe(response => {
+    return this.httpService.requestQuestionnairesResource().subscribe((response:questionnaireResolverModel[]) => {
       this.questionnairesResolver.dataModel = response;
       this.questionnairesData = response;
     });

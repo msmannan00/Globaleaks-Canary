@@ -30,17 +30,9 @@ export class Tab5Component {
   protected readonly Constants = Constants;
 
   ngOnInit(): void {
-    if (Array.isArray(this.usersResolver.dataModel)) {
-      this.userData = this.usersResolver.dataModel;
-    } else {
-      this.userData = [this.usersResolver.dataModel];
-    }
+    this.userData = this.usersResolver.dataModel;
     this.userData = this.userData.filter((user: { escrow: boolean; }) => user.escrow);
-    if (Array.isArray(this.questionnairesResolver.dataModel)) {
-      this.questionnaireData = this.questionnairesResolver.dataModel;
-    } else {
-      this.questionnaireData = [this.questionnairesResolver.dataModel];
-    }
+    this.questionnaireData = this.questionnairesResolver.dataModel;
   }
 
   enableEncryption() {

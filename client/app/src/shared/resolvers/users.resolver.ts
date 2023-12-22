@@ -9,7 +9,7 @@ import {map} from "rxjs/operators";
   providedIn: "root"
 })
 export class UsersResolver  {
-  dataModel: userResolverModel = new userResolverModel();
+  dataModel: userResolverModel[];
 
   constructor(
     private httpService: HttpService,
@@ -20,7 +20,7 @@ export class UsersResolver  {
   resolve(): Observable<boolean> {
     if (this.authenticationService.session.role === "admin") {
       return this.httpService.requestUsersResource().pipe(
-        map((response: userResolverModel) => {
+        map((response: userResolverModel[]) => {
           this.dataModel = response;
           return true;
         })

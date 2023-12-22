@@ -26,15 +26,10 @@ export class UsersTab1Component implements OnInit {
 
   ngOnInit(): void {
     if (this.usersResolver.dataModel) {
-      if (Array.isArray(this.usersResolver.dataModel)) {
-        this.usersData = this.usersResolver.dataModel;
-      } else {
-        this.usersData = [this.usersResolver.dataModel];
-      }
+      this.usersData = this.usersResolver.dataModel;
     }
     if (this.nodeResolver.dataModel.root_tenant) {
       this.tenantData = this.tenantsResolver.dataModel;
-
     }
   }
 
