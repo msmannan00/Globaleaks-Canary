@@ -14,7 +14,7 @@
                 <span id="tip-action-notify" *ngIf="tip && !tip.enable_notifications" (click)="tipNotify(true)" data-toggle="tooltip" title="{{'Turn on email notifications' | translate}}" class="btn btn-outline-secondary active">
                 <i class="fa-solid fa-volume-mute"></i>
             </span>
-                <span id="tip-action-silence" *ngIf="tip && tip.enable_notifications" (click)="tipNotify(false)" data-toggle="tooltip" title="{{'Silence email notifications' | translate}}" class="btn btn-outline-secondary">
+                <span id="tip-action-silence" *ngIf="!tip || tip.enable_notifications" (click)="tipNotify(false)" data-toggle="tooltip" title="{{'Silence email notifications' | translate}}" class="btn btn-outline-secondary">
                 <i class="fa-solid fa-volume-down"></i>
             </span>
                 <span id="tip-action-grant-access" *ngIf="preferencesService.dataModel.can_grant_access_to_reports" (click)="openGrantTipAccessModal()" data-toggle="tooltip" title="{{'Grant access' | translate}}" class="btn btn-outline-secondary">
@@ -26,8 +26,8 @@
                 <span id="tip-action-transfer-access" *ngIf="preferencesService.dataModel.can_transfer_access_to_reports" (click)="openTipTransferModal()" data-toggle="tooltip" title="{{'Transfer access' | translate}}" class="btn btn-outline-secondary">
                 <i class="fa-solid fa-people-arrows"></i>
             </span>
-                <ng-container *ngIf="tip && tip.context">
-                <span id="tip-action-postpone" *ngIf="preferencesService.dataModel.can_postpone_expiration && tip.context.tip_timetolive > 0" (click)="tipPostpone()" data-toggle="tooltip" title="{{'Postpone the expiration date' | translate}}" class="btn btn-outline-secondary">
+                <ng-container *ngIf="!tip || tip.context">
+                <span id="tip-action-postpone" *ngIf="!tip || preferencesService.dataModel.can_postpone_expiration && tip.context.tip_timetolive > 0" (click)="tipPostpone()" data-toggle="tooltip" title="{{'Postpone the expiration date' | translate}}" class="btn btn-outline-secondary">
                     <i class="fa-solid fa-clock"></i>
                 </span>
                 </ng-container>
