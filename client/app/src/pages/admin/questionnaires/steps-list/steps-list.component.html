@@ -46,7 +46,7 @@
         <div class="row">
             <div class="form-group col-md-12" *ngIf="nodeResolver.dataModel.enable_scoring_system">
                 <label>{{ 'Triggered by score:' | translate }}</label>
-                <select name="step.triggered_by_score" class="form-select" [(ngModel)]="step.triggered_by_score" convert-to-number>
+                <select name="step.triggered_by_score" class="form-select-custom" [(ngModel)]="step.triggered_by_score" convert-to-number>
                     <option value="0">{{ 'Low' | translate }}</option>
                     <option value="1">{{ 'Medium' | translate }}</option>
                     <option value="2">{{ 'High' | translate }}</option>
@@ -62,13 +62,13 @@
                 </label>
                 <div *ngIf="showAddTrigger" class="col-md-12">
                     <div class="form-group">
-                        <select name="type" class="form-select" [(ngModel)]="new_trigger.field" required>
+                        <select name="type" class="form-select-custom" [(ngModel)]="new_trigger.field" required>
                             <option *ngFor="let field of parsedFields.fields" [value]="field.id">{{ field.label }}
                             </option>
                         </select>
                     </div>
                     <div *ngIf="new_trigger.field" class="form-group">
-                        <select name="type" class="form-select" [(ngModel)]="new_trigger.option" required>
+                        <select name="type" class="form-select-custom" [(ngModel)]="new_trigger.option" required>
                             <option *ngFor="let option of parsedFields.fields_by_id[new_trigger.field].options" [value]="option.id">{{ option.label }}</option>
                         </select>
                     </div>

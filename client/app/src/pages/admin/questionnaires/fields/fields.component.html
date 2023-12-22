@@ -98,7 +98,7 @@
                             <span>{{ 'Type' | translate }}</span>
                             <span>:</span>
                         </label>
-                        <select name="type" class="form-select" [(ngModel)]="field.type" required>
+                        <select name="type" class="form-select-custom" [(ngModel)]="field.type" required>
                             <option value="inputbox">{{ 'Single-line text input' | translate }}</option>
                             <option value="textarea">{{ 'Multi-line text input' | translate }}</option>
                         </select>
@@ -108,7 +108,7 @@
                             <span>{{ 'Type' | translate }}</span>
                             <span>:</span>
                         </label>
-                        <select name="type" class="form-select" [(ngModel)]="field.type" required>
+                        <select name="type" class="form-select-custom" [(ngModel)]="field.type" required>
                             <option value="selectbox">{{ 'Selection box' | translate }}</option>
                             <option value="multichoice">{{ 'Multiple choice input' | translate }}</option>
                             <option value="checkbox">{{ 'Checkbox' | translate }}</option>
@@ -173,7 +173,7 @@
                         </div>
                         <div class="form-group" *ngIf="field.attrs.input_validation">
                             <label>{{ 'Input validation' | translate }}</label>
-                            <select name="type" class="form-select" [(ngModel)]="field.attrs.input_validation.value" required>
+                            <select name="type" class="form-select-custom" [(ngModel)]="field.attrs.input_validation.value" required>
                                 <option value="none">{{ 'None' | translate }}</option>
                                 <option value="email">{{ 'Email address' | translate }}</option>
                                 <option value="number">{{ 'Number' | translate }}</option>
@@ -217,7 +217,7 @@
                             <div *ngIf="field.attrs.multimedia.value" class="nested">
                                 <div class="form-group">
                                     <label>{{ 'Type' | translate }}</label>
-                                    <select name="type" class="form-select" [(ngModel)]="field.attrs.multimedia_type.value" required>
+                                    <select name="type" class="form-select-custom" [(ngModel)]="field.attrs.multimedia_type.value" required>
                                         <option value="image">{{ 'Image' | translate }}</option>
                                         <option value="audioUpload">{{ 'Audio' | translate }}</option>
                                         <option value="video">{{ 'Video' | translate }}</option>
@@ -290,7 +290,7 @@
                 <div class="col-md-12">
                     <div class="form-group" *ngIf="nodeResolver.dataModel.enable_scoring_system">
                         <label>{{ 'Triggered by score' | translate }}:</label>
-                        <select class="form-select" [(ngModel)]="field.triggered_by_score" convert-to-number>
+                        <select class="form-select-custom" [(ngModel)]="field.triggered_by_score" convert-to-number>
                             <option value="0">{{ 'Low' | translate }}</option>
                             <option value="1">{{ 'Medium' | translate }}</option>
                             <option value="2">{{ 'High' | translate }}</option>
@@ -306,13 +306,13 @@
                         </label>
                         <div *ngIf="showAddTrigger">
                             <div class="form-group">
-                                <select name="type" class="form-select" [(ngModel)]="new_trigger.field" required>
+                                <select name="type" class="form-select-custom" [(ngModel)]="new_trigger.field" required>
                                     <option *ngFor="let field of parsedFields.fields" [value]="field.id">{{field.label}}
                                     </option>
                                 </select>
                             </div>
                             <div *ngIf="new_trigger.field" class="form-group">
-                                <select name="type" class="form-select" [(ngModel)]="new_trigger.option" required>
+                                <select name="type" class="form-select-custom" [(ngModel)]="new_trigger.option" required>
                                     <option *ngFor="let option of parsedFields.fields_by_id[new_trigger.field].options" [value]="option.id">{{option.label}}</option>
                                 </select>
                             </div>

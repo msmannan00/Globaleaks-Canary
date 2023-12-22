@@ -35,6 +35,7 @@
             ],
             "styles": [
               "app/css/components/switch.css",
+              "app/css/components/select.css",
               "app/css/components/date-picker.css",
               "app/css/main.css",
               "app/css/ui-select-bootstrap4-fix.css",

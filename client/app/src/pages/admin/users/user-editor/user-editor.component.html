@@ -120,7 +120,7 @@
                 </div>
                 <div class="form-group">
                     <label>{{ 'Language' | translate }}</label>
-                    <select class="form-select" [(ngModel)]="user.language" [ngModelOptions]="{standalone: true}">
+                    <select class="form-select-custom" [(ngModel)]="user.language" [ngModelOptions]="{standalone: true}">
                         <option *ngFor="let item of appServiceData.languages_enabled_selector" [value]="item.code">
                             {{ item.name }}
                         </option>
