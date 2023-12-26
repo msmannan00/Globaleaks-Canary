@@ -100,7 +100,6 @@ export class WizardComponent implements OnInit {
 
   verifyProxiedWizard(){
     if (!this.appDataService.public.node.wizard_done && window.location.host === "localhost:4200") {
-      console.log(window.navigator.userAgent);
       if(!window.navigator.userAgent.includes("Electron")){
         this.proxiedServer = true;
       }
