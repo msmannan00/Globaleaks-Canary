@@ -25,7 +25,7 @@ export class TipFilesWhistleblowerComponent {
     (
         {
           next: async token => {
-            const ans = await this.cryptoService.proofOfWork(token.id);
+            const ans = this.cryptoService.proofOfWork(token.id).subscribe();
             window.open("api/whistleblower/wbtip/wbfiles/" + wbFile.id + "?token=" + token.id + ":" + ans);
             this.appDataService.updateShowLoadingPanel(false);
           }

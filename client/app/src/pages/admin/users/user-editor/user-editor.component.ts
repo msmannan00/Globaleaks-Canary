@@ -121,7 +121,7 @@ export class UserEditorComponent implements OnInit {
   loadPublicKeyFile(files: FileList | null) {
     if (files && files.length > 0) {
       this.utilsService.readFileAsText(files[0])
-        .then((txt: string) => {
+        .subscribe((txt: string) => {
           this.user.pgp_key_public = txt;
         });
     }

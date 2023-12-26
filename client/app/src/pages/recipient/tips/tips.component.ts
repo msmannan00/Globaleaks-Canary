@@ -17,6 +17,7 @@ import {Receiver} from "@app/models/reciever/reciever-tip-data";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
 import {HttpService} from "@app/shared/services/http.service";
+import { Observable, from, switchMap } from "rxjs";
 
 
 @Component({
@@ -148,13 +149,40 @@ export class TipsComponent implements OnInit {
       }
     );
   }
+  tipsExport(){
+      this.exportFiles().subscribe();
+  }
 
-  async tipsExport() {
-    for (let i = 0; i < this.selectedTips.length; i++) {
-      const token = await this.tokenResourceService.getWithProofOfWork();
-      window.open(`api/recipient/rtips/${this.selectedTips[i]}/export?token=${token.id}:${token.answer}`);
-      this.appDataService.updateShowLoadingPanel(false);
-    }
+  exportFiles(): Observable<void> {
+    const selectedTips = this.selectedTips.slice();
+
+    return from(this.tokenResourceService.getWithProofOfWork()).pipe(
+      switchMap((token: any) => {
+        return new Observable<void>((observer) => {
+          let count = 0;
+
+          const exportOneTip = (tipId: string) => {
+            const url = `api/recipient/rtips/${tipId}/export?token=${token.id}:${token.answer}`;
+            const newWindow = window.open(url);
+
+            if (newWindow) {
+              newWindow.onload = () => {
+                count++;
+                if (count === selectedTips.length) {
+                  observer.complete();
+                }
+              };
+            }
+          };
+
+          for (let i = 0; i < selectedTips.length; i++) {
+            exportOneTip(selectedTips[i]);
+          }
+           this.appDataService.updateShowLoadingPanel(false);
+        });
+      })
+      
+    );
   }
 
   reload() {
@@ -179,7 +207,7 @@ export class TipsComponent implements OnInit {
   }
 
   exportTip(tipId: string) {
-    this.utils.download("api/recipient/rtips/" + tipId + "/export");
+    this.utils.download("api/recipient/rtips/" + tipId + "/export").subscribe();
     this.appDataService.updateShowLoadingPanel(false);
   }
 
