@@ -1,4 +1,7 @@
+import { redirectResolverModel } from "../resolvers/redirect-resolver-model";
+
 export interface Session {
+  redirect: redirectResolverModel;
   id: string;
   role: string;
   encryption: boolean;

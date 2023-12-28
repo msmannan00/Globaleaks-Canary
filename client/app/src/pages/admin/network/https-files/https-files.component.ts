@@ -39,7 +39,7 @@ export class HttpsFilesComponent implements OnInit {
   postFile(files: FileList | null, resource: FileResource) {
     if (files && files.length > 0) {
       const file = files[0];
-      this.utilsService.readFileAsText(file).then(
+      this.utilsService.readFileAsText(file).subscribe(
         (str: string) => {
           resource.content = str;
           this.httpService.requestCSRContentResource(resource.name, resource).subscribe(

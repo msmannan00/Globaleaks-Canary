@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, Input, OnInit} from "@angular/core";
 import {Questionnaire} from "@app/models/app/public-model";
 import {ParsedFields} from "@app/models/component-model/parsedFields";
 import {fieldtemplatesResolverModel} from "@app/models/resolvers/field-template-model";
-import {Step} from "@app/models/resolvers/questionnaire-model";
+import {Step, questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
 import {FieldTemplatesResolver} from "@app/shared/resolvers/field-templates-resolver.service";
 import {HttpService} from "@app/shared/services/http.service";
 
@@ -51,7 +51,7 @@ export class StepComponent implements OnInit {
   
   getResolver() {
     return this.httpService.requestQuestionnairesResource().subscribe(response => {
-      response.forEach((step: Questionnaire) => {
+      response.forEach((step: questionnaireResolverModel) => {
         if (step.id == this.step.questionnaire_id) {
           step.steps.forEach((innerStep: any) => {
             if (innerStep.id == this.step.id) {

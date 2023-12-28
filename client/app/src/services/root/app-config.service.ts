@@ -59,7 +59,9 @@ export class AppConfigService {
   public localInitialization(languageInit = true, callback?: () => void) {
     this.httpService.getPublicResource().subscribe({
       next: data => {
-        this.appDataService.public = data.body;
+        if (data.body !== null) {
+          this.appDataService.public = data.body;
+        }
         let elem;
         if (window.location.pathname === "/") {
           if (this.appDataService.public.node.css) {
@@ -111,7 +113,7 @@ export class AppConfigService {
         }
 
         this.appDataService.connection = {
-          "tor": data.headers["X-Check-Tor"] === "true" || location.host.match(/\.onion$/),
+          "tor": data.headers.get("X-Check-Tor") === "true" || location.host.match(/\.onion$/),
         };
 
         this.appDataService.privacy_badge_open = !this.appDataService.connection.tor;

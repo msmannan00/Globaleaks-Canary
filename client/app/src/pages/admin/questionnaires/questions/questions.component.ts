@@ -45,7 +45,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
   importQuestion(files: FileList| null): void {
     if (files && files.length > 0) {
-    this.utilsService.readFileAsText(files[0]).then((txt) => {
+    this.utilsService.readFileAsText(files[0]).subscribe((txt) => {
       return this.httpClient.post("api/admin/fieldtemplates?multilang=1", txt).subscribe(() => {
         this.utilsService.reloadComponent();
       });

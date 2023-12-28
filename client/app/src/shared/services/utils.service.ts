@@ -7,7 +7,7 @@ import {RequestSupportComponent} from "@app/shared/modals/request-support/reques
 import {HttpService} from "@app/shared/services/http.service";
 import {TokenResource} from "@app/shared/services/token-resource.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable, map} from "rxjs";
+import {Observable, from, map, switchMap} from "rxjs";
 import {ConfirmationWithPasswordComponent} from "@app/shared/modals/confirmation-with-password/confirmation-with-password.component";
 import {ConfirmationWith2faComponent} from "@app/shared/modals/confirmation-with2fa/confirmation-with2fa.component";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
@@ -27,6 +27,7 @@ import {Option} from "@app/models/whistleblower/wb-tip-data";
 import {Status} from "@app/models/app/public-model";
 import {AppDataService} from "@app/app-data.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
+import { FlowFile } from "@flowjs/flow.js";
 
 @Injectable({
   providedIn: "root"
@@ -66,15 +67,27 @@ export class UtilsService {
     return ret;
   }
 
-  async load(url: string): Promise<string> {
-    const token = await this.tokenResource.getWithProofOfWork();
-    return url + "?token=" + token.id + ":" + token.answer;
+  load(url: string): Observable<string> {
+    return from(this.tokenResource.getWithProofOfWork()).pipe(
+      switchMap((token: any) => {
+        const modifiedUrl = `${url}?token=${token.id}:${token.answer}`;
+        return new Observable<string>((observer) => {
+          observer.next(modifiedUrl);
+          observer.complete();
+        });
+      })
+    );
   }
 
-  download(url: string): void {
-    this.tokenResource.getWithProofOfWork().then((token: any) => {
-      window.open(`${url}?token=${token.id}:${token.answer}`);
-    });
+  download(url: string): Observable<void> {
+    return from(this.tokenResource.getWithProofOfWork()).pipe(
+      switchMap((token: any) => {
+        window.open(`${url}?token=${token.id}:${token.answer}`);
+        return new Observable<void>((observer) => {
+          observer.complete();
+        });
+      })
+    );
   }
 
   isUploading(uploads?: any) {
@@ -326,7 +339,7 @@ export class UtilsService {
       "text": arg.text,
       "url": window.location.href.replace("localhost", "127.0.0.1")
     });
-    this.httpService.requestSuppor(param).subscribe();
+    this.httpService.requestSupport(param).subscribe();
   }
 
   runUserOperation(operation: string, args: any, refresh: boolean) {
@@ -545,8 +558,8 @@ export class UtilsService {
     });
   }
 
-  getFiles(): Observable<any[]> {
-    return this.http.get<any[]>("api/admin/files");
+  getFiles(): Observable<FlowFile[]> {
+    return this.http.get<FlowFile[]>("api/admin/files");
   }
 
   deleteFile(url: string): Observable<void> {
@@ -589,22 +602,23 @@ export class UtilsService {
     return this.httpService.requestUpdateAdminNotification(notification);
   }
 
-  readFileAsText(file: File): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
+  readFileAsText(file: File): Observable<string> {
+    return new Observable<string>((observer) => {
       const reader = new FileReader();
-
+  
       reader.onload = (event) => {
         if (event.target) {
-          resolve(event.target.result as string);
+          observer.next(event.target.result as string);
+          observer.complete();
         } else {
-          reject(new Error("Event target is null."));
+          observer.error(new Error("Event target is null."));
         }
       };
-
+  
       reader.onerror = (error) => {
-        reject(error);
+        observer.error(error);
       };
-
+  
       reader.readAsText(file);
     });
   }
