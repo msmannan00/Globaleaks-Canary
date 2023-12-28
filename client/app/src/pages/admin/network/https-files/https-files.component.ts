@@ -17,7 +17,6 @@ export class HttpsFilesComponent implements OnInit {
   @Output() dataToParent = new EventEmitter<string>();
   @Input() tlsConfig: TlsConfig;
   @Input() state: number = 0;
-  menuState: string;
   nodeData: nodeResolverModel;
   fileResources:FileResources = {
     key: {name: "key"},

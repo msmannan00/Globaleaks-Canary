@@ -1,6 +1,5 @@
 import {HttpClient} from "@angular/common/http";
 import {Component} from "@angular/core";
-import {Router} from "@angular/router";
 import {AppDataService} from "@app/app-data.service";
 import {preferenceResolverModel} from "@app/models/resolvers/preference-resolver-model";
 import {AcceptAgreementComponent} from "@app/shared/modals/accept-agreement/accept-agreement.component";
@@ -14,7 +13,7 @@ import {Observable} from "rxjs";
 })
 export class HomeComponent {
   preferenceData: preferenceResolverModel;
-  constructor(private appDataService: AppDataService, private http: HttpClient, private modalService: NgbModal, private preference: PreferenceResolver, private router: Router) {
+  constructor(private appDataService: AppDataService, private http: HttpClient, private modalService: NgbModal, private preference: PreferenceResolver) {
   }
 
  ngOnInit(): void {

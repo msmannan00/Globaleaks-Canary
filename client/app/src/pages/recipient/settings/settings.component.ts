@@ -15,7 +15,7 @@ export class SettingsComponent implements AfterViewInit {
 
   constructor(private cdr: ChangeDetectorRef, private preferenceResolver: PreferenceResolver, private router: Router) {
     if(!this.preferenceResolver.dataModel.can_edit_general_settings){
-      this.router.navigate(['recipient/home']);
+      this.router.navigate(['recipient/home']).then();
     }
   }
 

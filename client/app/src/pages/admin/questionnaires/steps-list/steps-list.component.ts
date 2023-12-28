@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -15,7 +15,7 @@ import { TriggeredByOption } from "@app/models/app/shared-public-model";
   selector: "src-steps-list",
   templateUrl: "./steps-list.component.html"
 })
-export class StepsListComponent {
+export class StepsListComponent implements OnInit{
   @Input() step: Step;
   @Input() steps: Step[];
   @Input() questionnaire: questionnaireResolverModel;

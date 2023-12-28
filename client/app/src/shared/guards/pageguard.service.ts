@@ -11,7 +11,7 @@ export class Pageguard  {
   constructor(private authenticationService: AuthenticationService, private router: Router, private appDataService: AppDataService) {
   }
 
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate(_: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     if(state.url == "/login"){
       if(this.authenticationService.session && this.authenticationService.session.homepage){

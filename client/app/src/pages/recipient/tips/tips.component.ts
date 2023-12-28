@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, OnInit} from "@angular/core";
+import {Component, HostListener, OnInit} from "@angular/core";
 import {AppConfigService} from "@app/services/root/app-config.service";
 import {NgbDate, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AppDataService} from "@app/app-data.service";
@@ -51,10 +51,6 @@ export class TipsComponent implements OnInit {
   reportDatePicker: boolean = false;
   lastUpdatePicker: boolean = false;
   expirationDatePicker: boolean = false;
-  dropdownDefaultText = {
-    buttonDefaultText: "",
-    searchPlaceholder: this.translateService.instant("Search")
-  };
   dropdownSettings: IDropdownSettings = {
     idField: "id",
     textField: "label",
@@ -63,7 +59,7 @@ export class TipsComponent implements OnInit {
     searchPlaceholderText: this.translateService.instant("Search")
   };
 
-  constructor(protected authenticationService: AuthenticationService, protected httpService: HttpService, protected RTipService: ReceiverTipService,private appConfigServices: AppConfigService, private router: Router, protected RTips: RTipsResolver, protected preference: PreferenceResolver, private modalService: NgbModal, protected utils: UtilsService, protected appDataService: AppDataService, private elementRef: ElementRef, private translateService: TranslateService, private tokenResourceService: TokenResource) {
+  constructor(protected authenticationService: AuthenticationService, protected httpService: HttpService, protected RTipService: ReceiverTipService,private appConfigServices: AppConfigService, private router: Router, protected RTips: RTipsResolver, protected preference: PreferenceResolver, private modalService: NgbModal, protected utils: UtilsService, protected appDataService: AppDataService, private translateService: TranslateService, private tokenResourceService: TokenResource) {
 
   }
 

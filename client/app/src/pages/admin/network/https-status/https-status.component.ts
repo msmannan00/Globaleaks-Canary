@@ -39,4 +39,8 @@ export class HttpsStatusComponent implements OnInit {
     };
     return modalRef.result;
   }
+
+  getNetworkResolver(){
+    return "https://" + this.networkResolver.dataModel.hostname
+  }
 }

@@ -109,7 +109,7 @@ export class ErrorCatchingInterceptor implements HttpInterceptor {
 export class CompletedInterceptor implements HttpInterceptor {
   count = 0;
 
-  constructor(private authenticationService: AuthenticationService, private appDataService: AppDataService) {
+  constructor(private appDataService: AppDataService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

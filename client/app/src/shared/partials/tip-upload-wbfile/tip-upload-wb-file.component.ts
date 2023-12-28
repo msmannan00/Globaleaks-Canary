@@ -2,7 +2,6 @@ import {Component, Input, ViewChild, ElementRef, ChangeDetectorRef, EventEmitter
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppDataService} from "@app/app-data.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
-import {AppConfigService} from "@app/services/root/app-config.service";
 import * as Flow from "@flowjs/flow.js";
 import {RecieverTipData} from "@app/models/reciever/reciever-tip-data";
 import {FlowFile} from "@flowjs/flow.js";
@@ -22,7 +21,7 @@ export class TipUploadWbFileComponent {
   showError: boolean = false;
   errorFile: FlowFile|null;
 
-  constructor(private cdr: ChangeDetectorRef, private appConfigService: AppConfigService, private authenticationService: AuthenticationService, protected utilsService: UtilsService, protected appDataService: AppDataService) {
+  constructor(private cdr: ChangeDetectorRef, private authenticationService: AuthenticationService, protected utilsService: UtilsService, protected appDataService: AppDataService) {
 
   }
 

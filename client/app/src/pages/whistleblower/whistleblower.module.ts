@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
+import {CommonModule, NgOptimizedImage} from "@angular/common";
 import {HomepageComponent} from "@app/pages/whistleblower/homepage/homepage.component";
 import {TranslateModule} from "@ngx-translate/core";
 import {SharedModule} from "@app/shared.module";
@@ -50,16 +50,17 @@ import {TipAdditionalQuestionnaireFormComponent} from "@app/shared/modals/tip-ad
     WhistleblowerIdentityFieldComponent,
     ReceiptComponent
   ],
-  imports: [
-    CommonModule,
-    TranslateModule,
-    SharedModule,
-    MarkdownModule,
-    ReactiveFormsModule,
-    FormsModule,
-    NgSelectModule,
-    NgbInputDatepicker,
-  ]
+    imports: [
+        CommonModule,
+        TranslateModule,
+        SharedModule,
+        MarkdownModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NgSelectModule,
+        NgbInputDatepicker,
+        NgOptimizedImage,
+    ]
 })
 export class WhistleblowerModule {
 }

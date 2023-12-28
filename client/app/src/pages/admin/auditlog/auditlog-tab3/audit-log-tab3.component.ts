@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {ngxCsv} from "ngx-csv";
 import {TipsResolver} from "@app/shared/resolvers/tips.resolver";
@@ -9,7 +9,7 @@ import {AppDataService} from "@app/app-data.service";
   selector: "src-auditlog-tab3",
   templateUrl: "./audit-log-tab3.component.html"
 })
-export class AuditLogTab3Component {
+export class AuditLogTab3Component implements OnInit{
   currentPage = 1;
   pageSize = 20;
   tips:tipsResolverModel[]=[];
