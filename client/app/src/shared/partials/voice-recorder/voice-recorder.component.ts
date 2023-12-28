@@ -1,7 +1,8 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import * as Flow from "@flowjs/flow.js";
-import {AuthenticationService} from "@app/services/helper/authentication.service";
-import {SubmissionService} from "@app/services/helper/submission.service";
+import { AuthenticationService } from "@app/services/helper/authentication.service";
+import { SubmissionService } from "@app/services/helper/submission.service";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "src-voice-recorder",
@@ -25,12 +26,12 @@ export class VoiceRecorderComponent implements OnInit {
   recorder: MediaRecorder = new MediaRecorder(this.mediaStreamDestination.stream);
   recording_blob: any = null;
   flow: Flow;
-  secondsTracker: NodeJS.Timer|null = null;
+  secondsTracker: NodeJS.Timer | null = null;
   startTime: number;
   stopButton: boolean;
   recordButton: boolean;
   chunks: never[];
- 
+
   @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
   private audioContext: AudioContext;
   entry: any;
@@ -45,7 +46,7 @@ export class VoiceRecorderComponent implements OnInit {
   private initAudioContext() {
     this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
   }
-  
+
   triggerRecording(fileId: string): void {
     this.activeButton = "record";
 
@@ -85,15 +86,15 @@ export class VoiceRecorderComponent implements OnInit {
       this.seconds += 1;
       if (this.seconds > parseInt(this.field.attrs.max_len.value)) {
         this.isRecording = false;
-        if(this.secondsTracker){
+        if (this.secondsTracker) {
           clearInterval(this.secondsTracker);
-          }
+        }
         this.secondsTracker = null;
-        this.stopRecording();
+        this.stopRecording().subscribe();
       }
     }, 1000);
 
-    await this.enableNoiseSuppression(stream);
+    this.enableNoiseSuppression(stream).subscribe();
     const mediaStreamDestination = this.audioContext.createMediaStreamDestination();
     const source = this.audioContext.createMediaStreamSource(stream);
     const anonymizationFilter = this.anonymizeSpeaker(this.audioContext);
@@ -105,7 +106,9 @@ export class VoiceRecorderComponent implements OnInit {
     anonymizationFilter.output.connect(mediaStreamDestination);
 
     const recorder = new MediaRecorder(mediaStreamDestination.stream);
-    recorder.onstop = this.onRecorderStop.bind(this);
+    recorder.onstop = () => {
+      this.onRecorderStop().subscribe();
+    };
     recorder.ondataavailable = this.onRecorderDataAvailable.bind(this);
     recorder.start();
 
@@ -123,61 +126,74 @@ export class VoiceRecorderComponent implements OnInit {
     this.recording_blob.relativePath = "audio.webm";
   };
 
-  async stopRecording(): Promise<void> {
 
-    if (this.mediaRecorder) {
-      const tracks = this.mediaRecorder.stream.getTracks();
-      tracks.forEach((track) => {
-        track.stop();
-      });
-      this.mediaRecorder.stop();
-    }
-    this.isRecording = false;
-    this.recordButton = false;
-    this.stopButton = true;
-    this.activeButton = null;
-    if(this.secondsTracker){
-    clearInterval(this.secondsTracker);
-    }
-    this.secondsTracker = null;
-
-    if (this.seconds < this.field.attrs.min_len.value) {
-      this.deleteRecording();
-      return;
-    }
-
-    if (this.mediaRecorder && (this.mediaRecorder.state === 'recording' || this.mediaRecorder.state === 'paused')) {
-      this.mediaRecorder.stop();
-    }
-  }
- 
-  async onRecorderStop() : Promise<void> {
-    this.flow.files = [];
-
-    if (this.uploads.hasOwnProperty(this.fileInput)) {
-      delete this.uploads[this.fileInput];
-    }
-
-    if (this.seconds >= parseInt(this.field.attrs.min_len.value) && this.seconds <= parseInt(this.field.attrs.max_len.value)) {
-    
-      this.flow.addFile(this.recording_blob);
-
-      this.audioPlayer = URL.createObjectURL(this.recording_blob)
-      this.uploads[this.fileInput] = this.flow;
-      this.submissionService.setSharedData(this.flow);
-      if (this.entry) {
-        if (!this.entry.files) {
-          this.entry.files = [];
-        }
-        this.entry.files.push(this.recording_blob.uniqueIdentifier);
+  stopRecording(): Observable<void> {
+    return new Observable<void>((observer) => {
+      if (this.mediaRecorder) {
+        const tracks = this.mediaRecorder.stream.getTracks();
+        tracks.forEach((track) => {
+          track.stop();
+        });
+        this.mediaRecorder.stop();
       }
-    }
-    this.cd.detectChanges();
+
+      this.isRecording = false;
+      this.recordButton = false;
+      this.stopButton = true;
+      this.activeButton = null;
+
+      if (this.secondsTracker) {
+        clearInterval(this.secondsTracker);
+      }
+      this.secondsTracker = null;
+
+      if (this.seconds < this.field.attrs.min_len.value) {
+        this.deleteRecording();
+        observer.complete();
+        return;
+      }
+
+      if (this.mediaRecorder && (this.mediaRecorder.state === 'recording' || this.mediaRecorder.state === 'paused')) {
+        this.mediaRecorder.stop();
+      }
+
+      observer.next();
+      observer.complete();
+    });
+  }
+  onStop(): void {
+    this.stopRecording().subscribe();
+  }
+  onRecorderStop(): Observable<void> {
+    return new Observable<void>((observer) => {
+      this.flow.files = [];
+
+      if (this.uploads.hasOwnProperty(this.fileInput)) {
+        delete this.uploads[this.fileInput];
+      }
+
+      if (this.seconds >= parseInt(this.field.attrs.min_len.value) && this.seconds <= parseInt(this.field.attrs.max_len.value)) {
+        this.flow.addFile(this.recording_blob);
+        this.audioPlayer = URL.createObjectURL(this.recording_blob);
+        this.uploads[this.fileInput] = this.flow;
+        this.submissionService.setSharedData(this.flow);
+
+        if (this.entry) {
+          if (!this.entry.files) {
+            this.entry.files = [];
+          }
+          this.entry.files.push(this.recording_blob.uniqueIdentifier);
+        }
+      }
+
+      this.cd.detectChanges();
+      observer.complete();
+    });
   }
 
   deleteRecording(): void {
     if (this.flow) {
-       this.flow.cancel();
+      this.flow.cancel();
     }
     this.chunks = [];
     this.mediaRecorder = null;
@@ -190,14 +206,20 @@ export class VoiceRecorderComponent implements OnInit {
     }
   }
 
-  async enableNoiseSuppression(stream: MediaStream): Promise<void> {
-    const supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
-    if ("noiseSuppression" in supportedConstraints) {
-      const settings = { noiseSuppression: true };
-      stream.getAudioTracks().forEach(track => {
-        track.applyConstraints(settings);
-      });
-    }
+  enableNoiseSuppression(stream: MediaStream): Observable<void> {
+    return new Observable<void>((observer) => {
+      const supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
+
+      if ("noiseSuppression" in supportedConstraints) {
+        const settings = { noiseSuppression: true };
+
+        stream.getAudioTracks().forEach(track => {
+          track.applyConstraints(settings);
+        });
+
+        observer.complete();
+      }
+    });
   }
 
   private generateVocoderBands(startFreq: number, endFreq: number, numBands: number): { freq: number; Q: number }[] {

@@ -65,16 +65,18 @@ export class appInterceptor implements HttpInterceptor {
 
     if (httpRequest.url.includes("api/signup") || httpRequest.url.endsWith("api/auth/receiptauth") && !this.authenticationService.session || protectedUrls.includes(httpRequest.url)) {
       return this.httpClient.post("api/auth/token", {}).pipe(
-        switchMap((response) => from(this.cryptoService.proofOfWork(Object.assign(new TokenResponse(), response).id)).pipe(
-          switchMap((ans) => next.handle(httpRequest.clone({
-            headers: httpRequest.headers.set("x-token", Object.assign(new TokenResponse(), response).id + ":" + ans)
-              .set("Accept-Language", this.getAcceptLanguageHeader() || ""),
-          })))
-        ))
+        switchMap((response) =>
+          from(this.cryptoService.proofOfWork(Object.assign(new TokenResponse(), response).id)).pipe(
+            switchMap((ans) => next.handle(httpRequest.clone({
+              headers: httpRequest.headers.set("x-token", `${Object.assign(new TokenResponse(), response).id}:${ans}`)
+                .set("Accept-Language", this.getAcceptLanguageHeader() || ""),
+            })))
+          )
+        )
       );
     } else {
       return next.handle(authRequest);
-    }
+    }   
   }
 }
 

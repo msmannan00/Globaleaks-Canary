@@ -128,7 +128,7 @@ export class FieldsComponent implements OnInit {
   }
 
   exportQuestion(field: Step | Field) {
-    this.utilsService.download("api/admin/fieldtemplates/" + field.id);
+    this.utilsService.download("api/admin/fieldtemplates/" + field.id).subscribe();
   }
 
   delField(field: Step | Field) {
