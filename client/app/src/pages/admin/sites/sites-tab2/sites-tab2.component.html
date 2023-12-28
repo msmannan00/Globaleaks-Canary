@@ -8,7 +8,7 @@
         </div>
         <div class="form-group">
             <label>{{'Mode:'|translate}}</label>
-            <select name="type" class="form-select" [(ngModel)]="nodeResolver.dataModel.mode" required>
+            <select name="type" class="form-select-custom" [(ngModel)]="nodeResolver.dataModel.mode" required>
                 <option value="default" [selected]="nodeResolver.dataModel.mode === 'default'">DEFAULT</option>
                 <option value="demo">DEMO</option>
                 <option value="wbpa">WHISTLEBLOWINGPA</option>
@@ -23,7 +23,7 @@
         </div>
         <div class="form-group">
             <label>{{'Questionnaire'|translate}}</label>
-            <select class="form-select" [(ngModel)]="nodeResolver.dataModel.default_questionnaire">
+            <select class="form-select-custom" [(ngModel)]="nodeResolver.dataModel.default_questionnaire">
                 <option *ngFor="let item of questionnairesResolver.dataModel" [ngValue]="item.id">{{item.name}}</option>
             </select>
         </div>
@@ -83,7 +83,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-primary" (click)="utilsService.updateNode()">
+        <button class="btn btn-primary" (click)="utilsService.updateNode(nodeResolver.dataModel)">
             <i class="fa-solid fa-check"></i>
             <span>{{'Save'|translate}}</span>
         </button>

@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class BrowserCheckService {
-  private supportedBrowsers:any = {
+  private supportedBrowsers:{ [key: string]: number } = {
     Firefox: 38,
     Chrome: 45,
     Brave: 1.20,
@@ -26,16 +26,16 @@ export class BrowserCheckService {
 
   private getBrowser(): string {
     const userAgent = window.navigator.userAgent;
-    if (userAgent.includes('Firefox')) return 'Firefox';
-    if (userAgent.includes('Chrome')) return 'Chrome';
-    if (userAgent.includes('Edg')) return 'Edge';
-    if (userAgent.includes('Safari')) return 'Safari';
-    if (userAgent.includes('MSIE') || userAgent.includes('Trident/')) return 'IE';
-    if (userAgent.includes('Brave')) return 'Brave';
-    if (userAgent.includes('iPhone') || userAgent.includes('iPad')) return 'iOS';
-    if (userAgent.includes('Android')) return 'Android';
+    if (userAgent.includes("Firefox")) return "Firefox";
+    if (userAgent.includes("Chrome")) return "Chrome";
+    if (userAgent.includes("Edg")) return "Edge";
+    if (userAgent.includes("Safari")) return "Safari";
+    if (userAgent.includes("MSIE") || userAgent.includes("Trident/")) return "IE";
+    if (userAgent.includes("Brave")) return "Brave";
+    if (userAgent.includes("iPhone") || userAgent.includes("iPad")) return "iOS";
+    if (userAgent.includes("Android")) return "Android";
 
-    return 'Unknown';
+    return "Unknown";
   }
 
   private getBrowserVersion(browser: string): number {

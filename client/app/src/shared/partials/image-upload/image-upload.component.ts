@@ -2,8 +2,7 @@ import {HttpClient} from "@angular/common/http";
 import {AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild} from "@angular/core";
 import {FlowDirective} from "@flowjs/ngx-flow";
 import {Subscription} from "rxjs";
-import {AuthenticationService} from "@app/services/authentication.service";
-import {UtilsService} from "@app/shared/services/utils.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 
 @Component({
   selector: "src-image-upload",
@@ -14,17 +13,15 @@ export class ImageUploadComponent implements AfterViewInit, OnDestroy {
   flow: FlowDirective;
   @ViewChild("uploader") uploaderElementRef!: ElementRef<HTMLInputElement>;
 
-  @Input() imageUploadModel: any;
+  @Input() imageUploadModel: { [key: string]: any };
   @Input() imageUploadModelAttr: string;
   @Input() imageUploadId: string;
-  imageUploadObj: any = {
-    files: [],
-  };
+  imageUploadObj: {files:[]} = {files:[]};
   autoUploadSubscription: Subscription;
   filemodel:any;
   currentTImestamp = new Date().getTime();
 
-  constructor(private utilsService: UtilsService, private http: HttpClient, protected authenticationService: AuthenticationService) {
+  constructor(private http: HttpClient, protected authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {

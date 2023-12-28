@@ -3,16 +3,16 @@ import {WbTipData} from "@app/models/whistleblower/wb-tip-data";
 import {WbTipResolver} from "@app/shared/resolvers/wb-tip-resolver.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {AppDataService} from "@app/app-data.service";
-import {AppConfigService} from "@app/services/app-config.service";
+import {AppConfigService} from "@app/services/root/app-config.service";
 
 @Component({
   selector: "src-receipt-whistleblower",
   templateUrl: "./receipt.component.html"
 })
 export class ReceiptComponent implements OnInit {
-  receipt: any;
+  receipt: string;
   receiptId: string = "";
 
   constructor(private appConfigService: AppConfigService, private httpService: HttpService, private wbTipResolver: WbTipResolver, protected utilsService: UtilsService, protected authenticationService: AuthenticationService, protected appDataService: AppDataService) {

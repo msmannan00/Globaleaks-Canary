@@ -1,33 +1,25 @@
 import {Injectable} from "@angular/core";
 import {HttpService} from "@app/shared/services/http.service";
-import {TranslateService} from "@ngx-translate/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppDataService} from "@app/app-data.service";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
-import {TranslationService} from "@app/services/translation.service";
+import {TranslationService} from "@app/services/helper/translation.service";
 import {Router, NavigationEnd, ActivatedRoute} from "@angular/router";
-import {AuthenticationService} from "@app/services/authentication.service";
-import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
+import {LanguagesSupported} from "@app/models/app/public-model";
+import {TitleService} from "@app/shared/services/title.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class AppConfigService {
   public sidebar: string = "";
-  public header_title: string = "";
 
-  private translationService: TranslationService;
-  public authenticationService: AuthenticationService;
-  public utilsService: UtilsService;
-
-  constructor(private serviceInstanceService: ServiceInstanceService, private router: Router, private activatedRoute: ActivatedRoute, private appServices: HttpService, private translateService: TranslateService, private appDataService: AppDataService, private fieldUtilitiesService: FieldUtilitiesService) {
+  constructor(private titleService:TitleService, public authenticationService: AuthenticationService, private translationService: TranslationService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private httpService: HttpService, private appDataService: AppDataService, private fieldUtilitiesService: FieldUtilitiesService) {
+    this.init();
   }
 
   init() {
-    this.translationService = this.serviceInstanceService.translationService;
-    this.authenticationService = this.serviceInstanceService.authenticationService;
-    this.utilsService = this.serviceInstanceService.utilsService;
-
     this.activatedRoute.paramMap.subscribe(_ => {
       const currentURL = window.location.hash.substring(2).split("?")[0];
       this.initRoutes(currentURL);
@@ -44,7 +36,7 @@ export class AppConfigService {
       }
 
       if (this.authenticationService.session.role === "admin") {
-        this.router.navigate(["/" + this.authenticationService.session.role], {queryParams}).then();
+        this.router.navigate(["/admin"], {queryParams}).then();
       } else if (this.authenticationService.session.role === "receiver") {
         this.router.navigate(["/recipient"], {queryParams}).then();
       } else if (this.authenticationService.session.role === "custodian") {
@@ -61,13 +53,15 @@ export class AppConfigService {
 
   public setPage(page:string) {
     this.appDataService.page = page;
-    this.setTitle();
+    this.titleService.setTitle();
   };
 
   public localInitialization(languageInit = true, callback?: () => void) {
-    this.appServices.getPublicResource().subscribe({
+    this.httpService.getPublicResource().subscribe({
       next: data => {
-        this.appDataService.public = data.body;
+        if (data.body !== null) {
+          this.appDataService.public = data.body;
+        }
         let elem;
         if (window.location.pathname === "/") {
           if (this.appDataService.public.node.css) {
@@ -107,8 +101,8 @@ export class AppConfigService {
         this.appDataService.submission_statuses_by_id = this.utilsService.array_to_map(this.appDataService.public.submission_statuses);
 
         for (const [key] of Object.entries(this.appDataService.questionnaires_by_id)) {
-          this.fieldUtilitiesService.parseQuestionnaire(this.appDataService.questionnaires_by_id[key], {});
-          this.appDataService.questionnaires_by_id[key].steps = this.appDataService.questionnaires_by_id[key].steps.sort((a: any, b: any) => a.order > b.order);
+          this.fieldUtilitiesService.parseQuestionnaire(this.appDataService.questionnaires_by_id[key],{fields: [], fields_by_id: {}, options_by_id: {}});
+          this.appDataService.questionnaires_by_id[key].steps = this.appDataService.questionnaires_by_id[key].steps.sort((a: { order: number; }, b: { order: number; }) => a.order > b.order);
         }
 
         for (const [key] of Object.entries(this.appDataService.contexts_by_id)) {
@@ -119,16 +113,16 @@ export class AppConfigService {
         }
 
         this.appDataService.connection = {
-          "tor": data.headers["X-Check-Tor"] === "true" || location.host.match(/\.onion$/),
+          "tor": data.headers.get("X-Check-Tor") === "true" || location.host.match(/\.onion$/),
         };
 
         this.appDataService.privacy_badge_open = !this.appDataService.connection.tor;
-        this.appDataService.languages_enabled = new Map<number, string>();
+        this.appDataService.languages_enabled = new Map<string, LanguagesSupported>();
         this.appDataService.languages_enabled_selector = [];
-        this.appDataService.languages_supported = new Map<number, string>();
+        this.appDataService.languages_supported = new Map<string, LanguagesSupported>();
 
         const self = this;
-        this.appDataService.public.node.languages_supported.forEach(function (lang: any) {
+        this.appDataService.public.node.languages_supported.forEach(function (lang: LanguagesSupported) {
           self.appDataService.languages_supported.set(lang.code, lang);
 
           if (self.appDataService.public.node.languages_enabled.includes(lang.code)) {
@@ -147,50 +141,13 @@ export class AppConfigService {
         }
 
 
-        this.setTitle();
+        this.titleService.setTitle();
         this.onValidateInitialConfiguration();
         if (callback) {
           callback();
         }
       }
     });
-  }
-
-  setTitle() {
-    const {public: rootData} = this.appDataService;
-
-    if (!rootData || !rootData.node) {
-      return;
-    }
-
-    const projectTitle = rootData.node.name;
-    let pageTitle = rootData.node.header_title_homepage;
-
-
-    if (this.header_title && this.router.url !== "/") {
-      pageTitle = this.header_title;
-    } else if (this.appDataService.page === "receiptpage") {
-      pageTitle = "Your report was successful.";
-    }
-
-    if (pageTitle && pageTitle.length > 0) {
-      pageTitle = this.translateService.instant(pageTitle);
-    }
-
-    this.appDataService.projectTitle = projectTitle !== "GLOBALEAKS" ? projectTitle : "";
-    this.appDataService.pageTitle = pageTitle !== projectTitle ? pageTitle : "";
-
-    if (pageTitle) {
-      const finalPageTitle = pageTitle.length > 0 ? this.translateService.instant(pageTitle) : projectTitle;
-      window.document.title = `${projectTitle} - ${finalPageTitle}`;
-
-      const element = window.document.querySelector("meta[name=\"description\"]");
-      if (element instanceof HTMLMetaElement) {
-        element.content = rootData.node.description;
-      }
-    } else {
-      window.document.title = projectTitle;
-    }
   }
 
   onValidateInitialConfiguration() {
@@ -216,7 +173,7 @@ export class AppConfigService {
 
     this.router.navigateByUrl(newPath).then(() => {
       this.sidebar = "admin-sidebar";
-      this.setTitle();
+      this.titleService.setTitle();
     });
   }
 
@@ -226,13 +183,13 @@ export class AppConfigService {
         this.onValidateInitialConfiguration();
         const lastChildRoute = this.findLastChildRoute(this.router.routerState.root);
         if (lastChildRoute && lastChildRoute.snapshot.data && lastChildRoute.snapshot.data["pageTitle"]) {
-          this.header_title = lastChildRoute.snapshot.data["pageTitle"];
+          this.appDataService.header_title = lastChildRoute.snapshot.data["pageTitle"];
           this.sidebar = lastChildRoute.snapshot.data["sidebar"];
-          this.setTitle();
+          this.titleService.setTitle();
         } else {
-          this.header_title = "";
+          this.appDataService.header_title = "";
           this.sidebar = "";
-          this.setTitle();
+          this.titleService.setTitle();
         }
       }
     });

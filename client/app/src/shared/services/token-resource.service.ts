@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
+import {CryptoService} from "@app/shared/services/crypto.service";
+import { Observable, from, switchMap } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -8,22 +9,28 @@ import {ServiceInstanceService} from "@app/shared/services/service-instance.serv
 export class TokenResource {
 
   private baseUrl = "api/token/:id";
-  deferred: Promise<any>;
-  data: any;
-  counter: number = 0;
-  resolver: any;
 
-  constructor(private http: HttpClient, private serviceInstanceService: ServiceInstanceService) {
+  constructor(private cryptoService: CryptoService, private http: HttpClient) {
   }
 
-  getToken(id: any) {
+  getToken(id: string) {
     this.http.post<any>(this.baseUrl.replace(":id", id), {}).subscribe();
   }
 
-  async getWithProofOfWork(): Promise<any> {
-    const response: any = await this.http.post("api/auth/token", {}).toPromise();
-    const token = response;
-    token.answer = await this.serviceInstanceService.cryptoService.proofOfWork(token.id);
-    return token;
+  getWithProofOfWork(): Observable<any> {
+    return from(this.http.post("api/auth/token", {})).pipe(
+      switchMap((response: any) => {
+        const token = response;
+        return this.cryptoService.proofOfWork(token.id).pipe(
+          switchMap((answer: any) => {
+            token.answer = answer;
+            return new Observable<any>((observer) => {
+              observer.next(token);
+              observer.complete();
+            });
+          })
+        );
+      })
+    );
   }
 }

@@ -2,8 +2,8 @@ import {Component, Input} from "@angular/core";
 import {ControlContainer, NgForm} from "@angular/forms";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {AuthenticationService} from "@app/services/authentication.service";
-import {AppConfigService} from "@app/services/app-config.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
+import {AppConfigService} from "@app/services/root/app-config.service";
 import {Constants} from "@app/shared/constants/constants";
 
 @Component({

@@ -5,26 +5,25 @@ import {Observable} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AppDataService} from "@app/app-data.service";
 import {ErrorCodes} from "@app/models/app/error-code";
-import {AppConfigService} from "@app/services/app-config.service";
-import {ServiceInstanceService} from "@app/shared/services/service-instance.service";
+import {Session} from "@app/models/authentication/session";
+import {TitleService} from "@app/shared/services/title.service";
+import {HttpHeaders} from "@angular/common/http";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthenticationService {
   public session: any = undefined;
-  public appConfigService: AppConfigService;
-
+  permissions:{can_upload_files:boolean}
   loginInProgress: boolean = false;
   requireAuthCode: boolean = false;
   loginData: LoginDataRef = new LoginDataRef();
 
-  constructor(private serviceInstanceService: ServiceInstanceService, private activatedRoute: ActivatedRoute, private httpService: HttpService, private rootDataService: AppDataService, private router: Router) {
+  constructor(private titleService:TitleService, private activatedRoute: ActivatedRoute, private httpService: HttpService, private appDataService: AppDataService, private router: Router) {
+    this.init();
   }
 
   init() {
-    this.appConfigService = this.serviceInstanceService.appConfigService;
-
     const json = window.sessionStorage.getItem("session");
     if (json !== null) {
       this.session = JSON.parse(json);
@@ -52,7 +51,7 @@ export class AuthenticationService {
     this.loginRedirect();
   }
 
-  setSession(response: any) {
+  setSession(response: Session) {
     this.session = response;
     if (this.session.role !== "whistleblower") {
       const role = this.session.role === "receiver" ? "recipient" : this.session.role;
@@ -74,7 +73,7 @@ export class AuthenticationService {
     );
   }
 
-  login(tid?: any, username?: any, password?: any, authcode?: any, authtoken?: any, callback?: () => void) {
+  login(tid?: number, username?: string, password?: string|undefined, authcode?: string|null, authtoken?: string|null, callback?: () => void) {
 
     if (authtoken === undefined) {
       authtoken = "";
@@ -83,12 +82,12 @@ export class AuthenticationService {
       authcode = "";
     }
 
-    let requestObservable: Observable<any>;
+    let requestObservable: Observable<Session>;
     if (authtoken) {
       requestObservable = this.httpService.requestAuthTokenLogin(JSON.stringify({"authtoken": authtoken}));
     } else {
       if (username === "whistleblower") {
-        password = password.replace(/\D/g, "");
+        password = password?.replace(/\D/g, "");
         const authHeader = this.getHeader();
         requestObservable = this.httpService.requestWhistleBlowerLogin(JSON.stringify({"receipt": password}), authHeader);
       } else {
@@ -103,11 +102,11 @@ export class AuthenticationService {
 
     requestObservable.subscribe(
       {
-        next: (response: any) => {
+        next: (response: Session) => {
           this.setSession(response);
 
-          if ("redirect" in response) {
-            this.router.navigate([response.data.redirect]).then();
+          if (response.redirect) {
+            this.router.navigate([response.redirect]).then();
           }
 
           const src = location.search;
@@ -116,12 +115,12 @@ export class AuthenticationService {
           } else {
             if (this.session.role === "whistleblower") {
               if (password) {
-                this.rootDataService.receipt = password;
+                this.appDataService.receipt = password;
               }
             } else {
               if (!callback) {
                 this.reset();
-                this.rootDataService.updateShowLoadingPanel(true);
+                this.appDataService.updateShowLoadingPanel(true);
                 this.router.navigate([this.session.homepage], {
                   queryParams: this.activatedRoute.snapshot.queryParams,
                   queryParamsHandling: "merge"
@@ -133,9 +132,9 @@ export class AuthenticationService {
             callback();
           }
         },
-        error: (error: any) => {
+        error: (error) => {
           this.loginInProgress = false;
-          this.rootDataService.updateShowLoadingPanel(false);
+          this.appDataService.updateShowLoadingPanel(false);
           if (error.error && error.error.error_code) {
             if (error.error.error_code === 4) {
               this.requireAuthCode = true;
@@ -144,7 +143,7 @@ export class AuthenticationService {
             }
           }
 
-          this.rootDataService.errorCodes = new ErrorCodes(error.error.error_message, error.error.error_code, error.error.arguments);
+          this.appDataService.errorCodes = new ErrorCodes(error.error.error_message, error.error.error_code, error.error.arguments);
           if (callback) {
             callback();
           }
@@ -154,17 +153,18 @@ export class AuthenticationService {
     return requestObservable;
   }
 
-  public getHeader(confirmation?: string) {
-    const header = new Map<string, string>();
+  public getHeader(confirmation?: string): HttpHeaders {
+    let headers = new HttpHeaders();
+
     if (this.session) {
-      header.set("X-Session", this.session.id);
-      header.set("Accept-Language", "en");
-    }
-    if (confirmation) {
-      header.set("X-Confirmation", confirmation);
+      headers = headers.set('X-Session', this.session.id);
+      headers = headers.set('Accept-Language', 'en');
     }
 
-    return header;
+    if (confirmation) {
+      headers = headers.set('X-Confirmation', confirmation);
+    }
+    return headers;
   }
 
   logout(callback?: () => void) {
@@ -175,7 +175,7 @@ export class AuthenticationService {
           this.reset();
           if (this.session.role === "whistleblower") {
             this.deleteSession();
-            this.appConfigService.setPage("homepage");
+            this.titleService.setPage("homepage");
           } else {
             this.deleteSession();
             this.loginRedirect();

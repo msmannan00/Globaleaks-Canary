@@ -59,17 +59,17 @@ const routes: Routes = [
     resolve: {
       PreferenceResolver
     },
-    loadChildren: () => import('./pages/signup/signup-routing.module').then(m => m.SignupRoutingModule)
+    loadChildren: () => import("./pages/signup/signup-routing.module").then(m => m.SignupRoutingModule)
 
   },
   {
     path: "action",
-    loadChildren: () => import('./pages/action/action-routing.module').then(m => m.ActionRoutingModule)
+    loadChildren: () => import("./pages/action/action-routing.module").then(m => m.ActionRoutingModule)
   },
   {
     path: "recipient",
     canActivate: [ReceiverGuard],
-    loadChildren: () => import('./pages/recipient/recipient-routing.module').then(m => m.RecipientRoutingModule),
+    loadChildren: () => import("./pages/recipient/recipient-routing.module").then(m => m.RecipientRoutingModule),
     data: {
       sidebar: "recipient-sidebar"
     }
@@ -80,19 +80,19 @@ const routes: Routes = [
     resolve: {
       PreferenceResolver, NodeResolver, RtipsResolver: RTipsResolver, IarsResolver: IarResolver
     },
-    loadChildren: () => import('./pages/custodian/custodian-routing.module').then(m => m.CustodianRoutingModule),
+    loadChildren: () => import("./pages/custodian/custodian-routing.module").then(m => m.CustodianRoutingModule),
     data: {
-      sidebar: 'custodian-sidebar',
-      pageTitle: 'Home',
+      sidebar: "custodian-sidebar",
+      pageTitle: "Home",
     },
   },
   {
-    path: 'admin',
+    path: "admin",
     canActivate: [AdminGuard],
-    loadChildren: () => import('./pages/admin/admin-routing.module').then(m => m.AdminRoutingModule),
+    loadChildren: () => import("./pages/admin/admin-routing.module").then(m => m.AdminRoutingModule),
     data: {
-      sidebar: 'admin-sidebar',
-      pageTitle: 'Log in',
+      sidebar: "admin-sidebar",
+      pageTitle: "Log in",
     },
   },
   {
@@ -112,7 +112,7 @@ const routes: Routes = [
       PreferenceResolver,
       title: TitleResolver
     },
-    loadChildren: () => import('./pages/wizard/wizard-routing.module').then(m => m.WizardRoutingModule)
+    loadChildren: () => import("./pages/wizard/wizard-routing.module").then(m => m.WizardRoutingModule)
   },
   {
     path: "reports/:tip_id",
@@ -124,7 +124,7 @@ const routes: Routes = [
     canActivate: [SessionGuard],
     pathMatch: "full",
   },
-  { path: '**', redirectTo: '' }
+  { path: "**", redirectTo: "" }
 ];
 
 @NgModule({

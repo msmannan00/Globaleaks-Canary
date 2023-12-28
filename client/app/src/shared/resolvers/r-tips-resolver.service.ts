@@ -1,11 +1,9 @@
 import {Injectable} from "@angular/core";
-
 import {Observable, of} from "rxjs";
 import {HttpService} from "@app/shared/services/http.service";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {map} from "rxjs/operators";
 import {rtipResolverModel} from "@app/models/resolvers/rtips-resolver-model";
-import {IarData} from "@app/models/reciever/Iar-data";
 import {UtilsService} from "@app/shared/services/utils.service";
 
 @Injectable({
@@ -16,7 +14,7 @@ export class RTipsResolver  {
 
   reload(){
     this.httpService.receiverTipResource().subscribe(
-        (response: any) => {
+        (response) => {
           this.dataModel = response;
           this.utilsService.reloadComponent();
         }
@@ -29,7 +27,7 @@ export class RTipsResolver  {
   resolve(): Observable<boolean> {
     if (this.authenticationService.session.role === "receiver") {
       return this.httpService.receiverTipResource().pipe(
-        map((response: any) => {
+        map((response) => {
           this.dataModel = response;
           return true;
         })

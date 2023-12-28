@@ -5,7 +5,7 @@
 			<ng-option *ngFor="let lang of appDataService.languages_enabled_selector" [value]="lang.code">{{lang.native}}</ng-option>
 		</ng-select>
 	</div>
-	<div id="login-status-box" *ngIf="utils.showUserStatusBox()" class="">
+	<div id="login-status-box" *ngIf="utils.showUserStatusBox(authentication, appDataService)" class="">
 		<span id="HomeLinkBox" *ngIf="authentication.session.role !== 'whistleblower'">
             <a id="HomepageLink" [href]="'#'+authentication.session.homepage" title="{{'Home' | translate }}">
                 <i class="fa-solid fa-fw fa-home"></i>
@@ -19,7 +19,7 @@
             <span class="text-separator">|</span>
         </span>
 		<span id="SupportLinkBox" *ngIf="authentication.session && authentication.session.role !== 'whistleblower'">
-            <a id="SupportLink" (click)="utils.openSupportModal()" title="{{'Request support' | translate}}">
+            <a id="SupportLink" (click)="utils.openSupportModal(appDataService)" title="{{'Request support' | translate}}">
                 <i class="fa-solid fa-fw fa-life-ring"></i>
             </a>
             <span class="text-separator">|</span>

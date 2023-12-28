@@ -1,6 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {NewContext} from "@app/models/admin/new-context";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {contextResolverModel} from "@app/models/resolvers/context-resolver-model";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {ContextsResolver} from "@app/shared/resolvers/contexts.resolver";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
@@ -14,8 +15,8 @@ import {UtilsService} from "@app/shared/services/utils.service";
 })
 export class ContextsComponent implements OnInit {
   showAddContext: boolean = false;
-  new_context: any = {};
-  contextsData: any = [];
+  new_context:{ name: string;} = { name: "" };
+  contextsData: contextResolverModel[]=[] ;
 
 
   constructor(protected preference: PreferenceResolver, protected httpService: HttpService, protected authenticationService: AuthenticationService, protected node: NodeResolver, protected users: UsersResolver, protected contexts: ContextsResolver, protected utilsService: UtilsService) {
@@ -26,19 +27,21 @@ export class ContextsComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    if (this.contexts.dataModel) {
+    if (Array.isArray(this.contexts.dataModel)) {
       this.contextsData = this.contexts.dataModel;
+    } else {
+      this.contextsData = [this.contexts.dataModel];
     }
   }
 
   addContext() {
     const context: NewContext = new NewContext();
     context.name = this.new_context.name;
-    context.questionnaire_id = this.node.dataModel.default_questionnaire;
+    context.questionnaire_id = "default";
     context.order = this.newItemOrder(this.contextsData, "order");
     this.utilsService.addAdminContext(context).subscribe(res => {
       this.contextsData.push(res);
-      this.new_context = {};
+      this.new_context.name = "";
     });
   }
 
@@ -46,7 +49,7 @@ export class ContextsComponent implements OnInit {
     this.utilsService.reloadComponent();
   }
 
-  newItemOrder(objects: any[], key: string): number {
+  newItemOrder(objects: Array<any>, key: string): number {
     if (objects.length === 0) {
       return 0;
     }

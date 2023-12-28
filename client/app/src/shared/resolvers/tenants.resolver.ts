@@ -1,8 +1,7 @@
 import {Injectable} from "@angular/core";
-
 import {Observable, of} from "rxjs";
 import {HttpService} from "@app/shared/services/http.service";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {tenantResolverModel} from "@app/models/resolvers/tenant-resolver-model";
 import {catchError, map} from "rxjs/operators";
 

@@ -1,9 +1,10 @@
 export interface Step {
+  enabled: boolean;
   id: string;
   questionnaire_id: string;
   order: number;
   triggered_by_score: number;
-  triggered_by_options: any[];
+  triggered_by_options: TriggeredByOption[];
   children: Children[];
   label: string;
   description: string;
@@ -18,6 +19,7 @@ export interface Children {
   template_override_id: string;
   step_id: string;
   fieldgroup_id: string;
+  questionnaire_id:string;
   multi_entry: boolean;
   required: boolean;
   preview: boolean;
@@ -28,19 +30,53 @@ export interface Children {
   triggered_by_score: number;
   triggered_by_options: TriggeredByOption[];
   options: Option[];
-  children: any[];
+  children: Children[];
   label: string;
   description: string;
   hint: string;
   placeholder: string;
+  enabled:boolean;
 }
 
 export interface Attrs {
-  input_validation?: InputValidation;
-  max_len?: MaxLen;
-  min_len?: MinLen;
-  regexp?: Regexp;
-  display_alphabetically?: DisplayAlphabetically;
+  input_validation: InputValidation;
+  max_len: MaxLen;
+  min_len: MinLen;
+  min_time:LocalizedSetting;
+  max_time:LocalizedSetting;
+  regexp: Regexp;
+  display_alphabetically: DisplayAlphabetically;
+  text_shown_upon_negative_answer: LocalizedSetting;
+  min_date: MinMaxDate;
+  max_date: MinMaxDate;
+  text: LocalizedSetting;
+  checkbox_label: LocalizedSetting;
+  attachment: BoolSetting;
+  attachment_text: LocalizedSetting;
+  attachment_url: LocalizedSetting;
+  multimedia: BoolSetting;
+  multimedia_type: UnicodeSetting;
+  multimedia_url: UnicodeSetting;
+}
+
+export interface BoolSetting {
+  type: string;
+  value: boolean;
+}
+
+export interface UnicodeSetting {
+  type: string;
+  value: string;
+}
+
+export interface MinMaxDate {
+  type: string;
+  value: { year: number; month: number; day: number } | string;
+}
+
+export interface LocalizedSetting {
+  type: string;
+  value: string;
 }
 
 export interface InputValidation {
@@ -85,8 +121,69 @@ export interface Option {
   block_submission: boolean;
   score_points: number;
   score_type: string;
-  trigger_receiver: any[];
+  trigger_receiver: string[];
   hint1: string;
   hint2: string;
   label: string;
+}
+
+export interface Comment {
+  id: string;
+  creation_date: string;
+  content: string;
+  author_id: string;
+  visibility: string;
+}
+
+export interface WbFile {
+  id: string;
+  ifile_id: string;
+  creation_date: string;
+  name: string;
+  size: number;
+  type: string;
+  reference_id: string;
+  error: boolean;
+}
+
+export interface RFile {
+  id: string;
+  creation_date: string;
+  name: string;
+  size: number;
+  type: string;
+  description: string;
+  visibility: string;
+  error: boolean;
+  author:string;
+  downloads:number;
+}
+
+export interface QuestionWhistleblowerIdentityName {
+  required_status: boolean;
+  value: string;
+}
+
+export interface QuestionWhistleblowerIdentitySurname {
+  required_status: boolean;
+  value: string;
+}
+
+export interface QuestionWhistleblowerIdentityAlternativeContactMethod {
+  required_status: boolean;
+  value: string;
+}
+
+export interface QuestionWhistleblowerIdentityOther {
+  required_status: boolean;
+  value: string;
+}
+
+export interface WhistleblowerIdentity {
+  question_whistleblower_identity_name: QuestionWhistleblowerIdentityName[];
+  question_whistleblower_identity_surname: QuestionWhistleblowerIdentitySurname[];
+  question_whistleblower_identity_alternative_contact_method: QuestionWhistleblowerIdentityAlternativeContactMethod[];
+  required_status: boolean;
+  value: string;
+  question_whistleblower_identity_other: QuestionWhistleblowerIdentityOther[];
 }

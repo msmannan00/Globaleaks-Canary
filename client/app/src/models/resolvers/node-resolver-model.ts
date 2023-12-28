@@ -70,10 +70,15 @@ export class nodeResolverModel {
   signup_tos2_text: string;
   signup_tos2_title: string;
   whistleblowing_button: string;
-  whistleblowing_question: any;
-  css: any;
-  favicon: any;
-  logo: any;
-  script: any;
-  onionservice:any;
+  whistleblowing_question: string;
+  css: string[];
+  favicon: string[];
+  logo: string[];
+  script: string[];
+  onionservice:string;
+  user_privacy_policy_url:string;
+  disable_admin_notification:boolean;
+  disable_custodian_notification:boolean;
+  can_postpone_expiration:boolean;
+  disable_receiver_notification:boolean;
 }

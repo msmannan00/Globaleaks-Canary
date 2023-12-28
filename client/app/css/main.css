@@ -922,8 +922,12 @@ text.axis-worktime {
   opacity: 1;
 }
 
-.image-upload .change-picture-button {
+[dir="ltr"] .image-upload .change-picture-button {
   left: 1rem;
+}
+
+[dir="rtl"] .image-upload .change-picture-button {
+  right: 1rem;
 }
 
 .tip-action-open {

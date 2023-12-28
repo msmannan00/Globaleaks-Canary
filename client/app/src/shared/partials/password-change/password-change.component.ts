@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppDataService} from "@app/app-data.service";
@@ -32,7 +32,7 @@ export class PasswordChangeComponent {
           this.preferencesService.dataModel.password_change_needed = false;
           this.router.navigate([this.authenticationService.session.homepage]).then();
         },
-        error: (error: any) => {
+        error: (error) => {
           this.passwordStrengthScore = 0;
           this.rootDataService.errorCodes = new ErrorCodes(error.error.error_message, error.error.error_code, error.error.arguments);
           this.appDataService.updateShowLoadingPanel(false);
@@ -40,7 +40,6 @@ export class PasswordChangeComponent {
         }
       }
     );
-
   }
 
   ngOnInit() {

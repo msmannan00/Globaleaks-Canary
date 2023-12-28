@@ -17,7 +17,7 @@
             <td>{{data.username}}</td>
             <td>{{data.role}}</td>
             <td>{{data.name}}</td>
-            <td> <i class="fa" [ngClass]="{'fa-check': usersResolver.dataModel.two_factor, 'fa-times': !usersResolver.dataModel.two_factor}"></i> </td>
+            <td> <i class="fa" [ngClass]="{'fa-check': data.two_factor, 'fa-times': !data.two_factor}"></i> </td>
             <td>{{data.creation_date | date:'dd-MM-yyyy HH:mm'}}</td>
             <td>{{data.last_login | date:'dd-MM-yyyy HH:mm'}}</td>
         </tr>

@@ -11,7 +11,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
 export class TipOperationSetReminderComponent {
   @Input() args: any;
 
-  request_motivation: any;
+  request_motivation: string;
   model: NgbDateStruct;
 
   constructor(private modalService: NgbModal, private http: HttpClient, private utils: UtilsService) {

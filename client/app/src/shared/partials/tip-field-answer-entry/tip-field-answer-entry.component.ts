@@ -1,7 +1,7 @@
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Component, Input} from "@angular/core";
-import {AuthenticationService} from "@app/services/authentication.service";
-import {ReceiverTipService} from "@app/services/receiver-tip.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
+import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
 
 @Component({
   selector: "src-tip-field-answer-entry",

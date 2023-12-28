@@ -1,13 +1,14 @@
 import {AfterViewInit, ChangeDetectorRef, Component, Inject, Renderer2} from "@angular/core";
-import {AppConfigService} from "@app/services/app-config.service";
+import {AppConfigService} from "@app/services/root/app-config.service";
 import {AppDataService} from "@app/app-data.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {LangChangeEvent, TranslateService} from "@ngx-translate/core";
 import {NavigationEnd, Router} from "@angular/router";
 import {BrowserCheckService} from "@app/shared/services/browser-check.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
-import {TranslationService} from "@app/services/translation.service";
+import {TranslationService} from "@app/services/helper/translation.service";
 import {DOCUMENT} from "@angular/common";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 
 @Component({
   selector: "app-root",
@@ -28,12 +29,12 @@ export class AppComponent implements AfterViewInit {
   supportedBrowser = true;
   loading = false;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private renderer: Renderer2, protected browserCheckService: BrowserCheckService, private changeDetectorRef: ChangeDetectorRef, private router: Router, protected translationService: TranslationService, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService) {
+  constructor(@Inject(DOCUMENT) private document: Document, private renderer: Renderer2, protected browserCheckService: BrowserCheckService, private changeDetectorRef: ChangeDetectorRef, private router: Router, protected translationService: TranslationService, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService, private authenticationService:AuthenticationService) {
     this.watchLanguage();
   }
 
   watchLanguage() {
-    this.utilsService.removeBootstrap(this.renderer, this.document, "./lib/bootstrap/bootstrap.rtl.css");
+    this.utilsService.removeBootstrap(this.renderer, this.document, "./lib/bootstrap/bootstrap.rtl.min.css");
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.translationService.loadBootstrapStyles(event, this.renderer);
     });
@@ -56,12 +57,8 @@ export class AppComponent implements AfterViewInit {
     this.checkToShowSidebar();
   }
 
-  public openGithubReport() {
-    window.open("https://github.com/msmannan00/globaleaks-angular-fork/issues", "_blank");
-  }
-
   isWhistleblowerPage() {
-    let temp = this.utilsService.isWhistleblowerPage()
+    let temp = this.utilsService.isWhistleblowerPage(this.authenticationService, this.appDataService)
     if((this.router.url === "/" || this.router.url === "/submission") && this.loading){
       return true;
     }else {

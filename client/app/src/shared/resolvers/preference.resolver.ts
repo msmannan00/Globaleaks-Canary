@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import {Observable, of} from "rxjs";
 import {HttpService} from "@app/shared/services/http.service";
 import {preferenceResolverModel} from "@app/models/resolvers/preference-resolver-model";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {map} from "rxjs/operators";
 
 @Injectable({

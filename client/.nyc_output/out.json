@@ -143,15 +143,6 @@
     "f": {},
     "b": {}
   },
-  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/js/scripts.js": {
-    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/js/scripts.js",
-    "statementMap": {},
-    "fnMap": {},
-    "branchMap": {},
-    "s": {},
-    "f": {},
-    "b": {}
-  },
   "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/js/vendor.js": {
     "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/build/js/vendor.js",
     "statementMap": {},
@@ -242,98 +233,8 @@
     "f": {},
     "b": {}
   },
-  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/crypto.service.ts": {
-    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/crypto.service.ts",
-    "statementMap": {},
-    "fnMap": {},
-    "branchMap": {},
-    "s": {},
-    "f": {},
-    "b": {}
-  },
   "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared.module.ts": {
     "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared.module.ts",
-    "statementMap": {},
-    "fnMap": {},
-    "branchMap": {},
-    "s": {},
-    "f": {},
-    "b": {}
-  },
-  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/2fa.data.service.ts": {
-    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/2fa.data.service.ts",
-    "statementMap": {},
-    "fnMap": {},
-    "branchMap": {},
-    "s": {},
-    "f": {},
-    "b": {}
-  },
-  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/app-config.service.ts": {
-    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/app-config.service.ts",
-    "statementMap": {},
-    "fnMap": {},
-    "branchMap": {},
-    "s": {},
-    "f": {},
-    "b": {}
-  },
-  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/authentication.service.ts": {
-    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/authentication.service.ts",
-    "statementMap": {},
-    "fnMap": {},
-    "branchMap": {},
-    "s": {},
-    "f": {},
-    "b": {}
-  },
-  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/receiver-tip.service.ts": {
-    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/receiver-tip.service.ts",
-    "statementMap": {},
-    "fnMap": {},
-    "branchMap": {},
-    "s": {},
-    "f": {},
-    "b": {}
-  },
-  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/request.interceptor.ts": {
-    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/request.interceptor.ts",
-    "statementMap": {},
-    "fnMap": {},
-    "branchMap": {},
-    "s": {},
-    "f": {},
-    "b": {}
-  },
-  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/submission-resource.service.ts": {
-    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/submission-resource.service.ts",
-    "statementMap": {},
-    "fnMap": {},
-    "branchMap": {},
-    "s": {},
-    "f": {},
-    "b": {}
-  },
-  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/submission.service.ts": {
-    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/submission.service.ts",
-    "statementMap": {},
-    "fnMap": {},
-    "branchMap": {},
-    "s": {},
-    "f": {},
-    "b": {}
-  },
-  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/translation.service.ts": {
-    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/translation.service.ts",
-    "statementMap": {},
-    "fnMap": {},
-    "branchMap": {},
-    "s": {},
-    "f": {},
-    "b": {}
-  },
-  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/wbtip.service.ts": {
-    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/wbtip.service.ts",
     "statementMap": {},
     "fnMap": {},
     "branchMap": {},
@@ -451,6 +352,60 @@
   },
   "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/models/authentication/token-response.ts": {
     "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/models/authentication/token-response.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/models/component-model/admin-file.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/models/component-model/admin-file.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/models/component-model/file-resources.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/models/component-model/file-resources.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/models/component-model/parsedFields.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/models/component-model/parsedFields.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/models/component-model/signup.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/models/component-model/signup.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/models/component-model/tab.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/models/component-model/tab.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/models/component-model/tls-confiq.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/models/component-model/tls-confiq.ts",
     "statementMap": {},
     "fnMap": {},
     "branchMap": {},
@@ -611,6 +566,15 @@
     "f": {},
     "b": {}
   },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/models/whistleblower/submission-resource.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/models/whistleblower/submission-resource.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
   "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/models/whistleblower/wb-tip-data.ts": {
     "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/models/whistleblower/wb-tip-data.ts",
     "statementMap": {},
@@ -757,6 +721,78 @@
   },
   "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/pages/wizard/wizard.module.ts": {
     "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/pages/wizard/wizard.module.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/helper/2fa.data.service.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/helper/2fa.data.service.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/helper/authentication.service.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/helper/authentication.service.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/helper/receiver-tip.service.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/helper/receiver-tip.service.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/helper/submission.service.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/helper/submission.service.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/helper/translation.service.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/helper/translation.service.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/helper/wbtip.service.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/helper/wbtip.service.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/root/app-config.service.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/root/app-config.service.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/root/app-interceptor.service.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/services/root/app-interceptor.service.ts",
     "statementMap": {},
     "fnMap": {},
     "branchMap": {},
@@ -1133,6 +1169,15 @@
     "f": {},
     "b": {}
   },
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/services/crypto.service.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/services/crypto.service.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
   "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/services/field-utilities.service.ts": {
     "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/services/field-utilities.service.ts",
     "statementMap": {},
@@ -1151,8 +1196,8 @@
     "f": {},
     "b": {}
   },
-  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/services/service-instance.service.ts": {
-    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/services/service-instance.service.ts",
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/services/tip-service.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/services/tip-service.ts",
     "statementMap": {},
     "fnMap": {},
     "branchMap": {},
@@ -1160,8 +1205,8 @@
     "f": {},
     "b": {}
   },
-  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/services/tip-service.ts": {
-    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/services/tip-service.ts",
+  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/services/title.service.ts": {
+    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/shared/services/title.service.ts",
     "statementMap": {},
     "fnMap": {},
     "branchMap": {},
@@ -1558,15 +1603,6 @@
   },
   "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/pages/dashboard/home/home.component.ts": {
     "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/pages/dashboard/home/home.component.ts",
-    "statementMap": {},
-    "fnMap": {},
-    "branchMap": {},
-    "s": {},
-    "f": {},
-    "b": {}
-  },
-  "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/pages/field/whistleblower-identity-field/whistleblower-identity-field.component.ts": {
-    "path": "/home/morgan-freeman/Workspace/globaleaks-angular-fork/client/app/src/pages/field/whistleblower-identity-field/whistleblower-identity-field.component.ts",
     "statementMap": {},
     "fnMap": {},
     "branchMap": {},

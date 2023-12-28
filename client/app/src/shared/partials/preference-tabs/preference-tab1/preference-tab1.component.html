@@ -1,4 +1,4 @@
-<form name="preferenceResolver.dataModel.orm" #preferenceForm="ngForm" class="reveal">
+<form name="preferenceResolver.dataModel.orm" #preferenceForm="ngForm" class="reveal" *ngIf="authenticationService.session">
     <div *ngIf="preferenceResolver.dataModel.picture" class="image-thumbnail">
         <img class="receiver-image" alt="user picture" src="/s/{{preferenceResolver.dataModel.id}}" />
         <br />
@@ -47,7 +47,7 @@
     <div *ngIf="editingEmailAddress">
         <input class="form-control" name="mail_address" [(ngModel)]="preferenceResolver.dataModel.mail_address" [pattern]="Constants.emailRegexp" type="email" [ngClass]="{'is-invalid': preferenceForm.form.get('mail_address')?.errors?.['pattern']}"/>
     </div>
-    <div *ngIf="!editingEmailAddress && preferenceResolver.dataModel.change_email_address" class="alert alert-secondary">
+    <div *ngIf="!editingEmailAddress && preferenceResolver.dataModel.change_email_address" class="alert alert-secondary mt-2">
         <div>{{'Validation of email address change in progress.'|translate}}</div>
         <div>{{'Please check your inbox for further instructions.'|translate}}</div>
     </div>
@@ -64,7 +64,7 @@
     </div>
     <div id="Language" class="form-group" *ngIf="appDataService.languages_enabled_selector.length > 1">
         <label>{{'Language'|translate}}</label>
-        <select class="form-select" name="languageModel" [(ngModel)]="languageModel" (ngModelChange)="onlanguagechange()">
+        <select class="form-select-custom" name="languageModel" [(ngModel)]="languageModel" (ngModelChange)="onlanguagechange()">
             <option *ngFor="let item of appDataService.languages_enabled_selector" [value]="item.code">{{ item.native }}</option>
         </select>
     </div>

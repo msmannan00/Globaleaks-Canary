@@ -1,8 +1,7 @@
 import {Injectable} from "@angular/core";
-
 import {Observable, of} from "rxjs";
 import {HttpService} from "@app/shared/services/http.service";
-import {AuthenticationService} from "app/src/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {redirectResolverModel} from "@app/models/resolvers/redirect-resolver-model";
 import {map} from "rxjs/operators";
 
@@ -10,7 +9,7 @@ import {map} from "rxjs/operators";
   providedIn: "root"
 })
 export class RedirectsResolver  {
-  dataModel: redirectResolverModel = new redirectResolverModel();
+  dataModel: redirectResolverModel[];
 
   constructor(
     private httpService: HttpService,
@@ -21,7 +20,7 @@ export class RedirectsResolver  {
   resolve(): Observable<boolean> {
     if (this.authenticationService.session.role === "admin") {
       return this.httpService.requestRedirectsResource().pipe(
-        map((response: redirectResolverModel) => {
+        map((response: redirectResolverModel[]) => {
           this.dataModel = response;
           return true;
         })

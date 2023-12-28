@@ -6,14 +6,14 @@ import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
   templateUrl: "./confirmation.component.html"
 })
 export class ConfirmationComponent {
-  @Input() arg: any;
+  @Input() arg: string;
 
   constructor(private modalService: NgbModal, private activeModal: NgbActiveModal) {
   }
 
   confirmFunction: (secret: string) => void;
 
-  confirm(arg: any) {
+  confirm(arg: string) {
     this.confirmFunction(arg);
     return this.activeModal.close(arg);
   }

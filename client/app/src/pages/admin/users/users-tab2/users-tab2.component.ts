@@ -1,4 +1,5 @@
 import {Component, OnInit} from "@angular/core";
+import {nodeResolverModel} from "@app/models/resolvers/node-resolver-model";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
 
@@ -7,14 +8,14 @@ import {UtilsService} from "@app/shared/services/utils.service";
   templateUrl: "./users-tab2.component.html"
 })
 export class UsersTab2Component implements OnInit {
-  nodeData: any = [];
+  nodeData: nodeResolverModel;
 
   constructor(private nodeResolver: NodeResolver, private utilsService: UtilsService) {
   }
 
   ngOnInit(): void {
     if (this.nodeResolver.dataModel) {
-      this.nodeData = this.nodeResolver.dataModel;
+        this.nodeData = this.nodeResolver.dataModel;
     }
   }
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 
 @Injectable({
@@ -23,7 +23,7 @@ export class TipService {
 
     for (x = 0; x < tip.questionnaires.length; x++) {
       let questionnaire = tip.questionnaires[x];
-      this.fieldUtilities.parseQuestionnaire(questionnaire, {});
+      this.fieldUtilities.parseQuestionnaire(questionnaire,{fields: [], fields_by_id: {}, options_by_id: {}});
 
       for (i = 0; i < questionnaire.steps.length; i++) {
         step = questionnaire.steps[i];

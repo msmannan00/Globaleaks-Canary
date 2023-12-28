@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
-import {ActivatedRoute, ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree} from "@angular/router";
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree} from "@angular/router";
 import {Observable} from "rxjs";
 import {AppDataService} from "@app/app-data.service";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 
 @Injectable({
   providedIn: "root"
@@ -11,7 +11,7 @@ export class Pageguard  {
   constructor(private authenticationService: AuthenticationService, private router: Router, private appDataService: AppDataService) {
   }
 
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate(_: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     if(state.url == "/login"){
       if(this.authenticationService.session && this.authenticationService.session.homepage){

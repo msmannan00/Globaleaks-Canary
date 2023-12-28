@@ -1,14 +1,14 @@
 import {Component, OnInit} from "@angular/core";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {AppDataService} from "@app/app-data.service";
+import {Node} from "@app/models/app/public-model";
 
 @Component({
   selector: "src-disclaimer",
   templateUrl: "./disclaimer.component.html",
 })
 export class DisclaimerComponent implements OnInit {
-  nodeData: any = [];
+  nodeData: Node;
 
   constructor(private activeModal: NgbActiveModal, private modalService: NgbModal, protected appDataService: AppDataService) {
   }

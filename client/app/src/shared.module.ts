@@ -35,7 +35,6 @@ import {ScrollToBottomDirective} from "@app/shared/directive/scroll-to-bottom.di
 import {TipReceiverListComponent} from "@app/shared/partials/tip-receiver-list/tip-receiver-list.component";
 import {FilterPipe} from "@app/shared/pipes/filter.pipe";
 import {RequestSupportComponent} from "@app/shared/modals/request-support/request-support.component";
-import {WhistleblowerIdentityFieldComponent} from "@app/pages/field/whistleblower-identity-field/whistleblower-identity-field.component";
 import {NgxFlowModule} from "@flowjs/ngx-flow";
 import {RFilesUploadStatusComponent} from "@app/shared/partials/rfiles-upload-status/r-files-upload-status.component";
 import {NgFormChangeDirective} from "@app/shared/directive/ng-form-change.directive";
@@ -81,7 +80,7 @@ import {TransferAccessComponent} from "@app/shared/modals/transfer-access/transf
 import {BlankComponent} from "@app/shared/blank/blank.component";
 import {VoiceRecorderComponent} from "@app/shared/partials/voice-recorder/voice-recorder.component";
 import {Tab1Component} from "@app/pages/admin/settings/tab1/tab1.component";
-import { SwitchComponent } from './shared/components/switch/switch.component';
+import { SwitchComponent } from "@app/shared/components/switch/switch.component";
 
 @NgModule({
   imports: [
@@ -142,7 +141,6 @@ import { SwitchComponent } from './shared/components/switch/switch.component';
     TipReceiverListComponent,
     FilterPipe,
     RequestSupportComponent,
-    WhistleblowerIdentityFieldComponent,
     RFilesUploadStatusComponent,
     NgFormChangeDirective,
     WbFilesComponent,

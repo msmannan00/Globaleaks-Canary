@@ -1,19 +1,19 @@
-import { HttpClient } from "@angular/common/http";
-import { Component } from "@angular/core";
-import { Router } from "@angular/router";
-import { AppDataService } from "@app/app-data.service";
-import { AcceptAgreementComponent } from "@app/shared/modals/accept-agreement/accept-agreement.component";
-import { PreferenceResolver } from "@app/shared/resolvers/preference.resolver";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { Observable } from "rxjs";
+import {HttpClient} from "@angular/common/http";
+import {Component} from "@angular/core";
+import {AppDataService} from "@app/app-data.service";
+import {preferenceResolverModel} from "@app/models/resolvers/preference-resolver-model";
+import {AcceptAgreementComponent} from "@app/shared/modals/accept-agreement/accept-agreement.component";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Observable} from "rxjs";
 
 @Component({
   selector: "src-custodian-home",
   templateUrl: "./home.component.html"
 })
 export class HomeComponent {
-  preferenceData: any = [];
-  constructor(private appDataService: AppDataService, private http: HttpClient, private modalService: NgbModal, private preference: PreferenceResolver, private router: Router) {
+  preferenceData:  preferenceResolverModel;
+  constructor(private appDataService: AppDataService, private http: HttpClient, private modalService: NgbModal, private preference: PreferenceResolver) {
   }
 
   ngOnInit(): void {

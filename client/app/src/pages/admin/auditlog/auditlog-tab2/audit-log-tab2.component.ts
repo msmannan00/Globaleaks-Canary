@@ -10,7 +10,7 @@ import {userResolverModel} from "@app/models/resolvers/user-resolver-model";
 export class AuditLogTab2Component {
   currentPage = 1;
   pageSize = 20;
-  users: any = new userResolverModel();
+  users: userResolverModel[]=[];
 
   constructor(protected usersResolver: UsersResolver) {
   }
@@ -23,7 +23,7 @@ export class AuditLogTab2Component {
     this.users = this.usersResolver.dataModel;
   }
 
-  getPaginatedData(): any[] {
+  getPaginatedData(): userResolverModel[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     return this.users.slice(startIndex, endIndex);

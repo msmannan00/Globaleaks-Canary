@@ -1,11 +1,9 @@
 import {Injectable} from "@angular/core";
-import {AppDataService} from "@app/app-data.service";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
-
 import {Observable, of} from "rxjs";
 import {HttpService} from "@app/shared/services/http.service";
 import {nodeResolverModel} from "@app/models/resolvers/node-resolver-model";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {map} from "rxjs/operators";
 
 @Injectable({

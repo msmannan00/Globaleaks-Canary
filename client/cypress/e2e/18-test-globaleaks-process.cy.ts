@@ -22,6 +22,7 @@ describe("globaleaks process", function () {
       cy.wait(1000)
       cy.login_receiver();
       cy.visit("/#/recipient/reports");
+      cy.waitForLoader(true)
 
       cy.get("#tip-0").first().click();
 
@@ -93,6 +94,8 @@ describe("globaleaks process", function () {
       cy.get(".TipInfoID").first().invoke("text").then(t => {
         expect(t.trim()).to.be.a("string");
       });
+      cy.waitForLoader(true)
+      cy.wait(1000)
 
       cy.get('[id="tip-action-silence"]').click();
       cy.get('#tip-action-notify').should('be.visible');

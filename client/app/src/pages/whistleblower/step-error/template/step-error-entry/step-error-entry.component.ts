@@ -1,18 +1,19 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {NgForm} from "@angular/forms";
+import {Field} from "@app/models/resolvers/field-template-model";
 
 @Component({
   selector: "src-step-error-entry",
   templateUrl: "./step-error-entry.component.html"
 })
 export class StepErrorEntryComponent implements OnInit {
-  @Input() navigation: any;
-  @Input() err: any;
-  @Input() field_id_map: any;
+  @Input() navigation: number;
+  @Input() err: string;
+  @Input() field_id_map: { [key: string]: Field };
   @Input() form!: NgForm;
   pre = "fieldForm_";
-  f_id: any;
-  field: any;
+  f_id: string;
+  field: Field;
 
   ngOnInit(): void {
     this.initialize();

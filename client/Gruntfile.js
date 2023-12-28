@@ -66,7 +66,12 @@ module.exports = function (grunt) {
           {
             dest: "app/assets/lib/bootstrap",
             cwd: ".",
-            src: ["node_modules/bootstrap/dist/css/*"],
+            src: [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css.map",
+              "node_modules/bootstrap/dist/css/bootstrap.rtl.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.rtl.min.css.map"
+            ],
             expand: true,
             flatten: true
           },
@@ -86,9 +91,6 @@ module.exports = function (grunt) {
 
           {dest: "tmp/js/runtime.js", cwd: ".", src: ["dist/runtime.js"], expand: false, flatten: true},
           {dest: "tmp/js/runtime.js.map", cwd: ".", src: ["dist/runtime.js.map"], expand: false, flatten: true},
-
-          {dest: "tmp/js/scripts.js", cwd: ".", src: ["dist/scripts.js"], expand: false, flatten: true},
-          {dest: "tmp/js/scripts.js.map", cwd: ".", src: ["dist/scripts.js.map"], expand: false, flatten: true},
 
           {dest: "tmp/js/vendor.js", cwd: ".", src: ["dist/vendor.js"], expand: false, flatten: true},
           {dest: "tmp/js/vendor.js.map", cwd: ".", src: ["dist/vendor.js.map"], expand: false, flatten: true},
@@ -398,10 +400,6 @@ module.exports = function (grunt) {
             {
               pattern: "<script src=\"main.js\" type=\"module\"></script>",
               replacement: "<script src=\"js/main.js\" type=\"module\"></script>"
-            },
-            {
-              pattern: "<script src=\"scripts.js\" defer></script>",
-              replacement: ""
             },
             {
               pattern: "<script src=\"vendor.js\" type=\"module\"></script>",

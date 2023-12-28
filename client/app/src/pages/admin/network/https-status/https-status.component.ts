@@ -5,6 +5,9 @@ import {ConfirmationComponent} from "@app/shared/modals/confirmation/confirmatio
 import {NetworkResolver} from "@app/shared/resolvers/network.resolver";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {HttpService} from "@app/shared/services/http.service";
+import {nodeResolverModel} from "@app/models/resolvers/node-resolver-model";
+import {TlsConfig} from "@app/models/component-model/tls-confiq";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 
 @Component({
   selector: "src-https-status",
@@ -12,10 +15,10 @@ import {HttpService} from "@app/shared/services/http.service";
 })
 export class HttpsStatusComponent implements OnInit {
   @Output() dataToParent = new EventEmitter<string>();
-  @Input() tlsConfig: any;
-  nodeData: any;
+  @Input() tlsConfig: TlsConfig;
+  nodeData: nodeResolverModel;
 
-  constructor(private utilsService: UtilsService, protected networkResolver: NetworkResolver, private nodeResolver: NodeResolver, private httpService: HttpService, private modalService: NgbModal) {
+  constructor(private authenticationService: AuthenticationService, private utilsService: UtilsService, protected networkResolver: NetworkResolver, private nodeResolver: NodeResolver, private httpService: HttpService, private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
@@ -23,17 +26,21 @@ export class HttpsStatusComponent implements OnInit {
   }
 
   toggleCfg() {
-    this.utilsService.toggleCfg(this.tlsConfig, this.dataToParent);
+    this.utilsService.toggleCfg(this.authenticationService, this.tlsConfig, this.dataToParent);
   }
 
   resetCfg() {
     const modalRef = this.modalService.open(ConfirmationComponent,{backdrop: 'static',keyboard: false});
     modalRef.componentInstance.arg = null;
-    modalRef.componentInstance.confirmFunction = (_: any) => {
+    modalRef.componentInstance.confirmFunction = () => {
       return this.httpService.requestDeleteTlsConfigResource().subscribe(() => {
         this.dataToParent.emit();
       });
     };
     return modalRef.result;
+  }
+
+  getNetworkResolver(){
+    return "https://" + this.networkResolver.dataModel.hostname
   }
 }

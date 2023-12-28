@@ -4,7 +4,7 @@
             <button class="btn" [ngClass]="{'text-secondary': !activeButton, 'text-danger': activeButton === 'record' }" [disabled]="isRecording || uploads[fileInput]?.files.length" (click)="triggerRecording(field.id)">
                 <i class="fas fa-microphone"></i>
             </button>
-            <button class="btn" *ngIf="activeButton === 'record'" (click)="stopRecording()">
+            <button class="btn" *ngIf="activeButton === 'record'" (click)="onStop()">
                 <i class="fas fa-stop"></i>
             </button>
         </div>

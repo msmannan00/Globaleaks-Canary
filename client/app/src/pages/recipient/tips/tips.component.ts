@@ -1,18 +1,23 @@
-import { Component, ElementRef, HostListener, OnInit } from "@angular/core";
-import {AppConfigService} from "@app/services/app-config.service";
-import { NgbDate, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { AppDataService } from "@app/app-data.service";
-import { DeleteConfirmationComponent } from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
-import { GrantAccessComponent } from "@app/shared/modals/grant-access/grant-access.component";
-import { RevokeAccessComponent } from "@app/shared/modals/revoke-access/revoke-access.component";
-import { PreferenceResolver } from "@app/shared/resolvers/preference.resolver";
-import { RTipsResolver } from "@app/shared/resolvers/r-tips-resolver.service";
-import { UtilsService } from "@app/shared/services/utils.service";
-import { TranslateService } from "@ngx-translate/core";
-import { IDropdownSettings } from "ng-multiselect-dropdown";
-import { filter, orderBy } from "lodash";
-import { TokenResource } from "@app/shared/services/token-resource.service";
-import { Router } from "@angular/router";
+import {Component, HostListener, OnInit} from "@angular/core";
+import {AppConfigService} from "@app/services/root/app-config.service";
+import {NgbDate, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {AppDataService} from "@app/app-data.service";
+import {GrantAccessComponent} from "@app/shared/modals/grant-access/grant-access.component";
+import {RevokeAccessComponent} from "@app/shared/modals/revoke-access/revoke-access.component";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
+import {RTipsResolver} from "@app/shared/resolvers/r-tips-resolver.service";
+import {UtilsService} from "@app/shared/services/utils.service";
+import {TranslateService} from "@ngx-translate/core";
+import {IDropdownSettings} from "ng-multiselect-dropdown";
+import {filter, orderBy} from "lodash";
+import {TokenResource} from "@app/shared/services/token-resource.service";
+import {Router} from "@angular/router";
+import {rtipResolverModel} from "@app/models/resolvers/rtips-resolver-model";
+import {Receiver} from "@app/models/reciever/reciever-tip-data";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
+import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
+import {HttpService} from "@app/shared/services/http.service";
+import { Observable, from, switchMap } from "rxjs";
 
 
 @Component({
@@ -21,22 +26,22 @@ import { Router } from "@angular/router";
 })
 export class TipsComponent implements OnInit {
   search: string | undefined;
-  selectedTips: any[] = [];
-  filteredTips: any[];
+  selectedTips: string[] = [];
+  filteredTips: rtipResolverModel[];
   currentPage: number = 1;
   itemsPerPage: number = 20;
-  reportDateFilter: any = null;
-  updateDateFilter: any = null;
-  expiryDateFilter: any = null;
-  reportDateModel: any = null;
-  updateDateModel: any = null;
-  expiryDateModel: any = null;
-  dropdownStatusModel: any[] = [];
-  dropdownStatusData: any[] = [];
-  dropdownContextModel: any[] = [];
-  dropdownContextData: any[] = [];
-  dropdownScoreModel: any[] = [];
-  dropdownScoreData: any[] = [];
+  reportDateFilter: [number, number] | null = null;
+  updateDateFilter: [number, number] | null = null;
+  expiryDateFilter: [number, number] | null = null;
+  reportDateModel: {fromDate: NgbDate | null;toDate: NgbDate | null; } | null = null;
+  updateDateModel: {fromDate: NgbDate | null;toDate: NgbDate | null; } | null = null;
+  expiryDateModel: {fromDate: NgbDate | null;toDate: NgbDate | null; } | null = null;
+  dropdownStatusModel: {id: number;label: string;}[]= [];
+  dropdownStatusData:{id: number;label: string;}[] = [];
+  dropdownContextModel:{id: number;label: string;}[] = [];
+  dropdownContextData: {id: number;label: string;}[] = [];
+  dropdownScoreModel:{id: number;label: string;}[]= [];
+  dropdownScoreData: {id: number;label: string;}[] = [];
   sortKey: string = "creation_date";
   sortReverse: boolean = true;
   channelDropdownVisible: boolean = false;
@@ -47,12 +52,6 @@ export class TipsComponent implements OnInit {
   reportDatePicker: boolean = false;
   lastUpdatePicker: boolean = false;
   expirationDatePicker: boolean = false;
-  oneDayInMilliseconds = 24 * 60 * 60 * 1000;
-
-  dropdownDefaultText: any = {
-    buttonDefaultText: "",
-    searchPlaceholder: this.translateService.instant("Search")
-  };
   dropdownSettings: IDropdownSettings = {
     idField: "id",
     textField: "label",
@@ -61,7 +60,7 @@ export class TipsComponent implements OnInit {
     searchPlaceholderText: this.translateService.instant("Search")
   };
 
-  constructor(private appConfigServices: AppConfigService, private router: Router, protected RTips: RTipsResolver, protected preference: PreferenceResolver, private modalService: NgbModal, protected utils: UtilsService, protected appDataService: AppDataService, private elementRef: ElementRef, private translateService: TranslateService, private tokenResourceService: TokenResource) {
+  constructor(protected authenticationService: AuthenticationService, protected httpService: HttpService, protected RTipService: ReceiverTipService,private appConfigServices: AppConfigService, private router: Router, protected RTips: RTipsResolver, protected preference: PreferenceResolver, private modalService: NgbModal, protected utils: UtilsService, protected appDataService: AppDataService, private translateService: TranslateService, private tokenResourceService: TokenResource) {
 
   }
 
@@ -85,61 +84,101 @@ export class TipsComponent implements OnInit {
     this.selectedTips = [];
   }
 
-  openGrantAccessModal() {
-    this.utils.runUserOperation("get_users_names", {}, true).subscribe(
-      {
-        next: response => {
-          const modalRef = this.modalService.open(GrantAccessComponent,{backdrop: 'static',keyboard: false});
-          modalRef.componentInstance.args = {
-            users_names: response
-          };
-          modalRef.componentInstance.confirmFun = (receiver_id: any) => {
-            const args = {
-              rtips: this.selectedTips,
-              receiver: receiver_id
-            };
-            return this.utils.runRecipientOperation("grant", args, true);
-          };
+  openGrantAccessModal(): void {
+    this.utils.runUserOperation("get_users_names", {}, false).subscribe( {
+      next: response => {
+      const selectableRecipients: Receiver[] = [];
+      this.appDataService.public.receivers.forEach(async (receiver: Receiver) => {
+        if (receiver.id !== this.authenticationService.session.user_id) {
+          selectableRecipients.push(receiver);
         }
+      });
+      const modalRef = this.modalService.open(GrantAccessComponent,{backdrop: 'static',keyboard: false});
+        modalRef.componentInstance.usersNames = response;
+        modalRef.componentInstance.selectableRecipients = selectableRecipients;
+        modalRef.componentInstance.confirmFun = (receiver_id: Receiver) => {
+        const req = {
+          operation: "grant",
+          args: {
+            rtips: this.selectedTips,
+            receiver: receiver_id.id
+          },
+        };
+        this.utils.runOperation("api/recipient/operations", req.operation, req.args, true)
+          .subscribe(() => {
+            this.reload();
+          });
+      };
+      modalRef.componentInstance.cancelFun = null;
       }
-    );
+    });
   }
 
   openRevokeAccessModal() {
-    this.utils.runUserOperation("get_users_names", {}, true).subscribe(
+    this.utils.runUserOperation("get_users_names", {}, false).subscribe(
       {
         next: response => {
+          const selectableRecipients: Receiver[] = [];
+          this.appDataService.public.receivers.forEach(async (receiver: Receiver) => {
+            if (receiver.id !== this.authenticationService.session.user_id) {
+              selectableRecipients.push(receiver);
+            }
+          });
           const modalRef = this.modalService.open(RevokeAccessComponent,{backdrop: 'static',keyboard: false});
-          modalRef.componentInstance.args = {
-            users_names: response
-          };
-          modalRef.componentInstance.confirmFun = (receiver_id: any) => {
-            const args = {
-              rtips: this.selectedTips,
-              receiver: receiver_id
+          modalRef.componentInstance.usersNames = response;
+          modalRef.componentInstance.selectableRecipients = selectableRecipients;
+          modalRef.componentInstance.confirmFun = (receiver_id: Receiver) => {
+            const req = {
+              operation: "revoke",
+              args: {
+                rtips: this.selectedTips,
+                receiver: receiver_id.id
+              },
             };
-            return this.utils.runRecipientOperation("revoke", args, true);
+            this.utils.runOperation("api/recipient/operations", req.operation, req.args, true)
+              .subscribe(() => {
+                this.reload();
+              });
           };
+          modalRef.componentInstance.cancelFun = null;
         }
       }
     );
   }
-
-  tipDeleteSelected() {
-    const modalRef = this.modalService.open(DeleteConfirmationComponent,{backdrop: 'static',keyboard: false});
-    modalRef.componentInstance.confirmFunction = () => {
-    };
-    modalRef.componentInstance.selected_tips = this.selectedTips;
-    modalRef.componentInstance.operation = "delete";
+  tipsExport(){
+      this.exportFiles().subscribe();
   }
 
+  exportFiles(): Observable<void> {
+    const selectedTips = this.selectedTips.slice();
 
-  async tipsExport() {
-    for (let i = 0; i < this.selectedTips.length; i++) {
-      const token: any = await this.tokenResourceService.getWithProofOfWork();
-      window.open(`api/recipient/rtips/${this.selectedTips[i]}/export?token=${token.id}:${token.answer}`);
-      this.appDataService.updateShowLoadingPanel(false);
-    }
+    return from(this.tokenResourceService.getWithProofOfWork()).pipe(
+      switchMap((token: any) => {
+        return new Observable<void>((observer) => {
+          let count = 0;
+
+          const exportOneTip = (tipId: string) => {
+            const url = `api/recipient/rtips/${tipId}/export?token=${token.id}:${token.answer}`;
+            const newWindow = window.open(url);
+
+            if (newWindow) {
+              newWindow.onload = () => {
+                count++;
+                if (count === selectedTips.length) {
+                  observer.complete();
+                }
+              };
+            }
+          };
+
+          for (let i = 0; i < selectedTips.length; i++) {
+            exportOneTip(selectedTips[i]);
+          }
+           this.appDataService.updateShowLoadingPanel(false);
+        });
+      })
+      
+    );
   }
 
   reload() {
@@ -150,7 +189,7 @@ export class TipsComponent implements OnInit {
     this.appConfigServices.localInitialization(true, reloadCallback);
   }
 
-  tipSwitch(id: number): void {
+  tipSwitch(id: string): void {
     this.index = this.selectedTips.indexOf(id);
     if (this.index > -1) {
       this.selectedTips.splice(this.index, 1);
@@ -159,12 +198,12 @@ export class TipsComponent implements OnInit {
     }
   }
 
-  isSelected(id: any): boolean {
+  isSelected(id: string): boolean {
     return this.selectedTips.indexOf(id) !== -1;
   }
 
-  exportTip(tipId: any) {
-    this.utils.download("api/recipient/rtips/" + tipId + "/export");
+  exportTip(tipId: string) {
+    this.utils.download("api/recipient/rtips/" + tipId + "/export").subscribe();
     this.appDataService.updateShowLoadingPanel(false);
   }
 
@@ -211,7 +250,7 @@ export class TipsComponent implements OnInit {
     }
   }
 
-  onChanged(model: any, type: string) {
+  onChanged(model: {id: number;label: string;}[], type: string) {
     this.processTips();
     if (model.length > 0 && type === "Score") {
       this.dropdownContextModel = [];
@@ -231,7 +270,7 @@ export class TipsComponent implements OnInit {
     this.applyFilter();
   }
 
-  checkFilter(filter: any) {
+  checkFilter(filter: {id: number;label: string;}[]) {
     return filter.length > 0;
   };
 
@@ -280,49 +319,49 @@ export class TipsComponent implements OnInit {
 
   }
 
-  onReportFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
+  onReportFilterChange(event:{ fromDate: string | null; toDate: string | null } ) {
     this.processTips();
     const {fromDate, toDate} = event;
-    this.reportDateModel = {fromDate, toDate};
     if (!fromDate && !toDate) {
       this.reportDateFilter = null;
       this.closeAllDatePickers();
-    } else {
+    } 
+    if (fromDate && toDate){
       this.reportDateFilter = [new Date(fromDate).getTime(), new Date(toDate).getTime()];
     }
     this.applyFilter();
   }
 
-  onUpdateFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
+  onUpdateFilterChange(event:{ fromDate: string | null; toDate: string | null } ) {
     this.processTips();
     const {fromDate, toDate} = event;
-    this.updateDateModel = {fromDate, toDate};
     if (!fromDate && !toDate) {
       this.updateDateFilter = null;
       this.closeAllDatePickers();
-    } else {
+    } 
+    if (fromDate && toDate){
       this.updateDateFilter = [new Date(fromDate).getTime(), new Date(toDate).getTime()];
     }
     this.applyFilter();
   }
 
-  onExpiryFilterChange(event: { fromDate: NgbDate | null; toDate: NgbDate | null } | any) {
+  onExpiryFilterChange(event:{ fromDate: string | null; toDate: string | null } ) {
     this.processTips();
     const {fromDate, toDate} = event;
-    this.expiryDateModel = {fromDate, toDate};
     if (!fromDate && !toDate) {
       this.expiryDateFilter = null;
       this.closeAllDatePickers();
-    } else {
+    } 
+    if (fromDate && toDate){
       this.expiryDateFilter = [new Date(fromDate).getTime(), new Date(toDate).getTime()];
     }
     this.applyFilter();
   }
 
   applyFilter() {
-    this.filteredTips = this.utils.getStaticFilter(this.RTips.dataModel, this.dropdownStatusModel, "submissionStatusStr");
-    this.filteredTips = this.utils.getStaticFilter(this.filteredTips, this.dropdownContextModel, "context_name");
-    this.filteredTips = this.utils.getStaticFilter(this.filteredTips, this.dropdownScoreModel, "score");
+    this.filteredTips = this.utils.getStaticFilter(this.RTips.dataModel, this.dropdownStatusModel, "submissionStatusStr", this.translateService);
+    this.filteredTips = this.utils.getStaticFilter(this.filteredTips, this.dropdownContextModel, "context_name", this.translateService);
+    this.filteredTips = this.utils.getStaticFilter(this.filteredTips, this.dropdownScoreModel, "score", this.translateService);
     this.filteredTips = this.utils.getDateFilter(this.filteredTips, this.reportDateFilter, this.updateDateFilter, this.expiryDateFilter);
   }
 

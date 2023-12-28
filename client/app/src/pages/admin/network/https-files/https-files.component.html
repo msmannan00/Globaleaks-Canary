@@ -38,7 +38,7 @@
                     <br>
                     <div *ngIf="csr_state.open">
                         <hr />
-                        <src-https-csr-gen [fileResources]="fileResources" (dataToParent)="httpsCsr($event)"></src-https-csr-gen>
+                        <src-https-csr-gen [fileResources]="fileResources"></src-https-csr-gen>
                     </div>
                 </span>
                 <span *ngIf="tlsConfig.files.csr?.set" class="clearfix">

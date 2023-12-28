@@ -1,16 +1,18 @@
+import {TriggeredByOption,Attrs} from "@app/models/app/shared-public-model";
+
 interface Option {
   id: string;
   order: number;
   block_submission: boolean;
   score_points: number;
   score_type: string;
-  trigger_receiver: any[];
+  trigger_receiver: string[];
   hint1: string;
   hint2: string;
   label: string;
 }
 
-interface Step {
+export interface Step {
   id: string;
   instance: string;
   editable: boolean;
@@ -22,12 +24,13 @@ interface Step {
   multi_entry: boolean;
   required: boolean;
   preview: boolean;
-  attrs: any;
+  attrs: Attrs;
   x: number;
   y: number;
   width: number;
+  questionnaire_id:string;
   triggered_by_score: number;
-  triggered_by_options: any[];
+  triggered_by_options: TriggeredByOption[];
   options: Option[];
   children: Step[];
   label: string;

@@ -8,7 +8,7 @@
         </div>
         <div class="form-group">
             <label>
-                <input #encryption name="node.dataModel.encryption" [(ngModel)]="nodeResolver.dataModel.encryption" type="checkbox" (ngModelChange)="enableEncryption()" [disabled]="nodeResolver.dataModel.encryption" />
+                <input name="node.dataModel.encryption" [(ngModel)]="nodeResolver.dataModel.encryption" type="checkbox" (ngModelChange)="enableEncryption()" [disabled]="nodeResolver.dataModel.encryption" />
                 <span>{{'Enable encryption' | translate}}</span>
             </label>
         </div>
@@ -54,7 +54,7 @@
         </div>
         <div class="form-group">
             <label>{{ 'Default questionnaire' | translate }}</label>
-            <select name="node.dataModel.default_questionnaire" class="form-select" [(ngModel)]="nodeResolver.dataModel.default_questionnaire">
+            <select name="node.dataModel.default_questionnaire" class="form-select-custom" [(ngModel)]="nodeResolver.dataModel.default_questionnaire">
                 <option [value]="item.id" *ngFor="let item of questionnaireData">{{ item.name }}</option>
             </select>
         </div>
@@ -125,7 +125,7 @@
         </div>
         <div class="form-group" *ngIf="nodeResolver.dataModel.root_tenant">
             <label>{{ 'Logging level' | translate }}</label>
-            <select class="form-select" [(ngModel)]="nodeResolver.dataModel.log_level">
+            <select class="form-select-custom" [(ngModel)]="nodeResolver.dataModel.log_level">
                 <option value="ERROR">ERROR</option>
                 <option value="INFO">INFO</option>
                 <option value="DEBUG">DEBUG</option>

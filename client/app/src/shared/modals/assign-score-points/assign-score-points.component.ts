@@ -14,7 +14,7 @@ export class AssignScorePointsComponent {
   constructor(private activeModal: NgbActiveModal, private modalService: NgbModal) {
   }
 
-  confirmFunction: (data: any) => void;
+  confirmFunction: (data: { score_points: number, score_type: string }) => void;
 
   confirm() {
     this.confirmFunction(this.arg);

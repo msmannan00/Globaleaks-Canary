@@ -1,14 +1,21 @@
 import {Injectable} from "@angular/core";
-import {HttpInterceptor, HttpEvent, HttpRequest, HttpHandler, HttpClient, HttpErrorResponse,} from "@angular/common/http";
+import {
+  HttpInterceptor,
+  HttpEvent,
+  HttpRequest,
+  HttpHandler,
+  HttpClient,
+  HttpErrorResponse,
+} from "@angular/common/http";
 import {catchError, finalize, from, Observable, switchMap, throwError} from "rxjs";
 import {TokenResponse} from "@app/models/authentication/token-response";
-import {CryptoService} from "@app/crypto.service";
-import {AuthenticationService} from "@app/services/authentication.service";
+import {CryptoService} from "@app/shared/services/crypto.service";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {AppDataService} from "@app/app-data.service";
-import {TranslationService} from "@app/services/translation.service";
+import {TranslationService} from "@app/services/helper/translation.service";
 import {ErrorCodes} from "@app/models/app/error-code";
-import { of } from 'rxjs';
-import { timer } from 'rxjs';
+import {of} from 'rxjs';
+import {timer} from 'rxjs';
 
 const protectedUrls = [
   "api/wizard",
@@ -20,7 +27,7 @@ const protectedUrls = [
 ];
 
 @Injectable()
-export class RequestInterceptor implements HttpInterceptor {
+export class appInterceptor implements HttpInterceptor {
   constructor(private authenticationService: AuthenticationService, private httpClient: HttpClient, private cryptoService: CryptoService, private translationService: TranslationService) {
   }
 
@@ -48,9 +55,12 @@ export class RequestInterceptor implements HttpInterceptor {
     const authHeader = this.authenticationService.getHeader();
     let authRequest = httpRequest;
 
-    for (const [key, value] of authHeader) {
-      authRequest = authRequest.clone({headers: authRequest.headers.set(key, value)});
-    }
+    authHeader.keys().forEach(header => {
+      const headerValue = authHeader.get(header);
+      if(headerValue){
+        authRequest = authRequest.clone({headers: authRequest.headers.set(header, headerValue)});
+      }
+    });
 
     authRequest = authRequest.clone({
       headers: authRequest.headers.set("Accept-Language", this.getAcceptLanguageHeader() || ""),
@@ -58,16 +68,18 @@ export class RequestInterceptor implements HttpInterceptor {
 
     if (httpRequest.url.includes("api/signup") || httpRequest.url.endsWith("api/auth/receiptauth") && !this.authenticationService.session || protectedUrls.includes(httpRequest.url)) {
       return this.httpClient.post("api/auth/token", {}).pipe(
-        switchMap((response) => from(this.cryptoService.proofOfWork(Object.assign(new TokenResponse(), response).id)).pipe(
-          switchMap((ans) => next.handle(httpRequest.clone({
-            headers: httpRequest.headers.set("x-token", Object.assign(new TokenResponse(), response).id + ":" + ans)
-              .set("Accept-Language", this.getAcceptLanguageHeader() || ""),
-          })))
-        ))
+        switchMap((response) =>
+          from(this.cryptoService.proofOfWork(Object.assign(new TokenResponse(), response).id)).pipe(
+            switchMap((ans) => next.handle(httpRequest.clone({
+              headers: httpRequest.headers.set("x-token", `${Object.assign(new TokenResponse(), response).id}:${ans}`)
+                .set("Accept-Language", this.getAcceptLanguageHeader() || ""),
+            })))
+          )
+        )
       );
     } else {
       return next.handle(authRequest);
-    }
+    }   
   }
 }
 
@@ -102,7 +114,7 @@ export class ErrorCatchingInterceptor implements HttpInterceptor {
 export class CompletedInterceptor implements HttpInterceptor {
   count = 0;
 
-  constructor(private authenticationService: AuthenticationService, private appDataService: AppDataService) {
+  constructor(private appDataService: AppDataService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
