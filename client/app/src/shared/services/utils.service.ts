@@ -27,6 +27,7 @@ import {Option} from "@app/models/whistleblower/wb-tip-data";
 import {Status} from "@app/models/app/public-model";
 import {AppDataService} from "@app/app-data.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
+import { FlowFile } from "@flowjs/flow.js";
 
 @Injectable({
   providedIn: "root"
@@ -338,7 +339,7 @@ export class UtilsService {
       "text": arg.text,
       "url": window.location.href.replace("localhost", "127.0.0.1")
     });
-    this.httpService.requestSuppor(param).subscribe();
+    this.httpService.requestSupport(param).subscribe();
   }
 
   runUserOperation(operation: string, args: any, refresh: boolean) {
@@ -557,8 +558,8 @@ export class UtilsService {
     });
   }
 
-  getFiles(): Observable<any[]> {
-    return this.http.get<any[]>("api/admin/files");
+  getFiles(): Observable<FlowFile[]> {
+    return this.http.get<FlowFile[]>("api/admin/files");
   }
 
   deleteFile(url: string): Observable<void> {

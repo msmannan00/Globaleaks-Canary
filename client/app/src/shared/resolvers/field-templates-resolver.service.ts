@@ -9,7 +9,7 @@ import {fieldtemplatesResolverModel} from "@app/models/resolvers/field-template-
   providedIn: "root"
 })
 export class FieldTemplatesResolver  {
-  dataModel: fieldtemplatesResolverModel = new fieldtemplatesResolverModel();
+  dataModel: fieldtemplatesResolverModel[];
 
   constructor(private httpService: HttpService, private authenticationService: AuthenticationService) {
   }
@@ -17,7 +17,7 @@ export class FieldTemplatesResolver  {
   resolve(): Observable<boolean> {
     if (this.authenticationService.session.role === "admin") {
       return this.httpService.requestAdminFieldTemplateResource().pipe(
-        map((response: fieldtemplatesResolverModel) => {
+        map((response: fieldtemplatesResolverModel[]) => {
           this.dataModel = response;
           return true;
         })

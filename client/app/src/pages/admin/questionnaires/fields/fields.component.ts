@@ -12,7 +12,7 @@ import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 import {map, Observable, of} from "rxjs";
-import {Step} from "@app/models/resolvers/questionnaire-model";
+import {Step, questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
 import {ParsedFields} from "@app/models/component-model/parsedFields";
 import {Field, fieldtemplatesResolverModel} from "@app/models/resolvers/field-template-model";
 import {Children, Option, Step as Steps, TriggeredByOption} from "@app/models/app/shared-public-model";
@@ -93,9 +93,9 @@ export class FieldsComponent implements OnInit {
     if (this.type === "step") {
       return this.httpService.requestQuestionnairesResource().pipe(
         map(response => {
-          response.forEach((step: Questionnaire) => {
+          response.forEach((step: questionnaireResolverModel) => {
             if (step.id == this.step.questionnaire_id) {
-              step.steps.forEach((innerStep: Steps) => {
+              step.steps.forEach((innerStep: any) => {
                 if (innerStep.id == this.step.id) {
                   innerStep.children.forEach((field: Step | Field) => {
                     if (field.id == this.field.id && field.step_id == this.field.step_id) {
@@ -112,7 +112,7 @@ export class FieldsComponent implements OnInit {
     if (this.type === "template") {
       return this.httpService.requestAdminFieldTemplateResource().pipe(
         map(response => {
-          response.forEach((field: Step | Field) => {
+          response.forEach((field: fieldtemplatesResolverModel) => {
             if (field.id == this.field.id) {
               this.children = field.children;
             }

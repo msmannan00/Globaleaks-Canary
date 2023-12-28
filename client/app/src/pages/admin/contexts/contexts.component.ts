@@ -37,7 +37,7 @@ export class ContextsComponent implements OnInit {
   addContext() {
     const context: NewContext = new NewContext();
     context.name = this.new_context.name;
-    context.questionnaire_id = this.node.dataModel.default_questionnaire;
+    context.questionnaire_id = "default";
     context.order = this.newItemOrder(this.contextsData, "order");
     this.utilsService.addAdminContext(context).subscribe(res => {
       this.contextsData.push(res);

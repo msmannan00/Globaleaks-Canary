@@ -81,7 +81,7 @@ export class AuthenticationService {
       authcode = "";
     }
 
-    let requestObservable: Observable<any>;
+    let requestObservable: Observable<Session>;
     if (authtoken) {
       requestObservable = this.httpService.requestAuthTokenLogin(JSON.stringify({"authtoken": authtoken}));
     } else {
@@ -101,11 +101,11 @@ export class AuthenticationService {
 
     requestObservable.subscribe(
       {
-        next: (response) => {
+        next: (response: Session) => {
           this.setSession(response);
 
-          if ("redirect" in response) {
-            this.router.navigate([response.data.redirect]).then();
+          if (response.redirect) {
+            this.router.navigate([response.redirect]).then();
           }
 
           const src = location.search;
