@@ -6,6 +6,7 @@ import {AppDataService} from "@app/app-data.service";
 import {CryptoService} from "@app/shared/services/crypto.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {WbFile} from "@app/models/app/shared-public-model";
+import {OrderByPipe} from "@app/shared/pipes/order-by.pipe";
 
 @Component({
   selector: "src-tip-files-whistleblower",
@@ -15,7 +16,7 @@ export class TipFilesWhistleblowerComponent {
   @Input() fileUploadUrl: string;
   collapsed = false;
 
-  constructor(private appDataService: AppDataService, private cryptoService: CryptoService, private httpService: HttpService, protected authenticationService: AuthenticationService, protected utilsService: UtilsService, protected wbTipService: WbtipService) {
+  constructor(private orderByPipe: OrderByPipe, private appDataService: AppDataService, private cryptoService: CryptoService, private httpService: HttpService, protected authenticationService: AuthenticationService, protected utilsService: UtilsService, protected wbTipService: WbtipService) {
   }
 
   downloadWBFile(wbFile: WbFile) {
@@ -31,6 +32,10 @@ export class TipFilesWhistleblowerComponent {
           }
         }
     );
+  }
+
+  getSortedWBFiles():WbFile[]{
+    return this.orderByPipe.transform(this.wbTipService.tip.wbfiles, 'creation_date');
   }
 
   public toggleColLapse() {

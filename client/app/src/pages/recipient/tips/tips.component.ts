@@ -18,6 +18,7 @@ import {AuthenticationService} from "@app/services/helper/authentication.service
 import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
 import {HttpService} from "@app/shared/services/http.service";
 import { Observable, from, switchMap } from "rxjs";
+import {OrderByPipe} from "@app/shared/pipes/order-by.pipe";
 
 
 @Component({
@@ -60,7 +61,7 @@ export class TipsComponent implements OnInit {
     searchPlaceholderText: this.translateService.instant("Search")
   };
 
-  constructor(protected authenticationService: AuthenticationService, protected httpService: HttpService, protected RTipService: ReceiverTipService,private appConfigServices: AppConfigService, private router: Router, protected RTips: RTipsResolver, protected preference: PreferenceResolver, private modalService: NgbModal, protected utils: UtilsService, protected appDataService: AppDataService, private translateService: TranslateService, private tokenResourceService: TokenResource) {
+  constructor(private orderByPipe: OrderByPipe, protected authenticationService: AuthenticationService, protected httpService: HttpService, protected RTipService: ReceiverTipService,private appConfigServices: AppConfigService, private router: Router, protected RTips: RTipsResolver, protected preference: PreferenceResolver, private modalService: NgbModal, protected utils: UtilsService, protected appDataService: AppDataService, private translateService: TranslateService, private tokenResourceService: TokenResource) {
 
   }
 
@@ -71,6 +72,10 @@ export class TipsComponent implements OnInit {
       this.filteredTips = this.RTips.dataModel;
       this.processTips();
     }
+  }
+
+  getSortedFilterTips():rtipResolverModel[]{
+    return this.orderByPipe.transform(this.filteredTips, this.sortKey, this.sortReverse);
   }
 
   selectAll() {
