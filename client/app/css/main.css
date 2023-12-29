@@ -350,7 +350,7 @@ table tr td {
   font-weight: bold;
 }
 
-#privacy-badge {
+.privacy-badge {
   background-color: #1d1f24;
   color: #fff;
 }
@@ -717,7 +717,7 @@ p:last-child {
   clear: both;
 }
 
-#max-selectable-receiver-box {
+.max-selectable-receiver-box {
   margin-bottom: 1em;
 }
 
