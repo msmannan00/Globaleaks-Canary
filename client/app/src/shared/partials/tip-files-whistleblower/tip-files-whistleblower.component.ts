@@ -34,8 +34,8 @@ export class TipFilesWhistleblowerComponent {
     );
   }
 
-  getSortedWBFiles():WbFile[]{
-    return this.orderByPipe.transform(this.wbTipService.tip.wbfiles, 'creation_date');
+  getSortedWBFiles(data:WbFile[]):WbFile[]{
+    return data;
   }
 
   public toggleColLapse() {

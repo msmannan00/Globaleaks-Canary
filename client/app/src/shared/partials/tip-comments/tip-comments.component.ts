@@ -51,8 +51,8 @@ export class TipCommentsComponent {
     );
   }
 
-  getSortedComments():Comment[]{
-    return this.filterPipe.transform(this.orderByPipe.transform(this.comments, 'creation_date'), 'visibility', this.key);
+  getSortedComments(data:Comment[]):Comment[]{
+    return data;
   }
 
   onEnableTwoWayCommentsChange() {

@@ -34,8 +34,8 @@ export class TipFilesReceiverComponent implements OnInit {
     };
   }
 
-  getSortedWBFiles():WbFile[]{
-    return this.orderByPipe.transform(this.tipService.tip.wbfiles, 'creation_date');
+  getSortedWBFiles(data:WbFile[]):WbFile[]{
+    return data;
   }
 
   public downloadRFile(file: WbFile) {
