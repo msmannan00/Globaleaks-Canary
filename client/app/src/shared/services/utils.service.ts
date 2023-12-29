@@ -28,6 +28,7 @@ import {Status} from "@app/models/app/public-model";
 import {AppDataService} from "@app/app-data.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import { FlowFile } from "@flowjs/flow.js";
+import { AcceptAgreementComponent } from "../modals/accept-agreement/accept-agreement.component";
 
 @Injectable({
   providedIn: "root"
@@ -666,5 +667,23 @@ export class UtilsService {
   deleteResource( list: any[], res: any): void {
       list.splice(list.indexOf(res), 1);
   }
-  
+
+  acceptPrivacyPolicyDialog(): Observable<string> {
+    return new Observable((observer) => {
+      let modalRef = this.modalService.open(AcceptAgreementComponent, {
+        backdrop: 'static',
+        keyboard: false,
+      });
+      modalRef.componentInstance.confirmFunction = () => {
+        observer.complete()
+        return this.http.put("api/user/operations", {
+          operation: "accepted_privacy_policy",
+          args: {}
+        }).subscribe(() => {
+          this.preferenceResolver.dataModel.accepted_privacy_policy = "";
+          modalRef.close();
+        });
+      };
+    });
+  }
 }
