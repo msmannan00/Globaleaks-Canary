@@ -5,8 +5,6 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {ScrollToBottomDirective} from "@app/shared/directive/scroll-to-bottom.directive";
 import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
 import {Comment} from "@app/models/app/shared-public-model";
-import {OrderByPipe} from "@app/shared/pipes/order-by.pipe";
-import {FilterPipe} from "@app/shared/pipes/filter.pipe";
 
 @Component({
   selector: "src-tip-comments",
@@ -25,7 +23,7 @@ export class TipCommentsComponent {
   comments: Comment[]=[];
   newComments:Comment;
 
-  constructor(private filterPipe: FilterPipe, private orderByPipe: OrderByPipe, private rTipService: ReceiverTipService, protected authenticationService: AuthenticationService, protected utilsService: UtilsService, private cdr: ChangeDetectorRef) {
+  constructor(private rTipService: ReceiverTipService, protected authenticationService: AuthenticationService, protected utilsService: UtilsService, private cdr: ChangeDetectorRef) {
 
   }
 

@@ -13,7 +13,6 @@ import {FormsModule} from "@angular/forms";
 import {NgbDatepickerModule, NgbDropdownModule, NgbModule, NgbNavModule} from "@ng-bootstrap/ng-bootstrap";
 import {WhistleBlowerIdentityReceiverComponent} from "@app/pages/recipient/whistleblower-identity-reciever/whistle-blower-identity-receiver.component";
 import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
-import {OrderByPipe} from "@app/shared/pipes/order-by.pipe";
 
 @NgModule({
   declarations: [

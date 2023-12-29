@@ -8,7 +8,6 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {FileViewComponent} from "@app/shared/modals/file-view/file-view.component";
 import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
 import {WbFile} from "@app/models/app/shared-public-model";
-import {OrderByPipe} from "@app/shared/pipes/order-by.pipe";
 
 @Component({
   selector: "src-tip-files-receiver",
@@ -19,7 +18,7 @@ export class TipFilesReceiverComponent implements OnInit {
   supportedViewTypes = ["application/pdf", "audio/mpeg", "image/gif", "image/jpeg", "image/png", "text/csv", "text/plain", "video/mp4"];
   collapsed = false;
 
-  constructor(private orderByPipe: OrderByPipe, protected modalService: NgbModal, private cryptoService: CryptoService, protected httpService: HttpService, protected authenticationService: AuthenticationService, protected utilsService: UtilsService, protected tipService: ReceiverTipService, protected appDataService: AppDataService) {
+  constructor(protected modalService: NgbModal, private cryptoService: CryptoService, protected httpService: HttpService, protected authenticationService: AuthenticationService, protected utilsService: UtilsService, protected tipService: ReceiverTipService, protected appDataService: AppDataService) {
   }
 
   ngOnInit(): void {
