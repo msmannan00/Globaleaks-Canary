@@ -30,7 +30,7 @@
                 </ul>
                 <div class="tab-content">
                     <div *ngIf="displayErrors()">
-                        <src-submission-error [field_id_map]="field_id_map" [stepForms]="stepForms" [submission]="submissionService" [uploads]="submissionService.uploads" [stepForm]="stepForm" [hasPreviousStep]=hasPreviousStep() [areReceiverSelected]=areReceiversSelected() [displayStepErrors]="displayStepErrors" [submissionForm]="submissionForm"></src-submission-error>
+                        <src-submission-error [field_id_map]="field_id_map" [stepForms]="stepForms" [submission]="submissionService" [uploads]="submissionService.uploads" [stepForm]="stepForm" [hasPreviousStep]=hasPreviousStep() [areReceiverSelected]=areReceiversSelected() [singleStepForm]="singleStepForm()" [displayStepErrors]="displayStepErrors" [submissionForm]="submissionForm"></src-submission-error>
                     </div>
                     <div *ngIf="submissionService.context.allow_recipients_selection">
                         <div *ngIf="navigation === -1">
