@@ -193,6 +193,10 @@ export class SubmissionComponent {
     return uploading;
   }
 
+  getContextID(){
+    return this.submissionService.context.id;
+  }
+
   calculateEstimatedTime() {
     let timeRemaining = 0;
     if (this.uploads && this.done) {
