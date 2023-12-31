@@ -44,10 +44,11 @@ export class StepComponent implements OnInit {
   listenToAddFieldFormTemplate() {
     this.showAddQuestionFromTemplate = false;
   }
+
   listenToFields() {
     this.getResolver()
   }
-  
+
   getResolver() {
     return this.httpService.requestQuestionnairesResource().subscribe(response => {
       response.forEach((step: questionnaireResolverModel) => {

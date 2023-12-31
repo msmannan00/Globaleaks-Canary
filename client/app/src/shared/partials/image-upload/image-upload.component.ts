@@ -16,9 +16,9 @@ export class ImageUploadComponent implements AfterViewInit, OnDestroy, OnInit {
   @Input() imageUploadModel: { [key: string]: any };
   @Input() imageUploadModelAttr: string;
   @Input() imageUploadId: string;
-  imageUploadObj: {files:[]} = {files:[]};
+  imageUploadObj: { files: [] } = {files: []};
   autoUploadSubscription: Subscription;
-  filemodel:any;
+  filemodel: any;
   currentTImestamp = new Date().getTime();
 
   constructor(private http: HttpClient, protected authenticationService: AuthenticationService) {

@@ -8,7 +8,7 @@ import {Signup} from "@app/models/component-model/signup";
   selector: "src-signup",
   templateUrl: "./signup.component.html"
 })
-export class SignupComponent implements OnInit{
+export class SignupComponent implements OnInit {
   hostname = "";
   completed = false;
   step = 1;

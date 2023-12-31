@@ -8,7 +8,9 @@ import {HttpService} from "@app/shared/services/http.service";
 import {TokenResource} from "@app/shared/services/token-resource.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, from, map, switchMap} from "rxjs";
-import {ConfirmationWithPasswordComponent} from "@app/shared/modals/confirmation-with-password/confirmation-with-password.component";
+import {
+  ConfirmationWithPasswordComponent
+} from "@app/shared/modals/confirmation-with-password/confirmation-with-password.component";
 import {ConfirmationWith2faComponent} from "@app/shared/modals/confirmation-with2fa/confirmation-with2fa.component";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
@@ -27,7 +29,7 @@ import {Option} from "@app/models/whistleblower/wb-tip-data";
 import {Status} from "@app/models/app/public-model";
 import {AppDataService} from "@app/app-data.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
-import { FlowFile } from "@flowjs/flow.js";
+import {FlowFile} from "@flowjs/flow.js";
 
 @Injectable({
   providedIn: "root"
@@ -37,7 +39,7 @@ export class UtilsService {
   constructor(private tokenResource: TokenResource, private clipboardService: ClipboardService, private http: HttpClient, private httpService: HttpService, private modalService: NgbModal, private preferenceResolver: PreferenceResolver, private router: Router) {
   }
 
-  updateNode(nodeResolverModel:nodeResolverModel) {
+  updateNode(nodeResolverModel: nodeResolverModel) {
     this.httpService.updateNodeResource(nodeResolverModel).subscribe();
   }
 
@@ -101,7 +103,7 @@ export class UtilsService {
     return false;
   }
 
-  removeBootstrap(renderer: Renderer2, document:Document, link:string){
+  removeBootstrap(renderer: Renderer2, document: Document, link: string) {
     let defaultBootstrapLink = document.head.querySelector(`link[href="${link}"]`);
     if (defaultBootstrapLink) {
       renderer.removeChild(document.head, defaultBootstrapLink);
@@ -175,7 +177,8 @@ export class UtilsService {
         this.router.navigate([this.router.url]).then();
       });
   }
-  onFlowUpload(flowJsInstance:Flow, file:File){
+
+  onFlowUpload(flowJsInstance: Flow, file: File) {
     const fileNameParts = file.name.split(".");
     const fileExtension = fileNameParts.pop();
     const fileNameWithoutExtension = fileNameParts.join(".");
@@ -187,7 +190,7 @@ export class UtilsService {
     flowJsInstance.upload();
   }
 
-  swap($event: Event, index: number, n: number, questionnaire:questionnaireResolverModel): void {
+  swap($event: Event, index: number, n: number, questionnaire: questionnaireResolverModel): void {
     $event.stopPropagation();
 
     const target = index + n;
@@ -207,7 +210,7 @@ export class UtilsService {
     }).subscribe();
   }
 
-  toggleCfg(authenticationService: AuthenticationService, tlsConfig:TlsConfig, dataToParent:EventEmitter<string>) {
+  toggleCfg(authenticationService: AuthenticationService, tlsConfig: TlsConfig, dataToParent: EventEmitter<string>) {
     if (tlsConfig.enabled) {
       const authHeader = authenticationService.getHeader();
       this.httpService.disableTLSConfig(tlsConfig, authHeader).subscribe(() => {
@@ -239,14 +242,14 @@ export class UtilsService {
 
   showUserStatusBox(authenticationService: AuthenticationService, appDataService: AppDataService) {
     return appDataService.public.node.wizard_done &&
-        appDataService.page !== "homepage" &&
-        appDataService.page !== "submissionpage" &&
-        authenticationService.session;
+      appDataService.page !== "homepage" &&
+      appDataService.page !== "submissionpage" &&
+      authenticationService.session;
   }
 
   isWhistleblowerPage(authenticationService: AuthenticationService, appDataService: AppDataService) {
     const currentUrl = this.router.url;
-    return appDataService.public.node.wizard_done && (!authenticationService.session || (location.hash==="#/" || location.hash.startsWith("#/submission"))) && ((currentUrl === "/" && !appDataService.public.node.enable_signup) || currentUrl === "/submission" || currentUrl === "/blank");
+    return appDataService.public.node.wizard_done && (!authenticationService.session || (location.hash === "#/" || location.hash.startsWith("#/submission"))) && ((currentUrl === "/" && !appDataService.public.node.enable_signup) || currentUrl === "/submission" || currentUrl === "/blank");
   }
 
   stopPropagation(event: Event) {
@@ -273,9 +276,10 @@ export class UtilsService {
     if (appDataService.public.node.custom_support_url) {
       window.open(appDataService.public.node.custom_support_url, "_blank");
     } else {
-      this.modalService.open(RequestSupportComponent,{backdrop: "static",keyboard: false});
+      this.modalService.open(RequestSupportComponent, {backdrop: "static", keyboard: false});
     }
   }
+
   array_to_map(receivers: any) {
     const ret: any = {};
 
@@ -290,7 +294,7 @@ export class UtilsService {
     this.clipboardService.copyFromContent(data);
   }
 
-  getSubmissionStatusText(status: string,substatus:string, submission_statuses: Status[]) {
+  getSubmissionStatusText(status: string, substatus: string, submission_statuses: Status[]) {
     let text;
     for (let i = 0; i < submission_statuses.length; i++) {
       if (submission_statuses[i].id === status) {
@@ -307,7 +311,7 @@ export class UtilsService {
         break;
       }
     }
-    return text?text:"";
+    return text ? text : "";
   }
 
   isNever(time: string) {
@@ -315,7 +319,7 @@ export class UtilsService {
     return date.getTime() === 32503680000000;
   }
 
-  deleteFromList(list:  { [key: string]: Field}[], elem: { [key: string]: Field}) {
+  deleteFromList(list: { [key: string]: Field }[], elem: { [key: string]: Field }) {
     const idx = list.indexOf(elem);
     if (idx !== -1) {
       list.splice(idx, 1);
@@ -333,7 +337,7 @@ export class UtilsService {
     return content_types.indexOf(content_type) > -1;
   }
 
-  submitSupportRequest(arg: {mail_address: string,text: string} ) {
+  submitSupportRequest(arg: { mail_address: string, text: string }) {
     const param = JSON.stringify({
       "mail_address": arg.mail_address,
       "text": arg.text,
@@ -346,7 +350,7 @@ export class UtilsService {
     return this.httpService.runOperation("api/user/operations", operation, args, refresh);
   }
 
-  runRecipientOperation(operation: string, args: {rtips:string[], receiver?: {id: number}}, refresh: boolean) {
+  runRecipientOperation(operation: string, args: { rtips: string[], receiver?: { id: number } }, refresh: boolean) {
     return this.httpService.runOperation("api/recipient/operations", operation, args, refresh);
   }
 
@@ -366,7 +370,10 @@ export class UtilsService {
     }
   }
 
-  getStaticFilter(data: any[], model:{id: number;label: string;}[], key: string, translateService: TranslateService): any[] {
+  getStaticFilter(data: any[], model: {
+    id: number;
+    label: string;
+  }[], key: string, translateService: TranslateService): any[] {
     if (model.length === 0) {
       return data;
     } else {
@@ -393,7 +400,7 @@ export class UtilsService {
     }
   }
 
-  getDateFilter(Tips: rtipResolverModel[], report_date_filter:[number, number] | null, update_date_filter: [number, number] | null, expiry_date_filter: [number, number] | null): rtipResolverModel[] {
+  getDateFilter(Tips: rtipResolverModel[], report_date_filter: [number, number] | null, update_date_filter: [number, number] | null, expiry_date_filter: [number, number] | null): rtipResolverModel[] {
     const filteredTips: rtipResolverModel[] = [];
     Tips.forEach(rows => {
       const m_row_rdate = new Date(rows.last_access).getTime();
@@ -454,7 +461,7 @@ export class UtilsService {
     return this.httpService.requestAdminL10NResource(lang);
   }
 
-  updateAdminL10NResource(data: {[key: string]: string}, lang: string) {
+  updateAdminL10NResource(data: { [key: string]: string }, lang: string) {
     return this.httpService.requestUpdateAdminL10NResource(data, lang);
   }
 
@@ -462,7 +469,7 @@ export class UtilsService {
     return this.httpService.requestDefaultL10NResource(lang);
   }
 
-  runAdminOperation(operation: string, args: {value: string}|{}, refresh: boolean) {
+  runAdminOperation(operation: string, args: { value: string } | {}, refresh: boolean) {
     return this.runOperation("api/admin/config", operation, args, refresh);
   }
 
@@ -471,7 +478,7 @@ export class UtilsService {
   }
 
 
-  runOperation(api: string, operation: string, args?: {value: string}|{}, refresh?: boolean): Observable<any> {
+  runOperation(api: string, operation: string, args?: { value: string } | {}, refresh?: boolean): Observable<any> {
     const requireConfirmation = [
       "enable_encryption",
       "disable_2fa",
@@ -495,7 +502,7 @@ export class UtilsService {
         this.getConfirmation().subscribe((secret: string) => {
           const headers = new HttpHeaders({"X-Confirmation": this.encodeString(secret)});
 
-          this.http.put(api, {"operation": operation, "args": args}, {headers}).subscribe(  {
+          this.http.put(api, {"operation": operation, "args": args}, {headers}).subscribe({
               next: (response) => {
                 if (refresh) {
                   this.reloadComponent();
@@ -523,9 +530,9 @@ export class UtilsService {
 
   getConfirmation(): Observable<string> {
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(ConfirmationWithPasswordComponent,{backdrop: "static",keyboard: false});
+      let modalRef = this.modalService.open(ConfirmationWithPasswordComponent, {backdrop: "static", keyboard: false});
       if (this.preferenceResolver.dataModel.two_factor) {
-        modalRef = this.modalService.open(ConfirmationWith2faComponent,{backdrop: "static",keyboard: false});
+        modalRef = this.modalService.open(ConfirmationWith2faComponent, {backdrop: "static", keyboard: false});
       }
 
       modalRef.componentInstance.confirmFunction = (secret: string) => {
@@ -538,7 +545,7 @@ export class UtilsService {
   openConfirmableModalDialogReport(arg: string, scope: any): Observable<string> {
     scope = !scope ? this : scope;
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(DeleteConfirmationComponent,{backdrop: "static",keyboard: false});
+      let modalRef = this.modalService.open(DeleteConfirmationComponent, {backdrop: "static", keyboard: false});
       modalRef.componentInstance.arg = arg;
       modalRef.componentInstance.scope = scope;
       modalRef.componentInstance.confirmFunction = () => {
@@ -548,7 +555,7 @@ export class UtilsService {
     });
   }
 
-  openPasswordConfirmableDialog(arg: string, scope: any){
+  openPasswordConfirmableDialog(arg: string, scope: any) {
     return this.runAdminOperation("reset_submissions", {}, true).subscribe({
       next: (_) => {
       },
@@ -649,21 +656,21 @@ export class UtilsService {
 
   assignUniqueOrderIndex(elements: Option[]): void {
     if (elements.length <= 0) {
-        return;
+      return;
     }
 
     const key: keyof Option = this.getYOrderProperty(elements[0]) as keyof Option;
     if (elements.length) {
-        let i = 0;
-        elements = elements.sort((a, b) => (a[key] as number) - (b[key] as number));
-        elements.forEach((element) => {
-            (element[key] as number) = i;
-            i += 1;
-        });
+      let i = 0;
+      elements = elements.sort((a, b) => (a[key] as number) - (b[key] as number));
+      elements.forEach((element) => {
+        (element[key] as number) = i;
+        i += 1;
+      });
     }
   }
 
-  deleteResource( list: any[], res: any): void {
+  deleteResource(list: any[], res: any): void {
     list.splice(list.indexOf(res), 1);
   }
 
@@ -684,7 +691,7 @@ export class UtilsService {
       return;
     }
 
-    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const blob = new Blob([csvContent], {type: 'text/csv'});
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
     link.download = `${fileName}.csv`;

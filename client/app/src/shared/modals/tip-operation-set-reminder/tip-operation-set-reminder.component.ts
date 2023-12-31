@@ -8,7 +8,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
   selector: "src-tip-operation-set-reminder",
   templateUrl: "./tip-operation-set-reminder.component.html"
 })
-export class TipOperationSetReminderComponent implements OnInit{
+export class TipOperationSetReminderComponent implements OnInit {
   @Input() args: any;
 
   request_motivation: string;

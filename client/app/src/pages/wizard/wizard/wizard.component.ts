@@ -24,7 +24,13 @@ export class WizardComponent implements OnInit {
   tosAccept: boolean;
   license = "";
   completed = false;
-  validation: {step2: boolean, step3: boolean, step4: boolean, step5: boolean, step6: boolean} = {step2: false, step3: false, step4: false, step5: false, step6: false};
+  validation: { step2: boolean, step3: boolean, step4: boolean, step5: boolean, step6: boolean } = {
+    step2: false,
+    step3: false,
+    step4: false,
+    step5: false,
+    step6: false
+  };
   wizard = {
     "node_language": "en",
     "node_name": "",
@@ -51,7 +57,7 @@ export class WizardComponent implements OnInit {
     }
   ];
 
-  constructor(private titleService:TitleService, private translationService: TranslationService, private router: Router, private http: HttpClient, private authenticationService: AuthenticationService, private httpService: HttpService, protected appDataService: AppDataService, protected appConfigService: AppConfigService) {
+  constructor(private titleService: TitleService, private translationService: TranslationService, private router: Router, private http: HttpClient, private authenticationService: AuthenticationService, private httpService: HttpService, protected appDataService: AppDataService, protected appConfigService: AppConfigService) {
   }
 
   ngOnInit() {
@@ -71,7 +77,7 @@ export class WizardComponent implements OnInit {
 
   selectProfile(name: string) {
     const self = this;
-    this.config_profiles.forEach(function (profile: { name: string,title: string, active: boolean }) {
+    this.config_profiles.forEach(function (profile: { name: string, title: string, active: boolean }) {
       profile.active = profile.name === name;
       if (profile.active) {
         self.wizard.profile = profile.name;
@@ -97,9 +103,9 @@ export class WizardComponent implements OnInit {
     );
   }
 
-  verifyProxiedWizard(){
+  verifyProxiedWizard() {
     if (!this.appDataService.public.node.wizard_done && window.location.host === "localhost:4200") {
-      if(!window.navigator.userAgent.includes("Electron")){
+      if (!window.navigator.userAgent.includes("Electron")) {
         this.proxiedServer = true;
       }
     }

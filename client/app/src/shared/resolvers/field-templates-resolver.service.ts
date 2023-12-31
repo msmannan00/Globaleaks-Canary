@@ -8,7 +8,7 @@ import {fieldtemplatesResolverModel} from "@app/models/resolvers/field-template-
 @Injectable({
   providedIn: "root"
 })
-export class FieldTemplatesResolver  {
+export class FieldTemplatesResolver {
   dataModel: fieldtemplatesResolverModel[];
 
   constructor(private httpService: HttpService, private authenticationService: AuthenticationService) {

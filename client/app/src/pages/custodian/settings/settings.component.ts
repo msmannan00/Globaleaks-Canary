@@ -6,7 +6,7 @@ import {Tab1Component} from "@app/pages/admin/settings/tab1/tab1.component";
   selector: "src-custodian-settings",
   templateUrl: "./settings.component.html"
 })
-export class SettingsComponent implements AfterViewInit{
+export class SettingsComponent implements AfterViewInit {
   @ViewChild("tab1") tab1!: TemplateRef<Tab1Component>;
   tabs: Tab[];
   active: string;

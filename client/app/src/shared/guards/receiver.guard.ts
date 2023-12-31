@@ -7,7 +7,7 @@ import {AppConfigService} from "@app/services/root/app-config.service";
 @Injectable({
   providedIn: "root"
 })
-export class ReceiverGuard  {
+export class ReceiverGuard {
   constructor(private appConfigService: AppConfigService, private router: Router, public authenticationService: AuthenticationService) {
   }
 

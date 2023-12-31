@@ -30,7 +30,7 @@ export class HttpsStatusComponent implements OnInit {
   }
 
   resetCfg() {
-    const modalRef = this.modalService.open(ConfirmationComponent,{backdrop: 'static',keyboard: false});
+    const modalRef = this.modalService.open(ConfirmationComponent, {backdrop: 'static', keyboard: false});
     modalRef.componentInstance.arg = null;
     modalRef.componentInstance.confirmFunction = () => {
       return this.httpService.requestDeleteTlsConfigResource().subscribe(() => {
@@ -40,7 +40,7 @@ export class HttpsStatusComponent implements OnInit {
     return modalRef.result;
   }
 
-  getNetworkResolver(){
+  getNetworkResolver() {
     return "https://" + this.networkResolver.dataModel.hostname
   }
 }

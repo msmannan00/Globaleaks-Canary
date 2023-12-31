@@ -10,7 +10,11 @@ import {HeaderComponent} from "@app/shared/partials/header/header.component";
 import {UserComponent} from "@app/shared/partials/header/template/user/user.component";
 import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import {CompletedInterceptor, ErrorCatchingInterceptor, appInterceptor} from "@app/services/root/app-interceptor.service";
+import {
+  CompletedInterceptor,
+  ErrorCatchingInterceptor,
+  appInterceptor
+} from "@app/services/root/app-interceptor.service";
 import {Keepalive, NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
@@ -37,13 +41,14 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 const translationModule = TranslateModule.forRoot({
-  loader: {
-    provide: TranslateLoader,
-    useFactory: createTranslateLoader,
-    deps: [HttpClient],
-  },
-})
+    loader: {
+      provide: TranslateLoader,
+      useFactory: createTranslateLoader,
+      deps: [HttpClient],
+    },
+  })
 ;
+
 @NgModule({
   declarations: [AppComponent, HomeComponent, HeaderComponent, UserComponent],
   imports: [

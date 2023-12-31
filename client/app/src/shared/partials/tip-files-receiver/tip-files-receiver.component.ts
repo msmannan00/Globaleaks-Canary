@@ -25,7 +25,7 @@ export class TipFilesReceiverComponent implements OnInit {
   }
 
   public viewRFile(file: WbFile) {
-    const modalRef = this.modalService.open(FileViewComponent,{backdrop: 'static',keyboard: false});
+    const modalRef = this.modalService.open(FileViewComponent, {backdrop: 'static', keyboard: false});
     modalRef.componentInstance.args = {
       file: file,
       loaded: false,
@@ -33,7 +33,7 @@ export class TipFilesReceiverComponent implements OnInit {
     };
   }
 
-  getSortedWBFiles(data:WbFile[]):WbFile[]{
+  getSortedWBFiles(data: WbFile[]): WbFile[] {
     return data;
   }
 

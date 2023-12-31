@@ -7,7 +7,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
   selector: "src-tip-operation-postpone",
   templateUrl: "./tip-operation-postpone.component.html"
 })
-export class TipOperationPostponeComponent implements OnInit{
+export class TipOperationPostponeComponent implements OnInit {
   @Input() args: any;
 
   request_motivation: string;

@@ -57,7 +57,7 @@ export class appInterceptor implements HttpInterceptor {
 
     authHeader.keys().forEach(header => {
       const headerValue = authHeader.get(header);
-      if(headerValue){
+      if (headerValue) {
         authRequest = authRequest.clone({headers: authRequest.headers.set(header, headerValue)});
       }
     });
@@ -79,7 +79,7 @@ export class appInterceptor implements HttpInterceptor {
       );
     } else {
       return next.handle(authRequest);
-    }   
+    }
   }
 }
 
@@ -118,14 +118,14 @@ export class CompletedInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if(req.url != "api/auth/authentication"){
+    if (req.url != "api/auth/authentication") {
       this.count++;
       this.appDataService.updateShowLoadingPanel(true);
     }
 
     return next.handle(req).pipe(
       finalize(() => {
-        if(req.url != "api/auth/authentication"){
+        if (req.url != "api/auth/authentication") {
           this.count--;
           if (this.count === 0 && (req.url !== "api/auth/token")) {
             timer(100).pipe(

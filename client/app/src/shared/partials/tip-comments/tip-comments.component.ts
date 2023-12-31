@@ -10,7 +10,7 @@ import {Comment} from "@app/models/app/shared-public-model";
   selector: "src-tip-comments",
   templateUrl: "./tip-comments.component.html"
 })
-export class TipCommentsComponent implements OnInit{
+export class TipCommentsComponent implements OnInit {
   @Input() tipService: ReceiverTipService | WbtipService;
   @Input() key: string;
   @ViewChild(ScrollToBottomDirective)
@@ -20,8 +20,8 @@ export class TipCommentsComponent implements OnInit{
   newCommentContent = "";
   currentCommentsPage: number = 1;
   itemsPerPage = 5;
-  comments: Comment[]=[];
-  newComments:Comment;
+  comments: Comment[] = [];
+  newComments: Comment;
 
   constructor(private rTipService: ReceiverTipService, protected authenticationService: AuthenticationService, protected utilsService: UtilsService, private cdr: ChangeDetectorRef) {
 
@@ -49,7 +49,7 @@ export class TipCommentsComponent implements OnInit{
     );
   }
 
-  getSortedComments(data:Comment[]):Comment[]{
+  getSortedComments(data: Comment[]): Comment[] {
     return data;
   }
 

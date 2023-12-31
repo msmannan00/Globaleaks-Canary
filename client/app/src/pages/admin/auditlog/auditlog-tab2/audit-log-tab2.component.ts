@@ -10,9 +10,9 @@ import {UtilsService} from "@app/shared/services/utils.service";
 export class AuditLogTab2Component {
   currentPage = 1;
   pageSize = 20;
-  users: userResolverModel[]=[];
+  users: userResolverModel[] = [];
 
-  constructor(private utilsService:UtilsService, protected usersResolver: UsersResolver) {
+  constructor(private utilsService: UtilsService, protected usersResolver: UsersResolver) {
   }
 
   ngOnInit() {

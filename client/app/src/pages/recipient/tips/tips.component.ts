@@ -16,7 +16,7 @@ import {rtipResolverModel} from "@app/models/resolvers/rtips-resolver-model";
 import {Receiver} from "@app/models/reciever/reciever-tip-data";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {HttpService} from "@app/shared/services/http.service";
-import { Observable, from, switchMap } from "rxjs";
+import {Observable, from, switchMap} from "rxjs";
 
 
 @Component({
@@ -32,15 +32,15 @@ export class TipsComponent implements OnInit {
   reportDateFilter: [number, number] | null = null;
   updateDateFilter: [number, number] | null = null;
   expiryDateFilter: [number, number] | null = null;
-  reportDateModel: {fromDate: NgbDate | null;toDate: NgbDate | null; } | null = null;
-  updateDateModel: {fromDate: NgbDate | null;toDate: NgbDate | null; } | null = null;
-  expiryDateModel: {fromDate: NgbDate | null;toDate: NgbDate | null; } | null = null;
-  dropdownStatusModel: {id: number;label: string;}[]= [];
-  dropdownStatusData:{id: number;label: string;}[] = [];
-  dropdownContextModel:{id: number;label: string;}[] = [];
-  dropdownContextData: {id: number;label: string;}[] = [];
-  dropdownScoreModel:{id: number;label: string;}[]= [];
-  dropdownScoreData: {id: number;label: string;}[] = [];
+  reportDateModel: { fromDate: NgbDate | null; toDate: NgbDate | null; } | null = null;
+  updateDateModel: { fromDate: NgbDate | null; toDate: NgbDate | null; } | null = null;
+  expiryDateModel: { fromDate: NgbDate | null; toDate: NgbDate | null; } | null = null;
+  dropdownStatusModel: { id: number; label: string; }[] = [];
+  dropdownStatusData: { id: number; label: string; }[] = [];
+  dropdownContextModel: { id: number; label: string; }[] = [];
+  dropdownContextData: { id: number; label: string; }[] = [];
+  dropdownScoreModel: { id: number; label: string; }[] = [];
+  dropdownScoreData: { id: number; label: string; }[] = [];
   sortKey: string = "creation_date";
   sortReverse: boolean = true;
   channelDropdownVisible: boolean = false;
@@ -84,31 +84,31 @@ export class TipsComponent implements OnInit {
   }
 
   openGrantAccessModal(): void {
-    this.utils.runUserOperation("get_users_names", {}, false).subscribe( {
+    this.utils.runUserOperation("get_users_names", {}, false).subscribe({
       next: response => {
-      const selectableRecipients: Receiver[] = [];
-      this.appDataService.public.receivers.forEach(async (receiver: Receiver) => {
-        if (receiver.id !== this.authenticationService.session.user_id) {
-          selectableRecipients.push(receiver);
-        }
-      });
-      const modalRef = this.modalService.open(GrantAccessComponent,{backdrop: 'static',keyboard: false});
+        const selectableRecipients: Receiver[] = [];
+        this.appDataService.public.receivers.forEach(async (receiver: Receiver) => {
+          if (receiver.id !== this.authenticationService.session.user_id) {
+            selectableRecipients.push(receiver);
+          }
+        });
+        const modalRef = this.modalService.open(GrantAccessComponent, {backdrop: 'static', keyboard: false});
         modalRef.componentInstance.usersNames = response;
         modalRef.componentInstance.selectableRecipients = selectableRecipients;
         modalRef.componentInstance.confirmFun = (receiver_id: Receiver) => {
-        const req = {
-          operation: "grant",
-          args: {
-            rtips: this.selectedTips,
-            receiver: receiver_id.id
-          },
+          const req = {
+            operation: "grant",
+            args: {
+              rtips: this.selectedTips,
+              receiver: receiver_id.id
+            },
+          };
+          this.utils.runOperation("api/recipient/operations", req.operation, req.args, true)
+            .subscribe(() => {
+              this.reload();
+            });
         };
-        this.utils.runOperation("api/recipient/operations", req.operation, req.args, true)
-          .subscribe(() => {
-            this.reload();
-          });
-      };
-      modalRef.componentInstance.cancelFun = null;
+        modalRef.componentInstance.cancelFun = null;
       }
     });
   }
@@ -123,7 +123,7 @@ export class TipsComponent implements OnInit {
               selectableRecipients.push(receiver);
             }
           });
-          const modalRef = this.modalService.open(RevokeAccessComponent,{backdrop: 'static',keyboard: false});
+          const modalRef = this.modalService.open(RevokeAccessComponent, {backdrop: 'static', keyboard: false});
           modalRef.componentInstance.usersNames = response;
           modalRef.componentInstance.selectableRecipients = selectableRecipients;
           modalRef.componentInstance.confirmFun = (receiver_id: Receiver) => {
@@ -144,8 +144,9 @@ export class TipsComponent implements OnInit {
       }
     );
   }
-  tipsExport(){
-      this.exportFiles().subscribe();
+
+  tipsExport() {
+    this.exportFiles().subscribe();
   }
 
   exportFiles(): Observable<void> {
@@ -173,10 +174,9 @@ export class TipsComponent implements OnInit {
           for (let i = 0; i < selectedTips.length; i++) {
             exportOneTip(selectedTips[i]);
           }
-           this.appDataService.updateShowLoadingPanel(false);
+          this.appDataService.updateShowLoadingPanel(false);
         });
       })
-      
     );
   }
 
@@ -218,7 +218,7 @@ export class TipsComponent implements OnInit {
     for (const tip of this.RTips.dataModel) {
       tip.context = this.appDataService.contexts_by_id[tip.context_id];
       tip.context_name = tip.context.name;
-      tip.submissionStatusStr = this.utils.getSubmissionStatusText(tip.status,tip.substatus, this.appDataService.submissionStatuses);
+      tip.submissionStatusStr = this.utils.getSubmissionStatusText(tip.status, tip.substatus, this.appDataService.submissionStatuses);
       if (!uniqueKeys.includes(tip.submissionStatusStr)) {
         uniqueKeys.push(tip.submissionStatusStr);
         this.dropdownStatusData.push({id: this.dropdownStatusData.length + 1, label: tip.submissionStatusStr});
@@ -249,7 +249,7 @@ export class TipsComponent implements OnInit {
     }
   }
 
-  onChanged(model: {id: number;label: string;}[], type: string) {
+  onChanged(model: { id: number; label: string; }[], type: string) {
     this.processTips();
     if (model.length > 0 && type === "Score") {
       this.dropdownContextModel = [];
@@ -269,7 +269,7 @@ export class TipsComponent implements OnInit {
     this.applyFilter();
   }
 
-  checkFilter(filter: {id: number;label: string;}[]) {
+  checkFilter(filter: { id: number; label: string; }[]) {
     return filter.length > 0;
   };
 
@@ -317,44 +317,44 @@ export class TipsComponent implements OnInit {
     }
   }
 
-  orderbyCast(data:rtipResolverModel[]):rtipResolverModel[]{
+  orderbyCast(data: rtipResolverModel[]): rtipResolverModel[] {
     return data;
   }
 
-  onReportFilterChange(event:{ fromDate: string | null; toDate: string | null } ) {
+  onReportFilterChange(event: { fromDate: string | null; toDate: string | null }) {
     this.processTips();
     const {fromDate, toDate} = event;
     if (!fromDate && !toDate) {
       this.reportDateFilter = null;
       this.closeAllDatePickers();
-    } 
-    if (fromDate && toDate){
+    }
+    if (fromDate && toDate) {
       this.reportDateFilter = [new Date(fromDate).getTime(), new Date(toDate).getTime()];
     }
     this.applyFilter();
   }
 
-  onUpdateFilterChange(event:{ fromDate: string | null; toDate: string | null } ) {
+  onUpdateFilterChange(event: { fromDate: string | null; toDate: string | null }) {
     this.processTips();
     const {fromDate, toDate} = event;
     if (!fromDate && !toDate) {
       this.updateDateFilter = null;
       this.closeAllDatePickers();
-    } 
-    if (fromDate && toDate){
+    }
+    if (fromDate && toDate) {
       this.updateDateFilter = [new Date(fromDate).getTime(), new Date(toDate).getTime()];
     }
     this.applyFilter();
   }
 
-  onExpiryFilterChange(event:{ fromDate: string | null; toDate: string | null } ) {
+  onExpiryFilterChange(event: { fromDate: string | null; toDate: string | null }) {
     this.processTips();
     const {fromDate, toDate} = event;
     if (!fromDate && !toDate) {
       this.expiryDateFilter = null;
       this.closeAllDatePickers();
-    } 
-    if (fromDate && toDate){
+    }
+    if (fromDate && toDate) {
       this.expiryDateFilter = [new Date(fromDate).getTime(), new Date(toDate).getTime()];
     }
     this.applyFilter();
@@ -371,7 +371,7 @@ export class TipsComponent implements OnInit {
   onClick(event: MouseEvent) {
     const clickedElement = event.target as HTMLElement;
     const isContainerClicked = clickedElement.classList.contains("ngb-dtepicker-container") || clickedElement.classList.contains("dropdown-multi-select-container") ||
-      clickedElement.closest(".ngb-dtepicker-container") !== null ||  clickedElement.closest(".dropdown-multi-select-container") !== null;
+      clickedElement.closest(".ngb-dtepicker-container") !== null || clickedElement.closest(".dropdown-multi-select-container") !== null;
     if (!isContainerClicked) {
       this.closeAllDatePickers();
     }

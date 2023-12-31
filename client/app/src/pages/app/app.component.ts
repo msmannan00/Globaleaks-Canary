@@ -29,7 +29,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   supportedBrowser = true;
   loading = false;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private renderer: Renderer2, protected browserCheckService: BrowserCheckService, private changeDetectorRef: ChangeDetectorRef, private router: Router, protected translationService: TranslationService, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService, private authenticationService:AuthenticationService) {
+  constructor(@Inject(DOCUMENT) private document: Document, private renderer: Renderer2, protected browserCheckService: BrowserCheckService, private changeDetectorRef: ChangeDetectorRef, private router: Router, protected translationService: TranslationService, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService, private authenticationService: AuthenticationService) {
     this.watchLanguage();
   }
 
@@ -59,9 +59,9 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   isWhistleblowerPage() {
     let temp = this.utilsService.isWhistleblowerPage(this.authenticationService, this.appDataService)
-    if((this.router.url === "/" || this.router.url === "/submission") && this.loading){
+    if ((this.router.url === "/" || this.router.url === "/submission") && this.loading) {
       return true;
-    }else {
+    } else {
       this.loading = temp;
       return this.loading;
     }

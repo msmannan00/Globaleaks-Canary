@@ -10,7 +10,7 @@ import {Field, fieldtemplatesResolverModel} from "@app/models/resolvers/field-te
   selector: "src-add-field-from-template",
   templateUrl: "./add-field-from-template.component.html"
 })
-export class AddFieldFromTemplateComponent implements OnInit{
+export class AddFieldFromTemplateComponent implements OnInit {
   @Input() fieldTemplatesData: fieldtemplatesResolverModel[];
   @Input() step: Step;
   @Input() type: string;
@@ -19,7 +19,8 @@ export class AddFieldFromTemplateComponent implements OnInit{
   fields: Step[] | Field[];
   new_field: { template_id: string } = {template_id: ""};
 
-  constructor(private questionnaireService: QuestionnaireService, private httpService: HttpService, private utilsService: UtilsService) { }
+  constructor(private questionnaireService: QuestionnaireService, private httpService: HttpService, private utilsService: UtilsService) {
+  }
 
   ngOnInit(): void {
     if (this.step) {

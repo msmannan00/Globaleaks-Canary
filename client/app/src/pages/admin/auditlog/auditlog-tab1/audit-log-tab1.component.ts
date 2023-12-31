@@ -12,9 +12,9 @@ import {AuthenticationService} from "@app/services/helper/authentication.service
 export class AuditLogTab1Component implements OnInit {
   currentPage = 1;
   pageSize = 20;
-  auditLog:auditlogResolverModel[] = [];
+  auditLog: auditlogResolverModel[] = [];
 
-  constructor(protected authenticationService:AuthenticationService, private auditLogResolver: AuditLogResolver, protected nodeResolver: NodeResolver, protected utilsService: UtilsService) {
+  constructor(protected authenticationService: AuthenticationService, private auditLogResolver: AuditLogResolver, protected nodeResolver: NodeResolver, protected utilsService: UtilsService) {
   }
 
   ngOnInit() {
@@ -28,9 +28,9 @@ export class AuditLogTab1Component implements OnInit {
       this.auditLog = [this.auditLogResolver.dataModel];
     }
   }
-  
 
-  getPaginatedData():auditlogResolverModel[] {
+
+  getPaginatedData(): auditlogResolverModel[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     return this.auditLog.slice(startIndex, endIndex);

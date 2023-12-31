@@ -31,6 +31,6 @@ export class userResolverModel {
   can_edit_general_settings: boolean;
   clicked_recovery_key: boolean;
   contexts: string[];
-  newpassword:boolean;
-  can_transfer_access_to_reports:boolean;
+  newpassword: boolean;
+  can_transfer_access_to_reports: boolean;
 }

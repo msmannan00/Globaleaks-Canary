@@ -7,7 +7,7 @@ import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
   selector: "src-tip-field-answer-entry",
   templateUrl: "./tip-field-answer-entry.component.html"
 })
-export class TipFieldAnswerEntryComponent implements OnInit{
+export class TipFieldAnswerEntryComponent implements OnInit {
   @Input() entry: any;
   @Input() field: any;
   @Input() fieldAnswers: any;

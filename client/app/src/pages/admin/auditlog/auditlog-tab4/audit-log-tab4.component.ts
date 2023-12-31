@@ -10,9 +10,9 @@ import {UtilsService} from "@app/shared/services/utils.service";
 export class AuditLogTab4Component {
   currentPage = 1;
   pageSize = 20;
-  jobs: jobResolverModel[]=[];
+  jobs: jobResolverModel[] = [];
 
-  constructor(private utilsService:UtilsService, private jobResolver: JobResolver) {
+  constructor(private utilsService: UtilsService, private jobResolver: JobResolver) {
   }
 
   ngOnInit() {

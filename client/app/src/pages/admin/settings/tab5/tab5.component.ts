@@ -17,7 +17,7 @@ import {questionnaireResolverModel} from "@app/models/resolvers/questionnaire-mo
   selector: "src-tab5",
   templateUrl: "./tab5.component.html"
 })
-export class Tab5Component implements OnInit{
+export class Tab5Component implements OnInit {
   @Input() contentForm: NgForm;
   userData: userResolverModel[];
   questionnaireData: questionnaireResolverModel[];
@@ -39,7 +39,7 @@ export class Tab5Component implements OnInit{
     const node = this.nodeResolver.dataModel;
     node.encryption = false;
     if (!node.encryption) {
-      const modalRef = this.modalService.open(EnableEncryptionComponent,{backdrop: 'static',keyboard: false});
+      const modalRef = this.modalService.open(EnableEncryptionComponent, {backdrop: 'static', keyboard: false});
       modalRef.result.then(
         () => {
           this.utilsService.runAdminOperation("enable_encryption", {}, false).subscribe(
@@ -52,7 +52,7 @@ export class Tab5Component implements OnInit{
     }
   }
 
-  toggleEscrow(escrow: {checked: boolean}) {
+  toggleEscrow(escrow: { checked: boolean }) {
     this.nodeResolver.dataModel.escrow = !this.nodeResolver.dataModel.escrow;
     escrow.checked = this.nodeResolver.dataModel.escrow;
     this.utilsService.runAdminOperation("toggle_escrow", {}, true).subscribe(
@@ -65,9 +65,9 @@ export class Tab5Component implements OnInit{
   updateNode() {
     this.utilsService.update(this.nodeResolver.dataModel).subscribe(_ => {
       this.appConfigService.reinit();
-      if(this.routeReload){
+      if (this.routeReload) {
         this.utilsService.reloadCurrentRoute();
-      }else {
+      } else {
         this.utilsService.reloadComponent();
       }
     });
@@ -77,7 +77,7 @@ export class Tab5Component implements OnInit{
     this.utilsService.deleteDialog();
   }
 
-  enableRouteReload(){
+  enableRouteReload() {
     this.routeReload = true;
   }
 }

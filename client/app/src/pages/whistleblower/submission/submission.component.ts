@@ -13,6 +13,7 @@ import {Field} from "@app/models/resolvers/field-template-model";
 import * as Flow from "@flowjs/flow.js";
 import {TitleService} from "@app/shared/services/title.service";
 import {Router} from "@angular/router";
+
 @Component({
   selector: "src-submission",
   templateUrl: "./submission.component.html",
@@ -34,10 +35,10 @@ export class SubmissionComponent {
   uploads: { [key: string]: any } = {};
   field_id_map: { [key: string]: Field };
   questionnaire: Questionnaire;
-  contextsOrderPredicate:string = this.appDataService.public.node.show_contexts_in_alphabetical_order ? "name" : "order";
+  contextsOrderPredicate: string = this.appDataService.public.node.show_contexts_in_alphabetical_order ? "name" : "order";
   selectable_contexts: Context[];
   show_steps_navigation_bar = false;
-  receivedData: Flow|null;
+  receivedData: Flow | null;
 
   constructor(private titleService: TitleService, private router: Router, private appConfigService: AppConfigService, private whistleblowerLoginResolver: WhistleblowerLoginResolver, protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, public submissionService: SubmissionService) {
     this.selectable_contexts = [];
@@ -193,7 +194,7 @@ export class SubmissionComponent {
     return uploading;
   }
 
-  getContextID(){
+  getContextID() {
     return this.submissionService.context.id;
   }
 
@@ -292,7 +293,7 @@ export class SubmissionComponent {
         delete this.submissionService.selected_receivers[key];
       }
     });
-  
+
     receivers.forEach((receiverId) => {
       if (receiverId in this.appDataService.receivers_by_id) {
         this.submissionService.selected_receivers[receiverId] = true;
@@ -302,7 +303,7 @@ export class SubmissionComponent {
 
   runValidation() {
     this.validate[this.navigation] = true;
-    return !((!this.areReceiversSelected() && this.firstStepIndex() && this.navigation==-1) || !this.checkForInvalidFields());
+    return !((!this.areReceiversSelected() && this.firstStepIndex() && this.navigation == -1) || !this.checkForInvalidFields());
   };
 
   checkForInvalidFields() {

@@ -35,7 +35,7 @@ export class adminHomeComponent implements OnInit {
 
   acceptPrivacyPolicyDialog(): Observable<string> {
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(AcceptAgreementComponent,{backdrop: 'static',keyboard: false});
+      let modalRef = this.modalService.open(AcceptAgreementComponent, {backdrop: 'static', keyboard: false});
       modalRef.componentInstance.confirmFunction = () => {
         observer.complete()
         return this.http.put("api/user/operations", {

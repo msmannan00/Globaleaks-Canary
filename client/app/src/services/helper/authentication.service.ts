@@ -14,12 +14,12 @@ import {HttpHeaders} from "@angular/common/http";
 })
 export class AuthenticationService {
   public session: any = undefined;
-  permissions:{can_upload_files:boolean}
+  permissions: { can_upload_files: boolean }
   loginInProgress: boolean = false;
   requireAuthCode: boolean = false;
   loginData: LoginDataRef = new LoginDataRef();
 
-  constructor(private titleService:TitleService, private activatedRoute: ActivatedRoute, private httpService: HttpService, private appDataService: AppDataService, private router: Router) {
+  constructor(private titleService: TitleService, private activatedRoute: ActivatedRoute, private httpService: HttpService, private appDataService: AppDataService, private router: Router) {
     this.init();
   }
 
@@ -73,7 +73,7 @@ export class AuthenticationService {
     );
   }
 
-  login(tid?: number, username?: string, password?: string|undefined, authcode?: string|null, authtoken?: string|null, callback?: () => void) {
+  login(tid?: number, username?: string, password?: string | undefined, authcode?: string | null, authtoken?: string | null, callback?: () => void) {
 
     if (authtoken === undefined) {
       authtoken = "";

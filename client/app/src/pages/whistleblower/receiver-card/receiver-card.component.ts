@@ -13,14 +13,15 @@ export class ReceiverCardComponent {
 
   constructor(protected translate: TranslateService) {
   }
+
   selectable(): boolean {
     if (this.submission.context.maximum_selectable_receivers === 0) {
       return true;
     }
-  
+
     return Object.keys(this.submission.selected_receivers).length < this.submission.context.maximum_selectable_receivers;
   }
-  
+
   switchSelection(receiver: Receiver): void {
     if (!this.submission.selected_receivers[receiver.id]) {
       delete this.submission.selected_receivers[receiver.id];
@@ -28,5 +29,5 @@ export class ReceiverCardComponent {
       this.submission.selected_receivers[receiver.id] = true;
     }
   }
-  
+
 }

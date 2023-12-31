@@ -24,17 +24,17 @@ export class TipFilesWhistleblowerComponent {
     const param = JSON.stringify({});
     this.httpService.requestToken(param).subscribe
     (
-        {
-          next: async token => {
-            const ans = this.cryptoService.proofOfWork(token.id).subscribe();
-            window.open("api/whistleblower/wbtip/wbfiles/" + wbFile.id + "?token=" + token.id + ":" + ans);
-            this.appDataService.updateShowLoadingPanel(false);
-          }
+      {
+        next: async token => {
+          const ans = this.cryptoService.proofOfWork(token.id).subscribe();
+          window.open("api/whistleblower/wbtip/wbfiles/" + wbFile.id + "?token=" + token.id + ":" + ans);
+          this.appDataService.updateShowLoadingPanel(false);
         }
+      }
     );
   }
 
-  getSortedWBFiles(data:WbFile[]):WbFile[]{
+  getSortedWBFiles(data: WbFile[]): WbFile[] {
     return data;
   }
 

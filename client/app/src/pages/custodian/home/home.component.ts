@@ -11,8 +11,9 @@ import {Observable} from "rxjs";
   selector: "src-custodian-home",
   templateUrl: "./home.component.html"
 })
-export class HomeComponent implements OnInit{
-  preferenceData:  preferenceResolverModel;
+export class HomeComponent implements OnInit {
+  preferenceData: preferenceResolverModel;
+
   constructor(private appDataService: AppDataService, private http: HttpClient, private modalService: NgbModal, private preference: PreferenceResolver) {
   }
 
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit{
       this.acceptPrivacyPolicyDialog().subscribe();
     }
   }
+
   acceptPrivacyPolicyDialog(): Observable<string> {
     return new Observable((observer) => {
       let modalRef = this.modalService.open(AcceptAgreementComponent, {

@@ -47,11 +47,11 @@ export class UserComponent {
     this.authentication.logout(promise);
   }
 
-  getHomepage(){
+  getHomepage() {
     return this.authentication.session.homepage;
   }
 
-  getPreferencepage(){
+  getPreferencepage() {
     return this.authentication.session.preferencespage;
   }
 

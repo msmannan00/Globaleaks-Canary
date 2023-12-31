@@ -8,10 +8,10 @@ import {AppDataService} from "@app/app-data.service";
   selector: "src-auditlog-tab3",
   templateUrl: "./audit-log-tab3.component.html"
 })
-export class AuditLogTab3Component implements OnInit{
+export class AuditLogTab3Component implements OnInit {
   currentPage = 1;
   pageSize = 20;
-  tips:tipsResolverModel[]=[];
+  tips: tipsResolverModel[] = [];
 
   constructor(private tipsResolver: TipsResolver, protected utilsService: UtilsService, protected appDataService: AppDataService) {
   }

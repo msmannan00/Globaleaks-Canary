@@ -8,7 +8,7 @@ import {map} from "rxjs/operators";
 @Injectable({
   providedIn: "root"
 })
-export class RedirectsResolver  {
+export class RedirectsResolver {
   dataModel: redirectResolverModel[];
 
   constructor(

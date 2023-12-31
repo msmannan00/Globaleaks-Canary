@@ -9,7 +9,7 @@ import {userResolverModel} from "@app/models/resolvers/user-resolver-model";
   selector: "src-trigger-receiver",
   templateUrl: "./trigger-receiver.component.html"
 })
-export class TriggerReceiverComponent implements OnInit{
+export class TriggerReceiverComponent implements OnInit {
 
   @Input() arg: Option;
   confirmFunction: (data: Option) => void;

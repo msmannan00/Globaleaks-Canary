@@ -11,7 +11,7 @@ import {ErrorCodes} from "@app/models/app/error-code";
   selector: "src-password-change",
   templateUrl: "./password-change.component.html"
 })
-export class PasswordChangeComponent implements OnInit{
+export class PasswordChangeComponent implements OnInit {
   passwordStrengthScore: number = 0;
 
   changePasswordArgs = {

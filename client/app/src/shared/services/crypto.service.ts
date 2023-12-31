@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
-import { Observable, from } from "rxjs";
-import { switchMap } from "rxjs/operators";
+import {Injectable} from "@angular/core";
+import {Observable, from} from "rxjs";
+import {switchMap} from "rxjs/operators";
 import sha256 from "fast-sha256";
 
 @Injectable({
@@ -43,8 +43,8 @@ export class CryptoService {
 
     if (webCrypto) {
       const toHash = this.str2Uint8Array(this.data + this.counter);
-      const digestPremise = from(webCrypto.digest({ name: "SHA-256" }, toHash));
-      
+      const digestPremise = from(webCrypto.digest({name: "SHA-256"}, toHash));
+
       return digestPremise.pipe(
         switchMap((res) => this.calculateHash(res))
       );
