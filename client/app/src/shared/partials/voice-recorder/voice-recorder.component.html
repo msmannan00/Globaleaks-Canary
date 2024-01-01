@@ -19,10 +19,8 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <input class="inputelem d-none" [id]="'customFile-' + fileInput" [(ngModel)]="_fakeModel" [required]="field && field.required" [name]="'input-' + entryIndex" type="file" />
-            <div [id]="fieldEntry + '-audio'" class="audio-player-wrapper" [ngClass]="{ 'disabled': isRecording || seconds < parseInt(field.attrs.min_len.value) }">
-                <audio *ngIf="audioPlayer" [src]="audioPlayer" controls class="audio-player"></audio>
-            </div>
+            <input class="inputelem d-none" [id]="'customFile-' + fileInput" [(ngModel)]="_fakeModel" [required]="field && field.required && !uploads[fileInput]?.files.length" [name]="'input-' + entryIndex" type="file" />
+            <iframe #viewer *ngIf="audioPlayer" [id]="fieldEntry + '-audio'" class="audio-player-iframe" frameborder="0" scrolling="no" sandbox="allow-downloads allow-scripts" [src]="iframeUrl" ></iframe>
         </div>
     </div>
     <div class="row" *ngIf="seconds > 0">

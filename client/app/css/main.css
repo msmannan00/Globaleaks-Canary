@@ -597,6 +597,10 @@ table tr td {
   opacity: 0.5;
 }
 
+.audio-player-iframe {
+  height: 4em;
+}
+
 textarea.form-control {
   resize: vertical;
 }
