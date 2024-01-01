@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {UsersResolver} from "@app/shared/resolvers/users.resolver";
 import {userResolverModel} from "@app/models/resolvers/user-resolver-model";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -7,7 +7,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
   selector: "src-auditlog-tab2",
   templateUrl: "./audit-log-tab2.component.html"
 })
-export class AuditLogTab2Component {
+export class AuditLogTab2Component implements OnInit{
   currentPage = 1;
   pageSize = 20;
   users: userResolverModel[] = [];
