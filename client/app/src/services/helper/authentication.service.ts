@@ -7,7 +7,7 @@ import {AppDataService} from "@app/app-data.service";
 import {ErrorCodes} from "@app/models/app/error-code";
 import {Session} from "@app/models/authentication/session";
 import {TitleService} from "@app/shared/services/title.service";
-import {HttpHeaders} from "@angular/common/http";
+import {HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 
 @Injectable({
   providedIn: "root"
@@ -132,18 +132,18 @@ export class AuthenticationService {
             callback();
           }
         },
-        error: (error) => {
+        error: (error: HttpErrorResponse) => {
           this.loginInProgress = false;
           this.appDataService.updateShowLoadingPanel(false);
-          if (error.error && error.error.error_code) {
-            if (error.error.error_code === 4) {
+          if (error.error && error.error["error_code"]) {
+            if (error.error["error_code"] === 4) {
               this.requireAuthCode = true;
-            } else if (error.error.error_code !== 13) {
+            } else if (error.error["error_code"] !== 13) {
               this.reset();
             }
           }
 
-          this.appDataService.errorCodes = new ErrorCodes(error.error.error_message, error.error.error_code, error.error.arguments);
+          this.appDataService.errorCodes = new ErrorCodes(error.error["error_message"], error.error["error_code"], error.error.arguments);
           if (callback) {
             callback();
           }
