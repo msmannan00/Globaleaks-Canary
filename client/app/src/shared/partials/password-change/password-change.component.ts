@@ -34,7 +34,7 @@ export class PasswordChangeComponent implements OnInit {
         },
         error: (error) => {
           this.passwordStrengthScore = 0;
-          this.rootDataService.errorCodes = new ErrorCodes(error.error.error_message, error.error.error_code, error.error.arguments);
+          this.rootDataService.errorCodes = new ErrorCodes(error.error["error_message"], error.error["error_code"], error.error.arguments);
           this.appDataService.updateShowLoadingPanel(false);
           return this.passwordStrengthScore;
         }
