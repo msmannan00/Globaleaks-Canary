@@ -29,18 +29,7 @@ export class HttpsStatusComponent implements OnInit {
     this.utilsService.toggleCfg(this.authenticationService, this.tlsConfig, this.dataToParent);
   }
 
-  resetCfg() {
-    const modalRef = this.modalService.open(ConfirmationComponent, {backdrop: 'static', keyboard: false});
-    modalRef.componentInstance.arg = null;
-    modalRef.componentInstance.confirmFunction = () => {
-      return this.httpService.requestDeleteTlsConfigResource().subscribe(() => {
-        this.dataToParent.emit();
-      });
-    };
-    return modalRef.result;
-  }
-
-  getNetworkResolver() {
+  getNetworkResolver(){
     return "https://" + this.networkResolver.dataModel.hostname
   }
 }
