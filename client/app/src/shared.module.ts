@@ -55,7 +55,6 @@ import {RFileUploadStatusComponent} from "@app/shared/partials/rfile-upload-stat
 import {TipCommentsComponent} from "@app/shared/partials/tip-comments/tip-comments.component";
 import {LimitToPipe} from "@app/shared/pipes/limit-to.pipe";
 import {OrderByPipe} from "@app/shared/pipes/order-by.pipe";
-import {ScrollToBottomDirective} from "@app/shared/directive/scroll-to-bottom.directive";
 import {TipReceiverListComponent} from "@app/shared/partials/tip-receiver-list/tip-receiver-list.component";
 import {FilterPipe} from "@app/shared/pipes/filter.pipe";
 import {RequestSupportComponent} from "@app/shared/modals/request-support/request-support.component";
@@ -178,7 +177,6 @@ import {SwitchComponent} from "@app/shared/components/switch/switch.component";
     TipCommentsComponent,
     LimitToPipe,
     OrderByPipe,
-    ScrollToBottomDirective,
     TipReceiverListComponent,
     FilterPipe,
     RequestSupportComponent,

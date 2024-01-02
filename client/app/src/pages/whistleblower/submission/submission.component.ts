@@ -13,6 +13,7 @@ import {Field} from "@app/models/resolvers/field-template-model";
 import * as Flow from "@flowjs/flow.js";
 import {TitleService} from "@app/shared/services/title.service";
 import {Router} from "@angular/router";
+import {WhistleblowerSubmissionService} from "@app/pages/whistleblower/whistleblower-submission.service";
 
 @Component({
   selector: "src-submission",
@@ -40,7 +41,7 @@ export class SubmissionComponent {
   show_steps_navigation_bar = false;
   receivedData: Flow | null;
 
-  constructor(private titleService: TitleService, private router: Router, private appConfigService: AppConfigService, private whistleblowerLoginResolver: WhistleblowerLoginResolver, protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, public submissionService: SubmissionService) {
+  constructor(protected whistleblowerSubmissionService:WhistleblowerSubmissionService,private titleService: TitleService, private router: Router, private appConfigService: AppConfigService, private whistleblowerLoginResolver: WhistleblowerLoginResolver, protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, public submissionService: SubmissionService) {
     this.selectable_contexts = [];
     this.receivedData = this.submissionService.getSharedData();
 
@@ -303,49 +304,9 @@ export class SubmissionComponent {
 
   runValidation() {
     this.validate[this.navigation] = true;
-    return !((!this.areReceiversSelected() && this.firstStepIndex() && this.navigation == -1) || !this.checkForInvalidFields());
+    return !((!this.areReceiversSelected() && this.firstStepIndex() && this.navigation == -1) || !this.whistleblowerSubmissionService.checkForInvalidFields(this));
   };
 
-  checkForInvalidFields() {
-    for (let counter = 0; counter <= this.navigation; counter++) {
-      this.validate[counter] = true;
-      if (this.questionnaire.steps[counter].enabled) {
-        if (this.stepForms.get(counter)?.invalid) {
-          this.navigation = counter;
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
-  decrementStep() {
-    if (this.hasPreviousStep()) {
-      for (let i = this.navigation - 1; i >= this.firstStepIndex(); i--) {
-        if (i === -1 || this.fieldUtilitiesService.isFieldTriggered(null, this.questionnaire.steps[i], this.answers, this.score)) {
-          this.navigation = i;
-          this.utilsService.scrollToTop();
-          return;
-        }
-      }
-    }
-  };
-
-  incrementStep() {
-    if (!this.runValidation()) {
-      return;
-    }
-
-    if (this.hasNextStep()) {
-      for (let i = this.navigation + 1; i <= this.lastStepIndex(); i++) {
-        if (this.fieldUtilitiesService.isFieldTriggered(null, this.questionnaire.steps[i], this.answers, this.score)) {
-          this.navigation = i;
-          this.utilsService.scrollToTop();
-          return;
-        }
-      }
-    }
-  }
 
   resetForm() {
     if (this.submissionForm) {
