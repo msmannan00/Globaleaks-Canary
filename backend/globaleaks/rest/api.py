@@ -10,13 +10,13 @@ import re
 from sqlalchemy.orm.exc import NoResultFound
 
 from twisted.internet import defer
-from twisted.internet.abstract import isIPAddress, isIPv6Address
 from twisted.python.failure import Failure
 from twisted.web.resource import Resource
 from twisted.web.server import NOT_DONE_YET
 
 from globaleaks import LANGUAGES_SUPPORTED_CODES
 from globaleaks.handlers import admin, \
+                                analyst, \
                                 auth, \
                                 custodian, \
                                 file, \
@@ -37,9 +37,10 @@ from globaleaks.handlers import admin, \
                                 wizard, \
                                 whistleblower
 
-from globaleaks.rest import decorators, requests, errors
+from globaleaks.rest import decorators, errors
 from globaleaks.state import State, extract_exception_traceback_and_schedule_email
 from globaleaks.utils.json import JSONEncoder
+from globaleaks.utils.sock import isIPAddress
 
 tid_regexp = r'([0-9]+)'
 uuid_regexp = r'([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})'
@@ -58,6 +59,7 @@ api_spec = [
     (r'/api/auth/receiptauth', auth.ReceiptAuthHandler),
     (r'/api/auth/session', auth.SessionHandler),
     (r'/api/auth/tenantauthswitch/' + tid_regexp, auth.TenantAuthSwitchHandler),
+    (r'/api/auth/operatorauthswitch', auth.OperatorAuthSwitchHandler),
 
     # User Preferences Handler
     (r'/api/user/preferences', user.UserInstance),
@@ -74,10 +76,13 @@ api_spec = [
     (r'/api/recipient/rtips/' + uuid_regexp + r'/iars', recipient.rtip.IdentityAccessRequestsCollection),
     (r'/api/recipient/rtips/' + uuid_regexp + r'/export', recipient.export.ExportHandler),
     (r'/api/recipient/rtips/' + uuid_regexp + r'/rfiles', recipient.rtip.ReceiverFileUpload),
+    (r'/api/recipient/redactions', recipient.rtip.RTipRedactionCollection),
+    (r'/api/recipient/redactions/' + uuid_regexp, recipient.rtip.RTipRedactionCollection),
     (r'/api/recipient/rfiles/' + uuid_regexp, recipient.rtip.ReceiverFileDownload),
     (r'/api/recipient/wbfiles/' + uuid_regexp, recipient.rtip.WhistleblowerFileDownload),
 
     # Whistleblower Handlers
+    (r'/api/whistleblower/operations', whistleblower.wbtip.Operations),
     (r'/api/whistleblower/submission', whistleblower.submission.SubmissionInstance),
     (r'/api/whistleblower/submission/attachment', whistleblower.attachment.SubmissionAttachment),
     (r'/api/whistleblower/wbtip', whistleblower.wbtip.WBTipInstance),
@@ -91,6 +96,9 @@ api_spec = [
     # Custodian Handlers
     (r'/api/custodian/iars', custodian.IdentityAccessRequestsCollection),
     (r'/api/custodian/iars/' + uuid_regexp, custodian.IdentityAccessRequestInstance),
+
+    # Analyst Handlers
+    (r'/api/analyst/stats', analyst.Statistics),
 
     # Admin Handlers
     (r'/api/admin/node', admin.node.NodeInstance),
@@ -304,8 +312,9 @@ class APIResourceWrapper(Resource):
 
         request.client_using_mobile = re.search(b'Mobi|Android', request.client_ua, re.IGNORECASE) is not None
 
-        if (not State.tenants[1].cache.wizard_done or
-                request.hostname == b'localhost'):
+        if not State.tenants[1].cache.wizard_done or \
+          request.hostname == b'127.0.0.1' or \
+          (State.tenants[1].cache.hostname == '' and isIPAddress(request.hostname)):
             request.tid = 1
         else:
             request.tid = State.tenant_hostname_id_map.get(request.hostname, None)
@@ -346,12 +355,12 @@ class APIResourceWrapper(Resource):
 
         self.set_headers(request)
 
-        if isIPAddress(request.hostname) or isIPv6Address(request.hostname):
-            hostname = State.tenants[1].cache['hostname'] if 1 in State.tenants else ''
-            if hostname and not isIPAddress(hostname) and not isIPv6Address(hostname):
+        if isIPAddress(request.hostname) and 1 in State.tenants:
+            hostname = State.tenants[1].cache['hostname']
+            https_enabled = State.tenants[1].cache['https_enabled']
+            if hostname and https_enabled:
                 request.tid = 1
                 self.redirect_https(request, hostname.encode())
-                return b''
 
         if request.tid is None or request.tid not in State.tenants:
             request.tid = None
@@ -411,7 +420,7 @@ class APIResourceWrapper(Resource):
 
         if self.handler.root_tenant_or_management_only and \
                 request.tid != 1 and \
-                  (not self.handler.session or \
+                  (not self.handler.session or
                    not self.handler.session.properties.get('management_session', False)):
             self.handle_exception(errors.ForbiddenOperation, request)
             return b''

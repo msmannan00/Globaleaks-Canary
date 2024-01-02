@@ -28,6 +28,8 @@ def parse_pgp_options(user, request):
     if not remove_key and pgp_key_public:
         pgpctx = PGPContext(pgp_key_public)
         user.pgp_key_public = pgp_key_public
+        user.can_redact_information = request['can_redact_information']
+        user.can_mask_information = request['can_mask_information']
         user.pgp_key_fingerprint = pgpctx.fingerprint
         user.pgp_key_expiration = pgpctx.expiration
     else:
@@ -80,7 +82,10 @@ def user_serialize_user(session, user, language):
         'can_postpone_expiration': user.can_postpone_expiration,
         'can_delete_submission': user.can_delete_submission,
         'can_grant_access_to_reports': user.can_grant_access_to_reports,
+        'can_redact_information': user.can_redact_information,
+        'can_mask_information': user.can_mask_information,
         'can_transfer_access_to_reports': user.can_transfer_access_to_reports,
+        'can_reopen_reports': user.can_reopen_reports,
         'can_edit_general_settings': user.can_edit_general_settings,
         'clicked_recovery_key': user.clicked_recovery_key,
         'accepted_privacy_policy': user.accepted_privacy_policy,

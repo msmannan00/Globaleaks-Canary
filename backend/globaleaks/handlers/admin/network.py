@@ -4,7 +4,7 @@ from twisted.internet.defer import inlineCallbacks, returnValue
 from globaleaks.handlers.base import BaseHandler
 from globaleaks.models.config import ConfigFactory
 from globaleaks.orm import tw
-from globaleaks.rest import errors, requests
+from globaleaks.rest import requests
 from globaleaks.utils.ip import parse_csv_ip_ranges_to_ip_networks
 
 
@@ -30,7 +30,7 @@ def db_update_network(session, tid, user_session, request):
     :return: Return the serialized configuration for the specified tenant
     """
     # Validate that IP addresses/ranges we're getting are good
-    for k in ['admin', 'custodian', 'receiver']:
+    for k in ['admin', 'analyst', 'custodian', 'receiver']:
         if 'ip_filter_' + k in request and request['ip_filter_' + k + '_enable'] and request['ip_filter_' + k]:
             parse_csv_ip_ranges_to_ip_networks(request['ip_filter_' + k])
 

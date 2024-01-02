@@ -203,13 +203,6 @@ class MigrationScript(MigrationBase):
         for old_obj in self.session_old.query(self.model_from['User']):
             new_obj = self.model_to['User']()
 
-            if old_obj.role == 'custodian':
-                new_cfg = self.model_to['Config']()
-                new_cfg.tid = old_obj.tid
-                new_cfg.var_name = 'enable_custodian'
-                new_cfg.value = True
-                self.session_new.merge(new_cfg)
-
             for key in new_obj.__mapper__.column_attrs.keys():
                 if key == 'hash':
                     setattr(new_obj, key, getattr(old_obj, 'password'))
@@ -315,7 +308,7 @@ class MigrationScript(MigrationBase):
         i = self.model_from['InternalTip']
         r = self.model_from['ReceiverTip']
         for m, i, r in self.session_old.query(m, i, r) \
-                                       .filter(m.receivertip_id == r.id, \
+                                       .filter(m.receivertip_id == r.id,
                                                r.internaltip_id == i.id):
             new_obj = self.model_to['Comment']()
             for key in new_obj.__mapper__.column_attrs.keys():

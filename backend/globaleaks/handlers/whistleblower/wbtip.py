@@ -17,41 +17,49 @@ from globaleaks.handlers.whistleblower.submission import decrypt_tip, \
 from globaleaks.handlers.user import user_serialize_user
 from globaleaks.models import serializers
 from globaleaks.orm import db_get, transact
-from globaleaks.rest import requests
-from globaleaks.utils.crypto import GCE
+from globaleaks.rest import errors, requests
+from globaleaks.state import State
+from globaleaks.utils.crypto import Base64Encoder, GCE
 from globaleaks.utils.fs import directory_traversal_check
 from globaleaks.utils.log import log
 from globaleaks.utils.templating import Templating
 from globaleaks.utils.utility import datetime_now, datetime_null
 
 
+def db_notify_report_update(session, user, rtip, itip):
+    """
+    :param session: An ORM session
+    :param user: An user ORM object
+    :param rtip: A rtip ORM object
+    :param itip: A itip ORM object
+    """
+    data = {
+      'type': 'tip_update',
+      'user': user_serialize_user(session, user, user.language),
+      'node': db_admin_serialize_node(session, user.tid, user.language),
+      'tip': serializers.serialize_rtip(session, itip, rtip, user.language),
+    }
+
+    if data['node']['mode'] == 'default':
+        data['notification'] = db_get_notification(session, user.tid, user.language)
+    else:
+        data['notification'] = db_get_notification(session, 1, user.language)
+
+    subject, body = Templating().get_mail_subject_and_body(data)
+
+    session.add(models.Mail({
+        'address': data['user']['mail_address'],
+        'subject': subject,
+        'body': body,
+        'tid': user.tid
+    }))
+
 def db_notify_recipients_of_tip_update(session, itip_id):
     for user, rtip, itip in session.query(models.User, models.ReceiverTip, models.InternalTip) \
                                    .filter(models.User.id == models.ReceiverTip.receiver_id,
                                            models.ReceiverTip.internaltip_id == models.InternalTip.id,
                                            models.InternalTip.id == itip_id):
-        data = {
-          'type': 'tip_update'
-        }
-
-        data['user'] = user_serialize_user(session, user, user.language)
-        data['tip'] = serializers.serialize_rtip(session, itip, rtip, user.language)
-
-        data['node'] = db_admin_serialize_node(session, user.tid, user.language)
-
-        if data['node']['mode'] == 'default':
-            data['notification'] = db_get_notification(session, user.tid, user.language)
-        else:
-            data['notification'] = db_get_notification(session, 1, user.language)
-
-        subject, body = Templating().get_mail_subject_and_body(data)
-
-        session.add(models.Mail({
-            'address': data['user']['mail_address'],
-            'subject': subject,
-            'body': body,
-            'tid': user.tid
-        }))
+        db_notify_report_update(session, user, rtip, itip)
 
 
 def db_get_wbtip(session, itip_id, language):
@@ -135,6 +143,47 @@ def store_additional_questionnaire_answers(session, tid, user_id, answers, langu
 
     db_notify_recipients_of_tip_update(session, itip.id)
 
+
+@transact
+def change_receipt(session, itip_id, cc, new_receipt, receipt_change_needed):
+    """
+    Transaction for updating old receipt to a new one
+    """
+    itip = session.query(models.InternalTip) \
+                  .filter(models.InternalTip.id == itip_id).one_or_none()
+    if itip is None:
+        return
+
+    tid = itip.tid
+
+    # update receipt
+    itip.receipt_hash = GCE.hash_password(new_receipt, State.tenants[tid].cache.receipt_salt)
+
+    if cc is None:
+        return
+
+    wb_key = GCE.derive_key(new_receipt.encode(), State.tenants[tid].cache.receipt_salt)
+
+    # update private keys
+    itip.crypto_prv_key = Base64Encoder.encode(GCE.symmetric_encrypt(wb_key, cc))
+
+    itip.receipt_change_needed = receipt_change_needed
+
+
+class Operations(BaseHandler):
+    """
+    This interface expose some utility methods for the Whistleblower Tip.
+    """
+    check_roles = "whistleblower"
+
+    def put(self):
+        request = self.validate_request(self.request.content.read(), requests.OpsDesc)
+        if request["operation"] != "change_receipt":
+            raise errors.InputValidationError("Invalid command")
+
+        return change_receipt(self.session.user_id, self.session.cc,
+                              self.session.properties["new_receipt"],
+                              "operator_session" in self.session.properties)
 
 
 class WBTipInstance(BaseHandler):
@@ -267,7 +316,6 @@ class WBTipAdditionalQuestionnaire(BaseHandler):
 
     def post(self):
         request = self.validate_request(self.request.content.read(), requests.AdditionalQuestionnaireAnswers)
-
         return store_additional_questionnaire_answers(self.request.tid,
                                                       self.session.user_id,
                                                       request['answers'],

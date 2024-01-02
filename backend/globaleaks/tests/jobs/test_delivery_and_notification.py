@@ -6,7 +6,6 @@ from globaleaks import models
 from globaleaks.jobs.delivery import Delivery
 from globaleaks.jobs.notification import Notification
 from globaleaks.orm import transact
-from globaleaks.state import State
 from globaleaks.tests import helpers
 from globaleaks.utils.utility import datetime_now, datetime_null
 
@@ -34,7 +33,7 @@ def simulate_reminders(session):
 class TestNotification(helpers.TestGLWithPopulatedDB):
     @inlineCallbacks
     def test_notification(self):
-        yield self.test_model_count(models.User, 8)
+        yield self.test_model_count(models.User, 9)
 
         yield self.test_model_count(models.InternalTip, 0)
         yield self.test_model_count(models.ReceiverTip, 0)

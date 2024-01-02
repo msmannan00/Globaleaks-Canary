@@ -32,7 +32,6 @@ class Context_v_45(Model):
     tid = Column(Integer, default=1, nullable=False)
     show_steps_navigation_interface = Column(Boolean, default=True, nullable=False)
     show_context = Column(Boolean, default=True, nullable=False)
-    show_recipients_details = Column(Boolean, default=False, nullable=False)
     allow_recipients_selection = Column(Boolean, default=False, nullable=False)
     maximum_selectable_receivers = Column(Integer, default=0, nullable=False)
     select_all_receivers = Column(Boolean, default=True, nullable=False)
@@ -55,27 +54,6 @@ class FieldOption_v_45(Model):
     label = Column(JSON, nullable=False)
     score_points = Column(Integer, default=0, nullable=False)
     trigger_field = Column(UnicodeText(36))
-
-
-class Field_v_45(Model):
-    __tablename__ = 'field'
-    id = Column(UnicodeText(36), primary_key=True, default=uuid4, nullable=False)
-    tid = Column(Integer, default=1, nullable=False)
-    x = Column(Integer, default=0, nullable=False)
-    y = Column(Integer, default=0, nullable=False)
-    width = Column(Integer, default=0, nullable=False)
-    label = Column(JSON, nullable=False)
-    description = Column(JSON, nullable=False)
-    hint = Column(JSON, nullable=False)
-    required = Column(Boolean, default=False, nullable=False)
-    multi_entry = Column(Boolean, default=False, nullable=False)
-    triggered_by_score = Column(Integer, default=0, nullable=False)
-    step_id = Column(UnicodeText(36))
-    fieldgroup_id = Column(UnicodeText(36))
-    type = Column(UnicodeText, default='inputbox', nullable=False)
-    instance = Column(UnicodeText, default='instance', nullable=False)
-    template_id = Column(UnicodeText(36))
-    template_override_id = Column(UnicodeText(36))
 
 
 class InternalFile_v_45(Model):
