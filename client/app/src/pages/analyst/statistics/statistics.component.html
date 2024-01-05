@@ -13,7 +13,7 @@
     <div *ngFor="let c of charts; let i = index" class="col-md-3">
         <div class="card">
             <div class="card-header">{{ c.title | translate }}</div>
-            <div class="card-body">
+            <div class="card-body analyst-graph">
                 <canvas baseChart class="chart chart-pie" [type]="'pie'" [datasets]="[{ data: c.values, label: c.labels,backgroundColor:c.colors }]">
                 </canvas>
             </div>

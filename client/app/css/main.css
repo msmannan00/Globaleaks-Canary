@@ -1118,3 +1118,8 @@ i.fa-solid.fa-chevron-right {
 .was-validated .admin-escrow:valid ~ .form-check-label {
   color: #2866a2;
 }
+
+.analyst-graph{
+  padding-left: 27%;
+  padding-right: 27%
+}
