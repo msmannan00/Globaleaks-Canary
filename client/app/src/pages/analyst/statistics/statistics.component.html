@@ -10,11 +10,11 @@
 </div>
 
 <div class="row">
-    <div *ngFor="let c of charts; let i = index" class="col-md-3">
+    <div *ngFor="let chart of charts; let i = index" class="col-md-3">
         <div class="card">
-            <div class="card-header">{{ c.title | translate }}</div>
+            <div class="card-header">{{ chart.title | translate }}</div>
             <div class="card-body analyst-graph">
-                <canvas baseChart class="chart chart-pie" [type]="'pie'" [datasets]="[{ data: c.values, label: c.labels,backgroundColor:c.colors }]">
+                <canvas baseChart class="chart chart-pie" [type]="'pie'" [datasets]="[{ data: chart.values, label: chart.labels,backgroundColor:chart.colors }]">
                 </canvas>
             </div>
         </div>
