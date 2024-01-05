@@ -128,7 +128,7 @@ export class UserEditorComponent implements OnInit {
   };
 
   getUserID() {
-    return this.authenticationData.session.user_id;
+    return this.authenticationData.session?.user_id;
   }
 
   toggleUserEscrow(user: userResolverModel) {

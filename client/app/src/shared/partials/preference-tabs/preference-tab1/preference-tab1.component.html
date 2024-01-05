@@ -68,7 +68,7 @@
             <option *ngFor="let item of appDataService.languages_enabled_selector" [value]="item.code">{{ item.native }}</option>
         </select>
     </div>
-    <div class="form-group" *ngIf="(authenticationService.session.role === 'admin' && !appDataService.public.node.disable_admin_notification) || (authenticationService.session.role === 'receiver' && !appDataService.public.node.disable_receiver_notification) || (authenticationService.session.role === 'custodian' && !appDataService.public.node.disable_custodian_notification)">
+    <div class="form-group">
         <input name="notification" [(ngModel)]="preferenceResolver.dataModel.notification" type="checkbox">
         <label>{{'Enable email notifications'|translate}}</label>
     </div>

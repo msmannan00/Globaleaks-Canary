@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header">{{ 'Reports' | translate }}</div>
+            <div class="card-body text-center">
+                <h2>{{ charts[0].total }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div *ngFor="let c of charts; let i = index" class="col-md-3">
+        <div class="card">
+            <div class="card-header">{{ c.title | translate }}</div>
+            <div class="card-body">
+                <canvas baseChart class="chart chart-pie" [type]="'pie'" [datasets]="[{ data: c.values, label: c.labels,backgroundColor:c.colors }]">
+                </canvas>
+            </div>
+        </div>
+    </div>
+</div>

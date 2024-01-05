@@ -41,14 +41,18 @@
                                     <input [(ngModel)]="networkData.https_admin" name="https_admin" type="checkbox">
                                 </td>
                             </tr>
-                            <ng-container *ngIf="networkData?.enable_custodian">
-                                <tr>
-                                    <td>{{ 'Custodian' | translate }}</td>
-                                    <td>
-                                        <input [(ngModel)]="networkData.https_custodian" name="https_custodian" type="checkbox">
-                                    </td>
-                                </tr>
-                            </ng-container>
+                            <tr>
+                                <td>{{ 'Analyst' | translate }}</td>
+                                <td>
+                                  <input [(ngModel)]="networkData.https_analyst" name="https_analyst" type="checkbox">
+                                </td>
+                              </tr>
+                            <tr>
+                                <td>{{ 'Custodian' | translate }}</td>
+                                <td>
+                                    <input [(ngModel)]="networkData.https_custodian" name="https_custodian" type="checkbox">
+                                </td>
+                            </tr>
                             <tr>
                                 <td>{{ 'Recipient' | translate }}</td>
                                 <td>

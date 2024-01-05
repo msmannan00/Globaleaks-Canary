@@ -24,7 +24,16 @@
                                 <input *ngIf="networkData.ip_filter_admin_enable" class="form-control" name="ip_filter_admin" [(ngModel)]="networkData.ip_filter_admin" type="text" autocomplete="off" />
                             </td>
                         </tr>
-                        <tr *ngIf="networkData.enable_custodian">
+                        <tr>
+                            <td>{{ 'Analyst' | translate }}</td>
+                            <td>
+                                <input [(ngModel)]="networkData.ip_filter_analyst_enable" type="checkbox" name="ip_filter_list" />
+                            </td>
+                            <td>
+                                <input *ngIf="networkData.ip_filter_analyst_enable" class="form-control" name="ip_filter_list" [(ngModel)]="networkData.ip_filter_analyst" type="text" autocomplete="off" />
+                            </td>
+                        </tr>
+                        <tr>
                             <td>{{ 'Custodian' | translate }}</td>
                             <td>
                                 <input [(ngModel)]="networkData.ip_filter_custodian_enable" type="checkbox" name="ip_filter_custodian_enable" />

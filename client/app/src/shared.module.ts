@@ -121,6 +121,7 @@ import {BlankComponent} from "@app/shared/blank/blank.component";
 import {VoiceRecorderComponent} from "@app/shared/partials/voice-recorder/voice-recorder.component";
 import {Tab1Component} from "@app/pages/admin/settings/tab1/tab1.component";
 import {SwitchComponent} from "@app/shared/components/switch/switch.component";
+import {NgChartsModule} from "ng2-charts";
 
 @NgModule({
   imports: [
@@ -149,7 +150,8 @@ import {SwitchComponent} from "@app/shared/components/switch/switch.component";
     NgbNavContent,
     NgbDropdownModule,
     NgbTooltipModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    NgChartsModule
   ],
   declarations: [
     FooterComponent,

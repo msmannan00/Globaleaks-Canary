@@ -7,6 +7,7 @@
                     <span *ngSwitchCase="'admin'">{{ 'Admin' | translate }}</span>
                     <span *ngSwitchCase="'receiver'">{{ 'Recipient' | translate }}</span>
                     <span *ngSwitchCase="'custodian'">{{ 'Custodian' | translate }}</span>
+                    <span *ngSwitchCase="'analyst'">{{ 'Analyst' | translate }}</span>
                 </ng-container>
             </span>
             <span class="badge bg-secondary" *ngIf="!user.enabled">{{ 'Disabled' | translate }}</span>
@@ -126,9 +127,7 @@
                         </option>
                     </select>
                 </div>
-                <div class="form-group" *ngIf="(user.role === 'admin' && !nodeData?.disable_admin_notification) ||
-                              (user.role === 'receiver' && !nodeData?.disable_receiver_notification) ||
-                              (user.role === 'custodian' && !nodeData?.disable_custodian_notification)">
+                <div class="form-group">
                     <input [(ngModel)]="user.notification" type="checkbox">
                     <label>{{ 'Enable email notifications' | translate }}</label>
                 </div>

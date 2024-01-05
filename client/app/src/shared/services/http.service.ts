@@ -33,6 +33,7 @@ import {jobResolverModel} from "@app/models/resolvers/job-resolver-model";
 import {rtipResolverModel} from "@app/models/resolvers/rtips-resolver-model";
 import {IarData} from "@app/models/reciever/Iar-data";
 import {statusResolverModel} from "@app/models/resolvers/status-resolver-model";
+import {statisticsResolverModel} from "@app/models/resolvers/statistics-resolver-model";
 
 
 @Injectable({
@@ -305,6 +306,10 @@ export class HttpService {
 
   receiverTipResource(): Observable<rtipResolverModel[]> {
     return this.httpClient.get<rtipResolverModel[]>("api/recipient/rtips");
+  }
+
+  requestStatisticsResource(): Observable<statisticsResolverModel> {
+    return this.httpClient.get<statisticsResolverModel>("api/analyst/stats");
   }
 
   iarResource(): Observable<IarData[]> {
