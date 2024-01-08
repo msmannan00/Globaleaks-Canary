@@ -14,201 +14,90 @@ export class StatisticsComponent implements OnInit {
   ngOnInit(): void {
     this.initializeCharts();
   }
-  private initializeCharts(): void {
-    const reports_count: number = this.statisticsResolver.dataModel.reports_count;
 
-    let a_1: any = this.statisticsResolver.dataModel.reports_with_no_access || 0;
-    let a_2: any = reports_count - this.statisticsResolver.dataModel.reports_with_no_access || 0;
-    let totAcc = a_1 + a_2;
-    a_1 = ((a_1 / totAcc) * 100).toFixed(1);
-    a_2 = 100 - parseFloat(a_1);
+  private calculatePercentage(value: number, total: number): string {
+    return ((value / total) * 100).toFixed(1);
+  }
 
-    let b_1: any = this.statisticsResolver.dataModel.reports_anonymous || 0;
-    let b_2: any = this.statisticsResolver.dataModel.reports_subscribed || 0;
-    let b_3: any = this.statisticsResolver.dataModel.reports_initially_anonymous || 0;
-    let totId = b_1 + b_2 + b_3;
-    b_1 = ((b_1 / totId) * 100).toFixed(1);
-    b_2 = ((b_2 / totId) * 100).toFixed(1);
-    b_3 = 100 - parseFloat(b_1) - parseFloat(b_2);
+  private formatLabels(labels: string[], ...percentages: (number | string)[]): string[] {
+    return labels.map((label, index) => {
+      const translatedLabel = this.translateService.instant(label);
+      const percentageLabel = `${translatedLabel} ${percentages[index]}%`;
 
-    let c_1: any = this.statisticsResolver.dataModel.reports_tor || 0;
-    let c_2: any = reports_count - this.statisticsResolver.dataModel.reports_tor || 0;
-    let totTor = c_1 + c_2;
-    c_1 = ((c_1 / totTor) * 100).toFixed(1);
-    c_2 = 100 - parseFloat(c_1);
-
-    let d_1: any = this.statisticsResolver.dataModel.reports_mobile || 0;
-    let d_2: any = reports_count - this.statisticsResolver.dataModel.reports_mobile || 0;
-    let totMobile = d_1 + d_2;
-    d_1 = ((d_1 / totMobile) * 100).toFixed(1);
-    d_2 = 100 - parseFloat(d_1);
-
-    const returning_wb_labels = ["Yes", "No"].map((label) => this.translateService.instant(label));
-    const anonymity_wb_labels = ["Anonymous", "Subscribed", "Subscribed later"].map((label) =>
-      this.translateService.instant(label)
-    );
-    const tor_wb_labels = ["Yes", "No"].map((label) => this.translateService.instant(label));
-    const mobile_wb_labels = ["Yes", "No"].map((label) => this.translateService.instant(label));
-
-    returning_wb_labels[0] = `${returning_wb_labels[0]} ${a_1}% - (${reports_count - this.statisticsResolver.dataModel.reports_with_no_access})`;
-    returning_wb_labels[1] = `${returning_wb_labels[1]} ${a_2}% - (${this.statisticsResolver.dataModel.reports_with_no_access})`;
-
-    anonymity_wb_labels[0] = `${anonymity_wb_labels[0]} ${b_1}% - (${this.statisticsResolver.dataModel.reports_anonymous})`;
-    anonymity_wb_labels[1] = `${anonymity_wb_labels[1]} ${b_2}% - (${this.statisticsResolver.dataModel.reports_subscribed})`;
-    anonymity_wb_labels[2] = `${anonymity_wb_labels[2]} ${b_3}% - (${this.statisticsResolver.dataModel.reports_initially_anonymous})`;
-
-    tor_wb_labels[0] = `${tor_wb_labels[0]} ${c_1}% - (${this.statisticsResolver.dataModel.reports_tor})`;
-    tor_wb_labels[1] = `${tor_wb_labels[1]} ${c_2}% - (${reports_count - this.statisticsResolver.dataModel.reports_tor})`;
-
-    mobile_wb_labels[0] = `${mobile_wb_labels[0]} ${d_1}% - (${this.statisticsResolver.dataModel.reports_mobile})`;
-    mobile_wb_labels[1] = `${mobile_wb_labels[1]} ${d_2}% - (${reports_count - this.statisticsResolver.dataModel.reports_mobile})`;
-
-    this.charts.push({
-      title: this.translateService.instant("Returning whistleblowers"),
-      total: totAcc,
-      labels: returning_wb_labels,
-      values: [parseFloat(a_1), a_2],
-      colors: ["rgb(96,186,255)", "rgb(0,127,224)"],
-      data: {
-        labels: returning_wb_labels,
-        datasets: [
-          {
-            data: [parseFloat(a_1), a_2],
-            backgroundColor: ["rgb(96,186,255)", "rgb(0,127,224)"],
-          },
-        ],
-      },
-      options: {
-        plugins: {
-          legend: {
-            onClick: (e: any) => e.stopPropagation(),
-            display: true,
-            position: 'left',
-            labels: {
-              color: '#333',
-              font: { size: 12 }
-            },
-          },
-          tooltip: {
-            callbacks: {
-              label: function (context: any) {
-                return context.dataset.label + ': ' + context.parsed;
-              },
-            },
-          },
-        },
-      },
-    });
-
-    this.charts.push({
-      title: this.translateService.instant("Anonymity"),
-      labels: anonymity_wb_labels,
-      values: [parseFloat(b_1), parseFloat(b_2), parseFloat(b_3)],
-      colors: ["rgb(96,186,255)", "rgb(0,127,224)", "rgb(0,46,82)"],
-      data: {
-        labels: anonymity_wb_labels,
-        datasets: [
-          {
-            data: [parseFloat(b_1), parseFloat(b_2), parseFloat(b_3)],
-            backgroundColor: ["rgb(96,186,255)", "rgb(0,127,224)", "rgb(0,46,82)"],
-          },
-        ],
-      },
-      options: {
-        plugins: {
-          legend: {
-            onClick: (e: any) => e.stopPropagation(),
-            display: true,
-            position: 'left',
-            labels: {
-              color: '#333',
-              font: { size: 12 }
-            },
-          },
-          tooltip: {
-            callbacks: {
-              label: function (context: any) {
-                return context.dataset.label + ': ' + context.parsed;
-              },
-            },
-          },
-        },
-      },
-    });
-
-    this.charts.push({
-      title: this.translateService.instant("Tor"),
-      total: totTor,
-      labels: tor_wb_labels,
-      values: [parseFloat(c_1), c_2],
-      colors: ["rgb(96,186,255)", "rgb(0,127,224)"],
-      data: {
-        labels: tor_wb_labels,
-        datasets: [
-          {
-            data: [parseFloat(c_1), c_2],
-            backgroundColor: ["rgb(96,186,255)", "rgb(0,127,224)"],
-          },
-        ],
-      },
-      options: {
-        plugins: {
-          legend: {
-            onClick: (e: any) => e.stopPropagation(),
-            display: true,
-            position: 'left',
-            labels: {
-              color: '#333',
-              font: { size: 12 }
-            },
-          },
-          tooltip: {
-            callbacks: {
-              label: function (context: any) {
-                return context.dataset.label + ': ' + context.parsed;
-              },
-            },
-          },
-        },
-      },
-    });
-
-    this.charts.push({
-      title: this.translateService.instant("Mobile"),
-      total: totMobile,
-      labels: mobile_wb_labels,
-      values: [parseFloat(d_1), d_2],
-      colors: ["rgb(96,186,255)", "rgb(0,127,224)"],
-      data: {
-        labels: mobile_wb_labels,
-        datasets: [
-          {
-            data: [parseFloat(d_1), d_2],
-            backgroundColor: ["rgb(96,186,255)", "rgb(0,127,224)"],
-          },
-        ],
-      },
-      options: {
-        plugins: {
-          legend: {
-            onClick: (e: any) => e.stopPropagation(),
-            display: true,
-            position: 'left',
-            labels: {
-              color: '#333',
-              font: { size: 12 }
-            },
-          },
-          tooltip: {
-            callbacks: {
-              label: function (context: any) {
-                return context.dataset.label + ': ' + context.parsed;
-              },
-            },
-          },
-        },
-      },
+      if (label === "Anonymous" || label === "Subscribed" || label === "Subscribed later") {
+        return `${percentageLabel} - (${percentages[index + labels.length]})`;
+      } else {
+        return percentageLabel;
+      }
     });
   }
 
+  private createChart(title: string, total: number, labels: string[], values: number[], colors: string[]) {
+    return {
+      title: this.translateService.instant(title),
+      total: total,
+      labels: labels,
+      values: values,
+      colors: colors,
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            data: values,
+            backgroundColor: colors,
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          legend: {
+            onClick: (e: any) => e.stopPropagation(),
+            display: true,
+            position: 'left',
+            labels: {
+              color: '#333',
+              font: { size: 12 },
+            },
+          },
+          tooltip: {
+            callbacks: {
+              label: (context: any) => context.dataset.label + ': ' + context.parsed,
+            },
+          },
+        },
+      },
+    };
+  }
+
+  private initializeCharts(): void {
+    const { dataModel } = this.statisticsResolver;
+    const reports_count: number = dataModel.reports_count;
+
+    const a_1: number = dataModel.reports_with_no_access || 0;
+    const a_2: number = reports_count - dataModel.reports_with_no_access || 0;
+    const totAcc: number = a_1 + a_2;
+
+    const b_1: number = dataModel.reports_anonymous || 0;
+    const b_2: number = dataModel.reports_subscribed || 0;
+    const b_3: number = dataModel.reports_initially_anonymous || 0;
+    const totId: number = b_1 + b_2 + b_3;
+
+    const c_1: number = dataModel.reports_tor || 0;
+    const c_2: number = reports_count - dataModel.reports_tor || 0;
+    const totTor: number = c_1 + c_2;
+
+    const d_1: number = dataModel.reports_mobile || 0;
+    const d_2: number = reports_count - dataModel.reports_mobile || 0;
+    const totMobile: number = d_1 + d_2;
+
+    const torAccLabels = this.formatLabels(["Yes", "No"], this.calculatePercentage(a_1, totAcc), this.calculatePercentage(a_2, totAcc), dataModel.reports_with_no_access);
+    const anonymityLabels = this.formatLabels(["Anonymous", "Subscribed", "Subscribed later"], this.calculatePercentage(b_1, totId), this.calculatePercentage(b_2, totId), this.calculatePercentage(b_3, totId), dataModel.reports_anonymous, dataModel.reports_subscribed, dataModel.reports_initially_anonymous);
+    const torLabels = this.formatLabels(["Yes", "No"], this.calculatePercentage(c_1, totTor), this.calculatePercentage(c_2, totTor), dataModel.reports_tor);
+    const mobileLabels = this.formatLabels(["Yes", "No"], this.calculatePercentage(d_1, totMobile), this.calculatePercentage(d_2, totMobile), dataModel.reports_mobile);
+
+    this.charts.push(this.createChart("Returning whistleblowers", totAcc, torAccLabels, [a_1, a_2], ["rgb(96,186,255)", "rgb(0,127,224)"]));
+    this.charts.push(this.createChart("Anonymity", totId, anonymityLabels, [b_1, b_2, b_3], ["rgb(96,186,255)", "rgb(0,127,224)", "rgb(0,46,82)"]));
+    this.charts.push(this.createChart("Tor", totTor, torLabels, [c_1, c_2], ["rgb(96,186,255)", "rgb(0,127,224)"]));
+    this.charts.push(this.createChart("Mobile", totMobile, mobileLabels, [d_1, d_2], ["rgb(96,186,255)", "rgb(0,127,224)"]));
+  }
 }
