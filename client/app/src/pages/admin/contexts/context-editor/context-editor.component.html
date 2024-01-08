@@ -57,7 +57,7 @@
                             <span>{{ 'Add' | translate }}</span>
                         </button>
                     </label>
-                    <div class="row ReceiverContextAdder">
+                    <div id="ReceiverContextAdder" class="row">
                         <div class="col-md-12" *ngIf="showSelect">
                             <ng-select [(ngModel)]="selected.value" name="selected.value" bindLabel="name" [items]="usersData | filter:  'role': 'receiver'" [searchable]="true" [placeholder]="'Search' | translate" (change)="moveReceiver($event)">
                                 <ng-template ng-option-tmp let-item="item">
@@ -120,7 +120,7 @@
                     <i *ngIf="showAdvancedSettings" class="fa-solid fa-minus"></i>
                     <span>{{ 'Advanced' | translate }}</span>
                 </button>
-                <div class="context-advanced-settings-box">
+                <div id="context-advanced-settings-box">
                     <div class="row" *ngIf="showAdvancedSettings">
                         <div class="col-md-6">
                             <div class="form-group">
