@@ -36,18 +36,18 @@
     <src-rfiles-upload-status [progress]="calculateProgress()" [estimatedTime]="calculateEstimatedTime()" [uploading]="uploading()" *ngIf="!hasNextStep()"></src-rfiles-upload-status>
 </div>
 <div class="modal-footer">
-    <div class="submission-buttons">
+    <div id="submission-buttons">
         <br>
         <button id="PreviousStepButton" class="btn btn-outline-secondary" *ngIf="hasPreviousStep()" (click)="whistleblowerSubmissionService.decrementStep(this)">
             <i class="fa-solid fa-arrow-circle-left"></i>
             <span>{{'Previous'|translate}}</span>
         </button>
-        <button class="btn btn-outline-secondary" *ngIf="hasNextStep()" (click)="whistleblowerSubmissionService.incrementStep(this)">
+        <button id="NextStepButton" class="btn btn-outline-secondary" *ngIf="hasNextStep()" (click)="whistleblowerSubmissionService.incrementStep(this)">
             <span>{{'Next'|translate}}</span>
             <i class="fa-solid fa-arrow-circle-right"></i>
         </button>
         <button id="SubmitButton" class="btn btn-primary" [disabled]="done" *ngIf="!hasNextStep()" (click)="completeSubmission()" type="submit">
-            <i class="fa-solid fa-check"></i>
+            <i id="SubmitIconOK" class="fa-solid fa-check"></i>
             <span>{{'Submit'|translate}}</span>
         </button>
     </div>
