@@ -1105,3 +1105,12 @@ i.fa-solid.fa-chevron-right {
 .was-validated .admin-escrow:valid~.form-check-label {
   color: #2866a2;
 }
+
+.audio-player-iframe {
+  height: 4em;
+}
+
+.analyst-graph{
+  padding-left: 27%;
+  padding-right: 27%
+}
