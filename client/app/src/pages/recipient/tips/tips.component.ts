@@ -75,7 +75,9 @@ export class TipsComponent implements OnInit {
   selectAll() {
     this.selectedTips = [];
     this.filteredTips.forEach(tip => {
+      if (tip.accessible) {
       this.selectedTips.push(tip.id);
+      }
     });
   }
 

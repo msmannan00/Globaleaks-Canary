@@ -24,6 +24,7 @@ export interface rtipResolverModel {
   substatus: string;
   file_count: number;
   comment_count: number;
+  accessible:boolean;
 }
 
 export interface Answers {

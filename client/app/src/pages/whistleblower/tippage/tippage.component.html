@@ -15,7 +15,7 @@
         <src-tip-info [tipService]="wbTipService"></src-tip-info>
     </div>
 </div>
-<div class="row" *ngIf="wbTipService.tip.context.show_recipients_details">
+<div class="row" *ngIf="wbTipService.tip.receivers.length > 1">
     <div class="col-md-12">
         <src-tip-receiver-list [tipService]="wbTipService"></src-tip-receiver-list>
     </div>
