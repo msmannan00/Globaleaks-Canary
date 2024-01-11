@@ -323,17 +323,6 @@ export class UtilsService {
     }
   }
 
-  showFilePreview(content_type: string) {
-    const content_types = [
-      "image/gif",
-      "image/jpeg",
-      "image/png",
-      "image/bmp"
-    ];
-
-    return content_types.indexOf(content_type) > -1;
-  }
-
   submitSupportRequest(arg: {mail_address: string,text: string} ) {
     const param = JSON.stringify({
       "mail_address": arg.mail_address,

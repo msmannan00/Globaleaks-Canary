@@ -165,6 +165,16 @@
                     <th class="TipInfoIdentity">
                         <i class="fa-solid fa-user"></i>
                     </th>
+                    <th class="TipInfoRecipientCount">
+                        <span (click)="sortKey = 'receiver_count'; sortReverse = !sortReverse">
+                          <i class="fa-solid fa-users"></i>
+                          <span></span>
+                          <span *ngIf="sortKey == 'receiver_count'">
+                            <span *ngIf="!sortReverse" class="fa-solid fa-caret-down"></span>
+                            <span *ngIf="sortReverse" class="fa-solid fa-caret-up"></span>
+                          </span>
+                        </span>
+                    </th>
                     <th class="TipInfoScore" *ngIf="appDataService.public.node.enable_scoring_system">
                         <span (click)="sortKey = 'score'; sortReverse = !sortReverse">
                             <i class="fa-solid fa-flash"></i>
@@ -229,6 +239,7 @@
                             <i *ngIf="tip.subscription === 1" class="fa-solid fa-check"></i>
                             <i *ngIf="tip.subscription === 2" class="fa-solid fa-check underline"></i>
                         </th>
+                        <td class="TipInfoRecipientCount">{{tip.receiver_count}}</td>
                         <td class="TipInfoScore" *ngIf="appDataService.public.node.enable_scoring_system">
                             <ng-container [ngSwitch]="tip.score">
                                 <span *ngSwitchCase="0">-</span>

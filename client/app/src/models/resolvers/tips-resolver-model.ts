@@ -10,5 +10,6 @@ export class tipsResolverModel {
   tor: boolean;
   comments: number;
   files: number;
+  receiver_count: number;
   last_access: string;
 }

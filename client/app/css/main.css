@@ -479,22 +479,6 @@ table tr td {
   height: 12rem;
 }
 
-.img-preview {
-  height: 10rem;
-  width: 10rem;
-  object-fit: contain;
-  padding: 10px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.img-preview img {
-  height: 100%;
-  width: 100%;
-}
-
 .file-upload {
   position: absolute;
   top: 0;
