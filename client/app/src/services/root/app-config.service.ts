@@ -15,7 +15,7 @@ import {TitleService} from "@app/shared/services/title.service";
 export class AppConfigService {
   public sidebar: string = "";
 
-  constructor(private titleService:TitleService, public authenticationService: AuthenticationService, private translationService: TranslationService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private httpService: HttpService, private appDataService: AppDataService, private fieldUtilitiesService: FieldUtilitiesService) {
+  constructor(private titleService: TitleService, public authenticationService: AuthenticationService, private translationService: TranslationService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private httpService: HttpService, private appDataService: AppDataService, private fieldUtilitiesService: FieldUtilitiesService) {
     this.init();
   }
 
@@ -51,7 +51,7 @@ export class AppConfigService {
     location.replace("/");
   };
 
-  public setPage(page:string) {
+  public setPage(page: string) {
     this.appDataService.page = page;
     this.titleService.setTitle();
   };
@@ -101,8 +101,14 @@ export class AppConfigService {
         this.appDataService.submission_statuses_by_id = this.utilsService.array_to_map(this.appDataService.public.submission_statuses);
 
         for (const [key] of Object.entries(this.appDataService.questionnaires_by_id)) {
-          this.fieldUtilitiesService.parseQuestionnaire(this.appDataService.questionnaires_by_id[key],{fields: [], fields_by_id: {}, options_by_id: {}});
-          this.appDataService.questionnaires_by_id[key].steps = this.appDataService.questionnaires_by_id[key].steps.sort((a: { order: number; }, b: { order: number; }) => a.order > b.order);
+          this.fieldUtilitiesService.parseQuestionnaire(this.appDataService.questionnaires_by_id[key], {
+            fields: [],
+            fields_by_id: {},
+            options_by_id: {}
+          });
+          this.appDataService.questionnaires_by_id[key].steps = this.appDataService.questionnaires_by_id[key].steps.sort((a: {
+            order: number;
+          }, b: { order: number; }) => a.order > b.order);
         }
 
         for (const [key] of Object.entries(this.appDataService.contexts_by_id)) {
@@ -160,7 +166,7 @@ export class AppConfigService {
         location.replace("/#/signup");
       } else if (this.router.url === "/signup" && !this.appDataService.public.node.enable_signup) {
         location.replace("/#/");
-      }else if(this.appDataService.page == "blank"){
+      } else if (this.appDataService.page == "blank") {
         this.appDataService.page = "homepage"
       }
     }

@@ -6,7 +6,7 @@ from globaleaks import models
 from globaleaks.handlers.recipient import rtip
 from globaleaks.jobs.delivery import Delivery
 from globaleaks.tests import helpers
-from globaleaks.utils.utility import datetime_now, datetime_null
+from globaleaks.utils.utility import datetime_now
 
 
 class TestRTipInstance(helpers.TestHandlerWithPopulatedDB):
@@ -51,8 +51,6 @@ class TestRTipInstance(helpers.TestHandlerWithPopulatedDB):
 
     @inlineCallbacks
     def test_grant_and_revoke_access(self):
-        now = datetime_now()
-
         rtip_descs = yield self.get_rtips()
 
         count = len(rtip_descs)
@@ -97,8 +95,6 @@ class TestRTipInstance(helpers.TestHandlerWithPopulatedDB):
 
     @inlineCallbacks
     def test_transfer(self):
-        now = datetime_now()
-
         rtip_descs = yield self.get_rtips()
 
         for rtip_desc in rtip_descs:
@@ -183,6 +179,64 @@ class TestRTipInstance(helpers.TestHandlerWithPopulatedDB):
 
             response = yield handler.get(rtip_desc['id'])
             self.assertEqual(response[key], True)
+
+    @inlineCallbacks
+    def test_update_status(self):
+        rtip_descs = yield self.get_rtips()
+
+        for rtip_desc in rtip_descs:
+            operation = {
+              'operation': 'update_status',
+              'args': {
+                'status': 'closed',
+                'substatus': '',
+                'motivation': ''
+              }
+            }
+
+            handler = self.request(operation, role='receiver', user_id=rtip_desc['receiver_id'])
+            yield handler.put(rtip_desc['id'])
+            self.assertEqual(handler.request.code, 200)
+
+        rtip_descs = yield self.get_rtips()
+        for rtip_desc in rtip_descs:
+            self.assertEqual(rtip_desc['status'], 'closed')
+
+        for rtip_desc in rtip_descs:
+            operation = {
+              'operation': 'update_status',
+              'args': {
+                'status': 'new',
+                'substatus': '',
+                'motivation': ''
+              }
+            }
+
+            handler = self.request(operation, role='receiver', user_id=rtip_desc['receiver_id'])
+            yield handler.put(rtip_desc['id'])
+            self.assertEqual(handler.request.code, 200)
+
+        rtip_descs = yield self.get_rtips()
+        for rtip_desc in rtip_descs:
+            self.assertEqual(rtip_desc['status'], 'closed')
+
+        for rtip_desc in rtip_descs:
+            operation = {
+              'operation': 'update_status',
+              'args': {
+                'status': 'opened',
+                'substatus': '',
+                'motivation': ''
+              }
+            }
+
+            handler = self.request(operation, role='receiver', user_id=rtip_desc['receiver_id'])
+            yield handler.put(rtip_desc['id'])
+            self.assertEqual(handler.request.code, 200)
+
+        rtip_descs = yield self.get_rtips()
+        for rtip_desc in rtip_descs:
+            self.assertEqual(rtip_desc['status'], 'opened')
 
     def test_enable_two_way_comments(self):
         return self.switch_enabler('enable_two_way_comments')
@@ -280,6 +334,78 @@ class TestRTipCommentCollection(helpers.TestHandlerWithPopulatedDB):
         for rtip_desc in rtip_descs:
             handler = self.request(body, role='receiver', user_id=rtip_desc['receiver_id'])
             yield handler.post(rtip_desc['id'])
+
+
+class TestRTipRedactionCollection(helpers.TestHandlerWithPopulatedDB):
+    _handler = rtip.RTipRedactionCollection
+
+    @inlineCallbacks
+    def setUp(self):
+        yield helpers.TestHandlerWithPopulatedDB.setUp(self)
+        yield self.perform_full_submission_actions()
+
+    @inlineCallbacks
+    def test_post_and_put(self):
+        rtip_descs = yield self.get_rtips()
+        for rtip_desc in rtip_descs:
+            body = {
+                'internaltip_id': rtip_desc['id'],
+                'reference_id': rtip_desc['questionnaires'][0]['steps'][0]['id'],
+                'entry': '0',
+                'permanent_redaction': '',
+                'temporary_redaction': [{"start": 0, "end": 0}]
+            }
+
+            handler = self.request(body, role='receiver', user_id=rtip_desc['receiver_id'])
+            yield handler.post()
+
+        rtip_descs = yield self.get_rtips()
+        for rtip_desc in rtip_descs:
+            body = {
+                'id': rtip_desc['redactions'][0]['id'],
+                'operation': 'mask',
+                'content_type': 'answer',
+                'internaltip_id': rtip_desc['id'],
+                'reference_id': '',
+                'entry': '0',
+                'permanent_redaction': '',
+                'temporary_redaction': [{"start": 0, "end": 1}]
+            }
+
+            handler = self.request(body, role='receiver', user_id=rtip_desc['receiver_id'])
+            yield handler.put(rtip_desc['redactions'][0]['id'])
+
+        rtip_descs = yield self.get_rtips()
+        for rtip_desc in rtip_descs:
+            body = {
+                'id': rtip_desc['redactions'][0]['id'],
+                'operation': 'redact',
+                'content_type': 'answer',
+                'internaltip_id': rtip_desc['id'],
+                'reference_id': '',
+                'entry': '0',
+                'permanent_redaction': [{"start": 0, "end": 0}],
+                'temporary_redaction': [{"start": 1, "end": 1}]
+            }
+
+            handler = self.request(body, role='receiver', user_id=rtip_desc['receiver_id'])
+            yield handler.put(rtip_desc['redactions'][0]['id'])
+
+        rtip_descs = yield self.get_rtips()
+        for rtip_desc in rtip_descs:
+            body = {
+                'id': rtip_desc['redactions'][0]['id'],
+                'operation': 'full-unmask',
+                'content_type': 'answer',
+                'internaltip_id': rtip_desc['id'],
+                'reference_id': '',
+                'entry': '0',
+                'permanent_redaction': '',
+                'temporary_redaction': ''
+            }
+
+            handler = self.request(body, role='receiver', user_id=rtip_desc['receiver_id'])
+            yield handler.put(rtip_desc['redactions'][0]['id'])
 
 
 class TestWhistleblowerFileDownload(helpers.TestHandlerWithPopulatedDB):

@@ -21,18 +21,19 @@ import {Field, fieldtemplatesResolverModel} from "@app/models/resolvers/field-te
 import {contextResolverModel} from "@app/models/resolvers/context-resolver-model";
 import {Root, Status, Substatus} from "@app/models/app/public-model";
 import {notificationResolverModel} from "@app/models/resolvers/notification-resolver-model";
-import { Session } from "@app/models/authentication/session";
-import { RFile,Comment } from "@app/models/app/shared-public-model";
-import { preferenceResolverModel } from "@app/models/resolvers/preference-resolver-model";
-import { TokenResponse } from "@app/models/authentication/token-response";
-import { tipsResolverModel } from "@app/models/resolvers/tips-resolver-model";
-import { redirectResolverModel } from "@app/models/resolvers/redirect-resolver-model";
-import { WbTipData } from "@app/models/whistleblower/wb-tip-data";
-import { auditlogResolverModel } from "@app/models/resolvers/auditlog-resolver-model";
-import { jobResolverModel } from "@app/models/resolvers/job-resolver-model";
-import { rtipResolverModel } from "@app/models/resolvers/rtips-resolver-model";
-import { IarData } from "@app/models/reciever/Iar-data";
-import { statusResolverModel } from "@app/models/resolvers/status-resolver-model";
+import {Session} from "@app/models/authentication/session";
+import {RFile, Comment} from "@app/models/app/shared-public-model";
+import {preferenceResolverModel} from "@app/models/resolvers/preference-resolver-model";
+import {TokenResponse} from "@app/models/authentication/token-response";
+import {tipsResolverModel} from "@app/models/resolvers/tips-resolver-model";
+import {redirectResolverModel} from "@app/models/resolvers/redirect-resolver-model";
+import {WbTipData} from "@app/models/whistleblower/wb-tip-data";
+import {auditlogResolverModel} from "@app/models/resolvers/auditlog-resolver-model";
+import {jobResolverModel} from "@app/models/resolvers/job-resolver-model";
+import {rtipResolverModel} from "@app/models/resolvers/rtips-resolver-model";
+import {IarData} from "@app/models/reciever/Iar-data";
+import {statusResolverModel} from "@app/models/resolvers/status-resolver-model";
+import {statisticsResolverModel} from "@app/models/resolvers/statistics-resolver-model";
 
 
 @Injectable({
@@ -71,20 +72,32 @@ export class HttpService {
     return this.httpClient.put<tenantResolverModel>(url, data);
   }
 
-  authorizeIdentity(url: string, data: {reply: string, reply_motivation: string}): Observable<{reply: string, reply_motivation: string}> {
-    return this.httpClient.put<{reply: string, reply_motivation: string}>(url, data);
+  authorizeIdentity(url: string, data: { reply: string, reply_motivation: string }): Observable<{
+    reply: string,
+    reply_motivation: string
+  }> {
+    return this.httpClient.put<{ reply: string, reply_motivation: string }>(url, data);
   }
 
   deleteDBFile(id: string): Observable<RFile> {
     return this.httpClient.delete<RFile>("api/recipient/rfiles/" + id);
   }
 
-  requestOperations(data: { operation: string, args: { [key: string]: string } }, header?: HttpHeaders): Observable<{ operation: string, args: { [key: string]: string } }> {
-    const options = { headers: header };
-    return this.httpClient.put<{ operation: string, args: { [key: string]: string } }>("api/user/operations", data, options);
+  requestOperations(data: { operation: string, args: { [key: string]: string } }, header?: HttpHeaders): Observable<{
+    operation: string,
+    args: { [key: string]: string }
+  }> {
+    const options = {headers: header};
+    return this.httpClient.put<{
+      operation: string,
+      args: { [key: string]: string }
+    }>("api/user/operations", data, options);
   }
 
-  requestOperationsRecovery(data: {operation: string,args: {[key:string]:string}}, confirmation: string): Observable<any> {
+  requestOperationsRecovery(data: {
+    operation: string,
+    args: { [key: string]: string }
+  }, confirmation: string): Observable<any> {
     const headers = {"X-Confirmation": confirmation};
     return this.httpClient.put<any>("api/user/operations", data, {headers});
   }
@@ -117,12 +130,12 @@ export class HttpService {
     return this.httpClient.post<TokenResponse>("api/signup/" + token, {});
   }
 
-  requestTenantSwitch(url: string): Observable<{redirect:string}> {
-    return this.httpClient.get<{redirect:string}>(url);
+  requestTenantSwitch(url: string): Observable<{ redirect: string }> {
+    return this.httpClient.get<{ redirect: string }>(url);
   }
 
-  requestReportSubmission(param: string): Observable<{receipt:string}> {
-    return this.httpClient.post<{receipt:string}>("api/whistleblower/submission", param);
+  requestReportSubmission(param: string): Observable<{ receipt: string }> {
+    return this.httpClient.post<{ receipt: string }>("api/whistleblower/submission", param);
   }
 
   requestSupport(param: string): Observable<void> {
@@ -132,6 +145,7 @@ export class HttpService {
   requestNewComment(param: string): Observable<Comment> {
     return this.httpClient.post<Comment>("api/whistleblower/wbtip/comments", param);
   }
+
   requestUserPreferenceResource(): Observable<preferenceResolverModel> {
     return this.httpClient.get<preferenceResolverModel>("api/user/preferences");
   }
@@ -188,7 +202,7 @@ export class HttpService {
     return this.httpClient.get<redirectResolverModel[]>("api/admin/redirects");
   }
 
-  requestPostRedirectsResource(param:{path1:string,path2:string}): Observable<redirectResolverModel> {
+  requestPostRedirectsResource(param: { path1: string, path2: string }): Observable<redirectResolverModel> {
     return this.httpClient.post<redirectResolverModel>("api/admin/redirects", param);
   }
 
@@ -212,7 +226,14 @@ export class HttpService {
     return this.httpClient.post<void>("api/admin/config/tls/files/" + name, param);
   }
 
-  requestCSRDirectContentResource(param:{country: string;province: string;city: string;company: string;department: string;email: string}): Observable<any> {
+  requestCSRDirectContentResource(param: {
+    country: string;
+    province: string;
+    city: string;
+    company: string;
+    department: string;
+    email: string
+  }): Observable<any> {
     return this.httpClient.post("api/admin/config/csr/gen", param);
   }
 
@@ -235,11 +256,11 @@ export class HttpService {
     return this.httpClient.get<WbTipData>("api/whistleblower/wbtip");
   }
 
-  whistleBlowerTipUpdate(param: {cmd: string,answers: Answers}): Observable<void> {
+  whistleBlowerTipUpdate(param: { cmd: string, answers: Answers }): Observable<void> {
     return this.httpClient.post<void>("api/whistleblower/wbtip/fillform", param);
   }
 
-  whistleBlowerIdentityUpdate(param: {identity_field_id:string,identity_field_answers:Answers}): Observable<void> {
+  whistleBlowerIdentityUpdate(param: { identity_field_id: string, identity_field_answers: Answers }): Observable<void> {
     return this.httpClient.post<void>("api/whistleblower/wbtip/identity", param);
   }
 
@@ -251,23 +272,23 @@ export class HttpService {
     return this.httpClient.put<nodeResolverModel>("api/admin/node", data);
   }
 
-  requestAdminL10NResource(lang: string): Observable<{[key: string]: string}> {
-    return this.httpClient.get<{[key: string]: string}>("api/admin/l10n/" + lang);
+  requestAdminL10NResource(lang: string): Observable<{ [key: string]: string }> {
+    return this.httpClient.get<{ [key: string]: string }>("api/admin/l10n/" + lang);
   }
 
-  requestUpdateAdminL10NResource(data: {[key: string]: string}, lang: string): Observable<{[key: string]: string}> {
-    return this.httpClient.put<{[key: string]: string}>("api/admin/l10n/" + lang, data);
+  requestUpdateAdminL10NResource(data: { [key: string]: string }, lang: string): Observable<{ [key: string]: string }> {
+    return this.httpClient.put<{ [key: string]: string }>("api/admin/l10n/" + lang, data);
   }
 
-  requestDefaultL10NResource(lang: string): Observable<{[key: string]: string}> {
-    return this.httpClient.get<{[key: string]: string}>("/data/l10n/" + lang + ".json");
+  requestDefaultL10NResource(lang: string): Observable<{ [key: string]: string }> {
+    return this.httpClient.get<{ [key: string]: string }>("/data/l10n/" + lang + ".json");
   }
 
   requestAdminAuditLogResource(): Observable<auditlogResolverModel> {
     return this.httpClient.get<auditlogResolverModel>("api/admin/auditlog");
   }
 
-  addQuestionnaire(param:NewQuestionare): Observable<questionnaireResolverModel> {
+  addQuestionnaire(param: NewQuestionare): Observable<questionnaireResolverModel> {
     return this.httpClient.post<questionnaireResolverModel>("api/admin/questionnaires", param);
   }
 
@@ -287,6 +308,10 @@ export class HttpService {
     return this.httpClient.get<rtipResolverModel[]>("api/recipient/rtips");
   }
 
+  requestStatisticsResource(): Observable<statisticsResolverModel> {
+    return this.httpClient.get<statisticsResolverModel>("api/analyst/stats");
+  }
+
   iarResource(): Observable<IarData[]> {
     return this.httpClient.get<IarData[]>("api/custodian/iars");
   }
@@ -303,7 +328,7 @@ export class HttpService {
     return this.httpClient.get<statusResolverModel>("api/admin/statuses");
   }
 
-  addSubmissionStatus(param: {label: string,order: number}): Observable<statusResolverModel> {
+  addSubmissionStatus(param: { label: string, order: number }): Observable<statusResolverModel> {
     return this.httpClient.post<statusResolverModel>("api/admin/statuses", param);
   }
 
@@ -311,7 +336,12 @@ export class HttpService {
     return this.httpClient.get<tenantResolverModel[]>("api/admin/tenants");
   }
 
-  addTenant(param: {name:string,active:boolean,mode:string,subdomain:string}): Observable<tenantResolverModel> {
+  addTenant(param: {
+    name: string,
+    active: boolean,
+    mode: string,
+    subdomain: string
+  }): Observable<tenantResolverModel> {
     return this.httpClient.post<tenantResolverModel>("api/admin/tenants", param);
   }
 
@@ -356,11 +386,11 @@ export class HttpService {
   }
 
   requestUpdateAdminQuestionnaireField(id: string, param: Step | Field): Observable<Field> {
-    return this.httpClient.put<Field> ("api/admin/fields/" + id, param);
+    return this.httpClient.put<Field>("api/admin/fields/" + id, param);
   }
 
   requestDeleteAdminQuestionareField(id: string): Observable<Field> {
-    return this.httpClient.delete<Field> ("api/admin/fields/" + id);
+    return this.httpClient.delete<Field>("api/admin/fields/" + id);
   }
 
   requestUpdateAdminContext(param: contextResolverModel, id: string): Observable<contextResolverModel> {
@@ -375,7 +405,7 @@ export class HttpService {
     return this.httpClient.delete<Status>(url);
   }
 
-  requestUpdateStatus(url: string, param: Substatus|Status): Observable<Status> {
+  requestUpdateStatus(url: string, param: Substatus | Status): Observable<Status> {
     const headers = {"content-type": "application/json"};
     return this.httpClient.put<Status>(url, param, {headers});
   }

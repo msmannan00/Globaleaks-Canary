@@ -1,4 +1,12 @@
-import {Step,TriggeredByOption,Children,RFile, WbFile, WhistleblowerIdentity,Comment} from "@app/models/app/shared-public-model";
+import {
+  Step,
+  TriggeredByOption,
+  Children,
+  RFile,
+  WbFile,
+  WhistleblowerIdentity,
+  Comment
+} from "@app/models/app/shared-public-model";
 import {IarData} from "@app/models/reciever/Iar-data";
 
 export class RecieverTipData {
@@ -38,7 +46,8 @@ export class RecieverTipData {
   receivers_by_id: ReceiversById;
   submissionStatusStr: string;
   whistleblower_identity_field: Children;
-  tip_id:string;
+  tip_id: string;
+  motivation:string;
 }
 
 export interface Questionnaire {
@@ -61,7 +70,7 @@ export interface Receiver {
 export interface Data {
   whistleblower_identity_provided: boolean;
   whistleblower_identity: WhistleblowerIdentity;
-  whistleblower_identity_date:string;
+  whistleblower_identity_date: string;
 }
 
 export interface Context {
@@ -72,7 +81,6 @@ export interface Context {
   tip_reminder: number;
   select_all_receivers: boolean;
   maximum_selectable_receivers: number;
-  show_recipients_details: boolean;
   allow_recipients_selection: boolean;
   enable_comments: boolean;
   enable_two_way_comments: boolean;
@@ -206,7 +214,7 @@ export interface Step3 {
   children: Children3[];
   label: string;
   description: string;
-  enabled:boolean;
+  enabled: boolean;
 }
 
 export interface Children3 {

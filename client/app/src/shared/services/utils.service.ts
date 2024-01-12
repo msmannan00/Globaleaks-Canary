@@ -28,13 +28,13 @@ import {Status} from "@app/models/app/public-model";
 import {AppDataService} from "@app/app-data.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import { FlowFile } from "@flowjs/flow.js";
-
+import { AcceptAgreementComponent } from "../modals/accept-agreement/accept-agreement.component";
 @Injectable({
   providedIn: "root"
 })
 export class UtilsService {
 
-  constructor(private tokenResource: TokenResource, private clipboardService: ClipboardService, private http: HttpClient, private httpService: HttpService, private modalService: NgbModal, private preferenceResolver: PreferenceResolver, private router: Router) {
+  constructor(private tokenResource: TokenResource,private translateService: TranslateService, private clipboardService: ClipboardService, private http: HttpClient, private httpService: HttpService, private modalService: NgbModal, private preferenceResolver: PreferenceResolver, private router: Router) {
   }
 
   updateNode(nodeResolverModel:nodeResolverModel) {
@@ -300,7 +300,7 @@ export class UtilsService {
         const subStatus = submission_statuses[i].substatuses;
         for (let j = 0; j < subStatus.length; j++) {
           if (subStatus[j].id === substatus) {
-            text += "(" + subStatus[j].label + ")";
+            text += ' \u2013 ' + this.translateService.instant(subStatus[j].label);
             break;
           }
         }
@@ -320,17 +320,6 @@ export class UtilsService {
     if (idx !== -1) {
       list.splice(idx, 1);
     }
-  }
-
-  showFilePreview(content_type: string) {
-    const content_types = [
-      "image/gif",
-      "image/jpeg",
-      "image/png",
-      "image/bmp"
-    ];
-
-    return content_types.indexOf(content_type) > -1;
   }
 
   submitSupportRequest(arg: {mail_address: string,text: string} ) {
@@ -424,19 +413,23 @@ export class UtilsService {
 
     this.http.get(url, {responseType: "blob", headers: headers}).subscribe(
       response => {
-        const blob = new Blob([response], {type: "application/octet-stream"});
-        const blobUrl = URL.createObjectURL(blob);
-
-        const a = document.createElement("a");
-        a.href = blobUrl;
-        a.download = filename;
-        a.click();
-
-        setTimeout(() => {
-          URL.revokeObjectURL(blobUrl);
-        }, 1000);
+        this.saveBlobAs(filename, response);
       }
     );
+  }
+
+  saveBlobAs(filename:string,response:Blob){
+    const blob = new Blob([response], {type: "application/octet-stream"});
+    const blobUrl = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = blobUrl;
+    a.download = filename;
+    a.click();
+
+    setTimeout(() => {
+      URL.revokeObjectURL(blobUrl);
+    }, 1000);
   }
 
   getPostponeDate(ttl: number): Date {
@@ -666,5 +659,46 @@ export class UtilsService {
   deleteResource( list: any[], res: any): void {
       list.splice(list.indexOf(res), 1);
   }
-  
+
+  acceptPrivacyPolicyDialog(): Observable<string> {
+    return new Observable((observer) => {
+      let modalRef = this.modalService.open(AcceptAgreementComponent, {
+        backdrop: 'static',
+        keyboard: false,
+      });
+      modalRef.componentInstance.confirmFunction = () => {
+        observer.complete()
+        return this.http.put("api/user/operations", {
+          operation: "accepted_privacy_policy",
+          args: {}
+        }).subscribe(() => {
+          this.preferenceResolver.dataModel.accepted_privacy_policy = "";
+          modalRef.close();
+        });
+      };
+    });
+  }
+  generateCSV(dataString: string, fileName: string, headerx: string[]): void {
+    const data = JSON.parse(dataString);
+
+    if (!Array.isArray(data)) {
+      console.error('Invalid data format');
+      return;
+    }
+
+    const headers = Object.keys(data[0] || {});
+    const newHeader = headerx.join(',');
+    const csvContent = `${newHeader ? `${newHeader}\n` : ""}${data.map(row => headers.map(header => row[header]).join(',')).join('\n')}`;
+
+    if (!csvContent.trim()) {
+      console.warn('No data to export');
+      return;
+    }
+
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = `${fileName}.csv`;
+    link.click();
+  }
 }

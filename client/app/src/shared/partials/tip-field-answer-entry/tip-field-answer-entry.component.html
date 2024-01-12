@@ -12,9 +12,8 @@
         </span>
     </div>
     <div *ngSwitchCase="'voice'">
-        <i class="fa-solid fa-file-audio" *ngIf="authenticationService.session?.role === 'whistleblower'"></i>
-        <div class="audio-player-wrapper" *ngIf="authenticationService.session?.role === 'receiver'">
-            <audio [src]="audioFiles[field.id]" controls class="audio-player"></audio>
+        <div class="audio-player-wrapper">
+            <iframe #viewer id="{{'audio-file-' + field.id}}" class="audio-player-iframe" frameborder="0" scrolling="no" sandbox="allow-downloads allow-scripts" [src]="iframeUrl" ></iframe>
         </div>
     </div>
     <div *ngSwitchCase="'selectbox'">

@@ -19,7 +19,7 @@ export class TipUploadWbFileComponent {
   file_upload_description: string = "";
   fileInput: string = "fileinput";
   showError: boolean = false;
-  errorFile: FlowFile|null;
+  errorFile: FlowFile | null;
 
   constructor(private cdr: ChangeDetectorRef, private authenticationService: AuthenticationService, protected utilsService: UtilsService, protected appDataService: AppDataService) {
 
@@ -56,10 +56,12 @@ export class TipUploadWbFileComponent {
       this.utilsService.onFlowUpload(flowJsInstance, file);
     }
   }
-  listenToWbfiles(files:string){
+
+  listenToWbfiles(files: string) {
     this.utilsService.deleteResource(this.tip.rfiles, files);
     this.dataToParent.emit()
   }
+
   protected dismissError() {
     this.showError = false;
   }

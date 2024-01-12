@@ -4,7 +4,6 @@ import itertools
 
 from datetime import timedelta
 
-from sqlalchemy import or_
 from twisted.internet import defer
 
 from globaleaks import models
@@ -78,7 +77,7 @@ class MailGenerator(object):
 
         for tid in self.state.tenants:
             cache = self.state.tenants[tid].cache
-            if cache.notification and cache.disable_receiver_notification_emails:
+            if cache.notification and cache.enable_notification_emails_recipient:
                 silent_tids.append(tid)
 
         results1 = session.query(models.User, models.ReceiverTip, models.InternalTip, models.ReceiverTip) \

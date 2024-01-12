@@ -57,7 +57,7 @@ export class appInterceptor implements HttpInterceptor {
 
     authHeader.keys().forEach(header => {
       const headerValue = authHeader.get(header);
-      if(headerValue){
+      if (headerValue) {
         authRequest = authRequest.clone({headers: authRequest.headers.set(header, headerValue)});
       }
     });
@@ -79,7 +79,7 @@ export class appInterceptor implements HttpInterceptor {
       );
     } else {
       return next.handle(authRequest);
-    }   
+    }
   }
 }
 
@@ -94,16 +94,18 @@ export class ErrorCatchingInterceptor implements HttpInterceptor {
     return next.handle(request)
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          if (error.error["error_code"] === 10) {
-            this.authenticationService.deleteSession();
-            this.authenticationService.reset();
-            this.authenticationService.routeLogin();
-          } else if (error.error["error_code"] === 6 && this.authenticationService.isSessionActive()) {
-            if (this.authenticationService.session.role !== "whistleblower") {
-              location.pathname = this.authenticationService.session.homepage;
+          if(error.error){
+            if (error.error["error_code"] === 10) {
+              this.authenticationService.deleteSession();
+              this.authenticationService.reset();
+              this.authenticationService.routeLogin();
+            } else if (error.error["error_code"] === 6 && this.authenticationService.isSessionActive()) {
+              if (this.authenticationService.session.role !== "whistleblower") {
+                location.pathname = this.authenticationService.session.homepage;
+              }
             }
+            this.appDataService.errorCodes = new ErrorCodes(error.error["error_message"], error.error["error_code"], error.error["arguments"]);
           }
-          this.appDataService.errorCodes = new ErrorCodes(error.error["error_message"], error.error["error_code"], error.error["arguments"]);
           return throwError(() => error);
         })
       );
@@ -118,14 +120,14 @@ export class CompletedInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if(req.url != "api/auth/authentication"){
+    if (req.url != "api/auth/authentication") {
       this.count++;
       this.appDataService.updateShowLoadingPanel(true);
     }
 
     return next.handle(req).pipe(
       finalize(() => {
-        if(req.url != "api/auth/authentication"){
+        if (req.url != "api/auth/authentication") {
           this.count--;
           if (this.count === 0 && (req.url !== "api/auth/token")) {
             timer(100).pipe(

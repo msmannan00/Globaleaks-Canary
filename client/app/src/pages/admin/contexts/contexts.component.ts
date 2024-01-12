@@ -15,8 +15,8 @@ import {UtilsService} from "@app/shared/services/utils.service";
 })
 export class ContextsComponent implements OnInit {
   showAddContext: boolean = false;
-  new_context:{ name: string;} = { name: "" };
-  contextsData: contextResolverModel[]=[] ;
+  new_context: { name: string; } = {name: ""};
+  contextsData: contextResolverModel[] = [];
 
 
   constructor(protected preference: PreferenceResolver, protected httpService: HttpService, protected authenticationService: AuthenticationService, protected node: NodeResolver, protected users: UsersResolver, protected contexts: ContextsResolver, protected utilsService: UtilsService) {

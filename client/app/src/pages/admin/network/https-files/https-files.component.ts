@@ -18,7 +18,7 @@ export class HttpsFilesComponent implements OnInit {
   @Input() tlsConfig: TlsConfig;
   @Input() state: number = 0;
   nodeData: nodeResolverModel;
-  fileResources:FileResources = {
+  fileResources: FileResources = {
     key: {name: "key"},
     cert: {name: "cert"},
     chain: {name: "chain"},
@@ -59,7 +59,7 @@ export class HttpsFilesComponent implements OnInit {
   }
 
   deleteFile(fileResource: FileResource) {
-    const modalRef = this.modalService.open(ConfirmationComponent,{backdrop: 'static',keyboard: false});
+    const modalRef = this.modalService.open(ConfirmationComponent, {backdrop: 'static', keyboard: false});
     modalRef.componentInstance.arg = fileResource.name;
     modalRef.componentInstance.confirmFunction = (arg: string) => {
       return this.httpService.requestDeleteTlsConfigFilesResource(arg).subscribe(() => {
@@ -88,7 +88,7 @@ export class HttpsFilesComponent implements OnInit {
   }
 
   resetCfg() {
-    const modalRef = this.modalService.open(ConfirmationComponent,{backdrop: 'static',keyboard: false});
+    const modalRef = this.modalService.open(ConfirmationComponent, {backdrop: 'static', keyboard: false});
     modalRef.componentInstance.arg = null;
     modalRef.componentInstance.confirmFunction = () => {
       return this.httpService.requestDeleteTlsConfigResource().subscribe(() => {

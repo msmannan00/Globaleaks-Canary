@@ -2,10 +2,13 @@ import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
 import {SessionGuard} from "@app/app-guard.service";
 import {HomeComponent} from "@app/pages/dashboard/home/home.component";
-import {PasswordResetResponseComponent} from "@app/pages/auth/password-reset-response/password-reset-response.component";
+import {
+  PasswordResetResponseComponent
+} from "@app/pages/auth/password-reset-response/password-reset-response.component";
 import {AdminGuard} from "@app/shared/guards/admin.guard";
 import {CustodianGuard} from "@app/shared/guards/custodian.guard";
 import {ReceiverGuard} from "@app/shared/guards/receiver.guard";
+import {AnalystGuard} from "@app/shared/guards/analyst.guard";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {Pageguard} from "@app/shared/guards/pageguard.service";
 import {ActivationComponent} from "@app/pages/signup/templates/activation/activation.component";
@@ -87,6 +90,15 @@ const routes: Routes = [
     },
   },
   {
+    path: "analyst",
+    canActivate: [AnalystGuard],
+    loadChildren: () => import("./pages/analyst/analyst-routing.module").then(m => m.AnalystRoutingModule),
+    data: {
+      sidebar: "analyst-sidebar",
+      pageTitle: "Home",
+    },
+  },
+  {
     path: "admin",
     canActivate: [AdminGuard],
     loadChildren: () => import("./pages/admin/admin-routing.module").then(m => m.AdminRoutingModule),
@@ -124,7 +136,7 @@ const routes: Routes = [
     canActivate: [SessionGuard],
     pathMatch: "full",
   },
-  { path: "**", redirectTo: "" }
+  {path: "**", redirectTo: ""}
 ];
 
 @NgModule({

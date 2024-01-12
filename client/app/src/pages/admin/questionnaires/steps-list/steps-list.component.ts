@@ -7,15 +7,15 @@ import {FieldUtilitiesService} from "@app/shared/services/field-utilities.servic
 import {HttpService} from "@app/shared/services/http.service";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 import {Observable} from "rxjs";
-import { Step, questionnaireResolverModel } from "@app/models/resolvers/questionnaire-model";
-import { ParsedFields } from "@app/models/component-model/parsedFields";
-import { TriggeredByOption } from "@app/models/app/shared-public-model";
+import {Step, questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
+import {ParsedFields} from "@app/models/component-model/parsedFields";
+import {TriggeredByOption} from "@app/models/app/shared-public-model";
 
 @Component({
   selector: "src-steps-list",
   templateUrl: "./steps-list.component.html"
 })
-export class StepsListComponent implements OnInit{
+export class StepsListComponent implements OnInit {
   @Input() step: Step;
   @Input() steps: Step[];
   @Input() questionnaire: questionnaireResolverModel;
@@ -33,18 +33,22 @@ export class StepsListComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.parsedFields = this.fieldUtilities.parseQuestionnaire(this.questionnaire,{fields: [], fields_by_id: {}, options_by_id: {}});
+    this.parsedFields = this.fieldUtilities.parseQuestionnaire(this.questionnaire, {
+      fields: [],
+      fields_by_id: {},
+      options_by_id: {}
+    });
   }
 
-  swap($event:Event, index: number, n: number): void {
-    this.utilsService.swap($event, index,n , this.questionnaire)
+  swap($event: Event, index: number, n: number): void {
+    this.utilsService.swap($event, index, n, this.questionnaire)
   }
 
-  moveUp(e:Event, idx: number): void {
+  moveUp(e: Event, idx: number): void {
     this.swap(e, idx, -1);
   }
 
-  moveDown(e:Event, idx: number): void {
+  moveDown(e: Event, idx: number): void {
     this.swap(e, idx, 1);
   }
 
@@ -69,14 +73,14 @@ export class StepsListComponent implements OnInit{
   openConfirmableModalDialog(arg: Step, scope: any): Observable<string> {
     scope = !scope ? this : scope;
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(DeleteConfirmationComponent,{backdrop: 'static',keyboard: false});
+      let modalRef = this.modalService.open(DeleteConfirmationComponent, {backdrop: 'static', keyboard: false});
       modalRef.componentInstance.arg = arg;
       modalRef.componentInstance.scope = scope;
 
       modalRef.componentInstance.confirmFunction = () => {
         observer.complete()
         return this.httpService.requestDeleteAdminQuestionareStep(arg.id).subscribe(_ => {
-          this.utilsService.deleteResource(this.steps,arg);
+          this.utilsService.deleteResource(this.steps, arg);
         });
       };
     });

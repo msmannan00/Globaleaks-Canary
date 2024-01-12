@@ -22,7 +22,7 @@
                     </li>
                     <li id="context-{{index}}" *ngFor="let step of (submissionService.context.questionnaire.steps | orderBy:'order');let index = index" class="nav-item" [attr.aria-selected]="navigation === index" [attr.aria-current]="navigation === index ? 'step' : 'false'" [attr.aria-controls]="'step-' + index">
                         <div *ngIf="step.enabled">
-                            <a href="#" id="step-{{index}}-link" [ngClass]="{active: navigation === index}" class="nav-link nav-link-custom" (click)="goToStep(index)">
+                            <a id="step-{{index}}-link" href="#" [ngClass]="{active: navigation === index}" class="nav-link nav-link-custom" (click)="goToStep(index)">
                                 <span class="step-index" [ngClass]="{'step-index-selected': navigation === index}">{{index + (submissionService.context.allow_recipients_selection ? 2 : 1)}}</span>
                                 <span class="step-label">{{step.label}}</span>
                             </a>
@@ -52,11 +52,11 @@
                 </div>
             </div>
             <div id="submission-buttons">
-                <button id="PreviousStepButton" class="btn btn-outline-secondary" *ngIf="hasPreviousStep()" (click)="decrementStep()">
+                <button id="PreviousStepButton" class="btn btn-outline-secondary" *ngIf="hasPreviousStep()" (click)="whistleblowerSubmissionService.decrementStep(this)">
                     <i class="fa-solid fa-arrow-circle-left"></i>
                     <span>{{'Previous'|translate}}</span>
                 </button>
-                <button id="NextStepButton" class="btn btn-outline-secondary" *ngIf="hasNextStep()" [disabled]="submissionService.blocked" (click)="incrementStep()">
+                <button id="NextStepButton" class="btn btn-outline-secondary" *ngIf="hasNextStep()" [disabled]="submissionService.blocked" (click)="whistleblowerSubmissionService.incrementStep(this)">
                     <span>{{'Next'|translate}}</span>
                     <i class="fa-solid fa-arrow-circle-right"></i>
                 </button>

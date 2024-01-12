@@ -11,6 +11,7 @@ export interface rtipResolverModel {
   expiration_date: string;
   reminder_date: string;
   progressive: number;
+  subscription: number;
   important: boolean;
   label: string;
   updated: boolean;
@@ -22,7 +23,9 @@ export interface rtipResolverModel {
   status: string;
   substatus: string;
   file_count: number;
+  receiver_count:number;
   comment_count: number;
+  accessible:boolean;
 }
 
 export interface Answers {

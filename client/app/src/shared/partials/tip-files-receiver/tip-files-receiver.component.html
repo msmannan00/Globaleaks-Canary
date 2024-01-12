@@ -7,7 +7,7 @@
         </span>
     </div>
     <div class="card-body" *ngIf="!collapsed">
-        <div *ngIf="tipService.tip.rfiles && tipService.tip.wbfiles.length" class="table-responsive">
+        <div *ngIf="tipService.tip.wbfiles?.length" class="table-responsive">
             <table class="table table-striped" id="fileList">
                 <thead>
                 <tr>
@@ -20,8 +20,7 @@
                 </tr>
                 </thead>
                 <tbody id="fileListBody">
-                <tr id="file-{{index}}" *ngFor="let file of tipService.tip.wbfiles | orderBy:'creation_date' as index" [ngClass]="{ 'view-supported': supportedViewTypes.includes(file.type) }">
-                    <ng-container *ngIf="!file.reference_id">
+                <tr id="file-{{index}}" *ngFor="let file of getSortedWBFiles(tipService.tip.wbfiles | orderBy:'creation_date') as index" [ngClass]="{ 'view-supported': supportedViewTypes.includes(file.type) }">
                         <td>{{ file.name }}</td>
                         <td *ngIf="appDataService.public.node.viewer">
                             <button class="btn btn-sm btn-primary tip-action-views-file" [disabled]="!supportedViewTypes.includes(file.type)" [ngClass]="{ 'btn-secondary': !supportedViewTypes.includes(file.type) }" data-toggle="tooltip" [title]="'View' | translate" (click)="viewRFile(file)">
@@ -36,7 +35,6 @@
                         <td>{{ file.creation_date | date:'dd-MM-yyyy HH:mm' }}</td>
                         <td>{{ file.type }}</td>
                         <td>{{ file.size | byteFmt:2 }}</td>
-                    </ng-container>
                 </tr>
                 </tbody>
             </table>

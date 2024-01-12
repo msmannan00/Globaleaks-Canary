@@ -3,6 +3,7 @@
 # Handlerse dealing with submission interface
 import base64
 import json
+import re
 
 from globaleaks import models
 from globaleaks.handlers.admin.questionnaire import db_get_questionnaire
@@ -15,6 +16,22 @@ from globaleaks.utils.json import JSONEncoder
 from globaleaks.utils.utility import get_expiration, datetime_null
 
 
+def index_answers(answers, parent_index=''):
+    for key in answers:
+        if not re.match(requests.uuid_regexp, key):
+            continue
+
+        index = 0
+        for answer in answers[key]:
+            str_index = str(index)
+            if parent_index:
+               str_index = parent_index + "-" + str_index
+
+            answer['index'] = str_index
+            index_answers(answer, str_index)
+            index += 1
+
+
 def decrypt_tip(user_key, tip_prv_key, tip):
     tip_key = GCE.asymmetric_decrypt(user_key, tip_prv_key)
 
@@ -23,6 +40,9 @@ def decrypt_tip(user_key, tip_prv_key, tip):
 
     for questionnaire in tip['questionnaires']:
         questionnaire['answers'] = json.loads(GCE.asymmetric_decrypt(tip_key, base64.b64decode(questionnaire['answers'].encode())).decode())
+
+    for q in tip['questionnaires']:
+        index_answers(q['answers'])
 
     for k in ['whistleblower_identity']:
         if k in tip['data'] and tip['data'][k]:
@@ -146,8 +166,6 @@ def db_create_submission(session, tid, request, user_session, client_using_tor, 
     steps = db_get_questionnaire(session, tid, questionnaire.id, None, True)['steps']
     questionnaire_hash = db_archive_questionnaire_schema(session, steps)
 
-    crypto_tip_pub_key = ''
-
     receivers = []
     for r in session.query(models.User).filter(models.User.id.in_(request['receivers'])):
         if crypto_is_available:
@@ -173,13 +191,9 @@ def db_create_submission(session, tid, request, user_session, client_using_tor, 
     if 0 < context.maximum_selectable_receivers < len(request['receivers']):
         raise errors.InputValidationError("The number of recipients selected exceed the configured limit")
 
-    if crypto_is_available:
-        crypto_tip_prv_key, crypto_tip_pub_key = GCE.generate_keypair()
-
     itip = models.InternalTip()
     itip.tid = tid
     itip.status = 'new'
-    itip.crypto_tip_pub_key = crypto_tip_pub_key
 
     # Ensure that update_date and creation_date have the same value at creation time.
     itip.update_date = itip.creation_date
@@ -216,14 +230,15 @@ def db_create_submission(session, tid, request, user_session, client_using_tor, 
     session.add(itip)
     session.flush()
 
+    user_session.user_id = itip.id
+
     # Evaluate if the whistleblower tip should be encrypted
     if crypto_is_available:
         crypto_tip_prv_key, itip.crypto_tip_pub_key = GCE.generate_keypair()
         wb_key = GCE.derive_key(receipt.encode(), State.tenants[tid].cache.receipt_salt)
-        wb_prv_key, wb_pub_key = GCE.generate_keypair()
-        itip.crypto_prv_key = Base64Encoder.encode(GCE.symmetric_encrypt(wb_key, wb_prv_key))
-        itip.crypto_pub_key = wb_pub_key
-        itip.crypto_tip_prv_key = Base64Encoder.encode(GCE.asymmetric_encrypt(wb_pub_key, crypto_tip_prv_key))
+        user_session.cc, itip.crypto_pub_key = GCE.generate_keypair()
+        itip.crypto_prv_key = Base64Encoder.encode(GCE.symmetric_encrypt(wb_key, user_session.cc))
+        itip.crypto_tip_prv_key = Base64Encoder.encode(GCE.asymmetric_encrypt(itip.crypto_pub_key, crypto_tip_prv_key))
 
     # Apply special handling to the whistleblower identity question
     if itip.enable_whistleblower_identity and request['identity_provided'] and answers[whistleblower_identity.id]:
@@ -268,7 +283,13 @@ def db_create_submission(session, tid, request, user_session, client_using_tor, 
 
         db_create_receivertip(session, user, itip, _tip_key)
 
-    db_log(session, tid=tid, type='whistleblower_new_report')
+    operator_id = user_session.properties.get('operator_session', '')
+    if operator_id:
+        # this is actually an operator which is operating on behalf of a whistleblower
+        itip.receipt_change_needed = True
+        itip.operator_id = operator_id
+
+    db_log(session, tid=tid, type='whistleblower_new_report', user_id=operator_id, object_id=itip.id)
 
     return {'receipt': receipt}
 

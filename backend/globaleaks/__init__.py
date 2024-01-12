@@ -6,11 +6,11 @@ import operator
 
 __author__ = 'GlobaLeaks'
 __email__ = 'info@globaleaks.org'
-__copyright__ = '2011-2023 - GlobaLeaks'
-__version__ = '4.13.18'
+__copyright__ = '2011-2024 - GlobaLeaks'
+__version__ = '4.14.0'
 __license__ = 'AGPL-3.0'
 
-DATABASE_VERSION = 66
+DATABASE_VERSION = 67
 FIRST_DATABASE_VERSION_SUPPORTED = 45
 
 # Add new languages as they are supported here! To do this retrieve the name of

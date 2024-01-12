@@ -2,11 +2,6 @@
     <div class="row">
         <div class="col-md-4">
             <div class="file-preview">
-                <div class="img-preview">
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <img alt="preview picture" class="wb-image-upload" [flowSrc]="file" *ngIf="utilsService.showFilePreview(file.flowFile.file.type)" />
-                    </div>
-                </div>
                 <div class="file-buttons" *ngIf="!formUploader || (!file.flowFile.isComplete() && !file.flowFile.isUploading())">
                     <div *ngIf="appDataService.page === 'submissionpage' || !file.complete" class="removeFileButton text-danger">
                         <div class="btn btn-sm btn-danger" (click)="file.flowFile.cancel()">
@@ -27,7 +22,7 @@
                         </div>
                     </div>
                     <div class="file-upload-progress progress progress-striped" [ngClass]="{'invisible': file.paused}">
-                        <div class="progress-bar" [ngClass]="{'progress-bar-complete': file.progress === 1 }" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width': (file.progress * 100) + '%'}"></div>
+                        <div class="progress-bar" [ngClass]="{'progress-bar-complete': file.progress === 1 }" role="progressbar" [ngStyle]="{'width': (file.progress * 100) + '%'}"></div>
                     </div>
                 </div>
             </div>

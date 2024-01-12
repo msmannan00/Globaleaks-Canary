@@ -323,7 +323,6 @@ class _Context(Model):
     id = Column(UnicodeText(36), primary_key=True, default=uuid4)
     tid = Column(Integer, default=1, nullable=False)
     show_steps_navigation_interface = Column(Boolean, default=True, nullable=False)
-    show_recipients_details = Column(Boolean, default=False, nullable=False)
     allow_recipients_selection = Column(Boolean, default=False, nullable=False)
     maximum_selectable_receivers = Column(Integer, default=0, nullable=False)
     select_all_receivers = Column(Boolean, default=True, nullable=False)
@@ -364,7 +363,6 @@ class _Context(Model):
         'hidden',
         'select_all_receivers',
         'show_context',
-        'show_recipients_details',
         'show_receivers_in_alphabetical_order',
         'show_steps_navigation_interface',
         'allow_recipients_selection',
@@ -623,7 +621,9 @@ class _InternalTip(Model):
     creation_date = Column(DateTime, default=datetime_now, nullable=False)
     update_date = Column(DateTime, default=datetime_now, nullable=False)
     context_id = Column(UnicodeText(36), nullable=False)
+    operator_id = Column(UnicodeText(33), default='', nullable=False)
     progressive = Column(Integer, default=0, nullable=False)
+    access_count = Column(Integer, default=0, nullable=False)
     tor = Column(Boolean, default=False, nullable=False)
     mobile = Column(Boolean, default=False, nullable=False)
     score = Column(Integer, default=0, nullable=False)
@@ -637,6 +637,7 @@ class _InternalTip(Model):
     last_access = Column(DateTime, default=datetime_now, nullable=False)
     status = Column(UnicodeText(36))
     substatus = Column(UnicodeText(36))
+    receipt_change_needed = Column(Boolean, default=False, nullable=False)
     receipt_hash = Column(UnicodeText(44), nullable=False)
     crypto_prv_key = Column(UnicodeText(84), default='', nullable=False)
     crypto_pub_key = Column(UnicodeText(56), default='', nullable=False)
@@ -740,7 +741,7 @@ class _WhistleblowerFile(Model):
     """
     This model keeps track of files destinated to a specific receiver
     """
-    __tablename__ = 'receiverfile'
+    __tablename__ = 'whistleblowerfile'
 
     id = Column(UnicodeText(36), primary_key=True, default=uuid4)
     internalfile_id = Column(UnicodeText(36), nullable=False, index=True)
@@ -778,6 +779,7 @@ class _ReceiverTip(Model):
         return (ForeignKeyConstraint(['receiver_id'], ['user.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'),
                 ForeignKeyConstraint(['internaltip_id'], ['internaltip.id'], ondelete='CASCADE', deferrable=True, initially='DEFERRED'))
 
+
 class _Redaction(Model):
     """
     This models keep track of data redactions applied on internaltips and related objects
@@ -785,11 +787,12 @@ class _Redaction(Model):
     __tablename__ = 'redaction'
 
     id = Column(UnicodeText(36), primary_key=True, default=uuid4)
-    update_date = Column(DateTime, default=datetime_now, nullable=False)
-    reference_id = Column(UnicodeText(36), nullable=False, index=True)
+    reference_id = Column(UnicodeText(36), nullable=False)
+    entry = Column(UnicodeText, default='0', nullable=False)
     internaltip_id = Column(UnicodeText(36), nullable=False, index=True)
     temporary_redaction = Column(JSON, default=dict, nullable=False)
     permanent_redaction = Column(JSON, default=dict, nullable=False)
+    update_date = Column(DateTime, default=datetime_now, nullable=False)
 
     @declared_attr
     def __table_args__(self):
@@ -966,8 +969,9 @@ class _User(Model):
     can_postpone_expiration = Column(Boolean, default=True, nullable=False)
     can_grant_access_to_reports = Column(Boolean, default=False, nullable=False)
     can_transfer_access_to_reports = Column(Boolean, default=False, nullable=False)
-    can_mask_information = Column(Boolean, default=False, nullable=False)
     can_redact_information = Column(Boolean, default=False, nullable=False)
+    can_mask_information = Column(Boolean, default=True, nullable=False)
+    can_reopen_reports = Column(Boolean, default=True, nullable=False)
     can_edit_general_settings = Column(Boolean, default=False, nullable=False)
     readonly = Column(Boolean, default=False, nullable=False)
     two_factor_secret = Column(UnicodeText(32), default='', nullable=False)
@@ -996,7 +1000,10 @@ class _User(Model):
                  'notification',
                  'can_delete_submission',
                  'can_postpone_expiration',
+                 'can_reopen_reports',
                  'can_grant_access_to_reports',
+                 'can_redact_information',
+                 'can_mask_information',
                  'can_transfer_access_to_reports',
                  'can_edit_general_settings',
                  'forcefully_selected',
@@ -1023,7 +1030,7 @@ class _ReceiverFile(Model):
     delivered to the whistleblower. This file is not encrypted and nor is it
     integrity checked in any meaningful way.
     """
-    __tablename__ = 'whistleblowerfile'
+    __tablename__ = 'receiverfile'
 
     id = Column(UnicodeText(36), primary_key=True, default=uuid4)
     internaltip_id = Column(UnicodeText(36), nullable=False, index=True)

@@ -16,7 +16,7 @@ from globaleaks.rest import requests
 from globaleaks.sessions import Sessions
 from globaleaks.state import State
 from globaleaks.utils.crypto import generateRandomKey, GCE
-from globaleaks.utils.utility import datetime_now, datetime_null
+from globaleaks.utils.utility import datetime_null
 
 
 def db_generate_password_reset_token(session, user):
@@ -146,11 +146,11 @@ def validate_password_reset(session, reset_token, recovery_key, auth_code):
     # Require password change
     user.password_change_needed = True
 
-    user.last_login = datetime_now()
+    user.last_login = now
 
     user_session = Sessions.new(user.tid, user.id,
-                           user.tid, user.role,
-                           prv_key,
+                           user.tid, user.name,
+                           user.role, prv_key,
                            user.crypto_escrow_prv_key)
 
     user_session.properties['reset_token'] = reset_token

@@ -5,7 +5,6 @@ export class NewContext {
   description = "";
   order = 0;
   tip_timetolive = 90;
-  show_recipients_details = false;
   allow_recipients_selection = false;
   show_receivers_in_alphabetical_order = true;
   show_steps_navigation_interface = true;

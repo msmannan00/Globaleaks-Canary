@@ -18,7 +18,7 @@ key_regexp = r'^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$|^[
 key_regexp_or_empty = r'^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$|^[a-z_]{0,100}$|^$'
 uuid_regexp = r'^([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$'
 uuid_regexp_or_empty = r'^([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$|^$'
-user_role_regexp = r'^(admin|custodian|receiver)$'
+user_role_regexp = r'^(admin|analyst|custodian|receiver)$'
 email_regexp = r'^(([\w+-\.]){0,100}[\w]{1,100}@([\w+-\.]){0,100}[\w]{1,100})$'
 email_regexp_or_empty = r'^(([\w+-\.]){0,100}[\w]{1,100}@([\w+-\.]){0,100}[\w]{1,100})$|^$'
 hostname_regexp = r'^[0-9a-z\-\.]+$'
@@ -143,6 +143,9 @@ AdminUserDesc = {
     'can_delete_submission': bool,
     'can_postpone_expiration': bool,
     'can_grant_access_to_reports': bool,
+    'can_redact_information': bool,
+    'can_mask_information': bool,
+    'can_reopen_reports': bool,
     'can_transfer_access_to_reports': bool,
     'forcefully_selected': bool
 }
@@ -209,7 +212,6 @@ AdminNodeDesc = {
     'disable_privacy_badge': bool,
     'disable_submissions': bool,
     'simplified_login': bool,
-    'enable_custodian': bool,
     'enable_scoring_system': bool,
     'enable_signup': bool,
     'mode': str,
@@ -247,6 +249,7 @@ AdminNodeDesc = {
 
 AdminNetworkDesc = {
     'https_admin': bool,
+    'https_analyst': bool,
     'https_custodian': bool,
     'https_whistleblower': bool,
     'https_receiver': bool,
@@ -254,6 +257,8 @@ AdminNetworkDesc = {
     'anonymize_outgoing_connections': bool,
     'ip_filter_admin_enable': bool,
     'ip_filter_admin': str,
+    'ip_filter_analyst_enable': bool,
+    'ip_filter_analyst': str,
     'ip_filter_custodian_enable': bool,
     'ip_filter_custodian': str,
     'ip_filter_receiver_enable': bool,
@@ -268,9 +273,10 @@ AdminNotificationDesc = {
     'smtp_username': str,
     'smtp_password': str,
     'smtp_source_email': email_regexp,
-    'disable_admin_notification_emails': bool,
-    'disable_custodian_notification_emails': bool,
-    'disable_receiver_notification_emails': bool,
+    'enable_notification_emails_admin': bool,
+    'disable_analyst_notification_emails': bool,
+    'enable_notification_emails_custodian': bool,
+    'enable_notification_emails_recipient': bool,
     'tip_expiration_threshold': int
 }
 
@@ -361,7 +367,6 @@ AdminContextDesc = {
     'tip_reminder': int,
     'receivers': [uuid_regexp],
     'select_all_receivers': bool,
-    'show_recipients_details': bool,
     'allow_recipients_selection': bool,
     'enable_two_way_comments': bool,
     'enable_attachments': bool,
@@ -463,7 +468,6 @@ ContextDesc = {
     'select_all_receivers': bool,
     'tip_timetolive': int,
     'tip_reminder': int,
-    'show_recipients_details': bool,
     'allow_recipients_selection': bool,
     'maximum_selectable_receivers': int,
     'enable_attachments': bool,
@@ -562,5 +566,6 @@ SubmissionStatusDesc = {
 
 SubmissionSubStatusDesc = {
     'label': str,
-    'order': int
+    'order': int,
+    'tip_timetolive': int
 }

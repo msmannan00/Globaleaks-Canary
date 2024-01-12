@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {CryptoService} from "@app/shared/services/crypto.service";
-import { Observable, from, switchMap } from "rxjs";
+import {Observable, from, switchMap} from "rxjs";
 
 @Injectable({
   providedIn: "root"

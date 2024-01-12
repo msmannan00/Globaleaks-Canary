@@ -14,7 +14,7 @@ import {Status, Substatus} from "@app/models/app/public-model";
 export class SubStatusComponent implements OnInit {
   @Input() submissionsStatus: Status;
   subStatusEditing: boolean[] = [];
-  newSubStatus:{ label: string;} = { label: "" };
+  newSubStatus: { label: string; } = {label: ""};
   showAddSubStatus: boolean = false;
 
   toggleAddSubStatus(): void {
@@ -32,7 +32,8 @@ export class SubStatusComponent implements OnInit {
     const order = this.utilsService.newItemOrder(this.submissionsStatus.substatuses, "order");
     const newSubmissionsSubStatus = {
       label: this.newSubStatus.label,
-      order: order
+      order: order,
+      tip_timetolive: -1
     };
 
     this.http.post<any>(
@@ -46,6 +47,10 @@ export class SubStatusComponent implements OnInit {
     );
   }
 
+  isCustomOptionSelected(tip_timetolive_option:string|number): boolean {
+    return Number(tip_timetolive_option) === 1;
+  }
+  
   swapSs($event: Event, index: number, n: number): void {
     $event.stopPropagation();
 
@@ -71,8 +76,14 @@ export class SubStatusComponent implements OnInit {
   }
 
   saveSubmissionsSubStatus(subStatusParam: Substatus): void {
+    if (subStatusParam.tip_timetolive_option <= -1) {
+      subStatusParam.tip_timetolive = -1;
+    } else if (subStatusParam.tip_timetolive_option == 0) {
+      subStatusParam.tip_timetolive = 0;
+    }
     const url = "api/admin/statuses/" + this.submissionsStatus.id + "/substatuses/" + subStatusParam.id;
-    this.httpService.requestUpdateStatus(url, subStatusParam).subscribe(_ => { });
+    this.httpService.requestUpdateStatus(url, subStatusParam).subscribe(_ => {
+    });
   }
 
   deleteSubSubmissionStatus(subStatusParam: Substatus): void {
@@ -95,14 +106,14 @@ export class SubStatusComponent implements OnInit {
     scope = !scope ? this : scope;
     let self = this
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(DeleteConfirmationComponent,{backdrop: 'static',keyboard: false});
+      let modalRef = this.modalService.open(DeleteConfirmationComponent, {backdrop: 'static', keyboard: false});
       modalRef.componentInstance.arg = arg;
       modalRef.componentInstance.scope = scope;
       modalRef.componentInstance.confirmFunction = () => {
         observer.complete()
-        const url = "api/admin/statuses/"+arg.submissionstatus_id+"/substatuses/"+arg.id;
+        const url = "api/admin/statuses/" + arg.submissionstatus_id + "/substatuses/" + arg.id;
         return self.utilsService.deleteSubStatus(url).subscribe(_ => {
-          this.utilsService.deleteResource(this.submissionsStatus.substatuses,arg);
+          this.utilsService.deleteResource(this.submissionsStatus.substatuses, arg);
         });
       };
     });

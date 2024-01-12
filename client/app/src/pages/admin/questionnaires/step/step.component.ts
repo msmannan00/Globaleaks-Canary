@@ -1,5 +1,4 @@
 import {ChangeDetectorRef, Component, Input, OnInit} from "@angular/core";
-import {Questionnaire} from "@app/models/app/public-model";
 import {ParsedFields} from "@app/models/component-model/parsedFields";
 import {fieldtemplatesResolverModel} from "@app/models/resolvers/field-template-model";
 import {Step, questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
@@ -45,10 +44,11 @@ export class StepComponent implements OnInit {
   listenToAddFieldFormTemplate() {
     this.showAddQuestionFromTemplate = false;
   }
+
   listenToFields() {
     this.getResolver()
   }
-  
+
   getResolver() {
     return this.httpService.requestQuestionnairesResource().subscribe(response => {
       response.forEach((step: questionnaireResolverModel) => {

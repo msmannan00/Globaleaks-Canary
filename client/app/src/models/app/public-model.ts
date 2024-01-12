@@ -45,7 +45,7 @@ export class Node {
   disclaimer_text: string;
   footer: string;
   header_title_homepage: string;
-  footer_whistleblowing_policy:string;
+  footer_whistleblowing_policy: string;
   presentation: string;
   signup_tos1_checkbox_label: string;
   signup_tos1_text: string;
@@ -64,8 +64,8 @@ export class Node {
   logo: string[];
   footer_accessibility_declaration: string;
   footer_privacy_policy: string;
-  user_privacy_policy_text:string;
-  user_privacy_policy_url:string;
+  user_privacy_policy_text: string;
+  user_privacy_policy_url: string;
 }
 
 export interface LanguagesSupported {
@@ -84,7 +84,7 @@ export interface Questionnaire {
 export interface Status {
   id: string;
   order: number;
-  system_defined:boolean;
+  system_defined: boolean;
   substatuses: Substatus[];
   label: string;
 }
@@ -102,7 +102,6 @@ export interface Context {
   tip_timetolive: number;
   select_all_receivers: boolean;
   maximum_selectable_receivers: number;
-  show_recipients_details: boolean;
   allow_recipients_selection: boolean;
   enable_comments: boolean;
   enable_two_way_comments: boolean;
@@ -132,4 +131,6 @@ export interface Substatus {
   submissionstatus_id: string;
   order: number;
   label: string;
+  tip_timetolive:number;
+  tip_timetolive_option:number;
 }

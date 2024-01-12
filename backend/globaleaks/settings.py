@@ -1,8 +1,5 @@
 # -*- coding: utf-8
-import getpass
-import grp
 import os
-import pwd
 import sys
 
 from globaleaks.orm import make_db_uri, set_db_uri, enable_orm_debug
@@ -48,8 +45,6 @@ class SettingsClass(object, metaclass=Singleton):
         # statistical, referred to latest period
         # and resetted by session_management sched
         self.failed_login_attempts = {}
-
-        self.local_hosts = ['127.0.0.1', 'localhost']
 
         self.onionservice = None
 

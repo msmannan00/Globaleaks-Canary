@@ -2,7 +2,6 @@
 #
 # Handlers dealing with public API exporting main platform configuration/resources
 import copy
-import os
 
 from sqlalchemy import or_
 
@@ -36,10 +35,19 @@ def serialize_submission_substatus(substatus, language):
     :param language: The language to be used in the serialization
     :return: The serialized descriptor of the specified status
     """
+    if substatus.tip_timetolive <= -1:
+        tip_timetolive_option = -1
+    elif substatus.tip_timetolive == 0:
+        tip_timetolive_option = 0
+    else:
+        tip_timetolive_option = 1
+
     submission_substatus = {
         'id': substatus.id,
         'submissionstatus_id': substatus.submissionstatus_id,
-        'order': substatus.order
+        'order': substatus.order,
+        'tip_timetolive': substatus.tip_timetolive,
+        'tip_timetolive_option': tip_timetolive_option
     }
 
     return get_localized_values(submission_substatus, substatus, substatus.localized_keys, language)
@@ -310,7 +318,6 @@ def serialize_context(session, context, language, data=None):
         'tip_reminder': context.tip_reminder,
         'select_all_receivers': context.select_all_receivers,
         'maximum_selectable_receivers': context.maximum_selectable_receivers,
-        'show_recipients_details': context.show_recipients_details,
         'allow_recipients_selection': context.allow_recipients_selection,
         'enable_two_way_comments': context.enable_two_way_comments,
         'enable_attachments': context.enable_attachments,

@@ -6,7 +6,6 @@ from globaleaks.db import refresh_tenant_cache
 from globaleaks.handlers.admin.node import db_update_enabled_languages
 from globaleaks.orm import tw
 from globaleaks.rest import api
-from globaleaks.state import State
 from globaleaks.tests.helpers import TestGL, forge_request
 
 
@@ -35,6 +34,7 @@ class TestAPI(TestGL):
                                                    'user',
                                                    'whistleblower',
                                                    'admin',
+                                                   'analyst',
                                                    'receiver',
                                                    'custodian'], check_roles))
             self.assertTrue(len(rest) == 0)

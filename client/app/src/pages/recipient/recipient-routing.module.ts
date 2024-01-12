@@ -14,6 +14,9 @@ const routes: Routes = [
     component: HomeComponent,
     pathMatch: "full",
     data: {pageTitle: "Home"},
+    resolve: {
+      PreferenceResolver, RTipsResolver
+    },
   },
   {
     path: "home",

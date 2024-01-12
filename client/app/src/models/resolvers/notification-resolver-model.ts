@@ -2,6 +2,7 @@ export class notificationResolverModel {
   disable_admin_notification_emails: boolean;
   disable_custodian_notification_emails: boolean;
   disable_receiver_notification_emails: boolean;
+  disable_analyst_notification_emails: boolean;
   smtp_authentication: boolean;
   smtp_password: string;
   smtp_port: number;
@@ -61,5 +62,6 @@ export class notificationResolverModel {
   unread_tips_mail_title: string;
   user_credentials: string;
   templates: string[];
+
   [key: string]: string | boolean | number | string[];
 }

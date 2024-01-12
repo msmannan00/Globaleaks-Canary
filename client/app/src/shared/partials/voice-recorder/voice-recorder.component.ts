@@ -1,8 +1,10 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
 import * as Flow from "@flowjs/flow.js";
-import { AuthenticationService } from "@app/services/helper/authentication.service";
-import { SubmissionService } from "@app/services/helper/submission.service";
-import { Observable } from "rxjs";
+import {AuthenticationService} from "@app/services/helper/authentication.service";
+import {SubmissionService} from "@app/services/helper/submission.service";
+import {Observable} from "rxjs";
+import {Field} from "@app/models/resolvers/field-template-model";
+import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 
 @Component({
   selector: "src-voice-recorder",
@@ -10,7 +12,7 @@ import { Observable } from "rxjs";
 })
 export class VoiceRecorderComponent implements OnInit {
   @Input() uploads: any;
-  @Input() field: any;
+  @Input() field: Field;
   @Input() fileUploadUrl: string;
   @Input() entryIndex: number;
   @Input() fieldEntry: string;
@@ -19,11 +21,9 @@ export class VoiceRecorderComponent implements OnInit {
   seconds: number = 0;
   activeButton: string | null = null;
   isRecording: boolean = false;
-  audioPlayer: string | null = null;
+  audioPlayer: boolean | string | null = null;
   mediaRecorder: MediaRecorder | null = null;
   context: AudioContext = new AudioContext();
-  mediaStreamDestination: MediaStreamAudioDestinationNode = new MediaStreamAudioDestinationNode(this.context);
-  recorder: MediaRecorder = new MediaRecorder(this.mediaStreamDestination.stream);
   recording_blob: any = null;
   flow: Flow;
   secondsTracker: NodeJS.Timer | null = null;
@@ -33,16 +33,21 @@ export class VoiceRecorderComponent implements OnInit {
   chunks: never[];
 
   @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
-  private audioContext: AudioContext;
+  private audioContext: AudioContext|null;
   entry: any;
-  constructor(private cd: ChangeDetectorRef, protected authenticationService: AuthenticationService, private submissionService: SubmissionService) {
+  iframeUrl: SafeResourceUrl;
+  @ViewChild("viewer") viewerFrame: ElementRef;
+
+  constructor(private cd: ChangeDetectorRef, private sanitizer: DomSanitizer, protected authenticationService: AuthenticationService, private submissionService: SubmissionService) {
   }
 
   ngOnInit(): void {
+    this.iframeUrl = this.sanitizer.bypassSecurityTrustResourceUrl("viewer/index.html");
     this.fileInput = this.field ? this.field.id : "status_page";
-    this.uploads[this.fileInput] = { files: [] };
+    this.uploads[this.fileInput] = {files: []};
     this.initAudioContext()
   }
+
   private initAudioContext() {
     this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
   }
@@ -51,9 +56,9 @@ export class VoiceRecorderComponent implements OnInit {
     this.activeButton = "record";
 
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({ audio: true })
+      navigator.mediaDevices.getUserMedia({audio: true})
         .then((stream) => {
-          this.startRecording(fileId, stream);
+          this.startRecording(fileId, stream).then();
         })
         .catch(() => {
           this.activeButton = null;
@@ -75,7 +80,7 @@ export class VoiceRecorderComponent implements OnInit {
       allowDuplicateUploads: false,
       testChunks: false,
       permanentErrors: [500, 501],
-      headers: { "X-Session": this.authenticationService.session.id },
+      headers: {"X-Session": this.authenticationService.session.id},
       query: {
         type: "audio.webm",
         reference_id: fileId,
@@ -95,10 +100,10 @@ export class VoiceRecorderComponent implements OnInit {
     }, 1000);
 
     this.enableNoiseSuppression(stream).subscribe();
+    if(this.audioContext){
     const mediaStreamDestination = this.audioContext.createMediaStreamDestination();
     const source = this.audioContext.createMediaStreamSource(stream);
     const anonymizationFilter = this.anonymizeSpeaker(this.audioContext);
-
     source.connect(anonymizationFilter.input);
     anonymizationFilter.output.connect(mediaStreamDestination);
 
@@ -118,6 +123,7 @@ export class VoiceRecorderComponent implements OnInit {
     };
 
     this.mediaRecorder.start();
+    }
   };
 
   onRecorderDataAvailable = (e: BlobEvent) => {
@@ -147,7 +153,7 @@ export class VoiceRecorderComponent implements OnInit {
       }
       this.secondsTracker = null;
 
-      if (this.seconds < this.field.attrs.min_len.value) {
+      if (this.seconds < parseInt(this.field.attrs.min_len.value)) {
         this.deleteRecording();
         observer.complete();
         return;
@@ -161,9 +167,11 @@ export class VoiceRecorderComponent implements OnInit {
       observer.complete();
     });
   }
+
   onStop(): void {
     this.stopRecording().subscribe();
   }
+
   onRecorderStop(): Observable<void> {
     return new Observable<void>((observer) => {
       this.flow.files = [];
@@ -174,7 +182,19 @@ export class VoiceRecorderComponent implements OnInit {
 
       if (this.seconds >= parseInt(this.field.attrs.min_len.value) && this.seconds <= parseInt(this.field.attrs.max_len.value)) {
         this.flow.addFile(this.recording_blob);
-        this.audioPlayer = URL.createObjectURL(this.recording_blob);
+        window.addEventListener("message", (message: MessageEvent) => {
+          const iframe = this.viewerFrame.nativeElement;
+          if (message.source !== iframe.contentWindow) {
+            return;
+          }
+          const data = {
+            tag: "audio",
+            blob: this.recording_blob,
+          };
+          iframe.contentWindow.postMessage(data, "*");
+        }, { once: true });
+        
+        this.audioPlayer = true;
         this.uploads[this.fileInput] = this.flow;
         this.submissionService.setSharedData(this.flow);
 
@@ -192,6 +212,7 @@ export class VoiceRecorderComponent implements OnInit {
   }
 
   deleteRecording(): void {
+    this.audioPlayer = false;
     if (this.flow) {
       this.flow.cancel();
     }
@@ -199,6 +220,11 @@ export class VoiceRecorderComponent implements OnInit {
     this.mediaRecorder = null;
     this.seconds = 0;
     this.audioPlayer = null;
+    if (this.audioContext) {
+      this.audioContext.close();
+      this.audioContext = null;
+    }
+    this.initAudioContext()
     this.submissionService.setSharedData(null);
     delete this.uploads[this.fileInput];
     if (this.entry && this.entry.files) {
@@ -211,10 +237,10 @@ export class VoiceRecorderComponent implements OnInit {
       const supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
 
       if ("noiseSuppression" in supportedConstraints) {
-        const settings = { noiseSuppression: true };
+        const settings = {noiseSuppression: true};
 
         stream.getAudioTracks().forEach(track => {
-          track.applyConstraints(settings);
+          track.applyConstraints(settings).then();
         });
 
         observer.complete();
@@ -233,7 +259,7 @@ export class VoiceRecorderComponent implements OnInit {
       const bw: number = hi - lo;
       const Q: number = fc / bw;
 
-      vocoderBands.push({ freq: fc, Q: Q });
+      vocoderBands.push({freq: fc, Q: Q});
     }
 
     return vocoderBands;
@@ -251,7 +277,7 @@ export class VoiceRecorderComponent implements OnInit {
     const output: GainNode = audioContext.createGain();
     input.gain.value = output.gain.value = 1;
     const vocoderBands = this.generateVocoderBands(200, 16000, 128);
-    const vocoderPitchShift: number = -(1 / 12 - Math.random() * 1 / 24);
+    const vocoderPitchShift: number = -(1 / 12 - Math.random() / 24);
 
     for (let i = 0; i < vocoderBands.length; i++) {
       const carrier: OscillatorNode = audioContext.createOscillator();
@@ -280,9 +306,10 @@ export class VoiceRecorderComponent implements OnInit {
 
       if (carrier) carrier.start();
     }
-    return { input: input, output: output };
+    return {input: input, output: output};
   }
 
 
+  protected readonly parseInt = parseInt;
 }
 

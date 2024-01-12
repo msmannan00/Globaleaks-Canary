@@ -479,22 +479,6 @@ table tr td {
   height: 12rem;
 }
 
-.img-preview {
-  height: 10rem;
-  width: 10rem;
-  object-fit: contain;
-  padding: 10px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.img-preview img {
-  height: 100%;
-  width: 100%;
-}
-
 .file-upload {
   position: absolute;
   top: 0;
@@ -609,6 +593,10 @@ textarea.form-control {
 .sup {
   vertical-align: super;
   font-size: smaller;
+}
+
+.PageContent {
+  flex: 1 0 auto;
 }
 
 @media screen and (min-width: 768px) {
@@ -1100,4 +1088,18 @@ i.fa-solid.fa-chevron-right {
 }
 .was-validated .admin-escrow:valid~.form-check-label {
   color: #2866a2;
+}
+
+.audio-player-iframe {
+  height: 4em;
+}
+
+.analyst-graph{
+  padding-left: 27%;
+  padding-right: 27%
+}
+
+.disabled {
+  opacity: 0.2;
+  pointer-events: none;
 }

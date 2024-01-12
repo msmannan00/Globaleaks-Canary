@@ -38,11 +38,11 @@
 <div class="modal-footer">
     <div id="submission-buttons">
         <br>
-        <button id="PreviousStepButton" class="btn btn-outline-secondary" *ngIf="hasPreviousStep()" (click)="decrementStep()">
+        <button id="PreviousStepButton" class="btn btn-outline-secondary" *ngIf="hasPreviousStep()" (click)="whistleblowerSubmissionService.decrementStep(this)">
             <i class="fa-solid fa-arrow-circle-left"></i>
             <span>{{'Previous'|translate}}</span>
         </button>
-        <button id="NextStepButton" class="btn btn-outline-secondary" *ngIf="hasNextStep()" (click)="incrementStep()">
+        <button id="NextStepButton" class="btn btn-outline-secondary" *ngIf="hasNextStep()" (click)="whistleblowerSubmissionService.incrementStep(this)">
             <span>{{'Next'|translate}}</span>
             <i class="fa-solid fa-arrow-circle-right"></i>
         </button>

@@ -4,13 +4,17 @@ import {AppRoutingModule} from "@app/app-routing.module";
 import {AppComponent} from "@app/pages/app/app.component";
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import {AuthModule} from "@app/pages/auth/auth.module";
-import {APP_BASE_HREF, HashLocationStrategy, LocationStrategy,} from "@angular/common";
+import {APP_BASE_HREF, HashLocationStrategy, LocationStrategy, NgOptimizedImage,} from "@angular/common";
 import {SharedModule} from "@app/shared.module";
 import {HeaderComponent} from "@app/shared/partials/header/header.component";
 import {UserComponent} from "@app/shared/partials/header/template/user/user.component";
 import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import {CompletedInterceptor, ErrorCatchingInterceptor, appInterceptor} from "@app/services/root/app-interceptor.service";
+import {
+  CompletedInterceptor,
+  ErrorCatchingInterceptor,
+  appInterceptor
+} from "@app/services/root/app-interceptor.service";
 import {Keepalive, NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
@@ -31,19 +35,21 @@ import {RecipientModule} from "@app/pages/recipient/recipient.module";
 import {AdminModule} from "@app/pages/admin/admin.module";
 import {CustodianModule} from "@app/pages/custodian/custodian.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {AnalystModule} from "@app/pages/analyst/analyst.module";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "l10n/", "");
 }
 
 const translationModule = TranslateModule.forRoot({
-  loader: {
-    provide: TranslateLoader,
-    useFactory: createTranslateLoader,
-    deps: [HttpClient],
-  },
-})
+    loader: {
+      provide: TranslateLoader,
+      useFactory: createTranslateLoader,
+      deps: [HttpClient],
+    },
+  })
 ;
+
 @NgModule({
   declarations: [AppComponent, HomeComponent, HeaderComponent, UserComponent],
   imports: [
@@ -63,10 +69,12 @@ const translationModule = TranslateModule.forRoot({
     FormsModule,
     WhistleblowerModule,
     CustodianModule,
+    AnalystModule,
     SharedModule,
     NgIdleKeepaliveModule.forRoot(),
     MarkdownModule.forRoot(),
-    NgxFlowModule
+    NgxFlowModule,
+    NgOptimizedImage
   ],
   providers: [
     ReceiptValidatorDirective,
