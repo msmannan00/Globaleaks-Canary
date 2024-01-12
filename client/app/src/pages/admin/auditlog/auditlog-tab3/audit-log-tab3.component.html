@@ -10,6 +10,7 @@
             <th>{{'Tor'|translate}}</th>
             <th>{{'Comments'|translate}}</th>
             <th>{{'Files'|translate}}</th>
+            <th>{{'Receivers'|translate}}</th>
             <th>{{'Whistleblower\'s last access'|translate}}</th>
         </tr>
         </thead>
@@ -24,6 +25,7 @@
             <td><i *ngIf="data.tor" class="fa-solid fa-check"></i></td>
             <td>{{data.comments}}</td>
             <td>{{data.files}}</td>
+            <td>{{data.receiver_count}}</td>
             <td>{{data.last_access | date:'dd-MM-yyyy HH:mm'}}</td>
         </tr>
         </tbody>

@@ -479,22 +479,6 @@ table tr td {
   height: 12rem;
 }
 
-.img-preview {
-  height: 10rem;
-  width: 10rem;
-  object-fit: contain;
-  padding: 10px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.img-preview img {
-  height: 100%;
-  width: 100%;
-}
-
 .file-upload {
   position: absolute;
   top: 0;
@@ -1113,4 +1097,9 @@ i.fa-solid.fa-chevron-right {
 .analyst-graph{
   padding-left: 27%;
   padding-right: 27%
+}
+
+.disabled {
+  opacity: 0.2;
+  pointer-events: none;
 }
