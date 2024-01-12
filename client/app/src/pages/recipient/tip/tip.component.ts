@@ -25,9 +25,12 @@ import {TransferAccessComponent} from "@app/shared/modals/transfer-access/transf
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {Tab} from "@app/models/component-model/tab";
 import {RecieverTipData} from "@app/models/reciever/reciever-tip-data";
-import {Receiver} from "@app/models/app/public-model";
+import {Receiver, Status} from "@app/models/app/public-model";
 import {TipUploadWbFileComponent} from "@app/shared/partials/tip-upload-wbfile/tip-upload-wb-file.component";
 import {TipCommentsComponent} from "@app/shared/partials/tip-comments/tip-comments.component";
+import {ReopenSubmissionComponent} from "@app/shared/modals/reopen-submission/reopen-submission.component";
+import {ChangeSubmissionStatusComponent} from "@app/shared/modals/change-submission-status/change-submission-status.component";
+import { SubmissionStatus } from "@app/models/app/shared-public-model";
 
 
 @Component({
@@ -200,6 +203,65 @@ export class TipComponent implements OnInit {
     );
   }
 
+  openModalChangeState(){
+    const modalRef = this.modalService.open(ChangeSubmissionStatusComponent, {backdrop: 'static', keyboard: false});
+    modalRef.componentInstance.arg={
+      tip:this.tip,
+      motivation:this.tip.motivation,
+      submission_statuses:this.prepareSubmissionStatuses(this.appDataService.submissionStatuses),
+    };
+
+    modalRef.componentInstance.confirmFunction = (status:any,motivation: string) => {
+      this.tip.status = status.status;
+      this.tip.substatus = status.substatus;
+      this.tip.motivation = motivation;
+      this.updateSubmissionStatus();
+    };
+    modalRef.componentInstance.cancelFun = null;
+  }
+
+  openModalReopen(){
+    const modalRef = this.modalService.open(ReopenSubmissionComponent, {backdrop: 'static', keyboard: false});
+    modalRef.componentInstance.confirmFunction = (motivation: string) => {
+      this.tip.status = "opened";
+      this.tip.substatus = "";
+      this.tip.motivation = motivation;
+      this.updateSubmissionStatus();
+    };
+    modalRef.componentInstance.cancelFun = null;
+  }
+
+  updateSubmissionStatus() {
+    const args = {"status":  this.tip.status, "substatus": this.tip.substatus ? this.tip.substatus : "", "motivation":  this.tip.motivation || ""};
+    this.httpService.tipOperation("update_status", args, this.tip.id)
+      .subscribe(
+        () => {
+          this.utils.reloadComponent();
+        }
+      );
+  };
+
+  prepareSubmissionStatuses(submissionStatuses: Status[]) {
+    let output = [];
+    for (let x of submissionStatuses) {
+      if (x.substatuses.length) {
+        for (let y of x.substatuses) {
+          output.push({
+            id: x.id + ':' + y.id,
+            label: x.label + ' \u2013 ' + y.label,
+            status: x.id,
+            substatus: y.id,
+            order: output.length,
+          });
+        }
+      } else {
+        x.order = output.length;
+        output.push(x);
+      }
+    }
+    return output;
+  }
+  
   reload(): void {
     const reloadCallback = () => {
       this.utils.reloadComponent();

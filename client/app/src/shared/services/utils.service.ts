@@ -29,13 +29,12 @@ import {AppDataService} from "@app/app-data.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import { FlowFile } from "@flowjs/flow.js";
 import { AcceptAgreementComponent } from "../modals/accept-agreement/accept-agreement.component";
-
 @Injectable({
   providedIn: "root"
 })
 export class UtilsService {
 
-  constructor(private tokenResource: TokenResource, private clipboardService: ClipboardService, private http: HttpClient, private httpService: HttpService, private modalService: NgbModal, private preferenceResolver: PreferenceResolver, private router: Router) {
+  constructor(private tokenResource: TokenResource,private translateService: TranslateService, private clipboardService: ClipboardService, private http: HttpClient, private httpService: HttpService, private modalService: NgbModal, private preferenceResolver: PreferenceResolver, private router: Router) {
   }
 
   updateNode(nodeResolverModel:nodeResolverModel) {
@@ -301,7 +300,7 @@ export class UtilsService {
         const subStatus = submission_statuses[i].substatuses;
         for (let j = 0; j < subStatus.length; j++) {
           if (subStatus[j].id === substatus) {
-            text += "(" + subStatus[j].label + ")";
+            text += ' \u2013 ' + this.translateService.instant(subStatus[j].label);
             break;
           }
         }

@@ -31,7 +31,6 @@ import {MarkdownModule} from "ngx-markdown";
 import {StripHtmlPipe} from "@app/shared/pipes/strip-html.pipe";
 import {ReceiptValidatorDirective} from "@app/shared/directive/receipt-validator.directive";
 import {TipInfoComponent} from "@app/shared/partials/tip-info/tip-info.component";
-import {TipSubmissionStatusComponent} from "@app/shared/partials/tip-submission-status/tip-submission-status.component";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {
   TipAdditionalQuestionnaireInviteComponent
@@ -121,6 +120,8 @@ import {VoiceRecorderComponent} from "@app/shared/partials/voice-recorder/voice-
 import {Tab1Component} from "@app/pages/admin/settings/tab1/tab1.component";
 import {SwitchComponent} from "@app/shared/components/switch/switch.component";
 import {NgChartsModule} from "ng2-charts";
+import {ChangeSubmissionStatusComponent} from "@app/shared/modals/change-submission-status/change-submission-status.component";
+import {ReopenSubmissionComponent} from "@app/shared/modals/reopen-submission/reopen-submission.component";
 
 @NgModule({
   imports: [
@@ -165,7 +166,6 @@ import {NgChartsModule} from "ng2-charts";
     ReceiptValidatorDirective,
     TipInfoComponent,
     TipQuestionnaireAnswersComponent,
-    TipSubmissionStatusComponent,
     TipAdditionalQuestionnaireInviteComponent,
     TipFieldComponent,
     TipFieldAnswerEntryComponent,
@@ -224,6 +224,8 @@ import {NgChartsModule} from "ng2-charts";
     TransferAccessComponent,
     SecurityAwarenessConfidentialityComponent,
     DisclaimerComponent,
+    ChangeSubmissionStatusComponent,
+    ReopenSubmissionComponent,
     BlankComponent,
     VoiceRecorderComponent,
     Tab1Component,
@@ -281,6 +283,8 @@ import {NgChartsModule} from "ng2-charts";
     TransferAccessComponent,
     SecurityAwarenessConfidentialityComponent,
     DisclaimerComponent,
+    ChangeSubmissionStatusComponent,
+    ReopenSubmissionComponent,
     VoiceRecorderComponent,
     Tab1Component,
     SwitchComponent

@@ -33,4 +33,5 @@ export class userResolverModel {
   contexts: string[];
   newpassword: boolean;
   can_transfer_access_to_reports: boolean;
+  can_reopen_reports:boolean;
 }
