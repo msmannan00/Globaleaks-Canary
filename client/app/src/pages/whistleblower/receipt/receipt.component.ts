@@ -37,6 +37,7 @@ export class ReceiptComponent implements OnInit {
       );
     };
     this.authenticationService.login(0, 'whistleblower', this.receipt, null, null, promise);
+    this.receipt="";
   }
 
 }

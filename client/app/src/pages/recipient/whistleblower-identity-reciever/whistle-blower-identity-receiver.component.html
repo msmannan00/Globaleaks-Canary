@@ -23,6 +23,7 @@
                     <span *ngSwitchCase="'pending'">{{ 'Waiting for authorization' | translate }}</span>
                     <span *ngSwitchCase="'denied'">{{ 'Denied' | translate }}</span>
                 </span>
+                <div><label>{{'Motivation' | translate}}</label>:<span> {{tipService.tip.iar.request_motivation}}</span></div>
             </div>
             <div *ngIf="tipService.tip.iar && tipService.tip.iar.reply === 'denied'">
                 <label>{{'Reply motivation' | translate}}</label>: <span>{{tipService.tip.iar.reply_motivation}}</span>
