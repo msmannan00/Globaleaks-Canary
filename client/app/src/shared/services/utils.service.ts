@@ -414,19 +414,23 @@ export class UtilsService {
 
     this.http.get(url, {responseType: "blob", headers: headers}).subscribe(
       response => {
-        const blob = new Blob([response], {type: "application/octet-stream"});
-        const blobUrl = URL.createObjectURL(blob);
-
-        const a = document.createElement("a");
-        a.href = blobUrl;
-        a.download = filename;
-        a.click();
-
-        setTimeout(() => {
-          URL.revokeObjectURL(blobUrl);
-        }, 1000);
+        this.saveBlobAs(filename, response);
       }
     );
+  }
+
+  saveBlobAs(filename:string,response:Blob){
+    const blob = new Blob([response], {type: "application/octet-stream"});
+    const blobUrl = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = blobUrl;
+    a.download = filename;
+    a.click();
+
+    setTimeout(() => {
+      URL.revokeObjectURL(blobUrl);
+    }, 1000);
   }
 
   getPostponeDate(ttl: number): Date {
