@@ -68,6 +68,7 @@ export class SubmissionComponent {
     this.submissionService.create(context.id);
     this.context = context;
     this.fieldUtilitiesService.onAnswersUpdate(this);
+    this.utilsService.scrollToTop();
 
     this.field_id_map = this.fieldUtilitiesService.build_field_id_map(this.questionnaire);
     this.show_steps_navigation_bar = this.context?.allow_recipients_selection || this.questionnaire.steps.length > 1;
