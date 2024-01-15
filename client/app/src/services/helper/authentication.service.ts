@@ -7,7 +7,9 @@ import {AppDataService} from "@app/app-data.service";
 import {ErrorCodes} from "@app/models/app/error-code";
 import {Session} from "@app/models/authentication/session";
 import {TitleService} from "@app/shared/services/title.service";
-import {HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {OtkcAccessComponent} from "@app/shared/modals/otkc-access/otkc-access.component";
 
 @Injectable({
   providedIn: "root"
@@ -19,7 +21,7 @@ export class AuthenticationService {
   requireAuthCode: boolean = false;
   loginData: LoginDataRef = new LoginDataRef();
 
-  constructor(private titleService: TitleService, private activatedRoute: ActivatedRoute, private httpService: HttpService, private appDataService: AppDataService, private router: Router) {
+  constructor(private http: HttpClient, private modalService: NgbModal,private titleService: TitleService, private activatedRoute: ActivatedRoute, private httpService: HttpService, private appDataService: AppDataService, private router: Router) {
     this.init();
   }
 
@@ -104,7 +106,7 @@ export class AuthenticationService {
       {
         next: (response: Session) => {
           this.setSession(response);
-
+          this.processResponse(response);
           if (response.redirect) {
             this.router.navigate([response.redirect]).then();
           }
@@ -153,6 +155,19 @@ export class AuthenticationService {
     return requestObservable;
   }
 
+  formatReceipt(receipt: string): string {
+    if (!receipt || receipt.length !== 16) {
+      return '';
+    }
+  
+    return (
+      receipt.substring(0, 4) + " " +
+      receipt.substring(4, 4) + " " +
+      receipt.substring(8, 4) + " " +
+      receipt.substring(12, 4)
+    );
+  }
+
   public getHeader(confirmation?: string): HttpHeaders {
     let headers = new HttpHeaders();
 
@@ -165,6 +180,28 @@ export class AuthenticationService {
       headers = headers.set('X-Confirmation', confirmation);
     }
     return headers;
+  }
+
+  processResponse(response: Session) {
+    if (response && response && response.properties && response.properties.new_receipt) {
+      const receipt = response.properties.new_receipt;
+      const formattedReceipt = this.formatReceipt(receipt);
+
+      const modalRef = this.modalService.open(OtkcAccessComponent);
+      modalRef.componentInstance.arg = {
+        receipt: receipt,
+        formatted_receipt: formattedReceipt
+      };
+      modalRef.componentInstance.confirmFunction = () => {
+        this.http.put('api/whistleblower/operations', {
+          operation: 'change_receipt',
+          args: {}
+        }).subscribe(() => {
+          this.titleService.setPage('tippage');
+          modalRef.close();
+        });
+      };
+    }
   }
 
   logout(callback?: () => void) {

@@ -23,6 +23,9 @@
 <div id="page-overlay" *ngIf="showLoadingPanel" [@fadeInOut]="!showLoadingPanel ? 'void' : ''">
     <div id="loader"></div>
 </div>
+<div *ngIf="authenticationService.session?.properties?.operator_session">
+    <src-operator></src-operator>
+</div>
 <ng-container *ngIf="appDataService.public.node">
     <div [dir]="utilsService.getDirection(translate.currentLang)" class="reveal">
         <div *ngIf="!appDataService.public.node.root_tenant && appDataService.public.node.mode === 'demo'">

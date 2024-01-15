@@ -17,6 +17,7 @@ import {Receiver} from "@app/models/reciever/reciever-tip-data";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {Observable, from, switchMap} from "rxjs";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 
 
 @Component({
@@ -59,7 +60,7 @@ export class TipsComponent implements OnInit {
     searchPlaceholderText: this.translateService.instant("Search")
   };
 
-  constructor(protected authenticationService: AuthenticationService, protected httpService: HttpService, private appConfigServices: AppConfigService, private router: Router, protected RTips: RTipsResolver, protected preference: PreferenceResolver, private modalService: NgbModal, protected utils: UtilsService, protected appDataService: AppDataService, private translateService: TranslateService, private tokenResourceService: TokenResource) {
+  constructor(private http: HttpClient,protected authenticationService: AuthenticationService, protected httpService: HttpService, private appConfigServices: AppConfigService, private router: Router, protected RTips: RTipsResolver, protected preference: PreferenceResolver, private modalService: NgbModal, protected utils: UtilsService, protected appDataService: AppDataService, private translateService: TranslateService, private tokenResourceService: TokenResource) {
 
   }
 
@@ -212,6 +213,17 @@ export class TipsComponent implements OnInit {
     const report_date = new Date(date);
     const current_date = new Date();
     return current_date > report_date;
+  }
+
+  actAsWhistleblower() {
+    this.http.get('/api/auth/operatorauthswitch', { observe: 'response' }).subscribe(
+      (response: HttpResponse<any>) => {
+        if (response.status === 200) {
+          const urlRedirect = window.location.origin + response.body.redirect;
+          window.open(urlRedirect, '_blank');
+        }
+      },
+    );
   }
 
   processTips() {
