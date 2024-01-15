@@ -15,12 +15,14 @@ export class HttpsComponent implements OnInit {
   state = 0;
   menuState = "setup";
   tlsConfig: TlsConfig;
+  hostName:string="";
 
   constructor(protected nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService,protected appDataService:AppDataService) {
   }
 
   ngOnInit() {
     this.initFunction();
+    this.hostName = this.appDataService.public.node.hostname
   }
 
   initFunction() {
