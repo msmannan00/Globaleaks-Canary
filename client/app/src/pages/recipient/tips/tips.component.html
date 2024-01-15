@@ -266,6 +266,14 @@
                     </ng-template>
                 </ngb-pagination>
             </div>
+            <div class="float-end">
+                <a class="btn btn-sm btn-link" type="button"
+                   *ngIf="filteredTips.length > 0"
+                   (click)="exportToCsv()">
+                  <i class="fa-solid fa-download"></i>
+                  <span>{{ 'Export' | translate }}</span>
+                </a>
+            </div>
         </div>
     </div>
 </ng-container>
