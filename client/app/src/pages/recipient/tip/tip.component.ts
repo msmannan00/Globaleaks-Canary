@@ -25,12 +25,12 @@ import {TransferAccessComponent} from "@app/shared/modals/transfer-access/transf
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {Tab} from "@app/models/component-model/tab";
 import {RecieverTipData} from "@app/models/reciever/reciever-tip-data";
-import {Receiver, Status} from "@app/models/app/public-model";
+import {Receiver} from "@app/models/app/public-model";
 import {TipUploadWbFileComponent} from "@app/shared/partials/tip-upload-wbfile/tip-upload-wb-file.component";
 import {TipCommentsComponent} from "@app/shared/partials/tip-comments/tip-comments.component";
 import {ReopenSubmissionComponent} from "@app/shared/modals/reopen-submission/reopen-submission.component";
 import {ChangeSubmissionStatusComponent} from "@app/shared/modals/change-submission-status/change-submission-status.component";
-import { SubmissionStatus } from "@app/models/app/shared-public-model";
+import {TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -51,7 +51,7 @@ export class TipComponent implements OnInit {
   active: string;
   loading = true;
 
-  constructor(private tipService: TipService, private appConfigServices: AppConfigService, private router: Router, private cdr: ChangeDetectorRef, private cryptoService: CryptoService, protected utils: UtilsService, protected preferencesService: PreferenceResolver, protected modalService: NgbModal, private activatedRoute: ActivatedRoute, protected httpService: HttpService, protected http: HttpClient, protected appDataService: AppDataService, protected RTipService: ReceiverTipService, protected fieldUtilities: FieldUtilitiesService, protected authenticationService: AuthenticationService) {
+  constructor(private translateService: TranslateService,private tipService: TipService, private appConfigServices: AppConfigService, private router: Router, private cdr: ChangeDetectorRef, private cryptoService: CryptoService, protected utils: UtilsService, protected preferencesService: PreferenceResolver, protected modalService: NgbModal, private activatedRoute: ActivatedRoute, protected httpService: HttpService, protected http: HttpClient, protected appDataService: AppDataService, protected RTipService: ReceiverTipService, protected fieldUtilities: FieldUtilitiesService, protected authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
@@ -208,7 +208,7 @@ export class TipComponent implements OnInit {
     modalRef.componentInstance.arg={
       tip:this.tip,
       motivation:this.tip.motivation,
-      submission_statuses:this.prepareSubmissionStatuses(this.appDataService.submissionStatuses),
+      submission_statuses:this.prepareSubmissionStatuses(),
     };
 
     modalRef.componentInstance.confirmFunction = (status:any,motivation: string) => {
@@ -241,20 +241,23 @@ export class TipComponent implements OnInit {
       );
   };
 
-  prepareSubmissionStatuses(submissionStatuses: Status[]) {
+  prepareSubmissionStatuses() {
+    const subCopy:any[]= [...this.appDataService.submissionStatuses];
     let output = [];
-    for (let x of submissionStatuses) {
+    for (let x of subCopy) {
       if (x.substatuses.length) {
         for (let y of x.substatuses) {
           output.push({
-            id: x.id + ':' + y.id,
-            label: x.label + ' \u2013 ' + y.label,
+            id: `${x.id}:${y.id}`,
+            label: this.translateService.instant(x.label) + ' \u2013 ' + y.label,
             status: x.id,
             substatus: y.id,
             order: output.length,
           });
         }
       } else {
+        x.status = x.id;
+        x.substatus = "";
         x.order = output.length;
         output.push(x);
       }
