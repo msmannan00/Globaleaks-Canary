@@ -1,8 +1,3 @@
-const fs = require("fs");
-const superagent = require("superagent");
-const Gettext = require("node-gettext");
-const path = require("path");
-const gettextParser = require("gettext-parser");
 module.exports = function (grunt) {
   let fs = require("fs"),
     path = require("path"),
@@ -103,7 +98,7 @@ module.exports = function (grunt) {
           {dest: "build/css", cwd: "tmp/css", src: ["**"], expand: true},
           {dest: "build/js", cwd: "tmp/js", src: ["**"], expand: true},
           {dest: "build/data", cwd: "tmp/assets/data", src: ["**"], expand: true},
-          {dest: "build/lib/bootstrap", cwd: "tmp/assets/lib/bootstrap", src: ["**"], expand: true},
+          {dest: "build/assets/lib/bootstrap", cwd: "tmp/assets/lib/bootstrap", src: ["**"], expand: true},
           {dest: "build/index.html", cwd: ".", src: ["tmp/index.html"], expand: false, flatten: true},
           {dest: "build/assets/favicon.ico", cwd: ".", src: ["tmp/assets/favicon.ico"], expand: false, flatten: true},
           {dest: "build/license.txt", cwd: ".", src: ["tmp/assets/license.txt"], expand: false, flatten: true},
