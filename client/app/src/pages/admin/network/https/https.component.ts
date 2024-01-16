@@ -34,7 +34,12 @@ export class HttpsComponent implements OnInit {
   }
 
   updateHostname(hostname: string) {
-    this.utilsService.runAdminOperation("set_hostname", {"value": hostname}, true).subscribe();
+    this.utilsService.runAdminOperation("set_hostname", {"value": hostname}, true)
+      .subscribe(
+        () => {
+          this.appDataService.public.node.hostname=this.hostName;
+        }
+      );
   }
 
   parseTLSConfig(tlsConfig: TlsConfig): void {
