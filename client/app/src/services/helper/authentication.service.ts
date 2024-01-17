@@ -26,11 +26,9 @@ export class AuthenticationService {
   }
 
   init() {
-    const json = window.sessionStorage.getItem("session");
-    if (json !== null) {
-      this.session = JSON.parse(json);
-    } else {
-      this.session = undefined;
+    this.session = window.sessionStorage.getItem("session");
+    if (typeof this.session === "string") {
+      this.session = JSON.parse(this.session);
     }
   }
 
@@ -77,9 +75,6 @@ export class AuthenticationService {
 
   login(tid?: number, username?: string, password?: string | undefined, authcode?: string | null, authtoken?: string | null, callback?: () => void) {
 
-    if (authtoken === undefined) {
-      authtoken = "";
-    }
     if (authcode === undefined) {
       authcode = "";
     }
@@ -105,20 +100,42 @@ export class AuthenticationService {
     requestObservable.subscribe(
       {
         next: (response: Session) => {
-          this.setSession(response);
-          this.processResponse(response);
+          this.reset()
           if (response.redirect) {
             this.router.navigate([response.redirect]).then();
           }
-
-          const src = location.search;
+          this.setSession(response);
+          if (response && response && response.properties && response.properties.new_receipt) {
+            const receipt = response.properties.new_receipt;
+            const formattedReceipt = this.formatReceipt(receipt);
+      
+            const modalRef = this.modalService.open(OtkcAccessComponent,{backdrop: 'static', keyboard: false});
+            modalRef.componentInstance.arg = {
+              receipt: receipt,
+              formatted_receipt: formattedReceipt
+            };
+            modalRef.componentInstance.confirmFunction = () => {
+              this.http.put('api/whistleblower/operations', {
+                operation: 'change_receipt',
+                args: {}
+              }).subscribe(() => {
+                this.titleService.setPage('tippage');
+                modalRef.close();
+              });
+            };
+            return;
+          }
+          const src = this.activatedRoute.snapshot.queryParams['src'];
           if (src) {
+            this.router.navigate([src]);
             location.replace(src);
           } else {
             if (this.session.role === "whistleblower") {
               if (password) {
                 this.appDataService.receipt = password;
+                this.titleService.setPage("tippage");
               }
+              this.router.navigate(['/']);
             } else {
               if (!callback) {
                 this.reset();
@@ -162,9 +179,9 @@ export class AuthenticationService {
   
     return (
       receipt.substring(0, 4) + " " +
-      receipt.substring(4, 4) + " " +
-      receipt.substring(8, 4) + " " +
-      receipt.substring(12, 4)
+      receipt.substring(4, 8) + " " +
+      receipt.substring(8, 12) + " " +
+      receipt.substring(12, 16)
     );
   }
 
@@ -187,7 +204,7 @@ export class AuthenticationService {
       const receipt = response.properties.new_receipt;
       const formattedReceipt = this.formatReceipt(receipt);
 
-      const modalRef = this.modalService.open(OtkcAccessComponent);
+      const modalRef = this.modalService.open(OtkcAccessComponent,{backdrop: 'static', keyboard: false});
       modalRef.componentInstance.arg = {
         receipt: receipt,
         formatted_receipt: formattedReceipt
@@ -201,6 +218,7 @@ export class AuthenticationService {
           modalRef.close();
         });
       };
+      return;
     }
   }
 

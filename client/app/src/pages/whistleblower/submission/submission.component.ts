@@ -46,13 +46,8 @@ export class SubmissionComponent {
     this.receivedData = this.submissionService.getSharedData();
 
     this.appConfigService.setPage("submissionpage");
-    if (!this.whistleblowerLoginResolver.loggedIn) {
-      this.utilsService.reloadCurrentRoute();
-    } else {
-      this.resetForm();
-      this.initializeSubmission();
-      this.whistleblowerLoginResolver.loggedIn = false;
-    }
+    this.resetForm();
+    this.initializeSubmission();
   }
 
   firstStepIndex() {
