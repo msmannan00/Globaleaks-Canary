@@ -122,6 +122,8 @@ import {SwitchComponent} from "@app/shared/components/switch/switch.component";
 import {NgChartsModule} from "ng2-charts";
 import {ChangeSubmissionStatusComponent} from "@app/shared/modals/change-submission-status/change-submission-status.component";
 import {ReopenSubmissionComponent} from "@app/shared/modals/reopen-submission/reopen-submission.component";
+import {OtkcAccessComponent} from "@app/shared/modals/otkc-access/otkc-access.component";
+import {OperationComponent} from "@app/shared/partials/operation/operation.component";
 
 @NgModule({
   imports: [
@@ -229,7 +231,9 @@ import {ReopenSubmissionComponent} from "@app/shared/modals/reopen-submission/re
     BlankComponent,
     VoiceRecorderComponent,
     Tab1Component,
-    SwitchComponent
+    SwitchComponent,
+    OtkcAccessComponent,
+    OperationComponent
   ],
   exports: [
     FooterComponent,
@@ -287,7 +291,9 @@ import {ReopenSubmissionComponent} from "@app/shared/modals/reopen-submission/re
     ReopenSubmissionComponent,
     VoiceRecorderComponent,
     Tab1Component,
-    SwitchComponent
+    SwitchComponent,
+    OtkcAccessComponent,
+    OperationComponent
   ]
 })
 export class SharedModule {
