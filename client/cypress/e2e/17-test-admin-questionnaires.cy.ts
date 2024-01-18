@@ -54,9 +54,9 @@ describe("admin add, configure and delete questionnaires", () => {
 
     const fieldTypes = Cypress.env("field_types");
     fieldTypes.forEach((questionType: string) => {
+        cy.waitForLoader();
         cy.contains("Step 2").click();
         add_question(questionType, true);
-        cy.waitForLoader();
     });
 
     cy.contains("Step 2").click();

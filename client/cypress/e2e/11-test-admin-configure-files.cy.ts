@@ -71,7 +71,7 @@ describe("Admin configure custom CSS", () => {
       });
     });
 
-    cy.waitForLoader()
+    cy.wait(2000)
     cy.contains("button", "Files").click();
     cy.get('table#fileList').contains('td', 'documentation').should('be.visible');
     cy.get("#fileList").contains("Delete").click();

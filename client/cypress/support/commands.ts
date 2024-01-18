@@ -107,15 +107,17 @@ Cypress.Commands.add("waitUntilClickable", (locator: string, timeout?: number) =
 Cypress.Commands.add("waitForLoader", (waitForHTTP: boolean = true) => {
   cy.intercept("**").as("httpRequests");
 
-  cy.get("#PageOverlay", {timeout: 1000, log: false})
+  cy.get("#PageOverlay", {timeout: 500, log: false})
     .should(($overlay) => {
       return new Cypress.Promise((resolve, _) => {
         const startTime = Date.now();
 
         const checkVisibility = () => {
           if (Cypress.$($overlay).is(":visible")) {
-            resolve();
-          } else if (Date.now() - startTime > 2000) {
+            cy.get("#PageOverlay", { log: false }).should("not.be.visible").then(() => {
+              resolve();
+            });
+          } else if (Date.now() - startTime > 500) {
             resolve();
           } else {
             setTimeout(checkVisibility, 100);
@@ -165,14 +167,14 @@ Cypress.Commands.add("login_admin", (username, password, url, firstlogin) => {
     finalURL = "/actions/forcedpasswordchange";
     cy.waitForUrl(finalURL);
   } else {
-    cy.url().should("include", "#/login").then(() => {
+    cy.url().should("include", "#/login").then((currentURL) => {
       cy.url().should("not.include", "#/login").then((currentURL) => {
         const hashPart = currentURL.split("#")[1];
         finalURL = hashPart === "login" ? "/admin/home" : hashPart;
         cy.waitForUrl(finalURL);
       });
     });
-    cy.waitForLoader()
+    cy.waitForLoader(false)
   }
 });
 
