@@ -46,8 +46,10 @@ export class SubmissionComponent {
     this.receivedData = this.submissionService.getSharedData();
 
     this.appConfigService.setPage("submissionpage");
+    this.whistleblowerLoginResolver.resolve()
     this.resetForm();
     this.initializeSubmission();
+
   }
 
   firstStepIndex() {

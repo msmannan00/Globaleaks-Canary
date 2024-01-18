@@ -172,9 +172,10 @@ Cypress.Commands.add("login_admin", (username, password, url, firstlogin) => {
         cy.waitForUrl(finalURL);
       });
     });
+    cy.waitForLoader()
   }
 });
 
 Cypress.Commands.add("logout", () => {
-  cy.get('a.LogoutLink').should('be.visible').click();
+  cy.get('a#LogoutLink').should('be.visible').click();
 });

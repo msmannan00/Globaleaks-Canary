@@ -31,15 +31,15 @@ describe("Admin configure custom CSS", () => {
 
     const customCSSFile = "files/style.css";
     cy.fixture(customCSSFile).then((fileContent) => {
-      cy.get("div.uploadfile.file-css input").then(($input) => {
+      cy.get('div.uploadfile.file-css input[type="file"]').then(($input) => {
         const inputElement = $input[0] as HTMLInputElement;
-        const blob = new Blob([fileContent], { type: "text/css" });
-        const testFile = new File([blob], customCSSFile, { type: "text/css" });
+        const blob = new Blob([fileContent], { type: 'text/css' });
+        const testFile = new File([blob], 'your-file-name.css', { type: 'text/css' });
         const dataTransfer = new DataTransfer();
 
         dataTransfer.items.add(testFile);
         inputElement.files = dataTransfer.files;
-        cy.wrap($input).trigger("change", { force: true });
+        cy.wrap($input).trigger('change', { force: true });
       });
     });
     cy.contains("label", "Project name").should("be.visible");

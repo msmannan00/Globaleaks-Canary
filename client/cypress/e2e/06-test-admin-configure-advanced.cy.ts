@@ -4,7 +4,6 @@ describe("admin configure advanced settings", () => {
     cy.visit("/#/admin/settings");
     cy.contains("button", "Advanced").click();
     cy.get('input[name="enable_custom_privacy_badge"]').click();
-    cy.get('input[name="enable_custodian"]').click();
     cy.get('input[name="viewer"]').click();
     cy.contains("button", "Save").click();
   });
