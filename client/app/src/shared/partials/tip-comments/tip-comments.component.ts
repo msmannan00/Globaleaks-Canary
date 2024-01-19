@@ -1,9 +1,11 @@
-import {ChangeDetectorRef, Component, Input, OnInit, ViewChild} from "@angular/core";
+import {ChangeDetectorRef, Component, Input, OnInit} from "@angular/core";
 import {WbtipService} from "@app/services/helper/wbtip.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
 import {Comment} from "@app/models/app/shared-public-model";
+import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
+import {MaskService} from "@app/shared/services/mask.service";
 
 @Component({
   selector: "src-tip-comments",
@@ -12,6 +14,8 @@ import {Comment} from "@app/models/app/shared-public-model";
 export class TipCommentsComponent implements OnInit {
   @Input() tipService: ReceiverTipService | WbtipService;
   @Input() key: string;
+  @Input() redactMode: boolean;
+  @Input() redactOperationTitle: string;
 
   collapsed = false;
   newCommentContent = "";
@@ -20,7 +24,7 @@ export class TipCommentsComponent implements OnInit {
   comments: Comment[] = [];
   newComments: Comment;
 
-  constructor(private rTipService: ReceiverTipService, protected authenticationService: AuthenticationService, protected utilsService: UtilsService, private cdr: ChangeDetectorRef) {
+  constructor(private maskService:MaskService,protected preferenceResolver:PreferenceResolver,private rTipService: ReceiverTipService, protected authenticationService: AuthenticationService, protected utilsService: UtilsService, private cdr: ChangeDetectorRef) {
 
   }
 
@@ -55,5 +59,13 @@ export class TipCommentsComponent implements OnInit {
       "key": "enable_two_way_comments",
       "value": this.tipService.tip.enable_two_way_comments
     });
+  }
+  
+  redactInformation(type:string, id:string, entry:string, content:string){
+    this.maskService.redactInfo(type,id,entry,content,this.tipService.tip)
+  }
+
+  maskContent(id: string, index: string, value: string) {
+    return this.maskService.maskingContent(id,index,value,this.tipService.tip)
   }
 }

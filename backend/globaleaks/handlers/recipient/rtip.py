@@ -173,7 +173,7 @@ def transfer_tip_access(session, tid, user_id, user_cc, itip_id, receiver_id):
         db_log(session, tid=tid, type='transfer_access', user_id=user_id, object_id=itip.id, data=log_data)
 
 
-def get_tip_ttl(session, orm_object_model, orm_object_id):
+def get_ttl(session, orm_object_model, orm_object_id):
     """
     Transaction for retrieving the data retention
 
@@ -198,37 +198,15 @@ def recalculate_data_retention(session, itip, report_reopen_request):
     new_retention = None
     if report_reopen_request:
         # use the context-defined data retention
-        new_retention = get_tip_ttl(session, models.Context, itip.context_id)
-        if new_retention <= 0:
-            new_retention = None
-    elif itip.status == "closed":
-        # check the substatus, status and context for a data retention
-        substatus = 0
-        status = 1
-        context = 2
-        for to_check in (substatus, status, context):
-            if to_check == substatus:
-                if itip.substatus is not None:
-                    new_retention = get_tip_ttl(session, models.SubmissionSubStatus, itip.substatus)
-            elif to_check == status:
-                new_retention = get_tip_ttl(session, models.SubmissionStatus, itip.status)
-            else: # to_check == context:
-                new_retention = get_tip_ttl(session, models.Context, itip.context_id)
-
-            if new_retention != -1:
-                if new_retention == 0:
-                    # infinite data retention, break from the for loop
-                    new_retention = None
-                break
-    else:
-        return # change between open statuses, no data retention recalculation needed
-
-    if isinstance(new_retention, int):
-        itip.expiration_date = datetime_now() + timedelta(new_retention)
-    else:
-        # infinite data retention, i.e. the 1st January 3000
-        itip.expiration_date = datetime(3000, 1, 1)
-
+        ttl = get_ttl(session, models.Context, itip.context_id)
+        if ttl > 0:
+            itip.expiration_date = datetime_now() + timedelta(ttl)
+        else:
+            itip.expiration_date = datetime_never()
+    elif itip.status == "closed" and itip.substatus is not None:
+        ttl = get_ttl(session, models.SubmissionSubStatus, itip.substatus)
+        if ttl > 0:
+            itip.expiration_date = datetime_now() + timedelta(ttl)
 
 def db_update_submission_status(session, tid, user_id, itip, status_id, substatus_id, motivation=None):
     """
@@ -452,7 +430,8 @@ def db_redact_comment(session, tid, user_id, itip_id, redaction, redaction_data,
 
 def db_redact_answers(answers, redaction):
     for key in answers:
-        if not re.match(requests.uuid_regexp, key):
+        if not re.match(requests.uuid_regexp, key) or \
+                not isinstance(answers[key], list):
             continue
 
         for inner_idx, answer in enumerate(answers[key]):
@@ -652,7 +631,8 @@ def get_rtip(session, tid, user_id, itip_id, language):
 
 def redact_answers(answers, redactions):
     for key in answers:
-        if not re.match(requests.uuid_regexp, key):
+        if not re.match(requests.uuid_regexp, key) or \
+                not isinstance(answers[key], list):
             continue
 
         for inner_idx, answer in enumerate(answers[key]):
@@ -763,7 +743,6 @@ def delete_rtip(session, tid, user_id, itip_id):
     db_log(session, tid=tid, type='delete_report', user_id=user_id, object_id=itip.id)
 
 
-@transact
 def delete_wbfile(session, tid, user_id, file_id):
     """
     Transaction for deleting a wbfile
@@ -772,24 +751,19 @@ def delete_wbfile(session, tid, user_id, file_id):
     :param user_id: The user ID of the user performing the operation
     :param file_id: The file ID of the wbfile to be deleted
     """
-
-    wbfile = (
-        session.query(models.WhistleblowerFile)
-               .filter(models.User.id == user_id,
-                       models.WhistleblowerFile.internalfile_id == file_id,
-                       models.ReceiverTip.receiver_id == models.User.id,
-                       models.ReceiverTip.internaltip_id == models.InternalTip.id, models.InternalTip.tid == tid)
+    ifile = (
+        session.query(models.InternalFile)
+               .filter(models.InternalFile.id == file_id,
+                       models.WhistleblowerFile.internalfile_id == models.InternalFile.id,
+                       models.ReceiverTip.id == models.WhistleblowerFile.receivertip_id,
+                       models.ReceiverTip.receiver_id == user_id,
+                       models.InternalTip.id == models.ReceiverTip.internaltip_id,
+                       models.InternalTip.tid == tid)
                .first()
     )
 
-    if wbfile:
-        receiver_file_list = session.query(models.WhistleblowerFile).filter(
-            models.WhistleblowerFile.internalfile_id == wbfile.internalfile_id).all()
-        internal_file_list = session.query(models.InternalFile).filter(
-            models.InternalFile.id == wbfile.internalfile_id).all()
-        all_files_to_delete = receiver_file_list + internal_file_list
-        for file in all_files_to_delete:
-            session.delete(file)
+    if ifile:
+        session.delete(ifile)
 
 
 @transact
@@ -1045,7 +1019,7 @@ def update_redaction(session, tid, user_id, redaction_id, redaction_data, tip_da
             if len(redaction.temporary_redaction) == 1 and \
                     redaction.temporary_redaction[0].get('start', False) == '-inf' and \
                     redaction.temporary_redaction[0].get('start', False) == '-inf':
-                session.delete(ifile)
+                delete_wbfile(session, tid, user_id, redaction.reference_id)
                 session.delete(redaction)
 
 

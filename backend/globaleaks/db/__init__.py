@@ -6,39 +6,64 @@ import warnings
 
 from sqlalchemy.exc import SAWarning
 
-from globaleaks import models, DATABASE_VERSION
+from globaleaks import __version__, models, DATABASE_VERSION, LANGUAGES_SUPPORTED_CODES
+from globaleaks.db.appdata import load_appdata, db_load_defaults
 from globaleaks.handlers.admin.https import db_load_tls_configs
-from globaleaks.models import Base, Config
+from globaleaks.models import config, Base, Config
 from globaleaks.models.config_desc import ConfigFilters
-from globaleaks.orm import get_engine, get_session, make_db_uri, transact, transact_sync
+from globaleaks.orm import db_log, get_engine, transact, transact_sync
 from globaleaks.settings import Settings
 from globaleaks.state import State, TenantState
 from globaleaks.utils import fs
 from globaleaks.utils.log import log
 from globaleaks.utils.objectdict import ObjectDict
+from globaleaks.utils.utility import datetime_now
 
 
-def get_db_file(db_path):
+def db_get_db_version(session):
     """
-    Utility function to retrieve the database file path
-    :param db_path: The path where to look for the database file
-    :return: The version and the path of the existing database file
+    Utility function to retrieve the database version
+    :return: The db version
     """
-    path = os.path.join(db_path, 'globaleaks.db')
-    if os.path.exists(path):
-        session = get_session(make_db_uri(path))
-        version_db = session.query(models.Config.value).filter(Config.tid == 1,
-                                                               Config.var_name == 'version_db').one()[0]
-        session.close()
-        return version_db, path
+    return session.query(models.Config.value).filter(Config.tid == 1,
+                                                     Config.var_name == 'version_db').one()[0]
 
-    for i in reversed(range(0, DATABASE_VERSION + 1)):
-        file_name = 'glbackend-%d.db' % i
-        db_file_path = os.path.join(db_path, 'db', file_name)
-        if os.path.exists(db_file_path):
-            return i, db_file_path
 
-    return 0, ''
+def db_perform_data_update(session):
+    """
+    Update the database including up-to-date application data
+    :param db_file: The database file path
+    """
+    now = datetime_now()
+
+    appdata = load_appdata()
+
+    enabled_languages = [lang.name for lang in session.query(models.EnabledLanguage)]
+
+    removed_languages = list(set(enabled_languages) - set(LANGUAGES_SUPPORTED_CODES))
+
+    if removed_languages:
+        removed_languages.sort()
+        removed_languages = ', '.join(removed_languages)
+        raise Exception("FATAL: cannot complete the upgrade because the support for some of the enabled languages is currently incomplete (%s)\n" % removed_languages)
+
+    original_version = config.ConfigFactory(session, 1).get_val('version')
+    if original_version != __version__:
+        for tid in [t[0] for t in session.query(models.Tenant.id)]:
+            config.update_defaults(session, tid, appdata)
+
+        db_load_defaults(session)
+
+        session.query(models.Config).filter_by(var_name='version') \
+               .update({'value': __version__, 'update_date': now})
+
+        session.query(models.Config).filter_by(var_name='latest_version') \
+               .update({'value': __version__, 'update_date': now})
+
+        session.query(models.Config).filter_by(var_name='version_db') \
+               .update({'value': DATABASE_VERSION, 'update_date': now})
+
+        db_log(session, tid=1, type='version_update', user_id='system', data={'from': original_version, 'to': __version__})
 
 
 def create_db():
@@ -71,30 +96,20 @@ def init_db(session):
     tenant.db_create(session, {'active': True, 'mode': 'default', 'name': 'GLOBALEAKS', 'subdomain': ''})
 
 
-def update_db():
+@transact_sync
+def update_db(session):
     """
     This function handles the update of an existing database
     :return: The database version
     """
-    db_version, db_file_path = get_db_file(Settings.working_path)
+    db_version = db_get_db_version(session)
     if db_version == 0:
         return 0
 
     try:
         with warnings.catch_warnings():
-            from globaleaks.db import migration
-            warnings.simplefilter("ignore", category=SAWarning)
-
             log.err('Found an already initialized database version: %d', db_version)
-
-            if db_version != DATABASE_VERSION:
-                log.err('Performing schema migration from version %d to version %d',
-                        db_version, DATABASE_VERSION)
-
-                migration.perform_migration(db_version)
-            else:
-                migration.perform_data_update(db_file_path)
-                compact_db()
+            db_perform_data_update(session)
 
     except Exception as exception:
         log.err('Failure: %s', exception)

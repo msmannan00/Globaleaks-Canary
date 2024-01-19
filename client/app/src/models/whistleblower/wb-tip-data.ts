@@ -1,5 +1,6 @@
 import {RFile, WbFile, WhistleblowerIdentity, Comment} from "@app/models/app/shared-public-model";
 import {Context, Answers, Questionnaire3, Questionnaire} from "@app/models/reciever/reciever-tip-data";
+import {RedactionData} from "@app/models/component-model/redaction";
 
 export class WbTipData {
   id: string;
@@ -38,6 +39,7 @@ export class WbTipData {
   whistleblower_identity_field: Children;
   answers: Answers;
   motivation:string;
+  redactions:RedactionData[];
 }
 
 export class Step {

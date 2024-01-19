@@ -12,7 +12,7 @@
                 <thead>
                 <tr>
                     <th>{{ 'Filename' | translate }}</th>
-                    <th *ngIf="appDataService.public.node.viewer">{{ 'View' | translate }}</th>
+                    <th>{{ 'View' | translate }}</th>
                     <th>{{ 'Download' | translate }}</th>
                     <th>{{ 'Upload date' | translate }}</th>
                     <th>{{ 'Type' | translate }}</th>
@@ -20,9 +20,10 @@
                 </tr>
                 </thead>
                 <tbody id="fileListBody">
-                <tr id="file-{{index}}" *ngFor="let file of getSortedWBFiles(tipService.tip.wbfiles | orderBy:'creation_date') as index" [ngClass]="{ 'view-supported': supportedViewTypes.includes(file.type) }">
+                <ng-container *ngFor="let file of getSortedWBFiles(tipService.tip.wbfiles | orderBy:'creation_date') as index">
+                    <tr id="file-{{index}}" *ngIf="!file.reference_id && (!maskService.isMasked(file.ifile_id,tipService.tip) || redactMode)" [ngClass]="{ 'view-supported': supportedViewTypes.includes(file.type) }">
                         <td>{{ file.name }}</td>
-                        <td *ngIf="appDataService.public.node.viewer">
+                        <td>
                             <button class="btn btn-sm btn-primary tip-action-views-file" [disabled]="!supportedViewTypes.includes(file.type)" [ngClass]="{ 'btn-secondary': !supportedViewTypes.includes(file.type) }" data-toggle="tooltip" [title]="'View' | translate" (click)="viewRFile(file)">
                                 <i class="fa-solid fa-eye"></i>
                             </button>
@@ -31,11 +32,39 @@
                             <button class="btn btn-sm btn-primary tip-action-download-file" data-toggle="tooltip" [title]="'Download' | translate" (click)="downloadRFile(file)">
                                 <i class="fa-solid fa-download"></i>
                             </button>
+                            <span *ngIf="redactMode">
+                                <span *ngIf="preferenceResolver.dataModel.can_mask_information && !maskService.isMasked(file.ifile_id,tipService.tip)">
+                                  <button class="btn btn-sm btn-outline-secondary"
+                                    data-toggle="tooltip" [title]="'Mask' | translate"
+                                    (click)="redactFileOperation('full-mask', 'file', file)">
+                                    <i class="fa-solid fa-eraser"></i>
+                                  </button>
+                                </span>
+                                <span *ngIf="maskService.isMasked(file.ifile_id,tipService.tip)">
+                                  <button class="btn btn-sm btn-outline-secondary"
+                                    [ngClass]="{ 'active': redactMode }"
+                                    data-toggle="tooltip" [title]="'Mask' | translate"
+                                    *ngIf="preferenceResolver.dataModel.can_mask_information"
+                                    [attr.disabled]="!redactMode ? true : null"
+                                    (click)="redactFileOperation('full-unmask', 'file', file)">
+                                    <i class="fa-solid fa-eraser"></i>
+                                  </button>
+                                  <button class="btn btn-sm btn-danger tip-action-delete-file"
+                                    data-toggle="tooltip" [title]="'Redact' | translate"
+                                    *ngIf="preferenceResolver.dataModel.can_redact_information"
+                                    [attr.disabled]="!redactMode ? true : null"
+                                    (click)="redactFileOperation('redact', 'file', file)">
+                                    <i class="fa-solid fa-trash"></i>
+                                  </button>
+                                </span>
+                            </span>
                         </td>
                         <td>{{ file.creation_date | date:'dd-MM-yyyy HH:mm' }}</td>
                         <td>{{ file.type }}</td>
                         <td>{{ file.size | byteFmt:2 }}</td>
                 </tr>
+                </ng-container>
+               
                 </tbody>
             </table>
         </div>

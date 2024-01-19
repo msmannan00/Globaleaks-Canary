@@ -34,6 +34,7 @@ import {rtipResolverModel} from "@app/models/resolvers/rtips-resolver-model";
 import {IarData} from "@app/models/reciever/Iar-data";
 import {statusResolverModel} from "@app/models/resolvers/status-resolver-model";
 import {statisticsResolverModel} from "@app/models/resolvers/statistics-resolver-model";
+import { RedactionData } from "@app/models/component-model/redaction";
 
 
 @Injectable({
@@ -412,6 +413,14 @@ export class HttpService {
 
   requestUpdateAdminNotification(notification: notificationResolverModel): Observable<notificationResolverModel> {
     return this.httpClient.put<notificationResolverModel>("api/admin/notification", notification);
+  }
+  
+  requestCreateRedaction(content:RedactionData): Observable<RedactionData> {
+    return this.httpClient.post<RedactionData>("api/recipient/redactions", content);
+  }
+
+  requestUpdateRedaction(data:RedactionData): Observable<RedactionData> {
+    return this.httpClient.put<RedactionData>("api/recipient/redactions/"+ data.id, data);
   }
 
   runOperation(url: string, operation: string, args: any, refresh: boolean) {
