@@ -34,6 +34,10 @@
                 <span id="tip-action-delete" *ngIf="preferencesService.dataModel.can_delete_submission" (click)="tipDelete()" data-toggle="tooltip" title="{{'Delete' | translate}}" class="btn btn-outline-secondary">
                 <i class="fa-solid fa-trash"></i>
             </span>
+            <span *ngIf="(preferencesService.dataModel.can_redact_information || preferencesService.dataModel.can_mask_information)" (click)="toggleRedactMode()" data-toggle="tooltip" title="{{redactOperationTitle | translate}}"
+	            class="btn btn-outline-secondary" [ngClass]="{'active': redactMode}">
+                <i class="fa-solid fa-eraser"></i>
+            </span>
             <ng-container *ngIf="tip?.status !== 'closed'">
               <span id="tip-action-change-status" (click)="openModalChangeState()" data-toggle="tooltip" title="{{'Change status' | translate}}" class="btn btn-outline-secondary">
                 <i class="fa-solid fa-dot-circle"></i>
@@ -69,7 +73,7 @@
         </ng-container>
         <div class="row">
             <div class="col-md-12">
-                <src-tip-questionnaire-answers [tipService]="RTipService"></src-tip-questionnaire-answers>
+                <src-tip-questionnaire-answers [tipService]="RTipService" [redactOperationTitle]="redactOperationTitle" [redactMode]="redactMode"></src-tip-questionnaire-answers>
             </div>
             <ng-container class="col-md-6" *ngIf="tip && tip.enable_whistleblower_identity">
                 <src-whistleblower-identity-reciever></src-whistleblower-identity-reciever>
@@ -77,7 +81,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <src-tip-files-receiver></src-tip-files-receiver>
+                <src-tip-files-receiver [redactMode]="redactMode"></src-tip-files-receiver>
             </div>
         </div>
         <ul ngbNav #nav="ngbNav" class="nav-tabs" [(activeId)]="active">
@@ -96,7 +100,7 @@
                 <div class="col-md-12">
                     <src-tip-upload-wbfile [tip]="tip" (dataToParent)="listenToFields()" [key]="'public'"></src-tip-upload-wbfile>
                     <ng-container *ngIf="tip && tip.context">
-                        <src-tip-comments [tipService]="RTipService" [key]="'public'"></src-tip-comments>
+                        <src-tip-comments [tipService]="RTipService" [redactOperationTitle]="redactOperationTitle" [redactMode]="redactMode" [key]="'public'"></src-tip-comments>
                     </ng-container>
                 </div>
             </ng-template>
@@ -104,7 +108,7 @@
                 <div class="col-md-12">
                     <src-tip-upload-wbfile [tip]="tip" (dataToParent)="listenToFields()" [key]="'internal'"></src-tip-upload-wbfile>
                     <ng-container *ngIf="tip && tip.context">
-                        <src-tip-comments [tipService]="RTipService" [key]="'internal'"></src-tip-comments>
+                        <src-tip-comments [tipService]="RTipService" [redactOperationTitle]="redactOperationTitle" [redactMode]="redactMode" [key]="'internal'"></src-tip-comments>
                     </ng-container>
                 </div>
             </ng-template>
@@ -112,7 +116,7 @@
                 <div class="col-md-12">
                     <src-tip-upload-wbfile [tip]="tip" (dataToParent)="listenToFields()" [key]="'personal'"></src-tip-upload-wbfile>
                     <ng-container *ngIf="tip && tip.context">
-                        <src-tip-comments [tipService]="RTipService" [key]="'personal'"></src-tip-comments>
+                        <src-tip-comments [tipService]="RTipService" [redactOperationTitle]="redactOperationTitle" [redactMode]="redactMode" [key]="'personal'"></src-tip-comments>
                     </ng-container>
                 </div>
             </ng-template>

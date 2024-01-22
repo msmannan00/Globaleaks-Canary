@@ -50,6 +50,8 @@ export class TipComponent implements OnInit {
   tabs: Tab[];
   active: string;
   loading = true;
+  redactMode :boolean = false;
+  redactOperationTitle: string;
 
   constructor(private translateService: TranslateService,private tipService: TipService, private appConfigServices: AppConfigService, private router: Router, private cdr: ChangeDetectorRef, private cryptoService: CryptoService, protected utils: UtilsService, protected preferencesService: PreferenceResolver, protected modalService: NgbModal, private activatedRoute: ActivatedRoute, protected httpService: HttpService, protected http: HttpClient, protected appDataService: AppDataService, protected RTipService: ReceiverTipService, protected fieldUtilities: FieldUtilitiesService, protected authenticationService: AuthenticationService) {
   }
@@ -61,6 +63,7 @@ export class TipComponent implements OnInit {
 
   loadTipDate() {
     this.tip_id = this.activatedRoute.snapshot.paramMap.get("tip_id");
+    this.redactOperationTitle = this.translateService.instant('Mask') + ' / ' + this.translateService.instant('Redact');
     const requestObservable: Observable<any> = this.httpService.receiverTip(this.tip_id);
     this.loading = true;
     this.RTipService.reset();
@@ -352,6 +355,10 @@ export class TipComponent implements OnInit {
     );
   }
 
+  toggleRedactMode() {
+    this.redactMode = !this.redactMode;
+  }
+  
   listenToFields() {
     this.loadTipDate();
   }

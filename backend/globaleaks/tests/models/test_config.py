@@ -6,8 +6,6 @@ from globaleaks.tests import helpers
 
 
 class TestModels(helpers.TestGL):
-    initialize_test_database_using_archived_db = False
-
     def test_initialize_config(self):
         @transact
         def transaction(session):

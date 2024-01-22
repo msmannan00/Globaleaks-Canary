@@ -8,6 +8,7 @@ import {
   Comment
 } from "@app/models/app/shared-public-model";
 import {IarData} from "@app/models/reciever/Iar-data";
+import {RedactionData} from "@app/models/component-model/redaction";
 
 export class RecieverTipData {
   id: string;
@@ -48,6 +49,7 @@ export class RecieverTipData {
   whistleblower_identity_field: Children;
   tip_id: string;
   motivation:string;
+  redactions:RedactionData[];
 }
 
 export interface Questionnaire {

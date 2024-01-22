@@ -59,7 +59,6 @@ body {
 }
 
 .container {
-  min-height: 100vh;
   overflow-y: auto;
 }
 
@@ -979,6 +978,13 @@ htmlinput[type="email"] {
   box-shadow: none;
 }
 
+[dir] [role=button] {
+  cursor: pointer;
+}
+
+.edit {
+  cursor: pointer;
+}
 
 [dir="ltr"] #Sidebar .fa,
 [dir="ltr"] #Sidebar .fa-solid {
