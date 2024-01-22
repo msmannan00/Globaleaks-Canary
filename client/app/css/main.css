@@ -1110,3 +1110,7 @@ i.fa-solid.fa-chevron-right {
   opacity: 0.2;
   pointer-events: none;
 }
+
+.mask-btn:first-child:active, :not(.btn-check)+.btn:active {
+  border-color: white;
+}

@@ -14,15 +14,15 @@
 <div class="modal-footer">
     <div class="container">
         <div class="float-start">
-            <div *ngIf="preferenceResolver.dataModel.can_mask_information && preferenceResolver.dataModel.can_redact_information" class="btn">
+            <div *ngIf="preferenceResolver.dataModel.can_mask_information && preferenceResolver.dataModel.can_redact_information" class="btn mask-btn">
                 <div class="form-check form-check-inline">
                     <input class="" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                        [(ngModel)]="vars.redaction_switch" [value]="true" (ngChange)="toggleMasking()" />
+                        [(ngModel)]="vars.redaction_switch" [value]="true" (ngModelChange)="toggleMasking()" />
                     <label class="form-check-label" for="inlineRadio1">{{ 'Mask' | translate }}</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                        [(ngModel)]="vars.redaction_switch" [value]="false" (ngChange)="toggleMasking()" />
+                        [(ngModel)]="vars.redaction_switch" [value]="false" (ngModelChange)="toggleMasking()" />
                     <label class="form-check-label" for="inlineRadio2">{{ 'Redact' | translate }}</label>
                 </div>
             </div>
