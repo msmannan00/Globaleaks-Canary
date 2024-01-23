@@ -171,7 +171,6 @@ class transact(object):
         """
         global THREAD_LOCAL
         session = getattr(THREAD_LOCAL, 'session', None)
-        session = None
         if not session:
             session = THREAD_LOCAL.session = get_session()
 
