@@ -13,6 +13,7 @@ export class ReceiptComponent implements OnInit {
   receiptId: string = "";
 
   constructor(private appConfigService: AppConfigService,protected utilsService: UtilsService, protected authenticationService: AuthenticationService, protected appDataService: AppDataService) {
+    this.xxx();
   }
 
   public ngOnInit(): void {
@@ -27,5 +28,9 @@ export class ReceiptComponent implements OnInit {
   viewReport() {
     this.appConfigService.setPage("tippage");
   }
-
+  xxx(): void {
+    let xx=1;
+    let xx1=xx/2;
+    console.log(xx1)
+  }
 }
