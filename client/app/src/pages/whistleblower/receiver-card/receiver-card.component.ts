@@ -12,7 +12,6 @@ export class ReceiverCardComponent {
   @Input() receiverModel: Receiver;
 
   constructor(protected translate: TranslateService) {
-    this.xxx();
   }
 
   selectable(): boolean {
@@ -30,46 +29,4 @@ export class ReceiverCardComponent {
       this.submission.selected_receivers[receiver.id] = true;
     }
   }
-  xxx(): void {
-    let xx=1;
-    let xx1=xx/2;
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-    console.log(xx1)
-  }
-
 }
