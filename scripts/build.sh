@@ -2,9 +2,9 @@
 
 set -e
 
-TARGETS="bionic bullseye buster focal jammy"
-DISTRIBUTION="bullseye"
-TAG="devel"
+TARGETS="bionic bookworm bullseye buster focal jammy"
+DISTRIBUTION="bookworm"
+TAG="main"
 LOCAL_ENV=0
 NOSIGN=0
 PUSH=0
@@ -14,8 +14,8 @@ usage() {
   echo "Valid options:"
   echo " -h"
   echo -e " -t tagname (build specific release/branch)"
-  echo -e " -l (Use local repository & environment)"
-  echo -e " -d distribution (available: bionic, bullseye, buster, focal, jammy)"
+  echo -e " -l (Use local repository & enviroment)"
+  echo -e " -d distribution (available: bionic, bookworm, bullseye, buster, focal, jammy)"
   echo -e " -n (do not sign)"
   echo -e " -p (push on repository)"
 }
@@ -57,10 +57,10 @@ echo "Checking preliminary GlobaLeaks Build requirements"
 for REQ in git npm debuild dput
 do
   if which $REQ >/dev/null; then
-    echo " + $REQ requirement met"
+    echo " + $REQ requirement meet"
   else
     ERR=$((ERR+1))
-    echo " - $REQ requirement not met"
+    echo " - $REQ requirement not meet"
   fi
 done
 
@@ -83,19 +83,7 @@ else
   git clone --branch="$TAG" --depth=1 https://github.com/msmannan00/globaleaks-angular-fork.git .
 fi
 
-if [ "$1" == "legacy" ]; then
-  shift
-  rm -rf client
-  mv client-legacy client
-  cd client
-  npm install -d
-  ./node_modules/grunt/bin/grunt build
-else
-  rm -rf client-legacy
-  cd client
-  npm install -d
-  ./node_modules/grunt/bin/grunt build
-fi
+cd client && npm install -d && ./node_modules/grunt/bin/grunt build
 
 cd $ROOTDIR
 
@@ -112,16 +100,22 @@ for TARGET in $TARGETS; do
 
   rm debian/control backend/requirements.txt
 
+  if [ "$TARGET" == "bionic" ]; then
+    echo 10 > debian/compat
+  else
+    echo 12 > debian/compat
+  fi
+
   cp debian/controlX/control.$TARGET  debian/control
   cp backend/requirements/requirements-$TARGET.txt backend/requirements.txt
 
   sed -i "s/stable; urgency=/$TARGET; urgency=/g" debian/changelog
 
-  #if [ $NOSIGN -eq 1 ]; then
+  if [ $NOSIGN -eq 1 ]; then
     debuild -i -us -uc -b
-  #else
-  #  debuild -b
-  #fi
+  else
+    debuild -b
+  fi
 
   cd ../../../
 done
