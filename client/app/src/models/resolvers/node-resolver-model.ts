@@ -41,7 +41,6 @@ export class nodeResolverModel {
   uuid: string;
   version: string;
   viewer: boolean;
-  wizard_done: boolean;
   changelog: string;
   license: string;
   languages_supported: {

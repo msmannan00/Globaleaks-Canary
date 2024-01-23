@@ -1,5 +1,4 @@
 import {Component, OnInit} from "@angular/core";
-import {Router} from "@angular/router";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {nodeResolverModel} from "@app/models/resolvers/node-resolver-model";
@@ -15,7 +14,7 @@ export class adminHomeComponent implements OnInit {
   nodeData: nodeResolverModel;
   preferenceData: preferenceResolverModel;
 
-  constructor(private utilsService: UtilsService, private preference: PreferenceResolver, protected nodeResolver: NodeResolver, private router: Router) {
+  constructor(private utilsService: UtilsService, private preference: PreferenceResolver, protected nodeResolver: NodeResolver) {
   }
 
   ngOnInit(): void {
@@ -28,14 +27,5 @@ export class adminHomeComponent implements OnInit {
     if (this.nodeData.user_privacy_policy_text && this.preferenceData.accepted_privacy_policy === "1970-01-01T00:00:00Z") {
       this.utilsService.acceptPrivacyPolicyDialog().subscribe();
     }
-  }
-
-  isActive(route: string): boolean {
-    return this.router.isActive(route, {
-      paths: "subset",
-      queryParams: "subset",
-      fragment: "ignored",
-      matrixParams: "ignored"
-    });
   }
 }

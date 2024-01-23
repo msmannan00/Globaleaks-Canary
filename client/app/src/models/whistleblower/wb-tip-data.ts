@@ -86,7 +86,6 @@ export class Attrs {
   max_len?: MaxLen;
   min_len?: MinLen;
   regexp?: Regexp;
-  display_alphabetically?: DisplayAlphabetically;
 }
 
 export class InputValidation {
@@ -111,12 +110,6 @@ export interface Regexp {
   name: string;
   type: string;
   value: string;
-}
-
-export class DisplayAlphabetically {
-  name: string;
-  type: string;
-  value: boolean;
 }
 
 export class TriggeredByOption {
