@@ -290,7 +290,7 @@
                 <div class="col-md-12">
                     <div class="form-group" *ngIf="nodeResolver.dataModel.enable_scoring_system">
                         <label>{{ 'Triggered by score' | translate }}:</label>
-                        <select class="form-select-custom" [(ngModel)]="field.triggered_by_score" convert-to-number>
+                        <select class="form-select-custom" [(ngModel)]="field.triggered_by_score">
                             <option value="0">{{ 'Low' | translate }}</option>
                             <option value="1">{{ 'Medium' | translate }}</option>
                             <option value="2">{{ 'High' | translate }}</option>

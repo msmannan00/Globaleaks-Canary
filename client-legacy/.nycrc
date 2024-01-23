@@ -1,8 +1,0 @@
-{
-  "reporter": ["lcov", "text-summary"],
-  "include": ["build/js/**/*"],
-  "exclude": ["cypress/**/*", "node_modules/**/*", "app/**/*", "build/lib/**/*"],
-  "check-coverage": false,
-  "report-dir": "cypress/coverage",
-  "sourceMap": false
-}

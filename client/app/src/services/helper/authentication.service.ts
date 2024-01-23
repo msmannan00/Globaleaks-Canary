@@ -127,7 +127,7 @@ export class AuthenticationService {
           }
           const src = this.activatedRoute.snapshot.queryParams['src'];
           if (src) {
-            this.router.navigate([src]);
+            this.router.navigate([src]).then();
             location.replace(src);
           } else {
             if (this.session.role === "whistleblower") {
@@ -135,7 +135,7 @@ export class AuthenticationService {
                 this.appDataService.receipt = password;
                 this.titleService.setPage("tippage");
               }
-              this.router.navigate(['/']);
+              this.router.navigate(['/']).then();
             } else {
               if (!callback) {
                 this.reset();
@@ -197,29 +197,6 @@ export class AuthenticationService {
       headers = headers.set('X-Confirmation', confirmation);
     }
     return headers;
-  }
-
-  processResponse(response: Session) {
-    if (response && response && response.properties && response.properties.new_receipt) {
-      const receipt = response.properties.new_receipt;
-      const formattedReceipt = this.formatReceipt(receipt);
-
-      const modalRef = this.modalService.open(OtkcAccessComponent,{backdrop: 'static', keyboard: false});
-      modalRef.componentInstance.arg = {
-        receipt: receipt,
-        formatted_receipt: formattedReceipt
-      };
-      modalRef.componentInstance.confirmFunction = () => {
-        this.http.put('api/whistleblower/operations', {
-          operation: 'change_receipt',
-          args: {}
-        }).subscribe(() => {
-          this.titleService.setPage('tippage');
-          modalRef.close();
-        });
-      };
-      return;
-    }
   }
 
   logout(callback?: () => void) {

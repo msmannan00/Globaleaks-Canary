@@ -121,10 +121,6 @@ export class MaskService {
     }, content);
   }
 
-  onHighlight(content: string, ranges: any[]) {
-    return this.maskContent(content, ranges, true, String.fromCharCode(0x2588),"");
-  }
-
   onUnHighlight(content: string, originalContent: string, ranges: any[]) {
     return this.maskContent(content, ranges, false,"", originalContent);
   }

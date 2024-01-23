@@ -1,10 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {UtilsService} from "@app/shared/services/utils.service";
 import {NetworkResolver} from "@app/shared/resolvers/network.resolver";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {nodeResolverModel} from "@app/models/resolvers/node-resolver-model";
 import {TlsConfig} from "@app/models/component-model/tls-confiq";
-import {AuthenticationService} from "@app/services/helper/authentication.service";
 
 @Component({
   selector: "src-https-status",
@@ -15,15 +13,11 @@ export class HttpsStatusComponent implements OnInit {
   @Input() tlsConfig: TlsConfig;
   nodeData: nodeResolverModel;
 
-  constructor(private authenticationService: AuthenticationService, private utilsService: UtilsService, protected networkResolver: NetworkResolver, private nodeResolver: NodeResolver) {
+  constructor(protected networkResolver: NetworkResolver, private nodeResolver: NodeResolver) {
   }
 
   ngOnInit(): void {
     this.nodeData = this.nodeResolver.dataModel;
-  }
-
-  toggleCfg() {
-    this.utilsService.toggleCfg(this.authenticationService, this.tlsConfig, this.dataToParent);
   }
 
   getNetworkResolver(){

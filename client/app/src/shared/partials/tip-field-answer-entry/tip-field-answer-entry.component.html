@@ -13,7 +13,7 @@
     </div>
     <div *ngSwitchCase="'voice'">
         <div class="audio-player-wrapper">
-            <iframe #viewer id="{{'audio-file-' + field.id}}" class="audio-player-iframe" frameborder="0" scrolling="no" sandbox="allow-downloads allow-scripts" [src]="iframeUrl" ></iframe>
+            <iframe #viewer id="{{'audio-file-' + field.id}}" class="audio-player-iframe" sandbox="allow-downloads allow-scripts" [src]="iframeUrl" ></iframe>
         </div>
     </div>
     <div *ngSwitchCase="'selectbox'">

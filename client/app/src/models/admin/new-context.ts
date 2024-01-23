@@ -10,7 +10,6 @@ export class NewContext {
   show_steps_navigation_interface = true;
   select_all_receivers = true;
   maximum_selectable_receivers = 0;
-  enable_comments = true;
   enable_two_way_comments = true;
   enable_attachments = true;
   questionnaire_id = "";

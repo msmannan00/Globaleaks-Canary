@@ -6,7 +6,6 @@ export class contextResolverModel {
   select_all_receivers: boolean;
   maximum_selectable_receivers: number;
   allow_recipients_selection: boolean;
-  enable_comments: boolean;
   enable_two_way_comments: boolean;
   enable_attachments: boolean;
   score_threshold_medium: number;

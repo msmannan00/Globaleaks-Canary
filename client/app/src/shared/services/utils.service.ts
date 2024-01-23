@@ -67,18 +67,6 @@ export class UtilsService {
     return ret;
   }
 
-  load(url: string): Observable<string> {
-    return from(this.tokenResource.getWithProofOfWork()).pipe(
-      switchMap((token: any) => {
-        const modifiedUrl = `${url}?token=${token.id}:${token.answer}`;
-        return new Observable<string>((observer) => {
-          observer.next(modifiedUrl);
-          observer.complete();
-        });
-      })
-    );
-  }
-
   download(url: string): Observable<void> {
     return from(this.tokenResource.getWithProofOfWork()).pipe(
       switchMap((token: any) => {

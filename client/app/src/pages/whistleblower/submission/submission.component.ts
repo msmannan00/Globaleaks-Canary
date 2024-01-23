@@ -137,10 +137,6 @@ export class SubmissionComponent {
     return this.navigation < this.lastStepIndex();
   }
 
-  singleStepForm() {
-    return this.firstStepIndex() === this.lastStepIndex();
-  };
-
   stepForm(index: number): any {
     if (this.stepForms && index !== -1) {
       return this.stepForms.get(index);
@@ -191,10 +187,6 @@ export class SubmissionComponent {
     }
 
     return uploading;
-  }
-
-  getContextID() {
-    return this.submissionService.context.id;
   }
 
   calculateEstimatedTime() {

@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {ErrorCodes} from "@app/models/app/error-code";
-import {LanguagesSupported, Root, Status} from "@app/models/app/public-model";
+import {LanguagesSupported, Root} from "@app/models/app/public-model";
 import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
@@ -31,7 +31,7 @@ export class AppDataService {
   receipt: string;
   score: number;
   receivers_by_id: any = {};
-  submissionStatuses: Status[];
+  submissionStatuses: any[];
   submission_statuses_by_id: any;
   contexts_by_id: any = {};
   questionnaires_by_id: any = {};

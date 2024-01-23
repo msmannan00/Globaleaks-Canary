@@ -17,7 +17,6 @@ import {WhistleblowerIdentity} from "@app/models/app/shared-public-model";
 export class TippageComponent implements OnInit {
 
   fileUploadUrl: string;
-  tip_id = null;
   answers = {};
   uploads: { [key: string]: any } = {};
   score = 0;

@@ -48,7 +48,6 @@ export class StatisticsComponent implements OnInit {
       options: {
         plugins: {
           legend: {
-            onClick: (e: any) => e.stopPropagation(),
             display: true,
             position: 'left',
             labels: {

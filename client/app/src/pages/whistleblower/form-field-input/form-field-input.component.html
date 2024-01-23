@@ -5,7 +5,7 @@
         </div>
         <div *ngSwitchDefault [ngSwitch]="field.type">
             <div *ngSwitchCase="'textarea'">
-                <textarea id="{{fieldEntry}}" [name]=input_entryIndex class="form-control inputelem" [minlength]="field.attrs.min_len.value" [maxlength]="field.attrs.max_len.value" [(ngModel)]="entry['value']" [required]="entry.required_status" #textarea="ngModel" [attr.aria-label]="field.label" [placeholder]="field.placeholder" dynamic-textarea></textarea>
+                <textarea id="{{fieldEntry}}" [name]=input_entryIndex class="form-control inputelem" [minlength]="field.attrs.min_len.value" [maxlength]="field.attrs.max_len.value" [(ngModel)]="entry['value']" [required]="entry.required_status" #textarea="ngModel" [attr.aria-label]="field.label" [placeholder]="field.placeholder" ></textarea>
                 <div class="clearfix">
                     <div *ngIf="entryValue.length && field.attrs.max_len.value > 0 && (field.attrs.max_len.value - entryValue.length) <= 50" class="float-end">{{entryValue.length}}/{{field.attrs.max_len.value}}
                     </div>
@@ -21,7 +21,7 @@
                     <option *ngFor="let option of field.options | orderBy:field.attrs.display_alphabetically.value ? 'label' : 'order'; let index = index" id="{{fieldEntry}}-option-{{index}}" [value]="option.id">{{option.label}}</option>
                 </select>
                 <div class="input-group" [ngClass]="{'d-block': !entry['value']}" *ngIf="field.options.length >= 10">
-                    <ng-select [clearable]="false" name="entry" [(ngModel)]="entry['value']" theme="bootstrap">
+                    <ng-select [clearable]="false" name="entry" [(ngModel)]="entry['value']" >
                         <ng-option *ngFor="let option of field.options | orderBy:field.attrs.display_alphabetically.value ? 'label' : 'order'" [value]="option.id">{{option.label}}</ng-option>
                     </ng-select>
                     <span class="input-append" (click)="entry['value']='';" disabled="!entry['value']" *ngIf="entry['value']">
