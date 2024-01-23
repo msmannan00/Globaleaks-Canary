@@ -48,14 +48,6 @@ export class WizardComponent implements OnInit {
     "enable_developers_exception_notification": false
   };
 
-  config_profiles = [
-    {
-      name: "default",
-      title: "Default",
-      active: true
-    }
-  ];
-
   constructor(private titleService: TitleService, private translationService: TranslationService, private router: Router, private http: HttpClient, private authenticationService: AuthenticationService, private httpService: HttpService, protected appDataService: AppDataService, protected appConfigService: AppConfigService) {
   }
 
@@ -73,16 +65,6 @@ export class WizardComponent implements OnInit {
     }
   }
 
-  selectProfile(name: string) {
-    const self = this;
-    this.config_profiles.forEach(function (profile: { name: string, title: string, active: boolean }) {
-      profile.active = profile.name === name;
-      if (profile.active) {
-        self.wizard.profile = profile.name;
-      }
-    });
-  };
-
   complete() {
 
     if (this.completed) {
@@ -99,10 +81,6 @@ export class WizardComponent implements OnInit {
         }
       }
     );
-  }
-
-  openLocalhost() {
-    window.location.href = "https://127.0.0.1:8443/";
   }
 
   validateDuplicateRecipient() {
