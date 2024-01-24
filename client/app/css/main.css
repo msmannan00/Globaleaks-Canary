@@ -493,11 +493,15 @@ table tr td {
 
 .file-upload-icon {
   font-size: 2rem;
-  padding: 10px;
+  padding: 60px 60px 67px;
 }
 
 .file-upload-progress {
-  margin-top: 5.6rem;
+  margin-top: 0;
+}
+
+.progress {
+  border-radius: 4px;
 }
 
 .message,
