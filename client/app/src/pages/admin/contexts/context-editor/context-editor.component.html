@@ -166,8 +166,11 @@
                                 <label>{{ 'Additional questionnaire' | translate }}</label>
                                 <select class="form-select-custom" [(ngModel)]="contextResolver.additional_questionnaire_id" name="contextResolver.additional_questionnaire_id">
                                     <option *ngIf="contextResolver.additional_questionnaire_id" [value]="null"></option>
-                                    <option [value]="item.id" *ngFor="let item of questionnairesData">{{ item.name }}
-                                    </option>
+                                    <ng-container *ngFor="let item of questionnairesData">
+                                        <ng-container *ngIf="item.id !== contextResolver.questionnaire_id">
+                                            <option [value]="item.id">{{ item.name }}</option>
+                                        </ng-container>
+                                    </ng-container>
                                 </select>
                             </div>
                             <div *ngIf="nodeData.enable_scoring_system">
