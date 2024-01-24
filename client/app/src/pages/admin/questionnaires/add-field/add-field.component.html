@@ -1,7 +1,7 @@
 <form class="add-field" #newField="ngForm">
     <div class="form-group">
         <label>{{ 'Question' | translate }}</label>
-        <input name="new_field.label" class="form-control" [(ngModel)]="new_field.label" type="text" required>
+        <input name="label" class="form-control" [(ngModel)]="new_field.label" type="text" required>
         <div class="text-danger" *ngIf="newField.form.get('label')?.errors?.['required']">
             <span>{{ 'This field is mandatory' | translate }}</span>
         </div>
