@@ -27,7 +27,7 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit {
   field_id_map: { [key: string]: Field };
   done: boolean = false;
   uploads: { [key: string]: any };
-  file_upload_url: string = "api/whistleblower/wbtip/rfile";
+  file_upload_url: string = "api/whistleblower/wbtip/wbfiles";
 
   constructor(protected whistleblowerSubmissionService:WhistleblowerSubmissionService,private wbTipResolver: WbTipResolver, private httpService: HttpService, private fieldUtilitiesService: FieldUtilitiesService, private utilsService: UtilsService, protected wbTipService: WbtipService, protected activeModal: NgbActiveModal) {
   }
