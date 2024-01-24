@@ -89,7 +89,7 @@ export class PreferenceTab1Component implements OnInit {
                   this.utilsService.reloadCurrentRoute();
                 },
                 error: (_: any) => {
-                  this.toggle2FA(event);
+                 this.toggle2FA(event);
                 }
               }
             );
