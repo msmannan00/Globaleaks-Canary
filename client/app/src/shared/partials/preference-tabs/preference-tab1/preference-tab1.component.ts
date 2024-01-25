@@ -187,6 +187,7 @@ export class PreferenceTab1Component implements OnInit {
       this.utilsService.readFileAsText(files[0])
         .subscribe((txt: string) => {
           this.preferenceResolver.dataModel.pgp_key_public = txt;
+          return this.save();
         });
     }
   };
