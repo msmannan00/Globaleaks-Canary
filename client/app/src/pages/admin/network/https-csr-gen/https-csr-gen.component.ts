@@ -34,14 +34,15 @@ export class HttpsCsrGenComponent {
   submitCSR() {
     this.httpService.requestCSRDirectContentResource(this.csr_cfg).subscribe({
       next: (response) => {
-        this.utilsService.saveAs(this.authenticationService, new Blob([response.data], {type: "text/plain;charset=utf-8"}), "csr.pem");
+        this.utilsService.saveBlobAs("csr.pem", new Blob([response.data]));
       },
       error: (error: any) => {
         if (error.status === 201) {
           const errorText = error.error.text;
-          this.utilsService.saveAs(this.authenticationService, new Blob([errorText], {type: "application/octet-stream"}), "csr.pem");
+          this.utilsService.saveBlobAs("csr.pem", new Blob([errorText]));
         }
       }
     });
   }
+
 }

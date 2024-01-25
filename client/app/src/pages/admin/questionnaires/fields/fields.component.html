@@ -136,6 +136,17 @@
                         <input [(ngModel)]="field.preview" type="checkbox">
                         <label>{{ 'Preview' | translate }}</label>
                     </div>
+                    <div class="form-group">
+                        <label>
+                          <span>{{ 'Width' | translate }}</span>
+                          <span>(</span><span>{{ '0 = auto' | translate }}</span><span>)</span>
+                         </label>
+                        <input class="form-control" [(ngModel)]="field.width" type="number" min="0" max="12">
+                    </div>
+                    <div class="form-group" *ngIf="field.template_id">
+                        <label>{{ 'Template override' | translate }}</label>
+                        <input name="template_override_id" class="form-control" [(ngModel)]="field.template_override_id" type="text">
+                    </div>
                 </div>
             </div>
             <div class="row" *ngIf="field.instance !== 'reference'">
