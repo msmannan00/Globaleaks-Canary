@@ -12,7 +12,7 @@ export class TipFieldComponent {
   @Input() redactMode: boolean;
   @Input() redactOperationTitle: string;
 
-  hasMultipleEntries(field_answer: any) {
-    return field_answer.length > 1;
+  hasMultipleEntries(field_answer: any): boolean {
+    return Array.isArray(field_answer) && field_answer.length > 1;
   };
 }

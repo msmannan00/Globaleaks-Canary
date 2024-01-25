@@ -407,7 +407,7 @@ export class UtilsService {
   }
 
   saveBlobAs(filename:string,response:Blob){
-    const blob = new Blob([response], {type: "application/octet-stream"});
+    const blob = new Blob([response], {type: "text/plain;charset=utf-8"});
     const blobUrl = URL.createObjectURL(blob);
 
     const a = document.createElement("a");
