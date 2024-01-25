@@ -18,11 +18,7 @@ export class UrlRedirectsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (Array.isArray(this.redirects.dataModel)) {
-      this.redirectData = this.redirects.dataModel;
-    } else {
-      this.redirectData = [this.redirects.dataModel];
-    }
+    this.getResolver();
   }
 
   redirectPath(path: redirectResolverModel, index: number) {
@@ -48,7 +44,11 @@ export class UrlRedirectsComponent implements OnInit {
 
   getResolver() {
     return this.httpService.requestRedirectsResource().subscribe(response => {
-      this.redirectData = response;
+      if (Array.isArray(response)) {
+        this.redirectData = response;
+      } else {
+        this.redirectData = [response];
+      }
     });
   }
 
