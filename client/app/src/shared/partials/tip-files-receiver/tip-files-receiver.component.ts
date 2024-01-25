@@ -47,9 +47,12 @@ export class TipFilesReceiverComponent implements OnInit {
     (
       {
         next: async token => {
-          const ans = this.cryptoService.proofOfWork(token.id).subscribe();
-          window.open("api/recipient/wbfiles/" + file.id + "?token=" + token.id + ":" + ans);
-          this.appDataService.updateShowLoadingPanel(false);
+          this.cryptoService.proofOfWork(token.id).subscribe(
+              (ans) => {
+                window.open("api/recipient/wbfiles/" + file.id + "?token=" + token.id + ":" + ans);
+                this.appDataService.updateShowLoadingPanel(false);
+              }
+          );
         }
       }
     );
