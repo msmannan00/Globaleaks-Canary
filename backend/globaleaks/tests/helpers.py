@@ -24,7 +24,6 @@ from . import TEST_DIR
 
 from globaleaks import db, models, orm, event, jobs, __version__, DATABASE_VERSION
 from globaleaks.db.appdata import load_appdata
-from globaleaks.orm import transact, tw
 from globaleaks.handlers.base import BaseHandler
 from globaleaks.handlers.admin.context import create_context, get_context
 from globaleaks.handlers.admin.field import db_create_field
@@ -38,6 +37,7 @@ from globaleaks.handlers.whistleblower import wbtip
 from globaleaks.handlers.whistleblower.submission import create_submission
 from globaleaks.models import serializers
 from globaleaks.models.config import db_set_config_variable
+from globaleaks.orm import transact, tw
 from globaleaks.rest import decorators
 from globaleaks.rest.api import JSONEncoder
 from globaleaks.sessions import initialize_submission_session, Sessions
@@ -138,17 +138,15 @@ def init_state():
     Settings.failed_login_attempts.clear()
     Settings.working_path = os.path.abspath('./working_path')
 
-    Settings.eval_paths()
-
-    if os.path.exists(Settings.working_path):
-        shutil.rmtree(Settings.working_path)
-
     orm.set_thread_pool(FakeThreadPool())
 
     State.settings.enable_api_cache = False
     State.tenants[1] = TenantState()
     State.tenants[1].cache.hostname = 'www.globaleaks.org'
     State.tenants[1].cache.encryption = True
+
+    if os.path.exists(Settings.working_path):
+        shutil.rmtree(Settings.working_path)
 
     State.init_environment()
 
@@ -566,7 +564,6 @@ def forge_request(uri=b'https://www.globaleaks.org/',
 
 
 class TestGL(unittest.TestCase):
-    initialize_test_database_using_archived_db = True
     pgp_configuration = 'ALL'
 
     @inlineCallbacks
@@ -582,14 +579,20 @@ class TestGL(unittest.TestCase):
 
         self.setUp_dummy()
 
-        if self.initialize_test_database_using_archived_db:
+        testdb = os.path.abspath("./globaleaks.db")
+        if os.path.exists(testdb):
             shutil.copy(
-                os.path.join(TEST_DIR, 'db', 'empty', 'globaleaks-%d.db' % DATABASE_VERSION),
-                os.path.join(Settings.db_file_path)
+                testdb,
+                Settings.db_file_path
             )
         else:
             yield db.create_db()
             yield db.init_db()
+
+            shutil.copy(
+                Settings.db_file_path,
+                testdb
+            )
 
         yield self.set_hostnames(1)
 

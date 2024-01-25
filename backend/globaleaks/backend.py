@@ -1,6 +1,7 @@
 # -*- coding: utf-8
 #   backend
 #   *******
+import os
 import sys
 import traceback
 
@@ -97,7 +98,10 @@ class Service(service.Service):
         return defer.DeferredList(deferred_list)
 
     def _deferred_start(self):
-        ret = update_db()
+        ret = 0
+
+        if os.path.exists(self.state.settings.db_file_path):
+            ret = update_db()
 
         if ret == -1:
             reactor.stop()
