@@ -41,7 +41,7 @@ export class FormFieldInputComponent implements OnInit {
   dateRange: { start: string, end: string } = {"start": "", "end": ""};
   dateOptions1: NgbDateStruct;
   dateOptions2: NgbDateStruct;
-  dateOptions: { min_date: NgbDateStruct, max_date: NgbDateStruct }
+  dateOptions: {min_date:NgbDateStruct,max_date:NgbDateStruct}={min_date:{year:0,month:0,day:0},max_date:{year:0,month:0,day:0}}
 
   constructor(private fieldUtilitiesService: FieldUtilitiesService) {
   }
