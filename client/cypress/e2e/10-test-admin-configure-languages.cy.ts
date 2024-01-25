@@ -21,6 +21,7 @@ describe("admin configure languages", () => {
     cy.get('ul.selection-list li').should('contain', 'German [de]');
 
     cy.contains("button", "Save").click();
+    cy.waitForLoader(false);
     cy.visit("/#/admin/settings");
     cy.contains("button", "Languages").click();
 
