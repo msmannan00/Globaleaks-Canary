@@ -4,7 +4,7 @@ set -e
 
 TARGETS="bionic bookworm bullseye buster focal jammy"
 DISTRIBUTION="bookworm"
-TAG="main"
+TAG="devel"
 LOCAL_ENV=0
 NOSIGN=0
 PUSH=0
@@ -111,11 +111,7 @@ for TARGET in $TARGETS; do
 
   sed -i "s/stable; urgency=/$TARGET; urgency=/g" debian/changelog
 
-  if [ $NOSIGN -eq 1 ]; then
-    debuild -i -us -uc -b
-  else
-    debuild -b
-  fi
+  debuild -i -us -uc -b
 
   cd ../../../
 done
