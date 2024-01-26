@@ -139,11 +139,17 @@ export class AuthenticationService {
             } else {
               if (!callback) {
                 this.reset();
-                this.appDataService.updateShowLoadingPanel(true);
-                this.router.navigate([this.session.homepage], {
-                  queryParams: this.activatedRoute.snapshot.queryParams,
-                  queryParamsHandling: "merge"
-                }).then();
+                const redirect = this.activatedRoute.snapshot.queryParams['redirect'] || '/';
+                const redirectURL = decodeURIComponent(redirect);
+                if(redirectURL!="/"){
+                  this.router.navigateByUrl(redirectURL).then();
+                }else {
+                  this.appDataService.updateShowLoadingPanel(true);
+                  this.router.navigate([this.session.homepage], {
+                    queryParams: this.activatedRoute.snapshot.queryParams,
+                    queryParamsHandling: "merge"
+                  }).then();
+                }
               }
             }
           }

@@ -1,7 +1,7 @@
 import {EventEmitter, Injectable, Renderer2} from "@angular/core";
 import * as Flow from "@flowjs/flow.js";
 import {TranslateService} from "@ngx-translate/core";
-import {Router} from "@angular/router";
+import {ActivatedRouteSnapshot, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {RequestSupportComponent} from "@app/shared/modals/request-support/request-support.component";
 import {HttpService} from "@app/shared/services/http.service";
@@ -39,6 +39,11 @@ export class UtilsService {
 
   updateNode(nodeResolverModel:nodeResolverModel) {
     this.httpService.updateNodeResource(nodeResolverModel).subscribe();
+  }
+
+  routeGuardRedirect(){
+    let loginUrlWithParam = `/login?redirect=${encodeURIComponent(location.hash.substring(1))}`;
+    this.router.navigateByUrl(loginUrlWithParam).then();
   }
 
   newItemOrder(objects: any[], key: string): number {

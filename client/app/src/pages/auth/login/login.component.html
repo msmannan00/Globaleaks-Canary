@@ -1,6 +1,6 @@
 
 <div class="row">
-    <div class="col-3 col-sm-auto login-form">
+    <div class="col-3 col-sm-auto login-form" id="login-form">
         <form #loginValidator="ngForm" autocomplete="off">
             <input class="d-none" type="password" name="disable-autocomplete" />
             <app-simple-login *ngIf="appDataService.public.node.simplified_login" [loginValidator]="loginValidator" [loginData]='loginData'></app-simple-login>
