@@ -126,13 +126,21 @@ The system implements strict transport security by default.
 ::
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
-Administrators could optionally enable the preload functionality.
+The default configuration of the application see this feature disabled.
 
 Content-Security-Policy
 +++++++++++++++++++++++
-The backend implements the following `Content Security Policy (CSP) <https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP>`_:
+The backend implements a strict `Content Security Policy (CSP) <https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP>`_ preventing any interaction with resources of third parties and restricting execution of untrusted user input:
 ::
-  Content-Security-Policy: base-uri 'none'; connect-src 'self'; default-src 'none'; font-src 'self' data:; form-action 'none'; frame-ancestors 'none'; img-src 'self' data:; media-src 'self'; script-src 'self';
+  Content-Security-Policy: base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none'; sandbox;
+
+On this default policy are then implemented specific policies in adherence to the principle of least privilege.
+
+For example:
+
+* the index.html source of the app is the only resource enabled to load scripts from the same origin;
+* every dynamic content is strictly sandboxed on a null origin;
+* every untrusted user input or third party library is executed in a sandbox limiting its interaction with other application components.
 
 Cross-Origin-Embedder-Policy
 ++++++++++++++++++++++++++++
@@ -144,23 +152,23 @@ Cross-Origin-Opener-Policy
 ++++++++++++++++++++++++++
 The backend implements the following `Cross-Origin-Opener-Policy (COOP) <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Opener-Policy>`_:
 ::
-  Cross-Origin-Resource-Policy: same-site
+  Cross-Origin-Resource-Policy: same-origin
 
 Cross-Origin-Resource-Policy
 ++++++++++++++++++++++++++++
 The backend implements the following `Cross-Origin-Resource-Policy (CORP) <https://developer.mozilla.org/en-US/docs/Web/HTTP/Cross-Origin_Resource_Policy>`_:
 ::
-  Cross-Origin-Resource-Policy: same-site
+  Cross-Origin-Resource-Policy: same-origin
 
 Permissions-Policy
 ++++++++++++++
 The backend implements the following Permissions-Policy header configuration to limit the possible de-anonymization of the user by disabling dangerous browser features:
 ::
-  Permissions-Policy: camera=('none') display-capture=('none') document-domain=('none') fullscreen=('none') geolocation=('none') microphone=('none') speaker=('none')
+  Permissions-Policy: camera=() display-capture=() document-domain=() fullscreen=() geolocation=() microphone=() serial=() usb=() web-share=()
 
 X-Frame-Options
 +++++++++++++++
-The backend configure the X-Frame-Options header to prevent inclusion by means of Iframes in any site:
+In addition to the implemtent Content Security Policy of level 3 that prevent the application to be included into an Iframe, the backend implements the outdated X-Frame-Options header to enure that iframes are always prevented in any circumstance also on outdated browsers:
 ::
   X-Frame-Options: deny
 
@@ -210,16 +218,17 @@ The client opens external urls on a new tab independent from the application con
 
 Input Validation
 ----------------
+The application implement strict input validation both on the backend and on the client
 
-On the Server
-+++++++++++++
-The system adopts a whitelist based input validation approach. Each client request is checked against a set of regular expressions and only requests matching the expression are then processed.
+On the Backend
+++++++++++++++
+Each client request is strictly validated by the backend against a set of regular expressions and only requests matching the expression are then processed.
 
 As well a set of rules are applied to each request type to limit possible attacks. For example any request is limited to a payload of 1MB.
 
 On the Client
 +++++++++++++
-The client implements strict validation of the rendered content by using the angular component `ngSanitize.$sanitize <http://docs.angularjs.org/api/ngSanitize.$sanitize>`_
+Each server output is strictly validated by the Client at rendering time by using the angular component `ngSanitize.$sanitize <http://docs.angularjs.org/api/ngSanitize.$sanitize>`_
 
 Form Autocomplete OFF
 ---------------------
@@ -335,15 +344,38 @@ When the accessed via the Tor Browser, the browser guarantees that no persistent
 
 In order to prevent or limit the forensic traces left in the browser history of the users accessing the platform via a common browser, the application avoids to change URI during whistleblower navigation. This has the effect to prevent the browser to log the activities performed by the user and offers high plausible deniability protection making the whistleblower appear as a simple visitor of the homepage and avoiding an actual evidence of any submission.
 
+Secure File Management
+----------------------
 Secure File Download
---------------------
-Malware Isolation
-+++++++++++++++++
-Any attachment file uploaded by anonymous whistleblowers could possibly contain malware. To support users to download a copy of the report and protect them while transfering files to an air-gapped machine in ordr to access them, the export functionality of reports provides files wrapped in a safe Zip archive.
+++++++++++++++++++++
+Any attachment file uploaded by anonymous whistleblowers could possibly contain malware that could be provided intentionally or not. It is always recommended if possible to download files and access them on an air-gapped machine disconnected from the network and other sensible devices. In order to safely downlod files and move them using a USB stick the application offers the possibility to perform a report export enabling the download of a ZIP archive including all the report content and thus reducing risks of executing files on-click during the file transfer from a device to one other.
 
-Download Encryption
-+++++++++++++++++++
-Any attachment file uploaded by anonymous whistlblowers is protected and stored on the application server with an automated :doc:`Requirements </security/Encryption Protocol>`. To protect at rest files downloaded by recipients on their own computers, the platforms offers users the possibility to load their own PGP key; whenever users load their own PGP key, their downloads will be served encrypted.
+Safe File Opening
++++++++++++++++++
+For conditions where the whistleblower trustworthines has been validated or in projects subject to a low risk threat model, the application offers an integrated file viewer that benefiting of modern browser sandboxing capabilities enable opening of a limited set of file types that are considered more safe and in a way that is better than accessing files directly through the operation system.
+This option is disabled by default and it is recommended that administrators of the project enable this feature only after proper evaluation and only in conditions in which it possible to ensure that recipients' browsers are always maintained up-to-date.
+Among the advantages of this novel viewer is the fact that access to files is performed within a controlled sandbox, via a set of controlled libraries and avoiding usage of any permanent storage and thus limiting the the exposure of the opened file.
+
+The set of file formats supported by this viewer are:
+
+* AUDIO
+* CSV
+* IMAGE
+* PDF
+* VIDEO
+* TXT
+
+The default configuration of the application see this feature disabled.
+
+PGP Encryption
+++++++++++++++
+The system offers an optional PGP encryption feature.
+
+When enabled, users could possibly enable a personal PGP key that will be used by the system to encrypt email notifications and encrypt downloaded files on-the-fly.
+
+This is a recommended feature for high risk threat models in association with the usage of air-gapped systems for the visualization of the reports.
+
+The default configuration of the application see this feature disabled.
 
 Encryption of Temporary Files
 -----------------------------

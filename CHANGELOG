@@ -1,4 +1,310 @@
-Changes in version 4.10.19.1
+Changes in version 4.14.8
+    Fix failure on configuration of network filter introduced in 4.14.0 (#3971)
+    Fix failure on the upload of PGP keys (#3970)
+    Update translations
+
+Changes in version 4.14.7
+    Update pid file in globaleaks.service
+
+Changes in version 4.14.6
+    Revise mail notifications in case of multiple report access grants (#3928)
+    Create pid file on /dev/shm/globaleaks/globaleaks.pid
+    Revase packaging reducing dependencies
+
+Changes in version 4.14.5
+    Downgrade version of PDFjs breaking pdf viewer (#3960)
+
+Changes in version 4.14.4
+    Correct assignment of classes on <body> tag
+    Ensure one could change the report status without specifying a motivation (#3935)
+    Fix visualization of user preferences for analyst user role (#3940)
+    Implement autofocus on first input of login pages (#3744)
+    Improve accessibility by setting initial focus on the reporting questionnaire
+    Revise implementation of report status change incorrectly setting the report
+      to never expire; defect introduced in 4.14.0
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 4.14.3
+    Apply minor bugfixing on release 4.14.0; see git log for details
+
+Changes in version 4.14.2
+    Apply minor bugfixing on release 4.14.0; see git log for details
+
+Changes in version 4.14.1
+    Apply minor bugfixing on release 4.14.0; see git log for details
+
+Changes in version 4.14.0
+    Implement masking and redaction features (#3420, #3429)
+    Register report update when the report is opened (#3918)
+    Implement functionality enabling a recipient to operate on behalf of a whistleblower
+    Add analyst user role and initial implementation of statistics panel
+    Extend recipient list UI adding number of recipients for each report
+    Added possibility to export the report list in form of CSV
+    Redirect to hostname only when the HTTPS certificate is configured and enabled
+    Make it possible to localize privacy and whistleblowing policies urls
+    Enable showdown simplifiedAutoLink option
+    Simplify interface for enabling and disabling email notifications
+    Enable recipients connected to contexts to list every report
+    Implement data retention policies on closed statuses
+    Introduces a proviledge to restrict who can re-open management of reports
+    Remove custodian user role enabler
+    Count whistleblowers accesses
+    Correct CSR download function
+    Bump npm dependencies to latest versions
+    Update translations
+    [doc] Update documentation images
+
+Changes in version 4.13.22
+    Deprecate file upload preview based on data uri
+      The feature will be reimplemented soon based on the
+      secure file viewer extended to more file types that not just images.
+    Revert "Modify report print to unroll tabs and export completed data"
+      Reason: functionality with graphical imperfections on some browsers
+      The feature will be reimplemented creating exports of type pdf
+    Revise firewall rules in relation to issue #3856
+
+Changes in version 4.13.21
+    Fix issue #3855 introduced in 4.13.19
+
+Changes in version 4.13.20
+    Revise firewall rules changes introduced in 4.13.19
+
+Changes in version 4.13.19
+    Correct audio player in relation to handling of multiple recordings
+    Modify report print to unroll tabs and export completed data
+    Reimplement CI on the base of Github Actions
+    During wizard register hostname only if it is not an IP
+    Revise firewalling rules in relation to Tor malfunctions
+    When creating a new channel always assign the 'default' questionnaire
+    Fix issues: #3790, #3794
+    Update translations
+    [doc] Revise documentation about Continuous Integration
+
+Changes in version 4.13.18
+    Fix download of recipient files by whistleblowers
+    Deprecate Accessibility Declaration feature;
+      it seems to confuse most of the users and
+      who need it could use the standard footer
+      customization feature.
+    Bump client dependencies to latest versions
+    Update translations source
+
+Changes in version 4.13.17
+    Enable secure file viewer by design and by default
+    Implement sandboxed listening of audio recordings
+    Make it possible for whistleblowers to listen to their own audio recordings (#3736)
+    Make it possible for whistleblowers to download their own file uploads
+    Always ask organization data when on signup form
+    Fix issue #3740
+    Bump client dependencies to latest versions
+    Update translations
+
+Changes in version 4.13.16
+    Fix issue #3727
+    Rename report Export functionality in Download
+    Replace icon used for file downloads
+    Bump npm dependencies to latest versions
+
+Changes in version 4.13.15
+    Improve responsivity of audio player interface (#3712)
+    Silence exceptions related to remote connections
+    Correct initialization order in Tor service
+    Update whistleblowing identity question
+    Reorganize Sites' options
+    Show postpone button also when the channel data retention policy is disabled
+    Revise content security policy
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 4.13.14
+    Revise vocoder implementation
+    Apply minor bugfixing
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 4.13.13
+    Implement speaker anonymization based on vocoder (#3483)
+    Fix issue on identity access for identities inserted before version 4.11 (#3628)
+    Fix homepage link definition in debian packaging (#3685)
+    Fix regression in user email change API (#3674)
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 4.13.12
+    Add Docker scripts: Dockerfile and docker-compose.yaml
+    Apply improvements for SEO purposes
+    Bump npm dependencies to latest versions
+    Add systemd script and revise packaging
+    Implement automated restart on failure (e.g. OOM)
+    Update translations
+
+Changes in version 4.13.11
+    Revise file decryption compatibility in compatibility with all sw versions
+
+Changes in version 4.13.10
+    Revise fixes included in 4.13.10 in compatibility with all sw versions
+
+Changes in version 4.13.9
+    Complete fix for failure on files migration from versions <= 4.11.5 (#3606)
+    File restore procedure described on ticket
+
+Changes in version 4.13.8
+    Fix regression on fileviewer introduced in 4.13.0
+    Revise migration to db version 65 in relation to recipient files
+
+Changes in version 4.13.7
+    Revise firewall rules in relation to new rootless mode
+
+Changes in version 4.13.6
+    Refactor application to be run as rootless
+    Fix additional questionnaire functionality
+    Fix issue #3610
+    Bump client version to latest versions
+    Update translations
+
+Changes in version 4.13.5
+    Fix issue #3609
+
+Changes in version 4.13.4
+    Fix duplicated entries shown on reports lists
+
+Changes in version 4.13.3
+    Fix bug #3599 introduced in release 4.13.2
+
+Changes in version 4.13.2
+    Ensure to register the same time for every action performed during a submission
+    Log admin operation: send_password_reset_email
+    Optimize Tor loading storing consensus data permanently
+    Change tor socket port to 9999
+
+Changes in version 4.13.1
+    Fix issue wiith selection of users to which granting report access
+    Remove redundant reordering of reports reordered on the client
+    Fix order of identity access requests by date (reverse)
+    Fix indicators for identities provided after the initial report
+    Fix issue #3592
+
+Changes in version 4.13.0
+    Make it possible for recipients to transfer access to their reports to other recipients (#3511)
+    Make it possible to configure a Privacy Policy for internal users (#3510)
+    Re-add CSS id ReceiptText used by some users for customization purposes (#3579)
+    Export start_time on /api/public API
+    Add initial draft of /api/health API
+    Enforce redirect from IP address to server hostname
+    Launch Tor via TxTorcon implementing Tor by design and by default
+    Export platform start time on public API
+    Fix issue #3577, #3587
+    Bump npm dependencies to latest versions
+    Update translations
+
+Changes in version 4.12.9
+    Add fieldset and legend to radio buttons inputs (#3433)
+    Add label to language selector (#3574)
+    Fix LE renewal compatibility with python3-acme 2.1.0 (#3571)
+
+Changes in version 4.12.8
+    Remove report labels from mail notifications
+    Fix defect #3565
+    Update translations
+
+Changes in version 4.12.7
+    Revise fix for issue #3556
+
+Changes in version 4.12.6
+    Fix issues: #3549, #3556
+
+Changes in version 4.12.5
+    Fix bug loading of Tor onion services introduced in 4.12.0
+
+Changes in version 4.12.4
+    Fix issue #3555
+    Revise migration of receiver files
+    Update translations
+
+Changes in version 4.12.3
+    Avoid to create first questionnaire step that seems to confuse users
+    Simplify whistleblowing interface related to files
+    Fix duplication of questionnaires using field templates
+    Correct validation of questionaires in relation to addition of feature #3426
+    Fix regression #3546
+
+Changes in version 4.12.2
+    Vary the permission policy in relation to feature #3426
+    Correct title of emails for new reports
+    Update translations
+
+Changes in version 4.12.1
+    Fix regression on receipt visualization introduced during packaging of 4.12.0
+
+Changes in version 4.12.0
+    Add packaging for Debian 12 Bookworm (#3485)
+    Perform full application review following AgID advice on accessibility
+    The full whistleblowing process is now accessible with screen readers
+    Implement notification for reports reminders (#3419)
+    Add two factor authentication on file based' configurations
+    Automatically configure a self signed certificate to ensure every
+    connection is always encrypted
+    Implement encryption of identity access requests and replies
+    Implement encryption of reports label
+    Perform db migration in RAM to ensure shorter downtimes on update
+    Enable file viewer by default
+    Make it possible to configure a Privacy Policy link
+    Make it possible to configure a Whistleblowing Policy link
+    Add support for Basque (Euskara) language
+    Update translations
+    Fix issues #3442, #3456, #3466, #3471, 3504
+    Voice question
+    [doc] Update documentation
+    [doc] Update ER schema representation
+
+Changes in version 4.11.5
+    Fix regression on ip filter check introduced in 4.11.4
+    causing authorized connections to be blocked
+    Bump npm dependencies to latest version
+    Update translations
+
+Changes in version 4.11.4
+    Implement database sessions caching
+    Optimize API cache
+
+Changes in version 4.11.3
+    Improve TOTP implementation adding a 1 step window
+    Fix packaging in relation to missing license file
+
+Changes in version 4.11.2
+    Revise content security policy
+    Revise HTML to improve accessibility (#3373)
+    Fix issues #3407, #3412
+    Bump npm dependencies to latest version
+    Update translations
+
+Changes in version 4.11.1
+    Fix packaging of PDF.js library (#3400)
+    Automatically delete demo platforms older than 30 days
+    Bump npm dependencies to latest versions
+    Update translations
+    [doc] Align documentation to latest development
+
+Changes in version 4.11.0
+    Add optional sandboxed viewer to open some types of files (#3345)
+    Make it optional for administrators to usage of PGP (#3382)
+    Make it possible for users to configure a custom reminder on reports (#2866)
+    Remove possibility to close the Privacy Badge when clicked (#3387)
+    Make it possible to customize the "Request Support" feature (#3335)
+    Fix regression on unread reports reminder introduced in commit cf708b2
+    Prevent users to delete users when escrow keys could be invalidated
+    Revise Content Security Policy restricting priviledges on general API
+    Set Cross-Origin-Resource-Policy to same-origin instead of same-site
+    Add PDF.js library by @mozilla
+    Deprecate use of FileSaver.js library
+    Adopt Inter Noto Sans font families to improve sw internationalization
+    Bump npm dependencies to latest versions
+    Update translations
+    [doc] Update documentation on the implemented Content Security Policy
+    [doc] Revise ApplicationSecurity documentation
+
+Changes in version 4.10.18
     Fix wizard when performed using a remote connection
 
 Changes in version 4.10.17

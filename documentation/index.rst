@@ -1,5 +1,5 @@
-GlobaLeaks Documentation
-========================
+Documentation
+=============
 
 `GlobaLeaks <https://www.globaleaks.org/>`_ is an open-source, free software intended to enable anyone to easily set up and maintain a secure whistleblowing platform.
 
@@ -11,5 +11,5 @@ GlobaLeaks Documentation
   setup/index.rst
   security/index.rst
   user/index.rst
-  roadmap/index.rst
   developer/index.rst
+  roadmap/index.rst

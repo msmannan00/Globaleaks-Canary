@@ -2,31 +2,27 @@ User Interface
 ==============
 This section offers you a summary of the user interface offered to Admin users.
 
-Anytime you log in as administrator via the Login page the application takes you to your personal administrative Homepage; This page includes some documentation about GlobaLeaks that is intended to clarify you all the up-to-date documentation in matter of software security, best practices and community support.
-
-From this Home page you may access all the common user facilities already described in the general User Documentation.
-
 .. image:: ../../images/admin/home.png
 
-A menu on the right offers you links to the different administrative sections:
+Through the menu you could access the following administrative sections:
 
-   1. Site settings
+   1. Settings
 
    2. Users
 
    3. Questionnaires
 
-   4. Contexts
+   4. Channels
 
    5. Case management
 
-   6. Notification settings
+   6. Notification
 
-   7. Network settings
+   7. Network
 
-   8. Advanced settings
+   8. Sites
 
-   9. System overview
+   9. Audit log
 
 Settings
 --------
@@ -36,7 +32,7 @@ This section is furtherly divided in:
 
    1. Settings
 
-   2. Theme customization
+   2. Files
 
    3. Languages
 
@@ -50,11 +46,11 @@ In this section is configurable the logo and all the texts of the main user inte
 
 .. image:: ../../images/admin/site_settings_main_configuration.png
 
-Theme Customization
-...................
-In this section could be loaded CSS and Javascript files necessary to customize the interface.
+Files
+.....
+In this section could be loaded CSS and Javascript and other files necessary to customize the interface.
 
-.. image:: ../../images/admin/site_settings_theme_customization.png
+.. image:: ../../images/admin/site_settings_files.png
 
 Languages
 .........
@@ -72,7 +68,7 @@ Here could be configured overrides for any of the texts of the platform and of t
 .. image:: ../../images/admin/site_settings_text_customization.png
 
 Advanced Settings
------------------
+.................
 In this section could be configured a set of advanced settings.
 
 .. image:: ../../images/admin/advanced_settings.png
@@ -94,21 +90,18 @@ The software offers the possibility to create users with the following roles:
 
    2. Recipients
 
+User Options
+............
+
+.. image:: ../../images/admin/users_options.png
+
 Questionnaires
 --------------
-This section is where whistleblowing questionnaires could be created and managed.
+The softare implements a standard default questionnaire that is proposed as a good base for a generic whistleblowing procedure. This questinnaire is the current result of the research performed by the project team with the organizations that have adopted the solution and expecially with anticorruption and investigative journalism NGOs.
 
-By default the software implements a Default Questionnaire with a single Step and the following three questions:
+As every organization has different needs, risks and goals globaleaks has been designed considering to implement an advanced questionnaire builder offering the possibility to design custom questionnaires.
 
-   One question "Short description" of type "Multi-line text input" enabling whistleblower to provide a short summary of the fact reported;
-
-   One question "Full description" of type "Multi-line text input" enabling whistleblowers to describe the fact reported in detail;
-
-   One question "Attachments" of type "Attachment" enabling users to load one or more attachments.
-
-The system with its basic configuration completed with the initial Platform wizard is also already configured with this Default Questionnaire pre-associated to the Default Context.
-
-Depending on your project needs you could create specific questionnaire for each of your different reports' contexts.
+The following sections present the questionnaire builder and its capabilities.
 
 .. image:: ../../images/admin/questionnaires.png
 
@@ -143,7 +136,9 @@ The software enables you to create questions of the following types:
 
    9. Date range
 
-   10. Question group
+   10. Voice
+
+   11. Question group
 
 Common Question Properties
 ...........................
@@ -157,11 +152,11 @@ Each of the software question types make it possible to configure the following 
 
   Required: Set this field if you want this question to be mandatory
 
-  Preview: Set this field if you want the answers to this question to appear in the preview section of the  list 
+  Preview: Set this field if you want the answers to this question to appear in the preview section of the list
 
-Contexts
+Channels
 --------
-This section is where whistleblowing contexts (channels) could be created and managed.
+This section is where whistleblowing channels could be created and managed.
 
 A whistleblowing channel is typically defined by the following main characteristics
 
@@ -172,19 +167,19 @@ A whistleblowing channel is typically defined by the following main characterist
     Questionnaire: the questionnaire that will be proposed to whistleblowers selecting this channel
     Submission expiration: the data retention policy for the channel
 
-The system with the basic configuration completed with the initial platform wizard is configured with a single Context called Default, on which is associated a recipient and the default questionnaire.
+The system with the basic configuration completed with the initial platform wizard is configured with a single Channel called Default, on which is associated a recipient and the default questionnaire.
 
-Depending on your project needs here you could create additional Contexts and configure their respective recipients and properties.
+Depending on your project needs here you could create additional Channels and configure their respective properties.
 
 .. image:: ../../images/admin/contexts.png
 
-Submissions Expiration
-......................
+Data Retention Policy
+.....................
 The software enables to configure a data retention policy for each channel.
 This is a fundamental property of the whistleblowing channel that makes it possible to configure automatic secure deletion of reports after a certain period of time.
 This setting should be configured in relation to the risk of the channel in order to limit unneeded exposure of the reports received therein.
 
-By default a context is configured with a report expiration of 30 days.
+By default a channel is configured with a report expiration of 90 days.
 
 Case Management
 ---------------
@@ -192,7 +187,6 @@ This section is intended to host all the main case management feature that will 
 Currently it hosts the possibility to define reports statuses and sub-statuses intended to be used by Recipients while working on the reports.
 
 By default the system includes the following report statuses:
-
    1. New
 
    2. Open
@@ -203,17 +197,17 @@ Within this section you may add additional Statuses between the State Open and C
 
 .. image:: ../../images/admin/report_statuses.png
 
-Notification Settings
----------------------
+Notification
+------------
 This is the section where are configured all the aspects related to the mail notifications sent by the software.
 
 The section is furtherly divided in:
-   1. Main configuration
+   1. Notification Settings
 
-   2. Notification templates
+   2. Notification Templates
 
-Main configuration
-..................
+Notification Settings
+.....................
 Here are configured the technical details about SMTP.
 
 .. note::
@@ -230,8 +224,8 @@ Depending on your project needs you may override the default text with your cust
 
 .. image:: ../../images/admin/notification_templates.png
 
-Network Settings
-----------------
+Network
+-------
 In this section are configured the network settings.
 
 The section is furtherly divided in:
@@ -281,8 +275,40 @@ Here you can configure URL Redirects.
 
 .. image:: ../../images/admin/url_redirects.png
 
+Sites
+-----
+The site section enables organization to create and manage multiple secondary whistleblowing sites.
+
+Sites Management
+................
+Secondary whistleblowing platforms with independent configurations can be manually created and managed through the Sites interface.
+
+Organizations have typically need for creating a secondary site when dealing with subsidiaries or third party clients.
+
+.. image:: ../../images/admin/sites_management_sites.png
+
+After creating a secondary site an administrators of the main site could simply enter on that system by clicking a "Configure" button.
+
+After clicking on the button the administrator will be logged in on the the administrative panel of the site.
+
+Signup Module
+.............
+The software features a signup module that can be enabled and used to offers others users the possibility to register their secondary site.
+
+Organizations have typically need for a signup module when offering the platform to other subsidiaries or third party clients where they want users to have the possibility to self subscribe.
+
+The signup feature can be anabled in the Options tab of the Sites section.
+
+.. image:: ../../images/admin/signup_configuration.png
+
+When the signup module is enabled the submission module of the main site is automatically disabled and the home page will be featuring the following signup form:
+
+.. image:: ../../images/admin/signup_form.png
+
 Audit Log
 ---------
+The software features a privacy precerving audit log enabling administrators of the system to supervise on projects operations.
+
 .. image:: ../../images/admin/audit_log.png
 
 .. image:: ../../images/admin/audit_log_users.png
@@ -290,4 +316,3 @@ Audit Log
 .. image:: ../../images/admin/audit_log_reports.png
 
 .. image:: ../../images/admin/audit_log_scheduled_jobs.png
-

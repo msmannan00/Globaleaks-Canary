@@ -38,7 +38,7 @@ Enter the followings:
 
 It is better to leave untouched the pre-defined settings pertaining the notification to admins and to recipients, but in the case you want to disable them, it is possible to check the corresponding checkboxes.
 
-You can then set the value for the time at which the notification alert of expiring submission; this value is set at 72hours to give time to the recipient(s) to check and manage the pending submissions.
+You can then set the value for the time at which the notification alert of expiring report; this value is set at 72hours to give time to the recipient(s) to check and manage the pending submissions.
 
 It is possible to tweak the maximum number of emails allowed in an hour, before email wil be suspended in order to avoid flooding the system. It is advised to keep the pre-defined value, and eventually change it accordingly with mail server capabilities.
 
@@ -61,7 +61,7 @@ This CSS example shows how to customize the Background Color of the application.
 
    body
    {
-      background-color: red;
+      background-color: blue;
    }
 
 Example 2: Custom Font
@@ -72,12 +72,12 @@ This CSS example shows how to customize the font of the application.
 
    @font-face {
      font-family: 'Antani';
-     src: url('s/antani.ttf') format('truetype');
+     src: url('s/antani.woff2') format('woff2');
      font-weight: normal;
      font-style: normal;
    }
 
    body {
-     font-family: 'Antani', Helvetica, Arial, Sans;
+     font-family: 'Antani', Inter, sans-serif;
      font-size: 16px;
    }
