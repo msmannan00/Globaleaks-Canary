@@ -4,7 +4,7 @@ set -e
 
 TARGETS="bionic bookworm bullseye buster focal jammy"
 DISTRIBUTION="bookworm"
-TAG="devel"
+TAG="main"
 LOCAL_ENV=0
 NOSIGN=0
 PUSH=0
@@ -80,7 +80,7 @@ mkdir -p $BUILDSRC && cd $BUILDSRC
 if [ $LOCAL_ENV -eq 1 ]; then
   git clone --branch="$TAG" --depth=1 file://$(pwd)/../../../GlobaLeaks .
 else
-  git clone --branch="$TAG" --depth=1 https://github.com/msmannan00/globaleaks-angular-fork.git .
+  git clone --branch="$TAG" --depth=1 https://github.com/globaleaks/GlobaLeaks.git .
 fi
 
 cd client && npm install -d && ./node_modules/grunt/bin/grunt build
@@ -111,7 +111,11 @@ for TARGET in $TARGETS; do
 
   sed -i "s/stable; urgency=/$TARGET; urgency=/g" debian/changelog
 
-  debuild -i -us -uc -b
+  if [ $NOSIGN -eq 1 ]; then
+    debuild -i -us -uc -b
+  else
+    debuild -b
+  fi
 
   cd ../../../
 done
