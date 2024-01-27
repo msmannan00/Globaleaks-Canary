@@ -36,9 +36,12 @@ export class FormFieldInputsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fieldId = this.stepId + "-field-" + this.fieldRow + "-" + this.fieldCol;
     this.entries = this.getAnswersEntries(this.entry);
-    this.fieldEntry = this.fieldId + "-input-" + this.index;
+    if (this.fieldEntry) {
+      this.fieldId = this.fieldEntry + "-field-" + this.fieldRow + "-" + this.fieldCol;
+    } else {
+      this.fieldId = (this.stepId ? this.stepId + "-": "") + "field-" + this.fieldRow + "-" + this.fieldCol;
+    }
   }
 
   getAnswersEntries(entry: any) {
@@ -49,7 +52,7 @@ export class FormFieldInputsComponent implements OnInit {
     return entry[this.field.id];
   };
 
-  addAnswerEntry() {
-    this.entries.push({});
+  addAnswerEntry(entries:{ [key: string]: Field }[]) {
+    entries.push({});
   };
 }

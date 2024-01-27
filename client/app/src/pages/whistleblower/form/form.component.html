@@ -2,7 +2,46 @@
     <ng-container *ngFor="let field of row | orderBy:'x' let fieldCol = index">
         <ng-container *ngIf="field.enabled">
             <div [ngClass]="fieldUtilitiesService.getClass(field, row.length)">
-                <src-form-field-inputs [fileUploadUrl]="fileUploadUrl" (notifyFileUpload)="notifyFileUpload.emit()" [identity_provided]=identity_provided [uploads]="uploads" [entry]="entry" [fields]="fields" [step]="step" [displayErrors]="displayErrors" [index]="index" [submission]="submission" [answers]="answers" [stepId]="stepId" [fieldCol]="fieldCol" [fieldRow]="fieldRow" [field]="field"></src-form-field-inputs>
+                <div *ngIf="(['checkbox', 'fieldgroup', 'multichoice'].indexOf(field.type) === -1) && (['whistleblower_identity'].indexOf(field.template_id) === -1)"
+                    class="question">
+                    <label  *ngIf="field.label" for="{{stepId + '-input-0'}}" class="title">{{field.label|translate}}</label>
+                    <span *ngIf="field.hint">
+                        <i data-toggle="tooltip" title="{{field.hint | translate}}"
+                            class="fa-solid fa-question-circle"></i>
+                    </span>
+                    <span *ngIf="field.required" class="text-danger sup" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
+                    <div class="question-body">
+                        <markdown *ngIf="field.description" class="description" [data]="field.description | stripHtml"></markdown>
+                        <div class="form-group">
+                            <src-form-field-inputs [fileUploadUrl]="fileUploadUrl"
+                                (notifyFileUpload)="notifyFileUpload.emit()" [identity_provided]=identity_provided
+                                [uploads]="uploads" [entry]="entry" [fields]="fields" [step]="step"
+                                [displayErrors]="displayErrors" [index]="index" [submission]="submission"
+                                [answers]="answers" [stepId]="stepId" [fieldCol]="fieldCol" [fieldRow]="fieldRow"
+                                [field]="field">
+                            </src-form-field-inputs>
+                        </div>
+                    </div>
+                </div>
+                <fieldset *ngIf="(['checkbox', 'fieldgroup', 'multichoice'].indexOf(field.type) !== -1) || (['whistleblower_identity'].indexOf(field.template_id) !== -1)" class="question">
+                    <legend class="title">{{field.label}}</legend>
+                    <span *ngIf="field.hint">
+                        <i data-toggle="tooltip" title="{{field.hint | translate}}" class="fa-solid fa-question-circle"></i>
+                    </span>
+                    <span *ngIf="field.required" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}" class="text-danger sup">*</span>
+                    <div class="question-body">
+                        <markdown *ngIf="field.description" class="description" [data]="field.description | stripHtml"></markdown>
+                        <div class="form-group">
+                            <src-form-field-inputs [fileUploadUrl]="fileUploadUrl"
+                                (notifyFileUpload)="notifyFileUpload.emit()" [identity_provided]=identity_provided
+                                [uploads]="uploads" [entry]="entry" [fields]="fields" [step]="step"
+                                [displayErrors]="displayErrors" [index]="index" [submission]="submission"
+                                [answers]="answers" [stepId]="stepId" [fieldCol]="fieldCol" [fieldRow]="fieldRow"
+                                [field]="field">
+                            </src-form-field-inputs>
+                        </div>
+                    </div>
+                </fieldset>
             </div>
         </ng-container>
     </ng-container>
