@@ -650,6 +650,10 @@ p:last-child {
   margin-bottom: 2em;
 }
 
+.question .question {
+  padding-left: 1em;
+}
+
 #whistle-blowing-question {
   white-space: pre-wrap;
 }
