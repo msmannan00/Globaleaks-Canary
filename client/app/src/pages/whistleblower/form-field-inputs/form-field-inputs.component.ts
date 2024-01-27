@@ -33,7 +33,7 @@ export class FormFieldInputsComponent implements OnInit {
   entries: { [key: string]: Field }[] = [];
   fieldEntry = "";
 
-  constructor(protected utilsService: UtilsService, private cdr: ChangeDetectorRef) {
+  constructor(protected utilsService: UtilsService) {
   }
 
   ngOnInit(): void {
@@ -54,7 +54,6 @@ export class FormFieldInputsComponent implements OnInit {
     let newEntry = cloneDeep(entries[0]);
     newEntry['value'] = "";
     entries.push(newEntry);
-    this.cdr.detectChanges();
   };
 
 }
