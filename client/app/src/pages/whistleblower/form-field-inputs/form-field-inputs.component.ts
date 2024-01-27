@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {ControlContainer, NgForm} from "@angular/forms";
 import {SubmissionService} from "@app/services/helper/submission.service";
 import {Answers} from "@app/models/reciever/reciever-tip-data";
 import {Step} from "@app/models/whistleblower/wb-tip-data";
 import {Field} from "@app/models/resolvers/field-template-model";
+import {cloneDeep} from "lodash";
 
 @Component({
   selector: "src-form-field-inputs",
@@ -32,7 +33,7 @@ export class FormFieldInputsComponent implements OnInit {
   entries: { [key: string]: Field }[] = [];
   fieldEntry = "";
 
-  constructor(protected utilsService: UtilsService) {
+  constructor(protected utilsService: UtilsService, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -42,14 +43,17 @@ export class FormFieldInputsComponent implements OnInit {
   }
 
   getAnswersEntries(entry: any) {
-    if (!entry || typeof entry === "undefined") {
+    if (typeof entry === "undefined") {
       return this.answers[this.field.id];
     }
 
     return entry[this.field.id];
   };
 
-  addAnswerEntry() {
-    this.entries.push({});
+  addAnswerEntry(entries:any) {
+    let newEntry = cloneDeep(entries[0]);
+    entries.push(newEntry);
+    this.cdr.detectChanges();
   };
+
 }

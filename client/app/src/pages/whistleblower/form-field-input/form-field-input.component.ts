@@ -61,7 +61,6 @@ export class FormFieldInputComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.entry["value"] = "";
     this.fieldFormVarName = this.fieldUtilitiesService.fieldFormName(this.field.id + "$" + this.index);
     this.initializeFormNames();
     this.fieldEntry = this.fieldId + "-input-" + this.index;
@@ -88,6 +87,8 @@ export class FormFieldInputComponent implements OnInit {
         this.dateOptions2 = this.field.attrs.max_date.value;
       }
     }
+
+    this.entry["value"] = "";
   }
 
   onDateSelection() {
@@ -114,4 +115,6 @@ export class FormFieldInputComponent implements OnInit {
   validateUploadSubmission() {
     return !!(this.uploads && this.uploads[this.field ? this.field.id : "status_page"] !== undefined && (this.field.type === "fileupload" && this.uploads && this.uploads[this.field ? this.field.id : "status_page"] && Object.keys(this.uploads[this.field ? this.field.id : "status_page"]).length === 0));
   }
+
+  protected readonly JSON = JSON;
 }
