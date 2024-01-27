@@ -91,21 +91,19 @@
                 <src-rfile-upload-button (notifyFileUpload)="notifyFileUpload.emit()" [fileUploadUrl]="fileUploadUrl" [uploads]="uploads" [field]="field" [formUploader]="true"></src-rfile-upload-button>
             </div>
             <div *ngSwitchCase="'fieldgroup'">
-                <div *ngIf="field.attrs.multimedia.value">
-                    <div *ngSwitchCase="'field.attrs.multimedia_type.value'">
-                        <div *ngSwitchCase="'image'">
-                            <img alt="media" [src]="field.attrs.multimedia_url.value" />
-                        </div>
-                        <div *ngSwitchCase="'audio'">
-                            <audio controls>
-                                <source [src]="field.attrs.multimedia_url.value" type="audio/mpeg" />
-                            </audio>
-                        </div>
-                        <div *ngSwitchCase="'video'">
-                            <video controls>
-                                <source [src]="field.attrs.multimedia_url.value" type="video/mp4">
-                            </video>
-                        </div>
+                <div [ngSwitch]="field.attrs.multimedia_type.value">
+                    <div *ngSwitchCase="'image'">
+                        <img alt="media" [src]="field.attrs.multimedia_url.value" />
+                    </div>
+                    <div *ngSwitchCase="'audio'">
+                        <audio controls>
+                            <source [src]="field.attrs.multimedia_url.value" type="audio/mpeg" />
+                        </audio>
+                    </div>
+                    <div *ngSwitchCase="'video'">
+                        <video controls>
+                            <source [src]="field.attrs.multimedia_url.value" type="video/mp4">
+                        </video>
                     </div>
                 </div>
                 <src-form [identity_provided]="identity_provided" [displayErrors]="displayErrors" [entry]="entry" [answers]="answers" [step]="rows" [submission]="submission" [index]="index"></src-form>
