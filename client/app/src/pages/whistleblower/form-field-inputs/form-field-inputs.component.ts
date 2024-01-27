@@ -52,6 +52,7 @@ export class FormFieldInputsComponent implements OnInit {
 
   addAnswerEntry(entries:any) {
     let newEntry = cloneDeep(entries[0]);
+    newEntry['value'] = "";
     entries.push(newEntry);
     this.cdr.detectChanges();
   };

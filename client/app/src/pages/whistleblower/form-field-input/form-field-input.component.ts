@@ -28,9 +28,9 @@ export class FormFieldInputComponent implements OnInit {
   @Input() uploads: { [key: string]: any };
   @Input() identity_provided: boolean;
   @Input() fileUploadUrl: string;
+  @Input() entryValue: any;
   @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
 
-  entryValue: string = "";
   fieldFormVarName: string;
   input_entryIndex = "";
   input_date: NgbDateStruct;
@@ -88,7 +88,6 @@ export class FormFieldInputComponent implements OnInit {
       }
     }
 
-    this.entry["value"] = "";
   }
 
   onDateSelection() {
