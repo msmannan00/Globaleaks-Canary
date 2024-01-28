@@ -28,7 +28,6 @@ export class FormFieldInputComponent implements OnInit {
   @Input() uploads: { [key: string]: any };
   @Input() identity_provided: boolean;
   @Input() fileUploadUrl: string;
-  @Input() entryValue: any;
   @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
 
   fieldFormVarName: string;
@@ -86,9 +85,6 @@ export class FormFieldInputComponent implements OnInit {
         this.dateOptions2 = this.field.attrs.max_date.value;
       }
     }
-    if(!this.entryValue){
-      this.entryValue = "";
-    }
   }
 
   onDateSelection() {
@@ -116,5 +112,4 @@ export class FormFieldInputComponent implements OnInit {
     return !!(this.uploads && this.uploads[this.field ? this.field.id : "status_page"] !== undefined && (this.field.type === "fileupload" && this.uploads && this.uploads[this.field ? this.field.id : "status_page"] && Object.keys(this.uploads[this.field ? this.field.id : "status_page"]).length === 0));
   }
 
-  protected readonly JSON = JSON;
 }
