@@ -27,19 +27,29 @@ export class FormFieldInputsComponent implements OnInit {
   @Input() uploads: { [key: string]: any };
   @Input() identity_provided: boolean;
   @Input() fileUploadUrl: string;
+  @Input() fieldEntry: string;
   @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
 
   fieldId: string;
   entries: { [key: string]: Field }[] = [];
-  fieldEntry = "";
 
   constructor(protected utilsService: UtilsService) {
   }
 
   ngOnInit(): void {
-    this.fieldId = this.stepId + "-field-" + this.fieldRow + "-" + this.fieldCol;
+    if(!this.fieldEntry){
+      this.fieldId = this.stepId + "-field-" + this.fieldRow + "-" + this.fieldCol;
+      this.fieldEntry = this.fieldId + "-input-" + this.index;
+    }else {
+      this.fieldId = "-field-" + this.fieldRow + "-" + this.fieldCol;
+      this.fieldEntry += this.fieldId + "-input-" + this.index;
+    }
+
     this.entries = this.getAnswersEntries(this.entry);
-    this.fieldEntry = this.fieldId + "-input-" + this.index;
+
+    if(!this.fieldEntry){
+      this.fieldEntry = "";
+    }
   }
 
   getAnswersEntries(entry: any) {

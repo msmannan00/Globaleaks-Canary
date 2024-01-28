@@ -21,6 +21,7 @@ export class FormComponent implements OnInit {
   @Input() identity_provided: any;
   @Input() fileUploadUrl: string;
   @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
+  @Input() fieldEntry: string;
 
   fields: Children[];
   stepId: string;
