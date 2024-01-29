@@ -37,8 +37,8 @@
             </div>
             <div *ngSwitchCase="'checkbox'">
                 <div *ngFor="let option of field.options | orderBy:field.attrs.display_alphabetically.value ? 'label' : 'order'; let index = index">
-                        <input id="{{fieldEntry + '-option-' + index}}" [name]="'input-' + index + '-option-' + entryIndex" class="form-control-input inputelinem" [(ngModel)]="entry[option.id]" [required]="entry.required_status" type="checkbox" />
-                        <label for="{{fieldEntry + '-option-' + index}}" data-toggle="tooltip" title="{{option.hint1}}" class="form-control-label" [ngClass]="{'text-underline': option.hint1}">{{option.label}}</label>
+                    <input id="{{fieldEntry + '-option-' + index}}" name="{{fieldEntry + '-option-' + index}}" class="form-control-input inputelinem" [(ngModel)]="entry[option.id]" [required]="entry.required_status" type="checkbox" />
+                    <label for="{{fieldEntry + '-option-' + index}}" data-toggle="tooltip" title="{{option.hint1}}" class="form-control-label" [ngClass]="{'text-underline': option.hint1}">{{option.label}}</label>
                 </div>
             </div>
             <div *ngSwitchCase="'date'">
