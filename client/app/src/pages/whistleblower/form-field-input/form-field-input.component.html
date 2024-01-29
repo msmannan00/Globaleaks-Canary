@@ -88,7 +88,7 @@
                 <src-voice-recorder (notifyFileUpload)="notifyFileUpload.emit()" [fileUploadUrl]="fileUploadUrl" [uploads]="uploads" [field]="field" [entryIndex]="entryIndex" [fieldEntry]="fieldEntry"></src-voice-recorder>
             </div>
             <div id="{{fieldEntry}}" *ngSwitchCase="'fileupload'">
-                <src-rfile-upload-button (notifyFileUpload)="notifyFileUpload.emit()" [fileUploadUrl]="fileUploadUrl" [uploads]="uploads" [field]="field" [formUploader]="true"></src-rfile-upload-button>
+                <src-rfile-upload-button [file_id]="fieldEntry" [session_id]="session_id" (notifyFileUpload)="notifyFileUpload.emit()" [fileUploadUrl]="fileUploadUrl" [uploads]="uploads" [field]="field" [formUploader]="true"></src-rfile-upload-button>
             </div>
             <div *ngSwitchCase="'fieldgroup'">
                 <div [ngSwitch]="field.attrs.multimedia_type.value">
@@ -106,7 +106,7 @@
                         </video>
                     </div>
                 </div>
-                <src-form (notifyFileUpload)="notifyFileUpload.emit()" [identity_provided]="identity_provided" [fileUploadUrl] = fileUploadUrl [fieldEntry]="fieldEntry" [displayErrors]="displayErrors" [entry]="entry" [answers]="answers" [step]="rows" [submission]="submission" [index]="index" [uploads]="uploads"></src-form>
+                <src-form [session_id]="session_id" (notifyFileUpload)="notifyFileUpload.emit()" [identity_provided]="identity_provided" [fileUploadUrl] = fileUploadUrl [fieldEntry]="fieldEntry" [displayErrors]="displayErrors" [entry]="entry" [answers]="answers" [step]="rows" [submission]="submission" [index]="index" [uploads]="uploads"></src-form>
             </div>
             <div *ngSwitchDefault>
                 <input id="{{fieldEntry}}" [name]="fieldEntry" class="form-control inputelem" [(ngModel)]="entry['value']" [minlength]="field.attrs.min_len.value" [maxlength]="field.attrs.max_len.value" [required]=entry.required_status #defaultinput="ngModel" [pattern]="validator" [placeholder]="field.placeholder" [attr.aria-label]="field.label" type="text" />

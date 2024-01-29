@@ -9,7 +9,6 @@ import {
   ViewChild
 } from "@angular/core";
 import {FlowDirective, Transfer} from "@flowjs/ngx-flow";
-import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {AppDataService} from "@app/app-data.service";
 import {ControlContainer, NgForm} from "@angular/forms";
 import {Subscription} from "rxjs";
@@ -27,6 +26,8 @@ export class RFileUploadButtonComponent implements AfterViewInit, OnInit, OnDest
   @Input() formUploader: boolean = true;
   @Input() uploads: { [key: string]: any };
   @Input() field: Field | undefined = undefined;
+  @Input() session_id: string;
+  @Input() file_id: string;
   @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild("flow") flow: FlowDirective;
 
@@ -37,7 +38,7 @@ export class RFileUploadButtonComponent implements AfterViewInit, OnInit, OnDest
   confirmButton = false;
   flowConfig: FlowOptions;
 
-  constructor(private cdr: ChangeDetectorRef, protected authenticationService: AuthenticationService, protected appDataService: AppDataService) {
+  constructor(private cdr: ChangeDetectorRef, protected appDataService: AppDataService) {
   }
 
   ngOnInit(): void {
@@ -48,7 +49,7 @@ export class RFileUploadButtonComponent implements AfterViewInit, OnInit, OnDest
       allowDuplicateUploads: false,
       testChunks: false,
       permanentErrors: [500, 501],
-      headers: {"X-Session": this.authenticationService.session.id}
+      headers: {"X-Session": this.session_id}
     };
     this.fileInput = this.field ? this.field.id : "status_page";
   }
