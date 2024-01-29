@@ -695,7 +695,7 @@ p:last-child {
 }
 
 .field-answer-entry {
-  margin-top: 0;
+  margin-top: 0.5em;
 }
 
 #otp-secret-form input {
@@ -810,7 +810,7 @@ p:last-child {
 }
 
 .form-group {
-  margin-bottom: 0;
+  margin-bottom: 0.5rem;
 }
 
 #language-picker-box .form-control {
