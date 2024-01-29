@@ -39,7 +39,7 @@ export class SubmissionComponent {
   contextsOrderPredicate: string = this.appDataService.public.node.show_contexts_in_alphabetical_order ? "name" : "order";
   selectable_contexts: Context[];
   show_steps_navigation_bar = false;
-  receivedData: Flow | null;
+  receivedData: Flow[];
 
   constructor(protected whistleblowerSubmissionService:WhistleblowerSubmissionService,private titleService: TitleService, private router: Router, private appConfigService: AppConfigService, private whistleblowerLoginResolver: WhistleblowerLoginResolver, protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, public submissionService: SubmissionService) {
     this.selectable_contexts = [];
@@ -238,8 +238,10 @@ export class SubmissionComponent {
 
   completeSubmission() {
     this.receivedData = this.submissionService.getSharedData();
-    if (this.receivedData !== null && this.receivedData !== undefined) {
-      this.receivedData.upload();
+    if (this.receivedData !== null && this.receivedData !== undefined && this.receivedData.length > 0) {
+       this.receivedData.forEach((item :Flow)=> {
+        item.upload();
+       });
     }
     this.fieldUtilitiesService.onAnswersUpdate(this);
 

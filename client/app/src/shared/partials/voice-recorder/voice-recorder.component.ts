@@ -44,7 +44,10 @@ export class VoiceRecorderComponent implements OnInit {
   ngOnInit(): void {
     this.iframeUrl = this.sanitizer.bypassSecurityTrustResourceUrl("viewer/index.html");
     this.fileInput = this.field ? this.field.id : "status_page";
+    this.uploads={}
+    this.fileUploadUrl="api/whistleblower/submission/attachment";
     this.uploads[this.fileInput] = {files: []};
+
     this.initAudioContext()
   }
 
