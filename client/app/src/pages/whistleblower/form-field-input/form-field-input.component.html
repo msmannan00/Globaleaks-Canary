@@ -106,7 +106,7 @@
                         </video>
                     </div>
                 </div>
-                <src-form [identity_provided]="identity_provided" [fieldEntry]="fieldEntry" [displayErrors]="displayErrors" [entry]="entry" [answers]="answers" [step]="rows" [submission]="submission" [index]="index"></src-form>
+                <src-form (notifyFileUpload)="notifyFileUpload.emit()" [identity_provided]="identity_provided" [fileUploadUrl] = fileUploadUrl [fieldEntry]="fieldEntry" [displayErrors]="displayErrors" [entry]="entry" [answers]="answers" [step]="rows" [submission]="submission" [index]="index" [uploads]="uploads"></src-form>
             </div>
             <div *ngSwitchDefault>
                 <input id="{{fieldEntry}}" [name]="fieldEntry" class="form-control inputelem" [(ngModel)]="entry['value']" [minlength]="field.attrs.min_len.value" [maxlength]="field.attrs.max_len.value" [required]=entry.required_status #defaultinput="ngModel" [pattern]="validator" [placeholder]="field.placeholder" [attr.aria-label]="field.label" type="text" />

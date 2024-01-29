@@ -41,17 +41,15 @@ export class RFileUploadButtonComponent implements AfterViewInit, OnInit, OnDest
   }
 
   ngOnInit(): void {
-    if (this.authenticationService.session.id) {
-      this.flowConfig = {
-        target: this.fileUploadUrl,
-        speedSmoothingFactor: 0.01,
-        singleFile: (this.field !== undefined && !this.field.multi_entry),
-        allowDuplicateUploads: false,
-        testChunks: false,
-        permanentErrors: [500, 501],
-        headers: {"X-Session": this.authenticationService.session.id}
-      };
-    }
+    this.flowConfig = {
+      target: this.fileUploadUrl,
+      speedSmoothingFactor: 0.01,
+      singleFile: (this.field !== undefined && !this.field.multi_entry),
+      allowDuplicateUploads: false,
+      testChunks: false,
+      permanentErrors: [500, 501],
+      headers: {"X-Session": this.authenticationService.session.id}
+    };
     this.fileInput = this.field ? this.field.id : "status_page";
   }
 
