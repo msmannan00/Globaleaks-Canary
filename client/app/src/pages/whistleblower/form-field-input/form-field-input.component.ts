@@ -33,7 +33,7 @@ export class FormFieldInputComponent implements OnInit {
   fieldFormVarName: string;
   input_entryIndex = "";
   input_date: NgbDateStruct;
-  input_start_date: NgbDateStruct;
+  input_start_date: any;
   input_end_date: NgbDateStruct;
   validator: string | RegExp;
   rows: Step;
@@ -46,7 +46,7 @@ export class FormFieldInputComponent implements OnInit {
   }
 
   clearDateRange() {
-    this.input_start_date = {year: 0, month: 0, day: 0};
+    this.input_start_date = "";
     this.input_end_date = {year: 0, month: 0, day: 0};
     this.dateRange = {
       "start": "",

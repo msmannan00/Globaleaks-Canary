@@ -69,8 +69,6 @@ export class FormFieldInputsComponent implements OnInit {
         }
       }
     }
-    console.log("adssdasdasads")
-
     entries.push(newEntry);
   };
 
