@@ -60,12 +60,17 @@ export class FormFieldInputsComponent implements OnInit {
     return entry[this.field.id];
   };
 
-  resetEntry(entry:any){
-    entry['value']="";
-  }
-
   addAnswerEntry(entries:any) {
     let newEntry = cloneDeep(entries[0]);
+    for (let key in newEntry) {
+      if (newEntry.hasOwnProperty(key)) {
+        if (Array.isArray(newEntry[key]) && newEntry[key].length > 0) {
+          newEntry[key][0].value = "";
+        }
+      }
+    }
+    console.log("adssdasdasads")
+
     entries.push(newEntry);
   };
 
