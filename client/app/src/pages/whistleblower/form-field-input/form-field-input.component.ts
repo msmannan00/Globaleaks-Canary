@@ -60,6 +60,7 @@ export class FormFieldInputComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.entry['value']=""
     this.fieldFormVarName = this.fieldUtilitiesService.fieldFormName(this.field.id + "$" + this.index);
     this.initializeFormNames();
     this.rows = this.fieldUtilitiesService.splitRows(this.field.children);

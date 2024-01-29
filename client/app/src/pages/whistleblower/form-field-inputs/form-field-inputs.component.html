@@ -24,7 +24,6 @@
                         </span>
                     </span>
                 </div>
-                {{resetEntry(entry)}}
                 <src-form-field-input [fileUploadUrl]="fileUploadUrl" (notifyFileUpload)="notifyFileUpload.emit()" [identity_provided]=identity_provided [uploads]="uploads" [fields]="fields" [step]="step" [answers]="answers" [fieldId]="fieldId" [displayErrors]="displayErrors" [entry]="entry" [entryIndex]="entryIndex" [fieldEntry]="fieldEntry" [submission]="submission" [field]="field" [index]="entryIndex"></src-form-field-input>
             </div>
             <div *ngIf="field.multi_entry && field.type === 'fieldgroup'" class="float-end">
