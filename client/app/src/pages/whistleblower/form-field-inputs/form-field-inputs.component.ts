@@ -60,28 +60,15 @@ export class FormFieldInputsComponent implements OnInit {
     return entry[this.field.id];
   };
 
-  resetEntries(obj: any) {
-    if (typeof obj === "boolean") {
-      return false;
-    } else if (typeof obj === "string") {
-      return "";
-    } else if (Array.isArray(obj)) {
-      for (let i = 0; i < obj.length; i++) {
-        obj[i] = this.resetEntries(obj[i]);
-      }
-    } else if (typeof obj === "object") {
-      for (let key in obj) {
-        if (obj.hasOwnProperty(key)) {
-          obj[key] = this.resetEntries(obj[key]);
+  addAnswerEntry(entries:any) {
+    let newEntry = cloneDeep(entries[0]);
+    for (let key in newEntry) {
+      if (newEntry.hasOwnProperty(key)) {
+        if (Array.isArray(newEntry[key]) && newEntry[key].length > 0) {
+          newEntry[key][0].value = "";
         }
       }
     }
-    return obj;
-  }
-
-  addAnswerEntry(entries:any) {
-    let newEntry = cloneDeep(entries[0]);
-    newEntry = this.resetEntries(newEntry)
     entries.push(newEntry);
   };
 
