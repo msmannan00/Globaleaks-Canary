@@ -11,11 +11,11 @@
         </div>
         <div *ngIf="hasMultipleEntries(fieldAnswers[fields.id])">
             <div *ngFor="let entry of fieldAnswers[fields.id] | orderBy:['y', 'x'],let i = index">
-                <div class="nested">
+                <div class="">
                     <span class="text-muted">#{{i + 1}}</span>
                 </div>
                 <src-tip-field-answer-entry [redactOperationTitle]="redactOperationTitle" [redactMode]="redactMode"
-                    [field]="fields" class="nested" [entry]="entry"></src-tip-field-answer-entry>
+                    [field]="fields" class="" [entry]="entry"></src-tip-field-answer-entry>
             </div>
         </div>
     </div>
