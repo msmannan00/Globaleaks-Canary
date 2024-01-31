@@ -4,7 +4,7 @@ declare global {
   namespace Cypress {
     interface Chainable {
       // @ts-ignore
-      waitForLoader: (waitForHTTP: boolean = true) => void;
+      waitForLoader: () => void;
       waitForPageIdle: () => void;
       logout: () => void;
       takeScreenshot: (filename: string, timeout?: number, locator?: any) => void;
@@ -104,7 +104,7 @@ Cypress.Commands.add("waitUntilClickable", (locator: string, timeout?: number) =
   cy.get(locator).click({timeout: t});
 });
 
-Cypress.Commands.add("waitForLoader", (waitForHTTP: boolean = true) => {
+Cypress.Commands.add("waitForLoader", () => {
   cy.intercept("**").as("httpRequests");
 
   cy.get("#PageOverlay", {timeout: 500, log: false})
@@ -169,7 +169,7 @@ Cypress.Commands.add("login_admin", (username, password, url, firstlogin) => {
         cy.waitForUrl(finalURL);
       });
     });
-    cy.waitForLoader(false)
+    cy.waitForLoader()
   }
 });
 

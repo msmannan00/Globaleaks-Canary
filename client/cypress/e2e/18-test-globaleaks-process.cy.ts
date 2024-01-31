@@ -19,6 +19,8 @@ describe("globaleaks process", function () {
     });
 
     it("Recipient actions ", function () {
+      /* file upload delay */
+      cy.wait(3000)
       cy.login_receiver();
       cy.waitForUrl("/#/recipient/home");
       cy.visit("/#/recipient/reports");
@@ -73,11 +75,9 @@ describe("globaleaks process", function () {
           const changeEvent = new Event("change", { bubbles: true });
           input[0].dispatchEvent(changeEvent);
         });
-        /* file upload delay */
-        cy.wait(3000)
 
         cy.get("#files-action-confirm").click();
-        cy.get(".progress-bar-complete", { timeout: 10000 }).should("exist");
+        cy.get('progress-bar', { timeout: 10000 }).should('have.css', 'width', '100%');
       });
 
       cy.logout();
