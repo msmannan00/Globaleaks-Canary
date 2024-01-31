@@ -40,7 +40,7 @@ describe("Admin Disable Signup", function() {
     cy.get('i.fa-solid.fa-check').click();
 
     cy.logout();
-    cy.waitForLoader();
+    cy.waitForUrl("/#/login")
     cy.visit("/#/");
 
   });

@@ -12,7 +12,6 @@ describe("admin configure network", () => {
 
     cy.get("#HTTPSManualMode").click();
     cy.contains("button", "Generate").click();
-    cy.waitForLoader();
     cy.get("#csrGen").click();
     cy.get('[name="country"]').type("IT");
     cy.get('[name="province"]').type("Milano");
@@ -22,11 +21,9 @@ describe("admin configure network", () => {
     cy.get("#csrSubmit").click();
 
     cy.get("#deleteKey").click();
-    cy.wait(500);
-    cy.get("#modal-action-ok").click();
+    cy.get("#modal-action-ok").should('be.visible', { timeout: 10000 }).click();
     cy.get("#deleteKey").should("not.exist");
-    cy.wait(500);
-    cy.get("#HTTPSManualMode").click();
+    cy.get("#HTTPSManualMode").should('be.visible', { timeout: 10000 }).click();
 
     cy.get("div.card.key input[type=file]").selectFile({
       contents: "../backend/globaleaks/tests/data/https/valid/key.pem",
@@ -51,8 +48,7 @@ describe("admin configure network", () => {
     cy.get("#deleteCert").click();
     cy.get("#modal-action-ok").click();
 
-    cy.wait(500);
-    cy.get("#deleteKey").click();
+    cy.get("#deleteKey").should('be.visible', { timeout: 10000 }).click();
     cy.get("#modal-action-ok").click();
     cy.logout();
   });

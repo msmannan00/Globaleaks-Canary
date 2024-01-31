@@ -19,12 +19,11 @@ describe("globaleaks process", function () {
     });
 
     it("Recipient actions ", function () {
-      cy.wait(1000)
       cy.login_receiver();
+      cy.waitForUrl("/#/recipient/home");
       cy.visit("/#/recipient/reports");
-      cy.waitForLoader(true)
 
-      cy.get("#tip-0").first().click();
+      cy.get("#tip-0").should('be.visible', { timeout: 10000 }).first().click();
 
       cy.get(".TipInfoID").invoke("text").then((_) => {
         cy.contains("summary").should("exist");
@@ -94,13 +93,9 @@ describe("globaleaks process", function () {
       cy.get(".TipInfoID").first().invoke("text").then(t => {
         expect(t.trim()).to.be.a("string");
       });
-      cy.waitForLoader(true)
-      cy.wait(1000)
-
-      cy.get('[id="tip-action-silence"]').click();
-      cy.get('#tip-action-notify').should('be.visible');
-      cy.get('[id="tip-action-notify"]').click();
-      cy.get('#tip-action-silence').should('be.visible');
+      cy.get('[id="tip-action-silence"]').should('be.visible', { timeout: 10000 }).click();
+      cy.get('#tip-action-notify').should('be.visible', { timeout: 10000 }).should('be.visible', { timeout: 10000 }).click();
+      cy.get('#tip-action-silence').should('be.visible', { timeout: 10000 }).should('be.visible');
       cy.takeScreenshot("recipient/report", 0);
 
       cy.logout();

@@ -21,8 +21,7 @@ describe("admin configure languages", () => {
     cy.get('ul.selection-list li').should('contain', 'German [de]');
 
     cy.contains("button", "Save").click();
-    cy.waitForLoader(false);
-    cy.visit("/#/admin/settings");
+    cy.waitForUrl("/#/admin/settings");
     cy.contains("button", "Languages").click();
 
     cy.get(".non-default-language").eq(1).click();
@@ -31,10 +30,9 @@ describe("admin configure languages", () => {
 
     cy.get(".remove-lang-btn").eq(1).click();
     cy.contains("button", "Speichern").click();
-    cy.waitForLoader()
 
-    cy.visit("/#/admin/settings");
-    cy.get('#language-picker-box').find('ng-select').last().click().get('ng-dropdown-panel').contains('Deutsch').click();
+    cy.waitForUrl("/#/admin/settings");
+    cy.get('#language-picker-box').should('be.visible', { timeout: 10000 }).find('ng-select').last().click().get('ng-dropdown-panel').contains('Deutsch').click();
 
     cy.get('[name="node.dataModel.header_title_homepage"]').clear().type("TEXT1_IT");
     cy.get('[name="node.dataModel.presentation"]').clear().type("TEXT2_IT");

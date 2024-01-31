@@ -51,15 +51,14 @@ describe("admin enable submissions", () => {
 
     cy.get('input[name="disable_submissions"]').click();
     cy.contains("button", "Save").click();
+    cy.waitForUrl("/#/admin/settings");
 
-    cy.waitForLoader();
-    cy.contains("button", "Advanced").click();
-
+    cy.get('#ngb-nav-12').click();
     cy.get('input[name="disable_submissions"]').should("be.visible").should("not.be.checked");
     cy.logout();
-    cy.waitForLoader()
+    cy.waitForUrl("/#/login");
 
     cy.visit("/#/");
-    cy.contains("button", "File a report").should("be.visible");
+    cy.contains("button", "File a report").should('be.visible', { timeout: 10000 });
   });
 });

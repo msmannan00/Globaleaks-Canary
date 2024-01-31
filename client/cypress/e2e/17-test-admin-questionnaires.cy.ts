@@ -15,9 +15,9 @@ describe("admin add, configure and delete questionnaires", () => {
     if (["Checkbox", "Selection box"].indexOf(question_type) === 0) {
       cy.waitForLoader();
       if(step_trigger){
-        cy.contains("Step 2").click();
+        cy.contains("Step 2").should('be.visible', { timeout: 10000 }).click();
       }
-      cy.get('.fieldBox').contains('span', question_type).click();
+      cy.get('.fieldBox').should('be.visible', { timeout: 10000 }).contains('span', question_type).click();
 
       for (let i = 0; i < 3; i++) {
         cy.get('button[name="addOption"]').click();
@@ -55,7 +55,7 @@ describe("admin add, configure and delete questionnaires", () => {
     const fieldTypes = Cypress.env("field_types");
     fieldTypes.forEach((questionType: string) => {
         cy.waitForLoader();
-        cy.contains("Step 2").click();
+        cy.contains("Step 2").should('be.visible', { timeout: 10000 }).click();
         add_question(questionType, true);
     });
 

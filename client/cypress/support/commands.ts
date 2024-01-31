@@ -127,11 +127,6 @@ Cypress.Commands.add("waitForLoader", (waitForHTTP: boolean = true) => {
         checkVisibility();
       });
     })
-    .then(() => {
-      if(waitForHTTP){
-        cy.wait("@httpRequests");
-      }
-    });
 });
 
 

@@ -17,12 +17,11 @@ describe("admin disable submissions", () => {
     cy.get('input[name="disable_submissions"]').click();
     cy.contains("button", "Save").click();
 
-    cy.waitForLoader();
-    cy.contains("button", "Advanced").click();
+    cy.contains("button", "Advanced").click().should('be.visible', { timeout: 10000 }).click();
 
     cy.get('input[name="disable_submissions"]').should("be.visible").should("be.checked");
     cy.logout();
-    cy.waitForLoader()
+    cy.waitForUrl("/#/login")
     cy.visit("/#/");
     cy.contains("span", "Submissions disabled").should("be.visible");
 
@@ -32,18 +31,18 @@ describe("admin disable submissions", () => {
 describe("admin enable submissions", () => {
   it("should enable submission", () => {
     cy.login_admin();
-    cy.visit("/#/admin/settings");
+    cy.waitForUrl("/#/admin/home")
+    cy.visit("/#/admin/settings")
     cy.contains("button", "Advanced").click();
 
     cy.get('input[name="disable_submissions"]').click();
     cy.contains("button", "Save").click();
-
-    cy.waitForLoader();
-    cy.contains("button", "Advanced").click();
+    cy.waitForLoader()
+    cy.contains("button", "Advanced").should('be.visible', { timeout: 10000 }).click();
 
     cy.get('input[name="disable_submissions"]').should("be.visible").should("not.be.checked");
     cy.logout();
-    cy.waitForLoader();
+    cy.waitForUrl("/#/login")
 
     cy.visit("/#/");
     cy.contains("button", "File a report").should("be.visible");
@@ -53,6 +52,7 @@ describe("admin enable submissions", () => {
 describe("Should browser opens a pop while clicking the support icon", () => {
   it("should open a pop-up modal", () => {
     cy.login_admin();
+    cy.waitForUrl("/#/admin/home");
     cy.visit("/#/admin/settings");
     cy.contains("button", "Advanced").click();
 
@@ -94,7 +94,7 @@ describe("Validating custom support url", () => {
 
     cy.contains("button", "Save").click();
     cy.waitForLoader();
-    cy.contains("button", "Advanced").click();
+    cy.contains("button", "Advanced").should('be.visible', { timeout: 10000 }).click();
 
     cy.get('input[name="customSupportURL"]')
       .invoke("val")

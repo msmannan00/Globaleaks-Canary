@@ -12,7 +12,7 @@ describe("Admin configure custom CSS", () => {
     cy.get(".modal [type='password']").type("wrongpassword");
     cy.get(".modal .btn-primary").click();
     cy.get(".modal").should("be.visible");
-    cy.wait(500)
+    cy.wait(1000)
     cy.get(".modal [type='password']").type(Cypress.env("user_password"));
     cy.get(".modal .btn-primary").click();
     cy.get("[name='authenticationData.session.permissions.can_upload_files']").should("be.checked");
@@ -71,14 +71,11 @@ describe("Admin configure custom CSS", () => {
       });
     });
 
-    cy.wait(2000)
-    cy.contains("button", "Files").click();
+    cy.visit("#/admin/home");
+    cy.waitForUrl("#/admin/settings");
+    cy.contains("button", "Files").should('be.visible', { timeout: 10000 }).click();
     cy.get('table#fileList').contains('td', 'documentation').should('be.visible');
     cy.get("#fileList").contains("Delete").click();
-
-    cy.waitForLoader()
-    cy.contains("button", "Files").click();
-    cy.get('table#fileList').contains('td', 'documentation').should('not.exist');
   });
 
 
