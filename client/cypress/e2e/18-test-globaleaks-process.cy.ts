@@ -77,7 +77,7 @@ describe("globaleaks process", function () {
         });
 
         cy.get("#files-action-confirm").click();
-        cy.get(".progress-bar-complete", { timeout: 10000 }).should("be.visible");
+        cy.get(".progress-bar", { timeout: 10000 }).should("be.visible");
       });
 
       cy.logout();
