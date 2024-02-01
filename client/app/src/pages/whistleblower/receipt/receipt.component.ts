@@ -1,7 +1,4 @@
 import {Component, OnInit} from "@angular/core";
-import {WbTipData} from "@app/models/whistleblower/wb-tip-data";
-import {WbTipResolver} from "@app/shared/resolvers/wb-tip-resolver.service";
-import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {AppDataService} from "@app/app-data.service";
@@ -15,7 +12,7 @@ export class ReceiptComponent implements OnInit {
   receipt: string;
   receiptId: string = "";
 
-  constructor(private appConfigService: AppConfigService, private httpService: HttpService, private wbTipResolver: WbTipResolver, protected utilsService: UtilsService, protected authenticationService: AuthenticationService, protected appDataService: AppDataService) {
+  constructor(private appConfigService: AppConfigService,protected utilsService: UtilsService, protected authenticationService: AuthenticationService, protected appDataService: AppDataService) {
   }
 
   public ngOnInit(): void {
@@ -28,15 +25,6 @@ export class ReceiptComponent implements OnInit {
   }
 
   viewReport() {
-    const promise = () => {
-      this.httpService.whistleBlowerTip().subscribe(
-        (response: WbTipData) => {
-          this.wbTipResolver.dataModel = response;
-          this.appConfigService.setPage("tippage");
-        }
-      );
-    };
-    this.authenticationService.login(0, 'whistleblower', this.receipt, null, null, promise);
+    this.appConfigService.setPage("tippage");
   }
-
 }

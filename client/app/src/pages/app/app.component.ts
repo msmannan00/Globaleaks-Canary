@@ -29,12 +29,12 @@ export class AppComponent implements AfterViewInit, OnInit {
   supportedBrowser = true;
   loading = false;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private renderer: Renderer2, protected browserCheckService: BrowserCheckService, private changeDetectorRef: ChangeDetectorRef, private router: Router, protected translationService: TranslationService, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService, private authenticationService: AuthenticationService) {
+  constructor(@Inject(DOCUMENT) private document: Document, private renderer: Renderer2, protected browserCheckService: BrowserCheckService, private changeDetectorRef: ChangeDetectorRef, private router: Router, protected translationService: TranslationService, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService, protected authenticationService: AuthenticationService) {
     this.watchLanguage();
   }
 
   watchLanguage() {
-    this.utilsService.removeBootstrap(this.renderer, this.document, "./lib/bootstrap/bootstrap.rtl.min.css");
+    this.utilsService.removeBootstrap(this.renderer, this.document, "assets/lib/bootstrap/bootstrap.rtl.min.css");
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.translationService.loadBootstrapStyles(event, this.renderer);
     });

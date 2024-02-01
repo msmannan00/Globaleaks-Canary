@@ -9,7 +9,6 @@ export class nodeResolverModel {
   disable_privacy_badge: boolean;
   disable_submissions: boolean;
   enable_admin_exception_notification: boolean;
-  enable_custodian: boolean;
   enable_custom_privacy_badge: boolean;
   enable_developers_exception_notification: boolean;
   enable_scoring_system: boolean;
@@ -42,7 +41,6 @@ export class nodeResolverModel {
   uuid: string;
   version: string;
   viewer: boolean;
-  wizard_done: boolean;
   changelog: string;
   license: string;
   languages_supported: {
@@ -77,8 +75,5 @@ export class nodeResolverModel {
   script: string[];
   onionservice: string;
   user_privacy_policy_url: string;
-  disable_admin_notification: boolean;
-  disable_custodian_notification: boolean;
   can_postpone_expiration: boolean;
-  disable_receiver_notification: boolean;
 }

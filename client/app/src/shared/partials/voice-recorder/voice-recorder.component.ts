@@ -1,9 +1,10 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import {ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
 import * as Flow from "@flowjs/flow.js";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {SubmissionService} from "@app/services/helper/submission.service";
 import {Observable} from "rxjs";
 import {Field} from "@app/models/resolvers/field-template-model";
+import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 
 @Component({
   selector: "src-voice-recorder",
@@ -20,7 +21,7 @@ export class VoiceRecorderComponent implements OnInit {
   seconds: number = 0;
   activeButton: string | null = null;
   isRecording: boolean = false;
-  audioPlayer: string | null = null;
+  audioPlayer: boolean | string | null = null;
   mediaRecorder: MediaRecorder | null = null;
   context: AudioContext = new AudioContext();
   recording_blob: any = null;
@@ -32,15 +33,21 @@ export class VoiceRecorderComponent implements OnInit {
   chunks: never[];
 
   @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
-  private audioContext: AudioContext;
+  private audioContext: AudioContext|null;
   entry: any;
+  iframeUrl: SafeResourceUrl;
+  @ViewChild("viewer") viewerFrame: ElementRef;
 
-  constructor(private cd: ChangeDetectorRef, protected authenticationService: AuthenticationService, private submissionService: SubmissionService) {
+  constructor(private cd: ChangeDetectorRef, private sanitizer: DomSanitizer, protected authenticationService: AuthenticationService, private submissionService: SubmissionService) {
   }
 
   ngOnInit(): void {
+    this.iframeUrl = this.sanitizer.bypassSecurityTrustResourceUrl("viewer/index.html");
     this.fileInput = this.field ? this.field.id : "status_page";
+    this.uploads={}
+    this.fileUploadUrl="api/whistleblower/submission/attachment";
     this.uploads[this.fileInput] = {files: []};
+
     this.initAudioContext()
   }
 
@@ -96,10 +103,10 @@ export class VoiceRecorderComponent implements OnInit {
     }, 1000);
 
     this.enableNoiseSuppression(stream).subscribe();
+    if(this.audioContext){
     const mediaStreamDestination = this.audioContext.createMediaStreamDestination();
     const source = this.audioContext.createMediaStreamSource(stream);
     const anonymizationFilter = this.anonymizeSpeaker(this.audioContext);
-
     source.connect(anonymizationFilter.input);
     anonymizationFilter.output.connect(mediaStreamDestination);
 
@@ -119,6 +126,7 @@ export class VoiceRecorderComponent implements OnInit {
     };
 
     this.mediaRecorder.start();
+    }
   };
 
   onRecorderDataAvailable = (e: BlobEvent) => {
@@ -177,7 +185,19 @@ export class VoiceRecorderComponent implements OnInit {
 
       if (this.seconds >= parseInt(this.field.attrs.min_len.value) && this.seconds <= parseInt(this.field.attrs.max_len.value)) {
         this.flow.addFile(this.recording_blob);
-        this.audioPlayer = URL.createObjectURL(this.recording_blob);
+        window.addEventListener("message", (message: MessageEvent) => {
+          const iframe = this.viewerFrame.nativeElement;
+          if (message.source !== iframe.contentWindow) {
+            return;
+          }
+          const data = {
+            tag: "audio",
+            blob: this.recording_blob,
+          };
+          iframe.contentWindow.postMessage(data, "*");
+        }, { once: true });
+        
+        this.audioPlayer = true;
         this.uploads[this.fileInput] = this.flow;
         this.submissionService.setSharedData(this.flow);
 
@@ -195,6 +215,7 @@ export class VoiceRecorderComponent implements OnInit {
   }
 
   deleteRecording(): void {
+    this.audioPlayer = false;
     if (this.flow) {
       this.flow.cancel();
     }
@@ -202,6 +223,11 @@ export class VoiceRecorderComponent implements OnInit {
     this.mediaRecorder = null;
     this.seconds = 0;
     this.audioPlayer = null;
+    if (this.audioContext) {
+      this.audioContext.close();
+      this.audioContext = null;
+    }
+    this.initAudioContext()
     this.submissionService.setSharedData(null);
     delete this.uploads[this.fileInput];
     if (this.entry && this.entry.files) {

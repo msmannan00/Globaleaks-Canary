@@ -17,19 +17,14 @@
                         <span *ngSwitchCase="'multichoice'">{{ 'Multiple choice input' | translate }}</span>
                         <span *ngSwitchCase="'checkbox'">{{ 'Checkbox' | translate }}</span>
                         <span *ngSwitchCase="'fileupload'">{{ 'Attachment' | translate }}</span>
-                        <span *ngSwitchCase="'audioUpload'">{{ 'Audio recording' | translate }}</span>
                         <span *ngSwitchCase="'tos'">{{ 'Terms of service' | translate }}</span>
                         <span *ngSwitchCase="'date'">{{ 'Date' | translate }}</span>
                         <span *ngSwitchCase="'daterange'">{{ 'Date range' | translate }}</span>
+                        <span *ngSwitchCase="'voice'">{{ 'Voice' | translate }}</span>
                         <span *ngSwitchCase="'fieldgroup'">{{ 'Question group' | translate }}</span>
                         <span *ngSwitchDefault>{{ field.type }}</span>
                     </ng-container>
                     <span *ngIf="field.template_id">{{ 'Template' | translate }}</span>
-                </span>
-                <span *ngIf="field.preview" class="badge bg-default text-dark">
-                    <span data-toggle="tooltip" title="{{'Preview' | translate}}">
-                        <i class="fa-solid fa-list-alt"></i>
-                    </span>
                 </span>
                 <span *ngIf="field.multi_entry" class="badge bg-default text-dark">
                     <ng-container [ngSwitch]="field.type">
@@ -130,21 +125,6 @@
                         <input name="field.required" [(ngModel)]="field.required" type="checkbox">
                         <label>{{ 'Mandatory' | translate }}</label>
                     </div>
-                    <div class="form-group" *ngIf="(field.type === 'audioUpload') && field.template_id === ''">
-                        <div class="form-group">
-                            <label>{{ 'Minimum number of seconds' | translate }}</label>
-                            <input name="field.attrs.min_time.value" [(ngModel)]="field.attrs.min_time.value" value="10" type="text" class="form-control" [disabled]="!field.editable" />
-                            <div>{{ 'Set the value to 0 to disable this feature.' | translate }}</div>
-                        </div>
-                    </div>
-                    <div class="form-group" *ngIf="(field.type === 'audioUpload') && field.template_id === ''">
-                        <div class="form-group">
-                            <label>{{ 'Maximum number of seconds' | translate }}</label>
-                            <input [(ngModel)]="field.attrs.max_time.value" value="60" type="text" class="form-control" [disabled]="!field.editable" />
-                            <div>{{ 'Maximum 60 seconds are allowed and do not keep it less than minimum length.' |
-                              translate }}</div>
-                        </div>
-                    </div>
                     <div class="form-group" *ngIf="(field.type === 'fieldgroup' || field.type === 'fileupload') && field.template_id === ''">
                         <div [ngSwitch]="typeSwitch(field.type)">
                             <input [(ngModel)]="field.multi_entry" type="checkbox">
@@ -152,22 +132,33 @@
                             <label *ngSwitchDefault>{{ 'Accept multiple answers' | translate }}</label>
                         </div>
                     </div>
-                    <div class="form-group" *ngIf="fieldIsMarkableSubjectToPreview && field.type !== 'audioUpload'">
+                    <div class="form-group" *ngIf="fieldIsMarkableSubjectToPreview">
                         <input [(ngModel)]="field.preview" type="checkbox">
                         <label>{{ 'Preview' | translate }}</label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                          <span>{{ 'Width' | translate }}</span>
+                          <span>(</span><span>{{ '0 = auto' | translate }}</span><span>)</span>
+                         </label>
+                        <input class="form-control" [(ngModel)]="field.width" type="number" min="0" max="12">
+                    </div>
+                    <div class="form-group" *ngIf="field.template_id">
+                        <label>{{ 'Template override' | translate }}</label>
+                        <input name="template_override_id" class="form-control" [(ngModel)]="field.template_override_id" type="text">
                     </div>
                 </div>
             </div>
             <div class="row" *ngIf="field.instance !== 'reference'">
                 <div class="col-md-12">
-                    <div *ngIf="field.type === 'inputbox' || field.type === 'textarea'">
+                    <div *ngIf="field.type === 'inputbox' || field.type === 'textarea' || field.type === 'voice'">
                         <div class="form-group">
-                            <label>{{ 'Minimum number of input characters' | translate }}</label>
+                            <label>{{ 'Min' | translate }}</label>
                             <input [(ngModel)]="field.attrs.min_len.value" type="text" class="form-control" [disabled]="!field.editable" />
                             <div>{{ 'Set the value to 0 to disable this feature.' | translate }}</div>
                         </div>
                         <div class="form-group">
-                            <label>{{ 'Maximum number of input characters' | translate }}</label>
+                            <label>{{ 'Max' | translate }}</label>
                             <input [(ngModel)]="field.attrs.max_len.value" type="text" class="form-control" [disabled]="!field.editable" />
                             <div>{{ 'Set the value to 0 to disable this feature.' | translate }}</div>
                         </div>
@@ -219,7 +210,7 @@
                                     <label>{{ 'Type' | translate }}</label>
                                     <select name="type" class="form-select-custom" [(ngModel)]="field.attrs.multimedia_type.value" required>
                                         <option value="image">{{ 'Image' | translate }}</option>
-                                        <option value="audioUpload">{{ 'Audio' | translate }}</option>
+                                        <option value="audio">{{ 'Audio' | translate }}</option>
                                         <option value="video">{{ 'Video' | translate }}</option>
                                     </select>
                                 </div>
@@ -290,7 +281,7 @@
                 <div class="col-md-12">
                     <div class="form-group" *ngIf="nodeResolver.dataModel.enable_scoring_system">
                         <label>{{ 'Triggered by score' | translate }}:</label>
-                        <select class="form-select-custom" [(ngModel)]="field.triggered_by_score" convert-to-number>
+                        <select class="form-select-custom" [(ngModel)]="field.triggered_by_score">
                             <option value="0">{{ 'Low' | translate }}</option>
                             <option value="1">{{ 'Medium' | translate }}</option>
                             <option value="2">{{ 'High' | translate }}</option>

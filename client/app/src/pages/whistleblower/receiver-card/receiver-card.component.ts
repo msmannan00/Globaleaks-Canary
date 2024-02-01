@@ -29,5 +29,4 @@ export class ReceiverCardComponent {
       this.submission.selected_receivers[receiver.id] = true;
     }
   }
-
 }

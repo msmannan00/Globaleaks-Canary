@@ -1,3 +1,5 @@
+import {Data} from "@app/models/reciever/reciever-tip-data";
+
 export interface rtipResolverModel {
   submissionStatusStr: string;
   context_name: string;
@@ -23,7 +25,10 @@ export interface rtipResolverModel {
   status: string;
   substatus: string;
   file_count: number;
+  receiver_count:number;
   comment_count: number;
+  accessible:boolean;
+  data: Data;
 }
 
 export interface Answers {

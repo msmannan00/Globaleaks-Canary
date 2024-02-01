@@ -17,7 +17,8 @@ import {Receiver} from "@app/models/reciever/reciever-tip-data";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {Observable, from, switchMap} from "rxjs";
-
+import {HttpClient, HttpResponse} from "@angular/common/http";
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: "src-tips",
@@ -59,7 +60,7 @@ export class TipsComponent implements OnInit {
     searchPlaceholderText: this.translateService.instant("Search")
   };
 
-  constructor(protected authenticationService: AuthenticationService, protected httpService: HttpService, private appConfigServices: AppConfigService, private router: Router, protected RTips: RTipsResolver, protected preference: PreferenceResolver, private modalService: NgbModal, protected utils: UtilsService, protected appDataService: AppDataService, private translateService: TranslateService, private tokenResourceService: TokenResource) {
+  constructor(private http: HttpClient,protected authenticationService: AuthenticationService, protected httpService: HttpService, private appConfigServices: AppConfigService, private router: Router, protected RTips: RTipsResolver, protected preference: PreferenceResolver, private modalService: NgbModal, protected utils: UtilsService, protected appDataService: AppDataService, private translateService: TranslateService, private tokenResourceService: TokenResource) {
 
   }
 
@@ -75,7 +76,9 @@ export class TipsComponent implements OnInit {
   selectAll() {
     this.selectedTips = [];
     this.filteredTips.forEach(tip => {
+      if (tip.accessible) {
       this.selectedTips.push(tip.id);
+      }
     });
   }
 
@@ -210,6 +213,17 @@ export class TipsComponent implements OnInit {
     const report_date = new Date(date);
     const current_date = new Date();
     return current_date > report_date;
+  }
+
+  actAsWhistleblower() {
+    this.http.get('/api/auth/operatorauthswitch', { observe: 'response' }).subscribe(
+      (response: HttpResponse<any>) => {
+        if (response.status === 200) {
+          const urlRedirect = window.location.origin + response.body.redirect;
+          window.open(urlRedirect, '_blank');
+        }
+      },
+    );
   }
 
   processTips() {
@@ -388,5 +402,48 @@ export class TipsComponent implements OnInit {
     this.lastUpdatePicker = false;
     this.expirationDatePicker = false;
   }
+  exportToCsv(): void {
+    this.utils.generateCSV(JSON.stringify(this.getDataCsv()), 'reports',this.getDataCsvHeaders());
+  }
 
+  getDataCsv(): any[] {
+    const output = [...this.filteredTips];
+    return output.map(tip => ({
+      id: tip.id,
+      progressive: tip.progressive,
+      important: tip.important,
+      reportStatus: this.markReportStatus(tip.reminder_date),
+      context_name: tip.context_name,
+      label: tip.label,
+      status: tip.submissionStatusStr,
+      creation_date: formatDate(tip.creation_date, 'dd-MM-yyyy HH:mm', 'en-US'),
+      update_date: formatDate(tip.update_date, 'dd-MM-yyyy HH:mm', 'en-US'),
+      expiration_date: formatDate(tip.expiration_date, 'dd-MM-yyyy HH:mm', 'en-US'),
+      last_access: formatDate(tip.last_access, 'dd-MM-yyyy HH:mm', 'en-US'),
+      comment_count: tip.comment_count,
+      file_count: tip.file_count,
+      subscription: tip.subscription === 0 ? 'Non sottoscritta' : tip.subscription === 1 ? 'Sottoscritta' : 'Sottoscritta successivamente',
+      receiver_count: tip.receiver_count
+    }));
+  }
+
+  getDataCsvHeaders(): string[] {
+    return [
+      'Id',
+      'Sequential',
+      'Important',
+      'Reminder',
+      'Channel',
+      'Label',
+      'Report Status',
+      'Date of Report',
+      'Last Update',
+      'Expiration date',
+      'Last Access',
+      'Number of Comments',
+      'Number of Files',
+      'Subscription',
+      'Number of Recipients'
+    ].map(header => this.translateService.instant(header));
+  }
 }

@@ -1,5 +1,6 @@
 import {RFile, WbFile, WhistleblowerIdentity, Comment} from "@app/models/app/shared-public-model";
 import {Context, Answers, Questionnaire3, Questionnaire} from "@app/models/reciever/reciever-tip-data";
+import {RedactionData} from "@app/models/component-model/redaction";
 
 export class WbTipData {
   id: string;
@@ -37,6 +38,8 @@ export class WbTipData {
   fields: Children[];
   whistleblower_identity_field: Children;
   answers: Answers;
+  motivation:string;
+  redactions:RedactionData[];
 }
 
 export class Step {
@@ -83,7 +86,6 @@ export class Attrs {
   max_len?: MaxLen;
   min_len?: MinLen;
   regexp?: Regexp;
-  display_alphabetically?: DisplayAlphabetically;
 }
 
 export class InputValidation {
@@ -108,12 +110,6 @@ export interface Regexp {
   name: string;
   type: string;
   value: string;
-}
-
-export class DisplayAlphabetically {
-  name: string;
-  type: string;
-  value: boolean;
 }
 
 export class TriggeredByOption {

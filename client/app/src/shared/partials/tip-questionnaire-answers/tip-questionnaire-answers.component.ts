@@ -9,6 +9,8 @@ import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
 })
 export class TipQuestionnaireAnswersComponent {
   @Input() tipService: ReceiverTipService | WbtipService;
+  @Input() redactOperationTitle: string;
+  @Input() redactMode: boolean;
   collapsed = false;
 
   constructor(protected utilsService: UtilsService) {

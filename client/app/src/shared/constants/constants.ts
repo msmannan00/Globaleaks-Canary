@@ -2,7 +2,7 @@ export const Constants = {
 
   emailRegexp: "^[\\w+-.]{1,100}@[\\w+-.]{1,100}\\.[A-Za-z]{2,5}$",
   emailRegexpOrEmpty: /^([\w+-.]){0,100}[\w]{1,100}@([\w+-.]){0,100}[\w]{1,100}$|^$/,
-  countryCodeRegexpOrEmpty: /^([a-zA-Z]){2}$|^$/,
+  countryCodeRegexpOrEmpty: "[A-Za-z]{0,2}",
   numberRegexp: /^\d+$/,
   phoneNumberRegexp: /^[+]?[ \d]+$/,
   hostnameRegexp: "^(?:[a-zA-Z0-9\\-]+\\.)*[a-zA-Z0-9\\-]+\\.?$",

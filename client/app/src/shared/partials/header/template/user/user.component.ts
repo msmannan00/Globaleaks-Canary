@@ -47,14 +47,6 @@ export class UserComponent {
     this.authentication.logout(promise);
   }
 
-  getHomepage() {
-    return this.authentication.session.homepage;
-  }
-
-  getPreferencepage() {
-    return this.authentication.session.preferencespage;
-  }
-
   onChangeLanguage() {
     this.cdr.detectChanges();
     localStorage.removeItem("default_language");
