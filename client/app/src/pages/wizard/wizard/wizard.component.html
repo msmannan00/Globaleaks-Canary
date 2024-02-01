@@ -1,4 +1,4 @@
-<form name="wizardForm" novalidate>
+<form #wizardForm="ngForm" name="wizardForm" novalidate>
     <div *ngIf="step === 1" ngForm class="clearfix">
         <div class="row wizard-block">
             <div class="col-md-12">
@@ -8,8 +8,15 @@
         </div>
         <br>
         <div class="pager float-start">
-            <button class="ButtonNext btn btn-primary" (click)="step = 2">
+            <div class="alert alert-danger" *ngIf="proxiedServer">
+                <span>{{'Wizard not allowed from proxied server.'|translate}}</span>
+            </div>
+            <button class="ButtonNext btn btn-primary" (click)="step = 2" [disabled]="proxiedServer">
                 <span>{{'Next'|translate}}</span>
+                <i class="fa-solid fa-arrow-circle-right"></i>
+            </button>
+            <button class="ButtonNext btn btn-primary" *ngIf="proxiedServer" (click)="openLocalhost()">
+                <span>{{'localhost'|translate}}</span>
                 <i class="fa-solid fa-arrow-circle-right"></i>
             </button>
         </div>
@@ -262,7 +269,7 @@
         </div>
         <br>
         <div class="pager float-start">
-            <button name="proceed" id="proceed" class="ButtonNext btn btn-primary" (click)="goToAdminInterface()" type="submit">
+            <button name="proceed" #proceed class="ButtonNext btn btn-primary" (click)="goToAdminInterface()" type="submit">
                 <span>{{'Proceed'|translate}}</span>
             </button>
         </div>

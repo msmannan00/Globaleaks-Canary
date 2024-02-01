@@ -89,7 +89,7 @@ export class PreferenceTab1Component implements OnInit {
                   this.utilsService.reloadCurrentRoute();
                 },
                 error: (_: any) => {
-                 this.toggle2FA(event);
+                  this.toggle2FA(event);
                 }
               }
             );
@@ -187,7 +187,6 @@ export class PreferenceTab1Component implements OnInit {
       this.utilsService.readFileAsText(files[0])
         .subscribe((txt: string) => {
           this.preferenceResolver.dataModel.pgp_key_public = txt;
-          return this.save();
         });
     }
   };

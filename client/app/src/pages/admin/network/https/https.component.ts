@@ -1,5 +1,4 @@
 import {Component, OnInit} from "@angular/core";
-import {AppDataService} from "@app/app-data.service";
 import {TlsConfig} from "@app/models/component-model/tls-confiq";
 import {Constants} from "@app/shared/constants/constants";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
@@ -12,17 +11,16 @@ import {UtilsService} from "@app/shared/services/utils.service";
 })
 export class HttpsComponent implements OnInit {
   protected readonly Constants = Constants;
+  hostname: string;
   state = 0;
   menuState = "setup";
   tlsConfig: TlsConfig;
-  hostName:string="";
 
-  constructor(protected nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService,protected appDataService:AppDataService) {
+  constructor(protected nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService) {
   }
 
   ngOnInit() {
     this.initFunction();
-    this.hostName = this.appDataService.public.node.hostname
   }
 
   initFunction() {
@@ -34,10 +32,10 @@ export class HttpsComponent implements OnInit {
   }
 
   updateHostname(hostname: string) {
-    this.utilsService.runAdminOperation("set_hostname", {"value": hostname}, true)
+    this.utilsService.runAdminOperation("set_hostname", {"value": hostname}, false)
       .subscribe(
         () => {
-          this.appDataService.public.node.hostname=this.hostName;
+          location.href = "https://" + this.nodeResolver.dataModel.hostname;
         }
       );
   }

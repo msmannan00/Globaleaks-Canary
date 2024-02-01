@@ -2,8 +2,6 @@ import {Injectable} from "@angular/core";
 import {HttpService} from "@app/shared/services/http.service";
 import {AppDataService} from "@app/app-data.service";
 import {RecieverTipData} from "@app/models/reciever/reciever-tip-data";
-import {UtilsService} from "@app/shared/services/utils.service";
-import { RedactionData } from "@app/models/component-model/redaction";
 
 @Injectable({
   providedIn: "root"
@@ -11,7 +9,7 @@ import { RedactionData } from "@app/models/component-model/redaction";
 export class ReceiverTipService {
   tip: RecieverTipData = new RecieverTipData();
 
-  constructor(private httpService: HttpService, private appDataService: AppDataService,protected utils: UtilsService) {
+  constructor(private httpService: HttpService, private appDataService: AppDataService) {
   }
 
   reset() {
@@ -34,22 +32,6 @@ export class ReceiverTipService {
   newComment(content: string, visibility: string) {
     const param = JSON.stringify({"id": this.tip.msg_receiver_selected, "content": content, "visibility": visibility});
     return this.httpService.rTipsRequestNewComment(param, this.tip.id);
-  }
-
-  newRedaction(content:RedactionData) {
-    this.httpService.requestCreateRedaction(content).subscribe(
-      () => {
-        this.utils.reloadComponent();
-      },
-    );
-  }
-
-  updateRedaction(content: RedactionData) {
-    this.httpService.requestUpdateRedaction(content).subscribe(
-      () => {
-        this.utils.reloadComponent();
-      },
-    );
   }
 
   private getMsgReceiversSelector() {

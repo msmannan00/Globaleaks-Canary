@@ -28,26 +28,26 @@ export class FormFieldInputComponent implements OnInit {
   @Input() uploads: { [key: string]: any };
   @Input() identity_provided: boolean;
   @Input() fileUploadUrl: string;
-  @Input() session_id: string;
   @Output() notifyFileUpload: EventEmitter<any> = new EventEmitter<any>();
 
+  entryValue: string = "";
   fieldFormVarName: string;
   input_entryIndex = "";
   input_date: NgbDateStruct;
-  input_start_date: any;
+  input_start_date: NgbDateStruct;
   input_end_date: NgbDateStruct;
   validator: string | RegExp;
   rows: Step;
   dateRange: { start: string, end: string } = {"start": "", "end": ""};
   dateOptions1: NgbDateStruct;
   dateOptions2: NgbDateStruct;
-  dateOptions: {min_date:NgbDateStruct,max_date:NgbDateStruct}={min_date:{year:0,month:0,day:0},max_date:{year:0,month:0,day:0}}
+  dateOptions: { min_date: NgbDateStruct, max_date: NgbDateStruct }
 
   constructor(private fieldUtilitiesService: FieldUtilitiesService) {
   }
 
   clearDateRange() {
-    this.input_start_date = "";
+    this.input_start_date = {year: 0, month: 0, day: 0};
     this.input_end_date = {year: 0, month: 0, day: 0};
     this.dateRange = {
       "start": "",
@@ -61,8 +61,10 @@ export class FormFieldInputComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.entry["value"] = "";
     this.fieldFormVarName = this.fieldUtilitiesService.fieldFormName(this.field.id + "$" + this.index);
     this.initializeFormNames();
+    this.fieldEntry = this.fieldId + "-input-" + this.index;
     this.rows = this.fieldUtilitiesService.splitRows(this.field.children);
     if (this.field.type === "inputbox") {
       const validator_regex = this.fieldUtilitiesService.getValidator(this.field);
@@ -112,5 +114,4 @@ export class FormFieldInputComponent implements OnInit {
   validateUploadSubmission() {
     return !!(this.uploads && this.uploads[this.field ? this.field.id : "status_page"] !== undefined && (this.field.type === "fileupload" && this.uploads && this.uploads[this.field ? this.field.id : "status_page"] && Object.keys(this.uploads[this.field ? this.field.id : "status_page"]).length === 0));
   }
-
 }

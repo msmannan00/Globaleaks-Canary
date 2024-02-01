@@ -7,9 +7,7 @@ import {AppDataService} from "@app/app-data.service";
 import {ErrorCodes} from "@app/models/app/error-code";
 import {Session} from "@app/models/authentication/session";
 import {TitleService} from "@app/shared/services/title.service";
-import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {OtkcAccessComponent} from "@app/shared/modals/otkc-access/otkc-access.component";
+import {HttpHeaders} from "@angular/common/http";
 
 @Injectable({
   providedIn: "root"
@@ -21,14 +19,16 @@ export class AuthenticationService {
   requireAuthCode: boolean = false;
   loginData: LoginDataRef = new LoginDataRef();
 
-  constructor(private http: HttpClient, private modalService: NgbModal,private titleService: TitleService, private activatedRoute: ActivatedRoute, private httpService: HttpService, private appDataService: AppDataService, private router: Router) {
+  constructor(private titleService: TitleService, private activatedRoute: ActivatedRoute, private httpService: HttpService, private appDataService: AppDataService, private router: Router) {
     this.init();
   }
 
   init() {
-    this.session = window.sessionStorage.getItem("session");
-    if (typeof this.session === "string") {
-      this.session = JSON.parse(this.session);
+    const json = window.sessionStorage.getItem("session");
+    if (json !== null) {
+      this.session = JSON.parse(json);
+    } else {
+      this.session = undefined;
     }
   }
 
@@ -75,6 +75,9 @@ export class AuthenticationService {
 
   login(tid?: number, username?: string, password?: string | undefined, authcode?: string | null, authtoken?: string | null, callback?: () => void) {
 
+    if (authtoken === undefined) {
+      authtoken = "";
+    }
     if (authcode === undefined) {
       authcode = "";
     }
@@ -100,56 +103,28 @@ export class AuthenticationService {
     requestObservable.subscribe(
       {
         next: (response: Session) => {
-          this.reset()
+          this.setSession(response);
+
           if (response.redirect) {
             this.router.navigate([response.redirect]).then();
           }
-          this.setSession(response);
-          if (response && response && response.properties && response.properties.new_receipt) {
-            const receipt = response.properties.new_receipt;
-            const formattedReceipt = this.formatReceipt(receipt);
-      
-            const modalRef = this.modalService.open(OtkcAccessComponent,{backdrop: 'static', keyboard: false});
-            modalRef.componentInstance.arg = {
-              receipt: receipt,
-              formatted_receipt: formattedReceipt
-            };
-            modalRef.componentInstance.confirmFunction = () => {
-              this.http.put('api/whistleblower/operations', {
-                operation: 'change_receipt',
-                args: {}
-              }).subscribe(() => {
-                this.titleService.setPage('tippage');
-                modalRef.close();
-              });
-            };
-            return;
-          }
-          const src = this.activatedRoute.snapshot.queryParams['src'];
+
+          const src = location.search;
           if (src) {
-            this.router.navigate([src]).then();
             location.replace(src);
           } else {
             if (this.session.role === "whistleblower") {
               if (password) {
                 this.appDataService.receipt = password;
-                this.titleService.setPage("tippage");
               }
-              this.router.navigate(['/']).then();
             } else {
               if (!callback) {
                 this.reset();
-                const redirect = this.activatedRoute.snapshot.queryParams['redirect'] || '/';
-                const redirectURL = decodeURIComponent(redirect);
-                if(redirectURL!="/"){
-                  this.router.navigateByUrl(redirectURL).then();
-                }else {
-                  this.appDataService.updateShowLoadingPanel(true);
-                  this.router.navigate([this.session.homepage], {
-                    queryParams: this.activatedRoute.snapshot.queryParams,
-                    queryParamsHandling: "merge"
-                  }).then();
-                }
+                this.appDataService.updateShowLoadingPanel(true);
+                this.router.navigate([this.session.homepage], {
+                  queryParams: this.activatedRoute.snapshot.queryParams,
+                  queryParamsHandling: "merge"
+                }).then();
               }
             }
           }
@@ -157,18 +132,18 @@ export class AuthenticationService {
             callback();
           }
         },
-        error: (error: HttpErrorResponse) => {
+        error: (error) => {
           this.loginInProgress = false;
           this.appDataService.updateShowLoadingPanel(false);
-          if (error.error && error.error["error_code"]) {
-            if (error.error["error_code"] === 4) {
+          if (error.error && error.error.error_code) {
+            if (error.error.error_code === 4) {
               this.requireAuthCode = true;
-            } else if (error.error["error_code"] !== 13) {
+            } else if (error.error.error_code !== 13) {
               this.reset();
             }
           }
 
-          this.appDataService.errorCodes = new ErrorCodes(error.error["error_message"], error.error["error_code"], error.error.arguments);
+          this.appDataService.errorCodes = new ErrorCodes(error.error.error_message, error.error.error_code, error.error.arguments);
           if (callback) {
             callback();
           }
@@ -176,19 +151,6 @@ export class AuthenticationService {
       }
     );
     return requestObservable;
-  }
-
-  formatReceipt(receipt: string): string {
-    if (!receipt || receipt.length !== 16) {
-      return '';
-    }
-  
-    return (
-      receipt.substring(0, 4) + " " +
-      receipt.substring(4, 8) + " " +
-      receipt.substring(8, 12) + " " +
-      receipt.substring(12, 16)
-    );
   }
 
   public getHeader(confirmation?: string): HttpHeaders {

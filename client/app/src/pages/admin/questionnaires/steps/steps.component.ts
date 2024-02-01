@@ -15,7 +15,13 @@ export class StepsComponent implements OnInit {
   showAddStep: boolean = false;
   step: Step;
   editing: boolean = false;
+  showAddTrigger: boolean = false;
   new_step: { label: string } = {label: ""};
+  new_trigger: { field: string; option: string; sufficient: boolean } = {
+    field: "",
+    option: "",
+    sufficient: true,
+  };
 
   constructor(private questionnaireService: QuestionnaireService, protected node: NodeResolver, protected utilsService: UtilsService, private httpService: HttpService) {
   }

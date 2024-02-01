@@ -11,6 +11,7 @@ import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {Observable} from "rxjs";
+import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {
   TipOperationSetReminderComponent
 } from "@app/shared/modals/tip-operation-set-reminder/tip-operation-set-reminder.component";
@@ -27,9 +28,6 @@ import {RecieverTipData} from "@app/models/reciever/reciever-tip-data";
 import {Receiver} from "@app/models/app/public-model";
 import {TipUploadWbFileComponent} from "@app/shared/partials/tip-upload-wbfile/tip-upload-wb-file.component";
 import {TipCommentsComponent} from "@app/shared/partials/tip-comments/tip-comments.component";
-import {ReopenSubmissionComponent} from "@app/shared/modals/reopen-submission/reopen-submission.component";
-import {ChangeSubmissionStatusComponent} from "@app/shared/modals/change-submission-status/change-submission-status.component";
-import {TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -49,10 +47,8 @@ export class TipComponent implements OnInit {
   tabs: Tab[];
   active: string;
   loading = true;
-  redactMode :boolean = false;
-  redactOperationTitle: string;
 
-  constructor(private translateService: TranslateService,private tipService: TipService, private appConfigServices: AppConfigService, private router: Router, private cdr: ChangeDetectorRef, private cryptoService: CryptoService, protected utils: UtilsService, protected preferencesService: PreferenceResolver, protected modalService: NgbModal, private activatedRoute: ActivatedRoute, protected httpService: HttpService, protected http: HttpClient, protected appDataService: AppDataService, protected RTipService: ReceiverTipService, protected authenticationService: AuthenticationService) {
+  constructor(private tipService: TipService, private appConfigServices: AppConfigService, private router: Router, private cdr: ChangeDetectorRef, private cryptoService: CryptoService, protected utils: UtilsService, protected preferencesService: PreferenceResolver, protected modalService: NgbModal, private activatedRoute: ActivatedRoute, protected httpService: HttpService, protected http: HttpClient, protected appDataService: AppDataService, protected RTipService: ReceiverTipService, protected fieldUtilities: FieldUtilitiesService, protected authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
@@ -62,7 +58,6 @@ export class TipComponent implements OnInit {
 
   loadTipDate() {
     this.tip_id = this.activatedRoute.snapshot.paramMap.get("tip_id");
-    this.redactOperationTitle = this.translateService.instant('Mask') + ' / ' + this.translateService.instant('Redact');
     const requestObservable: Observable<any> = this.httpService.receiverTip(this.tip_id);
     this.loading = true;
     this.RTipService.reset();
@@ -205,68 +200,6 @@ export class TipComponent implements OnInit {
     );
   }
 
-  openModalChangeState(){
-    const modalRef = this.modalService.open(ChangeSubmissionStatusComponent, {backdrop: 'static', keyboard: false});
-    modalRef.componentInstance.arg={
-      tip:this.tip,
-      motivation:this.tip.motivation,
-      submission_statuses:this.prepareSubmissionStatuses(),
-    };
-
-    modalRef.componentInstance.confirmFunction = (status:any,motivation: string) => {
-      this.tip.status = status.status;
-      this.tip.substatus = status.substatus;
-      this.tip.motivation = motivation;
-      this.updateSubmissionStatus();
-    };
-    modalRef.componentInstance.cancelFun = null;
-  }
-
-  openModalReopen(){
-    const modalRef = this.modalService.open(ReopenSubmissionComponent, {backdrop: 'static', keyboard: false});
-    modalRef.componentInstance.confirmFunction = (motivation: string) => {
-      this.tip.status = "opened";
-      this.tip.substatus = "";
-      this.tip.motivation = motivation;
-      this.updateSubmissionStatus();
-    };
-    modalRef.componentInstance.cancelFun = null;
-  }
-
-  updateSubmissionStatus() {
-    const args = {"status":  this.tip.status, "substatus": this.tip.substatus ? this.tip.substatus : "", "motivation":  this.tip.motivation || ""};
-    this.httpService.tipOperation("update_status", args, this.tip.id)
-      .subscribe(
-        () => {
-          this.utils.reloadComponent();
-        }
-      );
-  };
-
-  prepareSubmissionStatuses() {
-    const subCopy:any[]= [...this.appDataService.submissionStatuses];
-    let output = [];
-    for (let x of subCopy) {
-      if (x.substatuses.length) {
-        for (let y of x.substatuses) {
-          output.push({
-            id: `${x.id}:${y.id}`,
-            label: this.translateService.instant(x.label) + ' \u2013 ' + y.label,
-            status: x.id,
-            substatus: y.id,
-            order: output.length,
-          });
-        }
-      } else {
-        x.status = x.id;
-        x.substatus = "";
-        x.order = output.length;
-        output.push(x);
-      }
-    }
-    return output;
-  }
-  
   reload(): void {
     const reloadCallback = () => {
       this.utils.reloadComponent();
@@ -354,10 +287,6 @@ export class TipComponent implements OnInit {
     );
   }
 
-  toggleRedactMode() {
-    this.redactMode = !this.redactMode;
-  }
-  
   listenToFields() {
     this.loadTipDate();
   }

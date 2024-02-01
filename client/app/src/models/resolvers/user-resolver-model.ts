@@ -33,7 +33,4 @@ export class userResolverModel {
   contexts: string[];
   newpassword: boolean;
   can_transfer_access_to_reports: boolean;
-  can_reopen_reports:boolean;
-  can_mask_information:boolean;
-  can_redact_information:boolean;
 }
