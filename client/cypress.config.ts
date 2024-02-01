@@ -35,7 +35,7 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       return require("./cypress/plugin/index.ts").default(on, config);
     },
-    baseUrl: "http://localhost:4200",
+    baseUrl: "https://127.0.0.1:8443",
   },
   defaultCommandTimeout: 20000,
 });
