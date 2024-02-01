@@ -7,7 +7,6 @@
                     <span *ngSwitchCase="'admin'">{{ 'Admin' | translate }}</span>
                     <span *ngSwitchCase="'receiver'">{{ 'Recipient' | translate }}</span>
                     <span *ngSwitchCase="'custodian'">{{ 'Custodian' | translate }}</span>
-                    <span *ngSwitchCase="'analyst'">{{ 'Analyst' | translate }}</span>
                 </ng-container>
             </span>
             <span class="badge bg-secondary" *ngIf="!user.enabled">{{ 'Disabled' | translate }}</span>
@@ -127,7 +126,9 @@
                         </option>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group" *ngIf="(user.role === 'admin' && !nodeData?.disable_admin_notification) ||
+                              (user.role === 'receiver' && !nodeData?.disable_receiver_notification) ||
+                              (user.role === 'custodian' && !nodeData?.disable_custodian_notification)">
                     <input [(ngModel)]="user.notification" type="checkbox">
                     <label>{{ 'Enable email notifications' | translate }}</label>
                 </div>
@@ -155,7 +156,7 @@
                     <div class="position-relative">
                         <label>{{ 'Set up encryption by providing a PGP public key' | translate }}</label>
                         <div>
-                            <input #uploader id="customFile" type="file" [style.display]="'none'" class="custom-file-input inputelem" (change)="loadPublicKeyFile(uploader.files,user)" />
+                            <input #uploader id="customFile" type="file" [style.display]="'none'" class="custom-file-input inputelem" (change)="loadPublicKeyFile(uploader.files)" />
                             <label class="btn btn-sm btn-outline-secondary" for="customFile">
                                 <i class="fa-solid fa-upload"></i>
                                 <span>{{ 'Upload' | translate }}</span>
@@ -180,14 +181,6 @@
                     <label>{{ 'Forcefully selected' | translate }}</label>
                 </div>
                 <div class="form-group">
-                    <input [(ngModel)]="user.can_mask_information" type="checkbox" />
-                    <span>{{ 'Give this user ability to mask information' | translate }}</span>
-                </div>
-                <div class="form-group">
-                    <input [(ngModel)]="user.can_redact_information" type="checkbox" />
-                    <span>{{ 'Give this user ability to permanently redact masked information' | translate }}</span>
-                </div>
-                <div class="form-group">
                     <input name="can_delete_submission" [(ngModel)]="user.can_delete_submission" type="checkbox" />
                     <label>{{ 'Allow the recipient to delete reports' | translate }}</label>
                 </div>
@@ -203,10 +196,6 @@
                     <input name="can_transfer_access_to_reports" [(ngModel)]="user.can_transfer_access_to_reports" type="checkbox" />
                     <label>{{ 'Give this user ability to transfer reports to other users' | translate }}</label>
                 </div>
-                <div class="form-group">
-                    <input name="can_reopen_reports" [(ngModel)]="user.can_reopen_reports" type="checkbox" />
-                    <label>{{ 'Allow this user to reopen management of a report' | translate }}</label>
-                  </div>
             </div>
         </div>
         <div class="row" *ngIf="user.role !== 'admin'">

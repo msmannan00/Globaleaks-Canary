@@ -17,6 +17,8 @@ export class SimpleLoginComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-  
+    if (this.appDataService.public.receivers.length > 0) {
+      this.loginData.loginUsername = this.appDataService.public.receivers[0].id
+    }
   }
 }

@@ -118,18 +118,17 @@ export class UserEditorComponent implements OnInit {
     this.utilsService.runAdminOperation("send_password_reset_email", {"value": user.id}, true).subscribe();
   }
 
-  loadPublicKeyFile(files: FileList | null,user:userResolverModel) {
+  loadPublicKeyFile(files: FileList | null) {
     if (files && files.length > 0) {
       this.utilsService.readFileAsText(files[0])
         .subscribe((txt: string) => {
           this.user.pgp_key_public = txt;
-          return this.saveUser(user);
         });
     }
   };
 
   getUserID() {
-    return this.authenticationData.session?.user_id;
+    return this.authenticationData.session.user_id;
   }
 
   toggleUserEscrow(user: userResolverModel) {

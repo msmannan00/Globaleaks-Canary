@@ -56,6 +56,7 @@ input:focus + .slider {
 }
 
 .switch-container .switch input:checked + .slider:before {
+  -webkit-transform: translateX(13px);
   -ms-transform: translateX(13px);
   transform: translateX(13px);
   background-color: white;

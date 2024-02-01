@@ -8,7 +8,6 @@ import {
   Comment
 } from "@app/models/app/shared-public-model";
 import {IarData} from "@app/models/reciever/Iar-data";
-import {RedactionData} from "@app/models/component-model/redaction";
 
 export class RecieverTipData {
   id: string;
@@ -48,8 +47,6 @@ export class RecieverTipData {
   submissionStatusStr: string;
   whistleblower_identity_field: Children;
   tip_id: string;
-  motivation:string;
-  redactions:RedactionData[];
 }
 
 export interface Questionnaire {
@@ -83,6 +80,7 @@ export interface Context {
   tip_reminder: number;
   select_all_receivers: boolean;
   maximum_selectable_receivers: number;
+  show_recipients_details: boolean;
   allow_recipients_selection: boolean;
   enable_comments: boolean;
   enable_two_way_comments: boolean;

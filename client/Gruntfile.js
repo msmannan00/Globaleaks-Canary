@@ -446,7 +446,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
 
   let readNoTranslateStrings = function () {
-    return JSON.parse(grunt.file.read("app/data_src/notranslate_strings.json"));
+    return JSON.parse(grunt.file.read("app/assets/data/notranslate_strings.json"));
   };
 
   let notranslate_strings = readNoTranslateStrings();

@@ -12,8 +12,9 @@
         </span>
     </div>
     <div *ngSwitchCase="'voice'">
-        <div class="audio-player-wrapper">
-            <iframe #viewer id="{{'audio-file-' + field.id}}" class="audio-player-iframe" sandbox="allow-downloads allow-scripts" [src]="iframeUrl" ></iframe>
+        <i class="fa-solid fa-file-audio" *ngIf="authenticationService.session?.role === 'whistleblower'"></i>
+        <div class="audio-player-wrapper" *ngIf="authenticationService.session?.role === 'receiver'">
+            <audio [src]="audioFiles[field.id]" controls class="audio-player"></audio>
         </div>
     </div>
     <div *ngSwitchCase="'selectbox'">
@@ -50,10 +51,7 @@
     </span>
     <span *ngSwitchDefault class="entry-text">
         <span *ngIf="entry['value']">
-            <span class="preformatted">{{maskContent(field.id, entry['index'], entry['value'])}}</span>
-            <span class="float-end edit" id="edit-question" (click)="redactInformation('answer', field.id, entry['index'], entry['value'])" *ngIf="redactMode && (preferenceResolver.dataModel.can_mask_information || preferenceResolver.dataModel.can_redact_information)" data-toggle="tooltip" title="{{redactOperationTitle | translate}}">
-              <i class="fa-solid fa-eraser"></i>
-            </span>
+            {{entry['value']}}
         </span>
     </span>
 </div>
