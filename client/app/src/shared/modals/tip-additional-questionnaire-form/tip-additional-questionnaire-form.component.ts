@@ -8,7 +8,6 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {Answers, Questionnaire3} from "@app/models/reciever/reciever-tip-data";
 import {Field} from "@app/models/resolvers/field-template-model";
-import {WhistleblowerSubmissionService} from "@app/pages/whistleblower/whistleblower-submission.service";
 
 @Component({
   selector: "src-tip-additional-questionnaire-form",
@@ -27,9 +26,9 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit {
   field_id_map: { [key: string]: Field };
   done: boolean = false;
   uploads: { [key: string]: any };
-  file_upload_url: string = "api/whistleblower/wbtip/wbfiles";
+  file_upload_url: string = "api/whistleblower/wbtip/rfile";
 
-  constructor(protected whistleblowerSubmissionService:WhistleblowerSubmissionService,private wbTipResolver: WbTipResolver, private httpService: HttpService, private fieldUtilitiesService: FieldUtilitiesService, private utilsService: UtilsService, protected wbTipService: WbtipService, protected activeModal: NgbActiveModal) {
+  constructor(private wbTipResolver: WbTipResolver, private httpService: HttpService, private fieldUtilitiesService: FieldUtilitiesService, private utilsService: UtilsService, protected wbTipService: WbtipService, protected activeModal: NgbActiveModal) {
   }
 
   ngOnInit(): void {
@@ -104,15 +103,56 @@ export class TipAdditionalQuestionnaireFormComponent implements OnInit {
     return this.navigation > this.firstStepIndex();
   };
 
+  checkForInvalidFields() {
+    for (let counter = 0; counter <= this.navigation; counter++) {
+      this.validate[counter] = true;
+      if (this.questionnaire.steps[counter].enabled) {
+        if (this.stepForms.get(counter)?.invalid) {
+          this.navigation = counter;
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   runValidation() {
     this.validate[this.navigation] = true;
 
-    if (this.navigation > -1 && !this.whistleblowerSubmissionService.checkForInvalidFields(this)) {
+    if (this.navigation > -1 && !this.checkForInvalidFields()) {
       this.utilsService.scrollToTop();
       return false;
     }
 
     return true;
+  };
+
+  incrementStep() {
+    if (!this.runValidation()) {
+      return;
+    }
+
+    if (this.hasNextStep()) {
+      for (let i = this.navigation + 1; i <= this.lastStepIndex(); i++) {
+        if (this.fieldUtilitiesService.isFieldTriggered(null, this.questionnaire.steps[i], this.answers, this.score)) {
+          this.navigation = i;
+          this.utilsService.scrollToTop();
+          return;
+        }
+      }
+    }
+  }
+
+  decrementStep() {
+    if (this.hasPreviousStep()) {
+      for (let i = this.navigation - 1; i >= this.firstStepIndex(); i--) {
+        if (i === -1 || this.fieldUtilitiesService.isFieldTriggered(null, this.questionnaire.steps[i], this.answers, this.score)) {
+          this.navigation = i;
+          this.utilsService.scrollToTop();
+          return;
+        }
+      }
+    }
   };
 
   areReceiversSelected() {

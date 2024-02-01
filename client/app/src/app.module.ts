@@ -35,7 +35,6 @@ import {RecipientModule} from "@app/pages/recipient/recipient.module";
 import {AdminModule} from "@app/pages/admin/admin.module";
 import {CustodianModule} from "@app/pages/custodian/custodian.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {AnalystModule} from "@app/pages/analyst/analyst.module";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "l10n/", "");
@@ -69,7 +68,6 @@ const translationModule = TranslateModule.forRoot({
     FormsModule,
     WhistleblowerModule,
     CustodianModule,
-    AnalystModule,
     SharedModule,
     NgIdleKeepaliveModule.forRoot(),
     MarkdownModule.forRoot(),

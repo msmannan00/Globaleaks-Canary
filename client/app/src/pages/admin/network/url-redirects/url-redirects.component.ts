@@ -1,5 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {redirectResolverModel} from "@app/models/resolvers/redirect-resolver-model";
+import {RedirectsResolver} from "@app/shared/resolvers/redirects.resolver";
 import {HttpService} from "@app/shared/services/http.service";
 
 @Component({
@@ -13,11 +14,15 @@ export class UrlRedirectsComponent implements OnInit {
     path2: ""
   };
 
-  constructor(private httpService: HttpService) {
+  constructor(private redirects: RedirectsResolver, private httpService: HttpService) {
   }
 
   ngOnInit(): void {
-    this.getResolver();
+    if (Array.isArray(this.redirects.dataModel)) {
+      this.redirectData = this.redirects.dataModel;
+    } else {
+      this.redirectData = [this.redirects.dataModel];
+    }
   }
 
   redirectPath(path: redirectResolverModel, index: number) {
@@ -43,11 +48,7 @@ export class UrlRedirectsComponent implements OnInit {
 
   getResolver() {
     return this.httpService.requestRedirectsResource().subscribe(response => {
-      if (Array.isArray(response)) {
-        this.redirectData = response;
-      } else {
-        this.redirectData = [response];
-      }
+      this.redirectData = response;
     });
   }
 

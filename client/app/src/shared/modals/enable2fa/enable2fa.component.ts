@@ -22,7 +22,6 @@ export class Enable2faComponent {
       "secret": this.twoFactorAuthData.totp.secret,
       "token": this.twoFactorAuthData.totp.token
     }, true);
-    this.twoFactorAuthData.totp.token = ""
     requestObservable.subscribe(
       {
         next: _ => {
@@ -30,7 +29,7 @@ export class Enable2faComponent {
           this.activeModal.dismiss();
         },
         error: _ => {
-          // this.utilsService.reloadCurrentRoute();
+          this.utilsService.reloadCurrentRoute();
         }
       }
     );

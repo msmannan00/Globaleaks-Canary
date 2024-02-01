@@ -20,9 +20,14 @@ export class QuestionnairesListComponent {
   @Input() questionnaire: questionnaireResolverModel;
   @Input() questionnaires: questionnaireResolverModel[];
   @Input() editQuestionnaire: NgForm;
+  showAddQuestion: boolean = false;
   editing: boolean = false;
 
   constructor(private authenticationService: AuthenticationService, private questionnaireService: QuestionnaireService, private modalService: NgbModal, private httpService: HttpService, private utilsService: UtilsService) {
+  }
+
+  toggleAddQuestion(): void {
+    this.showAddQuestion = !this.showAddQuestion;
   }
 
   toggleEditing(questionnaire: questionnaireResolverModel) {

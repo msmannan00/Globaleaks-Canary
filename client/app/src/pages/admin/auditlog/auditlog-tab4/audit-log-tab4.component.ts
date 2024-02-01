@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component} from "@angular/core";
 import {JobResolver} from "@app/shared/resolvers/job.resolver";
 import {jobResolverModel} from "@app/models/resolvers/job-resolver-model";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -7,7 +7,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
   selector: "src-auditlog-tab4",
   templateUrl: "./audit-log-tab4.component.html"
 })
-export class AuditLogTab4Component implements OnInit{
+export class AuditLogTab4Component {
   currentPage = 1;
   pageSize = 20;
   jobs: jobResolverModel[] = [];

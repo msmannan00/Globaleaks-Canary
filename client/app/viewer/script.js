@@ -22,7 +22,7 @@ function receiveMessage(evt) {
     mediaViewer.style.display = "block";
     if (evt.data.tag === "audio") {
       mediaViewer.innerHTML =
-        "<audio id=\"viewer\" src=\"" + url + "\" controls /></audio>";
+        "<audio id=\"viewer\" src=\"' + url + '\" controls /></audio>";
     } else if (evt.data.tag === "image") {
       mediaViewer.innerHTML =
         "<img id=\"viewer\" src=\"" + url + "\" />";
@@ -109,7 +109,8 @@ window.addEventListener(
   function () {
     if (window.self === window.top) {
       return;
-    };
+    }
+    ;
 
     window.parent.postMessage("ready", "*");
     window.addEventListener("message", receiveMessage, {once: true});

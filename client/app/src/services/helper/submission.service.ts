@@ -16,7 +16,7 @@ export class SubmissionService {
   selected_receivers: { [key: string]: boolean } = {};
   blocked = false;
   uploads: { [key: string]: any };
-  private sharedData: Flow[] = []; 
+  private sharedData: Flow | null;
 
   constructor(private httpService: HttpService, private appDataService: AppDataService) {
   }
@@ -87,10 +87,8 @@ export class SubmissionService {
     return this.httpService.requestReportSubmission(param);
   }
 
-  setSharedData(data:Flow| null) {
-    if(data){
-      this.sharedData.push(data);
-    }
+  setSharedData(data: Flow | null) {
+    this.sharedData = data;
   }
 
   getSharedData() {

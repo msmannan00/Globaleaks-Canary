@@ -16,5 +16,4 @@ export class Session {
 
 export interface Properties {
   management_session: any
-  new_receipt:string;
 }

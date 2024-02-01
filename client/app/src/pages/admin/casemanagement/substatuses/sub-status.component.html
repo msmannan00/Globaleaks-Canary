@@ -1,4 +1,4 @@
-<div id="SubstatusEditBox">
+<div>
     <div class="row">
         <span class="col-md-8">
             <span>{{'Substatuses'|translate}}</span>
@@ -8,7 +8,7 @@
             </button>
         </span>
     </div>
-    <div id="SubstatusAddBox" class="row" *ngIf="showAddSubStatus">
+    <div class="row" *ngIf="showAddSubStatus">
         <div class="col-md-6">
             <div ngForm="newSubStatusList" #newSubStatusList="ngForm">
                 <div class="row">
@@ -68,26 +68,10 @@
                 <div ngForm="editStep" *ngIf="this.subStatusEditing[index]">
                     <hr />
                     <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
+                        <div class="form-group">
+                            <div class="col-md-6">
                                 <label>{{'Label'|translate}}</label>
                                 <input class="form-control" name="substatus.label" [(ngModel)]="substatus.label" type="text" required />
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                              <label><span>{{ 'Expiration date' | translate }}</span> (<span>{{ 'days' | translate }}</span>)</label>{{ substatus.tip_timetolive_option }}
-                              <select class="form-control" name="substatus.tip_timetolive_option" [(ngModel)]="substatus.tip_timetolive_option">
-                                <option value="-1">{{ 'Disabled' | translate }}</option>
-                                <option value="0">{{ 'Unlimited' | translate }}</option>
-                                <option value="1">{{ 'Custom' | translate }}</option>
-                              </select>
-                            </div>
-                        </div>
-                          <div class="col-md-1">
-                            <div class="form-group">
-                              <label></label>
-                              <input class="form-control" name="substatus.tip_timetolive" [(ngModel)]="substatus.tip_timetolive" type="number" min="1" *ngIf="isCustomOptionSelected(substatus.tip_timetolive_option)" required/>
                             </div>
                         </div>
                     </div>

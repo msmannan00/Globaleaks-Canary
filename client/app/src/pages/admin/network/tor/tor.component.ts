@@ -1,5 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {networkResolverModel} from "@app/models/resolvers/network-resolver-model";
+import {NetworkResolver} from "@app/shared/resolvers/network.resolver";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -12,11 +13,11 @@ export class TorComponent implements OnInit {
   torOnionResetInProgress: boolean = false;
   networkData: networkResolverModel;
 
-  constructor(protected nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService) {
+  constructor(protected nodeResolver: NodeResolver, private networkResolver: NetworkResolver, private httpService: HttpService, private utilsService: UtilsService) {
   }
 
   ngOnInit(): void {
-    this.getNetortResolver();
+    this.networkData = this.networkResolver.dataModel;
   }
 
   resetOnionPrivateKey() {
@@ -26,12 +27,6 @@ export class TorComponent implements OnInit {
   updateTor(network: networkResolverModel) {
     this.httpService.requestUpdateNetworkResource(network).subscribe(() => {
       this.utilsService.reloadComponent();
-    });
-  }
-  
-  getNetortResolver() {
-    return this.httpService.requestNetworkResource().subscribe(response => {
-        this.networkData = response;
     });
   }
 }
