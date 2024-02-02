@@ -102,7 +102,6 @@ export interface Context {
   tip_timetolive: number;
   select_all_receivers: boolean;
   maximum_selectable_receivers: number;
-  show_recipients_details: boolean;
   allow_recipients_selection: boolean;
   enable_comments: boolean;
   enable_two_way_comments: boolean;
@@ -132,4 +131,6 @@ export interface Substatus {
   submissionstatus_id: string;
   order: number;
   label: string;
+  tip_timetolive:number;
+  tip_timetolive_option:number;
 }

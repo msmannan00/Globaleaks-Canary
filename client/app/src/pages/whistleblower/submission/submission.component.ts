@@ -13,6 +13,7 @@ import {Field} from "@app/models/resolvers/field-template-model";
 import * as Flow from "@flowjs/flow.js";
 import {TitleService} from "@app/shared/services/title.service";
 import {Router} from "@angular/router";
+import {WhistleblowerSubmissionService} from "@app/pages/whistleblower/whistleblower-submission.service";
 
 @Component({
   selector: "src-submission",
@@ -38,20 +39,17 @@ export class SubmissionComponent {
   contextsOrderPredicate: string = this.appDataService.public.node.show_contexts_in_alphabetical_order ? "name" : "order";
   selectable_contexts: Context[];
   show_steps_navigation_bar = false;
-  receivedData: Flow | null;
+  receivedData: Flow[];
 
-  constructor(private titleService: TitleService, private router: Router, private appConfigService: AppConfigService, private whistleblowerLoginResolver: WhistleblowerLoginResolver, protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, public submissionService: SubmissionService) {
+  constructor(protected whistleblowerSubmissionService:WhistleblowerSubmissionService,private titleService: TitleService, private router: Router, private appConfigService: AppConfigService, private whistleblowerLoginResolver: WhistleblowerLoginResolver, protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, public submissionService: SubmissionService) {
     this.selectable_contexts = [];
     this.receivedData = this.submissionService.getSharedData();
 
     this.appConfigService.setPage("submissionpage");
-    if (!this.whistleblowerLoginResolver.loggedIn) {
-      this.utilsService.reloadCurrentRoute();
-    } else {
-      this.resetForm();
-      this.initializeSubmission();
-      this.whistleblowerLoginResolver.loggedIn = false;
-    }
+    this.whistleblowerLoginResolver.resolve()
+    this.resetForm();
+    this.initializeSubmission();
+
   }
 
   firstStepIndex() {
@@ -67,6 +65,7 @@ export class SubmissionComponent {
     this.submissionService.create(context.id);
     this.context = context;
     this.fieldUtilitiesService.onAnswersUpdate(this);
+    this.utilsService.scrollToTop();
 
     this.field_id_map = this.fieldUtilitiesService.build_field_id_map(this.questionnaire);
     this.show_steps_navigation_bar = this.context?.allow_recipients_selection || this.questionnaire.steps.length > 1;
@@ -138,10 +137,6 @@ export class SubmissionComponent {
     return this.navigation < this.lastStepIndex();
   }
 
-  singleStepForm() {
-    return this.firstStepIndex() === this.lastStepIndex();
-  };
-
   stepForm(index: number): any {
     if (this.stepForms && index !== -1) {
       return this.stepForms.get(index);
@@ -194,10 +189,6 @@ export class SubmissionComponent {
     return uploading;
   }
 
-  getContextID() {
-    return this.submissionService.context.id;
-  }
-
   calculateEstimatedTime() {
     let timeRemaining = 0;
     if (this.uploads && this.done) {
@@ -247,8 +238,10 @@ export class SubmissionComponent {
 
   completeSubmission() {
     this.receivedData = this.submissionService.getSharedData();
-    if (this.receivedData !== null && this.receivedData !== undefined) {
-      this.receivedData.upload();
+    if (this.receivedData !== null && this.receivedData !== undefined && this.receivedData.length > 0) {
+       this.receivedData.forEach((item :Flow)=> {
+        item.upload();
+       });
     }
     this.fieldUtilitiesService.onAnswersUpdate(this);
 
@@ -303,49 +296,9 @@ export class SubmissionComponent {
 
   runValidation() {
     this.validate[this.navigation] = true;
-    return !((!this.areReceiversSelected() && this.firstStepIndex() && this.navigation == -1) || !this.checkForInvalidFields());
+    return !((!this.areReceiversSelected() && this.firstStepIndex() && this.navigation == -1) || !this.whistleblowerSubmissionService.checkForInvalidFields(this));
   };
 
-  checkForInvalidFields() {
-    for (let counter = 0; counter <= this.navigation; counter++) {
-      this.validate[counter] = true;
-      if (this.questionnaire.steps[counter].enabled) {
-        if (this.stepForms.get(counter)?.invalid) {
-          this.navigation = counter;
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
-  decrementStep() {
-    if (this.hasPreviousStep()) {
-      for (let i = this.navigation - 1; i >= this.firstStepIndex(); i--) {
-        if (i === -1 || this.fieldUtilitiesService.isFieldTriggered(null, this.questionnaire.steps[i], this.answers, this.score)) {
-          this.navigation = i;
-          this.utilsService.scrollToTop();
-          return;
-        }
-      }
-    }
-  };
-
-  incrementStep() {
-    if (!this.runValidation()) {
-      return;
-    }
-
-    if (this.hasNextStep()) {
-      for (let i = this.navigation + 1; i <= this.lastStepIndex(); i++) {
-        if (this.fieldUtilitiesService.isFieldTriggered(null, this.questionnaire.steps[i], this.answers, this.score)) {
-          this.navigation = i;
-          this.utilsService.scrollToTop();
-          return;
-        }
-      }
-    }
-  }
 
   resetForm() {
     if (this.submissionForm) {
@@ -357,6 +310,13 @@ export class SubmissionComponent {
     this.fieldUtilitiesService.onAnswersUpdate(this);
   }
 
+  getAuthSessionID(){
+    if(this.authenticationService.session){
+      return this.authenticationService.session.id;
+    }else {
+      return this.authenticationService.session;
+    }
+  }
   notifyFileUpload(uploads: any) {
     if (uploads) {
       this.uploads = uploads;

@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {FormBuilder, FormGroup} from "@angular/forms";
@@ -8,7 +8,7 @@ import {TwoFactorAuthData} from "@app/services/helper/2fa.data.service";
   selector: "src-enable-2fa",
   templateUrl: "./enable-2fa.html"
 })
-export class Enable2fa {
+export class Enable2fa implements OnInit{
 
   symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
   array = new Uint32Array(32);

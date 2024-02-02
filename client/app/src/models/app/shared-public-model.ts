@@ -187,3 +187,12 @@ export interface WhistleblowerIdentity {
   value: string;
   question_whistleblower_identity_other: QuestionWhistleblowerIdentityOther[];
 }
+
+export interface SubmissionStatus {
+  id: string;
+  order: number;
+  substatuses: SubmissionStatus[];
+  label: string;
+  status?: string;
+  substatus?: string;
+}

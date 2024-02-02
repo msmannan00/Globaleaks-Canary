@@ -38,6 +38,7 @@
               "app/css/components/select.css",
               "app/css/components/date-picker.css",
               "app/css/main.css",
+              "app/css/ui-select-bootstrap4-fix.css",
               "app/css/components/loader.css",
               "app/css/print.css",
               "app/css/components/button.css",

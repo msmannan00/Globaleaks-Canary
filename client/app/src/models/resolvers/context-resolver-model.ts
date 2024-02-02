@@ -5,9 +5,7 @@ export class contextResolverModel {
   tip_reminder: number;
   select_all_receivers: boolean;
   maximum_selectable_receivers: number;
-  show_recipients_details: boolean;
   allow_recipients_selection: boolean;
-  enable_comments: boolean;
   enable_two_way_comments: boolean;
   enable_attachments: boolean;
   score_threshold_medium: number;

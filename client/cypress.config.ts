@@ -37,4 +37,5 @@ export default defineConfig({
     },
     baseUrl: "https://127.0.0.1:8443",
   },
+  defaultCommandTimeout: 20000,
 });

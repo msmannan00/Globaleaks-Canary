@@ -4,14 +4,14 @@
             <span class="input-group-prepend">
                 <span class="input-group-text rounded-end-0">{{ 'Hostname' | translate }}</span>
             </span>
-            <input name="hostname" class="form-control" type="text" [(ngModel)]="nodeResolver.dataModel.hostname" #hostname="ngModel" [pattern]="Constants.hostnameRegexp" [ngClass]="{'is-invalid': hostname.errors?.['pattern']}" />
+            <input name="hostname" class="form-control" type="text" [(ngModel)]="hostName" #hostname="ngModel" [pattern]="Constants.hostnameRegexp" [ngClass]="{'is-invalid': hostname.errors?.['pattern']}" />
             <span class="input-group-append">
-                <button class="btn btn-primary rounded-start-0 m-0" (click)="updateHostname(nodeResolver.dataModel.hostname)" [disabled]="hostname.errors?.['pattern'] || adminNetForm.pristine">{{ 'Save' | translate }}</button>
+                <button class="btn btn-primary rounded-start-0 m-0" (click)="updateHostname(hostName)" [disabled]="hostname.errors?.['pattern'] || adminNetForm.pristine">{{ 'Save' | translate }}</button>
             </span>
         </p>
     </form>
 </div>
-<div id="HTTPSSettings">
+<div id="HTTPSSettings" *ngIf="appDataService.public.node.hostname">
     <div class="card card-default">
         <div class="card-body" [ngSwitch]="menuState">
             <src-https-status [tlsConfig]="tlsConfig" (dataToParent)="httpsStatus($event)"></src-https-status>

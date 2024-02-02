@@ -57,7 +57,7 @@
                             <span>{{ 'Add' | translate }}</span>
                         </button>
                     </label>
-                    <div class="row ReceiverContextAdder">
+                    <div id="ReceiverContextAdder" class="row">
                         <div class="col-md-12" *ngIf="showSelect">
                             <ng-select [(ngModel)]="selected.value" name="selected.value" bindLabel="name" [items]="usersData | filter:  'role': 'receiver'" [searchable]="true" [placeholder]="'Search' | translate" (change)="moveReceiver($event)">
                                 <ng-template ng-option-tmp let-item="item">
@@ -120,7 +120,7 @@
                     <i *ngIf="showAdvancedSettings" class="fa-solid fa-minus"></i>
                     <span>{{ 'Advanced' | translate }}</span>
                 </button>
-                <div class="context-advanced-settings-box">
+                <div id="context-advanced-settings-box">
                     <div class="row" *ngIf="showAdvancedSettings">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -158,24 +158,6 @@
                             </div>
                             <div class="form-group">
                                 <label class="inline-checkbox">
-                                    <input type="checkbox" [(ngModel)]="contextResolver.show_recipients_details" name="contextResolver.show_recipients_details" />
-                                    <span>{{ 'Show recipient details on the status page of the report' | translate}}</span>
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label class="inline-checkbox">
-                                    <input type="checkbox" [(ngModel)]="contextResolver.enable_comments" name="contextResolver.enable_comments" />
-                                    <span>{{ 'Enable comments' | translate }}</span>
-                                </label>
-                            </div>
-                            <div class="form-group" *ngIf="contextResolver.enable_comments">
-                                <label class="inline-checkbox">
-                                    <input type="checkbox" [(ngModel)]="contextResolver.enable_two_way_comments" name="contextResolver.enable_two_way_comments" />
-                                    <span>{{ 'Allow the whistleblower to write comments' | translate }}</span>
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label class="inline-checkbox">
                                     <input type="checkbox" [(ngModel)]="contextResolver.enable_attachments" />
                                     <span>{{ 'Allow the whistleblower to add attachments' | translate }}</span>
                                 </label>
@@ -184,8 +166,11 @@
                                 <label>{{ 'Additional questionnaire' | translate }}</label>
                                 <select class="form-select-custom" [(ngModel)]="contextResolver.additional_questionnaire_id" name="contextResolver.additional_questionnaire_id">
                                     <option *ngIf="contextResolver.additional_questionnaire_id" [value]="null"></option>
-                                    <option [value]="item.id" *ngFor="let item of questionnairesData">{{ item.name }}
-                                    </option>
+                                    <ng-container *ngFor="let item of questionnairesData">
+                                        <ng-container *ngIf="item.id !== contextResolver.questionnaire_id">
+                                            <option [value]="item.id">{{ item.name }}</option>
+                                        </ng-container>
+                                    </ng-container>
                                 </select>
                             </div>
                             <div *ngIf="nodeData.enable_scoring_system">

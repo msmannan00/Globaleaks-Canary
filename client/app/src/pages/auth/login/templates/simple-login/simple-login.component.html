@@ -1,7 +1,7 @@
 <div *ngIf="!authentication.requireAuthCode">
     <div *ngIf="appDataService.public.receivers.length === 1">
         <div class="form-group">
-            <input class="form-control" name="password" [(ngModel)]="loginData.loginPassword" placeholder="{{'Password' | translate}}" type="password" required />
+            <input class="form-control" name="password" [(ngModel)]="loginData.loginPassword" placeholder="{{'Password' | translate}}" type="password" autofocus required />
         </div>
         <div class="form-group">
             <button id="login-button" class="btn btn-primary" [disabled]="authentication.loginInProgress || loginData.loginPassword.length==0" (click)="authentication.login(0, loginData.loginUsername, loginData.loginPassword)" type="submit">

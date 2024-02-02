@@ -97,7 +97,7 @@ module.exports = function (grunt) {
           {dest: "build/css/files", cwd: "tmp/assets/lib/webfonts/@fontsource/files", src: ["**"], expand: true},
           {dest: "build/css", cwd: "tmp/css", src: ["**"], expand: true},
           {dest: "build/js", cwd: "tmp/js", src: ["**"], expand: true},
-          {dest: "build/data", cwd: "tmp/assets/data", src: ["**"], expand: true},
+          {dest: "build/assets", cwd: "tmp/assets/data", src: ["**"], expand: true},
           {dest: "build/assets/lib/bootstrap", cwd: "tmp/assets/lib/bootstrap", src: ["**"], expand: true},
           {dest: "build/index.html", cwd: ".", src: ["tmp/index.html"], expand: false, flatten: true},
           {dest: "build/assets/favicon.ico", cwd: ".", src: ["tmp/assets/favicon.ico"], expand: false, flatten: true},

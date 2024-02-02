@@ -49,10 +49,6 @@ export class DeleteConfirmationComponent {
 
   }
 
-  reload() {
-    this.utils.reloadCurrentRoute();
-  }
-
   cancel() {
     this.modalService.dismiss();
   }
