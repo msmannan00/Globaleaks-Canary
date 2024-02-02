@@ -50,7 +50,7 @@ module.exports = function(grunt) {
           {dest: "build/viewer/", cwd: ".", src: ["app/viewer/*"], expand: true, flatten: true},
           {dest: "app/assets/license.txt", cwd: ".", src: ["../LICENSE"], expand: false, flatten: true},
           {
-            dest: "app/assets/lib/bootstrap",
+            dest: "app/lib/bootstrap",
             cwd: ".",
             src: [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -91,7 +91,7 @@ module.exports = function(grunt) {
           {dest: "build/css", cwd: "tmp/css", src: ["**"], expand: true},
           {dest: "build/js", cwd: "tmp/js", src: ["**"], expand: true},
           {dest: "build/data", cwd: "tmp/assets/data", src: ["**"], expand: true},
-          {dest: "build/lib/bootstrap", cwd: "tmp/assets/lib/bootstrap", src: ["**"], expand: true},
+          {dest: "build/lib/bootstrap", cwd: "app/lib/bootstrap", src: ["**"], expand: true},
           {dest: "build/index.html", cwd: ".", src: ["tmp/index.html"], expand: false, flatten: true},
           {dest: "build/data/favicon.ico", cwd: ".", src: ["tmp/assets/favicon.ico"], expand: false, flatten: true},
           {dest: "build/license.txt", cwd: ".", src: ["tmp/assets/license.txt"], expand: false, flatten: true},
@@ -458,7 +458,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-shell");
 
   let readNoTranslateStrings = function() {
-    return JSON.parse(grunt.file.read("app/assets/data/notranslate_strings.json"));
+    return JSON.parse(grunt.file.read("app/assets/data_src/notranslate_strings.json"));
   };
 
   let notranslate_strings = readNoTranslateStrings();

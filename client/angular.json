@@ -52,7 +52,7 @@
               "app/assets/lib/webfonts/@fontsource/fontsource-all.css"
             ],
             "customWebpackConfig": {
-              "path": "./extra-webpack.config.js",
+              "path": "./lazy.config.js",
               "mergeStrategies": {
                 "entrypoints": "replace"
               }
