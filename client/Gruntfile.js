@@ -1,20 +1,24 @@
-module.exports = function (grunt) {
+/* eslint no-console: 0 */
+const fs = require("fs");
+const path = require("path");
+module.exports = function(grunt) {
   let fs = require("fs"),
-    path = require("path"),
-    superagent = require("superagent"),
-    gettextParser = require("gettext-parser"),
-    Gettext = require("node-gettext");
+      path = require("path"),
+      superagent = require("superagent"),
+      gettextParser = require("gettext-parser"),
+      Gettext = require("node-gettext");
 
-
-  require("load-grunt-tasks")(grunt);
   grunt.initConfig({
-
     eslint: {
       options: {
-        configFile: "./.eslintrc.json"
+        configFile: "../.eslintrc.json"
       },
       src: [
-        "Gruntfile.js"
+        "Gruntfile.js",
+        "app/js/**/*.js",
+        "!app/lib/js/*.js",
+        "!app/lib/js/locale/*.js",
+        "tests/*.js"
       ]
     },
 
@@ -22,20 +26,7 @@ module.exports = function (grunt) {
       all: ["build", "tmp", "dist"],
       tmp: ["tmp", "dist", "instrument"],
     },
-    shell: {
-      build: {
-        command: "npx ng build --configuration=production --aot && echo \"Build completed\""
-      },
-      babel: {
-        command: "npx ng build --configuration=production --source-map && nyc instrument dist instrument"
-      },
-      serve: {
-        command: "ng serve --proxy-config proxy.conf.json"
-      },
-      code_overage: {
-        command: "npm run e2e:ci && npm run e2e:coverage"
-      }
-    },
+
     copy: {
       sources: {
         files: [
@@ -72,6 +63,7 @@ module.exports = function (grunt) {
           },
         ]
       },
+
       build: {
         files: [
           {dest: "tmp/", cwd: "dist", src: ["**"], expand: true},
@@ -91,6 +83,7 @@ module.exports = function (grunt) {
           {dest: "tmp/js/vendor.js.map", cwd: ".", src: ["dist/vendor.js.map"], expand: false, flatten: true},
         ]
       },
+
       package: {
         files: [
           {dest: "build/css/files", cwd: "tmp/assets/lib/webfonts/@fontawesome/files", src: ["**"], expand: true},
@@ -98,9 +91,9 @@ module.exports = function (grunt) {
           {dest: "build/css", cwd: "tmp/css", src: ["**"], expand: true},
           {dest: "build/js", cwd: "tmp/js", src: ["**"], expand: true},
           {dest: "build/data", cwd: "tmp/assets/data", src: ["**"], expand: true},
-          {dest: "build/assets/lib/bootstrap", cwd: "tmp/assets/lib/bootstrap", src: ["**"], expand: true},
+          {dest: "build/lib/bootstrap", cwd: "tmp/assets/lib/bootstrap", src: ["**"], expand: true},
           {dest: "build/index.html", cwd: ".", src: ["tmp/index.html"], expand: false, flatten: true},
-          {dest: "build/assets/favicon.ico", cwd: ".", src: ["tmp/assets/favicon.ico"], expand: false, flatten: true},
+          {dest: "build/data/favicon.ico", cwd: ".", src: ["tmp/assets/favicon.ico"], expand: false, flatten: true},
           {dest: "build/license.txt", cwd: ".", src: ["tmp/assets/license.txt"], expand: false, flatten: true},
           {
             dest: 'build/',
@@ -111,11 +104,13 @@ module.exports = function (grunt) {
           }
         ]
       },
+
       instrument: {
         files: [
           {dest: "dist", cwd: "instrument/", src: ["**"], expand: true}
         ]
       },
+
       coverage: {
         files: [{
           dest: "build/",
@@ -130,7 +125,6 @@ module.exports = function (grunt) {
         }]
       }
     },
-
 
     concat: {
       fontawesome: {
@@ -147,6 +141,7 @@ module.exports = function (grunt) {
         dest: 'app/assets/lib/webfonts/@fontsource/fontsource-all.css'
       }
     },
+
     "string-replace": {
       initFonts: {
         src: "./app/assets/lib/webfonts/@fontawesome/fontawesome-all.css",
@@ -351,16 +346,17 @@ module.exports = function (grunt) {
         }
       },
       pass2: {
-        src: "./tmp/*.js",
-        dest: "./tmp/",
+        files: {
+          "tmp/js/scripts.js": "tmp/js/scripts.js"
+        },
         options: {
           replacements: [
             {
-              pattern: /glyphicon glyphicon-ok/gi,
+              pattern: /glyphicon glyphicon-ok/ig,
               replacement: "fa fa-check"
             },
             {
-              pattern: /glyphicon glyphicon-remove/gi,
+              pattern: /glyphicon glyphicon-remove/ig,
               replacement: "fa fa-xmark"
             },
             {
@@ -382,23 +378,16 @@ module.exports = function (grunt) {
         files: {
           "tmp/index.html": "tmp/index.html"
         },
+
         options: {
           replacements: [
             {
-              pattern: "<script src=\"runtime.js\" type=\"module\"></script>",
-              replacement: "<script src=\"js/runtime.js\" type=\"module\"></script>"
+              pattern: 'assets/favicon.ico',
+              replacement: 'data/favicon.ico'
             },
             {
-              pattern: "<script src=\"polyfills.js\" type=\"module\"></script>",
-              replacement: "<script src=\"js/polyfills.js\" type=\"module\"></script>"
-            },
-            {
-              pattern: "<script src=\"main.js\" type=\"module\"></script>",
-              replacement: "<script src=\"js/main.js\" type=\"module\"></script>"
-            },
-            {
-              pattern: "<script src=\"vendor.js\" type=\"module\"></script>",
-              replacement: "<script src=\"js/vendor.js\" type=\"module\"></script>"
+              pattern: /<script src="(\w+)\.js" type="module"><\/script>/g,
+              replacement: '<script src="js/$1.js" type="module"></script>'
             },
             {
               pattern: "<link rel=\"stylesheet\" href=\"styles.css\"></head>",
@@ -408,13 +397,14 @@ module.exports = function (grunt) {
         }
       }
     },
+
     confirm: {
       "pushTranslationsSource": {
         options: {
           // Static text.
-          question: "WARNING:\n" +
-            "this task may cause translations loss and should be executed only on master branch.\n\n" +
-            "Are you sure you want to proceed (Y/N)?",
+          question: "WARNING:\n"+
+              "this task may cause translations loss and should be executed only on main branch.\n\n" +
+              "Are you sure you want to proceed (Y/N)?",
           input: "_key:y"
         }
       }
@@ -432,40 +422,64 @@ module.exports = function (grunt) {
         syntax: ""
       },
       all: ["app/css/**/*.css"]
-    }
+    },
+
+    terser: {
+      options: {
+        sourceMap: true
+      },
+      minify: {
+        files: {
+          "build/js/scripts.min.js": ["build/js/scripts.js"]
+        }
+      }
+    },
+
+    shell: {
+      build: {
+        command: "npx ng build --configuration=production --aot && echo \"Build completed\""
+      },
+      babel: {
+        command: "npx ng build --configuration=production --source-map && nyc instrument dist instrument"
+      },
+      serve: {
+        command: "ng serve --proxy-config proxy.conf.json"
+      },
+      code_coverage: {
+        command: "npm run e2e:ci && npm run e2e:coverage"
+      }
+    },
   });
 
-  grunt.loadNpmTasks("grunt-shell");
+  grunt.loadNpmTasks("@lodder/grunt-postcss");
   grunt.loadNpmTasks("grunt-angular-templates");
   grunt.loadNpmTasks("grunt-confirm");
   grunt.loadNpmTasks("grunt-contrib-clean");
+  grunt.loadNpmTasks("grunt-contrib-concat");
   grunt.loadNpmTasks("grunt-contrib-copy");
+  grunt.loadNpmTasks("grunt-contrib-cssmin");
   grunt.loadNpmTasks("grunt-stylelint");
   grunt.loadNpmTasks("grunt-string-replace");
+  grunt.loadNpmTasks("grunt-terser");
   grunt.loadNpmTasks("gruntify-eslint");
-  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks("grunt-shell");
 
-  let readNoTranslateStrings = function () {
-    return JSON.parse(grunt.file.read("app/data_src/notranslate_strings.json"));
+  let readNoTranslateStrings = function() {
+    return JSON.parse(grunt.file.read("app/assets/data/notranslate_strings.json"));
   };
 
   let notranslate_strings = readNoTranslateStrings();
 
-  /**
-   * Escapes special characters in a string to make it suitable for use as a string literal.
-   *
-   * @param {string} val - The input string to escape.
-   * @returns {string} The escaped string.
-   */
-  function str_escape(val) {
-    if (typeof (val) !== "string") {
+  function str_escape (val) {
+    if (typeof(val) !== "string") {
       return val;
     }
+
     return val.replace(/[\n]/g, "\\n").replace(/[\t]/g, "\\r");
   }
 
-  function str_unescape(val) {
-    if (typeof (val) !== "string") {
+  function str_unescape (val) {
+    if (typeof(val) !== "string") {
       return val;
     }
 
@@ -483,11 +497,11 @@ module.exports = function (grunt) {
   }
 
   let agent = superagent.agent(),
-    baseurl = "https://rest.api.transifex.com",
-    sourceFile = "pot/en.po",
-    transifexApiKey = readTransifexApiKey();
+      baseurl = "https://rest.api.transifex.com",
+      sourceFile = "pot/en.po",
+      transifexApiKey = readTransifexApiKey();
 
-  function updateTxSource(cb) {
+  function updateTxSource(cb){
     let url = baseurl + "/resource_strings_async_uploads";
 
     let content = {
@@ -501,7 +515,7 @@ module.exports = function (grunt) {
         "relationships": {
           "resource": {
             "data": {
-              "id": "o:otf:p:globaleaks:r:master",
+              "id": "o:otf:p:globaleaks:r:main",
               "type": "resources"
             }
           }
@@ -511,125 +525,137 @@ module.exports = function (grunt) {
     };
 
     agent.post(url)
-      .set({"Content-Type": "application/vnd.api+json", "Authorization": "Bearer " + transifexApiKey})
-      .send(content)
-      .end(function (err, res) {
-        if (res) {
-          if (res.ok) {
-            cb();
+        .set({"Content-Type": "application/vnd.api+json", "Authorization": "Bearer " + transifexApiKey})
+        .send(content)
+        .end(function(err, res) {
+          if (res) {
+            if (res.ok) {
+              cb();
+            } else {
+              console.log("Error: " + res.text);
+            }
+          } else {
+            console.log("Error: failed to fetch resource " + url);
           }
-        }
-      });
+        });
   }
 
-  function listLanguages(cb) {
+  function listLanguages(cb){
     let url = baseurl + "/projects/o:otf:p:globaleaks/languages";
 
     agent.get(url)
-      .set({"Authorization": "Bearer " + transifexApiKey})
-      .end(function (err, res) {
-        if (res) {
-          if (res.ok) {
-            let result = JSON.parse(res.text);
-            cb(result);
+        .set({"Authorization": "Bearer " + transifexApiKey})
+        .end(function(err, res) {
+          if (res) {
+            if (res.ok) {
+              let result = JSON.parse(res.text);
+              cb(result);
+            } else {
+              console.log("Error: " + res.text);
+            }
+          } else {
+            console.log("Error: failed to fetch resource");
           }
-        }
-      });
+        });
   }
 
   function fetchTxTranslationsPO(langCode, cb) {
     let url = baseurl + "/resource_translations_async_downloads";
 
     agent.post(url)
-      .set({"Authorization": "Bearer " + transifexApiKey, "Content-Type": "application/vnd.api+json"})
-      .send({
-        "data": {
-          "attributes": {
-            "content_encoding": "text",
-            "file_type": "default",
-            "mode": "default"
-          },
-          "relationships": {
-            "language": {
-              "data": {
-                "id": "l:" + langCode,
-                "type": "languages"
+        .set({"Authorization": "Bearer " + transifexApiKey, "Content-Type": "application/vnd.api+json"})
+        .send({
+          "data": {
+            "attributes": {
+              "content_encoding": "text",
+              "file_type": "default",
+              "mode": "default"
+            },
+            "relationships": {
+              "language": {
+                "data": {
+                  "id": "l:" + langCode,
+                  "type": "languages"
+                }
+              },
+              "resource": {
+                "data": {
+                  "id": "o:otf:p:globaleaks:r:main",
+                  "type": "resources"
+                }
               }
             },
-            "resource": {
-              "data": {
-                "id": "o:otf:p:globaleaks:r:master",
-                "type": "resources"
-              }
-            }
-          },
-          "type": "resource_translations_async_downloads"
-        }
-      })
-      .end(function (err, res) {
-        if (res && res.ok) {
-          url = JSON.parse(res.text).data.links.self;
+            "type": "resource_translations_async_downloads"
+          }
+        })
+        .end(function(err, res) {
+          if (res && res.ok) {
+            url = JSON.parse(res.text).data.links.self;
 
-          let fetchPO = function (url) {
-            agent.get(url)
-              .set({"Authorization": "Bearer " + transifexApiKey})
-              .end(function (err, res) {
-                if (res && res.ok) {
-                  if (res.redirects.length) {
-                    let stream = fs.createWriteStream("pot/" + langCode + ".po");
+            let fetchPO = function(url) {
+              console.log(url);
+              agent.get(url)
+                  .set({"Authorization": "Bearer " + transifexApiKey})
+                  .end(function(err, res) {
+                    if (res && res.ok) {
+                      if (res.redirects.length) {
+                        let stream = fs.createWriteStream("pot/" + langCode + ".po");
 
-                    stream.on("finish", function () {
-                      cb(true);
-                    });
+                        stream.on("finish", function () {
+                          cb(true);
+                        });
 
-                    agent.get(res.redirects[0])
-                      .set({"Authorization": "Bearer " + transifexApiKey})
-                      .pipe(stream);
+                        agent.get(res.redirects[0])
+                            .set({"Authorization": "Bearer " + transifexApiKey})
+                            .pipe(stream);
 
-                  } else {
-                    fetchPO(url);
-                  }
-                } else {
-                  cb(false);
-                }
-              });
-          };
+                      } else {
+                        fetchPO(url);
+                      }
+                    } else {
+                      console.log("Error: failed to fetch resource");
+                      cb(false);
+                    }
+                  });
+            };
 
-          fetchPO(url);
-        } else {
-          cb(false);
-        }
-      });
+            fetchPO(url);
+          } else {
+            console.log("Error: failed to fetch resource");
+            cb(false);
+          }
+        });
   }
 
   function fetchTxTranslationsForLanguage(langCode, cb) {
-    let url = baseurl + "/resource_language_stats/o:otf:p:globaleaks:r:master:l:" + langCode;
+    let url = baseurl + "/resource_language_stats/o:otf:p:globaleaks:r:main:l:" + langCode;
 
     agent.get(url)
-      .set({"Authorization": "Bearer " + transifexApiKey})
-      .end(function (err, res) {
-        if (res && res.ok) {
-          let content = JSON.parse(res.text);
+        .set({"Authorization": "Bearer " + transifexApiKey})
+        .end(function(err, res) {
+          if (res && res.ok) {
+            let content = JSON.parse(res.text);
 
-          // Add the new translations for languages translated above 50%
-          if (content.data.attributes.translated_strings > content.data.attributes.untranslated_strings) {
-            fetchTxTranslationsPO(langCode, cb);
+            // Add the new translations for languages translated above 50%
+            if (content.data.attributes.translated_strings > content.data.attributes.untranslated_strings) {
+              fetchTxTranslationsPO(langCode, cb);
+            } else {
+              cb(false);
+            }
           } else {
+            console.log("Error: failed to fetch resource");
             cb(false);
           }
-        } else {
-          cb(false);
-        }
-      });
+        });
   }
 
-  function fetchTxTranslations(cb) {
+  function fetchTxTranslations(cb){
     let fetched_languages = 0,
-      total_languages,
-      supported_languages = {};
+        total_languages,
+        supported_languages = {};
 
-    listLanguages(function (result) {
-      result.data = result.data.sort(function (a, b) {
+    listLanguages(function(result) {
+      result.data = result.data.sort(function(a, b) {
         if (a.code > b.code) {
           return 1;
         }
@@ -643,15 +669,25 @@ module.exports = function (grunt) {
 
       total_languages = result.data.length;
 
-      let fetchLanguage = function (language) {
-        fetchTxTranslationsForLanguage(language.attributes.code, function (ret) {
+      let fetchLanguage = function(language) {
+        fetchTxTranslationsForLanguage(language.attributes.code, function(ret){
           if (ret) {
+            console.log("Fetched " + language.attributes.code);
             supported_languages[language.attributes.code] = language.attributes.name;
           }
 
           fetched_languages += 1;
 
           if (total_languages === fetched_languages) {
+            let sorted_keys = Object.keys(supported_languages).sort();
+
+            console.log("List of available translations:");
+
+            for (let i in sorted_keys) {
+              console.log(" { \"code\": \"" + sorted_keys[i] +
+                  "\", \"name\": \"" + supported_languages[sorted_keys[i]] +"\" },");
+            }
+
             cb(supported_languages);
           } else {
             fetchLanguage(result.data[fetched_languages]);
@@ -663,8 +699,8 @@ module.exports = function (grunt) {
     });
   }
 
-  grunt.registerTask("makeTranslationsSource", function () {
-    const data = {
+  grunt.registerTask("makeTranslationsSource", function() {
+    let data = {
       "charset": "UTF-8",
       "headers": {
         "project-id-version": "GlobaLeaks",
@@ -676,14 +712,13 @@ module.exports = function (grunt) {
         "plural-forms": "nplurals=2; plural=(n != 1);"
       },
       "translations": {
-        "": {}
+        "": {
+        }
       }
     };
 
     let gt = new Gettext(),
-      translationStringRegexpHTML1 = /"(.+?)"\s+\|\s+translate/gi,
-      translationStringRegexpHTML2 = /translate>(.+?)</gi,
-      translationStringRegexpJSON = /"en":\s?"(.+)"/gi;
+        translationStringRegexpJSON = /"en":\s?"(.+)"/gi;
 
     gt.setTextDomain("main");
 
@@ -698,34 +733,9 @@ module.exports = function (grunt) {
       };
     }
 
-    function extractStringsFromHTMLFile(filepath) {
-      let filecontent = grunt.file.read(filepath),
-        result;
-
-      result = translationStringRegexpHTML1.exec(filecontent);
-      while (result) {
-        addString(result[1]);
-        result = translationStringRegexpHTML1.exec(filecontent);
-      }
-
-      result = translationStringRegexpHTML2.exec(filecontent);
-      while (result) {
-        addString(result[1]);
-        result = translationStringRegexpHTML2.exec(filecontent);
-      }
-
-    }
-
-    /**
-     * Extracts an array of strings from a JSON file.
-     *
-     * @param {string} filepath - The path to the JSON file.
-     * @returns {string[]} An array of strings extracted from the JSON file.
-     * @throws {Error} If the file does not exist or if there is an error reading it.
-     */
     function extractStringsFromJSONFile(filepath) {
       let filecontent = grunt.file.read(filepath),
-        result;
+          result;
 
       result = translationStringRegexpJSON.exec(filecontent);
       while (result) {
@@ -736,78 +746,64 @@ module.exports = function (grunt) {
 
     function extractStringsFromTXTFile(filepath) {
       let filecontent = grunt.file.read(filepath),
-        lines = filecontent.split("\n");
+          lines = filecontent.split("\n");
 
-      for (let i = 0; i < lines.length; i++) {
+      for (let i=0; i<lines.length; i++){
         // we skip adding empty strings and variable only strings
-        if (lines[i] !== "" && !lines[i].match(/^{[a-zA-Z0-9]+}/g)) {
+        if (lines[i] !== "" && !lines[i].match(/^{[a-zA-Z0-9]+}$/g)) {
           addString(lines[i]);
         }
       }
     }
 
-    /**
-     * Extracts an array of strings from a file.
-     *
-     * @param {string} filepath - The path to the file.
-     * @returns {string[]} An array of strings extracted from the file.
-     * @throws {Error} If the file does not exist or if there is an error reading it.
-     */
     function extractStringsFromFile(filepath) {
       let ext = filepath.split(".").pop();
 
-      if (ext === "html") {
-        extractStringsFromHTMLFile(filepath);
-      } else if (ext === "json") {
+      if (ext === "json") {
         extractStringsFromJSONFile(filepath);
       } else if (ext === "txt") {
         extractStringsFromTXTFile(filepath);
       }
     }
 
-    /**
-     * Extracts an array of strings from files in a directory.
-     *
-     * @param {string} dir - The path to the directory containing files to extract strings from.
-     * @returns {string[]} An array of strings extracted from the files in the directory.
-     * @throws {Error} If the directory does not exist, is not accessible, or if there are errors reading the files.
-     */
     function extractStringsFromDir(dir) {
-      grunt.file.recurse(dir, function (absdir, rootdir, subdir, filename) {
+      grunt.file.recurse(dir, function(absdir, rootdir, subdir, filename) {
         let filepath = path.join(dir, subdir || "", filename || "");
         extractStringsFromFile(filepath);
       });
     }
 
-    ["app/translations.html",
-      "app/data_src/appdata.json",
-      "app/data/field_attrs.json"].forEach(function (file) {
+    ["app/assets/data/texts.txt",
+      "app/assets/data/appdata_src.json",
+      "app/assets/data/field_attrs.json"].forEach(function(file) {
       extractStringsFromFile(file);
     });
 
-    ["app/views",
-      "app/data_src/questionnaires",
-      "app/data_src/questions",
-      "app/data_src/txt"].forEach(function (dir) {
+    ["app/assets/data/questionnaires",
+      "app/assets/data/questions",
+      "app/assets/data/txt"].forEach(function(dir) {
       extractStringsFromDir(dir);
     });
 
     grunt.file.mkdir("pot");
+
     fs.writeFileSync("pot/en.po", gettextParser.po.compile(data), "utf8");
+
+    console.log("Written " + Object.keys(data["translations"][""]).length + " string to pot/en.po.");
   });
 
-  grunt.registerTask("☠☠☠pushTranslationsSource☠☠☠", function () {
+  grunt.registerTask("☠☠☠pushTranslationsSource☠☠☠", function() {
     updateTxSource(this.async());
   });
 
-  grunt.registerTask("fetchTranslations", function () {
+  grunt.registerTask("fetchTranslations", function() {
     let done = this.async(),
-      gt = new Gettext(),
-      lang_code;
+        gt = new Gettext(),
+        lang_code;
 
     gt.setTextDomain("main");
 
-    fetchTxTranslations(function (supported_languages) {
+    fetchTxTranslations(function(supported_languages) {
       gt.addTranslations("en", "main", gettextParser.po.parse(fs.readFileSync("pot/en.po")));
       let strings = Object.keys(gettextParser.po.parse(fs.readFileSync("pot/en.po"))["translations"][""]);
 
@@ -828,38 +824,38 @@ module.exports = function (grunt) {
 
         output = JSON.stringify(translations, null, 2);
 
-        fs.writeFileSync("app/data/l10n/" + lang_code + ".json", output);
+        fs.writeFileSync("app/assets/data/l10n/" + lang_code + ".json", output);
       }
 
       done();
     });
   });
 
-  grunt.registerTask("makeAppData", function () {
+  grunt.registerTask("makeAppData", function() {
     let done = this.async(),
-      gt = new Gettext(),
-      supported_languages = [];
+        gt = new Gettext(),
+        supported_languages = [];
 
     gt.setTextDomain("main");
 
-    grunt.file.recurse("pot/", function (absdir, rootdir, subdir, filename) {
+    grunt.file.recurse("pot/", function(absdir, rootdir, subdir, filename) {
       supported_languages.push(filename.replace(/.po$/, ""));
     });
 
-    let appdata = JSON.parse(fs.readFileSync("app/data_src/appdata.json")),
-      output = {},
-      version = appdata["version"],
-      templates = appdata["templates"],
-      templates_sources = {};
+    let appdata = JSON.parse(fs.readFileSync("app/assets/data/appdata_src.json")),
+        output = {},
+        version = appdata["version"],
+        templates = appdata["templates"],
+        templates_sources = {};
 
-    let translate_object = function (object, keys) {
+    let translate_object = function(object, keys) {
       for (let k in keys) {
         if (object[keys[k]]["en"] === "")
           continue;
 
-        supported_languages.forEach(function (lang_code) {
+        supported_languages.forEach(function(lang_code) {
           gt.setLocale(lang_code);
-          let translation = gt.gettext(str_escape(sanitizeInput(object[keys[k]]["en"])));
+          let translation = gt.gettext(str_escape(object[keys[k]]["en"]));
           if (translation !== undefined) {
             object[keys[k]][lang_code] = str_unescape(translation).trim();
           }
@@ -867,26 +863,24 @@ module.exports = function (grunt) {
       }
     };
 
-    let translate_field = function (field) {
+    let translate_field = function(field) {
       let i;
       translate_object(field, ["label", "description", "hint"]);
 
       for (i in field["attrs"]) {
-        let sanitizedField = sanitizeInput(field["attrs"][i]);
-        translate_object(sanitizedField, ["value"]);
+        translate_object(field["attrs"][i], ["value"]);
       }
 
       for (i in field["options"]) {
-        let sanitizedField = sanitizeInput(field["options"][i]);
-        translate_object(sanitizedField, ["label"]);      }
+        translate_object(field["options"][i], ["label"]);
+      }
 
       for (i in field["children"]) {
-        let sanitizedField = sanitizeInput(field["children"][i]);
-        translate_field(sanitizedField);
+        translate_field(field["children"][i]);
       }
     };
 
-    let translate_step = function (step) {
+    let translate_step = function(step) {
       translate_object(step, ["label", "description"]);
 
       for (let c in step["children"]) {
@@ -894,22 +888,22 @@ module.exports = function (grunt) {
       }
     };
 
-    let translate_questionnaire = function (questionnaire) {
-      questionnaire["steps"].forEach(function (step) {
+    let translate_questionnaire = function(questionnaire) {
+      questionnaire["steps"].forEach(function(step) {
         translate_step(step);
       });
     };
 
     gt.addTranslations("en", "main", gettextParser.po.parse(fs.readFileSync("pot/en.po")));
 
-    grunt.file.recurse("app/data_src/txt", function (absdir, rootdir, subdir, filename) {
+    grunt.file.recurse("app/assets/data/txt", function(absdir, rootdir, subdir, filename) {
       let template_name = filename.split(".txt")[0],
-        filepath = path.join("app/data_src/txt", subdir || "", filename || "");
+          filepath = path.join("app/assets/data/txt", subdir || "", filename || "");
 
       templates_sources[template_name] = grunt.file.read(filepath);
     });
 
-    supported_languages.forEach(function (lang_code) {
+    supported_languages.forEach(function(lang_code) {
       gt.setLocale(lang_code);
       gt.addTranslations(lang_code, "main", gettextParser.po.parse(fs.readFileSync("pot/" + lang_code + ".po")));
 
@@ -922,7 +916,7 @@ module.exports = function (grunt) {
 
         let lines = templates_sources[template_name].split("\n");
 
-        for (let i = 0; i < lines.length; i++) {
+        for (let i=0; i<lines.length; i++) {
           let translation = gt.gettext(str_escape(lines[i]));
           if (translation === undefined) {
             continue;
@@ -944,7 +938,7 @@ module.exports = function (grunt) {
 
     for (let k in appdata["node"]) {
       output["node"][k] = {};
-      supported_languages.forEach(function (lang_code) {
+      supported_languages.forEach(function(lang_code) {
         gt.setLocale(lang_code);
         output["node"][k][lang_code] = str_unescape(gt.gettext(str_escape(appdata["node"][k]["en"])));
       });
@@ -954,16 +948,16 @@ module.exports = function (grunt) {
 
     fs.writeFileSync("app/data/appdata.json", output);
 
-    grunt.file.recurse("app/data_src/questionnaires", function (absdir, rootdir, subdir, filename) {
-      let srcpath = path.join("app/data_src/questionnaires", subdir || "", filename || "");
+    grunt.file.recurse("app/assets/data/questionnaires", function(absdir, rootdir, subdir, filename) {
+      let srcpath = path.join("app/assets/data/questionnaires", subdir || "", filename || "");
       let dstpath = path.join("app/data/questionnaires", subdir || "", filename || "");
       let questionnaire = JSON.parse(fs.readFileSync(srcpath));
       translate_questionnaire(questionnaire);
       fs.writeFileSync(dstpath, JSON.stringify(questionnaire, null, 2));
     });
 
-    grunt.file.recurse("app/data_src/questions", function (absdir, rootdir, subdir, filename) {
-      let srcpath = path.join("app/data_src/questions", subdir || "", filename || "");
+    grunt.file.recurse("app/assets/data/questions", function(absdir, rootdir, subdir, filename) {
+      let srcpath = path.join("app/assets/data/questions", subdir || "", filename || "");
       let dstpath = path.join("app/data/questions", subdir || "", filename || "");
       let field = JSON.parse(fs.readFileSync(srcpath));
       translate_field(field);
@@ -973,19 +967,19 @@ module.exports = function (grunt) {
     done();
   });
 
-  grunt.registerTask("verifyAppData", function () {
+  grunt.registerTask("verifyAppData", function() {
     let app_data = JSON.parse(fs.readFileSync("app/data/appdata.json"));
     let var_map = JSON.parse(fs.readFileSync("app/data/templates_descriptor.json"));
 
     let failures = [];
 
     function recordFailure(template_name, lang, text, msg) {
-      let line = template_name + " : " + lang + " : " + msg;
+      let line = template_name + " : "+ lang + " : " + msg;
       failures.push(line);
     }
 
     function checkIfRightTagsUsed(variables, lang, text, template_name, expected_tags) {
-      expected_tags.forEach(function (tag) {
+      expected_tags.forEach(function(tag) {
         if (text.indexOf(tag) === -1) {
           recordFailure(template_name, lang, text, "missing expected tag: " + tag);
         }
@@ -1007,13 +1001,13 @@ module.exports = function (grunt) {
 
       // Check to see there are no other commonly used tags inside like: () [] %%, {{}}
       if (text.match(/\([A-Z][a-zA-Z]+\)/g) !== null ||
-        text.match(/\[[A-Z][a-zA-Z]+]/g) !== null ||
-        text.match(/%[A-Z][a-zA-Z]+%/g) !== null ||
-        text.match(/{{[A-Z][a-zA-Z]+}}/g) !== null) {
+          text.match(/\[[A-Z][a-zA-Z]+/g) !== null ||
+          text.match(/%[A-Z][a-zA-Z]+%/g) !== null ||
+          text.match(/{{[A-Z][a-zA-Z]+}}/g) !== null) {
         recordFailure(template_name, lang, text, "mistaken variable tags");
       }
 
-      tags.forEach(function (tag) {
+      tags.forEach(function(tag) {
         if (variables.indexOf(tag) < 0) {
           recordFailure(template_name, lang, text, "invalid tag " + tag);
         }
@@ -1034,17 +1028,25 @@ module.exports = function (grunt) {
     }
 
     if (failures.length !== 0) {
+      failures.forEach(function(failure) {
+        console.log(failure);
+      });
+
       grunt.fail.warn("verifyAppData task failure");
+    } else {
+      console.log("Successfully verified");
     }
   });
 
+  // Run this task to push translations on transifex
   grunt.registerTask("pushTranslationsSource", ["confirm", "☠☠☠pushTranslationsSource☠☠☠"]);
 
+  // Run this task to fetch translations from transifex and create application files
   grunt.registerTask("updateTranslations", ["fetchTranslations", "makeAppData", "verifyAppData"]);
 
   grunt.registerTask("build", ["clean", "concat:fontsource", "concat:fontawesome", "string-replace:initFonts", "copy:sources", "shell:build", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
 
   grunt.registerTask("serve", ["shell:serve"]);
 
-  grunt.registerTask("coverage", ["shell:code_overage"]);
+  grunt.registerTask("coverage", ["shell:code_coverage"]);
 };

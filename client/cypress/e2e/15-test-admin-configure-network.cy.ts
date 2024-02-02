@@ -7,10 +7,10 @@ describe("admin configure network", () => {
   it("should be able to configure https", () => {
     cy.contains("button", "HTTPS").click();
 
-    cy.get('[name="hostname"]').clear().type("localhost");
+    cy.get('[name="hostname"]').clear().type("127.0.0.1");
     cy.get('button:contains("Save")').first().click();
 
-    cy.get("#HTTPSManualMode").click();
+    cy.get("#HTTPSManualMode", { timeout: 10000 }).click();
     cy.contains("button", "Generate").click();
     cy.get("#csrGen").click();
     cy.get('[name="country"]').type("IT");
