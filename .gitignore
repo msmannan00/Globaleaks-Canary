@@ -1,6 +1,7 @@
 backend/env
 client/node_modules
 client/.angular/cache
+.idea/*
 scripts/
 dist/
 client/build
