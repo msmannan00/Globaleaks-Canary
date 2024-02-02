@@ -101,6 +101,8 @@
     "cypress": "^13.6.2",
     "grunt": "^1.6.1",
     "grunt-contrib-concat": "^2.1.0",
+    "grunt-contrib-cssmin": "^5.0.0",
+    "grunt-terser": "^2.0.0",
     "istanbul-api": "^3.0.0",
     "istanbul-lib-coverage": "^3.2.0",
     "istanbul-reports": "^3.1.6",

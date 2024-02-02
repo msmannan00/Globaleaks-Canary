@@ -108,10 +108,10 @@ class SettingsClass(object, metaclass=Singleton):
             print("Unable to find a directory to load the client from")
             sys.exit(1)
 
-        self.appdata_file = os.path.join(self.client_path, 'assets/data/appdata.json')
-        self.questionnaires_path = os.path.join(self.client_path, 'assets/data/questionnaires')
-        self.questions_path = os.path.join(self.client_path, 'assets/data/questions')
-        self.field_attrs_file = os.path.join(self.client_path, 'assets/data/field_attrs.json')
+        self.appdata_file = os.path.join(self.client_path, 'data/appdata.json')
+        self.questionnaires_path = os.path.join(self.client_path, 'data/questionnaires')
+        self.questions_path = os.path.join(self.client_path, 'data/questions')
+        self.field_attrs_file = os.path.join(self.client_path, 'data/field_attrs.json')
 
         set_db_uri(make_db_uri(self.db_file_path))
 

@@ -282,7 +282,7 @@ export class HttpService {
   }
 
   requestDefaultL10NResource(lang: string): Observable<{ [key: string]: string }> {
-    return this.httpClient.get<{ [key: string]: string }>("/assets/l10n/" + lang + ".json");
+    return this.httpClient.get<{ [key: string]: string }>("/data/l10n/" + lang + ".json");
   }
 
   requestAdminAuditLogResource(): Observable<auditlogResolverModel> {
