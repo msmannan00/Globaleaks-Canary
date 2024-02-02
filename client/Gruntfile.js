@@ -95,13 +95,6 @@ module.exports = function(grunt) {
           {dest: "build/index.html", cwd: ".", src: ["tmp/index.html"], expand: false, flatten: true},
           {dest: "build/data/favicon.ico", cwd: ".", src: ["tmp/assets/favicon.ico"], expand: false, flatten: true},
           {dest: "build/license.txt", cwd: ".", src: ["tmp/assets/license.txt"], expand: false, flatten: true},
-          {
-            dest: 'build/',
-            cwd: 'tmp/',
-            src: ['**/[0-9]*.js'],
-            expand: true,
-            flatten: true
-          }
         ]
       },
 

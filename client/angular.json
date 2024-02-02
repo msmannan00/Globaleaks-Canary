@@ -50,7 +50,13 @@
               "node_modules/@fortawesome/fontawesome-free/css/fontawesome.css",
               "app/assets/lib/webfonts/@fontawesome/fontawesome-all.css",
               "app/assets/lib/webfonts/@fontsource/fontsource-all.css"
-            ]
+            ],
+            "customWebpackConfig": {
+              "path": "./extra-webpack.config.js",
+              "mergeStrategies": {
+                "entrypoints": "replace"
+              }
+            }
           },
           "configurations": {
             "production": {
