@@ -4,6 +4,7 @@ client/.angular/cache
 scripts/
 dist/
 client/build
+.idea/*
 client/app/lib
 backend/workingdir
 client/app/license.txt
