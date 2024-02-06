@@ -48,8 +48,8 @@ export class RecieverTipData {
   submissionStatusStr: string;
   whistleblower_identity_field: Children;
   tip_id: string;
-  motivation:string;
-  redactions:RedactionData[];
+  motivation: string;
+  redactions: RedactionData[];
 }
 
 export interface Questionnaire {

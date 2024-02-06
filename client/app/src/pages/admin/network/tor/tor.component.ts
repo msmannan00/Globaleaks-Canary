@@ -28,7 +28,7 @@ export class TorComponent implements OnInit {
       this.utilsService.reloadComponent();
     });
   }
-  
+
   getNetortResolver() {
     return this.httpService.requestNetworkResource().subscribe(response => {
         this.networkData = response;

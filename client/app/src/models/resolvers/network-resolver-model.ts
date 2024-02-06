@@ -4,7 +4,7 @@ export class networkResolverModel {
   https_admin: boolean;
   https_custodian: boolean;
   https_receiver: boolean;
-  https_analyst:boolean;
+  https_analyst: boolean;
   https_whistleblower: boolean;
   ip_filter_admin: string;
   ip_filter_admin_enable: boolean;

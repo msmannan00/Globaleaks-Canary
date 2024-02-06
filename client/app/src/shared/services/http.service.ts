@@ -414,7 +414,7 @@ export class HttpService {
   requestUpdateAdminNotification(notification: notificationResolverModel): Observable<notificationResolverModel> {
     return this.httpClient.put<notificationResolverModel>("api/admin/notification", notification);
   }
-  
+
   requestCreateRedaction(content:RedactionData): Observable<RedactionData> {
     return this.httpClient.post<RedactionData>("api/recipient/redactions", content);
   }

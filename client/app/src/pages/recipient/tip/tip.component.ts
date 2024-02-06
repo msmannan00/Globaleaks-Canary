@@ -266,7 +266,7 @@ export class TipComponent implements OnInit {
     }
     return output;
   }
-  
+
   reload(): void {
     const reloadCallback = () => {
       this.utils.reloadComponent();
@@ -357,7 +357,7 @@ export class TipComponent implements OnInit {
   toggleRedactMode() {
     this.redactMode = !this.redactMode;
   }
-  
+
   listenToFields() {
     this.loadTipDate();
   }

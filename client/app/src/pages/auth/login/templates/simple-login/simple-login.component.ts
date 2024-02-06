@@ -17,6 +17,6 @@ export class SimpleLoginComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-  
+
   }
 }

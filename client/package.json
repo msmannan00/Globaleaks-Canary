@@ -1,11 +1,11 @@
 {
-  "name": "angular-cypress-coverage-tutorial",
-  "version": "0.0.0",
+  "name": "globaleaks",
+  "version": "4.14.8",
   "scripts": {
     "proxy": "ng serve --proxy-config proxy.conf.json",
-    "e2e": "ng e2e",
-    "e2e:ci": "ng run Globaleaks:e2e-ci",
-    "e2e:coverage": "npx nyc report --reporter=lcov --reporter=text-summary"
+    "e2e:coverage": "npx nyc report --reporter=lcov --report-dir=./cypress/coverage --reporter=text-summary --browser electron",
+    "test": "npx cypress run && npm run e2e:coverage",
+    "test-local": "grunt test && npx cypress run && npm run e2e:coverage"
   },
   "private": true,
   "dependencies": {

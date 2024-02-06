@@ -50,7 +50,7 @@ export class SubStatusComponent implements OnInit {
   isCustomOptionSelected(tip_timetolive_option:string|number): boolean {
     return Number(tip_timetolive_option) === 1;
   }
-  
+
   swapSs($event: Event, index: number, n: number): void {
     $event.stopPropagation();
 

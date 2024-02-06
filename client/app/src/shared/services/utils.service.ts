@@ -591,7 +591,7 @@ export class UtilsService {
   readFileAsText(file: File): Observable<string> {
     return new Observable<string>((observer) => {
       const reader = new FileReader();
-  
+
       reader.onload = (event) => {
         if (event.target) {
           observer.next(event.target.result as string);
@@ -600,11 +600,11 @@ export class UtilsService {
           observer.error(new Error("Event target is null."));
         }
       };
-  
+
       reader.onerror = (error) => {
         observer.error(error);
       };
-  
+
       reader.readAsText(file);
     });
   }
