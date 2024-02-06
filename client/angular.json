@@ -98,40 +98,6 @@
           "options": {
             "browserTarget": "Globaleaks:build"
           }
-        },
-        "serve-coverage": {
-          "builder": "@angular-builders/custom-webpack:dev-server",
-          "options": {
-            "browserTarget": "Globaleaks:build:e2e",
-            "proxyConfig": "proxy.conf.json"
-          }
-        },
-        "e2e": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "devServerTarget": "Globaleaks:serve-coverage",
-            "watch": true,
-            "headless": false
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "Globaleaks:serve-coverage:production"
-            }
-          }
-        },
-        "e2e-ci": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "browser": "electron",
-            "devServerTarget": "Globaleaks:serve-coverage",
-            "headless": true,
-            "watch": false
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "Globaleaks:serve-coverage:production"
-            }
-          }
         }
       }
     }
