@@ -448,7 +448,7 @@ export class UtilsService {
     return this.httpService.requestDefaultL10NResource(lang);
   }
 
-  runAdminOperation(operation: string, args: {value: string}|Object, refresh: boolean) {
+  runAdminOperation(operation: string, args: {value: string}|object, refresh: boolean) {
     return this.runOperation("api/admin/config", operation, args, refresh);
   }
 
@@ -457,7 +457,7 @@ export class UtilsService {
   }
 
 
-  runOperation(api: string, operation: string, args?: {value: string}|Object, refresh?: boolean): Observable<any> {
+  runOperation(api: string, operation: string, args?: {value: string}|object, refresh?: boolean): Observable<any> {
     const requireConfirmation = [
       "enable_encryption",
       "disable_2fa",
