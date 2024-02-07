@@ -58,7 +58,7 @@ export class SiteslistComponent {
 
   openConfirmableModalDialog(arg: tenantResolverModel, scope: any): Observable<string> {
     scope = !scope ? this : scope;
-    let self = this
+    const self = this
     return new Observable((observer) => {
       const modalRef = this.modalService.open(DeleteConfirmationComponent, {backdrop: 'static', keyboard: false});
       modalRef.componentInstance.arg = arg;

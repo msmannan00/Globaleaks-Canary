@@ -12,7 +12,7 @@ export class OrderByPipe implements PipeTransform {
     let propertyNames = typeof propertyName === 'string' ? [propertyName] : propertyName;
 
     return value.sort((a, b) => {
-      for (let prop of propertyNames) {
+      for (const prop of propertyNames) {
         const valA = typeof a[prop] === 'string' ? a[prop].toLowerCase() : a[prop];
         const valB = typeof b[prop] === 'string' ? b[prop].toLowerCase() : b[prop];
 
