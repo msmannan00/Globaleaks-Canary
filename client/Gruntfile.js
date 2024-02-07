@@ -432,6 +432,9 @@ module.exports = function(grunt) {
       build: {
         command: "npx ng build --configuration=production --aot && echo \"Build completed\""
       },
+      test: {
+        command: "npx ng build --configuration=development && echo \"Build completed\""
+      },
       babel: {
         command: "npx ng build --configuration=production --source-map && nyc instrument dist instrument"
       },
@@ -586,13 +589,12 @@ module.exports = function(grunt) {
             url = JSON.parse(res.text).data.links.self;
 
             let fetchPO = function(url) {
-              console.log(url);
               agent.get(url)
                   .set({"Authorization": "Bearer " + transifexApiKey})
                   .end(function(err, res) {
                     if (res && res.ok) {
                       if (res.redirects.length) {
-                        let stream = fs.createWriteStream("pot/" + langCode + ".po");
+                        let stream = fs.createWriteStream("app/assets/data_src/pot/" + langCode + ".po");
 
                         stream.on("finish", function () {
                           cb(true);
@@ -766,23 +768,23 @@ module.exports = function(grunt) {
       });
     }
 
-    ["app/assets/data/texts.txt",
-      "app/assets/data/appdata_src.json",
-      "app/assets/data/field_attrs.json"].forEach(function(file) {
+    ["app/assets/data_src/texts.txt",
+      "app/assets/data_src/appdata.json",
+      "app/assets/data_src/field_attrs.json"].forEach(function(file) {
       extractStringsFromFile(file);
     });
 
-    ["app/assets/data/questionnaires",
-      "app/assets/data/questions",
-      "app/assets/data/txt"].forEach(function(dir) {
+    ["app/assets/data_src/questionnaires",
+      "app/assets/data_src/questions",
+      "app/assets/data_src/txt"].forEach(function(dir) {
       extractStringsFromDir(dir);
     });
 
-    grunt.file.mkdir("pot");
+    grunt.file.mkdir("app/assets/data_src/pot");
 
-    fs.writeFileSync("pot/en.po", gettextParser.po.compile(data), "utf8");
+    fs.writeFileSync("app/assets/data_src/pot/en.po", gettextParser.po.compile(data), "utf8");
 
-    console.log("Written " + Object.keys(data["translations"][""]).length + " string to pot/en.po.");
+    console.log("Written " + Object.keys(data["translations"][""]).length + " string to app/assets/data_src/pot/en.po.");
   });
 
   grunt.registerTask("☠☠☠pushTranslationsSource☠☠☠", function() {
@@ -797,13 +799,13 @@ module.exports = function(grunt) {
     gt.setTextDomain("main");
 
     fetchTxTranslations(function(supported_languages) {
-      gt.addTranslations("en", "main", gettextParser.po.parse(fs.readFileSync("pot/en.po")));
-      let strings = Object.keys(gettextParser.po.parse(fs.readFileSync("pot/en.po"))["translations"][""]);
+      gt.addTranslations("en", "main", gettextParser.po.parse(fs.readFileSync("app/assets/data_src/pot/en.po")));
+      let strings = Object.keys(gettextParser.po.parse(fs.readFileSync("app/assets/data_src/pot/en.po"))["translations"][""]);
 
       for (lang_code in supported_languages) {
         let translations = {}, output;
 
-        gt.addTranslations(lang_code, "main", gettextParser.po.parse(fs.readFileSync("pot/" + lang_code + ".po")));
+        gt.addTranslations(lang_code, "main", gettextParser.po.parse(fs.readFileSync("app/assets/data_src/pot/" + lang_code + ".po")));
 
         gt.setLocale(lang_code);
 
@@ -831,11 +833,11 @@ module.exports = function(grunt) {
 
     gt.setTextDomain("main");
 
-    grunt.file.recurse("pot/", function(absdir, rootdir, subdir, filename) {
+    grunt.file.recurse("app/assets/data_src/pot/", function(absdir, rootdir, subdir, filename) {
       supported_languages.push(filename.replace(/.po$/, ""));
     });
 
-    let appdata = JSON.parse(fs.readFileSync("app/assets/data/appdata_src.json")),
+    let appdata = JSON.parse(fs.readFileSync("app/assets/data_src/appdata.json")),
         output = {},
         version = appdata["version"],
         templates = appdata["templates"],
@@ -887,18 +889,18 @@ module.exports = function(grunt) {
       });
     };
 
-    gt.addTranslations("en", "main", gettextParser.po.parse(fs.readFileSync("pot/en.po")));
+    gt.addTranslations("en", "main", gettextParser.po.parse(fs.readFileSync("app/assets/data_src/pot/en.po")));
 
-    grunt.file.recurse("app/assets/data/txt", function(absdir, rootdir, subdir, filename) {
+    grunt.file.recurse("app/assets/data_src/txt", function(absdir, rootdir, subdir, filename) {
       let template_name = filename.split(".txt")[0],
-          filepath = path.join("app/assets/data/txt", subdir || "", filename || "");
+          filepath = path.join("app/assets/data_src/txt", subdir || "", filename || "");
 
       templates_sources[template_name] = grunt.file.read(filepath);
     });
 
     supported_languages.forEach(function(lang_code) {
       gt.setLocale(lang_code);
-      gt.addTranslations(lang_code, "main", gettextParser.po.parse(fs.readFileSync("pot/" + lang_code + ".po")));
+      gt.addTranslations(lang_code, "main", gettextParser.po.parse(fs.readFileSync("app/assets/data_src/pot/" + lang_code + ".po")));
 
       for (let template_name in templates_sources) {
         if (!(template_name in templates)) {
@@ -939,19 +941,19 @@ module.exports = function(grunt) {
 
     output = JSON.stringify(output, null, 2);
 
-    fs.writeFileSync("app/data/appdata.json", output);
+    fs.writeFileSync("app/assets/data/appdata.json", output);
 
-    grunt.file.recurse("app/assets/data/questionnaires", function(absdir, rootdir, subdir, filename) {
-      let srcpath = path.join("app/assets/data/questionnaires", subdir || "", filename || "");
-      let dstpath = path.join("app/data/questionnaires", subdir || "", filename || "");
+    grunt.file.recurse("app/assets/data_src/questionnaires", function(absdir, rootdir, subdir, filename) {
+      let srcpath = path.join("app/assets/data_src/questionnaires", subdir || "", filename || "");
+      let dstpath = path.join("app/assets/data/questionnaires", subdir || "", filename || "");
       let questionnaire = JSON.parse(fs.readFileSync(srcpath));
       translate_questionnaire(questionnaire);
       fs.writeFileSync(dstpath, JSON.stringify(questionnaire, null, 2));
     });
 
-    grunt.file.recurse("app/assets/data/questions", function(absdir, rootdir, subdir, filename) {
-      let srcpath = path.join("app/assets/data/questions", subdir || "", filename || "");
-      let dstpath = path.join("app/data/questions", subdir || "", filename || "");
+    grunt.file.recurse("app/assets/data_src/questions", function(absdir, rootdir, subdir, filename) {
+      let srcpath = path.join("app/assets/data_src/questions", subdir || "", filename || "");
+      let dstpath = path.join("app/assets/data/questions", subdir || "", filename || "");
       let field = JSON.parse(fs.readFileSync(srcpath));
       translate_field(field);
       fs.writeFileSync(dstpath, JSON.stringify(field, null, 2));
@@ -961,8 +963,8 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask("verifyAppData", function() {
-    let app_data = JSON.parse(fs.readFileSync("app/data/appdata.json"));
-    let var_map = JSON.parse(fs.readFileSync("app/data/templates_descriptor.json"));
+    let app_data = JSON.parse(fs.readFileSync("app/assets/data/appdata.json"));
+    let var_map = JSON.parse(fs.readFileSync("app/assets/data_src/templates_descriptor.json"));
 
     let failures = [];
 
@@ -1038,6 +1040,8 @@ module.exports = function(grunt) {
   grunt.registerTask("updateTranslations", ["fetchTranslations", "makeAppData", "verifyAppData"]);
 
   grunt.registerTask("build", ["clean", "concat:fontsource", "concat:fontawesome", "string-replace:initFonts", "copy:sources", "shell:build", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
+
+  grunt.registerTask("test_build", ["clean", "concat:fontsource", "concat:fontawesome", "string-replace:initFonts", "copy:sources", "shell:test", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
 
   grunt.registerTask("serve", ["shell:serve"]);
 

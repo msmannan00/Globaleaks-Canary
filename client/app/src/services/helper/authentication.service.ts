@@ -182,7 +182,7 @@ export class AuthenticationService {
     if (!receipt || receipt.length !== 16) {
       return '';
     }
-  
+
     return (
       receipt.substring(0, 4) + " " +
       receipt.substring(4, 8) + " " +

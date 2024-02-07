@@ -131,6 +131,6 @@ export interface Substatus {
   submissionstatus_id: string;
   order: number;
   label: string;
-  tip_timetolive:number;
-  tip_timetolive_option:number;
+  tip_timetolive: number;
+  tip_timetolive_option: number;
 }

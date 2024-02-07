@@ -57,7 +57,7 @@ export class TipFilesReceiverComponent implements OnInit {
       }
     );
   }
-  
+
   redactFileOperation(operation: string, content_type: string, file: any) {
     const redactionData:RedactionData= {
       reference_id: file.ifile_id,

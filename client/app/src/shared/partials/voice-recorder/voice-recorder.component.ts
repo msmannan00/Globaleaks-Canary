@@ -196,7 +196,7 @@ export class VoiceRecorderComponent implements OnInit {
           };
           iframe.contentWindow.postMessage(data, "*");
         }, { once: true });
-        
+
         this.audioPlayer = true;
         this.uploads[this.fileInput] = this.flow;
         this.submissionService.setSharedData(this.flow);

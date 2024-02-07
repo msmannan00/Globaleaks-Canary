@@ -11,7 +11,7 @@ describe("admin configure network", () => {
     cy.get('button:contains("Save")').first().click();
 
     cy.get("#HTTPSManualMode", { timeout: 10000 }).click();
-    cy.contains("button", "Generate").click();
+    cy.contains("button", "Generate").should('be.visible', { timeout: 10000 }).click();
     cy.get("#csrGen").click();
     cy.get('[name="country"]').type("IT");
     cy.get('[name="province"]').type("Milano");

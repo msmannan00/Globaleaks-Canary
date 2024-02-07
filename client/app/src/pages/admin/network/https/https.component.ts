@@ -15,7 +15,7 @@ export class HttpsComponent implements OnInit {
   state = 0;
   menuState = "setup";
   tlsConfig: TlsConfig;
-  hostName:string="";
+  hostName: string="";
 
   constructor(protected nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService,protected appDataService:AppDataService) {
   }

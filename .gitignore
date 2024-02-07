@@ -2,6 +2,7 @@ backend/env
 client/node_modules
 client/.angular/cache
 .idea/*
+client/cypress/coverage/*
 scripts/
 dist/
 client/build

@@ -16,7 +16,7 @@ export class SubmissionService {
   selected_receivers: { [key: string]: boolean } = {};
   blocked = false;
   uploads: { [key: string]: any };
-  private sharedData: Flow[] = []; 
+  private sharedData: Flow[] = [];
 
   constructor(private httpService: HttpService, private appDataService: AppDataService) {
   }
