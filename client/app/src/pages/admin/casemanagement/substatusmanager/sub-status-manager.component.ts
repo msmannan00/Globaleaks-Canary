@@ -93,7 +93,6 @@ export class SubStatusManagerComponent {
 
   openConfirmableModalDialog(arg: Status, scope: any): Observable<string> {
     scope = !scope ? this : scope;
-    const self = this
     return new Observable((observer) => {
       const modalRef = this.modalService.open(DeleteConfirmationComponent, {backdrop: 'static', keyboard: false});
       modalRef.componentInstance.arg = arg;
@@ -101,7 +100,7 @@ export class SubStatusManagerComponent {
       modalRef.componentInstance.confirmFunction = () => {
         observer.complete()
         const url = "api/admin/statuses/" + arg.id;
-        return self.utilsService.deleteStatus(url).subscribe(_ => {
+        return this.utilsService.deleteStatus(url).subscribe(_ => {
           this.utilsService.deleteResource(this.submissionStatuses, arg);
         });
       };
