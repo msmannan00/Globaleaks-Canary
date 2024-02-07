@@ -448,7 +448,7 @@ export class UtilsService {
     return this.httpService.requestDefaultL10NResource(lang);
   }
 
-  runAdminOperation(operation: string, args: {value: string}|{}, refresh: boolean) {
+  runAdminOperation(operation: string, args: {value: string}|Object, refresh: boolean) {
     return this.runOperation("api/admin/config", operation, args, refresh);
   }
 
@@ -655,7 +655,7 @@ export class UtilsService {
 
   acceptPrivacyPolicyDialog(): Observable<string> {
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(AcceptAgreementComponent, {
+      const modalRef = this.modalService.open(AcceptAgreementComponent, {
         backdrop: 'static',
         keyboard: false,
       });

@@ -151,8 +151,6 @@ export class FieldUtilitiesService {
   updateAnswers(scope: any, parent: any, list: any, answers: any) {
     let entry, option, i, j;
 
-    const localscope = this;
-
     list.forEach((field: any) => {
       if (this.isFieldTriggered(parent, field, scope.answers, scope.score)) {
         if (!(field.id in answers)) {
@@ -177,9 +175,9 @@ export class FieldUtilitiesService {
       }
 
       if (scope.appDataService?.public.node.enable_scoring_system) {
-        scope.answers[field.id]?.forEach(function (entry: any) {
-          localscope.calculateScore(scope, field, entry);
-        });
+        scope.answers[field.id]?.forEach((entry: any) => {
+          this.calculateScore(scope, field, entry);
+        })
       }
 
       for (i = 0; i < answers[field.id].length; i++) {
@@ -248,11 +246,9 @@ export class FieldUtilitiesService {
       scope.submissionService.setContextReceivers(scope.context.id);
     }
 
-    const localscope = this;
-
     scope.questionnaire.steps.forEach((step: any) => {
       step.enabled = this.isFieldTriggered(null, step, scope.answers, scope.score);
-      localscope.updateAnswers(scope, step, step.children, scope.answers);
+      this.updateAnswers(scope, step, step.children, scope.answers);
     });
 
     if (scope.context) {

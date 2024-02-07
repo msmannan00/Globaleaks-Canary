@@ -72,7 +72,7 @@ export class FormFieldInputsComponent implements OnInit {
       }
     } else if (typeof obj === "object") {
       for (const key in obj) {
-        if (obj.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
           obj[key] = this.resetEntries(obj[key]);
         }
       }
