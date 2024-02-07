@@ -166,7 +166,7 @@ export class AppConfigService {
         location.replace("/#/signup");
       } else if (this.router.url === "/signup" && !this.appDataService.public.node.enable_signup) {
         location.replace("/#/");
-      } else if (this.appDataService.page == "blank") {
+      } else if (this.appDataService.page === "blank") {
         this.appDataService.page = "homepage"
       }
     }

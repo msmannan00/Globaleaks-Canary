@@ -78,7 +78,7 @@ export class SubStatusComponent implements OnInit {
   saveSubmissionsSubStatus(subStatusParam: Substatus): void {
     if (subStatusParam.tip_timetolive_option <= -1) {
       subStatusParam.tip_timetolive = -1;
-    } else if (subStatusParam.tip_timetolive_option == 0) {
+    } else if (subStatusParam.tip_timetolive_option === 0) {
       subStatusParam.tip_timetolive = 0;
     }
     const url = "api/admin/statuses/" + this.submissionsStatus.id + "/substatuses/" + subStatusParam.id;
@@ -104,9 +104,9 @@ export class SubStatusComponent implements OnInit {
 
   openConfirmableModalDialog(arg: Substatus, scope: any): Observable<string> {
     scope = !scope ? this : scope;
-    let self = this
+    const self = this
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(DeleteConfirmationComponent, {backdrop: 'static', keyboard: false});
+      const modalRef = this.modalService.open(DeleteConfirmationComponent, {backdrop: 'static', keyboard: false});
       modalRef.componentInstance.arg = arg;
       modalRef.componentInstance.scope = scope;
       modalRef.componentInstance.confirmFunction = () => {

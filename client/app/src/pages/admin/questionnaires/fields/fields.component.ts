@@ -97,11 +97,11 @@ export class FieldsComponent implements OnInit {
       return this.httpService.requestQuestionnairesResource().pipe(
         map(response => {
           response.forEach((step: questionnaireResolverModel) => {
-            if (step.id == this.step.questionnaire_id) {
+            if (step.id === this.step.questionnaire_id) {
               step.steps.forEach((innerStep: any) => {
-                if (innerStep.id == this.step.id) {
+                if (innerStep.id === this.step.id) {
                   innerStep.children.forEach((field: Step | Field) => {
-                    if (field.id == this.field.id && field.step_id == this.field.step_id) {
+                    if (field.id === this.field.id && field.step_id === this.field.step_id) {
                       this.children = field.children;
                     }
                   });
@@ -116,7 +116,7 @@ export class FieldsComponent implements OnInit {
       return this.httpService.requestAdminFieldTemplateResource().pipe(
         map(response => {
           response.forEach((field: fieldtemplatesResolverModel) => {
-            if (field.id == this.field.id) {
+            if (field.id === this.field.id) {
               this.children = field.children;
             }
           });
@@ -140,7 +140,7 @@ export class FieldsComponent implements OnInit {
 
   openConfirmableModalDialog(arg: Step | Field, scope: any): Observable<string> {
     return new Observable((observer) => {
-      let modalRef = this.modalService.open(DeleteConfirmationComponent, {backdrop: 'static', keyboard: false});
+      const modalRef = this.modalService.open(DeleteConfirmationComponent, {backdrop: 'static', keyboard: false});
       modalRef.componentInstance.arg = arg;
       modalRef.componentInstance.scope = scope;
 
