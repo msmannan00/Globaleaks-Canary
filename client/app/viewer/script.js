@@ -22,17 +22,17 @@ function receiveMessage(evt) {
     mediaViewer.style.display = "block";
     if (evt.data.tag === "audio") {
       mediaViewer.innerHTML =
-        "<audio id=\"viewer\" src=\"" + url + "\" controls /></audio>";
+          "<audio id=\"viewer\" src=\"" + url + "\" controls /></audio>";
     } else if (evt.data.tag === "image") {
       mediaViewer.innerHTML =
-        "<img id=\"viewer\" src=\"" + url + "\" />";
+          "<img id=\"viewer\" src=\"" + url + "\" />";
     } else if (evt.data.tag === "video") {
       mediaViewer.innerHTML =
-        "<video id=\"viewer\" src=\"" + url + "\" controls /></video>";
-    } else if (evt.data.tag === "txt") {
-      evt.data.blob.text().then(function (text) {
+          "<video id=\"viewer\" src=\"" + url + "\" controls /></video>";
+    } else if (evt.data.tag === "txt"){
+      evt.data.blob.text().then(function(text) {
         mediaViewer.innerHTML =
-          "<pre id=\"viewer\">" + text + "</pre>";
+            "<pre id=\"viewer\">" + text + "</pre>";
       });
     }
   }
@@ -54,8 +54,8 @@ function createPdfViewer(url) {
 function renderPage(num) {
   pdfDoc.getPage(num).then(function (page) {
     // find scale to fit page in canvas
-    var scale = pdfCanvas.clientWidth / page.getViewport({scale: 1.0}).width;
-    var viewport = page.getViewport({scale: scale});
+    var scale = pdfCanvas.clientWidth / page.getViewport({ scale: 1.0 }).width;
+    var viewport = page.getViewport({ scale: scale});
     var canvas = pdfCanvas;
     var context = canvas.getContext("2d");
     canvas.height = viewport.height;
@@ -105,23 +105,23 @@ function pdfPrevPage() {
 }
 
 window.addEventListener(
-  "load",
-  function () {
-    if (window.self === window.top) {
-      return;
-    };
+    "load",
+    function () {
+      if (window.self === window.top) {
+        return;
+      };
 
-    window.parent.postMessage("ready", "*");
-    window.addEventListener("message", receiveMessage, {once: true});
-  },
-  true
+      window.parent.postMessage("ready", "*");
+      window.addEventListener("message", receiveMessage, { once: true });
+    },
+    true
 );
 
 window.addEventListener(
-  "unload",
-  function () {
-    pdfControlNext.removeEventListener("click", pdfNextPage);
-    pdfControlPrev.removeEventListener("click", pdfPrevPage);
-  },
-  true
+    "unload",
+    function () {
+      pdfControlNext.removeEventListener("click", pdfNextPage);
+      pdfControlPrev.removeEventListener("click", pdfPrevPage);
+    },
+    true
 );
