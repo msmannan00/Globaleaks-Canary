@@ -68,15 +68,6 @@
               "customWebpackConfig": {
                 "path": "./cypress/test.config.ts"
               }
-            },
-            "e2e": {
-              "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true,
-              "vendorChunk": true,
-              "customWebpackConfig": {
-                "path": "./cypress/test.config.ts"
-              }
             }
           },
           "defaultConfiguration": "production"

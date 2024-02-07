@@ -1041,7 +1041,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask("build", ["clean", "concat:fontsource", "concat:fontawesome", "string-replace:initFonts", "copy:sources", "shell:build", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
 
-  grunt.registerTask("test", ["clean", "concat:fontsource", "concat:fontawesome", "string-replace:initFonts", "copy:sources", "shell:test", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
+  grunt.registerTask("test_build", ["clean", "concat:fontsource", "concat:fontawesome", "string-replace:initFonts", "copy:sources", "shell:test", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
 
   grunt.registerTask("serve", ["shell:serve"]);
 
