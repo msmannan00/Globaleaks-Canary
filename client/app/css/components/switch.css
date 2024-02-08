@@ -1,3 +1,9 @@
+.switch-container .switch input:checked + .slider::before {
+  transform: translateX(13px);
+  background-color: white;
+  left: 3px;
+}
+
 input:disabled + .slider::before {
   background-color: #ccc;
   left: 1px;
@@ -43,21 +49,15 @@ input:disabled + .slider::before {
 
 input + .slider {
   background-color: white;
-  border: 1px solid #ccc
+  border: 1px solid #ccc;
 }
 
 input:checked + .slider {
   background-color: #2866a2;
-  border: 1px solid #2866a2
+  border: 1px solid #2866a2;
 }
 
 input:focus + .slider {
   box-shadow: 0 0 1px #24598f;
-  border: 1px solid #2866a2
-}
-
-.switch-container .switch input:checked + .slider::before {
-  transform: translateX(13px);
-  background-color: white;
-  left: 3px;
+  border: 1px solid #2866a2;
 }

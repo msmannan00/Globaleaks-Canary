@@ -25,7 +25,17 @@
   opacity: 1;
 }
 
-.ng-select.ng-select-opened .ng-select-container {
+.ng-select .ng-select-container {
+  background: #f5f7fa !important;
+  cursor: default;
+  display: flex;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.ng-select-container .ng-select.ng-select-opened .ng-select-container {
   z-index: 1001;
 }
 
@@ -61,16 +71,6 @@
   display: none;
 }
 
-.ng-select .ng-select-container {
-  background: #f5f7fa !important;
-  cursor: default;
-  display: flex;
-  outline: none;
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-}
-
 .ng-select .ng-select-container .ng-value-container {
   display: flex;
   flex: 1;
@@ -91,7 +91,7 @@
   width: 100%;
 }
 
-.ng-select .ng-select-container .ng-input > input[readonly] {
+.ng-select .ng-select-container .ng-value-container .ng-input > input[readonly] {
   user-select: none;
   width: 0;
   padding: 0;
@@ -193,7 +193,6 @@
   height: 17px;
 }
 
-
 @keyframes load8 {
   0% {
     transform: rotate(0deg);
@@ -220,7 +219,6 @@
   max-height: 240px;
   overflow-y: auto;
 }
-
 
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-optgroup {
   white-space: nowrap;
