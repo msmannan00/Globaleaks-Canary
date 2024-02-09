@@ -2,9 +2,9 @@ describe("admin configure advanced settings", () => {
   it("should perform main configuration", () => {
     cy.login_admin();
     cy.visit("/#/admin/settings");
-    cy.contains("button", "Advanced").click();
+    cy.get(".advanced").click().should("be.visible",{ timeout: 10000 }).click();;
     cy.get('input[name="enable_custom_privacy_badge"]').click();
-    cy.contains("button", "Save").click();
+    cy.get("#save").click();
   });
 });
 
@@ -12,18 +12,18 @@ describe("admin disable submissions", () => {
   it("should disable submission", () => {
     cy.login_admin();
     cy.visit("/#/admin/settings");
-    cy.contains("button", "Advanced").click();
+    cy.get(".advanced").click().should("be.visible", { timeout: 10000 }).click();;
 
     cy.get('input[name="disable_submissions"]').click();
-    cy.contains("button", "Save").click();
+    cy.get("#save").click();
 
-    cy.contains("button", "Advanced").click().should('be.visible', { timeout: 10000 }).click();
+    cy.get(".advanced").click().should('be.visible', { timeout: 10000 }).click();
 
     cy.get('input[name="disable_submissions"]').should("be.visible").should("be.checked");
     cy.logout();
     cy.waitForUrl("/#/login")
     cy.visit("/#/");
-    cy.contains("span", "Submissions disabled").should("be.visible");
+    cy.get("#submissions_disabled").should("be.visible");
 
   });
 });
@@ -33,19 +33,19 @@ describe("admin enable submissions", () => {
     cy.login_admin();
     cy.waitForUrl("/#/admin/home")
     cy.visit("/#/admin/settings")
-    cy.contains("button", "Advanced").click();
+    cy.get(".advanced").click().should("be.visible", { timeout: 10000 }).click();;
 
     cy.get('input[name="disable_submissions"]').click();
-    cy.contains("button", "Save").click();
+    cy.get("#save").click();
     cy.waitForLoader()
-    cy.contains("button", "Advanced").should('be.visible', { timeout: 10000 }).click();
+    cy.get(".advanced").click().should('be.visible', { timeout: 10000 }).click();
 
     cy.get('input[name="disable_submissions"]').should("be.visible").should("not.be.checked");
     cy.logout();
     cy.waitForUrl("/#/login")
 
     cy.visit("/#/");
-    cy.contains("button", "File a report").should("be.visible");
+    cy.get("#WhistleblowingButton").should("be.visible");
   });
 });
 
@@ -54,12 +54,12 @@ describe("Should browser opens a pop while clicking the support icon", () => {
     cy.login_admin();
     cy.waitForUrl("/#/admin/home");
     cy.visit("/#/admin/settings");
-    cy.contains("button", "Advanced").click();
+    cy.get(".advanced").click().should("be.visible", { timeout: 10000 }).click();;
 
     cy.get('input[name="customSupportURL"]').clear();
 
-    cy.contains("button", "Save").click();
-    cy.contains("button", "Advanced").click();
+    cy.get("#save").click();
+    cy.get(".advanced").click().should("be.visible", { timeout: 10000 }).click();;
 
     cy.get('input[name="customSupportURL"]')
       .invoke("val")
@@ -85,16 +85,16 @@ describe("Validating custom support url", () => {
   it("Enter custom support url and browser", () => {
     cy.login_admin();
     cy.visit("/#/admin/settings");
-    cy.contains("button", "Advanced").click();
+    cy.get(".advanced").click().should("be.visible", { timeout: 10000 }).click();;
 
     cy.get('input[name="customSupportURL"]').clear();
     cy.get('input[name="customSupportURL"]').type(
       "https://www.globaleaks.org/"
     );
 
-    cy.contains("button", "Save").click();
+    cy.get("#save").click();
     cy.waitForLoader();
-    cy.contains("button", "Advanced").should('be.visible', { timeout: 10000 }).click();
+    cy.get(".advanced").click().should('be.visible', { timeout: 10000 }).click();
 
     cy.get('input[name="customSupportURL"]')
       .invoke("val")
