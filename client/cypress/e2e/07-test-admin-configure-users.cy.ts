@@ -51,9 +51,9 @@ describe("admin add, configure, and delete users", () => {
     cy.visit("/#/admin/users");
 
     cy.get(".userList").eq(3).within(() => {
-      cy.contains("button", "Edit").click();
+      cy.get("#edit_user").click();
       cy.get('input[name="can_delete_submission"]').click();
-      cy.contains("button", "Save").click();
+      cy.get("#save_user").click();
     });
   });
 
@@ -65,9 +65,9 @@ describe("admin add, configure, and delete users", () => {
       const numberOfUsers = Math.min(userListLength, 6);
       for (let i = 1; i < numberOfUsers; i++) {
         cy.get(".userList").eq(i).within(() => {
-          if (Cypress.$("button:contains('Edit')").length > 0) {
-            cy.contains("button", "Edit").should('be.visible', { timeout: 10000 }).click();
-            cy.contains("span", "Set password").first().click();
+          if (Cypress.$("#edit_user").length > 0) {
+            cy.get("#edit_user").should('be.visible', { timeout: 10000 }).click();
+            cy.get("#set_password").first().click();
             cy.get('input[name="password"]').clear().type(Cypress.env("init_password"));
             cy.get('#setPasswordButton').should('be.visible').click();
           }

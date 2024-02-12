@@ -2,7 +2,7 @@ describe("admin configure advanced settings", () => {
   it("should perform main configuration", () => {
     cy.login_admin();
     cy.visit("/#/admin/settings");
-    cy.get(".advanced").click().should("be.visible",{ timeout: 10000 }).click();;
+    cy.get(".advanced").click().should("be.visible",{ timeout: 10000 }).click();
     cy.get('input[name="enable_custom_privacy_badge"]').click();
     cy.get("#save").click();
   });
@@ -54,12 +54,12 @@ describe("Should browser opens a pop while clicking the support icon", () => {
     cy.login_admin();
     cy.waitForUrl("/#/admin/home");
     cy.visit("/#/admin/settings");
-    cy.get(".advanced").click().should("be.visible", { timeout: 10000 }).click();;
+    cy.get(".advanced").click().should("be.visible", { timeout: 10000 }).click();
 
     cy.get('input[name="customSupportURL"]').clear();
 
     cy.get("#save").click();
-    cy.get(".advanced").click().should("be.visible", { timeout: 10000 }).click();;
+    cy.get(".advanced").click().should("be.visible", { timeout: 10000 }).click();
 
     cy.get('input[name="customSupportURL"]')
       .invoke("val")
@@ -71,9 +71,7 @@ describe("Should browser opens a pop while clicking the support icon", () => {
     cy.get('textarea[name="message"]').type("test message");
     cy.get(".modal #modal-action-ok").click();
 
-    cy.contains(
-      "Thank you. We will try to get back to you as soon as possible."
-    ).should("be.visible");
+    cy.get("#sent").should("be.visible");
 
     cy.get('#modal-action-cancel').should('be.visible').click();
     cy.logout();
@@ -85,7 +83,7 @@ describe("Validating custom support url", () => {
   it("Enter custom support url and browser", () => {
     cy.login_admin();
     cy.visit("/#/admin/settings");
-    cy.get(".advanced").click().should("be.visible", { timeout: 10000 }).click();;
+    cy.get(".advanced").click().should("be.visible", { timeout: 10000 }).click();
 
     cy.get('input[name="customSupportURL"]').clear();
     cy.get('input[name="customSupportURL"]').type(
