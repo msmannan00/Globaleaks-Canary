@@ -42,7 +42,7 @@ describe("admin add, configure, and delete users", () => {
 
     for (let i = 0; i < new_users.length; i++) {
       make_account(new_users[i]);
-      cy.get(".userList").should('have.length', 6);
+      cy.get(".userList").should('have.length', i+2);
     }
   });
 
