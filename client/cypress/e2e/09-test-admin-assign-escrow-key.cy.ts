@@ -8,14 +8,14 @@ describe("key escrow assignment and revocation", () => {
     const path = `form:contains("${user.name}")`;
 
     cy.get(path).within(() => {
-      cy.get("#edit_user").click();
+      cy.contains("button", "Edit").click();
 
       cy.get("[name='user.escrow']").click();
 
     });
 
     cy.get("[name='secret']").type(Cypress.env("user_password"));
-    cy.get("#confirm").click();
+    cy.contains("button", "Confirm").click();
 
     cy.logout();
   });

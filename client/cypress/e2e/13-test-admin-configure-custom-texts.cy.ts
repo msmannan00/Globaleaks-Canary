@@ -2,10 +2,10 @@ describe("admin disable submissions", () => {
   it("should disable submission", () => {
     cy.login_admin();
     cy.visit("/#/admin/settings");
-    cy.get(".advanced").click();
+    cy.contains("button", "Advanced").click();
 
     cy.get('input[name="disable_submissions"]').click();
-    cy.get("#save").click();
+    cy.contains("button", "Save").click();
 
     cy.logout();
     cy.visit("/#/");
@@ -16,7 +16,7 @@ describe("admin configure custom texts", () => {
   it("should perform custom texts configuration", () => {
     cy.login_admin();
     cy.visit("/#/admin/settings");
-    cy.get(".text_customization").click();
+    cy.contains("button", "Text customization").click();
 
     cy.get('select[name="vars.text_to_customize"]').select("Submissions disabled");
 
@@ -30,7 +30,7 @@ describe("admin configure custom texts", () => {
     cy.contains("button", "Submissions disabled").should("not.exist");
 
     cy.visit("/#/admin/settings");
-    cy.get(".text_customization").click();
+    cy.contains("button", "Text customization").click();
 
     cy.get(".deleteCustomTextButton").click();
 
@@ -47,10 +47,10 @@ describe("admin enable submissions", () => {
   it("should enable submission", () => {
     cy.login_admin();
     cy.visit("/#/admin/settings");
-    cy.get(".advanced").click();
+    cy.contains("button", "Advanced").click();
 
     cy.get('input[name="disable_submissions"]').click();
-    cy.get("#save").click();
+    cy.contains("button", "Save").click();
     cy.waitForUrl("/#/admin/settings");
 
     cy.get('#ngb-nav-12').click();
@@ -59,6 +59,6 @@ describe("admin enable submissions", () => {
     cy.waitForUrl("/#/login");
 
     cy.visit("/#/");
-    cy.get("#WhistleblowingButton").should("be.visible", { timeout: 10000 });
+    cy.contains("button", "File a report").should('be.visible', { timeout: 10000 });
   });
 });

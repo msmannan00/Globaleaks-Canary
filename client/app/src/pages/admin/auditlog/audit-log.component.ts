@@ -31,7 +31,6 @@ export class AuditLogComponent implements AfterViewInit {
       this.nodeData = this.nodeResolver;
       this.tabs = [
         {
-          id:"audit_log",
           title: "Audit Log",
           component: this.tab1
         },
@@ -39,17 +38,14 @@ export class AuditLogComponent implements AfterViewInit {
       if (this.authenticationService.session.role === "admin") {
         this.tabs = this.tabs.concat([
           {
-            id:"users",
             title: "Users",
             component: this.tab2
           },
           {
-            id:"reports",
             title: "Reports",
             component: this.tab3
           },
           {
-            id:"scheduled_jobs",
             title: "Scheduled jobs",
             component: this.tab4
           }

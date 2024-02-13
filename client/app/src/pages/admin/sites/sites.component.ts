@@ -30,7 +30,6 @@ export class SitesComponent implements OnInit, AfterViewInit {
       this.nodeData = this.node;
       this.tabs = [
         {
-          id:"sites",
           title: "Sites",
           component: this.tab1
         },
@@ -38,7 +37,6 @@ export class SitesComponent implements OnInit, AfterViewInit {
       if (this.authenticationService.session.role === "admin") {
         this.tabs = this.tabs.concat([
           {
-            id:"options",
             title: "Options",
             component: this.tab2
           }
