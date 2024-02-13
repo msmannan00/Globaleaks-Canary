@@ -76,7 +76,7 @@ Cypress.Commands.add("login_custodian", (username, password, url, firstlogin) =>
 
 });
 
-Cypress.Commands.add("takeScreenshot", (filename, _?: any) => {
+Cypress.Commands.add("takeScreenshot", (filename, timeout: number = 0, _?: any) => {
   if (!Cypress.env("takeScreenshots")) {
     return;
   }

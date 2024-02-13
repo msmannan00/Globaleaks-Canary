@@ -66,8 +66,5 @@ html_theme_options = {
   'style_nav_header_background': '#377abc',
 }
 
-locale_dirs = ['locale/']
-gettext_compact = False
-
 def setup(app):
     app.add_css_file("custom.css")
