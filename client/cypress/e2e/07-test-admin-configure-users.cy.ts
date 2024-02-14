@@ -1,28 +1,28 @@
 describe("admin add, configure, and delete users", () => {
   const new_users = [
     {
+      role: "Recipient",
       name: "Recipient",
-      value:"receiver",
       address: "globaleaks-receiver1@mailinator.com",
     },
     {
+      role: "Recipient",
       name: "Recipient2",
-      value:"receiver",
       address: "globaleaks-receiver2@mailinator.com",
     },
     {
+      role: "Recipient",
       name: "Recipient3",
-      value:"receiver",
       address: "globaleaks-receiver3@mailinator.com",
     },
     {
+      role: "Custodian",
       name: "Custodian",
-      value:"custodian",
       address: "globaleaks-custodian1@mailinator.com",
     },
     {
+      role: "Admin",
       name: "Admin2",
-      value:"admin",
       address: "globaleaks-admin2@mailinator.com",
     }
   ];
@@ -33,7 +33,7 @@ describe("admin add, configure, and delete users", () => {
 
     const make_account = (user:any) => {
       cy.get(".show-add-user-btn").click();
-      cy.get('select[name="role"]').select(user.value);
+      cy.get('select[name="role"]').select(user.role);
       cy.get('input[name="username"]').clear().type(user.name);
       cy.get('input[name="name"]').clear().type(user.name);
       cy.get('input[name="email"]').clear().type(user.address);

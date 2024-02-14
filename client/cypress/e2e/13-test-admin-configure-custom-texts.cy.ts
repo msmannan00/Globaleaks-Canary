@@ -26,7 +26,8 @@ describe("admin configure custom texts", () => {
 
     cy.reload();
     cy.visit("/#/");
-    cy.get('#submissions_disabled').should('contain', 'Whistleblowing disabled');
+    cy.contains("button", "Whistleblowing disabled").should("exist");
+    cy.contains("button", "Submissions disabled").should("not.exist");
 
     cy.visit("/#/admin/settings");
     cy.contains("button", "Text customization").click();
@@ -38,7 +39,8 @@ describe("admin configure custom texts", () => {
     cy.reload();
     cy.visit("/#/");
     cy.reload();
-    cy.get('#submissions_disabled').should('not.contain', 'Whistleblowing disabled');
+    cy.contains("button", "Whistleblowing disabled").should("not.exist");
+    cy.contains("button", "Submissions disabled").should("exist");
   });
 });
 describe("admin enable submissions", () => {
