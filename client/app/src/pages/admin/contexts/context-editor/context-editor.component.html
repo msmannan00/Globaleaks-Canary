@@ -21,7 +21,7 @@
                 <button class="btn btn-sm btn-outline-secondary" *ngIf="editing" (click)="toggleEditing()">
                     <span>{{ 'Cancel' | translate }}</span>
                 </button>
-                <button class="btn btn-sm btn-danger" (click)="deleteContext(contextResolver)">
+                <button class="btn btn-sm btn-danger" name="delete_context" id="delete_context" (click)="deleteContext(contextResolver)">
                     <span>{{ 'Delete' | translate }}</span>
                 </button>
             </span>
