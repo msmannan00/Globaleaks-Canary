@@ -3,7 +3,7 @@ describe("Admin Enable Signup", function() {
     cy.login_admin();
 
     cy.visit("/#/admin/sites");
-    cy.get(".options").should('be.visible').click();
+    cy.get('[data-cy="options"]').should('be.visible').click();
     cy.get('input[name="nodeResolver.dataModel.rootdomain"]').type("domain.tld");
     cy.get('input[name="nodeResolver.dataModel.enable_signup"]').click();
     cy.takeScreenshot("admin/signup_configuration");
@@ -35,7 +35,7 @@ describe("Admin Disable Signup", function() {
     cy.login_admin();
 
     cy.visit("/#/admin/sites");
-    cy.get(".options").click();
+    cy.get('[data-cy="options"]').click();
     cy.get('input[name="nodeResolver.dataModel.enable_signup"]').click();
     cy.get('i.fa-solid.fa-check').click();
 

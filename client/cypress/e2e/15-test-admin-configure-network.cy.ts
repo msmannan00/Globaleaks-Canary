@@ -5,7 +5,7 @@ describe("admin configure network", () => {
   });
 
   it("should be able to configure https", () => {
-    cy.get(".https").should('be.visible', { timeout: 10000 }).click();
+    cy.get('[data-cy="https"]').should('be.visible', { timeout: 10000 }).click();
 
     cy.get('[name="hostname"]').clear().type("127.0.0.1");
     cy.get('#save_hostname').click();
@@ -54,7 +54,7 @@ describe("admin configure network", () => {
   });
 
   it("should configure url redirects", () => {
-    cy.get(".url_redirects").first().click();
+    cy.get('[data-cy="url_redirects"]').first().click();
     for (let i = 0; i < 3; i++) {
       cy.get('[name="path1"]').type(`yyyyyyyy-${i}`);
       cy.get('[name="path2"]').type("xxxxxxxx");

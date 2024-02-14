@@ -72,7 +72,7 @@ describe("admin add, configure and delete questionnaires", () => {
     });
 
 
-    cy.get(".question_templates").click();
+    cy.get('[data-cy="question_templates"]').click();
 
     fieldTypes.forEach((questionType:string, index: number) => {
       add_question(questionType, index, false);

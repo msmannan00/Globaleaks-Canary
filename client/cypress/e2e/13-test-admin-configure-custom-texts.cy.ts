@@ -2,7 +2,7 @@ describe("admin disable submissions", () => {
   it("should disable submission", () => {
     cy.login_admin();
     cy.visit("/#/admin/settings");
-    cy.get(".advanced").click();
+    cy.get('[data-cy="advanced"]').click();
 
     cy.get('input[name="disable_submissions"]').click();
     cy.get("#save").click();
@@ -16,7 +16,7 @@ describe("admin configure custom texts", () => {
   it("should perform custom texts configuration", () => {
     cy.login_admin();
     cy.visit("/#/admin/settings");
-    cy.get(".text_customization").click();
+    cy.get('[data-cy="text_customization"]').click();
 
     cy.get('select[name="vars.text_to_customize"]').select("Submissions disabled");
 
@@ -29,7 +29,7 @@ describe("admin configure custom texts", () => {
     cy.get('#submissions_disabled').should('contain', 'Whistleblowing disabled');
 
     cy.visit("/#/admin/settings");
-    cy.get(".text_customization").click();
+    cy.get('[data-cy="text_customization"]').click();
 
     cy.get(".deleteCustomTextButton").click();
 
@@ -45,7 +45,7 @@ describe("admin enable submissions", () => {
   it("should enable submission", () => {
     cy.login_admin();
     cy.visit("/#/admin/settings");
-    cy.get(".advanced").click();
+    cy.get('[data-cy="advanced"]').click();
 
     cy.get('input[name="disable_submissions"]').click();
     cy.get("#save").click();

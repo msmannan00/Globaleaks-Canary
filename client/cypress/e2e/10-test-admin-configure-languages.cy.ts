@@ -2,7 +2,7 @@ describe("admin configure languages", () => {
   it("should configure languages", () => {
     cy.login_admin();
     cy.visit("/#/admin/settings");
-    cy.get(".languages").click();
+    cy.get('[data-cy="languages"]').click();
     cy.get(".add-language-btn").click();
 
     cy.get("body").click("top");
@@ -22,11 +22,11 @@ describe("admin configure languages", () => {
 
     cy.get("#save_language").click();
     cy.waitForUrl("/#/admin/settings");
-    cy.get(".languages").click();
+    cy.get('[data-cy="languages"]').click();
 
     cy.get(".non-default-language").eq(1).click();
     cy.get("#save_language").click();
-    cy.get(".languages").click();
+    cy.get('[data-cy="languages"]').click();
 
     cy.get(".remove-lang-btn").eq(1).click();
     cy.get("#save_language").should('exist').should('be.visible').click();
@@ -40,7 +40,7 @@ describe("admin configure languages", () => {
 
     cy.get('#language-picker-box').find('ng-select').last().click().get('ng-dropdown-panel').contains('English').click();
     cy.visit("/#/admin/settings");
-    cy.get(".languages").click();
+    cy.get('[data-cy="languages"]').click();
     cy.get(".non-default-language").eq(0).click();
     cy.get("#save_language").click();
 
