@@ -1,6 +1,3 @@
-/* eslint no-console: 0 */
-const fs = require("fs");
-const path = require("path");
 module.exports = function(grunt) {
   let fs = require("fs"),
       path = require("path"),
