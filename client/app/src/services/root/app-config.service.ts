@@ -142,11 +142,12 @@ export class AppConfigService {
             storageLanguage = this.appDataService.public.node.default_language;
             localStorage.setItem("default_language", storageLanguage);
           }
-          this.translationService.onChange(storageLanguage);
+          const setTitle = () => {
+            this.titleService.setTitle();
+          };
+          this.translationService.onChange(storageLanguage, setTitle);
         }
 
-
-        this.titleService.setTitle();
         this.onValidateInitialConfiguration();
         if (callback) {
           callback();

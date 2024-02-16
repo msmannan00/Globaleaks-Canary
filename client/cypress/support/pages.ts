@@ -27,7 +27,7 @@ class WhistleblowerPage {
 
 
     cy.get("#step-0-field-3-0-input-0").first().select("13d17a19-1c7c-482c-9e6c-16896f0d5f1b");
-    cy.get("#step-0-field-4-0-input-0").first().select("Yes");
+    cy.get("#step-0-field-4-0-input-0").first().select(1);
 
     cy.get("#step-0-field-6-0-input-0").type("...");
 
@@ -43,7 +43,7 @@ class WhistleblowerPage {
       mimeType: "application/zip"
     }, {"force": true});
 
-    cy.get("#step-0-field-7-0-input-0").first().select("No");
+    cy.get("#step-0-field-7-0-input-0").first().select(2);
 
     cy.get("#step-0-field-10-0-input-0").type("...");
     cy.wait(1000);

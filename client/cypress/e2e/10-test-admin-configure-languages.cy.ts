@@ -38,7 +38,7 @@ describe("admin configure languages", () => {
     cy.get('[name="node.dataModel.presentation"]').clear().type("TEXT2_IT");
     cy.get('button.btn.btn-primary').eq(0).get("#save_settings").click();
 
-    cy.get('#language-picker-box').find('ng-select').last().click().get('ng-dropdown-panel').contains('English').click();
+    cy.get('#language-picker-box').find('ng-select').last().click().get('ng-dropdown-panel').contains(Cypress.env('default_language')).click();
     cy.visit("/#/admin/settings");
     cy.get('[data-cy="languages"]').click();
     cy.get(".non-default-language").eq(0).click();
