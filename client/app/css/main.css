@@ -1087,7 +1087,8 @@ i.fa-solid.fa-chevron-right {
 }
 
 .audio-player-iframe {
-  height: 4em;
+  width: 24em;
+  height: 5em;
 }
 
 .analyst-graph{
