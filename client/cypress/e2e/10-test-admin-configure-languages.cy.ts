@@ -24,11 +24,18 @@ describe("admin configure languages", () => {
     cy.waitForUrl("/#/admin/settings");
     cy.get('[data-cy="languages"]').click();
 
-    cy.get(".non-default-language").eq(1).click();
+    if (Cypress.env('default_language')=="Italian") {
+      cy.get(".non-default-language").eq(0).click();
+    }
+
     cy.get("#save_language").click();
     cy.get('[data-cy="languages"]').click();
 
-    cy.get(".remove-lang-btn").eq(1).click();
+    if (Cypress.env('default_language')=="Italian") {
+      cy.get(".remove-lang-btn").eq(0).click();
+    } else {
+      cy.get(".remove-lang-btn").eq(1).click();
+    }
     cy.get("#save_language").should('exist').should('be.visible').click();
 
     cy.waitForUrl("/#/admin/settings");
