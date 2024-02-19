@@ -1,7 +1,7 @@
 <div class="audio-box" *ngIf="authenticationService.session">
     <div class="row">
         <div class="col-md-6">
-            <button class="btn" [ngClass]="{'text-secondary': !activeButton, 'text-danger': activeButton === 'record' }" [disabled]="isRecording || uploads[fileInput]?.files.length" (click)="triggerRecording(field.id)" aria-label="Start Recording">
+            <button class="btn" [ngClass]="{'text-secondary': !activeButton, 'text-danger': activeButton === 'record' }" [disabled]="isRecording || uploads[fileInput]?.files.length" (click)="triggerRecording(field.id)" aria-label="Record a voice message">
                 <i class="fas fa-microphone"></i>
             </button>
             <button class="btn" *ngIf="activeButton === 'record'" (click)="onStop()" aria-label="Stop Recording">
