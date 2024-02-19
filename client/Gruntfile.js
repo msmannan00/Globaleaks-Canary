@@ -1,6 +1,3 @@
-/* eslint no-console: 0 */
-const fs = require("fs");
-const path = require("path");
 module.exports = function(grunt) {
   let fs = require("fs"),
       path = require("path"),
@@ -417,29 +414,18 @@ module.exports = function(grunt) {
       all: ["app/css/**/*.css"]
     },
 
-    terser: {
-      options: {
-        sourceMap: true
-      },
-      minify: {
-        files: {
-          "build/js/scripts.min.js": ["build/js/scripts.js"]
-        }
-      }
-    },
-
     shell: {
       build: {
         command: "npx ng build --configuration=production --aot && echo \"Build completed\""
       },
       test: {
-        command: "npx ng build --configuration=development && echo \"Build completed\""
+        command: "npx ng build --configuration=development --source-map && nyc instrument dist instrument"
       },
       babel: {
         command: "npx ng build --configuration=production --source-map && nyc instrument dist instrument"
       },
       serve: {
-        command: "ng serve --proxy-config proxy.conf.json"
+        command: "ng serve --configuration=production --proxy-config proxy.conf.json"
       },
       code_coverage: {
         command: "npm run e2e:ci && npm run e2e:coverage"
@@ -453,10 +439,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-clean");
   grunt.loadNpmTasks("grunt-contrib-concat");
   grunt.loadNpmTasks("grunt-contrib-copy");
-  grunt.loadNpmTasks("grunt-contrib-cssmin");
   grunt.loadNpmTasks("grunt-stylelint");
   grunt.loadNpmTasks("grunt-string-replace");
-  grunt.loadNpmTasks("grunt-terser");
   grunt.loadNpmTasks("gruntify-eslint");
   grunt.loadNpmTasks("grunt-shell");
 

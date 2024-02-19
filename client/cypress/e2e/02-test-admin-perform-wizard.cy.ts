@@ -2,7 +2,8 @@ describe("globaLeaks setup wizard", () => {
   it("should allow the user to setup the wizard", () => {
     cy.visit("/#/");
 
-    cy.contains("h1", "Platform wizard").should("be.visible");
+    cy.get("#PageTitle").should("be.visible");
+    cy.get('#language-picker-box').should('be.visible', { timeout: 10000 }).find('ng-select').last().click().get('ng-dropdown-panel').contains(Cypress.env('default_language')).click();
 
     cy.takeScreenshot("wizard/1");
 

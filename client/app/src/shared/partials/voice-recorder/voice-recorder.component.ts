@@ -26,7 +26,7 @@ export class VoiceRecorderComponent implements OnInit {
   context: AudioContext = new AudioContext();
   recording_blob: any = null;
   flow: Flow;
-  secondsTracker: NodeJS.Timer | null = null;
+  private secondsTracker: ReturnType<typeof setInterval> | null = null;
   startTime: number;
   stopButton: boolean;
   recordButton: boolean;
@@ -96,8 +96,8 @@ export class VoiceRecorderComponent implements OnInit {
         this.isRecording = false;
         if (this.secondsTracker) {
           clearInterval(this.secondsTracker);
+          this.secondsTracker = null;
         }
-        this.secondsTracker = null;
         this.stopRecording().subscribe();
       }
     }, 1000);
@@ -179,7 +179,7 @@ export class VoiceRecorderComponent implements OnInit {
     return new Observable<void>((observer) => {
       this.flow.files = [];
 
-      if (this.uploads.hasOwnProperty(this.fileInput)) {
+      if (Object.prototype.hasOwnProperty.call(this.uploads, this.fileInput)) {
         delete this.uploads[this.fileInput];
       }
 

@@ -7,7 +7,7 @@ declare global {
       waitForLoader: () => void;
       waitForPageIdle: () => void;
       logout: () => void;
-      takeScreenshot: (filename: string, timeout?: number, locator?: any) => void;
+      takeScreenshot: (filename: string, locator?: any) => void;
       login_whistleblower: (receipt: string) => void;
       waitUntilClickable: (locator: string, timeout?: number) => void;
       waitForUrl: (url: string, timeout?: number) => Chainable<any>;
@@ -76,12 +76,11 @@ Cypress.Commands.add("login_custodian", (username, password, url, firstlogin) =>
 
 });
 
-Cypress.Commands.add("takeScreenshot", (filename, timeout: number = 0, _?: any) => {
+Cypress.Commands.add("takeScreenshot", (filename, _?: any) => {
   if (!Cypress.env("takeScreenshots")) {
     return;
   }
 
-  cy.wait(timeout);
   cy.get("html, body").invoke(
     "attr",
     "style",
@@ -93,6 +92,7 @@ Cypress.Commands.add("takeScreenshot", (filename, timeout: number = 0, _?: any) 
 
     cy.waitForPageIdle();
 
+    cy.waitForLoader();
     cy.screenshot("../" + filename, {
       overwrite: true
     });
@@ -117,7 +117,7 @@ Cypress.Commands.add("waitForLoader", () => {
             cy.get("#PageOverlay", { log: false }).should("not.be.visible").then(() => {
               resolve();
             });
-          } else if (Date.now() - startTime > 500) {
+          } else if (Date.now() - startTime > 100) {
             resolve();
           } else {
             setTimeout(checkVisibility, 100);
@@ -162,7 +162,7 @@ Cypress.Commands.add("login_admin", (username, password, url, firstlogin) => {
     finalURL = "/actions/forcedpasswordchange";
     cy.waitForUrl(finalURL);
   } else {
-    cy.url().should("include", "#/login").then((currentURL) => {
+    cy.url().should("include", "#/login").then((_) => {
       cy.url().should("not.include", "#/login").then((currentURL) => {
         const hashPart = currentURL.split("#")[1];
         finalURL = hashPart === "login" ? "/admin/home" : hashPart;
