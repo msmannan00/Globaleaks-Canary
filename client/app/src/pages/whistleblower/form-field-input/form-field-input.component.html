@@ -88,9 +88,7 @@
                 <src-voice-recorder (notifyFileUpload)="notifyFileUpload.emit()" [fileUploadUrl]="fileUploadUrl" [uploads]="uploads" [field]="field" [entryIndex]="entryIndex" [fieldEntry]="fieldEntry"></src-voice-recorder>
             </div>
             <div id="{{fieldEntry}}" *ngSwitchCase="'fileupload'">
-                <ng-container *ngIf="session_id">
-                    <src-rfile-upload-button [file_id]="fieldEntry" [session_id]="session_id" (notifyFileUpload)="notifyFileUpload.emit()" [fileUploadUrl]="fileUploadUrl" [uploads]="uploads" [field]="field" [formUploader]="true"></src-rfile-upload-button>
-                </ng-container>
+                    <src-rfile-upload-button [file_id]="fieldEntry" (notifyFileUpload)="notifyFileUpload.emit()" [fileUploadUrl]="fileUploadUrl" [uploads]="uploads" [field]="field" [formUploader]="true"></src-rfile-upload-button>
             </div>
             <div *ngSwitchCase="'fieldgroup'">
                 <div [ngSwitch]="field.attrs.multimedia_type.value">
