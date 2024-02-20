@@ -1,9 +1,9 @@
-describe("acquire screenshots necessary for user documentation", () => {
+describe("acquire screenshots necessary for user documentation - Admin Section", () => {
   beforeEach(() => {
     cy.login_admin();
   });
 
-  it("should navigate through some admin sections to collect screenshots", () => {
+  it("should capture screenshots of the admin section", () => {
     // Home section
     cy.get("#admin_home").first().click();
     cy.takeScreenshot("admin/home");
@@ -78,6 +78,34 @@ describe("acquire screenshots necessary for user documentation", () => {
     cy.get('[data-cy="scheduled_jobs"]').first().click();
     cy.takeScreenshot("admin/audit_log_scheduled_jobs");
 
+    cy.logout();
+  });
+});
+
+describe("Acquire screenshots necessary for user documentation - Analyst Section", () => {
+  it("should capture screenshots of the analyst section", function () {
+    cy.login_analyst();
+    cy.takeScreenshot("analyst/home", 500);
+    cy.get("#analyst_statistics").first().click();
+    cy.takeScreenshot("analyst/statistics", 500);
+    cy.logout();
+  });
+});
+
+describe("Acquire screenshots necessary for user documentation - Custodian Section", () => {
+  it("should capture screenshots of the custodian section", function () {
+    cy.login_custodian();
+    cy.takeScreenshot("custodian/home", 500);
+    cy.get("#custodian_requests").first().click();
+    cy.takeScreenshot("custodian/requests", 500);
+    cy.logout();
+  });
+});
+
+describe("Acquire screenshots necessary for user documentation - Recipient Section", () => {
+  it("should capture screenshots of the recipient section", function () {
+    cy.login_receiver();
+    cy.takeScreenshot("recipient/home", 500);
     cy.logout();
   });
 });
