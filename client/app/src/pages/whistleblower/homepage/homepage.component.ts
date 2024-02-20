@@ -16,7 +16,7 @@ export class HomepageComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.evaluateConfidentialityModalOpening();
+    // this.evaluateConfidentialityModalOpening();
   }
 
   openSubmission() {
