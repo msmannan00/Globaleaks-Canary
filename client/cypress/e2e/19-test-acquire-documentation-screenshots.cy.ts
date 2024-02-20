@@ -97,6 +97,7 @@ describe("Acquire screenshots necessary for user documentation - Custodian Secti
     cy.login_custodian();
     cy.takeScreenshot("custodian/home", 500);
     cy.get("#custodian_requests").first().click();
+    cy.wait(500);
     cy.takeScreenshot("custodian/requests", 500);
     cy.logout();
   });
@@ -106,6 +107,12 @@ describe("Acquire screenshots necessary for user documentation - Recipient Secti
   it("should capture screenshots of the recipient section", function () {
     cy.login_receiver();
     cy.takeScreenshot("recipient/home", 500);
+    cy.visit("/#/recipient/reports");
+    cy.get("#tip-0").first().click();
+    cy.get('[id="tip-action-mask"]').should('be.visible', { timeout: 10000 }).click();
+    cy.get("#edit-question").should('be.visible').first().click();
+    cy.get("#close-redact-modal").should('be.visible').first().click();
+    cy.takeScreenshot("recipient/masking-popup", 500);
     cy.logout();
   });
 });

@@ -57,6 +57,7 @@ describe("admin add, configure, and delete users", () => {
 
     cy.get(".userList").eq(4).within(() => {
       cy.get("#edit_user").click();
+      cy.get('input[name="can_mask_information"]').click();
       cy.get('input[name="can_delete_submission"]').click();
       cy.get("#save_user").click();
     });
