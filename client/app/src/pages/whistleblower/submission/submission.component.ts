@@ -41,7 +41,7 @@ export class SubmissionComponent {
   show_steps_navigation_bar = false;
   receivedData: Flow[];
 
-  constructor(protected whistleblowerSubmissionService:WhistleblowerSubmissionService,private titleService: TitleService, private router: Router, private appConfigService: AppConfigService, private whistleblowerLoginResolver: WhistleblowerLoginResolver, protected authenticationService: AuthenticationService, private appDataService: AppDataService, protected utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, public submissionService: SubmissionService) {
+  constructor(protected whistleblowerSubmissionService:WhistleblowerSubmissionService,private titleService: TitleService, private router: Router, private appConfigService: AppConfigService, private whistleblowerLoginResolver: WhistleblowerLoginResolver, protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, public submissionService: SubmissionService) {
     this.selectable_contexts = [];
     this.receivedData = this.submissionService.getSharedData();
 
@@ -310,6 +310,13 @@ export class SubmissionComponent {
     this.fieldUtilitiesService.onAnswersUpdate(this);
   }
 
+  getAuthSessionID(){
+    if(this.authenticationService.session){
+      return this.authenticationService.session.id;
+    }else {
+      return this.authenticationService.session;
+    }
+  }
   notifyFileUpload(uploads: any) {
     if (uploads) {
       this.uploads = uploads;

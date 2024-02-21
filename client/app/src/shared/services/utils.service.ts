@@ -34,7 +34,7 @@ import { AcceptAgreementComponent } from "../modals/accept-agreement/accept-agre
 })
 export class UtilsService {
 
-  constructor(private tokenResource: TokenResource,protected authenticationService: AuthenticationService,private translateService: TranslateService, private clipboardService: ClipboardService, private http: HttpClient, private httpService: HttpService, private modalService: NgbModal, private preferenceResolver: PreferenceResolver, private router: Router) {
+  constructor(private tokenResource: TokenResource,private translateService: TranslateService, private clipboardService: ClipboardService, private http: HttpClient, private httpService: HttpService, private modalService: NgbModal, private preferenceResolver: PreferenceResolver, private router: Router) {
   }
 
   updateNode(nodeResolverModel:nodeResolverModel) {
@@ -693,13 +693,5 @@ export class UtilsService {
     link.href = window.URL.createObjectURL(blob);
     link.download = `${fileName}.csv`;
     link.click();
-  }
-
-  getAuthSessionID(){
-    if(this.authenticationService.session){
-      return this.authenticationService.session.id;
-    }else {
-      return this.authenticationService.session;
-    }
   }
 }
