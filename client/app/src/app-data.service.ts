@@ -25,8 +25,7 @@ export class AppDataService {
   sidebar = "";
   privacy_badge_open: boolean;
   languages_supported: Map<string, LanguagesSupported>;
-  connection: { tor: any ,https:any};
-  confidentialWarningOpened:boolean=false;
+  connection: { tor: any};
   languages_enabled_selector: any[];
   ctx: string;
   receipt: string;

@@ -120,7 +120,6 @@ export class AppConfigService {
 
         this.appDataService.connection = {
           "tor": data.headers.get("X-Check-Tor") === "true" || location.host.match(/\.onion$/),
-          "https": false,
         };
 
         this.appDataService.privacy_badge_open = !this.appDataService.connection.tor;
