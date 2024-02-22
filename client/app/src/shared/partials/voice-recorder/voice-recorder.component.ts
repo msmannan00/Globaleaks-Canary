@@ -23,7 +23,6 @@ export class VoiceRecorderComponent implements OnInit {
   isRecording: boolean = false;
   audioPlayer: boolean | string | null = null;
   mediaRecorder: MediaRecorder | null = null;
-  context: AudioContext = new AudioContext();
   recording_blob: any = null;
   flow: Flow;
   private secondsTracker: ReturnType<typeof setInterval> | null = null;
