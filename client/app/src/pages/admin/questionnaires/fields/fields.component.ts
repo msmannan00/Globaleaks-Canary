@@ -69,12 +69,10 @@ export class FieldsComponent implements OnInit {
     this.children = this.field.children;
   }
 
-  saveField(field: Step | Field,editing?:boolean) {
+  saveField(field: Step | Field) {
     this.utilsService.assignUniqueOrderIndex(field.options);
     return this.httpService.requestUpdateAdminQuestionnaireField(field.id, field).subscribe(_ => {
-      if(!editing){
-        this.dataToParent.emit()
-      }
+      this.dataToParent.emit()
     });
   }
 
