@@ -308,9 +308,9 @@ h6 {
 }
 
 #footer-box,
-#demo-badge,
-#privacy-badge,
-#operator-badge{
+#DemoBadge,
+#PrivacyBadge,
+#OperatorBadge {
   padding: 1em;
 }
 
@@ -345,7 +345,7 @@ h6 {
   font-weight: bold;
 }
 
-#privacy-badge {
+#PrivacyBadge {
   background-color: #1d1f24;
   color: #fff;
 }
@@ -506,7 +506,7 @@ h6 {
   --bs-table-striped-bg: #f5f7fa;
 }
 
-#logo-box img {
+#LogoBox img {
   max-height: 5rem;
   max-width: 20rem;
   margin: 0;
@@ -697,7 +697,7 @@ p:last-child {
   margin-top: 0.5em;
 }
 
-#otp-secret-form input {
+#OTPSecretForm input {
   width: 26rem;
   text-align: center;
 }
@@ -736,7 +736,7 @@ p:last-child {
 }
 
 .step-index,
-#submission-buttons button {
+#SubmissionButtons button {
   margin-right: 10px;
 }
 
@@ -773,19 +773,19 @@ p:last-child {
   margin: 1em auto;
 }
 
-#header-box h1 {
+#HeaderBox h1 {
   margin: 0;
   padding: 0;
   font-size: 100%;
   font-weight: bold;
 }
 
-#logo-box,
-#title-box {
+#LogoBox,
+#TitleBox {
   margin: 0;
 }
 
-#logo-box{
+#LogoBox{
   min-height: 5rem;
 }
 
@@ -794,7 +794,7 @@ p:last-child {
 }
 
 
-#title-box {
+#TitleBox {
   font-size: 1.6rem;
   font-weight: bold;
   margin: 0;
@@ -840,10 +840,10 @@ p:last-child {
   padding: 0 5em;
 }
 
-#step-add-box,
-#steps-edit-box,
-#fields-edit-box,
-#context-advanced-settings-box {
+#StepAddBox,
+#StepsEditBox,
+#FieldsEditBox,
+#ContextAdvancedSettingsBox {
   margin-top: 0.5em;
 }
 
@@ -925,7 +925,7 @@ text.axis-worktime {
   text-transform: capitalize;
 }
 
-#search-filter {
+#SearchFilter {
   margin: 0;
 }
 
