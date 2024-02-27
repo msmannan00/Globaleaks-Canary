@@ -697,7 +697,7 @@ p:last-child {
   margin-top: 0.5em;
 }
 
-#otp-secret-form input {
+#OTPSecretForm input {
   width: 26rem;
   text-align: center;
 }
@@ -736,7 +736,7 @@ p:last-child {
 }
 
 .step-index,
-#submission-buttons button {
+#SubmissionButtons button {
   margin-right: 10px;
 }
 
@@ -840,10 +840,10 @@ p:last-child {
   padding: 0 5em;
 }
 
-#step-add-box,
-#steps-edit-box,
-#fields-edit-box,
-#context-advanced-settings-box {
+#StepAddBox,
+#StepsEditBox,
+#FieldsEditBox,
+#ContextAdvancedSettingsBox {
   margin-top: 0.5em;
 }
 
