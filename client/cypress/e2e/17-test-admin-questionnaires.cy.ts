@@ -6,7 +6,7 @@ describe("admin add, configure and delete questionnaires", () => {
     cy.contains(questionnaire_name).should("be.visible");
   };
 
-  const add_question = async (question_type:string, question_id:number, step_trigger:boolean) => {
+  const add_question = async (question_type:string, question_id:number) => {
     cy.get(".show-add-question-btn").first().click();
     cy.get("input[name='new_field.label']").first().type(question_type);
     cy.get("select[name='new_field.type']").first().select(question_id);
@@ -14,9 +14,6 @@ describe("admin add, configure and delete questionnaires", () => {
 
     if (["Checkbox", "Selection box"].indexOf(question_type) === 0) {
       cy.waitForLoader();
-      if(step_trigger){
-        cy.contains("Step 2").should('be.visible', { timeout: 10000 }).click();
-      }
       cy.get('.fieldBox').should('be.visible', { timeout: 10000 }).contains('span', question_type).click();
 
       for (let i = 0; i < 3; i++) {
@@ -26,9 +23,6 @@ describe("admin add, configure and delete questionnaires", () => {
 
       cy.get('button[name="delOption"]').eq(2).click();
       cy.get('button[name="save_field"]').filter(':visible').first().click();
-      if(step_trigger){
-        cy.contains("Step 2").click();
-      }
     }
   };
 
@@ -53,10 +47,11 @@ describe("admin add, configure and delete questionnaires", () => {
     add_step("Step 3");
 
     const fieldTypes = Cypress.env("field_types");
+    cy.contains("Step 2").should('be.visible', { timeout: 10000 }).click();
+
     fieldTypes.forEach((questionType: string, index: number) => {
         cy.waitForLoader();
-        cy.contains("Step 2").should('be.visible', { timeout: 10000 }).click();
-        add_question(questionType, index, true);
+        add_question(questionType, index);
     });
 
     cy.contains("Step 2").click();
@@ -75,7 +70,7 @@ describe("admin add, configure and delete questionnaires", () => {
     cy.get('[data-cy="question_templates"]').click();
 
     fieldTypes.forEach((questionType:string, index: number) => {
-      add_question(questionType, index, false);
+      add_question(questionType, index);
     });
 
     cy.logout();
