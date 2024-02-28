@@ -833,12 +833,11 @@ p:last-child {
 
 #messages-console-box {
   position: fixed;
-  width: 23rem;
+  width: 30rem;
   min-width: 20rem;
   z-index: 10;
-  left: 1rem;
   top: 2.0rem;
-  padding: 0 2em;
+  padding: 0 5em;
 }
 
 #StepAddBox,
