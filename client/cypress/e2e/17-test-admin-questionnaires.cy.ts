@@ -75,4 +75,25 @@ describe("admin add, configure and delete questionnaires", () => {
 
     cy.logout();
   });
+  it("should import questionnaire file", () => {
+    cy.login_admin();
+
+    cy.visit("/#/admin/questionnaires");
+    cy.get("#keyUpload").click();
+    cy.fixture("files/testing.txt").then(fileContent => {
+      cy.get('input[type="file"]').then(input => {
+        const blob = new Blob([fileContent], { type: "text/plain" });
+        const testFile = new File([blob], "files/testing.txt");
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(testFile);
+        const inputElement = input[0] as HTMLInputElement;
+        inputElement.files = dataTransfer.files;
+
+        const changeEvent = new Event("change", { bubbles: true });
+        input[0].dispatchEvent(changeEvent);
+      });
+
+    });
+  });
+
 });
