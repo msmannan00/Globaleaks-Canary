@@ -117,7 +117,7 @@ describe("Action: Revoke Access and Grant Access - Recipient Section", () => {
     cy.get("#edit_context").first().click();
     cy.get('select[name="contextResolver.questionnaire_id"]').select('Testing');
     cy.get("#save_context").click();
-
+    cy.reload();
     cy.visit("#/");
     cy.get("#WhistleblowingButton").click();
     cy.get("#step-0").should("be.visible");
