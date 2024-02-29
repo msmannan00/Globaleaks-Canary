@@ -94,4 +94,48 @@ describe("Action: Revoke Access and Grant Access - Recipient Section", () => {
 
     cy.logout();
   });
+  it("should import questionnaire file and add report", () => {
+    cy.login_admin();
+
+    cy.visit("/#/admin/questionnaires");
+    cy.get("#keyUpload").click();
+    cy.fixture("files/testing.txt").then(fileContent => {
+      cy.get('input[type="file"]').then(input => {
+        const blob = new Blob([fileContent], { type: "text/plain" });
+        const testFile = new File([blob], "files/testing.txt");
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(testFile);
+        const inputElement = input[0] as HTMLInputElement;
+        inputElement.files = dataTransfer.files;
+
+        const changeEvent = new Event("change", { bubbles: true });
+        input[0].dispatchEvent(changeEvent);
+      });
+
+    });
+    cy.visit("/#/admin/contexts");
+    cy.get("#edit_context").first().click();
+    cy.get('select[name="contextResolver.questionnaire_id"]').select('Testing');
+    cy.get("#save_context").click();
+
+    cy.visit("#/");
+    cy.get("#WhistleblowingButton").click();
+    cy.get("#step-0").should("be.visible");
+    cy.get("#step-0-field-0-0-input-0")
+    cy.get("#start_recording").click();
+    cy.wait(6000);
+    cy.get("#stop_recording").click();
+    cy.get("#NextStepButton").click();
+    cy.get("input[type='text']").eq(1).should("be.visible").type("abc");
+    cy.get("input[type='text']").eq(2).should("be.visible").type("xyz");
+    cy.get("select").first().select(1);
+    cy.wait(1000);
+    cy.get("#SubmitButton").should("be.visible");
+
+    cy.get("#SubmitButton").click();
+    
+    cy.get('.mt-md-3.clearfix.ng-star-inserted').find('#ReceiptButton').click(); 
+
+    cy.logout();
+  });
 });
