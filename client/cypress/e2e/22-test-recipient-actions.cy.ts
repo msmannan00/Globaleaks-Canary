@@ -1,4 +1,4 @@
-describe("TESTS", () => {
+describe("recipient admin tip actions", () => {
   it("should revoke and grant access to reports", function () {
     cy.login_receiver();
 
@@ -95,38 +95,6 @@ describe("TESTS", () => {
     cy.get('#assignSubmissionStatus', { timeout: 10000 }).select(0);
     cy.get('textarea[name="reason"]').type("This is a test motivation");
     cy.get("#modal-action-ok").click();
-    cy.logout();
-  });
-  it("should update default context", () => {
-    cy.login_admin();
-    cy.visit("/#/admin/contexts");
-    cy.get("#edit_context").first().click();
-    cy.get('select[name="contextResolver.questionnaire_id"]').select('Testing');
-    cy.get("#save_context").click();
-    cy.logout();
-  })
-  it("should run audio questionnaire", () => {
-    cy.visit("#/");
-    cy.get("#WhistleblowingButton").click();
-    cy.get("#step-0").should("be.visible");
-    cy.get("#step-0-field-0-0-input-0")
-    cy.get("#start_recording").click();
-    cy.wait(6000);
-    cy.get("#stop_recording").click();
-    cy.get("#NextStepButton").click();
-    cy.get("#SubmitButton").should("be.visible");
-    cy.get("#SubmitButton").click();
-  })
-  it("should run identity questionnaire", () => {
-    cy.visit("#/");
-    cy.get("#WhistleblowingButton").click();
-    cy.get("#NextStepButton").click();
-    cy.get("input[type='text']").eq(1).should("be.visible").type("abc");
-    cy.get("input[type='text']").eq(2).should("be.visible").type("xyz");
-    cy.get("select").first().select(1);
-    cy.get("#SubmitButton").should("be.visible");
-    cy.get("#SubmitButton").click();
-    cy.get('.mt-md-3.clearfix.ng-star-inserted').find('#ReceiptButton').click();
     cy.logout();
   });
 });
