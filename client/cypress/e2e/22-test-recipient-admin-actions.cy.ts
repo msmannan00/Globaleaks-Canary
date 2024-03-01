@@ -83,7 +83,9 @@ describe("TESTS", () => {
     cy.login_admin();
     cy.visit("/#/admin/contexts");
     cy.get("#edit_context").first().click();
-    cy.get('select[name="contextResolver.questionnaire_id"]').select('Testing');
+    cy.get('select[name="contextResolver.questionnaire_id"]').select('testing 1');
+    cy.get("#advance_context").click();
+    cy.get('select[name="contextResolver.additional_questionnaire_id"]').select('testing 2');
     cy.get("#save_context").click();
     cy.logout();
   })
@@ -97,14 +99,7 @@ describe("TESTS", () => {
     cy.get("#modal-action-ok").click();
     cy.logout();
   });
-  it("should update default context", () => {
-    cy.login_admin();
-    cy.visit("/#/admin/contexts");
-    cy.get("#edit_context").first().click();
-    cy.get('select[name="contextResolver.questionnaire_id"]').select('Testing');
-    cy.get("#save_context").click();
-    cy.logout();
-  })
+ 
   it("should run audio questionnaire", () => {
     cy.visit("#/");
     cy.get("#WhistleblowingButton").click();
@@ -127,8 +122,10 @@ describe("TESTS", () => {
     cy.get("#SubmitButton").should("be.visible");
     cy.get("#SubmitButton").click();
     cy.get('.mt-md-3.clearfix.ng-star-inserted').find('#ReceiptButton').click();
+    cy.get("#open_additional_questionnaire").click();
+    cy.get("input[type='text']").eq(1).should("be.visible").type("single line text input");
+    cy.get("#SubmitButton").click();
     cy.logout();
   });
-
 
 });
