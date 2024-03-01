@@ -75,7 +75,7 @@ describe("admin add, configure and delete questionnaires", () => {
 
     cy.logout();
   });
-  it("should import questionnaire file", () => {
+  it("should import custom questionnaire file", () => {
     cy.login_admin();
 
     cy.visit("/#/admin/questionnaires");

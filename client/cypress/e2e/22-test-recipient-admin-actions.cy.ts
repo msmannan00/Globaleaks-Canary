@@ -1,4 +1,4 @@
-describe("Action: Revoke Access and Grant Access - Recipient Section", () => {
+describe("TESTS", () => {
   it("should revoke and grant access to reports", function () {
     cy.login_receiver();
 
@@ -35,7 +35,7 @@ describe("Action: Revoke Access and Grant Access - Recipient Section", () => {
 
     cy.logout();
   });
-  it("should open a new tab for reports", function () {
+  it("recipient should file a report on behalf of whistleblower", function () {
     cy.login_receiver();
 
     cy.visit("/#/recipient/reports");
@@ -45,7 +45,7 @@ describe("Action: Revoke Access and Grant Access - Recipient Section", () => {
     cy.logout();
   });
 
-  it("should set a reminder for reports", function () {
+  it("should set a reminder date for reports", function () {
     cy.login_receiver();
 
     cy.visit("/#/recipient/reports");
@@ -78,7 +78,6 @@ describe("Action: Revoke Access and Grant Access - Recipient Section", () => {
     cy.get("#add-submission-sub-status").click();
 
     cy.logout();
-
   });
   it("should update default context", () => {
     cy.login_admin();
@@ -130,4 +129,6 @@ describe("Action: Revoke Access and Grant Access - Recipient Section", () => {
     cy.get('.mt-md-3.clearfix.ng-star-inserted').find('#ReceiptButton').click();
     cy.logout();
   });
+
+
 });
