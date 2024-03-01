@@ -129,6 +129,4 @@ describe("TESTS", () => {
     cy.get('.mt-md-3.clearfix.ng-star-inserted').find('#ReceiptButton').click();
     cy.logout();
   });
-
-
 });

@@ -136,14 +136,14 @@ Cypress.Commands.add("waitUntilClickable", (locator: string, timeout?: number) =
 Cypress.Commands.add("waitForLoader", () => {
   cy.intercept("**").as("httpRequests");
 
-  cy.get("#PageOverlay", {timeout: 500, log: false})
+  cy.get('[data-cy="PageOverlay"]', {timeout: 500, log: false})
     .should(($overlay) => {
       return new Cypress.Promise((resolve, _) => {
         const startTime = Date.now();
 
         const checkVisibility = () => {
           if (Cypress.$($overlay).is(":visible")) {
-            cy.get("#PageOverlay", { log: false }).should("not.be.visible").then(() => {
+            cy.get('[data-cy="PageOverlay"]', { log: false }).should("not.be.visible").then(() => {
               resolve();
             });
           } else if (Date.now() - startTime > 100) {
