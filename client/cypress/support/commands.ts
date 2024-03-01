@@ -9,6 +9,7 @@ declare global {
       logout: () => void;
       takeScreenshot: (filename: string, locator?: any) => void;
       login_whistleblower: (receipt: string) => void;
+      waitForTipImageUpload: (attempt?: number) => void;
       waitUntilClickable: (locator: string, timeout?: number) => void;
       waitForUrl: (url: string, timeout?: number) => Chainable<any>;
       login_admin: (username?: string, password?: string, url?: string, firstlogin?: boolean) => void;
@@ -171,6 +172,28 @@ Cypress.Commands.add("login_whistleblower", (receipt) => {
   cy.get("#ReceiptButton").click();
 });
 
+Cypress.Commands.add("waitForTipImageUpload", (attempts = 0) => {
+  const maxAttempts = 10; // Set the maximum number of attempts
+  cy.get('body').then($body => {
+    if ($body.find('#fileListBody').length > 0) {
+      cy.get('#fileListBody')
+        .find('tr')
+        .then($rows => {
+          if ($rows.length === 2) {
+            cy.log('Condition met: 2 rows found');
+          } else if (attempts < maxAttempts) {
+            cy.get('#link-reload').click();
+            cy.wait(1000); // Wait for 1 second before retrying
+            cy.waitForTipImageUpload(attempts + 1);
+          }
+        });
+    } else if (attempts < maxAttempts) {
+      cy.get('#link-reload').click();
+      cy.wait(1000);
+      cy.waitForTipImageUpload(attempts + 1);
+    }
+  });
+});
 
 Cypress.Commands.add("login_admin", (username, password, url, firstlogin) => {
   username = username === undefined ? "admin" : username;

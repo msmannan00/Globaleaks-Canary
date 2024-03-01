@@ -13,14 +13,13 @@ describe("globaleaks process", function () {
     });
   };
 
+
   for (let i = 1; i <= N; i++) {
     it("Whistleblowers should be able to perform a submission", function () {
       perform_submission();
     });
 
     it("Recipient actions ", function () {
-      /* file upload delay */
-      cy.wait(3000)
       cy.login_receiver();
       cy.waitForUrl("/#/recipient/home");
       cy.visit("/#/recipient/reports");
@@ -36,6 +35,7 @@ describe("globaleaks process", function () {
         cy.get("#tip-action-star").click();
       });
 
+      cy.waitForTipImageUpload();
       cy.get('#fileListBody', { timeout: 10000 }).find('tr').should('have.length', 2);
 
       const comment = "comment";
@@ -133,4 +133,12 @@ describe("globaleaks process", function () {
     cy.get('.mt-md-3.clearfix.ng-star-inserted').find('#ReceiptButton').click();
     cy.logout();
   });
+  it("should revert default context", () => {
+    cy.login_admin();
+    cy.visit("/#/admin/contexts");
+    cy.get("#edit_context").first().click();
+    cy.get('select[name="contextResolver.questionnaire_id"]').select('GLOBALEAKS');
+    cy.get("#save_context").click();
+    cy.logout();
+  })
 });
