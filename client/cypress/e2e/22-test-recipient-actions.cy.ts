@@ -83,7 +83,9 @@ describe("recipient admin tip actions", () => {
     cy.login_admin();
     cy.visit("/#/admin/contexts");
     cy.get("#edit_context").first().click();
-    cy.get('select[name="contextResolver.questionnaire_id"]').select('Testing');
+    cy.get('select[name="contextResolver.questionnaire_id"]').select('testing 1');
+    cy.get("#advance_context").click();
+    cy.get('select[name="contextResolver.additional_questionnaire_id"]').select('testing 2');
     cy.get("#save_context").click();
     cy.logout();
   })
