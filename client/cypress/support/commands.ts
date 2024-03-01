@@ -137,14 +137,14 @@ Cypress.Commands.add("waitUntilClickable", (locator: string, timeout?: number) =
 Cypress.Commands.add("waitForLoader", () => {
   cy.intercept("**").as("httpRequests");
 
-  cy.get('[data-cy="page-overlay"]', {timeout: 500, log: false})
+  cy.get('[data-cy="page-loader-overlay"]', {timeout: 500, log: false})
     .should(($overlay) => {
       return new Cypress.Promise((resolve, _) => {
         const startTime = Date.now();
 
         const checkVisibility = () => {
           if (Cypress.$($overlay).is(":visible")) {
-            cy.get('[data-cy="page-overlay"]', { log: false }).should("not.be.visible").then(() => {
+            cy.get('[data-cy="page-loader-overlay"]', { log: false }).should("not.be.visible").then(() => {
               resolve();
             });
           } else if (Date.now() - startTime > 100) {
@@ -173,7 +173,7 @@ Cypress.Commands.add("login_whistleblower", (receipt) => {
 });
 
 Cypress.Commands.add("waitForTipImageUpload", (attempts = 0) => {
-  const maxAttempts = 10; // Set the maximum number of attempts
+  const maxAttempts = 10;
   cy.get('body').then($body => {
     if ($body.find('#fileListBody').length > 0) {
       cy.get('#fileListBody')
@@ -183,7 +183,7 @@ Cypress.Commands.add("waitForTipImageUpload", (attempts = 0) => {
             cy.log('Condition met: 2 rows found');
           } else if (attempts < maxAttempts) {
             cy.get('#link-reload').click();
-            cy.wait(1000); // Wait for 1 second before retrying
+            cy.wait(1000);
             cy.waitForTipImageUpload(attempts + 1);
           }
         });

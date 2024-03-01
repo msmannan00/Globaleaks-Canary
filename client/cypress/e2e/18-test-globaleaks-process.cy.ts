@@ -105,7 +105,9 @@ describe("globaleaks process", function () {
     cy.login_admin();
     cy.visit("/#/admin/contexts");
     cy.get("#edit_context").first().click();
-    cy.get('select[name="contextResolver.questionnaire_id"]').select('Testing');
+    cy.get('select[name="contextResolver.questionnaire_id"]').select('testing 1');
+    cy.get("#advance_context").click();
+    cy.get('select[name="contextResolver.additional_questionnaire_id"]').select('testing 2');
     cy.get("#save_context").click();
     cy.logout();
   })
@@ -121,7 +123,7 @@ describe("globaleaks process", function () {
     cy.get("#SubmitButton").should("be.visible");
     cy.get("#SubmitButton").click();
   })
-  it("should run identity questionnaire", () => {
+  it("should run identity & additional questionnaire", () => {
     cy.visit("#/");
     cy.get("#WhistleblowingButton").click();
     cy.get("#NextStepButton").click();
@@ -131,6 +133,9 @@ describe("globaleaks process", function () {
     cy.get("#SubmitButton").should("be.visible");
     cy.get("#SubmitButton").click();
     cy.get('.mt-md-3.clearfix.ng-star-inserted').find('#ReceiptButton').click();
+    cy.get("#open_additional_questionnaire").click();
+    cy.get("input[type='text']").eq(1).should("be.visible").type("single line text input");
+    cy.get("#SubmitButton").click();
     cy.logout();
   });
   it("should revert default context", () => {

@@ -79,16 +79,6 @@ describe("recipient admin tip actions", () => {
 
     cy.logout();
   });
-  it("should update default context", () => {
-    cy.login_admin();
-    cy.visit("/#/admin/contexts");
-    cy.get("#edit_context").first().click();
-    cy.get('select[name="contextResolver.questionnaire_id"]').select('testing 1');
-    cy.get("#advance_context").click();
-    cy.get('select[name="contextResolver.additional_questionnaire_id"]').select('testing 2');
-    cy.get("#save_context").click();
-    cy.logout();
-  })
   it("should change sub-status for reports", function () {
     cy.login_receiver();
     cy.visit("/#/recipient/reports");
