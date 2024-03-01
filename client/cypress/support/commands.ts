@@ -122,7 +122,7 @@ Cypress.Commands.add("takeScreenshot", (filename, _?: any) => {
 
     cy.waitForPageIdle();
 
-    cy.waitForLoader();
+    cy.wait(500);
     cy.screenshot("../" + filename, {
       overwrite: true
     });
