@@ -145,5 +145,30 @@ describe("globaleaks process", function () {
     cy.get('select[name="contextResolver.questionnaire_id"]').select('GLOBALEAKS');
     cy.get("#save_context").click();
     cy.logout();
-  })
+  });
+  it("should mask report data", function () {
+    cy.login_receiver();
+    cy.visit("/#/recipient/reports");
+    cy.get("#tip-0").first().click();
+    cy.get('[id="tip-action-mask"]').should('be.visible', { timeout: 10000 }).click();
+    cy.get("#edit-question").should('be.visible').first().click();
+
+    cy.get('textarea[name="controlElement"]').should('be.visible').then((textarea:any) => {
+      const val = textarea.val();
+      cy.get('textarea[name="controlElement"]').should('be.visible').clear().type(val);
+      cy.get("#select_content").click();
+      cy.wait(1000);
+    });
+    cy.get("#save_masking").click();
+    cy.get('[id="tip-action-mask"]').should('be.visible', { timeout: 10000 }).click();
+    cy.get("#edit-question").should('be.visible').first().click();
+    cy.get('textarea[name="controlElement"]').should('be.visible').then((textarea:any) => {
+      const val = textarea.val();
+      cy.get('textarea[name="controlElement"]').should('be.visible').clear().type(val);
+      cy.get("#unselect_content").click();
+      cy.wait(1000);
+    });
+    cy.get("#save_masking").click();
+    cy.logout();
+  });
 });
