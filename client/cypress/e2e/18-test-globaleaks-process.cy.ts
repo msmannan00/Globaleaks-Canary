@@ -146,7 +146,7 @@ describe("globaleaks process", function () {
     cy.get("#save_context").click();
     cy.logout();
   });
-  it("should mask report data", function () {
+  it("should mask reported data", function () {
     cy.login_receiver();
     cy.visit("/#/recipient/reports");
     cy.get("#tip-0").first().click();
