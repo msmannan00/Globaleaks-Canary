@@ -138,6 +138,22 @@ describe("globaleaks process", function () {
     cy.get("#SubmitButton").click();
     cy.logout();
   });
+  it("should request for identity", () => {
+    cy.login_receiver();
+    cy.visit("/#/recipient/reports");
+    cy.get("#tip-0").first().click();
+    cy.get('[data-cy="identity_toggle"]').click();
+    cy.get("#identity_access_request").click();
+    cy.get('textarea[name="request_motivation"]').type("This is the motivation text.");
+    cy.get('#modal-action-ok').click();
+    cy.logout();
+  })
+   it("should authorize identity", () => {
+    cy.login_custodian();
+    cy.get("#custodian_requests").first().click();
+    cy.get("#authorize").first().click();
+    cy.logout();
+  })
   it("should revert default context", () => {
     cy.login_admin();
     cy.visit("/#/admin/contexts");
