@@ -44,7 +44,25 @@ describe("recipient admin tip actions", () => {
 
     cy.logout();
   });
+  it("should set a postpone date for reports", function () {
+    cy.login_receiver();
 
+    cy.visit("/#/recipient/reports");
+    cy.get("#tip-0").first().click();
+    cy.get("#tip-action-postpone").click();
+    cy.get('.modal').should('be.visible');
+    cy.get('input[name="dp"]').invoke('val').then((currentDate: any) => {
+      const current = new Date(currentDate);
+      const nextDay = new Date(current);
+      nextDay.setDate(nextDay.getDate() + 1);
+      cy.get('input[name="dp"]').click();
+      cy.get('.ngb-dp-day').contains(nextDay.getDate()).click();
+      const formattedNextDay = `${nextDay.getFullYear()}-${(nextDay.getMonth() + 1).toString().padStart(2, '0')}-${nextDay.getDate().toString().padStart(2, '0')}`;
+      cy.get('input[name="dp"]').should('have.value', formattedNextDay);
+    });
+    cy.get('#modal-action-ok').click();
+    cy.logout();
+  });
   it("should set a reminder date for reports", function () {
     cy.login_receiver();
 
@@ -91,8 +109,8 @@ describe("recipient admin tip actions", () => {
   });
 });
 
-describe("admin configure duplicate questionnaire", function() {
-  it("should add duplicate questionnaire", function() {
+describe("admin configure duplicate questionnaire", function () {
+  it("should add duplicate questionnaire", function () {
     cy.login_admin();
     cy.visit("/#/admin/questionnaires");
     cy.get(".fa-clone").first().click();
@@ -102,8 +120,8 @@ describe("admin configure duplicate questionnaire", function() {
   });
 });
 
-describe("admin add and remove disclaimer", function() {
-  it("should add disclaimer", function() {
+describe("admin add and remove disclaimer", function () {
+  it("should add disclaimer", function () {
     cy.login_admin();
     cy.visit("/#/admin/settings");
     cy.get('textarea[name="nodeResolver.dataModel.disclaimer_text"]').type("disclaimer_text");
@@ -119,8 +137,8 @@ describe("admin add and remove disclaimer", function() {
   });
 });
 
-describe("admin add and remove user privacy policy", function() {
-  it("should add and remove user privacy policy", function() {
+describe("admin add and remove user privacy policy", function () {
+  it("should add and remove user privacy policy", function () {
     cy.login_admin();
     cy.visit("/#/admin/users");
     cy.get('[data-cy="options"]').click();
@@ -136,5 +154,87 @@ describe("admin add and remove user privacy policy", function() {
     cy.get('input[name="nodeData.user_privacy_policy_url"]').clear();
     cy.get("#save_user_policy").click();
     cy.logout();
+  });
+});
+
+describe("file upload on recipient side", function () {
+  it("should upload a file", function () {
+    cy.login_receiver();
+    cy.visit("/#/recipient/reports");
+    cy.get("#tip-0").first().click();
+    cy.get('#upload_description').type("description");
+    cy.get('i.fa-solid.fa-upload').click();
+    cy.fixture("files/dummy-image.jpg").then(fileContent => {
+      cy.get('input[type="file"]').then(input => {
+        const blob = new Blob([fileContent], { type: "image/jpeg" });
+        const testFile = new File([blob], "files/dummy-image.jpg");
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(testFile);
+        const inputElement = input[0] as HTMLInputElement;
+        inputElement.files = dataTransfer.files;
+
+        const changeEvent = new Event("change", { bubbles: true });
+        input[0].dispatchEvent(changeEvent);
+      });
+
+    });
+    cy.logout();
+  });
+  describe("multiple filter report tests", () => {
+    it("should check multiple filter of report", function () {
+      cy.login_receiver();
+
+      cy.visit("/#/recipient/reports");
+
+      // serch filter
+      cy.get('span#SearchFilter input[type="text"]').type("your search term");
+      cy.get('span#SearchFilter input[type="text"]').clear();
+
+      // sorting filter
+      cy.get('th.TipInfoID').click();
+      cy.wait(500);
+      cy.get('th.TipInfoID').click();
+
+      // context filter
+      cy.get('th.TipInfoContext i.fa-solid.fa-filter').click();
+      cy.get('.multiselect-item-checkbox').eq(1).click();
+      cy.get('.multiselect-item-checkbox').eq(0).click();
+
+      // submission filter
+      cy.get('.TipInfoSubmissionDate .fas.fa-calendar').click();
+      cy.get('.custom-day').first().click();
+      cy.get('.custom-day').eq(4).click({ shiftKey: true });
+      cy.contains('button.btn.btn-danger', 'Reset').click();
+
+      cy.logout();
+    });
+  });
+  describe("apply grant and revoke access to selected reports", () => {
+    it("should apply grant and revoke access to selected reports for a specific recipient", function () {
+      cy.login_receiver();
+
+      cy.visit("/#/recipient/reports");
+      // grant access selected reports
+      cy.get('#tip-action-select-all').click();
+      cy.get('#tip-action-grant-access-selected').click();
+      cy.get('[data-cy="reciever_selection"]').click();
+      cy.get('.ng-dropdown-panel').should('be.visible');
+      cy.get('[data-cy="reciever_selection"]').click();
+      cy.contains('.ng-option', 'Recipient2').click();
+      cy.get("#modal-action-ok").click();
+
+      cy.wait(500);
+
+      // revoke access selected reports
+      cy.get('#tip-action-reload').click();
+      cy.get('#tip-action-select-all').click();
+      cy.get("#tip-action-revoke-access-selected").click();
+      cy.get('[data-cy="reciever_selection"]').click();
+      cy.get('.ng-dropdown-panel').should('be.visible');
+      cy.get('[data-cy="reciever_selection"]').click();
+      cy.contains('.ng-option', 'Recipient2').click();
+      cy.get("#modal-action-ok").click();
+      cy.logout();
+    });
   });
 });
