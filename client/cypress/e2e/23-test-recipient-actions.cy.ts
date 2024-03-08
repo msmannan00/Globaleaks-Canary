@@ -5,21 +5,24 @@ describe("recipient admin tip actions", () => {
     cy.visit("/#/recipient/reports");
     cy.get("#tip-0").first().click();
 
-    cy.get("#tip-action-revoke-access").should('be.visible', { timeout: 10000 }).click();
+   cy.get("#tip-action-revoke-access").should('be.visible', { timeout: 10000 }).click();
     cy.get('[data-cy="reciever_selection"]').click();
     cy.get('.ng-dropdown-panel').should('be.visible');
     cy.get('[data-cy="reciever_selection"]').click();
+    cy.contains('.ng-option', 'Recipient2').click();
     cy.get("#modal-action-ok").click();
 
-    cy.get("#tip-action-grant-access").should('be.visible', { timeout: 10000 }).click();
-    cy.get('[data-cy="reciever_selection"]').click();
-    cy.get('.ng-dropdown-panel').should('be.visible');
-    cy.get('[data-cy="reciever_selection"]').click();
-    cy.get("#modal-action-ok").click();
+  cy.get("#tip-action-grant-access").should('be.visible', { timeout: 10000 }).click();
+  cy.get('[data-cy="reciever_selection"]').click();
+  cy.get('.ng-dropdown-panel').should('be.visible');
+  cy.get('[data-cy="reciever_selection"]').click();
+  cy.contains('.ng-option', 'Recipient2').click();
+  cy.get("#modal-action-ok").click();
+
 
     cy.logout();
   });
-  
+
   it("should close and reopen reports", function () {
     cy.login_receiver();
 
@@ -173,5 +176,26 @@ describe("recipient admin tip actions", () => {
     cy.contains('.ng-option', 'Recipient2').click();
     cy.get("#modal-action-ok").click();
     cy.logout();
+  });
+
+  it("should transfer access to recipient", function () {
+    cy.login_receiver();
+
+    cy.visit("/#/recipient/reports");
+    cy.get("#tip-0").first().click();
+
+    cy.get("#tip-action-revoke-access").should('be.visible', { timeout: 10000 }).click();
+    cy.get('[data-cy="reciever_selection"]').click();
+    cy.get('.ng-dropdown-panel').should('be.visible');
+    cy.get('[data-cy="reciever_selection"]').click();
+    cy.contains('.ng-option', 'Recipient2').click();
+    cy.get("#modal-action-ok").click();
+
+    cy.get("#tip-action-transfer-access").should('be.visible', { timeout: 10000 }).click();
+    cy.get('[data-cy="reciever_selection"]').click();
+    cy.get('.ng-dropdown-panel').should('be.visible');
+    cy.get('[data-cy="reciever_selection"]').click();
+    cy.contains('.ng-option', 'Recipient2').click();
+    cy.get("#modal-action-ok").click();
   });
 });
