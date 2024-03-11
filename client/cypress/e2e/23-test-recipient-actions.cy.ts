@@ -5,19 +5,19 @@ describe("recipient admin tip actions", () => {
     cy.visit("/#/recipient/reports");
     cy.get("#tip-0").first().click();
 
-   cy.get("#tip-action-revoke-access").should('be.visible', { timeout: 10000 }).click();
+    cy.get("#tip-action-revoke-access").should('be.visible', { timeout: 10000 }).click();
     cy.get('[data-cy="reciever_selection"]').click();
     cy.get('.ng-dropdown-panel').should('be.visible');
     cy.get('[data-cy="reciever_selection"]').click();
     cy.contains('.ng-option', 'Recipient2').click();
     cy.get("#modal-action-ok").click();
 
-  cy.get("#tip-action-grant-access").should('be.visible', { timeout: 10000 }).click();
-  cy.get('[data-cy="reciever_selection"]').click();
-  cy.get('.ng-dropdown-panel').should('be.visible');
-  cy.get('[data-cy="reciever_selection"]').click();
-  cy.contains('.ng-option', 'Recipient2').click();
-  cy.get("#modal-action-ok").click();
+    cy.get("#tip-action-grant-access").should('be.visible', { timeout: 10000 }).click();
+    cy.get('[data-cy="reciever_selection"]').click();
+    cy.get('.ng-dropdown-panel').should('be.visible');
+    cy.get('[data-cy="reciever_selection"]').click();
+    cy.contains('.ng-option', 'Recipient2').click();
+    cy.get("#modal-action-ok").click();
 
 
     cy.logout();
@@ -110,10 +110,10 @@ describe("recipient admin tip actions", () => {
     cy.get("#tip-0").first().click();
     cy.get('#upload_description').type("description");
     cy.get('i.fa-solid.fa-upload').click();
-    cy.fixture("files/dummy-image.jpg").then(fileContent => {
+    cy.fixture("files/evidence-3.txt").then(fileContent => {
       cy.get('input[type="file"]').then(input => {
-        const blob = new Blob([fileContent], { type: "image/jpeg" });
-        const testFile = new File([blob], "files/dummy-image.jpg");
+        const blob = new Blob([fileContent], { type: "text/plain" });
+        const testFile = new File([blob], "files/evidence-3.txt");
         const dataTransfer = new DataTransfer();
         dataTransfer.items.add(testFile);
         const inputElement = input[0] as HTMLInputElement;
@@ -122,8 +122,19 @@ describe("recipient admin tip actions", () => {
         const changeEvent = new Event("change", { bubbles: true });
         input[0].dispatchEvent(changeEvent);
       });
-
     });
+    cy.logout();
+  });
+
+  it("should download and delete the file", function () {
+    cy.login_receiver();
+
+    cy.visit("/#/recipient/reports");
+    cy.get("#tip-0").first().click();
+    cy.get('.download-button').first().click();
+    cy.get('.fa-trash').first().click();
+    cy.get("#modal-action-ok").click();
+
     cy.logout();
   });
 
