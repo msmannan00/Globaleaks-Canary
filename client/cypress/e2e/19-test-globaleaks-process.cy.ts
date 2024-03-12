@@ -125,6 +125,7 @@ describe("globaleaks process", function () {
   })
   it("should run identity , upload file & additional questionnaire", () => {
     cy.visit("#/");
+    cy.reload();
     cy.get("#WhistleblowingButton").click();
     cy.get("#NextStepButton").click();
     cy.get("input[type='text']").eq(1).should("be.visible").type("abc");
@@ -150,15 +151,16 @@ describe("globaleaks process", function () {
         input[0].dispatchEvent(changeEvent);
       });
     });
-    cy.get("#files-action-confirm").click();
+    cy.get("#files-action-confirm", { timeout: 10000 }).click();
     cy.logout();
   });
   it("should view the whistleblower file", () => {
     cy.login_receiver();
+    cy.reload();
+    cy.wait(2000);
     cy.visit("/#/recipient/reports");
     cy.get("#tip-0").first().click();
-    cy.get(".tip-action-views-file").first().click();
-    cy.wait(1000);
+    cy.get(".tip-action-views-file", { timeout: 10000 }).first().click();
     cy.get("#modal-action-cancel").click();
     cy.logout();
   })
