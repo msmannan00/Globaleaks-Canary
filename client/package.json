@@ -47,7 +47,6 @@
     "@ngx-translate/core": "15.0.0",
     "@ngx-translate/http-loader": "8.0.0",
     "@popperjs/core": "2.11.8",
-    "angular-translate-loader-static-files": "2.19.1",
     "angular2-qrcode": "2.0.3",
     "angularx-qrcode": "17.0.0",
     "bootstrap": "5.3.3",
