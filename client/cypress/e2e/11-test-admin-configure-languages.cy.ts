@@ -55,6 +55,6 @@ describe("admin configure languages", () => {
     }
     cy.get("#save_language").click();
 
-    // cy.logout();
+    cy.logout();
   });
 });
