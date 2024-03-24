@@ -1,9 +1,6 @@
 .js-disabled-message {
   display: none;
 }
-body {
-  display: none;
-}
 
 .reveal {
   opacity: 0.3;

@@ -12,7 +12,6 @@ export class CustomFileLoaderServiceService {
     if (window.location.pathname === '/' && this.appDataService.public.node) {
       let cssLoaded = false;
       let jsLoaded = false;
-      document.body.style.display = 'none';
 
       const showBodyIfReady = () => {
         if (cssLoaded && jsLoaded) {
@@ -21,6 +20,7 @@ export class CustomFileLoaderServiceService {
       };
 
       if (this.appDataService.public.node.css) {
+        document.body.style.display = 'none';
         const newElem = document.createElement('link');
         newElem.setAttribute('id', 'load-custom-css-new');
         newElem.setAttribute('rel', 'stylesheet');
@@ -39,9 +39,11 @@ export class CustomFileLoaderServiceService {
         };
       } else {
         cssLoaded = true;
+        showBodyIfReady();
       }
 
       if (this.appDataService.public.node.script) {
+        document.body.style.display = 'none';
         const scriptElem = document.createElement('script');
         scriptElem.setAttribute('id', 'load-custom-script');
         scriptElem.setAttribute('src', 's/script');
@@ -53,6 +55,7 @@ export class CustomFileLoaderServiceService {
         };
       } else {
         jsLoaded = true;
+        showBodyIfReady();
       }
 
       if (this.appDataService.public.node.favicon) {
@@ -62,4 +65,5 @@ export class CustomFileLoaderServiceService {
         }
       }
     }
-  }}
+  }
+}

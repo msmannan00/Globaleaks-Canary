@@ -15,6 +15,7 @@ import {CustomFileLoaderServiceService} from "@app/services/helper/custom-file-l
 })
 export class AppConfigService {
   public sidebar: string = "";
+  private firstLoad = true;
 
   constructor(private customFileLoaderServiceService: CustomFileLoaderServiceService, private titleService: TitleService, public authenticationService: AuthenticationService, private translationService: TranslationService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private httpService: HttpService, private appDataService: AppDataService, private fieldUtilitiesService: FieldUtilitiesService) {
     this.init();
@@ -63,7 +64,6 @@ export class AppConfigService {
         if (data.body !== null) {
           this.appDataService.public = data.body;
         }
-        this.customFileLoaderServiceService.loadCustomFiles();
         this.appDataService.contexts_by_id = this.utilsService.array_to_map(this.appDataService.public.contexts);
         this.appDataService.receivers_by_id = this.utilsService.array_to_map(this.appDataService.public.receivers);
         this.appDataService.questionnaires_by_id = this.utilsService.array_to_map(this.appDataService.public.questionnaires);
@@ -91,6 +91,11 @@ export class AppConfigService {
         this.appDataService.connection = {
           "tor": data.headers.get("X-Check-Tor") === "true" || location.host.match(/\.onion$/),
         };
+
+        if(this.firstLoad){
+          this.firstLoad = false;
+          this.customFileLoaderServiceService.loadCustomFiles();
+        }
 
         this.appDataService.privacy_badge_open = !this.appDataService.connection.tor;
         this.appDataService.languages_enabled = new Map<string, LanguagesSupported>();
