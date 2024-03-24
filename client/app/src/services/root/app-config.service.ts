@@ -8,6 +8,7 @@ import {Router, NavigationEnd, ActivatedRoute} from "@angular/router";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {LanguagesSupported} from "@app/models/app/public-model";
 import {TitleService} from "@app/shared/services/title.service";
+import {CustomFileLoaderServiceService} from "@app/services/helper/custom-file-loader-service.service";
 
 @Injectable({
   providedIn: "root"
@@ -15,7 +16,7 @@ import {TitleService} from "@app/shared/services/title.service";
 export class AppConfigService {
   public sidebar: string = "";
 
-  constructor(private titleService: TitleService, public authenticationService: AuthenticationService, private translationService: TranslationService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private httpService: HttpService, private appDataService: AppDataService, private fieldUtilitiesService: FieldUtilitiesService) {
+  constructor(private customFileLoaderServiceService: CustomFileLoaderServiceService, private titleService: TitleService, public authenticationService: AuthenticationService, private translationService: TranslationService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private httpService: HttpService, private appDataService: AppDataService, private fieldUtilitiesService: FieldUtilitiesService) {
     this.init();
   }
 
@@ -56,68 +57,13 @@ export class AppConfigService {
     this.titleService.setTitle();
   };
 
-  public loadCustomFiles() {
-    let cssLoaded = false;
-    let jsLoaded = false;
-
-    // Function to show the body if both CSS and JS are loaded
-    const showBodyIfReady = () => {
-      if (cssLoaded && jsLoaded) {
-        document.body.style.display = 'block';
-      }
-    };
-
-    if (this.appDataService.public.node.css) {
-      const newElem = document.createElement("link");
-      newElem.setAttribute("id", "load-custom-css-new");
-      newElem.setAttribute("rel", "stylesheet");
-      newElem.setAttribute("type", "text/css");
-      newElem.setAttribute("href", "s/css");
-      document.getElementsByTagName("head")[0].appendChild(newElem);
-
-      newElem.onload = () => {
-        const oldElem = document.getElementById("load-custom-css");
-        if (oldElem !== null && oldElem.parentNode !== null) {
-          oldElem.parentNode.removeChild(oldElem);
-        }
-        newElem.setAttribute("id", "load-custom-css");
-        cssLoaded = true;
-        showBodyIfReady();
-      };
-    } else {
-      cssLoaded = true;
-    }
-
-    if (this.appDataService.public.node.script) {
-      const scriptElem = document.createElement("script");
-      scriptElem.setAttribute("id", "load-custom-script");
-      scriptElem.setAttribute("src", "s/script");
-      document.getElementsByTagName("body")[0].appendChild(scriptElem);
-
-      scriptElem.onload = () => {
-        jsLoaded = true;
-        showBodyIfReady();
-      };
-    } else {
-      jsLoaded = true;
-    }
-
-    if (this.appDataService.public.node.favicon) {
-      const faviconElem = window.document.getElementById("favicon");
-      if (faviconElem !== null) {
-        faviconElem.setAttribute("href", "s/favicon");
-      }
-    }
-  }
-
-
   public localInitialization(languageInit = true, callback?: () => void) {
     this.httpService.getPublicResource().subscribe({
       next: data => {
         if (data.body !== null) {
           this.appDataService.public = data.body;
         }
-        this.loadCustomFiles();
+        this.customFileLoaderServiceService.loadCustomFiles();
         this.appDataService.contexts_by_id = this.utilsService.array_to_map(this.appDataService.public.contexts);
         this.appDataService.receivers_by_id = this.utilsService.array_to_map(this.appDataService.public.receivers);
         this.appDataService.questionnaires_by_id = this.utilsService.array_to_map(this.appDataService.public.questionnaires);
@@ -217,7 +163,9 @@ export class AppConfigService {
   routeChangeListener() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.loadCustomFiles();
+        if (event.url === '/') {
+          this.customFileLoaderServiceService.loadCustomFiles();
+        }
         this.onValidateInitialConfiguration();
         const lastChildRoute = this.findLastChildRoute(this.router.routerState.root);
         if (lastChildRoute && lastChildRoute.snapshot.data && lastChildRoute.snapshot.data["pageTitle"]) {
