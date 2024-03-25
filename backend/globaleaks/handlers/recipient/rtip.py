@@ -442,17 +442,17 @@ def db_redact_answers(answers, redaction):
             else:
                 db_redact_answers(answer, redaction)
 
-def db_redact_whistleblower_identities(answers, redaction):
-    for key in answers:
-        if isinstance(answers[key], bool):
+def db_redact_whistleblower_identities(whistleblower_identities, redaction):
+    for key in whistleblower_identities:
+        if isinstance(whistleblower_identities[key], bool):
             continue
-        for inner_idx, answer in enumerate(answers[key]):
-            if 'value' in answer:
+        for inner_idx, whistleblower_identity in enumerate(whistleblower_identities[key]):
+            if 'value' in whistleblower_identity:
                 if key == redaction.reference_id:
-                    answer['value'] = redact_content(answer['value'], redaction.permanent_redaction)
+                    whistleblower_identity['value'] = redact_content(whistleblower_identity['value'], redaction.permanent_redaction)
                     return
             else:
-                db_redact_whistleblower_identities(answer, redaction)
+                db_redact_whistleblower_identities(whistleblower_identity, redaction)
 
 
 def db_redact_answers_recursively(session, tid, user_id, itip_id, redaction, redaction_data, tip_data):
@@ -486,7 +486,7 @@ def db_redact_answers_recursively(session, tid, user_id, itip_id, redaction, red
     if itip_answers:
         itip_answers.answers = _content
 
-def db_redact_whistleblower_identity(session, tid, user_id, itip_id, redaction, redaction_data, tip_data,rtip):
+def db_redact_whistleblower_identity(session, tid, user_id, itip_id, redaction, redaction_data, tip_data):
     currentMaskedData = next((masked_content for masked_content in tip_data['redactions'] if
                               masked_content['id'] == redaction_data['id']), None)
 
@@ -1059,7 +1059,7 @@ def update_redaction(session, tid, user_id, redaction_id, redaction_data, tip_da
                 delete_wbfile(session, tid, user_id, redaction.reference_id)
                 session.delete(redaction)
         elif content_type == 'whistleblower_identity':
-            db_redact_whistleblower_identity(session, tid, user_id, itip, redaction, redaction_data, tip_data,rtip)
+            db_redact_whistleblower_identity(session, tid, user_id, itip, redaction, redaction_data, tip_data)
 
 @transact
 def delete_rfile(session, tid, user_id, file_id):
