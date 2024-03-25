@@ -51,7 +51,6 @@ describe("globaleaks process", function () {
 
     it("Whistleblower actions", function () {
       const comment_reply = "comment reply";
-      cy.wait(1000);
 
       cy.login_whistleblower(receipts[0]);
 
