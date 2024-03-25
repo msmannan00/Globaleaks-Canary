@@ -39,7 +39,7 @@ describe("globaleaks process", function () {
       cy.get('#fileListBody', { timeout: 10000 }).find('tr').should('have.length', 2);
 
       const comment = "comment";
-      cy.get("[name='newCommentContent']").type(comment);
+      cy.get("[name='newCommentContent']", { timeout: 10000 }).type(comment);
       cy.get("#comment-action-send").click();
       cy.waitForLoader();
       cy.get('#comment-0').should('contain', comment);
@@ -51,12 +51,13 @@ describe("globaleaks process", function () {
 
     it("Whistleblower actions", function () {
       const comment_reply = "comment reply";
+      cy.wait(1000);
 
       cy.login_whistleblower(receipts[0]);
 
       cy.get("#comment-0").should("contain", comment);
 
-      cy.get("[name='newCommentContent']").type(comment_reply);
+      cy.get("[name='newCommentContent']", { timeout: 10000 }).type(comment_reply);
       cy.get("#comment-action-send").click();
 
       cy.get("#comment-0 .preformatted").should("contain", comment_reply);
