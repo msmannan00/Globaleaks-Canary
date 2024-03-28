@@ -67,6 +67,7 @@ describe("recipient admin tip actions", () => {
       } else {
         day = nextDay.getDate()
       }
+      cy.get('.btn-link[aria-label="Next month"]').click();
       cy.get('.ngb-dp-day').contains(day).click();
     });
     cy.get('#modal-action-ok').click();
