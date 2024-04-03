@@ -51,7 +51,10 @@ export class RFileUploadButtonComponent implements AfterViewInit, OnInit, OnDest
       allowDuplicateUploads: false,
       testChunks: false,
       permanentErrors: [500, 501],
-      headers: {"X-Session": this.session_id?this.session_id:this.authenticationService.session.id}
+      headers: {"X-Session": this.session_id?this.session_id:this.authenticationService.session.id},
+      query: {
+        reference_id: this.field?.id,
+      },
     };
     this.fileInput = this.field ? this.field.id : "status_page";
   }
@@ -83,6 +86,7 @@ export class RFileUploadButtonComponent implements AfterViewInit, OnInit, OnDest
           this.confirmButton = true;
         }
       });
+      this.flow.flowJs.opts.headers={"X-Session": this.session_id?this.session_id:this.authenticationService.session.id};
       this.uploads[this.fileInput] = this.flow;
       this.notifyFileUpload.emit(this.uploads);
     });
