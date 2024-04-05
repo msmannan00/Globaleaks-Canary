@@ -1,12 +1,17 @@
-document.addEventListener('DOMContentLoaded', function() {
+setTimeout(() => {
+  document.body.classList.add('fade-in');
+  init();
+}, 500);
+
+window.addEventListener('popstate', function(event) {
   setTimeout(() => {
-    document.body.classList.add('fade-in');
+    document.body.style.opacity = '0';
     init();
-  }, 500);
+    document.body.style.opacity = '1';
+  }, 0);
 });
 
 function init() {
-
   let whistleBlowingLoginQuestionContent;
   { // Secondary content hero block
     const frontPageSecondaryHeroContent = {
@@ -27,7 +32,7 @@ function init() {
       </div>
       `
     };
-    GL.mockEngine.addMock('/#/', '#HomePageBox', localizedMock(frontPageSecondaryHeroContent), 'add-before');
+    GL.mockEngine.addMock('*', '#HomePageBox', localizedMock(frontPageSecondaryHeroContent), 'add-before');
   }
   { // Front page: Logo Change
     const whistleBlowingLogoContent = {
@@ -35,7 +40,7 @@ function init() {
         <img class="img-fluid pointer" [alt]="appDataService.projectTitle" src="data/whistleaks/images/logo.png"  alt=""/>
       `
     };
-    GL.mockEngine.addMock('/#/', '#LogoBox', localizedMock(whistleBlowingLogoContent), 'replace');
+    GL.mockEngine.addMock('*', '#LogoBox', localizedMock(whistleBlowingLogoContent), 'replace');
   }
   { // Front page: New submission
     const whistleBlowingQuestionContent = {
@@ -44,17 +49,18 @@ function init() {
         <p>Do you wish to report a suspected breach or unethical conduct?</p>
       `
     };
-    GL.mockEngine.addMock('/#/', '#id="WhistleblowingButton"', localizedMock(whistleBlowingQuestionContent), 'replace');
+    GL.mockEngine.addMock('*', '#id="WhistleblowingButton"', localizedMock(whistleBlowingQuestionContent), 'replace');
   }
   { // Front page: View existing submission
     whistleBlowingLoginQuestionContent = {
       en: `
-          <h2>Submit a new notification</h2>
-          <p>Do you wish to report a suspected breach or unethical conduct?</p>
-          <button id="WhistleblowingButton" class="btn btn-primary"><span class="ng-star-inserted">File a report</span><!----></button>
+         <markdown id="WhistleblowingQuestion" class="ng-star-inserted">
+         <h2>Submit a new notification</h2>
+           <p>Do you wish to report a suspected breach or unethical conduct?</p>
+         </markdown><br>
       `
     };
-    GL.mockEngine.addMock('/#/', '#WhistleblowerSubmitBox', localizedMock(whistleBlowingLoginQuestionContent), 'replace');
+    GL.mockEngine.addMock('*', '#WhistleblowerSubmitBox', localizedMock(whistleBlowingLoginQuestionContent), 'add-before');
   }
 
   { // Front page: View existing submission
@@ -64,7 +70,7 @@ function init() {
         <p>After submitting a notification you receive a code to sign in and track the progress of your notification’s processing. Enter the code here:</p>
       `
     };
-    GL.mockEngine.addMock('/#/', '#WhistleblowerLoginQuestion', localizedMock(whistleBlowingLoginQuestionContent), 'replace');
+    GL.mockEngine.addMock('*', '#WhistleblowerLoginQuestion', localizedMock(whistleBlowingLoginQuestionContent), 'replace');
   }
 
   { // Admin welcome text
