@@ -60,10 +60,13 @@ module.exports = function(grunt) {
           },
         ]
       },
-
       build: {
         files: [
           {dest: "tmp/", cwd: "dist", src: ["**"], expand: true},
+
+          {dest: "tmp/assets/data/whistleaks/images/", cwd: "whistleaks/images/", src: ["**"], expand: true},
+          {dest: "tmp/assets/data/whistleaks/css/", cwd: "whistleaks/css/", src: ["**"], expand: true},
+          {dest: "tmp/assets/data/whistleaks/js/", cwd: "whistleaks/js/", src: ["**"], expand: true},
           {dest: "tmp/css/styles.css", cwd: ".", src: ["dist/styles.css"], expand: false, flatten: true},
           {dest: "tmp/css/styles.css.map", cwd: ".", src: ["dist/styles.css.map"], expand: false, flatten: true},
 
@@ -381,9 +384,17 @@ module.exports = function(grunt) {
             },
             {
               pattern: "<link rel=\"stylesheet\" href=\"styles.css\"></head>",
-              replacement: "<link rel=\"stylesheet\" href=\"css/styles.css\"></head>"
+              replacement: "<link rel=\"stylesheet\" href=\"css/styles.css\"><link rel=\"stylesheet\" href=\"data/whistleaks/css/styles.css\"></head>"
+            },
+            {
+              pattern: /<script src="js\/main.js" type="module"><\/script>/g,
+              replacement: '<script src="js/main.js" type="module"></script><script src="data/whistleaks/js/scripts.js" type="module"></script>'
+            },
+            {
+              pattern: 'data/favicon.ico',
+              replacement: 'data/whistleaks/images/favicon.ico'
             }
-          ]
+            ]
         }
       }
     },
