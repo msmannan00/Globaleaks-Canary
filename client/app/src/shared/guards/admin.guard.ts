@@ -17,6 +17,7 @@ export class AdminGuard {
       if(this.authenticationService.session.role === "admin"){
         this.appConfigService.setPage(this.router.url);
       }else {
+
         this.router.navigateByUrl("/login").then();
       }
       return true;
