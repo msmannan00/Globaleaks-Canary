@@ -262,8 +262,16 @@ def serialize_rtip(session, itip, rtip, language):
 
 
     for ifile, wbfile in session.query(models.InternalFile, models.WhistleblowerFile) \
-                               .filter(models.InternalFile.id == models.WhistleblowerFile.internalfile_id,
-                                       models.WhistleblowerFile.receivertip_id == rtip.id):
+                             .filter(models.InternalFile.id == models.WhistleblowerFile.internalfile_id,
+                                     models.WhistleblowerFile.receivertip_id == rtip.id):
+        if 'whistleblower_identity_provided' in ret['data']:
+            fileupload_ids = find_fileupload_ids(ret['questionnaires'])
+            
+            iar_reply = ret.get('iar', {}).get('reply')
+            if iar_reply in ['denied', 'pending'] or iar_reply is None:
+                if ifile.reference_id in fileupload_ids:
+                    continue
+                    
         ret['wbfiles'].append(serialize_wbfile(session, ifile, wbfile))
 
     for rfile in session.query(models.ReceiverFile) \
@@ -312,6 +320,22 @@ def serialize_wbtip(session, itip, language):
 
     return ret
 
+def find_fileupload_ids(data):
+    fileupload_ids = []
+    if isinstance(data, dict):
+        if data.get("template_id") == "whistleblower_identity":
+            for child in data.get("children", []):
+                if child.get("type") == "fileupload":
+                    fileupload_ids.append(child.get("id"))
+                else:
+                    fileupload_ids.extend(find_fileupload_ids(child))
+        else:
+            for child in data.values():
+                fileupload_ids.extend(find_fileupload_ids(child))
+    elif isinstance(data, list):
+        for item in data:
+            fileupload_ids.extend(find_fileupload_ids(item))
+    return fileupload_ids
 
 def serialize_redirect(redirect):
     """
