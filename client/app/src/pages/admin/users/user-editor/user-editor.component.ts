@@ -86,12 +86,7 @@ export class UserEditorComponent implements OnInit {
       user.pgp_key_remove = false;
     }
     return this.utilsService.updateAdminUser(userData.id, userData).subscribe(_ => {
-      this.sendDataToParent();
     });
-  }
-
-  sendDataToParent() {
-    this.dataToParent.emit();
   }
 
   deleteUser(user: userResolverModel) {
