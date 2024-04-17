@@ -74,6 +74,9 @@ export class Tab2Component implements OnInit {
         allowDuplicateUploads: true,
         testChunks: false,
         permanentErrors: [500, 501],
+        generateUniqueIdentifier: () => {
+          return crypto.randomUUID();
+        },
         query: {fileSizeLimit: this.nodeResolver.dataModel.maximum_filesize * 1024 * 1024},
         headers: {"X-Session": this.authenticationService.session.id}
       });

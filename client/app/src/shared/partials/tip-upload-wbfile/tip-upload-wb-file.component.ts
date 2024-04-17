@@ -40,6 +40,9 @@ export class TipUploadWbFileComponent {
         },
         allowDuplicateUploads: false,
         testChunks: false,
+        generateUniqueIdentifier: () => {
+          return crypto.randomUUID();
+        },
         permanentErrors: [500, 501],
         headers: {"X-Session": this.authenticationService.session.id}
       });
