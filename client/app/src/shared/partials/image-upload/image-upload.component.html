@@ -1,4 +1,4 @@
-<form action="" >
+<form action="">
     <div id="projectImageLoader" class="image-upload">
         <ng-container #flowAdvanced="flow" flowDrop [flowConfig]="flowConfig"></ng-container>
         <input #uploader id="projectImageLoader" (change)="onFileSelected(uploader.files)" type="file" flowButton [style.display]="'none'" [flowAttributes]="{ accept: 'image/*' }" class="custom-file-input inputelem" />
