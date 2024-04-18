@@ -36,6 +36,9 @@ export class AdminFileComponent implements OnInit {
         allowDuplicateUploads: false,
         testChunks: false,
         permanentErrors: [500, 501],
+        generateUniqueIdentifier: () => {
+          return crypto.randomUUID();
+        },
         query: {fileSizeLimit: this.node.dataModel.maximum_filesize * 1024 * 1024},
         headers: {"X-Session": this.authenticationService.session.id}
       });
