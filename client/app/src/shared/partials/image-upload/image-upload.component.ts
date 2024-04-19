@@ -22,12 +22,14 @@ export class ImageUploadComponent implements AfterViewInit, OnDestroy, OnInit {
   filemodel: any;
   currentTImestamp = new Date().getTime();
   flowConfig: FlowOptions;
+  @ViewChild('uploader') uploaderInput: ElementRef<HTMLInputElement>;
+
   constructor(private http: HttpClient, protected authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
     this.filemodel = this.imageUploadModel[this.imageUploadModelAttr];
-    this.flowConfig = {target: 'api/admin/files/'+this.imageUploadId, speedSmoothingFactor:0.01, singleFile:true ,allowDuplicateUploads:false, testChunks:false, generateUniqueIdentifier: () => {return crypto.randomUUID()}, permanentErrors : [ 500, 501 ], headers : {'X-Session':this.authenticationService.session?.id}}
+    this.flowConfig = {target: 'api/admin/files/'+this.imageUploadId, speedSmoothingFactor:0.01,singleFile:true ,allowDuplicateUploads:false, testChunks:false, generateUniqueIdentifier: () => {return crypto.randomUUID()}, permanentErrors : [ 500, 501 ], headers : {'X-Session':this.authenticationService.session?.id}}
   }
 
   ngAfterViewInit() {
@@ -73,6 +75,9 @@ export class ImageUploadComponent implements AfterViewInit, OnDestroy, OnInit {
         }
         this.imageUploadObj.files = [];
         this.filemodel = ""
+        if (this.uploaderInput) {
+          this.uploaderInput.nativeElement.value = "";
+        }
       });
   }
 
