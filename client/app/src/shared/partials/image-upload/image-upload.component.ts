@@ -3,6 +3,8 @@ import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChil
 import {FlowDirective} from "@flowjs/ngx-flow";
 import {Subscription} from "rxjs";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
+import {FlowOptions} from "@flowjs/flow.js";
+import { UtilsService } from "@app/shared/services/utils.service";
 
 @Component({
   selector: "src-image-upload",
@@ -20,12 +22,18 @@ export class ImageUploadComponent implements AfterViewInit, OnDestroy, OnInit {
   autoUploadSubscription: Subscription;
   filemodel: any;
   currentTImestamp = new Date().getTime();
+  flowConfig: FlowOptions;
+  @ViewChild('uploader') uploaderInput: ElementRef<HTMLInputElement>;
 
-  constructor(private http: HttpClient, protected authenticationService: AuthenticationService) {
+  constructor(private http: HttpClient, protected authenticationService: AuthenticationService,private utilsService: UtilsService) {
   }
 
   ngOnInit() {
     this.filemodel = this.imageUploadModel[this.imageUploadModelAttr];
+    this.flowConfig = this.utilsService.flowDefault.opts;
+    this.flowConfig.target = "api/admin/files/"+this.imageUploadId;
+    this.flowConfig.singleFile = true;
+    this.flowConfig.headers = {"X-Session": this.authenticationService.session.id};
   }
 
   ngAfterViewInit() {
@@ -71,6 +79,9 @@ export class ImageUploadComponent implements AfterViewInit, OnDestroy, OnInit {
         }
         this.imageUploadObj.files = [];
         this.filemodel = ""
+        if (this.uploaderInput) {
+          this.uploaderInput.nativeElement.value = "";
+        }
       });
   }
 
