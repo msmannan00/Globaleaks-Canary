@@ -23,7 +23,6 @@
                             <a href="/login"><img class="img-fluid-logo pointer" src="{{ asset('images/logo.png') }}" alt=""></a>
                         </div>
                     </div>
-                    <a href="/register"> <button type="button" class="btn btn-primary py-3 px-3"><b>Register Account</b></button></a>
                 @else
                     <div id="">
                         <div id="LogoBox">

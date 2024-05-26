@@ -35,10 +35,28 @@
                     @endif
                     <br>
 
-                    <div class="input-group mb-3">
+                    <div class="input-group">
                         <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                         <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password" aria-label="Confirm Password">
+                    </div><br>
+
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                        <input type="text" class="form-control @error('product_id') is-invalid @enderror" id="product_id" name="product_id" placeholder="Setup ID" aria-label="product_id">
                     </div>
+                    @if ($errors->has('product_id'))
+                        <span class="error-margin text-danger">{{ $errors->first('product_id') }}</span><br>
+                    @endif
+                    <br>
+
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                        <input type="password" class="form-control @error('secret_key') is-invalid @enderror" id="secret" name="secret" placeholder="Secret Key" aria-label="secret">
+                    </div>
+                    @if ($errors->has('secret_key'))
+                        <span class="error-margin text-danger">{{ $errors->first('secret_key') }}</span><br>
+                    @endif
+                    <br>
 
                     <div class="input-group">
                         <input type="submit" class="submit col-md-3 offset-md-9 btn btn-primary" value="Register">

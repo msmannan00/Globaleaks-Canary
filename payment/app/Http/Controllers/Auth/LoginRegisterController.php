@@ -38,16 +38,24 @@ class LoginRegisterController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->input('secret') !== env('SECRET_REGISTERATION_KEY')) {
+            return back()->withErrors([
+                'secret_key' => 'Authentication failed.'
+            ])->onlyInput('secret');
+        }
+
         $request->validate([
             'name' => 'required|string|max:250',
             'email' => 'required|email|max:250|unique:users',
-            'password' => 'required|min:8|confirmed'
+            'password' => 'required|min:8|confirmed',
+            'product_id' => 'required|max:15|unique:users'
         ]);
 
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'product_id' => $request->product_id
         ]);
 
         $credentials = $request->only('email', 'password');
