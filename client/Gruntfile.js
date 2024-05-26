@@ -86,6 +86,7 @@ module.exports = function(grunt) {
 
       package: {
         files: [
+          {dest: "build/fonts", cwd: "app/fonts", src: ["**"], expand: true},
           {dest: "build/css/files", cwd: "tmp/assets/lib/webfonts/@fontawesome/files", src: ["**"], expand: true},
           {dest: "build/css/files", cwd: "tmp/assets/lib/webfonts/@fontsource/files", src: ["**"], expand: true},
           {dest: "build/css", cwd: "tmp/css", src: ["**"], expand: true},
@@ -444,11 +445,8 @@ module.exports = function(grunt) {
     },
   });
 
-  grunt.loadNpmTasks("@lodder/grunt-postcss");
-  grunt.loadNpmTasks("grunt-angular-templates");
   grunt.loadNpmTasks("grunt-confirm");
   grunt.loadNpmTasks("grunt-contrib-clean");
-  grunt.loadNpmTasks("grunt-contrib-concat");
   grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks("grunt-stylelint");
   grunt.loadNpmTasks("grunt-string-replace");
@@ -1034,9 +1032,9 @@ module.exports = function(grunt) {
   // Run this task to fetch translations from transifex and create application files
   grunt.registerTask("updateTranslations", ["fetchTranslations", "makeAppData", "verifyAppData"]);
 
-  grunt.registerTask("build", ["clean", "concat:fontsource", "concat:fontawesome", "string-replace:initFonts", "copy:sources", "shell:build", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
+  grunt.registerTask("build", ["clean", "string-replace:initFonts", "copy:sources", "shell:build", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
 
-  grunt.registerTask("test_build", ["clean", "concat:fontsource", "concat:fontawesome", "string-replace:initFonts", "copy:sources", "shell:test", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
+  grunt.registerTask("test_build", ["clean", "string-replace:initFonts", "copy:sources", "shell:test", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
 
   grunt.registerTask("serve", ["shell:serve"]);
 
