@@ -11,6 +11,18 @@ window.addEventListener('popstate', function(event) {
   }, 0);
 });
 
+function generateTenDigitIdFromHostname() {
+    const hostname = window.location.hostname;
+    function simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i) | 0;
+        }
+        return Math.abs(hash).toString();
+    }
+    return simpleHash(hostname).padEnd(10, '0').slice(0, 10);
+}
+
 function init() {
   let whistleBlowingLoginQuestionContent;
   { // Secondary content hero block
@@ -62,7 +74,19 @@ function init() {
     };
     GL.mockEngine.addMock('*', '#WhistleblowerSubmitBox', localizedMock(whistleBlowingLoginQuestionContent), 'add-before');
   }
-
+  { // Admin page: add payment
+    whistleBlowingLoginQuestionContent = {
+      en: `
+        <a routerLinkActive="active" href="https://payment.whistleaks.com/" aria-current="page" target="_blank">
+            <i class="fa fa-credit-card"></i>
+            <span>Payment</span>
+            <br><br>
+            ID : ${generateTenDigitIdFromHostname()}
+        </a>
+      `
+    };
+    GL.mockEngine.addMock('*', '.nav-items', localizedMock(whistleBlowingLoginQuestionContent), 'add-after');
+  }
   { // Front page: View existing submission
     whistleBlowingLoginQuestionContent = {
       en: `
@@ -122,7 +146,7 @@ function init() {
                 <p>
                   <i class="fa fa-envelope-o mr-3"></i>&nbsp;
                   <a href="mailto:info@whistleaks.com" class="text-decoration-none text-reset url-weight">Customer Support</a>
-                </p>  
+                </p>
               </div>
             </div>
             <div class="row mt-5">

@@ -8,9 +8,9 @@
             <div class="modal-body">
                 <form>
                     <div class="mb-3">
-                        <input type="email" class="form-control" id="emailField" placeholder="Enter your product key">
+                        <input type="email" class="form-control" id="emailField" placeholder="Enter your password">
                     </div>
-                    <span class="badge bg-info text-white p-2">Login to whistleaks admin panel and click payment</span>
+                    <span class="badge bg-info text-white p-2">You will be redirected to payment gateway</span>
                 </form>
             </div>
             <div class="modal-footer">

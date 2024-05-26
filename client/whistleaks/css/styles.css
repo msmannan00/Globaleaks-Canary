@@ -9,6 +9,10 @@ body {
   opacity: 0;
 }
 
+.product-id{
+    margin-top:-25px;
+}
+
 .fade-in {
   opacity: 1;
   transition: opacity 0.25s ease-in-out;
