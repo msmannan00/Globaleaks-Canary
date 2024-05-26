@@ -100,14 +100,8 @@ function init() {
                   <a href="https://www.youtube.com/watch?v=Q6k8hHAoIKA&ab_channel=Christiaan008">
                       &nbsp;&nbsp;<img src="data/whistleaks/images/youtube.png" class="img-fluid icon-size" alt=""/>
                   </a>
-                  <a>
-                      &nbsp;&nbsp;<img src="data/whistleaks/images/twitter.png" class="img-fluid icon-size" alt=""/>
-                  </a>
-                  <a>
+                  <a href="https://www.linkedin.com/company/whistleaks/">
                       &nbsp;&nbsp;<img src="data/whistleaks/images/linkedin.png" class="img-fluid icon-size" alt=""/>
-                  </a>
-                  <a>
-                      &nbsp;&nbsp;<img src="data/whistleaks/images/facebook.png" class="img-fluid icon-size" alt=""/>
                   </a>
                 </p>
               </div>
