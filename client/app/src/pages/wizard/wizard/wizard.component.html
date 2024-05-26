@@ -3,7 +3,7 @@
         <div class="row wizard-block">
             <div class="col-md-12">
                 <div class="title">{{'Welcome!'|translate}}</div>
-                <div>{{'The following step - by - step procedure will guide you through creating your whistleblowing platform.'|translate}}</div>
+                <div>{{'The following step-by-step procedure will guide you through creating your whistleblowing platform.'|translate}}</div>
             </div>
         </div>
         <br>
@@ -191,7 +191,7 @@
                     </div>
                     <div class="row form-group">
                         <label class="col-md-4">
-                            <span>{{'Password'|translate}}</span> ( <span>{{'Confirm'|translate}}</span>) <span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
+                            <span>{{'Password'|translate}}</span> (<span>{{'Confirm'|translate}}</span>)<span class="text-danger" data-toggle="tooltip" title="{{'This field is mandatory' | translate}}">*</span>
                         </label>
                         <div class="col-md-8">
                             <input name="checkpassword" class="form-control" [(ngModel)]="recipient_check_password" type="password" placeholder="{{'Password' | translate}}" autocomplete="off" [ngClass]="{'is-invalid': validation.step4 && (!password_receiver.errors?.['passwordStrengthValidator'] && wizard.receiver_password && (wizard.receiver_password !== recipient_check_password))}" required />

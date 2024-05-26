@@ -259,9 +259,6 @@ msgstr "Configure"
 msgid "Confirm"
 msgstr "Confirm"
 
-msgid "Confirmation"
-msgstr "Confirmation"
-
 msgid "Congratulations!"
 msgstr "Congratulations!"
 
