@@ -68,7 +68,7 @@ def generateRandomPassword(N: int) -> str:
     if N < 10:
         N = 10
 
-    accessible_special_symbols = "!?@#+-/\*="
+    accessible_special_symbols = "!?@#+-/*="
     accessible_symbols_set = string.ascii_letters + string.digits + accessible_special_symbols
 
     password = ''.join(secrets.SystemRandom().choice(accessible_symbols_set) for _ in range(N-4))
@@ -223,7 +223,7 @@ class _GCE(object):
     @staticmethod
     def check_password(password: str, salt: str, hash: str) -> bool:
         """
-        Perform passowrd check for match with a provided hash
+        Perform password check for match with a provided hash
         """
         password = _convert_to_bytes(password)
         salt = _convert_to_bytes(salt)
