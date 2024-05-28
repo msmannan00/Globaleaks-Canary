@@ -2,8 +2,8 @@
 # Implement the notification of new submissions
 import itertools
 
-from datetime import timedelta
-
+from datetime import datetime, timedelta
+from sqlalchemy import not_
 from twisted.internet import defer
 
 from globaleaks import models
@@ -12,6 +12,7 @@ from globaleaks.handlers.admin.notification import db_get_notification
 from globaleaks.handlers.user import user_serialize_user
 from globaleaks.jobs.job import LoopingJob
 from globaleaks.models import serializers
+from globaleaks.models.config import ConfigFactory
 from globaleaks.orm import db_del, transact, tw
 from globaleaks.utils.log import log
 from globaleaks.utils.templating import Templating
@@ -69,6 +70,9 @@ class MailGenerator(object):
     @transact
     def generate(self, session):
         now = datetime_now()
+
+        config = ConfigFactory(session, 1)
+        timestamp_daily_notifications = config.get_val('timestamp_daily_notifications')
 
         rtips_ids = {}
         silent_tids = []
@@ -128,43 +132,36 @@ class MailGenerator(object):
             except:
                 pass
 
-        for user in session.query(models.User).filter(models.User.reminder_date < now - timedelta(reminder_time),
-                                                      models.User.id == models.ReceiverTip.receiver_id,
+        if now < datetime.fromtimestamp(timestamp_daily_notifications) + timedelta(1):
+            return
+
+        config.set_val('timestamp_daily_notifications', now)
+
+        for user in session.query(models.User).filter(models.User.id == models.ReceiverTip.receiver_id,
+                                                      not_(models.User.id.in_(silent_tids)),
+                                                      models.User.reminder_date < now - timedelta(reminder_time),
                                                       models.ReceiverTip.last_access < models.InternalTip.update_date,
                                                       models.ReceiverTip.internaltip_id == models.InternalTip.id,
                                                       models.InternalTip.update_date < now - timedelta(reminder_time)).distinct():
-            tid = user.tid
-
-            if tid in silent_tids:
-                continue
-
             user.reminder_date = now
             data = {'type': 'unread_tips'}
 
             try:
                 data['user'] = user_serialize_user(session, user, user.language)
-                self.process_mail_creation(session, tid, data)
+                self.process_mail_creation(session, user.tid, data)
             except:
                 pass
 
-        if now < Notification.next_daily_run:
-            return
-
-        Notification.next_daily_run = now + timedelta(1)
-
         for user in session.query(models.User).filter(models.User.id == models.ReceiverTip.receiver_id,
+                                                      not_(models.User.id.in_(silent_tids)),
                                                       models.ReceiverTip.internaltip_id == models.InternalTip.id,
                                                       models.InternalTip.reminder_date < now).distinct():
-            tid = user.tid
-
-            if tid in silent_tids:
-                continue
 
             data = {'type': 'tip_reminder'}
 
             try:
                 data['user'] = user_serialize_user(session, user, user.language)
-                self.process_mail_creation(session, tid, data)
+                self.process_mail_creation(session, user.tid, data)
             except:
                 pass
 
@@ -192,7 +189,6 @@ def get_mails_from_the_pool(session):
 class Notification(LoopingJob):
     interval = 10
     monitor_interval = 3 * 60
-    next_daily_run = datetime_now()
 
     def generate_emails(self):
         return MailGenerator(self.state).generate()

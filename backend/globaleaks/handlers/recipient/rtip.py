@@ -442,6 +442,7 @@ def db_redact_answers(answers, redaction):
             else:
                 db_redact_answers(answer, redaction)
 
+
 def db_redact_whistleblower_identities(whistleblower_identities, redaction):
     for key in whistleblower_identities:
         if isinstance(whistleblower_identities[key], bool):
@@ -486,6 +487,7 @@ def db_redact_answers_recursively(session, tid, user_id, itip_id, redaction, red
     if itip_answers:
         itip_answers.answers = _content
 
+
 def db_redact_whistleblower_identity(session, tid, user_id, itip_id, redaction, redaction_data, tip_data):
     currentMaskedData = next((masked_content for masked_content in tip_data['redactions'] if
                               masked_content['id'] == redaction_data['id']), None)
@@ -503,14 +505,17 @@ def db_redact_whistleblower_identity(session, tid, user_id, itip_id, redaction, 
 
     whistleblower_identity = tip_data['data']['whistleblower_identity']
     db_redact_whistleblower_identities(whistleblower_identity, redaction)
+
     _content = whistleblower_identity
     if itip_id.crypto_tip_pub_key:
         _content = base64.b64encode(
             GCE.asymmetric_encrypt(itip_id.crypto_tip_pub_key, json.dumps(_content, cls=JSONEncoder).encode())).decode()
+
     itip_whistleblower_identity = session.query(models.InternalTipData) \
                         .filter_by(internaltip_id=currentMaskedData['internaltip_id']).first()
     if itip_whistleblower_identity:
         itip_whistleblower_identity.value = _content
+
 
 @transact
 def update_tip_submission_status(session, tid, user_id, rtip_id, status_id, substatus_id, motivation):
@@ -598,7 +603,9 @@ def register_rfile_on_db(session, tid, user_id, itip_id, uploaded_file):
                                 models.InternalTip.status != 'closed',
                                 models.InternalTip.tid == tid).one()
 
-    itip.update_date = rtip.last_access = datetime_now()
+    rtip.last_access = datetime_now()
+    if uploaded_file['visibility'] == 0:
+        itip.update_date = rtip.last_access
 
     if itip.crypto_tip_pub_key:
         for k in ['name', 'description', 'type', 'size']:
@@ -638,7 +645,11 @@ def db_get_rtip(session, tid, user_id, itip_id, language):
     if rtip.access_date == datetime_null():
         rtip.access_date = rtip.last_access
 
+    if itip.reminder_date < rtip.last_access:
+        itip.reminder_date = datetime_null()
+
     if itip.status == 'new':
+        itip.update_date = rtip.last_access
         db_update_submission_status(session, tid, user_id, itip, 'opened', None)
 
     db_log(session, tid=tid, type='access_report', user_id=user_id, object_id=itip.id)
@@ -961,7 +972,9 @@ def create_comment(session, tid, user_id, itip_id, content, visibility=0):
     """
     _, rtip, itip = db_access_rtip(session, tid, user_id, itip_id)
 
-    itip.update_date = rtip.last_access = datetime_now()
+    rtip.last_access = datetime_now()
+    if visibility == 0:
+        itip.update_date = rtip.last_access
 
     _content = content
     if itip.crypto_tip_pub_key:
