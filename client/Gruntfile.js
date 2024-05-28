@@ -25,73 +25,41 @@ module.exports = function(grunt) {
     },
 
     copy: {
-      sources: {
-        files: [
-          {
-            expand: true,
-            cwd: 'node_modules/',
-            src: ['@fontsource/**/files/*400*',
-              '@fontsource/**/files/*700*'],
-            dest: 'app/assets/lib/webfonts/@fontsource/files/',
-            flatten: true
-          },
-          {
-            expand: true,
-            cwd: 'node_modules/',
-            src: ['@fortawesome/fontawesome-free/webfonts/*'],
-            dest: 'app/assets/lib/webfonts/@fontawesome/files/',
-            flatten: true
-          },
-
-          {dest: "build/index.html", cwd: ".", src: ["app/index.html"], expand: false, flatten: true},
-          {dest: "build/viewer/", cwd: ".", src: ["app/viewer/*"], expand: true, flatten: true},
-          {dest: "app/assets/license.txt", cwd: ".", src: ["../LICENSE"], expand: false, flatten: true},
-          {
-            dest: "app/lib/bootstrap",
-            cwd: ".",
-            src: [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css.map",
-              "node_modules/bootstrap/dist/css/bootstrap.rtl.min.css",
-              "node_modules/bootstrap/dist/css/bootstrap.rtl.min.css.map"
-            ],
-            expand: true,
-            flatten: true
-          },
-        ]
-      },
-
       build: {
         files: [
           {dest: "tmp/", cwd: "dist", src: ["**"], expand: true},
-          {dest: "tmp/css/styles.css", cwd: ".", src: ["dist/styles.css"], expand: false, flatten: true},
-          {dest: "tmp/css/styles.css.map", cwd: ".", src: ["dist/styles.css.map"], expand: false, flatten: true},
-
-          {dest: "tmp/js/main.js", cwd: ".", src: ["dist/main.js"], expand: false, flatten: true},
-          {dest: "tmp/js/main.js.map", cwd: ".", src: ["dist/main.js.map"], expand: false, flatten: true},
-
-          {dest: "tmp/js/polyfills.js", cwd: ".", src: ["dist/polyfills.js"], expand: false, flatten: true},
-          {dest: "tmp/js/polyfills.js.map", cwd: ".", src: ["dist/polyfills.js.map"], expand: false, flatten: true},
-
-          {dest: "tmp/js/runtime.js", cwd: ".", src: ["dist/runtime.js"], expand: false, flatten: true},
-          {dest: "tmp/js/runtime.js.map", cwd: ".", src: ["dist/runtime.js.map"], expand: false, flatten: true},
-
-          {dest: "tmp/js/vendor.js", cwd: ".", src: ["dist/vendor.js"], expand: false, flatten: true},
-          {dest: "tmp/js/vendor.js.map", cwd: ".", src: ["dist/vendor.js.map"], expand: false, flatten: true},
+          {dest: "tmp/css/", cwd: "dist", src: ["fonts.css*"], expand: true, flatten: true},
+          {dest: "tmp/css/", cwd: "dist", src: ["styles-*"], expand: true, flatten: true},
+          {dest: "tmp/js/", cwd: "dist", src: ["main.js*"], expand: true, flatten: true},
+          {dest: "tmp/js/", cwd: "dist", src: ["polyfills.js*"], expand: true, flatten: true},
+          {dest: "tmp/js/", cwd: "dist", src: ["runtime.js*"], expand: true, flatten: true},
+          {dest: "tmp/js/", cwd: "dist", src: ["vendor.js*"], expand: true, flatten: true}
         ]
       },
 
       package: {
         files: [
-          {dest: "build/css/files", cwd: "tmp/assets/lib/webfonts/@fontawesome/files", src: ["**"], expand: true},
-          {dest: "build/css/files", cwd: "tmp/assets/lib/webfonts/@fontsource/files", src: ["**"], expand: true},
           {dest: "build/css", cwd: "tmp/css", src: ["**"], expand: true},
+          {dest: "build/fonts", cwd: "app/fonts", src: ["**"], expand: true},
+          {
+            dest: 'build/fonts',
+            cwd: 'node_modules/',
+            src: ['@fontsource/**/files/*400*', '@fontsource/**/files/*700*'],
+            flatten: true,
+            expand: true
+          },
+          {
+            dest: 'build/fonts',
+            cwd: 'node_modules/',
+            src: ['@fortawesome/fontawesome-free/webfonts/*'],
+            flatten: true,
+            expand: true
+          },
           {dest: "build/js", cwd: "tmp/js", src: ["**"], expand: true},
           {dest: "build/data", cwd: "tmp/assets/data", src: ["**"], expand: true},
-          {dest: "build/lib/bootstrap", cwd: "app/lib/bootstrap", src: ["**"], expand: true},
+          {dest: "build/viewer/", cwd: ".", src: ["app/viewer/*"], expand: true, flatten: true},
           {dest: "build/index.html", cwd: ".", src: ["tmp/index.html"], expand: false, flatten: true},
-          {dest: "build/data/favicon.ico", cwd: ".", src: ["tmp/assets/favicon.ico"], expand: false, flatten: true},
-          {dest: "build/license.txt", cwd: ".", src: ["tmp/assets/license.txt"], expand: false, flatten: true},
+          {dest: "build/license.txt", cwd: ".", src: ["../LICENSE"], expand: false, flatten: true},
         ]
       },
 
@@ -116,78 +84,12 @@ module.exports = function(grunt) {
       }
     },
 
-    concat: {
-      fontawesome: {
-        src: [
-          'node_modules/@fortawesome/fontawesome-free/css/fontawesome.css',
-          'node_modules/@fortawesome/fontawesome-free/css/solid.css',
-          'node_modules/@fortawesome/fontawesome-free/css/regular.css'],
-        dest: 'app/assets/lib/webfonts/@fontawesome/fontawesome-all.css'
-      },
-      fontsource: {
-        src: [
-          'node_modules/@fontsource/*/400.css',
-          'node_modules/@fontsource/*/700.css'],
-        dest: 'app/assets/lib/webfonts/@fontsource/fontsource-all.css'
-      }
-    },
-
     "string-replace": {
-      initFonts: {
-        src: "./app/assets/lib/webfonts/@fontawesome/fontawesome-all.css",
-        dest: "./app/assets/lib/webfonts/@fontawesome/fontawesome-all.css",
-        options: {
-          replacements: [
-            {
-              pattern: /url\("\.\.\/webfonts\/fa/gi,
-              replacement: function () {
-                return 'url("./files/fa';
-              },
-            }
-          ]
-        }
-      },
       pass1: {
-        src: "./tmp/css/*.css",
+        src: "./tmp/css/styles-*.css",
         dest: "./tmp/css/",
         options: {
           replacements: [
-            {
-              pattern: /'fa-solid-/gi,
-              replacement: function () {
-                return "'../lib/webfonts/fa-solid-";
-              }
-            },
-            {
-              pattern: /url\(fa-/gi,
-              replacement: function () {
-                return "url(./files/fa-";
-              }
-            },
-            {
-              pattern: /url\(noto/gi,
-              replacement: function () {
-                return "url(./files/noto";
-              }
-            },
-            {
-              pattern: /url\(inter/gi,
-              replacement: function () {
-                return "url(./files/inter";
-              }
-            },
-            {
-              pattern: /\.\.\/webfonts/gi,
-              replacement: function () {
-                return "../lib/webfonts";
-              }
-            },
-            {
-              pattern: /_-webfonts-/gi,
-              replacement: function () {
-                return "../lib/webfonts/";
-              }
-            },
             {
               pattern: /(0056b3|007bff|17a2b8|28a745|34ce57)/gi,
               replacement: function () {
@@ -335,35 +237,40 @@ module.exports = function(grunt) {
           ]
         }
       },
+
       pass2: {
-        files: {
-          "tmp/js/scripts.js": "tmp/js/scripts.js"
-        },
+        src: "./tmp/css/fonts.css",
+        dest: "./tmp/css/",
         options: {
           replacements: [
             {
-              pattern: /glyphicon glyphicon-ok/ig,
-              replacement: "fa fa-check"
+              pattern: /'fa-solid-/gi,
+              replacement: function () {
+                return "'../fonts/fa-solid-";
+              }
             },
             {
-              pattern: /glyphicon glyphicon-remove/ig,
-              replacement: "fa fa-xmark"
+              pattern: /url\(fa-/gi,
+              replacement: function () {
+                return "url(../fonts/fa-";
+              }
             },
             {
-              pattern: "style=\"outline: 0;\"",
-              replacement: "data-ng-style=\"{\\'outline\\': \\'0\\'}\""
+              pattern: /url\(noto/gi,
+              replacement: function () {
+                return "url(../fonts/noto";
+              }
             },
             {
-              pattern: "style=\"margin-right: 10px\"",
-              replacement: "data-ng-style=\"{\\'margin-right\\': \\'10px\\'}\""
-            },
-            {
-              pattern: "style=\"width: 34px;\"",
-              replacement: "data-ng-style=\"{\\'width\\': \\'34px\\'}\""
+              pattern: /url\(inter/gi,
+              replacement: function () {
+                return "url(../fonts/inter";
+              }
             }
           ]
         }
       },
+
       pass3: {
         files: {
           "tmp/index.html": "tmp/index.html"
@@ -372,16 +279,12 @@ module.exports = function(grunt) {
         options: {
           replacements: [
             {
-              pattern: 'assets/favicon.ico',
-              replacement: 'data/favicon.ico'
-            },
-            {
               pattern: /<script src="(\w+)\.js" type="module"><\/script>/g,
               replacement: '<script src="js/$1.js" type="module"></script>'
             },
             {
-              pattern: "<link rel=\"stylesheet\" href=\"styles.css\"></head>",
-              replacement: "<link rel=\"stylesheet\" href=\"css/styles.css\"></head>"
+              pattern: /<link rel="stylesheet" href="/g,
+              replacement: "<link rel=\"stylesheet\" href=\"css/"
             }
           ]
         }
@@ -415,34 +318,25 @@ module.exports = function(grunt) {
     },
 
     shell: {
-      build: {
-        command: "npx ng build --configuration=production --aot && echo \"Build completed\""
+      npx_build: {
+        command: "npx ng build --configuration=production --aot --source-map"
       },
-      test: {
+      npx_build_and_instrument: {
         command: "npx ng build --configuration=testing --source-map && nyc instrument dist instrument"
-      },
-      babel: {
-        command: "npx ng build --configuration=production --source-map && nyc instrument dist instrument"
       },
       serve: {
         command: "ng serve --proxy-config proxy.conf.json"
-      },
-      code_coverage: {
-        command: "npm run e2e:ci && npm run e2e:coverage"
       }
     },
   });
 
-  grunt.loadNpmTasks("@lodder/grunt-postcss");
-  grunt.loadNpmTasks("grunt-angular-templates");
   grunt.loadNpmTasks("grunt-confirm");
   grunt.loadNpmTasks("grunt-contrib-clean");
-  grunt.loadNpmTasks("grunt-contrib-concat");
   grunt.loadNpmTasks("grunt-contrib-copy");
+  grunt.loadNpmTasks("grunt-shell");
   grunt.loadNpmTasks("grunt-stylelint");
   grunt.loadNpmTasks("grunt-string-replace");
   grunt.loadNpmTasks("gruntify-eslint");
-  grunt.loadNpmTasks("grunt-shell");
 
   let readNoTranslateStrings = function() {
     return JSON.parse(grunt.file.read("app/assets/data_src/notranslate_strings.json"));
@@ -1023,11 +917,9 @@ module.exports = function(grunt) {
   // Run this task to fetch translations from transifex and create application files
   grunt.registerTask("updateTranslations", ["fetchTranslations", "makeAppData", "verifyAppData"]);
 
-  grunt.registerTask("build", ["clean", "concat:fontsource", "concat:fontawesome", "string-replace:initFonts", "copy:sources", "shell:build", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
-
-  grunt.registerTask("test_build", ["clean", "concat:fontsource", "concat:fontawesome", "string-replace:initFonts", "copy:sources", "shell:test", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
+  grunt.registerTask("build", ["clean", "shell:npx_build", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
 
   grunt.registerTask("serve", ["shell:serve"]);
 
-  grunt.registerTask("coverage", ["shell:code_coverage"]);
+  grunt.registerTask("build_and_instrument", ["clean", "shell:npx_build_and_instrument", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
 };
