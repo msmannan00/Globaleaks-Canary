@@ -34,7 +34,6 @@ export class AppComponent implements AfterViewInit, OnInit {
   }
 
   watchLanguage() {
-    this.utilsService.removeBootstrap(this.renderer, this.document, "lib/bootstrap/bootstrap.rtl.min.css");
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.translationService.loadBootstrapStyles(event, this.renderer);
     });

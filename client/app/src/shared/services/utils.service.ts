@@ -98,7 +98,7 @@ export class UtilsService {
     return false;
   }
 
-  removeBootstrap(renderer: Renderer2, document:Document, link:string){
+  removeStyles(renderer: Renderer2, document:Document, link:string){
     const defaultBootstrapLink = document.head.querySelector(`link[href="${link}"]`);
     if (defaultBootstrapLink) {
       renderer.removeChild(document.head, defaultBootstrapLink);

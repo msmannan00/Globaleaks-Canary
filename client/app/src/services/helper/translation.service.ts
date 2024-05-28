@@ -20,16 +20,15 @@ export class TranslationService {
     const newDirection = this.utilsService.getDirection(event.lang);
     if (newDirection !== this.currentDirection) {
       waitForLoader = true;
-      this.utilsService.removeBootstrap(renderer, this.document, "lib/bootstrap/bootstrap.min.css");
-      this.utilsService.removeBootstrap(renderer, this.document, "lib/bootstrap/bootstrap.rtl.min.css");
+      this.utilsService.removeStyles(renderer, this.document, "css/styles-" + this.currentDirection + ".css");
 
       const lang = this.translate.currentLang;
-      const bootstrapCssFilename = ['ar', 'dv', 'fa', 'fa_AF', 'he', 'ps', 'ug', 'ur'].includes(lang) ? 'bootstrap.rtl.min.css' : 'bootstrap.min.css';
-      const bootstrapCssPath = `lib/bootstrap/${bootstrapCssFilename}`;
+      const cssFilename = ['ar', 'dv', 'fa', 'fa_AF', 'he', 'ps', 'ug', 'ur'].includes(lang) ? 'styles-rtl.css' : 'styles-ltr.css';
+      const cssPath = `css/${cssFilename}`;
       const newLinkElement = renderer.createElement('link');
       renderer.setAttribute(newLinkElement, 'rel', 'stylesheet');
       renderer.setAttribute(newLinkElement, 'type', 'text/css');
-      renderer.setAttribute(newLinkElement, 'href', bootstrapCssPath);
+      renderer.setAttribute(newLinkElement, 'href', cssPath);
       const firstLink = this.document.head.querySelector('link');
       renderer.insertBefore(this.document.head, newLinkElement, firstLink);
       this.currentDirection = newDirection;
@@ -41,9 +40,6 @@ export class TranslationService {
     this.language = changedLanguage;
     this.translate.use(this.language).subscribe(() => {
       this.translate.setDefaultLang(this.language);
-      if (this.translate.getBrowserLang() !== this.language) {
-        this.translate.getTranslation(this.language).subscribe();
-      }
       if (callback) {
         callback();
       }
