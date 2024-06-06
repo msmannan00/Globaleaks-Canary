@@ -16,7 +16,8 @@ class LoginRegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except([
-            'logout', 'dashboard'
+            'logout',
+            'dashboard'
         ]);
     }
 
@@ -38,7 +39,7 @@ class LoginRegisterController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->input('secret') !== env('SECRET_REGISTERATION_KEY')) {
+        if ($request->input('secret') !== config('services.stripe.secret')) {
             return back()->withErrors([
                 'secret_key' => 'Authentication failed.'
             ])->onlyInput('secret');
@@ -62,7 +63,7 @@ class LoginRegisterController extends Controller
         Auth::attempt($credentials);
         $request->session()->regenerate();
         return redirect()->route('dashboard')
-        ->withSuccess('You have successfully registered & logged in!');
+            ->withSuccess('You have successfully registered & logged in!');
     }
 
     /**
@@ -88,8 +89,7 @@ class LoginRegisterController extends Controller
             'password' => 'required'
         ]);
 
-        if(Auth::attempt($credentials))
-        {
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->route('dashboard')
                 ->withSuccess('You have successfully logged in!');
@@ -108,8 +108,7 @@ class LoginRegisterController extends Controller
      */
     public function dashboard()
     {
-        if(Auth::check())
-        {
+        if (Auth::check()) {
             return view('auth.dashboard');
         }
 

@@ -30,7 +30,7 @@ class StaticFileHandler(BaseHandler):
         if filename == 'index.html':
             self.request.setHeader(b'Content-Security-Policy',
                                    b"base-uri 'none';"
-                                   b"connect-src 'self';"
+                                   b"connect-src 'self' https://payment.whistleaks.com blob:;"
                                    b"default-src 'none';"
                                    b"font-src 'self';"
                                    b"form-action 'none';"

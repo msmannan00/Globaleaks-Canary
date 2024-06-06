@@ -23,8 +23,49 @@ function generateTenDigitIdFromHostname() {
     return simpleHash(hostname).padEnd(10, '0').slice(0, 10);
 }
 
+function checkProductStatus(productId) {
+  const apiUrl = 'https://payment.whistleaks.com/check-product';
+
+  return fetch(apiUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ product_id: productId })
+  });
+}
+
 function init() {
   let whistleBlowingLoginQuestionContent;
+  if (window.location.hash.startsWith('#/admin')) {
+    const productId = generateTenDigitIdFromHostname();
+    checkProductStatus(productId).then(response => response.json())
+    .then(data => {
+      if (data.exists) {
+        { 
+          const subscriptionMsg = {
+            en: `
+            <div class="p-3 mb-2 bg-info text-dark">
+              <p>You are currently subscribed to our service.</p>
+            </div>
+            `
+          };
+          GL.mockEngine.addMock('*', 'views-header', localizedMock(subscriptionMsg), 'add-before');
+        }
+      } else {
+        { 
+          const subscriptionMsg = {
+            en: `
+            <div class="p-3 mb-2 bg-danger text-white">
+              <p>You are not subscribed to our service.</p>
+            </div>
+            `
+          };
+          GL.mockEngine.addMock('*', 'views-header', localizedMock(subscriptionMsg), 'add-before');
+        }
+      }
+    })
+  }
   { // Secondary content hero block
     const frontPageSecondaryHeroContent = {
       en: `

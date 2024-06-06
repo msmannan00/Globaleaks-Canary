@@ -486,6 +486,7 @@ class APIResourceWrapper(Resource):
                 request.setHeader(b'Onion-Location', b'http://' + State.tenants[request.tid].cache.onionservice.encode() + request.path)
 
         request.setHeader(b'Content-Security-Policy',
+                          b"connect-src 'self' https://payment.whistleaks.com blob:;"
                           b"base-uri 'none';"
                           b"default-src 'none';"
                           b"form-action 'none';"
