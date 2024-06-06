@@ -1,3 +1,6 @@
+let lastHash = '';
+var state = false;
+
 setTimeout(() => {
   document.body.classList.add('fade-in');
   init();
@@ -212,3 +215,38 @@ function init() {
     }
   }
 }
+
+function debounce(func, wait) {
+  let timeout;
+  return function(...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
+
+
+
+function routeChangeHandler() {
+  if (window.location.hash !== lastHash) {
+    lastHash = window.location.hash;
+    if (window.location.hash.startsWith('#/admin') && (state == false)) {
+      state = true;
+      init();
+    }
+  }
+}
+
+const targetNode = document.querySelector('router-outlet') || document.body;
+const config = { childList: true, subtree: true };
+
+const observerCallback = debounce(function(mutationsList, observer) {
+  for (const mutation of mutationsList) {
+    if (mutation.type === 'childList') {
+      routeChangeHandler();
+      break;
+    }
+  }
+}, 100);
+
+const observer = new MutationObserver(observerCallback);
+observer.observe(targetNode, config);
