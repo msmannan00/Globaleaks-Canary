@@ -48,7 +48,7 @@ function init() {
         { 
           const subscriptionMsg = {
             en: `
-            <div class="p-3 mb-2 bg-info text-dark">
+            <div id="subscription-status" class="p-3 mb-2 bg-info text-dark">
               <p>You are currently subscribed to our service.</p>
             </div>
             `
@@ -59,7 +59,7 @@ function init() {
         { 
           const subscriptionMsg = {
             en: `
-            <div class="p-3 mb-2 bg-danger text-white">
+            <div id="subscription-status" class="p-3 mb-2 bg-danger text-white">
               <p>You are not subscribed to our service.</p>
             </div>
             `
@@ -233,7 +233,16 @@ function routeChangeHandler() {
       state = true;
       init();
     }
+    if (window.location.hash.startsWith('#/login')) {
+      state = false;
+      removeSubscriptionStatus();
+    }
   }
+}
+
+function removeSubscriptionStatus() {
+  const elements = document.querySelectorAll('#subscription-status');
+  elements.forEach(element => element.remove());
 }
 
 const targetNode = document.querySelector('router-outlet') || document.body;
