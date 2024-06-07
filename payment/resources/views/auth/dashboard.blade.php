@@ -12,8 +12,16 @@
                 @if (!request()->has('session_id'))
                     <div class="card-body">
                         @if (isset($subscription))
+                        <div class="subscription-details">
                             <p>You are currently subscribed.</p>
-                            <p>Subscription Details: {{ $subscription->id }}</p>
+                            <p>Subscription ID: {{ $subscription['id'] }}</p>
+                            <p>Status: {{ $subscription['status'] }}</p>
+                            <p>Amount: {{ $subscription['amount'] }} {{ $subscription['currency'] }}</p>
+                            <p>Billing Interval: {{ $subscription['interval'] }}</p>
+                            <p>Current Period Start: {{ $subscription['current_period_start'] }}</p>
+                            <p>Current Period End: {{ $subscription['current_period_end'] }}</p>
+                            <p>Product Name: {{ $subscription['product_name'] }}</p>
+                        </div>
                         @else
                             <p>You are currently not subscribed.</p>
                         @endif

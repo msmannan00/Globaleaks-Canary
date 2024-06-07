@@ -11,7 +11,8 @@ use Stripe\Subscription;
 use Stripe\BillingPortal\Session as BillingPortalSession;
 use Exception;
 use DB;
-
+use Carbon\Carbon;
+use Stripe\Product;
 class SubscriptionController extends Controller
 {
     public function subscribe(Request $request)
@@ -67,24 +68,47 @@ class SubscriptionController extends Controller
     {
         $user = Auth::user();
         $email = $user->email;
-
+    
         // Check if the user has an active subscription
-        $subscription = DB::table('subscriptions')->where('user_email', $email)->first();
-
-        if ($subscription) {
+        $subscriptionRecord = DB::table('subscriptions')->where('user_email', $email)->first();
+    
+        if ($subscriptionRecord) {
             // Fetch subscription details from Stripe
             try {
                 Stripe::setApiKey(config('services.stripe.secret'));
                 $subscriptions = Subscription::all([
-                    'customer' => $subscription->customer_id,
+                    'customer' => $subscriptionRecord->customer_id,
                     'status' => 'active',
                 ]);
                 $activeSubscription = $subscriptions->data[0] ?? null;
-
-                return view('auth.dashboard', [
-                    'user' => $user,
-                    'subscription' => $activeSubscription
-                ]);
+    
+                if ($activeSubscription) {
+                    $plan = $activeSubscription->plan;
+    
+                    // Fetch the product details associated with the plan
+                    $product = Product::retrieve($plan->product);
+    
+                    $subscriptionDetails = [
+                        'id' => $activeSubscription->id,
+                        'status' => $activeSubscription->status,
+                        'current_period_start' => Carbon::createFromTimestamp($activeSubscription->current_period_start)->toDateTimeString(),
+                        'current_period_end' => Carbon::createFromTimestamp($activeSubscription->current_period_end)->toDateTimeString(),
+                        'amount' => number_format($plan->amount / 100, 2),
+                        'currency' => strtoupper($plan->currency),
+                        'interval' => ucfirst($plan->interval),
+                        'product_name' => $product->name,
+                    ];
+    
+                    return view('auth.dashboard', [
+                        'user' => $user,
+                        'subscription' => $subscriptionDetails
+                    ]);
+                } else {
+                    return view('auth.dashboard', [
+                        'user' => $user,
+                        'subscription' => null
+                    ]);
+                }
             } catch (Exception $e) {
                 return view('auth.dashboard', [
                     'user' => $user,
