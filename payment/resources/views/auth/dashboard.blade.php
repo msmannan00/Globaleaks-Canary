@@ -12,21 +12,65 @@
                 @if (!request()->has('session_id'))
                     <div class="card-body">
                         @if (isset($subscription))
-                        <div class="subscription-details">
-                            <p>You are currently subscribed.</p>
-                            <p>Subscription ID: {{ $subscription['id'] }}</p>
-                            <p>Status: {{ $subscription['status'] }}</p>
-                            <p>Amount: {{ $subscription['amount'] }} {{ $subscription['currency'] }}</p>
-                            <p>Billing Interval: {{ $subscription['interval'] }}</p>
-                            <p>Current Period Start: {{ $subscription['current_period_start'] }}</p>
-                            <p>Current Period End: {{ $subscription['current_period_end'] }}</p>
-                            <p>Product Name: {{ $subscription['product_name'] }}</p>
-                        </div>
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <th scope="row" class="bg-light">Subscription Status</th>
+                                </tr>
+                                <tr>
+                                    <td>You are currently subscribed.</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="bg-light">Subscription ID</th>
+                                </tr>
+                                <tr>
+                                    <td>{{ $subscription['id'] }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="bg-light">Status</th>
+                                </tr>
+                                <tr>
+                                    <td>{{ $subscription['status'] }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="bg-light">Subscription Amount</th>
+                                </tr>
+                                <tr>
+                                    <td>{{ $subscription['status'] }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="bg-light">Billing Interval</th>
+                                </tr>
+                                <tr>
+                                    <td>{{ $subscription['interval'] }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="bg-light">Current Period Start</th>
+                                </tr>
+                                <tr>
+                                    <td>{{ $subscription['current_period_start'] }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="bg-light">Current Period End</th>
+                                </tr>
+                                <tr>
+                                    <td>{{ $subscription['current_period_start'] }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="bg-light">Product Name</th>
+                                </tr>
+                                <tr>
+                                    <td>{{ $subscription['product_name'] }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
                         @else
-                            <p>You are currently not subscribed.</p>
+                            <div class="alert alert-info" role="alert">
+                                You are currently not subscribed.
+                            </div>
                         @endif
                     </div>
-                    <div class="container mt-3 mb-3">
+                    <div class="container mt-3">
                         <div class="d-flex">
                             @if (isset($subscription))
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
@@ -36,6 +80,12 @@
                                     data-bs-target="#subscribeModal">Subscribe</button>
                             @endif
                         </div>
+                        <br>
+                        @if ($errors->has('password'))
+                            <div class="alert alert-danger" role="alert">
+                                {{ $errors->first('password') }}
+                            </div>
+                        @endif
                     </div>
                 @endif
                 @if (request()->has('session_id'))
