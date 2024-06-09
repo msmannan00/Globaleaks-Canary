@@ -451,11 +451,33 @@ body[data-ng-class*='"public":true'] #LogoBox img {
   background-color: #e5af0b;
   border-color: #e5af0b;
 }
+[dir] .btn-warning {
+    background-color: #e5af0b;
+    border-color: #e5af0b;
+    active:e5af0b;
+    color: white;
+}
+
+[dir] .btn-warning:active {
+    color: white;
+}
+
+[dir] .btn-warning:focus-visible {
+    border: none;
+}
+
 .input-group-text{
   background: #06b0eb;
   color:white;
   border: 1px solid #06b0eb;
+  border-top-left-radius: 6px !important;
+  border-bottom-left-radius: 6px !important;
 }
+
+#LanguagePickerBox{
+  margin-top: 12px;
+}
+
 .btn-primary:active{
   background-color: #06b0eb !important;
   border-color: #06b0eb !important;

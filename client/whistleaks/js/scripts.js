@@ -48,8 +48,9 @@ function init() {
         { 
           const subscriptionMsg = {
             en: `
-            <div id="subscription-status" class="p-3 mb-2 bg-info text-dark">
-              <p>You are currently subscribed to our service.</p>
+            <div id="subscription-status" class="p-3 mb-2 bg-primary d-flex justify-content-between align-items-center">
+              <p class="text-white fw-semibold mb-0">You are currently subscribed to our service. You can view your payment information by going to payments</p>
+              <a target="_blank" class="btn btn-info text-white" href="https://payment.whistleaks.com/">Payments</a>
             </div>
             `
           };
@@ -59,8 +60,9 @@ function init() {
         { 
           const subscriptionMsg = {
             en: `
-            <div id="subscription-status" class="p-3 mb-2 bg-danger text-white">
-              <p>You are not subscribed to our service.</p>
+            <div id="subscription-status" class="p-3 mb-2 bg-warning d-flex justify-content-between align-items-center">
+              <p class="text-white mb-0 fw-semibold">You are not subscribed to our service. This system data is at risk of being lost.</p>
+              <a target="_blank" class="btn btn-warning" href="https://payment.whistleaks.com/">Payments</a>
             </div>
             `
           };
