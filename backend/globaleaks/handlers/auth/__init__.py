@@ -254,7 +254,7 @@ class SessionHandler(BaseHandler):
     """
     check_roles = {'user', 'whistleblower'}
 
-    def get(self):
+    def post(self):
         """
         Refresh and retrive session
         """

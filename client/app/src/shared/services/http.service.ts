@@ -64,6 +64,10 @@ export class HttpService {
   requestDeleteUserSession(): Observable<Session> {
     return this.httpClient.delete<Session>("api/auth/session");
   }
+  
+  requestGetUserSession(): Observable<any> {
+    return this.httpClient.post<any>('api/auth/session', {});
+  }
 
   requestDeleteTenant(url: string): Observable<tenantResolverModel> {
     return this.httpClient.delete<tenantResolverModel>(url);
