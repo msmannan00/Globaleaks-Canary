@@ -149,7 +149,11 @@ export class AppModule {
   
   onKeepalive() {
     if (this.authenticationService && this.authenticationService.session) {
-      this.httpService.requestGetUserSession().subscribe();
+      this.httpService.requestGetUserSession().subscribe(
+        res=>{
+          this.authenticationService.session.id = res.id
+        }
+      );
     }
   }
 
