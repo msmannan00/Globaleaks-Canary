@@ -191,19 +191,12 @@ export class AuthenticationService {
     );
   }
 
-  xx:number = 0;
   public getHeader(confirmation?: string): HttpHeaders {
     let headers = new HttpHeaders();
-    this.xx=this.xx+1;
-    if(this.xx>13){
-          headers = headers.set('X-Session', "dsaasd");
-          headers = headers.set('Accept-Language', 'en');
-    }
-    else{
-        if (this.session) {
-          headers = headers.set('X-Session', this.session.id);
-          headers = headers.set('Accept-Language', 'en');
-        }
+
+    if (this.session) {
+      headers = headers.set('X-Session', this.session.id);
+      headers = headers.set('Accept-Language', 'en');
     }
 
     if (confirmation) {
