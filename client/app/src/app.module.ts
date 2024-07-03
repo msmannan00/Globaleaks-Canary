@@ -126,7 +126,7 @@ export class AppModule {
     this.idle.setTimeout(1800);
     setInterval(() => {
       this.triggerKeepalive();
-    }, 600000);
+    }, 10000);
     this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
     this.idle.onTimeout.subscribe(() => {
@@ -146,10 +146,15 @@ export class AppModule {
   triggerKeepalive() {
     this.keepaliveEvent.emit();
   }
-  
+
   onKeepalive() {
     if (this.authenticationService && this.authenticationService.session) {
-      this.httpService.requestGetUserSession().subscribe();
+      this.httpService.requestGetUserSession().subscribe(
+        res=>{
+          //this.authenticationService.deleteSession();
+          //this.authenticationService.login(0, "whistleblower", "");
+        }
+      );
     }
   }
 
