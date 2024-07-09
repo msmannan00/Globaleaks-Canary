@@ -254,18 +254,11 @@ class SessionHandler(BaseHandler):
     """
     check_roles = {'user', 'whistleblower'}
 
-    def post(self):
+    def get(self):
         """
         Refresh and retrive session
         """
-        session = Sessions.new(self.session.user_tid,
-                               self.session.user_id,
-                               self.session.user_tid,
-                               self.session.user_name,
-                               self.session.user_role,
-                               self.session.cc,
-                               self.session.ek)
-        return session.serialize()
+        return self.session.serialize()
 
     @inlineCallbacks
     def delete(self):

@@ -89,6 +89,9 @@ class ConfigL10NFactory(object):
         for key in keys:
             value = data[key][lang] if key in data else ''
             self.session.add(ConfigL10N({'tid': self.tid, 'lang': lang, 'var_name': key, 'value': value}))
+#         for key in keys:
+#             value = data[key][lang] if key in data else ''
+#             self.session.add(ConfigL10N({'tid': 0, 'lang': lang, 'var_name': key, 'value': value}))
 
     def get_all(self, filter_name, lang):
         return list(self.session.query(ConfigL10N).filter(ConfigL10N.tid == self.tid, ConfigL10N.lang == lang, ConfigL10N.var_name.in_(ConfigL10NFilters[filter_name])))

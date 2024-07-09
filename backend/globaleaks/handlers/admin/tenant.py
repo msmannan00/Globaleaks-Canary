@@ -24,8 +24,21 @@ def db_initialize_tenant_submission_statuses(session, tid):
         session.add(models.SubmissionStatus(s))
 
 
-def db_create(session, desc):
-    t = models.Tenant()
+def db_create(session, desc, default = False):
+    if default:
+        first_tenant = models.Tenant()
+        first_tenant.id = 0
+        session.add(first_tenant)
+        session.commit()
+        session.flush()
+
+        appdata = load_appdata()
+
+        models.config.add_new_lang(session, first_tenant.id, 'en', appdata)
+        return first_tenant
+    else:
+        t = models.Tenant()
+
 
     t.active = desc['active']
 
@@ -36,25 +49,26 @@ def db_create(session, desc):
 
     appdata = load_appdata()
 
-    if t.id == 1:
-        language = 'en'
-        db_load_defaults(session)
-    else:
-        language = db_get_config_variable(session, 1, 'default_language')
+    if not default:
+        if t.id == 1:
+            language = 'en'
+            db_load_defaults(session)
+        else:
+            language = db_get_config_variable(session, 1, 'default_language')
 
-    models.config.initialize_config(session, t.id, desc['mode'])
+        models.config.initialize_config(session, t.id, desc['mode'])
 
-    if t.id == 1:
-        key, cert = gen_selfsigned_certificate()
-        db_set_config_variable(session, 1, 'https_selfsigned_key', key)
-        db_set_config_variable(session, 1, 'https_selfsigned_cert', cert)
+        if t.id == 1:
+            key, cert = gen_selfsigned_certificate()
+            db_set_config_variable(session, 1, 'https_selfsigned_key', key)
+            db_set_config_variable(session, 1, 'https_selfsigned_cert', cert)
 
-    for var in ['mode', 'name', 'subdomain']:
-        db_set_config_variable(session, t.id, var, desc[var])
+        for var in ['mode', 'name', 'subdomain']:
+            db_set_config_variable(session, t.id, var, desc[var])
 
-    models.config.add_new_lang(session, t.id, language, appdata)
+        models.config.add_new_lang(session, t.id, language, appdata)
 
-    db_initialize_tenant_submission_statuses(session, t.id)
+        db_initialize_tenant_submission_statuses(session, t.id)
 
     return t
 
