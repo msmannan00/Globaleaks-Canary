@@ -23,54 +23,53 @@ def db_initialize_tenant_submission_statuses(session, tid):
               {'tid': tid, 'id': 'closed', 'label': {'en': 'Closed'}, 'tip_timetolive': 0}]:
         session.add(models.SubmissionStatus(s))
 
+def create_default_tenant(session, desc):
+    first_tenant = models.Tenant()
+    first_tenant.id = 0
+    session.add(first_tenant)
+    session.commit()
+    session.flush()
 
-def db_create(session, desc, default = False):
-    if default:
-        first_tenant = models.Tenant()
-        first_tenant.id = 0
-        session.add(first_tenant)
-        session.commit()
-        session.flush()
+    appdata = load_appdata()
+    models.config.add_new_lang(session, first_tenant.id, 'en', appdata)
+    models.config.initialize_config(session, first_tenant.id, desc['mode'])
+    
+    return first_tenant
 
-        appdata = load_appdata()
-
-        models.config.add_new_lang(session, first_tenant.id, 'en', appdata)
-        return first_tenant
-    else:
-        t = models.Tenant()
-
-
+def create_non_default_tenant(session, desc):
+    t = models.Tenant()
     t.active = desc['active']
-
     session.add(t)
-
-    # required to generate the tenant id
     session.flush()
 
     appdata = load_appdata()
 
-    if not default:
-        if t.id == 1:
-            language = 'en'
-            db_load_defaults(session)
-        else:
-            language = db_get_config_variable(session, 1, 'default_language')
+    if t.id == 1:
+        language = 'en'
+        db_load_defaults(session)
+    else:
+        language = db_get_config_variable(session, 1, 'default_language')
 
-        models.config.initialize_config(session, t.id, desc['mode'])
+    models.config.initialize_config(session, t.id, desc['mode'])
 
-        if t.id == 1:
-            key, cert = gen_selfsigned_certificate()
-            db_set_config_variable(session, 1, 'https_selfsigned_key', key)
-            db_set_config_variable(session, 1, 'https_selfsigned_cert', cert)
+    if t.id == 1:
+        key, cert = gen_selfsigned_certificate()
+        db_set_config_variable(session, 1, 'https_selfsigned_key', key)
+        db_set_config_variable(session, 1, 'https_selfsigned_cert', cert)
 
-        for var in ['mode', 'name', 'subdomain']:
-            db_set_config_variable(session, t.id, var, desc[var])
+    for var in ['mode', 'name', 'subdomain']:
+        db_set_config_variable(session, t.id, var, desc[var])
 
-        models.config.add_new_lang(session, t.id, language, appdata)
-
-        db_initialize_tenant_submission_statuses(session, t.id)
+    models.config.add_new_lang(session, t.id, language, appdata)
+    db_initialize_tenant_submission_statuses(session, t.id)
 
     return t
+
+def db_create(session, desc, default=False):
+    if default:
+        return create_default_tenant(session, desc)
+    else:
+        return create_non_default_tenant(session, desc)
 
 
 @transact
@@ -103,7 +102,7 @@ def db_get_tenant_list(session):
 
     configs = db_get_configs(session, 'tenant')
 
-    for t, s in session.query(models.Tenant, models.Subscriber).join(models.Subscriber, models.Subscriber.tid == models.Tenant.id, isouter=True):
+    for t, s in session.query(models.Tenant, models.Subscriber).join(models.Subscriber, models.Subscriber.tid == models.Tenant.id, isouter=True).filter(models.Tenant.id != 0):
         tenant_dict = serializers.serialize_tenant(session, t, configs[t.id])
         if s:
             tenant_dict['signup'] = serializers.serialize_signup(s)
