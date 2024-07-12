@@ -907,7 +907,7 @@ class _Tenant(Model):
     __table_args__ = {'sqlite_autoincrement': True}
 
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=False)
     creation_date = Column(DateTime, default=datetime_now, nullable=False)
     active = Column(Boolean, default=False, nullable=False)
 

@@ -37,7 +37,14 @@ def create_default_tenant(session, desc):
     return first_tenant
 
 def create_non_default_tenant(session, desc):
+    current_tenant_config = session.query(models.Config).filter_by(tid=1, var_name='current_tenant_id').first()
     t = models.Tenant()
+    if current_tenant_config:
+        current_tenant_id = int(current_tenant_config.value)
+        t.id = current_tenant_id + 1
+        db_set_config_variable(session, 1, 'current_tenant_id', t.id)
+    else:
+        t.id = 1  
     t.active = desc['active']
     session.add(t)
     session.flush()
@@ -56,11 +63,36 @@ def create_non_default_tenant(session, desc):
         key, cert = gen_selfsigned_certificate()
         db_set_config_variable(session, 1, 'https_selfsigned_key', key)
         db_set_config_variable(session, 1, 'https_selfsigned_cert', cert)
+        db_set_config_variable(session, 1, 'current_tenant_id', t.id)
+        db_set_config_variable(session, 1, 'current_profile_tenant_id', 1000000)
 
     for var in ['mode', 'name', 'subdomain']:
         db_set_config_variable(session, t.id, var, desc[var])
 
     models.config.add_new_lang(session, t.id, language, appdata)
+    db_initialize_tenant_submission_statuses(session, t.id)
+
+    return t
+
+def create_profile_tenant(session, desc):
+    current_tenant_config = session.query(models.Config).filter_by(tid=1, var_name='current_profile_tenant_id').first()
+    t = models.Tenant()
+    if current_tenant_config and int(current_tenant_config.value) != 1000000:
+        current_tenant_id = int(current_tenant_config.value)
+        t.id = current_tenant_id + 1
+        db_set_config_variable(session, 1, 'current_profile_tenant_id', t.id)
+    else:
+        t.id = 1000001  
+        db_set_config_variable(session, 1, 'current_profile_tenant_id', t.id)
+    t.active = desc['active']
+    session.add(t)
+    session.flush()
+   
+    models.config.initialize_config(session, t.id, desc['mode'])
+
+    for var in ['mode', 'name', 'subdomain']:
+        db_set_config_variable(session, t.id, var, desc[var])
+
     db_initialize_tenant_submission_statuses(session, t.id)
 
     return t
