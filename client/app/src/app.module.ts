@@ -1,4 +1,4 @@
-import {HostListener, NgModule, CUSTOM_ELEMENTS_SCHEMA, EventEmitter} from "@angular/core";
+import {HostListener, NgModule, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {AppRoutingModule} from "@app/app-routing.module";
 import {AppComponent} from "@app/pages/app/app.component";
@@ -15,7 +15,7 @@ import {
   ErrorCatchingInterceptor,
   appInterceptor
 } from "@app/services/root/app-interceptor.service";
-import {NgIdleKeepaliveModule} from "@ng-idle/keepalive";
+import {Keepalive, NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {HomeComponent} from "@app/pages/dashboard/home/home.component";
@@ -37,7 +37,6 @@ import {CustodianModule} from "@app/pages/custodian/custodian.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AnalystModule} from "@app/pages/analyst/analyst.module";
 import { mockEngine } from './services/helper/mocks';
-import { HttpService } from "./shared/services/http.service";
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "l10n/", "");
 }
@@ -110,9 +109,8 @@ export class AppModule {
 
   timedOut = false;
   title = "angular-idle-timeout";
-  keepaliveEvent: EventEmitter<void> = new EventEmitter();
 
-  constructor(private authenticationService: AuthenticationService,private httpService: HttpService, private idle: Idle) {
+  constructor(private authenticationService: AuthenticationService, private idle: Idle, private keepalive: Keepalive) {
     this.initIdleState();
   }
 
@@ -124,9 +122,7 @@ export class AppModule {
   initIdleState() {
     this.idle.setIdle(300);
     this.idle.setTimeout(1800);
-    setInterval(() => {
-      this.triggerKeepalive();
-    }, 600000);
+    this.keepalive.interval(600);
     this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
     this.idle.onTimeout.subscribe(() => {
@@ -139,22 +135,8 @@ export class AppModule {
         }
       }
     });
-    this.keepaliveEvent.subscribe(() => this.onKeepalive());
-    this.reset();
-  }
 
-  triggerKeepalive() {
-    this.keepaliveEvent.emit();
-  }
-  
-  onKeepalive() {
-    if (this.authenticationService && this.authenticationService.session) {
-      this.httpService.requestGetUserSession().subscribe(
-        res=>{
-          this.authenticationService.session.id = res.id
-        }
-      );
-    }
+    this.reset();
   }
 
   reset() {

@@ -41,7 +41,7 @@ def db_get_configs(session, filter_name):
 class ConfigFactory(object):
     def __init__(self, session, tid):
         self.session = session
-        self.pid = 0
+        self.pid = 1000000
         self.tid = tid
 
     def get_all(self, filter_name, reference_pointers=False):
@@ -57,12 +57,13 @@ class ConfigFactory(object):
         p_result = {}
         t_result = {}
         for item in combined_values:
-            if item.tid == self.pid and item.var_name not in result:
-                result[item.var_name] = item
+            if item.tid == self.pid:
                 p_result[item.var_name] = item
+                if item.var_name not in result:
+                  result[item.var_name] = item
             if item.tid == self.tid:
-                result[item.var_name] = item
                 t_result[item.var_name] = item
+                result[item.var_name] = item
 
         if reference_pointers:
             return result, p_result, t_result
@@ -114,6 +115,7 @@ class ConfigFactory(object):
 
     def remove_val(self, var_name):
         v = self.session.query(Config).filter(Config.tid == self.tid, Config.var_name == var_name).one_or_none()
+
         if v:
             self.session.delete(v)
             self.session.commit()
@@ -137,7 +139,7 @@ class ConfigFactory(object):
 class ConfigL10NFactory(object):
     def __init__(self, session, tid):
         self.session = session
-        self.pid = 0
+        self.pid = 1000000
         self.tid = tid
 
     def initialize(self, keys, lang, data):
@@ -160,12 +162,13 @@ class ConfigL10NFactory(object):
         p_result = {}
         t_result = {}
         for item in combined_values:
-            if item.tid == self.pid and item.var_name not in result:
-                result[item.var_name] = item
+            if item.tid == self.pid:
                 p_result[item.var_name] = item
+                if item.var_name not in result:
+                  result[item.var_name] = item
             if item.tid == self.tid:
-                result[item.var_name] = item
                 t_result[item.var_name] = item
+                result[item.var_name] = item
 
         if reference_pointers:
             return list(result.values()), p_result, t_result
@@ -239,7 +242,7 @@ def db_set_config_variable(session, tid, var, val):
 
 
 def initialize_config(session, tid, mode):
-    default_tenant_keys = ["subdomain", "onionservice", "https_admin", "https_analyst", "https_cert", "wizard_done", "uuid","default_language","name","mode"]
+    default_tenant_keys = ["subdomain", "onionservice", "https_admin", "https_analyst", "https_cert", "wizard_done", "uuid", "default_language", "name"]
     variables = {}
 
     # Initialization valid for any tenant
@@ -259,7 +262,7 @@ def initialize_config(session, tid, mode):
             variables[name] = root_tenant_node[name]
 
     for name, value in variables.items():
-        if tid == 1 or tid == 0 or name in default_tenant_keys:
+        if tid == 1 or tid == 1000000 or name in default_tenant_keys:
             session.add(Config({'tid': tid, 'var_name': name, 'value': value}))
 
 

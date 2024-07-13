@@ -10,6 +10,7 @@ from globaleaks.orm import db_del, db_get, transact, tw
 from globaleaks.rest import errors, requests
 from globaleaks.utils.tls import gen_selfsigned_certificate
 
+default_profile_id = 1000000
 
 def db_initialize_tenant_submission_statuses(session, tid):
     """
@@ -23,30 +24,21 @@ def db_initialize_tenant_submission_statuses(session, tid):
               {'tid': tid, 'id': 'closed', 'label': {'en': 'Closed'}, 'tip_timetolive': 0}]:
         session.add(models.SubmissionStatus(s))
 
-def create_default_tenant(session, desc):
-    first_tenant = models.Tenant()
-    first_tenant.id = 0
-    session.add(first_tenant)
-    session.commit()
-    session.flush()
-
-    appdata = load_appdata()
-    models.config.add_new_lang(session, first_tenant.id, 'en', appdata)
-    models.config.initialize_config(session, first_tenant.id, desc['mode'])
-    
-    return first_tenant
-
-def create_non_default_tenant(session, desc):
-    current_tenant_config = session.query(models.Config).filter_by(tid=1, var_name='current_tenant_id').first()
-    t = models.Tenant()
-    if current_tenant_config:
-        current_tenant_id = int(current_tenant_config.value)
-        t.id = current_tenant_id + 1
-        db_set_config_variable(session, 1, 'current_tenant_id', t.id)
+def db_create(session, desc, isTenant = True):
+    if isTenant:
+        id_key = 'current_tenant_id'
     else:
-        t.id = 1  
+        id_key = 'current_profile_id'
+
+    tid = db_get_config_variable(session, 1, id_key)
+    t = models.Tenant()
+
+    t.id = tid + 1
     t.active = desc['active']
+
     session.add(t)
+
+    # required to generate the tenant id
     session.flush()
 
     appdata = load_appdata()
@@ -63,45 +55,16 @@ def create_non_default_tenant(session, desc):
         key, cert = gen_selfsigned_certificate()
         db_set_config_variable(session, 1, 'https_selfsigned_key', key)
         db_set_config_variable(session, 1, 'https_selfsigned_cert', cert)
-        db_set_config_variable(session, 1, 'current_tenant_id', t.id)
-        db_set_config_variable(session, 1, 'current_profile_tenant_id', 1000000)
 
+    db_set_config_variable(session, 1, id_key, t.id)
     for var in ['mode', 'name', 'subdomain']:
         db_set_config_variable(session, t.id, var, desc[var])
 
     models.config.add_new_lang(session, t.id, language, appdata)
-    db_initialize_tenant_submission_statuses(session, t.id)
-
-    return t
-
-def create_profile_tenant(session, desc):
-    current_tenant_config = session.query(models.Config).filter_by(tid=1, var_name='current_profile_tenant_id').first()
-    t = models.Tenant()
-    if current_tenant_config and int(current_tenant_config.value) != 1000000:
-        current_tenant_id = int(current_tenant_config.value)
-        t.id = current_tenant_id + 1
-        db_set_config_variable(session, 1, 'current_profile_tenant_id', t.id)
-    else:
-        t.id = 1000001  
-        db_set_config_variable(session, 1, 'current_profile_tenant_id', t.id)
-    t.active = desc['active']
-    session.add(t)
-    session.flush()
-   
-    models.config.initialize_config(session, t.id, desc['mode'])
-
-    for var in ['mode', 'name', 'subdomain']:
-        db_set_config_variable(session, t.id, var, desc[var])
 
     db_initialize_tenant_submission_statuses(session, t.id)
 
     return t
-
-def db_create(session, desc, default=False):
-    if default:
-        return create_default_tenant(session, desc)
-    else:
-        return create_non_default_tenant(session, desc)
 
 
 @transact
@@ -134,7 +97,7 @@ def db_get_tenant_list(session):
 
     configs = db_get_configs(session, 'tenant')
 
-    for t, s in session.query(models.Tenant, models.Subscriber).join(models.Subscriber, models.Subscriber.tid == models.Tenant.id, isouter=True).filter(models.Tenant.id != 0):
+    for t, s in session.query(models.Tenant, models.Subscriber).join(models.Subscriber, models.Subscriber.tid == models.Tenant.id, isouter=True).filter(models.Tenant.id != default_profile_id):
         tenant_dict = serializers.serialize_tenant(session, t, configs[t.id])
         if s:
             tenant_dict['signup'] = serializers.serialize_signup(s)

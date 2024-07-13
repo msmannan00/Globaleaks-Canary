@@ -918,8 +918,6 @@ module.exports = function(grunt) {
   grunt.registerTask("updateTranslations", ["fetchTranslations", "makeAppData", "verifyAppData"]);
 
   grunt.registerTask("build", ["clean", "shell:npx_build", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
-
-  grunt.registerTask("serve", ["shell:serve"]);
-
+ 
   grunt.registerTask("build_and_instrument", ["clean", "shell:npx_build_and_instrument", "copy:build", "string-replace", "copy:package", "clean:tmp"]);
 };
