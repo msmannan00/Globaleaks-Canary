@@ -67,18 +67,6 @@ class ConfigFactory(object):
             )
         ).all()
 
-        result = {}
-        p_result = {}
-        t_result = {}
-        for item in combined_values:
-            if item.tid == self.pid:
-                p_result[item.var_name] = item
-                if item.var_name not in result:
-                  result[item.var_name] = item
-            if item.tid == self.tid:
-                t_result[item.var_name] = item
-                result[item.var_name] = item
-
         return process_items(combined_values, self.pid, self.tid)
 
     def update(self, filter_name, data):
@@ -97,18 +85,8 @@ class ConfigFactory(object):
                     v.set_v(data[k])
 
     def get_cfg(self, var_name):
-        subquery = self.session.query(Config) \
-            .filter(Config.var_name == var_name) \
-            .filter(or_(Config.tid == self.tid, Config.tid == 1)) \
-            .order_by(Config.tid.desc()) \
-            .limit(2).subquery()
-
-        config = self.session.query(Config) \
-            .select_entity_from(subquery) \
-            .order_by(subquery.c.tid.desc()) \
-            .first()
-
-        return config
+        subquery = self.session.query(Config).filter(Config.var_name == var_name).filter(or_(Config.tid == self.tid, Config.tid == 1)).order_by(Config.tid.desc()).limit(2).subquery()
+        return self.session.query(Config).select_entity_from(subquery).order_by(subquery.c.tid.desc()).first()
 
     def get_val(self, var_name):
         config = self.get_cfg(var_name)
