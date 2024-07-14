@@ -44,7 +44,7 @@ class ConfigFactory(object):
         self.pid = 1000000
         self.tid = tid
 
-    def get_all(self, filter_name, reference_pointers=False):
+    def get_all(self, filter_name):
         combined_values = self.session.query(Config).filter(
             Config.var_name.in_(ConfigFilters[filter_name]),
             or_(
@@ -65,13 +65,10 @@ class ConfigFactory(object):
                 t_result[item.var_name] = item
                 result[item.var_name] = item
 
-        if reference_pointers:
-            return result, p_result, t_result
-        else:
-            return result
+        return result, p_result, t_result
 
     def update(self, filter_name, data):
-        result, p_result, t_result = self.get_all(filter_name, True)
+        result, p_result, t_result = self.get_all(filter_name)
         for k, v in result.items():
             if k in data:
                 if self.tid != self.pid:
@@ -121,7 +118,8 @@ class ConfigFactory(object):
             self.session.commit()
 
     def serialize(self, filter_name):
-        return {k: v.value for k, v in self.get_all(filter_name).items()}
+        values, _, _ = self.get_all(filter_name)
+        return {k: v.value for k, v in values.items()}
 
     def update_defaults(self):
         actual = set([c[0] for c in self.session.query(Config.var_name).filter(Config.tid == self.tid)])
@@ -148,7 +146,7 @@ class ConfigL10NFactory(object):
                 value = data[key][lang] if key in data else ''
                 self.session.add(ConfigL10N({'tid': self.tid, 'lang': lang, 'var_name': key, 'value': value}))
 
-    def get_all(self, filter_name, lang, reference_pointers = False):
+    def get_all(self, filter_name, lang):
         combined_values = self.session.query(ConfigL10N).filter(
             ConfigL10N.lang == lang,
             ConfigL10N.var_name.in_(ConfigL10NFilters[filter_name]),
@@ -170,17 +168,14 @@ class ConfigL10NFactory(object):
                 t_result[item.var_name] = item
                 result[item.var_name] = item
 
-        if reference_pointers:
-            return list(result.values()), p_result, t_result
-        else:
-            return list(result.values())
+        return list(result.values()), p_result, t_result
 
     def serialize(self, filter_name, lang):
-        rows = self.get_all(filter_name, lang)
+        rows, _, _ = self.get_all(filter_name, lang)
         return {c.var_name: c.value for c in rows if c.var_name in ConfigL10NFilters[filter_name]}
 
     def update(self, filter_name, data, lang):
-        result, p_result, t_result = self.get_all(filter_name, lang, True)
+        result, p_result, t_result = self.get_all(filter_name, lang)
         c_map = {c.var_name: c for c in result}
 
         for key in (x for x in ConfigL10NFilters[filter_name] if x in data):
@@ -203,7 +198,8 @@ class ConfigL10NFactory(object):
         for lang in langs:
             old_keys = []
 
-            for cfg in self.get_all(filter_name, lang):
+            values, _, _ = self.get_all(filter_name, lang)
+            for cfg in values:
                 old_keys.append(cfg.var_name)
                 if (cfg.update_date == null or reset) and cfg.var_name in templates:
                     cfg.value = templates[cfg.var_name][lang]
@@ -285,3 +281,4 @@ def update_defaults(session, tid, appdata):
 
     ConfigL10NFactory(session, tid).update_defaults('node', langs, appdata['node'])
     ConfigL10NFactory(session, tid).update_defaults('notification', langs, appdata['templates'])
+e
