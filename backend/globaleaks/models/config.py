@@ -24,6 +24,20 @@ def get_default(default):
 
     return default
 
+def process_items(combined_values, pid, tid):
+    result = {}
+    p_result = {}
+    t_result = {}
+    for item in combined_values:
+        if item.tid == pid:
+            p_result[item.var_name] = item
+            if item.var_name not in result:
+                result[item.var_name] = item
+        if item.tid == tid:
+            t_result[item.var_name] = item
+            result[item.var_name] = item
+
+    return result, p_result, t_result
 
 def db_get_configs(session, filter_name):
     configs = {}
@@ -65,7 +79,7 @@ class ConfigFactory(object):
                 t_result[item.var_name] = item
                 result[item.var_name] = item
 
-        return result, p_result, t_result
+        return process_items(combined_values, self.pid, self.tid)
 
     def update(self, filter_name, data):
         result, p_result, t_result = self.get_all(filter_name)
@@ -156,18 +170,7 @@ class ConfigL10NFactory(object):
             )
         ).all()
 
-        result = {}
-        p_result = {}
-        t_result = {}
-        for item in combined_values:
-            if item.tid == self.pid:
-                p_result[item.var_name] = item
-                if item.var_name not in result:
-                  result[item.var_name] = item
-            if item.tid == self.tid:
-                t_result[item.var_name] = item
-                result[item.var_name] = item
-
+        result, p_result, t_result = process_items(combined_values, self.pid, self.tid)
         return list(result.values()), p_result, t_result
 
     def serialize(self, filter_name, lang):
@@ -281,4 +284,3 @@ def update_defaults(session, tid, appdata):
 
     ConfigL10NFactory(session, tid).update_defaults('node', langs, appdata['node'])
     ConfigL10NFactory(session, tid).update_defaults('notification', langs, appdata['templates'])
-e
