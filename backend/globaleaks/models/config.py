@@ -239,7 +239,7 @@ def initialize_config(session, tid, mode):
             variables[name] = root_tenant_node[name]
 
     for name, value in variables.items():
-        if tid == 1 or tid == 1000000 or name in default_tenant_keys:
+        if tid == 1 or (name in default_tenant_keys) != (tid == 1000000):
             session.add(Config({'tid': tid, 'var_name': name, 'value': value}))
 
 
