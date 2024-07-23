@@ -25,16 +25,24 @@ def db_initialize_tenant_submission_statuses(session, tid):
         session.add(models.SubmissionStatus(s))
 
 def db_create(session, desc, isTenant = True):
-    if isTenant:
+    if isTenant and desc['is_profile'] == False:
         id_key = 'current_tenant_id'
     else:
-        id_key = 'current_profile_id'
+        id_key = 'profile_tenant_id'
 
     tid = db_get_config_variable(session, 1, id_key)
     t = models.Tenant()
+    if tid == 999999 and desc['is_profile'] == True:
+       t.id = tid + 2
+    else:
+       t.id = tid + 1
 
-    t.id = tid + 1
     t.active = desc['active']
+    t.is_profile = desc['is_profile']
+    if t.id > 1000000 and t.id != 999999:
+       t.profile_tenant_id = t.id
+    else:
+       t.profile_tenant_id = desc['profile_tenant_id']
 
     session.add(t)
 
