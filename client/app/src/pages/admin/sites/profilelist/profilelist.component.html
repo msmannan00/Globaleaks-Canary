@@ -6,7 +6,7 @@
                 <span>{{tenant.name}}</span>
             </div>
             <div class="tenant-badge"
-                *ngIf="tenant.active && !tenant.is_profile && (tenant.onionservice || tenant.hostname || (tenant.subdomain || nodeResolver.dataModel.rootdomain))">
+                *ngIf="tenant.active && tenant.id > 1000000 && (tenant.onionservice || tenant.hostname || (tenant.subdomain || nodeResolver.dataModel.rootdomain))">
                 <a class="badge bg-primary" *ngIf="tenant.onionservice" [href]="'https://' + tenant.onionservice"
                     rel="noreferrer" target="_blank">{{tenant.onionservice}}</a>
                 <span *ngIf="tenant.subdomain">

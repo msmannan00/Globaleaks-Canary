@@ -24,25 +24,33 @@ def db_initialize_tenant_submission_statuses(session, tid):
               {'tid': tid, 'id': 'closed', 'label': {'en': 'Closed'}, 'tip_timetolive': 0}]:
         session.add(models.SubmissionStatus(s))
 
-def db_create(session, desc, isTenant = True):
-    if isTenant and desc['is_profile'] == False:
-        id_key = 'current_tenant_id'
-    else:
-        id_key = 'profile_tenant_id'
-
+def get_id_key_and_tid(session, isTenant, is_profile):
+    id_key = 'current_tenant_id' if isTenant and not is_profile else 'profile_tenant_id'
     tid = db_get_config_variable(session, 1, id_key)
-    t = models.Tenant()
-    if tid == 999999 and desc['is_profile'] == True:
-       t.id = tid + 2
-    else:
-       t.id = tid + 1
+    return id_key, tid
 
-    t.active = desc['active']
-    t.is_profile = desc['is_profile']
-    if t.id > 1000000 and t.id != 999999:
-       t.profile_tenant_id = t.id
+def calculate_tenant_id(tid, is_profile):
+    if tid == 999999 and is_profile:
+        return tid + 2
     else:
-       t.profile_tenant_id = desc['profile_tenant_id']
+        return tid + 1
+    
+def db_create(session, desc, isTenant = True, **kwargs):
+    is_profile = kwargs.get('is_profile', False)
+    
+    # Get the id_key and tid using the helper function
+    id_key, tid = get_id_key_and_tid(session, isTenant, is_profile)
+    
+    # Calculate the new tenant ID
+    tenant_id = calculate_tenant_id(tid, is_profile)
+    
+    # Create and initialize the tenant object
+    t = models.Tenant()
+    t.id = tenant_id
+    t.active = desc['active']
+
+    # Set the profile tenant ID based on conditions
+    t.profile_tenant_id = t.id if t.id > 1000000 and t.id != 999999 else int(desc['profile_tenant_id'])
 
     session.add(t)
 
@@ -161,7 +169,20 @@ class TenantCollection(BaseHandler):
                                         requests.AdminTenantDesc)
 
         return create_and_initialize(request)
+    
+class ProfileTenantInstance(BaseHandler):
+    check_roles = 'admin'
+    root_tenant_only = True
+    invalidate_cache = True
 
+    def post(self):
+        """
+        Create a new profile tenant
+        """
+        request = self.validate_request(self.request.content.read(),
+                                        requests.AdminTenantDesc)
+
+        return create_and_initialize(request,is_profile=True)
 
 class TenantInstance(BaseHandler):
     check_roles = 'admin'

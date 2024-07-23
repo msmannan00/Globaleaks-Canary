@@ -219,7 +219,7 @@ def db_set_config_variable(session, tid, var, val):
 
 
 def initialize_config(session, tid, mode):
-    default_tenant_keys = ["subdomain", "onionservice", "https_admin", "https_analyst", "https_cert", "wizard_done", "uuid", "default_language", "name"]
+    default_tenant_keys = ["subdomain", "onionservice", "https_admin", "https_analyst", "https_cert", "wizard_done", "uuid", "mode", "default_language", "name"]
     variables = {}
 
     # Initialization valid for any tenant

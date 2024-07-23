@@ -341,13 +341,21 @@ export class HttpService {
     name: string,
     active: boolean,
     mode: string,
-    is_profile: boolean,
     profile_tenant_id: number | null,
     subdomain: string
   }): Observable<tenantResolverModel> {
     return this.httpClient.post<tenantResolverModel>("api/admin/tenants", param);
   }
-
+  addProfileTenant(param: {
+    name: string,
+    active: boolean,
+    mode: string,
+    profile_tenant_id: number | null,
+    subdomain: string
+  }): Observable<tenantResolverModel> {
+    return this.httpClient.post<tenantResolverModel>("api/admin/profile/tenants", param);
+  }
+  
   accessIdentity(id: string): Observable<void> {
     return this.httpClient.post<void>(`api/recipient/rtips/${id}/iars`, {"request_motivation": ""});
   }

@@ -133,6 +133,7 @@ api_spec = [
     (r'/api/admin/files', admin.file.FileCollection),
     (r'/api/admin/files/(.+)', admin.file.FileInstance),
     (r'/api/admin/tenants', admin.tenant.TenantCollection),
+    (r'/api/admin/profile/tenants', admin.tenant.ProfileTenantInstance),
     (r'/api/admin/tenants/' + '([0-9]{1,20})', admin.tenant.TenantInstance),
     (r'/api/admin/statuses', admin.submission_statuses.SubmissionStatusCollection),
     (r'/api/admin/statuses/' + r'(closed)' + r'/substatuses', admin.submission_statuses.SubmissionSubStatusCollection),
