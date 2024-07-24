@@ -337,11 +337,15 @@ export class HttpService {
     return this.httpClient.get<tenantResolverModel[]>("api/admin/tenants");
   }
 
+  fetchProfileTenant(): Observable<tenantResolverModel[]> {
+    return this.httpClient.get<tenantResolverModel[]>("api/admin/profile/tenants");
+  }
+  
   addTenant(param: {
     name: string,
     active: boolean,
     mode: string,
-    profile_tenant_id: number | null,
+    profile_tenant_id?: string,
     subdomain: string
   }): Observable<tenantResolverModel> {
     return this.httpClient.post<tenantResolverModel>("api/admin/tenants", param);
@@ -350,7 +354,6 @@ export class HttpService {
     name: string,
     active: boolean,
     mode: string,
-    profile_tenant_id: number | null,
     subdomain: string
   }): Observable<tenantResolverModel> {
     return this.httpClient.post<tenantResolverModel>("api/admin/profile/tenants", param);

@@ -377,7 +377,6 @@ def serialize_tenant(session, tenant, config=None):
       'id': tenant.id,
       'creation_date': tenant.creation_date,
       'active': tenant.active,
-      'profile_tenant_id': tenant.profile_tenant_id
     }
 
     if config:

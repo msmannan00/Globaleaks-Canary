@@ -10,8 +10,6 @@ from globaleaks.orm import db_del, db_get, transact, tw
 from globaleaks.rest import errors, requests
 from globaleaks.utils.tls import gen_selfsigned_certificate
 
-default_profile_id = 1000000
-
 def db_initialize_tenant_submission_statuses(session, tid):
     """
     Transaction for initializing the submission statuses of a tenant
@@ -48,9 +46,6 @@ def db_create(session, desc, isTenant = True, **kwargs):
     t = models.Tenant()
     t.id = tenant_id
     t.active = desc['active']
-
-    # Set the profile tenant ID based on conditions
-    t.profile_tenant_id = t.id if t.id > 1000000 and t.id != 999999 else int(desc['profile_tenant_id'])
 
     session.add(t)
 
@@ -108,12 +103,20 @@ def create_and_initialize(session, desc, *args, **kwargs):
     return serializers.serialize_tenant(session, t)
 
 
-def db_get_tenant_list(session):
+def db_get_tenant_list(session, is_profile):
     ret = []
-
     configs = db_get_configs(session, 'tenant')
 
-    for t, s in session.query(models.Tenant, models.Subscriber).join(models.Subscriber, models.Subscriber.tid == models.Tenant.id, isouter=True).filter(models.Tenant.id != default_profile_id):
+    query = session.query(models.Tenant, models.Subscriber).join(
+        models.Subscriber, models.Subscriber.tid == models.Tenant.id, isouter=True
+    )
+
+    if is_profile:
+        query = query.filter(models.Tenant.id > 1000000)
+    else:
+        query = query.filter(models.Tenant.id < 1000000)
+
+    for t, s in query:
         tenant_dict = serializers.serialize_tenant(session, t, configs[t.id])
         if s:
             tenant_dict['signup'] = serializers.serialize_signup(s)
@@ -124,9 +127,8 @@ def db_get_tenant_list(session):
 
 
 @transact
-def get_tenant_list(session):
-    return db_get_tenant_list(session)
-
+def get_tenant_list(session, is_profile):
+    return db_get_tenant_list(session, is_profile)
 
 @transact
 def get(session, tid):
@@ -159,7 +161,7 @@ class TenantCollection(BaseHandler):
         """
         Return the list of registered tenants
         """
-        return get_tenant_list()
+        return get_tenant_list(is_profile=False)
 
     def post(self):
         """
@@ -175,6 +177,12 @@ class ProfileTenantInstance(BaseHandler):
     root_tenant_only = True
     invalidate_cache = True
 
+    def get(self):
+        """
+        Return the list of registered profile tenants
+        """
+        return get_tenant_list(is_profile=True)
+    
     def post(self):
         """
         Create a new profile tenant

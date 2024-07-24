@@ -1,6 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {tenantResolverModel} from "@app/models/resolvers/tenant-resolver-model";
 import {HttpService} from "@app/shared/services/http.service";
+import { forkJoin } from "rxjs";
 
 @Component({
   selector: "src-sites-tab1",
@@ -8,11 +9,11 @@ import {HttpService} from "@app/shared/services/http.service";
 })
 export class SitesTab1Component implements OnInit {
   search: string;
-  newTenant: { name: string, active: boolean, mode: string, profile_tenant_id: number | null, subdomain: string } = {
+  newTenant: { name: string, active: boolean, mode: string, profile_tenant_id?: string, subdomain: string } = {
     name: "",
     active: true,
     mode: "default",
-    profile_tenant_id: 999999,
+    profile_tenant_id: "default",
     subdomain: ""
   };
   tenants: tenantResolverModel[];
@@ -23,14 +24,21 @@ export class SitesTab1Component implements OnInit {
   indexNumber: number = 0;
 
   ngOnInit(): void {
-    this.httpService.fetchTenant().subscribe(
-      tenants => {
-        this.tenants = tenants.filter(tenant => tenant.id < 1000000);
-        this.profileTenants = tenants.filter(tenant => tenant.id > 1000000);
-      }
-    );
+    this.fetchTenants();
   }
 
+  fetchTenants() {
+    forkJoin({
+      tenants: this.httpService.fetchTenant(),
+      profileTenants: this.httpService.fetchProfileTenant()
+    }).subscribe({
+      next: ({ tenants, profileTenants }) => {
+        this.tenants = tenants;
+        this.profileTenants = profileTenants;
+      },
+    });
+  }
+  
   toggleAddTenant() {
     this.showAddTenant = !this.showAddTenant;
   }
@@ -39,10 +47,13 @@ export class SitesTab1Component implements OnInit {
   }
 
   addTenant() {
+    if (this.newTenant.profile_tenant_id === "default") {
+      delete this.newTenant.profile_tenant_id;
+    }
     this.httpService.addTenant(this.newTenant).subscribe(res => {
       this.tenants.push(res);
       this.newTenant.name = "";
-      this.newTenant.profile_tenant_id = 999999;
+      this.newTenant.profile_tenant_id = "default";
     });
   }
 }

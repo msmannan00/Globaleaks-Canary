@@ -9,11 +9,10 @@ import {HttpService} from "@app/shared/services/http.service";
 })
 export class SitesTab3Component {
   search: string;
-  newTenant: { name: string, active: boolean, mode: string, profile_tenant_id: number | null , subdomain: string } = {
+  newTenant: { name: string, active: boolean, mode: string, subdomain: string } = {
     name: "",
     active: true,
     mode: "default",
-    profile_tenant_id: 999999,
     subdomain: ""
   };
   tenants: tenantResolverModel[];
@@ -23,9 +22,9 @@ export class SitesTab3Component {
   indexNumber: number = 0;
 
   ngOnInit(): void {
-    this.httpService.fetchTenant().subscribe(
+    this.httpService.fetchProfileTenant().subscribe(
       tenants => {
-        this.tenants = tenants.filter(tenant => tenant.id > 1000000);
+        this.tenants = tenants;
       }
     );
   }
