@@ -337,27 +337,15 @@ export class HttpService {
     return this.httpClient.get<tenantResolverModel[]>("api/admin/tenants");
   }
 
-  fetchProfileTenant(): Observable<tenantResolverModel[]> {
-    return this.httpClient.get<tenantResolverModel[]>("api/admin/profile/tenants");
-  }
-  
   addTenant(param: {
     name: string,
     active: boolean,
     mode: string,
-    profile_id?: string,
-    subdomain: string
+    default_profile: string,
+    subdomain: string,
+    is_profile:boolean,
   }): Observable<tenantResolverModel> {
     return this.httpClient.post<tenantResolverModel>("api/admin/tenants", param);
-  }
-  addProfileTenant(param: {
-    name: string,
-    active: boolean,
-    mode: string,
-    profile_id?: string,
-    subdomain: string
-  }): Observable<tenantResolverModel> {
-    return this.httpClient.post<tenantResolverModel>("api/admin/profile/tenants", param);
   }
   
   accessIdentity(id: string): Observable<void> {

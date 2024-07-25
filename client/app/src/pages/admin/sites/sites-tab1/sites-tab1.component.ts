@@ -1,7 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {tenantResolverModel} from "@app/models/resolvers/tenant-resolver-model";
 import {HttpService} from "@app/shared/services/http.service";
-import { forkJoin } from "rxjs";
 
 @Component({
   selector: "src-sites-tab1",
@@ -9,12 +8,13 @@ import { forkJoin } from "rxjs";
 })
 export class SitesTab1Component implements OnInit {
   search: string;
-  newTenant: { name: string, active: boolean, mode: string, profile_id?: string, subdomain: string } = {
+  newTenant: { name: string, active: boolean, mode: string,is_profile:boolean, default_profile: string, subdomain: string } = {
     name: "",
     active: true,
     mode: "default",
-    profile_id: "default",
-    subdomain: ""
+    default_profile: "default",
+    subdomain: "",
+    is_profile: false,
   };
   tenants: tenantResolverModel[];
   profileTenants: tenantResolverModel[];
@@ -28,15 +28,12 @@ export class SitesTab1Component implements OnInit {
   }
 
   fetchTenants() {
-    forkJoin({
-      tenants: this.httpService.fetchTenant(),
-      profileTenants: this.httpService.fetchProfileTenant()
-    }).subscribe({
-      next: ({ tenants, profileTenants }) => {
-        this.tenants = tenants;
-        this.profileTenants = profileTenants;
-      },
-    });
+    this.httpService.fetchTenant().subscribe(
+      tenants => {
+        this.tenants = tenants.filter(tenant => tenant.id < 1000000);
+        this.profileTenants = tenants.filter(tenant => tenant.id > 1000000);
+      }
+    );
   }
   
   toggleAddTenant() {
@@ -50,7 +47,7 @@ export class SitesTab1Component implements OnInit {
     this.httpService.addTenant(this.newTenant).subscribe(res => {
       this.tenants.push(res);
       this.newTenant.name = "";
-      this.newTenant.profile_id = "default";
+      this.newTenant.default_profile = "default";
     });
   }
 }

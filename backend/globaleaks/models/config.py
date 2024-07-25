@@ -238,14 +238,17 @@ def initialize_config(session, tid, data):
         for name in inherit_from_root_tenant:
             variables[name] = root_tenant_node[name]
 
+    if tid in (1, 1000000):
+        variables.pop('default_profile', None)
+    
     for name, value in variables.items():
-        if tid == 1 or tid == 1000000 or name in default_tenant_keys:
+        if tid in (1, 1000000) or name in default_tenant_keys:
             session.add(Config({'tid': tid, 'var_name': name, 'value': value}))
-
-    if 'profile_id' in data and data['profile_id'] != 'default':
-        profile_id = data['profile_id']
-        variables['profile_id'] = profile_id
-        session.add(Config({'tid': tid, 'var_name': 'profile_id', 'value': variables['profile_id']}))
+    
+    default_profile = data.get('default_profile')
+    if default_profile and default_profile != 'default':
+        variables['default_profile'] = default_profile
+        session.add(Config({'tid': tid, 'var_name': 'default_profile', 'value': default_profile}))
 
 def add_new_lang(session, tid, lang, appdata_dict):
     l = EnabledLanguage()

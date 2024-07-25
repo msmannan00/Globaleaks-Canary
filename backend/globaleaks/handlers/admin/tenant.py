@@ -9,6 +9,9 @@ from globaleaks.models.config import db_get_configs, \
 from globaleaks.orm import db_del, db_get, transact, tw
 from globaleaks.rest import errors, requests
 from globaleaks.utils.tls import gen_selfsigned_certificate
+import json
+
+default_profile_id = 1000000
 
 def db_initialize_tenant_submission_statuses(session, tid):
     """
@@ -23,7 +26,7 @@ def db_initialize_tenant_submission_statuses(session, tid):
         session.add(models.SubmissionStatus(s))
 
 def get_id_key_and_tid(session, isTenant, is_profile):
-    id_key = 'current_tenant_id' if isTenant and not is_profile else 'current_profile_id'
+    id_key = 'tenant_counter' if isTenant and not is_profile else 'profile_counter'
     tid = db_get_config_variable(session, 1, id_key)
     return id_key, tid
 
@@ -98,20 +101,11 @@ def create_and_initialize(session, desc, *args, **kwargs):
     return serializers.serialize_tenant(session, t)
 
 
-def db_get_tenant_list(session, is_profile):
+def db_get_tenant_list(session):
     ret = []
     configs = db_get_configs(session, 'tenant')
 
-    query = session.query(models.Tenant, models.Subscriber).join(
-        models.Subscriber, models.Subscriber.tid == models.Tenant.id, isouter=True
-    )
-
-    if is_profile:
-        query = query.filter(models.Tenant.id > 1000000)
-    else:
-        query = query.filter(models.Tenant.id < 1000000)
-
-    for t, s in query:
+    for t, s in session.query(models.Tenant, models.Subscriber).join(models.Subscriber, models.Subscriber.tid == models.Tenant.id, isouter=True).filter(models.Tenant.id != default_profile_id):
         tenant_dict = serializers.serialize_tenant(session, t, configs[t.id])
         if s:
             tenant_dict['signup'] = serializers.serialize_signup(s)
@@ -122,8 +116,8 @@ def db_get_tenant_list(session, is_profile):
 
 
 @transact
-def get_tenant_list(session, is_profile):
-    return db_get_tenant_list(session, is_profile)
+def get_tenant_list(session):
+    return db_get_tenant_list(session)
 
 @transact
 def get(session, tid):
@@ -156,36 +150,18 @@ class TenantCollection(BaseHandler):
         """
         Return the list of registered tenants
         """
-        return get_tenant_list(is_profile=False)
+        return get_tenant_list()
 
     def post(self):
         """
         Create a new tenant
         """
-        request = self.validate_request(self.request.content.read(),
-                                        requests.AdminTenantDesc)
+        raw_content = self.request.content.read()
+        request = self.validate_request(raw_content, requests.AdminTenantDesc)
+        content = json.loads(raw_content)
+        is_profile = content.get('is_profile', False)
 
-        return create_and_initialize(request)
-    
-class ProfileTenantInstance(BaseHandler):
-    check_roles = 'admin'
-    root_tenant_only = True
-    invalidate_cache = True
-
-    def get(self):
-        """
-        Return the list of registered profile tenants
-        """
-        return get_tenant_list(is_profile=True)
-    
-    def post(self):
-        """
-        Create a new profile tenant
-        """
-        request = self.validate_request(self.request.content.read(),
-                                        requests.AdminTenantDesc)
-
-        return create_and_initialize(request,is_profile=True)
+        return create_and_initialize(request, is_profile=is_profile)
 
 class TenantInstance(BaseHandler):
     check_roles = 'admin'
