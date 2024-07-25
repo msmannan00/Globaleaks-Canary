@@ -9,10 +9,11 @@ import {HttpService} from "@app/shared/services/http.service";
 })
 export class SitesTab3Component {
   search: string;
-  newTenant: { name: string, active: boolean, mode: string, subdomain: string } = {
+  newTenant: { name: string, active: boolean, profile_id?: string, mode: string, subdomain: string } = {
     name: "",
     active: true,
     mode: "default",
+    profile_id: "default",
     subdomain: ""
   };
   tenants: tenantResolverModel[];

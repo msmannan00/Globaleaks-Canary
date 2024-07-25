@@ -9,11 +9,11 @@ import { forkJoin } from "rxjs";
 })
 export class SitesTab1Component implements OnInit {
   search: string;
-  newTenant: { name: string, active: boolean, mode: string, profile_tenant_id?: string, subdomain: string } = {
+  newTenant: { name: string, active: boolean, mode: string, profile_id?: string, subdomain: string } = {
     name: "",
     active: true,
     mode: "default",
-    profile_tenant_id: "default",
+    profile_id: "default",
     subdomain: ""
   };
   tenants: tenantResolverModel[];
@@ -47,13 +47,10 @@ export class SitesTab1Component implements OnInit {
   }
 
   addTenant() {
-    if (this.newTenant.profile_tenant_id === "default") {
-      delete this.newTenant.profile_tenant_id;
-    }
     this.httpService.addTenant(this.newTenant).subscribe(res => {
       this.tenants.push(res);
       this.newTenant.name = "";
-      this.newTenant.profile_tenant_id = "default";
+      this.newTenant.profile_id = "default";
     });
   }
 }

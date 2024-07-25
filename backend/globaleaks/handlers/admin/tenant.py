@@ -23,7 +23,7 @@ def db_initialize_tenant_submission_statuses(session, tid):
         session.add(models.SubmissionStatus(s))
 
 def get_id_key_and_tid(session, isTenant, is_profile):
-    id_key = 'current_tenant_id' if isTenant and not is_profile else 'profile_tenant_id'
+    id_key = 'current_tenant_id' if isTenant and not is_profile else 'current_profile_id'
     tid = db_get_config_variable(session, 1, id_key)
     return id_key, tid
 
@@ -36,20 +36,16 @@ def calculate_tenant_id(tid, is_profile):
 def db_create(session, desc, isTenant = True, **kwargs):
     is_profile = kwargs.get('is_profile', False)
     
-    # Get the id_key and tid using the helper function
     id_key, tid = get_id_key_and_tid(session, isTenant, is_profile)
     
-    # Calculate the new tenant ID
     tenant_id = calculate_tenant_id(tid, is_profile)
     
-    # Create and initialize the tenant object
     t = models.Tenant()
     t.id = tenant_id
     t.active = desc['active']
 
     session.add(t)
 
-    # required to generate the tenant id
     session.flush()
 
     appdata = load_appdata()
@@ -59,8 +55,7 @@ def db_create(session, desc, isTenant = True, **kwargs):
         db_load_defaults(session)
     else:
         language = db_get_config_variable(session, 1, 'default_language')
-
-    models.config.initialize_config(session, t.id, desc['mode'])
+    models.config.initialize_config(session, t.id, desc)
 
     if t.id == 1:
         key, cert = gen_selfsigned_certificate()

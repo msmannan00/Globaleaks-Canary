@@ -218,7 +218,7 @@ def db_set_config_variable(session, tid, var, val):
     ConfigFactory(session, tid).set_val(var, val)
 
 
-def initialize_config(session, tid, mode):
+def initialize_config(session, tid, data):
     default_tenant_keys = ["subdomain", "onionservice", "https_admin", "https_analyst", "https_cert", "wizard_done", "uuid", "mode", "default_language", "name"]
     variables = {}
 
@@ -228,20 +228,24 @@ def initialize_config(session, tid, mode):
 
     if tid != 1:
         # Initialization valid for secondary tenants
-        variables['mode'] = mode
+        variables['mode'] = data['mode']
 
-    if mode == 'default':
+    if data['mode'] == 'default':
         variables['onionservice'], variables['tor_onion_key'] = generate_onion_service_v3()
 
-    if mode == 'wbpa':
+    if data['mode'] == 'wbpa':
         root_tenant_node = ConfigFactory(session, 1).serialize('node')
         for name in inherit_from_root_tenant:
             variables[name] = root_tenant_node[name]
 
     for name, value in variables.items():
-        if tid == 1 or (name in default_tenant_keys) != (tid == 1000000):
+        if tid == 1 or tid == 1000000 or name in default_tenant_keys:
             session.add(Config({'tid': tid, 'var_name': name, 'value': value}))
 
+    if 'profile_id' in data and data['profile_id'] != 'default':
+        profile_id = data['profile_id']
+        variables['profile_id'] = profile_id
+        session.add(Config({'tid': tid, 'var_name': 'profile_id', 'value': variables['profile_id']}))
 
 def add_new_lang(session, tid, lang, appdata_dict):
     l = EnabledLanguage()
