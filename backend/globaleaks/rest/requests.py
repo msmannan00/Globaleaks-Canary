@@ -567,3 +567,7 @@ SubmissionSubStatusDesc = {
     'order': int,
     'tip_timetolive': int
 }
+
+SessionUpdateDesc = {
+    'token': str
+}
