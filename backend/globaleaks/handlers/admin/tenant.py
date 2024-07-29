@@ -25,7 +25,7 @@ def db_initialize_tenant_submission_statuses(session, tid):
               {'tid': tid, 'id': 'closed', 'label': {'en': 'Closed'}, 'tip_timetolive': 0}]:
         session.add(models.SubmissionStatus(s))
 
-def get_id_key_and_tid(session, isTenant, is_profile):
+def get_tenant_id(session, isTenant, is_profile):
     id_key = 'tenant_counter' if isTenant and not is_profile else 'profile_counter'
     tid = db_get_config_variable(session, 1, id_key)
     return id_key, tid
@@ -39,7 +39,7 @@ def calculate_tenant_id(tid, is_profile):
 def db_create(session, desc, isTenant = True, **kwargs):
     is_profile = kwargs.get('is_profile', False)
     
-    id_key, tid = get_id_key_and_tid(session, isTenant, is_profile)
+    id_key, tid = get_tenant_id(session, isTenant, is_profile)
     
     tenant_id = calculate_tenant_id(tid, is_profile)
     
