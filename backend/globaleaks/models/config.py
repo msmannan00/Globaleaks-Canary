@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from operator import and_
 from sqlalchemy import not_
 from sqlalchemy import or_
 from globaleaks.models import Config, ConfigL10N, EnabledLanguage
@@ -25,27 +24,20 @@ def get_default(default):
 
     return default
 
-def process_items(combined_values, pid, tid,tpid=None):
-    if tpid !=None:
-       tpid = int(tpid)
+def process_items(combined_values, pid, tid):
     result = {}
     p_result = {}
     t_result = {}
-    tp_result = {}
-
     for item in combined_values:
         if item.tid == pid:
             p_result[item.var_name] = item
             if item.var_name not in result:
                 result[item.var_name] = item
-        if item.tid == tpid:
-            tp_result[item.var_name] = item
-            if item.var_name not in result or item.var_name not in t_result: 
-                result[item.var_name] = item
         if item.tid == tid:
             t_result[item.var_name] = item
             result[item.var_name] = item
-    return result, p_result, t_result,tp_result
+
+    return result, p_result, t_result
 
 def db_get_configs(session, filter_name):
     configs = {}
@@ -65,40 +57,65 @@ class ConfigFactory(object):
         self.session = session
         self.pid = 1000000
         self.tid = tid
+
+    def process_items(self, combined_values, pid, tid,tpid=None):
+        if tpid !=None:
+           tpid = int(tpid)
+        result = {}
+        p_result = {}
+        t_result = {}
+        tp_result = {}
+
+        for item in combined_values:
+            if item.tid == pid:
+                p_result[item.var_name] = item
+                if item.var_name not in result:
+                    result[item.var_name] = item
+            if item.tid == tpid:
+                tp_result[item.var_name] = item
+                if item.var_name not in result or item.var_name not in t_result:
+                    result[item.var_name] = item
+            if item.tid == tid:
+                t_result[item.var_name] = item
+                result[item.var_name] = item
+        return result, p_result, t_result,tp_result
+
     def get_all(self, filter_name):
         default_profile_value = None
-        tpid = self.session.query(Config).filter(
-            and_(
-                Config.tid == self.tid,
-                self.tid < 1000000,
-            )
-        ).all()
-        for item in tpid:
-           if item.var_name == 'default_profile':
-                default_profile_value = item.value
-                break  
+        filters = [Config.var_name.in_(ConfigFilters[filter_name])]
 
-        combined_values = self.session.query(Config).filter(
-            Config.var_name.in_(ConfigFilters[filter_name]),
+        default_profile = self.session.query(Config.value).filter(
+            Config.tid == self.tid,
+            Config.var_name == 'default_profile',
+            self.tid < 1000000
+        ).scalar()
+
+        if default_profile is not None:
+            default_profile_value = default_profile
+
+        filters.append(
             or_(
                 Config.tid == self.pid,
                 Config.tid == self.tid,
-                Config.tid == default_profile_value,
+                Config.tid == default_profile_value
             )
-        ).all()
-        return process_items(combined_values, self.pid, self.tid,default_profile_value)
+        )
+
+        combined_values = self.session.query(Config).filter(*filters).all()
+        return self.process_items(combined_values, self.pid, self.tid, default_profile_value)
 
     def update(self, filter_name, data):
-        result, p_result, t_result ,tp_result = self.get_all(filter_name)
+        result, p_result, t_result, tp_result = self.get_all(filter_name)
         for k, v in result.items():
             if k in data:
                 if self.tid != self.pid:
                     if k in t_result:
-                        if data[k] == p_result[k].value or (self.tid < 1000000 and k in tp_result and data[k] == tp_result[k].value):
-                            self.remove_val(k)
+                        if (k in tp_result and data[k] == tp_result[k].value) or (k not in tp_result and data[k] == p_result[k].value):
+                            if(k not in ["subdomain", "onionservice", "https_admin", "https_analyst", "https_cert", "wizard_done", "uuid", "mode", "default_language", "name"]):
+                                self.remove_val(k)
                         else:
                             v.set_v(data[k])
-                    elif data[k] != p_result[k].value or (k in tp_result and data[k] != tp_result[k].value):
+                    elif (k in tp_result and data[k] != tp_result[k].value) or (k not in tp_result and data[k] != p_result[k].value):
                         self.session.add(Config({'tid': self.tid, 'var_name': k, 'value': data[k]}))
                 else:
                     v.set_v(data[k])
@@ -129,7 +146,7 @@ class ConfigFactory(object):
             self.session.commit()
 
     def serialize(self, filter_name):
-        values, _, _ ,_= self.get_all(filter_name)
+        values, _, _, _ = self.get_all(filter_name)
         return {k: v.value for k, v in values.items()}
 
     def update_defaults(self):
@@ -167,15 +184,15 @@ class ConfigL10NFactory(object):
             )
         ).all()
 
-        result, p_result, t_result ,tp_result = process_items(combined_values, self.pid, self.tid,)
-        return list(result.values()), p_result, t_result ,tp_result
+        result, p_result, t_result = process_items(combined_values, self.pid, self.tid)
+        return list(result.values()), p_result, t_result
 
     def serialize(self, filter_name, lang):
-        rows, _, _ ,_= self.get_all(filter_name, lang)
+        rows, _, _ = self.get_all(filter_name, lang)
         return {c.var_name: c.value for c in rows if c.var_name in ConfigL10NFilters[filter_name]}
 
     def update(self, filter_name, data, lang):
-        result, p_result, t_result,tp_result = self.get_all(filter_name, lang)
+        result, p_result, t_result = self.get_all(filter_name, lang)
         c_map = {c.var_name: c for c in result}
 
         for key in (x for x in ConfigL10NFilters[filter_name] if x in data):
@@ -183,12 +200,10 @@ class ConfigL10NFactory(object):
                 if self.tid != self.pid:
                     if key in t_result:
                         if data[key] == p_result[key].value:
-                        # if data[key] == p_result[key].value or (self.tid < 1000000 and data[key] == tp_result[key].value):
                             self.remove_val(key, lang)
                         else:
                             c_map[key].set_v(data[key])
                     elif data[key] != p_result[key].value:
-                    # elif data[key] != p_result[key].value and data[key] != tp_result[key].value:
                         self.session.add(ConfigL10N({'tid': self.tid, 'lang': lang, 'var_name': key, 'value': data[key]}))
                 else:
                     c_map[key].set_v(data[key])
@@ -261,11 +276,11 @@ def initialize_config(session, tid, data):
 
     if tid in (1, 1000000):
         variables.pop('default_profile', None)
-    
+
     for name, value in variables.items():
         if tid in (1, 1000000) or name in default_tenant_keys:
             session.add(Config({'tid': tid, 'var_name': name, 'value': value}))
-    
+
     default_profile = data.get('default_profile')
     if default_profile and default_profile != 'default':
         variables['default_profile'] = default_profile
