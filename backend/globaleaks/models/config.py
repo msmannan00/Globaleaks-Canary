@@ -58,64 +58,28 @@ class ConfigFactory(object):
         self.pid = 1000000
         self.tid = tid
 
-    def process_items(self, combined_values, pid, tid,tpid=None):
-        if tpid !=None:
-           tpid = int(tpid)
-        result = {}
-        p_result = {}
-        t_result = {}
-        tp_result = {}
-
-        for item in combined_values:
-            if item.tid == pid:
-                p_result[item.var_name] = item
-                if item.var_name not in result:
-                    result[item.var_name] = item
-            if item.tid == tpid:
-                tp_result[item.var_name] = item
-                if item.var_name not in result or item.var_name not in t_result:
-                    result[item.var_name] = item
-            if item.tid == tid:
-                t_result[item.var_name] = item
-                result[item.var_name] = item
-        return result, p_result, t_result,tp_result
-
     def get_all(self, filter_name):
-        default_profile_value = None
-        filters = [Config.var_name.in_(ConfigFilters[filter_name])]
-
-        default_profile = self.session.query(Config.value).filter(
-            Config.tid == self.tid,
-            Config.var_name == 'default_profile',
-            self.tid < 1000000
-        ).scalar()
-
-        if default_profile is not None:
-            default_profile_value = default_profile
-
-        filters.append(
+        combined_values = self.session.query(Config).filter(
+            Config.var_name.in_(ConfigFilters[filter_name]),
             or_(
                 Config.tid == self.pid,
-                Config.tid == self.tid,
-                Config.tid == default_profile_value
+                Config.tid == self.tid
             )
-        )
+        ).all()
 
-        combined_values = self.session.query(Config).filter(*filters).all()
-        return self.process_items(combined_values, self.pid, self.tid, default_profile_value)
+        return process_items(combined_values, self.pid, self.tid)
 
     def update(self, filter_name, data):
-        result, p_result, t_result, tp_result = self.get_all(filter_name)
+        result, p_result, t_result = self.get_all(filter_name)
         for k, v in result.items():
             if k in data:
                 if self.tid != self.pid:
                     if k in t_result:
-                        if (k in tp_result and data[k] == tp_result[k].value) or (k not in tp_result and data[k] == p_result[k].value):
-                            if(k not in ["subdomain", "onionservice", "https_admin", "https_analyst", "https_cert", "wizard_done", "uuid", "mode", "default_language", "name"]):
-                                self.remove_val(k)
+                        if data[k] == p_result[k].value:
+                            self.remove_val(k)
                         else:
                             v.set_v(data[k])
-                    elif (k in tp_result and data[k] != tp_result[k].value) or (k not in tp_result and data[k] != p_result[k].value):
+                    elif data[k] != p_result[k].value:
                         self.session.add(Config({'tid': self.tid, 'var_name': k, 'value': data[k]}))
                 else:
                     v.set_v(data[k])
@@ -146,7 +110,7 @@ class ConfigFactory(object):
             self.session.commit()
 
     def serialize(self, filter_name):
-        values, _, _, _ = self.get_all(filter_name)
+        values, _, _ = self.get_all(filter_name)
         return {k: v.value for k, v in values.items()}
 
     def update_defaults(self):
@@ -285,6 +249,15 @@ def initialize_config(session, tid, data):
     if default_profile and default_profile != 'default':
         variables['default_profile'] = default_profile
         session.add(Config({'tid': tid, 'var_name': 'default_profile', 'value': default_profile}))
+
+        default_vars = session.query(Config).filter(
+            Config.tid == default_profile,
+        ).all()
+
+        for item in default_vars:
+            if item.var_name not in default_tenant_keys:
+                session.add(Config({'tid': tid, 'var_name': item.var_name, 'value': item.value}))
+
 
 def add_new_lang(session, tid, lang, appdata_dict):
     l = EnabledLanguage()
