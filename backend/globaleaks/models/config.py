@@ -16,6 +16,7 @@ import copy
 inherit_from_root_tenant = [
     'default_questionnaire'
 ]
+default_tenant_keys = ["subdomain", "onionservice", "https_admin", "https_analyst", "https_cert", "wizard_done", "uuid", "mode", "default_language", "name"]
 
 
 def get_default(default):
@@ -75,7 +76,7 @@ class ConfigFactory(object):
             if k in data:
                 if self.tid != self.pid:
                     if k in t_result:
-                        if data[k] == p_result[k].value:
+                        if data[k] == p_result[k].value and k not in default_tenant_keys:
                             self.remove_val(k)
                         else:
                             v.set_v(data[k])
@@ -163,7 +164,7 @@ class ConfigL10NFactory(object):
             if key in c_map:
                 if self.tid != self.pid:
                     if key in t_result:
-                        if data[key] == p_result[key].value:
+                        if data[key] == p_result[key].value and key not in default_tenant_keys:
                             self.remove_val(key, lang)
                         else:
                             c_map[key].set_v(data[key])
@@ -219,7 +220,6 @@ def db_set_config_variable(session, tid, var, val):
 
 
 def initialize_config(session, tid, data):
-    default_tenant_keys = ["subdomain", "onionservice", "https_admin", "https_analyst", "https_cert", "wizard_done", "uuid", "mode", "default_language", "name"]
     variables = {}
 
     # Initialization valid for any tenant
@@ -254,12 +254,16 @@ def initialize_config(session, tid, data):
             Config.tid == default_profile,
         ).all()
 
-
+        default_config_lang = session.query(ConfigL10N).filter(
+            ConfigL10N.tid == default_profile,
+        ).all()
 
         for item in default_config:
             if item.var_name not in default_tenant_keys:
                 session.add(Config({'tid': tid, 'var_name': item.var_name, 'value': item.value}))
 
+        for item in default_config_lang:
+                session.add(ConfigL10N({'tid': tid,'lang': item.lang, 'var_name': item.var_name, 'value': item.value}))
 
 def add_new_lang(session, tid, lang, appdata_dict):
     l = EnabledLanguage()
