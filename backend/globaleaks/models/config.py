@@ -250,11 +250,13 @@ def initialize_config(session, tid, data):
         variables['default_profile'] = default_profile
         session.add(Config({'tid': tid, 'var_name': 'default_profile', 'value': default_profile}))
 
-        default_vars = session.query(Config).filter(
+        default_config = session.query(Config).filter(
             Config.tid == default_profile,
         ).all()
 
-        for item in default_vars:
+
+
+        for item in default_config:
             if item.var_name not in default_tenant_keys:
                 session.add(Config({'tid': tid, 'var_name': item.var_name, 'value': item.value}))
 
