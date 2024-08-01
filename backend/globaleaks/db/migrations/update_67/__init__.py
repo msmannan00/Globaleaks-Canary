@@ -110,6 +110,7 @@ class WhistleblowerFile_v_66(Model):
 
 class MigrationScript(MigrationBase):
     def migrate_Config(self):
+        print("config ::::::::::::::::::::::")
         for old_obj in self.session_old.query(self.model_from['Config']):
             new_obj = self.model_to['Config']()
             for key in new_obj.__mapper__.column_attrs.keys():
@@ -128,6 +129,7 @@ class MigrationScript(MigrationBase):
             self.session_new.add(new_obj)
 
     def epilogue(self):
+        print("epic ::::::::::::::::::::::")
         # Transform footer_privacy_policy and footer_whistleblowing_policy in localized variables
         for c in self.session_new.query(self.model_from['Config']) \
                                  .filter(self.model_from['Config'].var_name.in_(['footer_privacy_policy',

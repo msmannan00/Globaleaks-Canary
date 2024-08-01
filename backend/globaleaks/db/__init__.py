@@ -81,6 +81,7 @@ def update_db():
     if db_version == 0:
         return 0
 
+    db_version = 67
     try:
         with warnings.catch_warnings():
             from globaleaks.db import migration
