@@ -3,7 +3,7 @@ from globaleaks import models
 from globaleaks.db.appdata import load_appdata, db_load_defaults
 from globaleaks.handlers.base import BaseHandler
 from globaleaks.handlers.wizard import db_wizard
-from globaleaks.models import config, serializers
+from globaleaks.models import Config, config, serializers
 from globaleaks.models.config import db_get_configs, \
     db_get_config_variable, db_set_config_variable
 from globaleaks.orm import db_del, db_get, transact, tw
@@ -184,4 +184,15 @@ class TenantInstance(BaseHandler):
         """
         Delete the specified tenant.
         """
-        return tw(db_del, models.Tenant, models.Tenant.id == int(tid))
+        tid = int(tid)
+        default_profile_entry = self.session.query(Config).filter_by(tid=tid, var_name='default_profile').one_or_none()
+        
+        if default_profile_entry is not None:
+            print('dasdadsada')
+            print('dasdadsada')
+            print('dasdadsada')
+            print('dasdadsada')
+            print('dasdadsada')
+            raise errors.ForbiddenOperation
+        
+        return tw(db_del, models.Tenant, models.Tenant.id == tid)
