@@ -185,14 +185,9 @@ class TenantInstance(BaseHandler):
         Delete the specified tenant.
         """
         tid = int(tid)
-        default_profile_entry = self.session.query(Config).filter_by(tid=tid, var_name='default_profile').one_or_none()
+        # default_profile_entry = self.session.query(Config).filter_by(tid=tid, var_name='default_profile').one_or_none()
         
-        if default_profile_entry is not None:
-            print('dasdadsada')
-            print('dasdadsada')
-            print('dasdadsada')
-            print('dasdadsada')
-            print('dasdadsada')
-            raise errors.ForbiddenOperation
+        # if default_profile_entry is not None:
+        #     raise errors.ForbiddenOperation
         
         return tw(db_del, models.Tenant, models.Tenant.id == tid)
