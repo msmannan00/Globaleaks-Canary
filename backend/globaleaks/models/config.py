@@ -23,20 +23,24 @@ def get_default(default):
 
     return default
 
-def process_items(combined_values, default_profile_id, tid):
-    result = {}
-    default_tenant_result = {}
-    t_result = {}
-    for item in combined_values:
-        if item.tid == default_profile_id:
-            default_tenant_result[item.var_name] = item
-            if item.var_name not in result:
+def process_items(combined_values, default_profile_id, tid, pid):
+        result = {}
+        default_tenant_result = {}
+        t_result = {}
+        p_result = {}
+        for item in combined_values:
+            if item.tid == default_profile_id:
+                default_tenant_result[item.var_name] = item
+                if item.var_name not in result:
+                    result[item.var_name] = item
+            if item.tid == pid:
+                p_result[item.var_name] = item
+                if item.var_name not in result or item.var_name not in t_result:
+                    result[item.var_name] = item
+            if item.tid == tid:
+                t_result[item.var_name] = item
                 result[item.var_name] = item
-        if item.tid == tid:
-            t_result[item.var_name] = item
-            result[item.var_name] = item
-
-    return result, default_tenant_result, t_result
+        return result, default_tenant_result, t_result, p_result
 
 def db_get_configs(session, filter_name):
     configs = {}
@@ -56,26 +60,6 @@ class ConfigFactory(object):
         self.session = session
         self.default_profile_id = 1000000
         self.tid = tid
-
-    def process_items(self, combined_values, default_profile_id, tid,pid):
-        result = {}
-        default_tenant_result = {}
-        t_result = {}
-        p_result = {}
-
-        for item in combined_values:
-            if item.tid == default_profile_id:
-                default_tenant_result[item.var_name] = item
-                if item.var_name not in result:
-                    result[item.var_name] = item
-            if item.tid == pid:
-                p_result[item.var_name] = item
-                if item.var_name not in result or item.var_name not in t_result:
-                    result[item.var_name] = item
-            if item.tid == tid:
-                t_result[item.var_name] = item
-                result[item.var_name] = item
-        return result, default_tenant_result, t_result, p_result
     
     def get_all(self, filter_name):
         default_profile_value = None
@@ -98,7 +82,7 @@ class ConfigFactory(object):
         )
 
         combined_values = self.session.query(Config).filter(*filters).all()
-        return self.process_items(combined_values, self.default_profile_id, self.tid, default_profile_value)
+        return process_items(combined_values, self.default_profile_id, self.tid, default_profile_value)
 
     def update(self, filter_name, data):
         result, default_tenant_result, t_result, p_result = self.get_all(filter_name)
@@ -170,33 +154,14 @@ class ConfigL10NFactory(object):
                 value = data[key][lang] if key in data else ''
                 self.session.add(ConfigL10N({'tid': self.tid, 'lang': lang, 'var_name': key, 'value': value}))
 
-    def process_items(self, combined_values, default_profile_id, tid,pid):
-        result = {}
-        default_tenant_result = {}
-        t_result = {}
-        p_result = {}
-        for item in combined_values:
-            if item.tid == default_profile_id:
-                default_tenant_result[item.var_name] = item
-                if item.var_name not in result:
-                    result[item.var_name] = item
-            if item.tid == pid:
-                p_result[item.var_name] = item
-                if item.var_name not in result or item.var_name not in t_result:
-                    result[item.var_name] = item
-            if item.tid == tid:
-                t_result[item.var_name] = item
-                result[item.var_name] = item
-        return result, default_tenant_result, t_result, p_result
-
     def get_all(self, filter_name, lang):
 
         default_profile_value = None
         filters = [ConfigL10N.lang == lang,ConfigL10N.var_name.in_(ConfigL10NFilters[filter_name])]
 
-        default_profile = self.session.query(ConfigL10N.value).filter(
-            ConfigL10N.tid == self.tid,
-            ConfigL10N.var_name == 'default_profile',
+        default_profile = self.session.query(Config.value).filter(
+            Config.tid == self.tid,
+            Config.var_name == 'default_profile',
         ).scalar()
 
         if default_profile is not None:
@@ -211,7 +176,7 @@ class ConfigL10NFactory(object):
         )
 
         combined_values = self.session.query(ConfigL10N).filter(*filters).all()
-        result, default_tenant_result, t_result ,p_result = self.process_items(combined_values, self.default_profile_id, self.tid, default_profile_value)
+        result, default_tenant_result, t_result ,p_result = process_items(combined_values, self.default_profile_id, self.tid, default_profile_value)
         return list(result.values()), default_tenant_result, t_result,p_result
 
     def serialize(self, filter_name, lang):
