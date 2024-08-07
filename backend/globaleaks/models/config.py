@@ -92,7 +92,7 @@ class ConfigFactory(object):
                     if k in t_result:
                         if (k in p_result and data[k] == p_result[k].value) or (k not in p_result and data[k] == default_tenant_result[k].value):
                             if k not in default_tenant_keys:
-                                self.remove_val(k)
+                                self.remove_val(k, self.tid)
                                 del t_result[k]
                         else:
                             v.set_v(data[k])
@@ -107,29 +107,12 @@ class ConfigFactory(object):
             self.sync_profile(default_tenant_result, t_result)
 
     def sync_profile(self, default_tenant_result, t_result):
-        tid_str = str(self.tid)
-        result = self.session.query(Config).filter(Config.var_name == 'default_profile', Config.value == tid_str).all()
-
+        result = self.session.query(Config).filter(Config.var_name == 'default_profile', Config.value == str(self.tid)).all()
         tid_list = [config.tid for config in result]
-        all_configs = self.session.query(Config).filter(Config.tid.in_(tid_list)).all()
 
-        for entry in all_configs:
-            var_name = entry.var_name
-            value = entry.value
-
-            if var_name not in default_tenant_keys:
-                if var_name in t_result:
-                    if t_result[var_name].value == value:
-                        v = self.session.query(Config).filter(Config.tid == entry.tid,  Config.var_name == var_name).one_or_none()
-                        if v:
-                            self.session.delete(v)
-                            self.session.commit()
-                elif var_name in default_tenant_result:
-                    if default_tenant_result[var_name].value == value:
-                        v = self.session.query(Config).filter(Config.tid == entry.tid, Config.var_name == var_name).one_or_none()
-                        if v:
-                            self.session.delete(v)
-                            self.session.commit()
+        for entry in self.session.query(Config).filter(Config.tid.in_(tid_list)).all():
+            if entry.var_name not in default_tenant_keys and entry.var_name in t_result and t_result[entry.var_name].value == entry.value or entry.var_name not in t_result and entry.var_name in default_tenant_result and default_tenant_result[entry.var_name].value == entry.value:
+                self.remove_val(entry.var_name, entry.tid)
 
     def get_cfg(self, var_name):
         subquery = self.session.query(Config).filter(Config.var_name == var_name).filter(or_(Config.tid == self.tid, Config.tid == 1)).order_by(Config.tid.desc()).limit(2).subquery()
@@ -149,8 +132,8 @@ class ConfigFactory(object):
         if v:
             v.set_v(value)
 
-    def remove_val(self, var_name):
-        v = self.session.query(Config).filter(Config.tid == self.tid, Config.var_name == var_name).one_or_none()
+    def remove_val(self, var_name, tid):
+        v = self.session.query(Config).filter(Config.tid == tid, Config.var_name == var_name).one_or_none()
 
         if v:
             self.session.delete(v)
@@ -223,14 +206,27 @@ class ConfigL10NFactory(object):
                 if self.tid != self.default_profile_id:
                     if key in t_result:
                         if (key in p_result and data[key] == p_result[key].value) or (key not in p_result and data[key] == default_tenant_result[key].value):
-                            if(key not in default_tenant_keys):
-                                self.remove_val(key, lang)
+                            if key not in default_tenant_keys:
+                                self.remove_val(key, lang, self.tid)
+                                del t_result[key]
                         else:
                             c_map[key].set_v(data[key])
+                            t_result[key] = data[key]
                     elif (key in p_result and data[key] != p_result[key].value) or (key not in p_result and data[key] != default_tenant_result[key].value):
                         self.session.add(ConfigL10N({'tid': self.tid, 'lang': lang, 'var_name': key, 'value': data[key]}))
                 else:
                     c_map[key].set_v(data[key])
+                    t_result[key] = data[key]
+        if self.tid > self.default_profile_id:
+            self.sync_profile(lang, default_tenant_result, t_result)
+
+    def sync_profile(self, lang, default_tenant_result, t_result):
+        result = self.session.query(Config).filter(Config.var_name == 'default_profile', Config.value == str(self.tid)).all()
+        tid_list = [config.tid for config in result]
+
+        for entry in self.session.query(ConfigL10N).filter(ConfigL10N.tid.in_(tid_list)).all():
+            if entry.var_name not in default_tenant_keys and entry.var_name in t_result and t_result[entry.var_name] == entry.value or entry.var_name not in t_result and entry.var_name in default_tenant_result and default_tenant_result[entry.var_name] == entry.value:
+                self.remove_val(entry.var_name, lang,entry.tid)
 
     def update_defaults(self, filter_name, langs, data, reset=False):
         null = datetime_null()
@@ -239,7 +235,7 @@ class ConfigL10NFactory(object):
         for lang in langs:
             old_keys = []
 
-            values, _, _ = self.get_all(filter_name, lang)
+            values, _, _, _ = self.get_all(filter_name, lang)
             for cfg in values:
                 old_keys.append(cfg.var_name)
                 if (cfg.update_date == null or reset) and cfg.var_name in templates:
@@ -254,8 +250,8 @@ class ConfigL10NFactory(object):
 
         return v.value
 
-    def remove_val(self, var_name, lang):
-        v = self.session.query(ConfigL10N).filter(ConfigL10N.tid == self.tid, ConfigL10N.lang == lang, ConfigL10N.var_name == var_name).one_or_none()
+    def remove_val(self, var_name, lang, tid):
+        v = self.session.query(ConfigL10N).filter(ConfigL10N.tid == tid, ConfigL10N.lang == lang, ConfigL10N.var_name == var_name).one_or_none()
         if v:
             self.session.delete(v)
             self.session.commit()
