@@ -86,7 +86,7 @@ def create(session, desc, *args, **kwargs):
 @transact
 def is_profile_mapped(session, tid):
     if int(tid) > 1000000:
-        return session.query(Config).filter_by(value=tid, var_name='default_profile').one_or_none() is not None
+        return session.query(Config).filter_by(value=tid, var_name='default_profile').first() is not None
     else:
         return False
 

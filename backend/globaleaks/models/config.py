@@ -111,7 +111,7 @@ class ConfigFactory(object):
         tid_list = [config.tid for config in result]
 
         for entry in self.session.query(Config).filter(Config.tid.in_(tid_list)).all():
-            if entry.var_name not in default_tenant_keys and entry.var_name in t_result and t_result[entry.var_name].value == entry.value or entry.var_name not in t_result and entry.var_name in default_tenant_result and default_tenant_result[entry.var_name].value == entry.value:
+            if entry.var_name not in default_tenant_keys and entry.var_name in t_result and t_result[entry.var_name] == entry.value or entry.var_name not in t_result and entry.var_name in default_tenant_result and default_tenant_result[entry.var_name] == entry.value:
                 self.remove_val(entry.var_name, entry.tid)
 
     def get_cfg(self, var_name):
