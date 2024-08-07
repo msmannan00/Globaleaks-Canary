@@ -1,10 +1,12 @@
 # -*- coding: UTF-8 -*-
+from globaleaks import models
 from globaleaks.db.migrations.update import MigrationBase
-from globaleaks.models import Config, Model
+from globaleaks.models import Model
 from globaleaks.models.properties import *
 from globaleaks.utils.utility import datetime_now
 from globaleaks.models.config_desc import ConfigDescriptor
 from globaleaks.models.config import get_default
+from globaleaks.db.appdata import load_appdata
 
 class Tenant_v_68(Model):
     __tablename__ = 'tenant'
@@ -17,10 +19,6 @@ class Tenant_v_68(Model):
 class MigrationScript(MigrationBase):
 
     def migrate_Tenant(self):
-        # Skip count checks for migration
-        MigrationScript.skip_count_check['Tenant'] = True
-        MigrationScript.skip_count_check['Config'] = True
-    
         # Define default tenant keys that should not be removed
         default_tenant_keys = ["subdomain", "onionservice", "https_admin", "https_analyst", "https_cert",
                                "wizard_done", "uuid", "mode", "default_language", "name"]
@@ -41,7 +39,7 @@ class MigrationScript(MigrationBase):
         new_tenant.creation_date = datetime_now()
         new_tenant.active = False
         self.session_new.add(new_tenant)
-    
+        self.entries_count['Tenant'] += 1
         self.session_new.commit()
     
         # Handle configurations
@@ -58,12 +56,12 @@ class MigrationScript(MigrationBase):
                 new_config.value = value
                 new_config.update_date = datetime_now()
                 self.session_new.add(new_config)
-    
+                self.entries_count['Config'] += 1
+        models.config.add_new_lang(self.session_new, 1000000, 'en', load_appdata())
+        self.entries_count['ConfigL10N'] += 72
+        self.entries_count['EnabledLanguage'] += 1
         # Set up special configuration entries for tid=1
-        special_entries = [
-            ('tenant_counter', total_tenants),
-            ('profile_counter', 999999),
-        ]
+        special_entries = [('tenant_counter', total_tenants),('profile_counter', 999999)]
         for var_name, value in special_entries:
             if not self.session_new.query(self.model_to['Config']).filter_by(tid=1, var_name=var_name).first():
                 new_config = self.model_to['Config']()
@@ -72,7 +70,7 @@ class MigrationScript(MigrationBase):
                 new_config.value = value
                 new_config.update_date = datetime_now()
                 self.session_new.add(new_config)
-    
+                self.entries_count['Config'] += 1
         self.session_new.commit()
     
         # Remove redundant configurations for other tenants
@@ -86,4 +84,5 @@ class MigrationScript(MigrationBase):
                     entry = self.session_new.query(self.model_to['Config']).filter_by(tid=tid, var_name=var_name).one_or_none()
                     if entry:
                         self.session_new.delete(entry)
+                        self.entries_count['Config'] -= 1
                         self.session_new.commit()

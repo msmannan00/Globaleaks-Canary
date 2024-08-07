@@ -32,7 +32,7 @@ export class ProfilelistComponent {
   toggleActivation(event: Event): void {
     event.stopPropagation();
     this.tenant.active = !this.tenant.active;
-
+    this.tenant.default_profile = "default";
     const url = "api/admin/tenants/" + this.tenant.id;
     this.httpService.requestUpdateTenant(url, this.tenant).subscribe((_) => {});
   }
