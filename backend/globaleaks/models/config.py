@@ -99,7 +99,20 @@ class ConfigFactory(object):
                         self.session.add(Config({'tid': self.tid, 'var_name': k, 'value': data[k]}))
                 else:
                     v.set_v(data[k])
-
+        default_profile_entries = self.get_default_profile_entries()
+        for entry in default_profile_entries:
+            print('aaaaaaaaaaaa')
+            print('aaaaaaaaaaaa')
+            print('aaaaaaaaaaaa')
+            print('aaaaaaaaaaaa', entry.tid)
+            print('aaaaaaaaaaaa')
+            print('aaaaaaaaaaaa')
+        
+    def get_default_profile_entries(self):
+        tid_str = str(self.tid)
+        query = self.session.query(Config).filter(Config.value == tid_str).all()
+        return query
+    
     def get_cfg(self, var_name):
         subquery = self.session.query(Config).filter(Config.var_name == var_name).filter(or_(Config.tid == self.tid, Config.tid == 1)).order_by(Config.tid.desc()).limit(2).subquery()
         return self.session.query(Config).select_entity_from(subquery).order_by(subquery.c.tid.desc()).first()
