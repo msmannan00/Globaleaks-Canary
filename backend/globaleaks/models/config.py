@@ -91,28 +91,46 @@ class ConfigFactory(object):
                 if self.tid != self.default_profile_id:
                     if k in t_result:
                         if (k in p_result and data[k] == p_result[k].value) or (k not in p_result and data[k] == default_tenant_result[k].value):
-                            if(k not in default_tenant_keys):
+                            if k not in default_tenant_keys:
                                 self.remove_val(k)
+                                del t_result[k]
                         else:
                             v.set_v(data[k])
+                            t_result[k] = data[k]
                     elif (k in p_result and data[k] != p_result[k].value) or (k not in p_result and data[k] != default_tenant_result[k].value):
                         self.session.add(Config({'tid': self.tid, 'var_name': k, 'value': data[k]}))
                 else:
+                    t_result[k] = data[k]
                     v.set_v(data[k])
-        default_profile_entries = self.get_default_profile_entries()
-        for entry in default_profile_entries:
-            print('aaaaaaaaaaaa')
-            print('aaaaaaaaaaaa')
-            print('aaaaaaaaaaaa')
-            print('aaaaaaaaaaaa', entry.tid)
-            print('aaaaaaaaaaaa')
-            print('aaaaaaaaaaaa')
-        
-    def get_default_profile_entries(self):
+
+        if self.tid > self.default_profile_id:
+            self.sync_profile(default_tenant_result, t_result)
+
+    def sync_profile(self, default_tenant_result, t_result):
         tid_str = str(self.tid)
-        query = self.session.query(Config).filter(Config.value == tid_str).all()
-        return query
-    
+        result = self.session.query(Config).filter(Config.var_name == 'default_profile', Config.value == tid_str).all()
+
+        tid_list = [config.tid for config in result]
+        all_configs = self.session.query(Config).filter(Config.tid.in_(tid_list)).all()
+
+        for entry in all_configs:
+            var_name = entry.var_name
+            value = entry.value
+
+            if var_name not in default_tenant_keys:
+                if var_name in t_result:
+                    if t_result[var_name].value == value:
+                        v = self.session.query(Config).filter(Config.tid == entry.tid,  Config.var_name == var_name).one_or_none()
+                        if v:
+                            self.session.delete(v)
+                            self.session.commit()
+                elif var_name in default_tenant_result:
+                    if default_tenant_result[var_name].value == value:
+                        v = self.session.query(Config).filter(Config.tid == entry.tid, Config.var_name == var_name).one_or_none()
+                        if v:
+                            self.session.delete(v)
+                            self.session.commit()
+
     def get_cfg(self, var_name):
         subquery = self.session.query(Config).filter(Config.var_name == var_name).filter(or_(Config.tid == self.tid, Config.tid == 1)).order_by(Config.tid.desc()).limit(2).subquery()
         return self.session.query(Config).select_entity_from(subquery).order_by(subquery.c.tid.desc()).first()
@@ -206,7 +224,7 @@ class ConfigL10NFactory(object):
                     if key in t_result:
                         if (key in p_result and data[key] == p_result[key].value) or (key not in p_result and data[key] == default_tenant_result[key].value):
                             if(key not in default_tenant_keys):
-                                self.remove_val(key)
+                                self.remove_val(key, lang)
                         else:
                             c_map[key].set_v(data[key])
                     elif (key in p_result and data[key] != p_result[key].value) or (key not in p_result and data[key] != default_tenant_result[key].value):
