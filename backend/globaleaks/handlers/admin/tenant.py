@@ -10,6 +10,7 @@ from globaleaks.orm import db_del, db_get, transact, tw
 from globaleaks.rest import errors, requests
 from globaleaks.utils.tls import gen_selfsigned_certificate
 import json
+from twisted.internet.defer import inlineCallbacks
 
 default_profile_id = 1000000
 
@@ -82,6 +83,12 @@ def create(session, desc, *args, **kwargs):
 
     return serializers.serialize_tenant(session, t)
 
+@transact
+def is_profile_mapped(session, tid):
+    if int(tid) > 1000000:
+        return session.query(Config).filter_by(value=tid, var_name='default_profile').one_or_none() is not None
+    else:
+        return False
 
 @transact
 def create_and_initialize(session, desc, *args, **kwargs):
@@ -163,6 +170,7 @@ class TenantCollection(BaseHandler):
 
         return create_and_initialize(request, is_profile=is_profile)
 
+
 class TenantInstance(BaseHandler):
     check_roles = 'admin'
     root_tenant_only = True
@@ -180,14 +188,15 @@ class TenantInstance(BaseHandler):
 
         return update(int(tid), request)
 
+    @inlineCallbacks
     def delete(self, tid):
         """
         Delete the specified tenant.
         """
+
+        profile_mapped_status = yield is_profile_mapped(tid)
+        if profile_mapped_status:
+            raise errors.ForbiddenOperation
+
         tid = int(tid)
-        # default_profile_entry = self.session.query(Config).filter_by(tid=tid, var_name='default_profile').one_or_none()
-        
-        # if default_profile_entry is not None:
-        #     raise errors.ForbiddenOperation
-        
-        return tw(db_del, models.Tenant, models.Tenant.id == tid)
+        tw(db_del, models.Tenant, models.Tenant.id == tid)
