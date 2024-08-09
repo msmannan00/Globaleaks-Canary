@@ -48,29 +48,25 @@ class MigrationScript(MigrationBase):
                 setattr(new_obj, key, getattr(old_obj, key))
             new_configs.append(new_obj)
         self.session_new.bulk_save_objects(new_configs)
-    
+
         variables = {name: get_default(desc.default) for name, desc in ConfigDescriptor.items()}
-        new_default_configs = []
+
+        variables.update({
+            'tenant_counter': self.session_old.query(self.model_from['Tenant']).count(),
+            'profile_counter': 999999
+        })
+
+        merged_configs = []
         for var_name, value in variables.items():
             new_config = self.model_to['Config']()
-            new_config.tid = 1000000
+            new_config.tid = 1 if var_name in ['tenant_counter', 'profile_counter'] else 1000000
             new_config.var_name = var_name
             new_config.value = value
-            new_default_configs.append(new_config)
-        self.session_new.bulk_save_objects(new_default_configs)
-        self.entries_count['Config'] += len(new_default_configs)
-    
-        special_entries = [('tenant_counter', self.session_old.query(self.model_from['Tenant']).count()),('profile_counter', 999999)]
-        special_configs = []
-        for var_name, value in special_entries:
-            new_config = self.model_to['Config']()
-            new_config.tid = 1
-            new_config.var_name = var_name
-            new_config.value = value
-            special_configs.append(new_config)
-        self.session_new.bulk_save_objects(special_configs)
-        self.entries_count['Config'] += len(special_configs)
-    
+            merged_configs.append(new_config)
+
+        self.session_new.bulk_save_objects(merged_configs)
+        self.entries_count['Config'] += len(merged_configs)
+
         default_config = {entry.var_name: entry.value for entry in self.session_new.query(self.model_to['Config']).filter_by(tid=1000000).all()}
         tenant_configs = self.session_new.query(self.model_to['Config'].tid,self.model_to['Config'].var_name,self.model_to['Config'].value).filter(self.model_to['Config'].tid.notin_([1000000, 1])).all()
     
