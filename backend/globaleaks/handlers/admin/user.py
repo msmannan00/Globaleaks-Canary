@@ -66,8 +66,7 @@ def db_create_user(session, tid, user_session, request, language):
     if existing_user:
         raise errors.DuplicateUserError
 
-    user.salt = GCE.generate_salt()
-
+    user.salt = GCE.generate_salt(user.username)
     user.language = request['language']
 
     # The various options related in manage PGP keys are used here.

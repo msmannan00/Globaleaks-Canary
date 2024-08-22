@@ -55,6 +55,7 @@ api_spec = [
     # Authentication Handlers
     (r'/api/auth/token', auth.token.TokenHandler),
     (r'/api/auth/authentication', auth.AuthenticationHandler),
+    (r'/api/auth/salt', auth.SaltHandler),
     (r'/api/auth/tokenauth', auth.TokenAuthHandler),
     (r'/api/auth/receiptauth', auth.ReceiptAuthHandler),
     (r'/api/auth/session', auth.SessionHandler),
@@ -495,6 +496,7 @@ class APIResourceWrapper(Resource):
                           b"default-src 'none';"
                           b"form-action 'none';"
                           b"frame-ancestors 'none';"
+                          b"script-src 'self' 'wasm-unsafe-eval';"
                           b"sandbox;")
 
         request.setHeader(b"Cross-Origin-Embedder-Policy", "require-corp")
