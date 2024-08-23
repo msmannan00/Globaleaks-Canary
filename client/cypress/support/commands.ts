@@ -7,7 +7,7 @@ declare global {
       waitForLoader: () => void;
       waitForPageIdle: () => void;
       logout: () => void;
-      takeScreenshot: (filename: string, locator?: any) => void;
+      takeScreenshot: (filename: string, locator?: string) => void;
       login_whistleblower: (receipt: string) => void;
       waitForTipImageUpload: (attempt?: number) => void;
       waitUntilClickable: (locator: string, timeout?: number) => void;
@@ -25,8 +25,8 @@ declare global {
 Cypress.Commands.add("waitForPageIdle", () => {
   const pageIdleDetector = new PageIdleDetector();
   pageIdleDetector.waitForPageToBeIdle();
-  }
-);
+  cy.wait(0);
+});
 
 Cypress.Commands.add("login_receiver", (username, password, url, firstlogin) => {
   username = username === undefined ? "Recipient" : username;
@@ -87,7 +87,7 @@ Cypress.Commands.add("simple_login_receiver", (username, password, url, firstlog
 Cypress.Commands.add("simple_login_admin", (username, password, url, firstlogin) => {
   username = username === undefined ? "admin" : username;
   password = password === undefined ? Cypress.env("user_password") : password;
-  url = url === undefined ? "#/admin/" : url;
+  url = url === undefined ? "#/admin" : url;
 
   let finalURL = "";
 
@@ -165,7 +165,7 @@ Cypress.Commands.add("login_custodian", (username, password, url, firstlogin) =>
 
 });
 
-Cypress.Commands.add("takeScreenshot", (filename, _?: any) => {
+Cypress.Commands.add("takeScreenshot", (filename: string, locator?: string) => {
   if (!Cypress.env("takeScreenshots")) {
     return;
   }
@@ -173,17 +173,32 @@ Cypress.Commands.add("takeScreenshot", (filename, _?: any) => {
   cy.get("html, body").invoke(
     "attr",
     "style",
-    "height: auto; scroll-behavior: auto;"
+    "height: auto;"
   );
 
+  if (locator == '.modal') {
+    cy.get(".modal").invoke(
+      "attr",
+      "style",
+      "height: auto; position: absolute;"
+    );
+  }
+
   return cy.document().then((doc) => {
-    cy.viewport(1280, doc.body.scrollHeight);
+    cy.viewport(1920, doc.body.scrollHeight);
 
     cy.waitForPageIdle();
 
     cy.wait(500);
-    cy.screenshot("../" + filename, {
-      overwrite: true
+
+    if (locator && locator !== ".modal") {
+      return cy.get(locator).screenshot("../" + filename, {overwrite: true, scale: true});
+    }
+
+    return cy.screenshot("../" + filename, {
+      capture: "fullPage",
+      overwrite: true,
+      scale: true
     });
   });
 });
@@ -285,5 +300,5 @@ Cypress.Commands.add("login_admin", (username, password, url, firstlogin) => {
 });
 
 Cypress.Commands.add("logout", () => {
-  cy.get('a#LogoutLink').should('be.visible').click();
+  cy.get('#LogoutLink').should('be.visible').click();
 });
