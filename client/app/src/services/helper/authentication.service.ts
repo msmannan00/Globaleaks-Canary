@@ -11,6 +11,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {OtkcAccessComponent} from "@app/shared/modals/otkc-access/otkc-access.component";
 import {CryptoService} from "@app/shared/services/crypto.service";
+import {TokenResponse} from "@app/models/authentication/token-response";
 
 @Injectable({
   providedIn: "root"
@@ -92,17 +93,22 @@ export class AuthenticationService {
         requestObservable = this.httpService.requestWhistleBlowerLogin(JSON.stringify({"receipt": password}), authHeader);
       } else {
         let hash = "";
+        let tokenResponse: TokenResponse = { id: "", answer: ""};
+        let ans:number = 0;
         if (password && username) {
           const res = await firstValueFrom(this.httpService.requestSalt(JSON.stringify({'username':username})));
           hash = await this.cryptoService.hashArgon2(password, "", res.salt);
+          tokenResponse = res.session.token
         }
+        ans = await firstValueFrom(this.cryptoService.proofOfWork(tokenResponse.id));
+        const authHeader = new HttpHeaders().set("x-token", `${tokenResponse.id}:${ans}`);
         requestObservable = this.httpService.requestGeneralLogin(JSON.stringify({
           "tid": tid,
           "username": username,
           "password": password,
           "hash": hash,
           "authcode": authcode
-        }));
+        }),authHeader);
       }
     }
 

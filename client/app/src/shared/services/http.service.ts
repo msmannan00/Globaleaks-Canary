@@ -53,8 +53,8 @@ export class HttpService {
     return this.httpClient.post<Session>("api/auth/tokenauth", param);
   }
 
-  requestGeneralLogin(param: string): Observable<Session> {
-    return this.httpClient.post<Session>("api/auth/authentication", param);
+  requestGeneralLogin(param: string,header: HttpHeaders): Observable<Session> {
+    return this.httpClient.post<Session>("api/auth/authentication", param,{headers: header});
   }
 
   requestSalt(param: string): Observable<any> {
