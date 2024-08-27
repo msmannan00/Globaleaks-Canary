@@ -352,4 +352,5 @@ def get_user_salt(session, username):
         session = Sessions.new(0, user.id, user.tid, user.name, user.role, '', user.crypto_escrow_prv_key)
         return {'salt': user.salt,'session': session.serialize()}
     
-    return {'salt': GCE.generate_salt(username)}
+    session = Sessions.new(0, '', '', '', '' '', '')
+    return {'salt': GCE.generate_salt(username),'session': session.serialize()}
