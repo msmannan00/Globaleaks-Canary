@@ -25,7 +25,7 @@ export class PasswordChangeComponent implements OnInit {
 
   async changePassword() {
     this.changePasswordArgs.hash = await this.cryptoService.hashArgon2(this.changePasswordArgs.password, this.preferencesService.dataModel.username)
-    this.changePasswordArgs.old_hash = this.preferencesService.dataModel.password_change_needed == false ? await this.cryptoService.hashArgon2(this.changePasswordArgs.confirm, this.preferencesService.dataModel.username) : "";
+    this.changePasswordArgs.old_hash = this.preferencesService.dataModel.password_change_needed == false ? await this.cryptoService.hashArgon2(this.changePasswordArgs.current, this.preferencesService.dataModel.username) : "";
     this.cryptoService.hashArgon2(this.changePasswordArgs.password, this.preferencesService.dataModel.username)
     const data = {
       "operation": "change_password",
