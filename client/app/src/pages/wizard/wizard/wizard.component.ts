@@ -76,8 +76,8 @@ export class WizardComponent implements OnInit {
     }
     this.completed = true;
     
-    this.wizard.admin_hash = this.wizard.admin_password ? await this.cryptoService.hashArgon2(this.wizard.admin_password,this.wizard.admin_name) : "";
-    this.wizard.receiver_hash = this.wizard.receiver_password ? await this.cryptoService.hashArgon2(this.wizard.receiver_password,this.wizard.receiver_name) : "";
+    this.wizard.admin_hash = this.wizard.admin_password ? await this.cryptoService.hashArgon2(this.wizard.admin_password,this.wizard.admin_username) : "";
+    this.wizard.receiver_hash = this.wizard.receiver_password ? await this.cryptoService.hashArgon2(this.wizard.receiver_password,this.wizard.receiver_username) : "";
     const param = JSON.stringify(this.wizard);
     this.httpService.requestWizard(param).subscribe
     (
