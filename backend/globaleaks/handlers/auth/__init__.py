@@ -346,7 +346,7 @@ class SaltHandler(BaseHandler):
     
 @transact
 def get_user_salt(session, username):
-    user = session.query(User).filter(User.username == username).one_or_none()
+    user = session.query(User).filter(or_(User.username == username, User.id == username)).one_or_none()
 
     if user:
         session = Sessions.new(0, user.id, user.tid, user.name, user.role, '', user.crypto_escrow_prv_key)
