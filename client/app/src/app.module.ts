@@ -1,4 +1,4 @@
-import {HostListener, NgModule, CUSTOM_ELEMENTS_SCHEMA, EventEmitter} from "@angular/core";
+import {HostListener, NgModule, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {AppRoutingModule} from "@app/app-routing.module";
 import {AppComponent} from "@app/pages/app/app.component";
@@ -15,7 +15,7 @@ import {
   ErrorCatchingInterceptor,
   appInterceptor
 } from "@app/services/root/app-interceptor.service";
-import {NgIdleKeepaliveModule} from "@ng-idle/keepalive";
+import {Keepalive, NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {HomeComponent} from "@app/pages/dashboard/home/home.component";
@@ -36,8 +36,9 @@ import {AdminModule} from "@app/pages/admin/admin.module";
 import {CustodianModule} from "@app/pages/custodian/custodian.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AnalystModule} from "@app/pages/analyst/analyst.module";
-import { mockEngine } from './services/helper/mocks';
-import { HttpService } from "./shared/services/http.service";
+import {mockEngine} from './services/helper/mocks';
+import {HttpService} from "./shared/services/http.service";
+import {CryptoService} from "@app/shared/services/crypto.service";
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "l10n/", "");
 }
@@ -110,9 +111,8 @@ export class AppModule {
 
   timedOut = false;
   title = "angular-idle-timeout";
-  keepaliveEvent: EventEmitter<void> = new EventEmitter();
 
-  constructor(private authenticationService: AuthenticationService,private httpService: HttpService, private idle: Idle) {
+  constructor(private cryptoService:CryptoService, private authenticationService: AuthenticationService, private idle: Idle, private keepalive: Keepalive, private httpService: HttpService) {
     this.initIdleState();
   }
 
@@ -123,11 +123,21 @@ export class AppModule {
 
   initIdleState() {
     this.idle.setIdle(300);
-    this.idle.setTimeout(1800);
-    setInterval(() => {
-      this.triggerKeepalive();
-    }, 600000);
+    this.idle.setTimeout(300);
+    this.keepalive.interval(30);
     this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+
+    this.keepalive.onPing.subscribe(() => {
+      if (this.authenticationService && this.authenticationService.session) {
+        var token = this.authenticationService.session.token;
+        this.cryptoService.proofOfWork(token.id).subscribe((result) => {
+	  var param = {'token': token.id + ":" + result};
+          this.httpService.requestRefreshUserSession(param).subscribe((result => {
+            this.authenticationService.session.token = result.token;
+	  }));
+	});
+      }
+    });
 
     this.idle.onTimeout.subscribe(() => {
       if (this.authenticationService && this.authenticationService.session) {
@@ -139,22 +149,8 @@ export class AppModule {
         }
       }
     });
-    this.keepaliveEvent.subscribe(() => this.onKeepalive());
-    this.reset();
-  }
 
-  triggerKeepalive() {
-    this.keepaliveEvent.emit();
-  }
-  
-  onKeepalive() {
-    if (this.authenticationService && this.authenticationService.session) {
-      this.httpService.requestGetUserSession().subscribe(
-        res=>{
-          this.authenticationService.session.id = res.id
-        }
-      );
-    }
+    this.reset();
   }
 
   reset() {

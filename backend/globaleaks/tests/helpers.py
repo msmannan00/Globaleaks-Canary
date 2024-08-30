@@ -43,7 +43,7 @@ from globaleaks.rest.api import JSONEncoder
 from globaleaks.sessions import initialize_submission_session, Sessions
 from globaleaks.settings import Settings
 from globaleaks.state import State, TenantState
-from globaleaks.utils import tempdict
+from globaleaks.utils import tempdict, token
 from globaleaks.utils.crypto import generateRandomKey, GCE
 from globaleaks.utils.securetempfile import SecureTemporaryFile
 from globaleaks.utils.utility import datetime_now, uuid4
@@ -72,7 +72,8 @@ USER_REC_KEY_PLAIN = Base32Encoder.encode(USER_REC_KEY_PLAIN).replace(b'=', b'')
 GCE_orig_generate_key = GCE.generate_key
 GCE_orig_generate_keypair = GCE.generate_keypair
 
-
+TOKEN = b"31b780b6eb6357e324eea7c3a5d2542067c4d537f4f4de77473c93d48dd8a758"
+TOKEN_ANSWER = b"31b780b6eb6357e324eea7c3a5d2542067c4d537f4f4de77473c93d48dd8a758:149619"
 def mock_nullfunction(*args, **kwargs):
     return
 
@@ -164,6 +165,14 @@ def mock_users_keys(session):
         user.crypto_pub_key = USER_PUB_KEY
         user.crypto_bkp_key = USER_BKP_KEY
         user.crypto_rec_key = USER_REC_KEY
+
+
+def get_token():
+    token = State.tokens.new(1)
+    State.tokens.pop(token.id)
+    token.id = TOKEN
+    State.tokens[token.id] = token
+    return TOKEN_ANSWER
 
 
 def get_dummy_step():
@@ -461,7 +470,7 @@ BaseHandler.get_file_upload = get_file_upload
 
 
 def forge_request(uri=b'https://www.globaleaks.org/',
-                  headers=None, body='', args=None, client_addr=None, method=b'GET'):
+                  headers=None, body='', args=None, client_addr=b'127.0.0.1', method=b'GET'):
     """
     Creates a twisted.web.Request compliant request that is from an external
     IP address.
@@ -495,7 +504,7 @@ def forge_request(uri=b'https://www.globaleaks.org/',
     request.code = 200
     request.hostname = b''
     request.headers = None
-    request.client_ip = b'127.0.0.1'
+    request.client_ip = client_addr
     request.client_ua = b''
     request.client_using_mobile = False
     request.client_using_tor = False
@@ -521,14 +530,10 @@ def forge_request(uri=b'https://www.globaleaks.org/',
 
     request.getResponseBody = getResponseBody
 
-    if client_addr is None:
-        request.client = IPv4Address('TCP', b'1.2.3.4', 12345)
-    else:
-        request.client = client_addr
-
     def getHost():
-        return IPv4Address('TCP', b'127.0.0.1', port)
+        return IPv4Address('TCP', request.client_ip, port)
 
+    request.client = getHost()
     request.getHost = getHost
 
     def notifyFinish():
@@ -941,7 +946,7 @@ class TestHandler(TestGLWithPopulatedDB):
 
     def request(self, body='', uri=b'https://www.globaleaks.org/',
                 user_id=None, role=None, multilang=False, headers=None, args=None,
-                client_addr=None, handler_cls=None, attached_file=None,
+                client_addr=b'127.0.0.1', handler_cls=None, attached_file=None,
                 kwargs=None, token=False):
         """
         Constructs a handler for preforming mock requests using the bag of params described below.
@@ -977,11 +982,7 @@ class TestHandler(TestGLWithPopulatedDB):
             headers[b'x-session'] = session.id.encode()
 
         # during unit tests a token is always provided to any handler
-        token = self.state.tokens.new(1)
-        self.state.tokens.pop(token.id)
-        token.id = "PBmL2WGq8w8luxOjgH38MjqSti0WfL9YAfQYJddnxp" # answer: 406
-        self.state.tokens[token.id] = token
-        headers[b'x-token'] = b"PBmL2WGq8w8luxOjgH38MjqSti0WfL9YAfQYJddnxp:406"
+        headers[b'x-token'] = get_token()
 
         if handler_cls is None:
             handler_cls = self._handler

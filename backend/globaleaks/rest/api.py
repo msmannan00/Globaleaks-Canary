@@ -29,7 +29,6 @@ from globaleaks.handlers import admin, \
                                 security, \
                                 signup, \
                                 sitemap, \
-                                support, \
                                 staticfile, \
                                 support, \
                                 user, \
@@ -427,7 +426,12 @@ class APIResourceWrapper(Resource):
             return b''
 
         if self.handler.upload_handler and method == 'post':
-            self.handler.process_file_upload()
+            try:
+                self.handler.process_file_upload()
+            except Exception as e:
+                self.handle_exception(e, request)
+                return b''
+
             if self.handler.uploaded_file is None:
                 return b''
 

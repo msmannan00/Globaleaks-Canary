@@ -256,16 +256,19 @@ class SessionHandler(BaseHandler):
 
     def post(self):
         """
-        Refresh and retrive session
+        Reset session timout
         """
-        session = Sessions.new(self.session.user_tid,
-                               self.session.user_id,
-                               self.session.user_tid,
-                               self.session.user_name,
-                               self.session.user_role,
-                               self.session.cc,
-                               self.session.ek)
-        return session.serialize()
+        request = self.validate_request(self.request.content.read(), requests.SessionUpdateDesc)
+
+        try:
+            self.session.token.validate(request['token'].encode())
+            Sessions.reset_timeout(self.session)
+        except:
+            pass
+        else:
+            self.session.token = self.state.tokens.new(self.request.tid)
+
+        return self.session.serialize()
 
     @inlineCallbacks
     def delete(self):

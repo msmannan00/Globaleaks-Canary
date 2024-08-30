@@ -344,6 +344,12 @@ class BaseHandler(object):
         file_id = self.request.args[b'flowIdentifier'][0].decode()
 
         if file_id not in self.state.TempUploadFiles:
+            if self.session.user_role == 'whistleblower':
+                State.RateLimitingTable.check(self.request.path + b'#' + self.session.user_id.encode(),
+                                              State.tenants[1].cache.threshold_attachments_per_hour_per_report)
+                State.RateLimitingTable.check(self.request.path + b'#' + self.request.client_ip.encode(),
+                                              State.tenants[1].cache.threshold_attachments_per_hour_per_ip)
+
             self.state.TempUploadFiles[file_id] = SecureTemporaryFile(Settings.tmp_path)
 
         f = self.state.TempUploadFiles[file_id]
@@ -412,6 +418,5 @@ class BaseHandler(object):
             err_tup = ("Handler [%s] exceeded execution threshold (of %d secs) with an execution time of %.2f seconds",
                        self.name, self.handler_exec_time_threshold, self.request.execution_time.seconds)
             log.err(tid=self.request.tid, *err_tup)
-            self.state.schedule_exception_email(self.request.tid, *err_tup)
 
         track_handler(self)
