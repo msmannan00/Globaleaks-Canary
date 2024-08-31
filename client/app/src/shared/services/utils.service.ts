@@ -308,14 +308,14 @@ export class UtilsService {
   }
 
   isDatePassed(time: string) {
-    const report_date = new Date(time);
-    const current_date = new Date();
+    var report_date = new Date(time);
+    var current_date = new Date();
     return current_date > report_date;
   }
 
   isNever(time: string) {
     const date = new Date(time);
-    return date.getTime() >= 32503680000000;
+    return date.getTime() === 32503680000000;
   }
 
   deleteFromList(list:  { [key: string]: Field}[], elem: { [key: string]: Field}) {
@@ -519,12 +519,9 @@ export class UtilsService {
 
   getConfirmation(): Observable<string> {
     return new Observable((observer) => {
-      let modalRef;
-
+      let modalRef = this.modalService.open(ConfirmationWithPasswordComponent,{backdrop: "static",keyboard: false});
       if (this.preferenceResolver.dataModel.two_factor) {
         modalRef = this.modalService.open(ConfirmationWith2faComponent,{backdrop: "static",keyboard: false});
-      } else {
-        modalRef = this.modalService.open(ConfirmationWithPasswordComponent,{backdrop: "static",keyboard: false});
       }
 
       modalRef.componentInstance.confirmFunction = (secret: string) => {
