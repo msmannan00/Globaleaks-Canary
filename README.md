@@ -3,7 +3,7 @@
 </div>
 
 <div align="center">
-  <a href="https://github.com/globaleaks/GlobaLeaks/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-AGPLv3%2B-green" alt="License"></a> <a href="https://github.com/globaleaks/GlobaLeaks/blob/main/CODE_OF_CONDUCT.md"><img src="https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg" alt="Code of Conduct"></a> <a href="https://twitter.com/intent/follow?screen_name=GlobaLeaks"><img src="https://img.shields.io/twitter/follow/GlobaLeaks?style=social&logo=twitter" alt="follow on Twitter"></a>
+  <a href="https://github.com/globaleaks/GlobaLeaks/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-AGPLv3%2B-green" alt="License"></a> <a href="https://github.com/globaleaks/GlobaLeaks/blob/main/CODE_OF_CONDUCT.md"><img src="https://img.shields.io/badge/Contributor%20Covenant-v2.1%20adopted-ff69b4.svg" alt="Code of Conduct"></a>
 </div>
 
 [GlobaLeaks](https://www.globaleaks.org/) is free, open source software enabling anyone to easily set up and maintain a secure whistleblowing platform.
@@ -17,7 +17,7 @@
 Project best practices and scores:
 | Metric | Score
 | :---: | :---: |
-| [Mozilla HTTP Observatory](https://observatory.mozilla.org/analyze/try.globaleaks.org) | ![Status](https://img.shields.io/badge/observatory-A%2B-brightgreen)
+| [MDN HTTP Observatory](https://developer.mozilla.org/en-US/observatory/analyze?host=try.globaleaks.org) | ![Status](https://img.shields.io/badge/observatory-A%2B-brightgreen)
 | [Security Headers](https://securityheaders.com/?q=https%3A%2F%2Ftry.globaleaks.org%2F) | ![Status](https://img.shields.io/badge/security%20headers-A%2B-brightgreen)
 | [SSLLabs](https://www.ssllabs.com/ssltest/analyze.html?d=try.globaleaks.org) | [![Status](https://img.shields.io/static/v1?label=SSLLabs&message=A%2B&color=%3CCOLOR%3E)](https://www.ssllabs.com/ssltest/analyze.html?d=try.globaleaks.org&latest)
 | [CII Best Practices](https://bestpractices.coreinfrastructure.org/) | [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/3816/badge)](https://bestpractices.coreinfrastructure.org/projects/3816)
@@ -48,4 +48,4 @@ If you are planning some press releases, a conference, or promoting GlobaLeaks p
 To support the GlobaLeaks project you can help us with [donations](https://github.com/sponsors/globaleaks) that will goes entirely for the software development.
 
 ## License
-GlobaLeaks is released under the [AGPLv3 license](https://github.com/globaleaks/GlobaLeaks/blob/main/LICENSE).
+GlobaLeaks is released under the AGPLv3 license. See [LICENSE](https://github.com/globaleaks/GlobaLeaks/blob/main/LICENSE) for more information on Additional Terms as per [7(b)](https://github.com/globaleaks/GlobaLeaks/blob/main/LICENSE#L684) and [7(c)](https://github.com/globaleaks/GlobaLeaks/blob/main/LICENSE#L713).

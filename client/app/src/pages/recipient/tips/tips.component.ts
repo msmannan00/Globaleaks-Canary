@@ -115,6 +115,7 @@ export class TipsComponent implements OnInit {
       }
     });
   }
+
   openRevokeAccessModal() {
     this.utils.runUserOperation("get_users_names", {}, false).subscribe(
       {
@@ -147,11 +148,7 @@ export class TipsComponent implements OnInit {
     );
   }
 
-  tipsExport() {
-    this.exportFiles().subscribe();
-  }
-
-  exportFiles(): Observable<void> {
+  exportTips() {
     const selectedTips = this.selectedTips.slice();
 
     return from(this.tokenResourceService.getWithProofOfWork()).pipe(
@@ -179,7 +176,7 @@ export class TipsComponent implements OnInit {
           this.appDataService.updateShowLoadingPanel(false);
         });
       })
-    );
+    ).subscribe();
   }
 
   reload() {
@@ -203,23 +200,11 @@ export class TipsComponent implements OnInit {
     return this.selectedTips.indexOf(id) !== -1;
   }
 
-  exportTip(tipId: string) {
-    this.utils.download("api/recipient/rtips/" + tipId + "/export").subscribe();
-    this.appDataService.updateShowLoadingPanel(false);
-  }
-
-  markReportStatus(date: string): boolean {
-    const report_date = new Date(date);
-    const current_date = new Date();
-    return current_date > report_date;
-  }
-
   actAsWhistleblower() {
     this.http.get('/api/auth/operatorauthswitch', { observe: 'response' }).subscribe(
       (response: HttpResponse<any>) => {
         if (response.status === 200) {
-          const urlRedirect = window.location.origin + response.body.redirect;
-          window.open(urlRedirect, '_blank');
+          window.open(window.location.origin + response.body.redirect);
         }
       },
     );
@@ -401,6 +386,7 @@ export class TipsComponent implements OnInit {
     this.lastUpdatePicker = false;
     this.expirationDatePicker = false;
   }
+
   exportToCsv(): void {
     this.utils.generateCSV(JSON.stringify(this.getDataCsv()), 'reports',this.getDataCsvHeaders());
   }
@@ -411,7 +397,7 @@ export class TipsComponent implements OnInit {
       id: tip.id,
       progressive: tip.progressive,
       important: tip.important,
-      reportStatus: this.markReportStatus(tip.reminder_date),
+      reportStatus: this.utils.isDatePassed(tip.reminder_date),
       context_name: tip.context_name,
       label: tip.label,
       status: tip.submissionStatusStr,
