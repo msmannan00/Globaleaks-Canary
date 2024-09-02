@@ -90,7 +90,7 @@ def login_whistleblower(session, tid, receipt, client_using_tor, operator_id=Non
 
     db_log(session, tid=tid, type='whistleblower_login', user_id=operator_id, object_id=itip.id)
 
-    session = Sessions.new(tid, itip.id, tid, "whistleblower", 'whistleblower', crypto_prv_key)
+    session = Sessions.new(tid, itip.id, tid, 'whistleblower', crypto_prv_key)
 
     if itip.receipt_change_needed:
         session.properties["new_receipt"] = GCE.generate_receipt()
@@ -150,7 +150,7 @@ def login(session, tid, username, password, hash, authcode, client_using_tor, cl
 
     db_log(session, tid=tid, type='login', user_id=user.id)
 
-    session = Sessions.new(tid, user.id, user.tid, user.name, user.role, crypto_prv_key, user.crypto_escrow_prv_key)
+    session = Sessions.new(tid, user.id, user.tid, user.role, crypto_prv_key, user.crypto_escrow_prv_key)
 
     if user.role == 'receiver' and user.can_edit_general_settings:
         session.permissions['can_edit_general_settings'] = True
@@ -209,7 +209,7 @@ class TokenAuthHandler(BaseHandler):
         connection_check(self.request.tid, session.user_role,
                          self.request.client_ip, self.request.client_using_tor)
 
-        session = Sessions.regenerate(session.id)
+        session = Sessions.regenerate(session)
 
         returnValue(session.serialize())
 
@@ -300,7 +300,6 @@ class TenantAuthSwitchHandler(BaseHandler):
         session = Sessions.new(tid,
                                self.session.user_id,
                                self.session.user_tid,
-                               self.session.user_name,
                                self.session.user_role,
                                self.session.cc,
                                self.session.ek)
@@ -320,7 +319,6 @@ class OperatorAuthSwitchHandler(BaseHandler):
         session = Sessions.new(self.session.user_tid,
                                uuid4(),
                                self.session.user_tid,
-                               "whistleblower",
                                "whistleblower",
                                self.session.cc,
                                self.session.ek)
@@ -349,8 +347,8 @@ def get_user_salt(session, username):
     user = session.query(User).filter(or_(User.username == username, User.id == username)).one_or_none()
 
     if user:
-        session = Sessions.new(0, user.id, user.tid, user.name, user.role, '', user.crypto_escrow_prv_key)
+        session = Sessions.new(0, user.id, user.tid, user.role, '', user.crypto_escrow_prv_key)
         return {'salt': user.salt,'session': session.serialize()}
     
-    session = Sessions.new(0, '', '', '', '' '', '')
+    session = Sessions.new(0, '', '', '', '', '')
     return {'salt': GCE.generate_salt(username),'session': session.serialize()}
