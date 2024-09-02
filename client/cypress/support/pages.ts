@@ -44,7 +44,13 @@ class WhistleblowerPage {
     cy.wait(1000);
     cy.get("#SubmitButton").should("be.visible");
 
+    cy.takeScreenshot("whistleblower/submission");
+
     cy.get("#SubmitButton").click();
+
+    cy.get("#ReceiptCode").should("be.visible");
+
+    cy.takeScreenshot("whistleblower/receipt");
 
     return cy.get('#ReceiptCode').invoke('val').then((value) => {
       return value;
