@@ -2,7 +2,6 @@
 #
 # Handlers dealing with platform authentication
 from datetime import timedelta
-import json
 from random import SystemRandom
 from sqlalchemy import or_
 from twisted.internet.defer import inlineCallbacks, returnValue
@@ -99,7 +98,7 @@ def login_whistleblower(session, tid, receipt, client_using_tor, operator_id=Non
 
 
 @transact
-def login(session, tid, username, password, hash, authcode, client_using_tor, client_ip):
+def login(session, tid, username, password, authcode, client_using_tor, client_ip):
     """
     Login transaction for users' access
 
@@ -122,7 +121,7 @@ def login(session, tid, username, password, hash, authcode, client_using_tor, cl
                                           User.enabled.is_(True),
                                           User.tid == tid).one_or_none()
 
-    if not user or not GCE.check_hash(user.hash,hash):
+    if not user or not GCE.check_password(password, user.salt, user.hash):
         db_login_failure(session, tid, 0)
 
     connection_check(tid, user.role, client_ip, client_using_tor)
@@ -177,7 +176,6 @@ class AuthenticationHandler(BaseHandler):
         session = yield login(tid,
                               request['username'],
                               request['password'],
-                              request['hash'],
                               request['authcode'],
                               self.request.client_using_tor,
                               self.request.client_ip)
@@ -326,29 +324,3 @@ class OperatorAuthSwitchHandler(BaseHandler):
         session.properties['operator_session'] = self.session.user_id
 
         return {'redirect': '/#/login?token=%s' % session.id}
-
-class SaltHandler(BaseHandler):
-    """
-    Salt handler for user
-    """
-    check_roles = 'any'
-    @inlineCallbacks
-    def post(self):
-        raw_request = self.request.content.read()
-        request_str = raw_request.decode('utf-8')
-        request_dict = json.loads(request_str)
-        username = request_dict['username']
-        user = yield get_user_salt(username)
-
-        returnValue(user) 
-    
-@transact
-def get_user_salt(session, username):
-    user = session.query(User).filter(or_(User.username == username, User.id == username)).one_or_none()
-
-    if user:
-        session = Sessions.new(0, user.id, user.tid, user.name, user.role, '', user.crypto_escrow_prv_key)
-        return {'salt': user.salt,'session': session.serialize()}
-    
-    session = Sessions.new(0, '', '', '', '' '', '')
-    return {'salt': GCE.generate_salt(username),'session': session.serialize()}

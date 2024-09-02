@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {LoginDataRef} from "@app/pages/auth/login/model/login-model";
 import {HttpService} from "@app/shared/services/http.service";
-import {firstValueFrom, Observable} from "rxjs";
+import {Observable} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AppDataService} from "@app/app-data.service";
 import {ErrorCodes} from "@app/models/app/error-code";
@@ -10,8 +10,6 @@ import {TitleService} from "@app/shared/services/title.service";
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {OtkcAccessComponent} from "@app/shared/modals/otkc-access/otkc-access.component";
-import {CryptoService} from "@app/shared/services/crypto.service";
-import {TokenResponse} from "@app/models/authentication/token-response";
 
 @Injectable({
   providedIn: "root"
@@ -23,7 +21,7 @@ export class AuthenticationService {
   requireAuthCode: boolean = false;
   loginData: LoginDataRef = new LoginDataRef();
 
-  constructor(private http: HttpClient,private cryptoService: CryptoService, private modalService: NgbModal,private titleService: TitleService, private activatedRoute: ActivatedRoute, private httpService: HttpService, private appDataService: AppDataService, private router: Router) {
+  constructor(private http: HttpClient, private modalService: NgbModal,private titleService: TitleService, private activatedRoute: ActivatedRoute, private httpService: HttpService, private appDataService: AppDataService, private router: Router) {
     this.init();
   }
 
@@ -77,7 +75,7 @@ export class AuthenticationService {
     );
   }
 
-  async login(tid?: number, username?: string, password?: string | undefined, authcode?: string | null, authtoken?: string | null, callback?: () => void) {
+  login(tid?: number, username?: string, password?: string | undefined, authcode?: string | null, authtoken?: string | null, callback?: () => void) {
 
     if (authcode === undefined) {
       authcode = "";
@@ -92,23 +90,12 @@ export class AuthenticationService {
         const authHeader = this.getHeader();
         requestObservable = this.httpService.requestWhistleBlowerLogin(JSON.stringify({"receipt": password}), authHeader);
       } else {
-        let hash = "";
-        let tokenResponse: TokenResponse = { id: "", answer: ""};
-        let ans:number = 0;
-        if (password && username) {
-          const res = await firstValueFrom(this.httpService.requestSalt(JSON.stringify({'username':username})));
-          hash = await this.cryptoService.hashArgon2(password, "", res.salt);
-          tokenResponse = res.session.token
-        }
-        ans = await firstValueFrom(this.cryptoService.proofOfWork(tokenResponse.id));
-        const authHeader = new HttpHeaders().set("x-token", `${tokenResponse.id}:${ans}`);
         requestObservable = this.httpService.requestGeneralLogin(JSON.stringify({
           "tid": tid,
           "username": username,
           "password": password,
-          "hash": hash,
           "authcode": authcode
-        }),authHeader);
+        }));
       }
     }
 

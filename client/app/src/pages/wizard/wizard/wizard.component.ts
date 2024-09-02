@@ -9,7 +9,6 @@ import {TranslationService} from "@app/services/helper/translation.service";
 import {AppConfigService} from "@app/services/root/app-config.service";
 import {TitleService} from "@app/shared/services/title.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {CryptoService} from "@app/shared/services/crypto.service";
 
 @Component({
   selector: "src-wizard",
@@ -47,12 +46,10 @@ export class WizardComponent implements OnInit {
     "skip_admin_account_creation": false,
     "skip_recipient_account_creation": false,
     "profile": "default",
-    "enable_developers_exception_notification": false,
-    "admin_hash": "",
-    "receiver_hash": "",
+    "enable_developers_exception_notification": false
   };
 
-  constructor(private titleService: TitleService,private cryptoService: CryptoService, private translationService: TranslationService, private router: Router, private http: HttpClient, private authenticationService: AuthenticationService, private httpService: HttpService, protected appDataService: AppDataService, protected appConfigService: AppConfigService, private utilsService: UtilsService) {
+  constructor(private titleService: TitleService, private translationService: TranslationService, private router: Router, private http: HttpClient, private authenticationService: AuthenticationService, private httpService: HttpService, protected appDataService: AppDataService, protected appConfigService: AppConfigService, private utilsService: UtilsService) {
   }
 
   ngOnInit() {
@@ -69,15 +66,13 @@ export class WizardComponent implements OnInit {
     }
   }
 
-  async complete() {
+  complete() {
 
     if (this.completed) {
       return;
     }
     this.completed = true;
-    
-    this.wizard.admin_hash = this.wizard.admin_password ? await this.cryptoService.hashArgon2(this.wizard.admin_password,this.wizard.admin_username) : "";
-    this.wizard.receiver_hash = this.wizard.receiver_password ? await this.cryptoService.hashArgon2(this.wizard.receiver_password,this.wizard.receiver_username) : "";
+
     const param = JSON.stringify(this.wizard);
     this.httpService.requestWizard(param).subscribe
     (

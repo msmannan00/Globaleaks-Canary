@@ -7,7 +7,6 @@ User Features
 
 - Multi-user system with customizable user roles (whistleblower, recipient, administrator)
 - Fully manageable via a web administration interface
-- Support for `over 90 languages <https://www.transifex.com/otf/globaleaks>`_ and Right-to-Left (RTL) languages
 - Allows whistleblowers to decide if and when to confidentially declare their identity
 - Facilitates multimedia file exchanges with whistleblowers
 - Secure management of file access and visualization
@@ -22,11 +21,12 @@ User Features
 - Enables creation and management of multiple whistleblowing sites (e.g., for subsidiaries or third-party clients)
 - Advanced questionnaire builder
 - Provides whistleblowing system statistics
+- Support for `over 90 languages <https://www.transifex.com/otf/globaleaks>`_ and Right-to-Left (RTL) languages
 
 Legal Features
 --------------
 
-- Designed in compliance with `ISO 37002:2021 <https://www.iso.org/standard/65035.html>`_ and `EU Directive 2019/1937 <https://eur-lex.europa.eu/legal-content/en/TXT/?uri=CELEX%3A32019L1937>`_ for whistleblowing compliance
+- Designed in adherence to `ISO 37002:2021 <https://www.iso.org/standard/65035.html>`_ and `EU Directive 2019/1937 <https://eur-lex.europa.eu/legal-content/en/TXT/?uri=CELEX%3A32019L1937>`_ recommendations for whistleblowing compliance
 - Supports bidirectional anonymous communication (comments/messages)
 - Customizable case management workflow (statuses/sub-statuses)
 - Conditional reporting workflow based on whistleblower identity
@@ -43,7 +43,7 @@ Legal Features
 Security Features
 -----------------
 
-- Designed in accordance with `ISO 27001:2022 <https://www.iso.org/standard/82875.html>`_, `CSA STAR <https://cloudsecurityalliance.org/star>`_, and `OWASP <https://owasp.org/>`_ security standards
+- Designed in adherence to `ISO 27001:2022 <https://www.iso.org/standard/82875.html>`_, `CSA STAR <https://cloudsecurityalliance.org/star>`_, and `OWASP <https://owasp.org/>`_ recommendations for security compliance
 - Full data encryption for whistleblower reports and recipient communications
 - Supports digital anonymity through `Tor <https://www.torproject.org/>`_ integration
 - Built-in HTTPS support with `TLS 1.3 <https://tools.ietf.org/html/rfc8446>`_ standard and `SSLabs A+ <https://www.ssllabs.com/ssltest/analyze.html?d=try.globaleaks.org>`_ rating
@@ -60,9 +60,9 @@ Security Features
 Technical Features
 ------------------
 
+- Designed in adherence to `Directive (EU) 2019/882 <https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX%3A32019L0882>`_, `Directive (EU) 2016/2102 <https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX%3A32016L2102>`_, `ETSI EN 301 549 <https://www.etsi.org/deliver/etsi_en/301500_301599/301549/03.02.01_60/en_301549v030201p.pdf>`_, `W3C WCAG 2.2 <https://www.w3.org/TR/WCAG22/>`_, and `WAI-ARIA 2.2 <https://www.w3.org/TR/wai-aria-1.2/>`_ recommendations for accessibility compliance
 - Multi-site support enabling the operation of multiple virtual sites on the same setup
 - Responsive user interfaces created with `Bootstrap <https://getbootstrap.com/>`_ CSS framework
-- Designed in adherence to `Directive (EU) 2019/882 <https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX%3A32019L0882>`_, `Directive (EU) 2016/2102 <https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX%3A32016L2102>`_, `ETSI EN 301 549 <https://www.etsi.org/deliver/etsi_en/301500_301599/301549/03.02.01_60/en_301549v030201p.pdf>`_, `W3C WCAG 2.2 <https://www.w3.org/TR/WCAG22/>`_, and `WAI-ARIA 2.2 <https://www.w3.org/TR/wai-aria-1.2/>`_ recommendations for accessibility compliance
 - Automated software quality measurement and continuous integration testing
 - Long-Term Support (LTS) plan
 - Built with lightweight framework technologies (`Angular <https://angular.dev/>`_ and `Python Twisted <https://twisted.org/>`_)

@@ -53,14 +53,10 @@ export class HttpService {
     return this.httpClient.post<Session>("api/auth/tokenauth", param);
   }
 
-  requestGeneralLogin(param: string,header: HttpHeaders): Observable<Session> {
-    return this.httpClient.post<Session>("api/auth/authentication", param,{headers: header});
+  requestGeneralLogin(param: string): Observable<Session> {
+    return this.httpClient.post<Session>("api/auth/authentication", param);
   }
 
-  requestSalt(param: string): Observable<any> {
-    return this.httpClient.post<any>("api/auth/salt", param);
-  }
-  
   requestWhistleBlowerLogin(param: string, header: HttpHeaders): Observable<Session> {
     return this.httpClient.post<Session>("api/auth/receiptauth", param, {headers: header});
   }

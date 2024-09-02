@@ -12,7 +12,6 @@ import {Observable} from "rxjs";
 import {userResolverModel} from "@app/models/resolvers/user-resolver-model";
 import {nodeResolverModel} from "@app/models/resolvers/node-resolver-model";
 import {preferenceResolverModel} from "@app/models/resolvers/preference-resolver-model";
-import {CryptoService} from "@app/shared/services/crypto.service";
 
 @Component({
   selector: "src-user-editor",
@@ -26,8 +25,8 @@ export class UserEditorComponent implements OnInit {
   @Output() dataToParent = new EventEmitter<string>();
   @ViewChild("uploader") uploaderInput: ElementRef;
   editing = false;
-  setPasswordArgs: { user_id: string, password: string , hash: string};
-  changePasswordArgs: { password_change_needed: string};
+  setPasswordArgs: { user_id: string, password: string };
+  changePasswordArgs: { password_change_needed: string };
   passwordStrengthScore: number = 0;
   nodeData: nodeResolverModel;
   preferenceData: preferenceResolverModel;
@@ -35,7 +34,7 @@ export class UserEditorComponent implements OnInit {
   appServiceData: AppDataService;
   protected readonly Constants = Constants;
 
-  constructor(private cryptoService:CryptoService ,private modalService: NgbModal, private appDataService: AppDataService, private preference: PreferenceResolver, private authenticationService: AuthenticationService, private nodeResolver: NodeResolver, private utilsService: UtilsService) {
+  constructor(private modalService: NgbModal, private appDataService: AppDataService, private preference: PreferenceResolver, private authenticationService: AuthenticationService, private nodeResolver: NodeResolver, private utilsService: UtilsService) {
   }
 
   ngOnInit(): void {
@@ -53,8 +52,7 @@ export class UserEditorComponent implements OnInit {
     }
     this.setPasswordArgs = {
       user_id: this.user.id,
-      password: "",
-      hash: ""
+      password: ""
     };
     this.changePasswordArgs = {
       password_change_needed: ""
@@ -73,8 +71,7 @@ export class UserEditorComponent implements OnInit {
     this.utilsService.runAdminOperation("disable_2fa", {"value": user.id}, true).subscribe();
   }
 
-  async setPassword(setPasswordArgs: { user_id: string, password: string, hash: string }, username: string) {
-    setPasswordArgs.hash = await this.cryptoService.hashArgon2(setPasswordArgs.password, username);
+  setPassword(setPasswordArgs: { user_id: string, password: string }) {
     this.utilsService.runAdminOperation("set_user_password", setPasswordArgs, false).subscribe();
     this.user.newpassword = false;
     this.setPasswordArgs.password = "";
