@@ -14,7 +14,7 @@ import copy
 # List of variables that on creation are set with the value
 # they have on the root tenant
 inherit_from_root_tenant = ['default_questionnaire']
-default_tenant_keys = ["subdomain", "onionservice", "https_admin", "https_analyst", "https_cert", "wizard_done", "uuid", "mode", "default_language", "name", "disable_submissions", "encryption", "https_whistleblower"]
+default_tenant_keys = ["subdomain", "onionservice", "https_admin", "https_analyst", "https_cert", "wizard_done", "uuid", "mode", "default_language", "name", "disable_submissions", "encryption", "https_whistleblower", "receipt_salt", "counter_submissions", "crypto_escrow_pub_key"]
 
 
 def get_default(default):
