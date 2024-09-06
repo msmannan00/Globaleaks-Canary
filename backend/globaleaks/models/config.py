@@ -14,7 +14,7 @@ import copy
 # List of variables that on creation are set with the value
 # they have on the root tenant
 inherit_from_root_tenant = ['default_questionnaire']
-default_tenant_keys = ["subdomain", "onionservice", "https_admin", "https_analyst", "https_cert", "wizard_done", "uuid", "mode", "default_language", "name"]
+default_tenant_keys = ["subdomain", "onionservice", "https_admin", "https_analyst", "https_cert", "wizard_done", "uuid", "mode", "default_language", "name", "encryption", "https_whistleblower", "receipt_salt", "counter_submissions", "crypto_escrow_pub_key"]
 
 
 def get_default(default):
@@ -88,7 +88,7 @@ class ConfigFactory(object):
         result, default_tenant_result, t_result, p_result = self.get_all(filter_name)
         for k, v in result.items():
             if k in data:
-                if self.tid != self.default_profile_id:
+                if self.tid != self.default_profile_id and self.tid != 1:
                     if k in t_result:
                         if (k in p_result and data[k] == p_result[k].value) or (k not in p_result and data[k] == default_tenant_result[k].value):
                             if k not in default_tenant_keys:
@@ -203,7 +203,7 @@ class ConfigL10NFactory(object):
 
         for key in (x for x in ConfigL10NFilters[filter_name] if x in data):
             if key in c_map:
-                if self.tid != self.default_profile_id:
+                if self.tid != self.default_profile_id and self.tid != 1:
                     if key in t_result:
                         if (key in p_result and data[key] == p_result[key].value) or (key not in p_result and data[key] == default_tenant_result[key].value):
                             if key not in default_tenant_keys:
