@@ -60,29 +60,27 @@ class ConfigFactory(object):
         self.session = session
         self.default_profile_id = 1000000
         self.tid = tid
-    
-    def get_all(self, filter_name):
-        default_profile_value = None
-        filters = [Config.var_name.in_(ConfigFilters[filter_name])]
+        self.parent_profile = None
+        self.init_default_profile_id()
 
+    def init_default_profile_id(self):
         default_profile = self.session.query(Config.value).filter(
             Config.tid == self.tid,
             Config.var_name == 'default_profile',
         ).scalar()
 
         if default_profile is not None:
-            default_profile_value = int(default_profile)
+            self.parent_profile = int(default_profile)
 
-        filters.append(
-            or_(
-                Config.tid == self.default_profile_id,
-                Config.tid == self.tid,
-                Config.tid == default_profile_value
-            )
-        )
+    def get_all(self, filter_name):
+        filters = [Config.var_name.in_(ConfigFilters[filter_name]), or_(
+          Config.tid == self.default_profile_id,
+          Config.tid == self.tid,
+          Config.tid == self.parent_profile
+        )]
 
         combined_values = self.session.query(Config).filter(*filters).all()
-        return process_items(combined_values, self.default_profile_id, self.tid, default_profile_value)
+        return process_items(combined_values, self.default_profile_id, self.tid, self.parent_profile)
 
     def update(self, filter_name, data):
         result, default_tenant_result, t_result, p_result = self.get_all(filter_name)
@@ -115,8 +113,17 @@ class ConfigFactory(object):
                 self.remove_val(entry.var_name, entry.tid)
 
     def get_cfg(self, var_name):
-        subquery = self.session.query(Config).filter(Config.var_name == var_name).filter(or_(Config.tid == self.tid, Config.tid == 1)).order_by(Config.tid.desc()).limit(2).subquery()
-        return self.session.query(Config).select_entity_from(subquery).order_by(subquery.c.tid.desc()).first()
+        configurations = self.session.query(Config).filter(Config.var_name == var_name).filter(
+            Config.tid.in_([self.tid, self.parent_profile, self.default_profile_id])
+        ).all()
+
+        config_map = {config.tid: config for config in configurations}
+
+        return (
+                config_map.get(self.tid) or
+                config_map.get(self.parent_profile) or
+                config_map.get(self.default_profile_id)
+        )
 
     def get_val(self, var_name):
         config = self.get_cfg(var_name)
