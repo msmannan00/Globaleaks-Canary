@@ -14,7 +14,7 @@ import copy
 # List of variables that on creation are set with the value
 # they have on the root tenant
 inherit_from_root_tenant = ['default_questionnaire']
-default_tenant_keys = ["subdomain", "onionservice", "https_admin", "https_analyst", "https_cert", "wizard_done", "uuid", "mode", "default_language", "name", "encryption", "https_whistleblower", "receipt_salt", "counter_submissions", "crypto_escrow_pub_key"]
+default_tenant_keys = ["subdomain", "tor_onion_key", "onionservice", "https_admin", "https_analyst", "https_cert", "wizard_done", "uuid", "mode", "name", "encryption", "https_whistleblower", "receipt_salt", "crypto_escrow_pub_key"]
 
 
 def get_default(default):
@@ -40,6 +40,7 @@ def process_items(combined_values, default_profile_id, tid, pid):
         if item.tid == tid:
             t_result[item.var_name] = item
             result[item.var_name] = item
+
     return result, default_tenant_result, t_result, p_result
 
 def db_get_configs(session, filter_name):
@@ -109,7 +110,7 @@ class ConfigFactory(object):
         tid_list = [config.tid for config in result]
 
         for entry in self.session.query(Config).filter(Config.tid.in_(tid_list)).all():
-            if entry.var_name not in default_tenant_keys and entry.var_name in t_result and t_result[entry.var_name] == entry.value or entry.var_name not in t_result and entry.var_name in default_tenant_result and default_tenant_result[entry.var_name] == entry.value:
+            if entry.var_name not in default_tenant_keys and entry.var_name in t_result and t_result[entry.var_name] == entry.value or entry.var_name not in t_result and entry.var_name in default_tenant_result and default_tenant_result[entry.var_name].value == entry.value:
                 self.remove_val(entry.var_name, entry.tid)
 
     def get_cfg(self, var_name):
