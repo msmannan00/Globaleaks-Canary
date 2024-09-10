@@ -158,6 +158,14 @@ def sync_initialize_snimap(session):
     for cfg in db_load_tls_configs(session):
         State.snimap.load(cfg['tid'], cfg)
 
+def update_cache(cfg, tid):
+    tenant_cache = State.tenants[tid].cache
+    if cfg.var_name in ['https_cert', 'tor_onion_key'] or cfg.var_name in ConfigFilters['node']:
+        tenant_cache[cfg.var_name] = cfg.value
+    elif cfg.var_name in ConfigFilters['notification']:
+        tenant_cache.setdefault('notification', {})[cfg.var_name] = cfg.value
+    elif cfg.var_name in ConfigFilters['node']:
+        tenant_cache[cfg.var_name] = cfg.value
 
 def db_refresh_tenant_cache(session, to_refresh=None):
 
@@ -218,32 +226,13 @@ def db_refresh_tenant_cache(session, to_refresh=None):
         State.tenants[tid].cache['languages_enabled'].append(lang)
 
     configs = defaultdict(dict)
-    def_configs = {}
 
-    query = session.query(Config).filter(Config.tid.in_(tids + [1000000]))
+    for cfg in session.query(Config).filter(Config.tid.in_(tids) | (Config.tid >= 1000000)):
+        configs[cfg.tid][cfg.var_name] = cfg
 
-    if to_refresh is not None:
-        matching_tids = session.query(Config.tid).filter(
-            Config.var_name == 'default_profile',
-            Config.default_profile == to_refresh
-        ).all()
-        query = query.filter(Config.tid.in_([tid[0] for tid in matching_tids] + [1000000]))
-
-    for cfg in query:
-        (def_configs if cfg.tid == 1000000 else configs[cfg.tid])[cfg.var_name] = cfg
-
-    for var_name, default_cfg in def_configs.items():
+    for var_name, default_cfg in configs[1000000].items():
         for tid, tenant in configs.items():
             profile = configs.get(tenant.get("default_profile"))
-
-            def update_cache(cfg, tid):
-                tenant_cache = State.tenants[tid].cache
-                if var_name in ['https_cert', 'tor_onion_key'] or var_name in ConfigFilters['node']:
-                    tenant_cache[var_name] = cfg.value
-                elif var_name in ConfigFilters['notification']:
-                    tenant_cache.setdefault('notification', {})[var_name] = cfg.value
-                elif cfg.var_name in ConfigFilters['node']:
-                    tenant_cache[cfg.var_name] = cfg.value
 
             if var_name in tenant:
                 update_cache(tenant[var_name], tid)
