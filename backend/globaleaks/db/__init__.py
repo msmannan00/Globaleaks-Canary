@@ -220,11 +220,17 @@ def db_refresh_tenant_cache(session, to_refresh=None):
     configs = defaultdict(dict)
     def_configs = {}
 
-    for cfg in session.query(Config).filter(Config.tid.in_(tids + [1000000])):
-        if cfg.tid == 1000000:
-            def_configs[cfg.var_name] = cfg
-        else:
-            configs[cfg.tid][cfg.var_name] = cfg
+    query = session.query(Config).filter(Config.tid.in_(tids + [1000000]))
+
+    if to_refresh is not None:
+        matching_tids = session.query(Config.tid).filter(
+            Config.var_name == 'default_profile',
+            Config.default_profile == to_refresh
+        ).all()
+        query = query.filter(Config.tid.in_([tid[0] for tid in matching_tids] + [1000000]))
+
+    for cfg in query:
+        (def_configs if cfg.tid == 1000000 else configs[cfg.tid])[cfg.var_name] = cfg
 
     for var_name, default_cfg in def_configs.items():
         for tid, tenant in configs.items():
