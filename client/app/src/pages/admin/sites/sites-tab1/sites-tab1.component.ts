@@ -30,8 +30,8 @@ export class SitesTab1Component implements OnInit {
   fetchTenants() {
     this.httpService.fetchTenant().subscribe(
       tenants => {
-        this.tenants = tenants.filter(tenant => tenant.id < 1000000);
-        this.profileTenants = tenants.filter(tenant => tenant.id > 1000000);
+        this.tenants = tenants.filter(tenant => tenant.id < 1000001);
+        this.profileTenants = tenants.filter(tenant => tenant.id > 1000001);
       }
     );
   }

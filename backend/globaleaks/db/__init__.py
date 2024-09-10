@@ -70,8 +70,8 @@ def initialize_db(session):
     :param session: An ORM session
     """
     from globaleaks.handlers.admin import tenant
-    tenant.db_create(session, {'active': False, 'mode': 'default', 'profile_counter': 999999, 'name': 'GLOBALEAKS', 'subdomain': ''},False)
-    tenant.db_create(session, {'active': True, 'mode': 'default', 'profile_counter': 999999, 'name': 'GLOBALEAKS', 'subdomain': ''})
+    tenant.db_create(session, {'active': False, 'mode': 'default', 'profile_counter': 1000000, 'name': 'GLOBALEAKS', 'subdomain': ''},False)
+    tenant.db_create(session, {'active': True, 'mode': 'default', 'profile_counter': 1000000, 'name': 'GLOBALEAKS', 'subdomain': ''})
 
 
 def update_db():
@@ -201,12 +201,12 @@ def db_refresh_tenant_cache(session, to_refresh=None):
     else:
         if to_refresh in active_tids:
             tids = [to_refresh]
-            if to_refresh < 1000000:
+            if to_refresh < 1000001:
                 default_profile_exists = session.query(Config).filter_by(tid=to_refresh, var_name='default_profile').first()
                 if default_profile_exists:
                     tids.append(default_profile_exists.tid)
 
-            elif to_refresh > 1000000:
+            elif to_refresh > 1000001:
                 matching_tids = session.query(Config.tid).filter_by(var_name='default_profile', value=str(to_refresh)).all()
                 tids.extend([tid[0] for tid in matching_tids])
 
@@ -242,8 +242,8 @@ def db_refresh_tenant_cache(session, to_refresh=None):
     default_configs = {}
 
 
-    for cfg in session.query(Config).filter(or_(Config.tid.in_(tids), Config.tid == 1000000)):
-        if cfg.tid == 1000000:
+    for cfg in session.query(Config).filter(or_(Config.tid.in_(tids), Config.tid == 1000001)):
+        if cfg.tid == 1000001:
             default_configs[cfg.var_name] = cfg
         else:
             configs[cfg.tid][cfg.var_name] = cfg
@@ -257,7 +257,7 @@ def db_refresh_tenant_cache(session, to_refresh=None):
                 profile_id = None
                 profile = None
 
-            if to_refresh == 1 or to_refresh is None or (to_refresh < 1000000 and to_refresh == tid) or (1000000 < to_refresh == profile_id) or (1000000 < to_refresh == tid):
+            if to_refresh == 1 or to_refresh is None or (to_refresh < 1000001 and to_refresh == tid) or (1000001 < to_refresh == profile_id) or (1000001 < to_refresh == tid):
                 if var_name in tenant:
                     update_cache(tenant[var_name], tid)
                 elif profile and var_name in profile:

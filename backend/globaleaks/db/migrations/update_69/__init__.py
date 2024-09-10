@@ -31,7 +31,7 @@ class MigrationScript(MigrationBase):
             new_tenants.append(new_tenant)
     
         defualt_tenant = self.model_to['Tenant']()
-        defualt_tenant.id = 1000000
+        defualt_tenant.id = 1000001
         defualt_tenant.active = False
         new_tenants.append(defualt_tenant)
 
@@ -53,13 +53,13 @@ class MigrationScript(MigrationBase):
 
         variables.update({
             'tenant_counter': self.session_old.query(self.model_from['Tenant']).count(),
-            'profile_counter': 999999
+            'profile_counter': 1000000
         })
 
         merged_configs = []
         for var_name, value in variables.items():
             new_config = self.model_to['Config']()
-            new_config.tid = 1 if var_name in ['tenant_counter', 'profile_counter'] else 1000000
+            new_config.tid = 1 if var_name in ['tenant_counter', 'profile_counter'] else 1000001
             new_config.var_name = var_name
             new_config.value = value
             merged_configs.append(new_config)
@@ -67,8 +67,8 @@ class MigrationScript(MigrationBase):
         self.session_new.bulk_save_objects(merged_configs)
         self.entries_count['Config'] += len(merged_configs)
 
-        default_config = {entry.var_name: entry.value for entry in self.session_new.query(self.model_to['Config']).filter_by(tid=1000000).all()}
-        tenant_configs = self.session_new.query(self.model_to['Config'].tid,self.model_to['Config'].var_name,self.model_to['Config'].value).filter(self.model_to['Config'].tid.notin_([1000000, 1])).all()
+        default_config = {entry.var_name: entry.value for entry in self.session_new.query(self.model_to['Config']).filter_by(tid=1000001).all()}
+        tenant_configs = self.session_new.query(self.model_to['Config'].tid,self.model_to['Config'].var_name,self.model_to['Config'].value).filter(self.model_to['Config'].tid.notin_([1000001, 1])).all()
     
         to_delete = []
         for tid, var_name, value in tenant_configs:
@@ -90,12 +90,12 @@ class MigrationScript(MigrationBase):
             new_configs.append(new_obj)
         self.session_new.bulk_save_objects(new_configs)
     
-        models.config.add_new_lang(self.session_new, 1000000, 'en', load_appdata())
+        models.config.add_new_lang(self.session_new, 1000001, 'en', load_appdata())
         self.entries_count['ConfigL10N'] += 72
         self.entries_count['EnabledLanguage'] += 1
     
-        default_config = {(entry.var_name, entry.lang): entry.value for entry in self.session_new.query(self.model_to['ConfigL10N']).filter_by(tid=1000000).all()}
-        tenant_configs = self.session_new.query(self.model_to['ConfigL10N'].tid,self.model_to['ConfigL10N'].var_name,self.model_to['ConfigL10N'].lang,self.model_to['ConfigL10N'].value).filter(self.model_to['ConfigL10N'].tid.notin_([1000000, 1])).all()
+        default_config = {(entry.var_name, entry.lang): entry.value for entry in self.session_new.query(self.model_to['ConfigL10N']).filter_by(tid=1000001).all()}
+        tenant_configs = self.session_new.query(self.model_to['ConfigL10N'].tid,self.model_to['ConfigL10N'].var_name,self.model_to['ConfigL10N'].lang,self.model_to['ConfigL10N'].value).filter(self.model_to['ConfigL10N'].tid.notin_([1000001, 1])).all()
     
         to_delete = []
         for tid, var_name, lang, value in tenant_configs:

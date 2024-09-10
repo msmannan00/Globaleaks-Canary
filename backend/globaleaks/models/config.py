@@ -59,7 +59,7 @@ def db_get_configs(session, filter_name):
 class ConfigFactory(object):
     def __init__(self, session, tid):
         self.session = session
-        self.default_profile_id = 1000000
+        self.default_profile_id = 1000001
         self.tid = tid
         self.parent_profile = None
         self.init_default_profile_id()
@@ -167,7 +167,7 @@ class ConfigFactory(object):
 class ConfigL10NFactory(object):
     def __init__(self, session, tid):
         self.session = session
-        self.default_profile_id = 1000000
+        self.default_profile_id = 1000001
         self.tid = tid
 
     def initialize(self, keys, lang, data):
@@ -301,11 +301,11 @@ def initialize_config(session, tid, data):
         for name in inherit_from_root_tenant:
             variables[name] = root_tenant_node[name]
 
-    if tid in (1, 1000000):
+    if tid in (1, 1000001):
         variables.pop('default_profile', None)
 
     for name, value in variables.items():
-        if tid in (1, 1000000) or name in default_tenant_keys:
+        if tid in (1, 1000001) or name in default_tenant_keys:
             session.add(Config({'tid': tid, 'var_name': name, 'value': value}))
 
     default_profile = data.get('default_profile')

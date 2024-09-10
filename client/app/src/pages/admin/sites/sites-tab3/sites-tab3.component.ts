@@ -26,7 +26,7 @@ export class SitesTab3Component {
   ngOnInit(): void {
     this.httpService.fetchTenant().subscribe(
       tenants => {
-        this.tenants = tenants.filter(tenant => tenant.id > 1000000);
+        this.tenants = tenants.filter(tenant => tenant.id > 1000001);
       }
     );
   }
