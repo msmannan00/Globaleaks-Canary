@@ -251,7 +251,7 @@ def db_refresh_tenant_cache(session, to_refresh=None):
             configs[cfg.tid][cfg.var_name] = cfg
 
     for var_name, default_cfg in default_configs.items():
-        for tid, tenant in configs.items():
+        for tid, tenant in list(configs.items()):
             if "default_profile" in tenant:
                 profile_id = int(tenant["default_profile"].value)
                 profile = configs[profile_id]
