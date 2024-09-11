@@ -7,6 +7,7 @@ from collections import defaultdict
 from operator import or_
 
 from sqlalchemy.exc import SAWarning
+from globaleaks.rest.cache import Cache
 
 from globaleaks import models, DATABASE_VERSION
 from globaleaks.handlers.admin.https import db_load_tls_configs
@@ -207,9 +208,11 @@ def db_refresh_tenant_cache(session, to_refresh=None):
                     tids.append(default_profile_exists.tid)
 
             elif to_refresh > 1000001:
-                matching_tids = session.query(Config.tid).filter_by(var_name='default_profile', value=str(to_refresh)).all()
-                tids.extend([tid[0] for tid in matching_tids])
+                matching_tids = [tid[0] for tid in session.query(Config.tid).filter_by(var_name='default_profile', value=str(to_refresh)).all()]
+                tids.extend(matching_tids)
 
+                for tid in matching_tids:
+                    Cache.invalidate(tid)
         else:
             tids = []
 
@@ -240,7 +243,6 @@ def db_refresh_tenant_cache(session, to_refresh=None):
 
     configs = defaultdict(dict)
     default_configs = {}
-
 
     for cfg in session.query(Config).filter(or_(Config.tid.in_(tids), Config.tid == 1000001)):
         if cfg.tid == 1000001:
