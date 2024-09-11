@@ -1,4 +1,4 @@
-describe("admin configure and add profile tenant", () => {
+describe("Admin configure and add profile/tenant functionality", () => {
   const add_profile = (name: string, tenant?: boolean) => {
     if (tenant) {
       cy.get(".show-add-tenant-btn").click();
@@ -15,7 +15,7 @@ describe("admin configure and add profile tenant", () => {
     }
   };
 
-  it("should add new tenant", () => {
+  it("should add and configure the profile tenant", () => {
     cy.login_admin();
     cy.visit("/#/admin/sites");
     cy.get('[data-cy="profiles"]').click().should("be.visible", { timeout: 10000 }).click();
@@ -38,7 +38,9 @@ describe("admin configure and add profile tenant", () => {
     cy.get('input[name="disable_submissions"]').click();
     cy.get('input[name="node.dataModel.pgp"]').click();
     cy.get("#save").click();
+  });
 
+  it("should add a new tenant from the profile, verify that variables change in the tenant, and update the tenant's variables", () => {
     cy.login_admin();
     cy.visit("/#/admin/sites");
     cy.get('[data-cy="sites"]').click().should("be.visible", { timeout: 10000 }).click();
@@ -62,6 +64,9 @@ describe("admin configure and add profile tenant", () => {
     cy.get("textarea[name='nodeResolver.dataModel.footer']", { timeout: 20000 }).should("be.visible").clear();
     cy.get("#save_settings").click();
     cy.get('[data-cy="advanced"]').click().should("be.visible", { timeout: 10000 }).click();
+    cy.get('input[name="disable_submissions"]').should('be.checked');
+    cy.get('input[name="node.dataModel.pgp"]').should('be.checked');
+
     cy.get('input[name="disable_submissions"]').click();
     cy.get('input[name="node.dataModel.pgp"]').click();
     cy.get("#save").click();
