@@ -273,6 +273,7 @@ export class UtilsService {
       this.modalService.open(RequestSupportComponent,{backdrop: "static",keyboard: false});
     }
   }
+
   array_to_map(receivers: any) {
     const ret: any = {};
 
@@ -307,15 +308,32 @@ export class UtilsService {
     return text?text:"";
   }
 
+  searchInObject(obj: any, searchTerm: string) {
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        const value = obj[key];
+
+        if (typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())) {
+          return true;
+        } else if (typeof value === 'object') {
+          if (this.searchInObject(value, searchTerm)) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
   isDatePassed(time: string) {
-    var report_date = new Date(time);
-    var current_date = new Date();
+    const report_date = new Date(time);
+    const current_date = new Date();
     return current_date > report_date;
   }
 
   isNever(time: string) {
     const date = new Date(time);
-    return date.getTime() === 32503680000000;
+    return date.getTime() >= 32503680000000;
   }
 
   deleteFromList(list:  { [key: string]: Field}[], elem: { [key: string]: Field}) {
