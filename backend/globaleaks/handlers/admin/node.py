@@ -141,7 +141,7 @@ class NodeInstance(BaseHandler):
                        self.request.tid,
                        self.request.language,
                        config_desc=config[0])
-
+        ret["is_profile"] = True if self.request.tid > 1000001 else False
         returnValue(ret)
 
     @inlineCallbacks
