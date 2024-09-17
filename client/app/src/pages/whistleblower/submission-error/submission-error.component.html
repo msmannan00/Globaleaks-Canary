@@ -1,25 +1,43 @@
 <div id="SubmissionErrors" class="alert alert-secondary mb-2" role="alert">
-    <div *ngIf="!hasPreviousStep">
-        <div *ngIf="!areReceiverSelected">
-            <p>{{'You must select at least one recipient.'|translate}}</p>
+  @if (!hasPreviousStep) {
+    <div>
+      @if (!areReceiverSelected) {
+        <div>
+          <p>{{'You must select at least one recipient.'|translate}}</p>
         </div>
+      }
     </div>
-    <div *ngIf="!hasNextStep">
-        <div *ngIf="utilsService.isUploading(uploads)">
-            <span>{{'Waiting for the file(s) to finish uploading.'|translate}}</span>
-            <i class="fa-solid fa-sync gly-spin"></i>
+  }
+  @if (!hasNextStep) {
+    <div>
+      @if (utilsService.isUploading(uploads)) {
+        <div>
+          <span>{{'Waiting for the file(s) to finish uploading.'|translate}}</span>
+          <i class="fa-solid fa-sync gly-spin"></i>
         </div>
-        <div *ngIf="show_steps_navigation_interface && !singleStepForm && (!areReceiverSelected || submissionForm.invalid)">
-            <p>{{'The following steps have errors:'|translate}}</p>
+      }
+      @if (show_steps_navigation_interface && !singleStepForm && (!areReceiverSelected || submissionForm.invalid)) {
+        <div>
+          <p>{{'The following steps have errors:'|translate}}</p>
+          <ul>
+            @if (!areReceiverSelected) {
+              <li (click)="goToStep.emit(-1)">{{'Recipient selection'|translate}}</li>
+            }
+          </ul>
+          @if (submissionForm.invalid) {
             <ul>
-                <li *ngIf="!areReceiverSelected" (click)="goToStep.emit(-1)">{{'Recipient selection'|translate}}</li>
-            </ul>
-            <ul *ngIf="submissionForm.invalid">
-                <span *ngFor="let step of context.questionnaire.steps | orderBy:'order'; let index = index">
-                    <li *ngIf="displayStepErrors(index)" class="err-link" (click)="goToStep.emit(index)">{{step.label}}</li>
+              @for (step of context.questionnaire.steps | orderBy:'order'; track step; let index = $index) {
+                <span>
+                  @if (displayStepErrors(index)) {
+                    <li class="err-link" (click)="goToStep.emit(index)">{{step.label}}</li>
+                  }
                 </span>
+              }
             </ul>
+          }
         </div>
+      }
     </div>
-    <src-step-error [field_id_map]="field_id_map" [stepForms]=stepForms [submission]="submission" (goToStep)="goToStep.emit()" [stepForm]="stepForm" [navigation]="navigation" [displayStepErrors]="displayStepErrors"></src-step-error>
+  }
+  <src-step-error [field_id_map]="field_id_map" [stepForms]=stepForms [submission]="submission" (goToStep)="goToStep.emit()" [stepForm]="stepForm" [navigation]="navigation" [displayStepErrors]="displayStepErrors"></src-step-error>
 </div>
