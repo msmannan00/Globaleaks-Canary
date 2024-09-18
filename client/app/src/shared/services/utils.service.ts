@@ -273,6 +273,7 @@ export class UtilsService {
       this.modalService.open(RequestSupportComponent,{backdrop: "static",keyboard: false});
     }
   }
+
   array_to_map(receivers: any) {
     const ret: any = {};
 
@@ -291,13 +292,12 @@ export class UtilsService {
     let text;
     for (let i = 0; i < submission_statuses.length; i++) {
       if (submission_statuses[i].id === status) {
-        text = submission_statuses[i].label;
-
+        text = this.translateService.instant(submission_statuses[i].label);
 
         const subStatus = submission_statuses[i].substatuses;
         for (let j = 0; j < subStatus.length; j++) {
-          if (subStatus[j].id === substatus) {
-            text += ' \u2013 ' + this.translateService.instant(subStatus[j].label);
+          if (subStatus[j].id === substatus && subStatus[j].label) {
+            text += ' \u2013 ' + subStatus[j].label;
             break;
           }
         }
@@ -305,6 +305,23 @@ export class UtilsService {
       }
     }
     return text?text:"";
+  }
+
+  searchInObject(obj: any, searchTerm: string) {
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        const value = obj[key];
+
+        if (typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())) {
+          return true;
+        } else if (typeof value === 'object') {
+          if (this.searchInObject(value, searchTerm)) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
   }
 
   isDatePassed(time: string) {

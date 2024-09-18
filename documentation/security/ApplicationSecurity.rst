@@ -9,18 +9,18 @@ Architecture
 ============
 The software comprises two main components: a `Backend` and a `Client`:
 
-* The Backend is a Python-based server that runs on a physical server and exposes a `REST API <https://en.wikipedia.org/wiki/Representational_state_transfer>`.
-* The Client is a JavaScript client-side web application that interacts with the Backend only through `XHR <https://en.wikipedia.org/wiki/XMLHttpRequest>`.
+* The Backend is a Python-based server that runs on a physical server and exposes a `REST API <https://en.wikipedia.org/wiki/Representational_state_transfer>`_.
+* The Client is a JavaScript client-side web application that interacts with the Backend only through `XHR <https://en.wikipedia.org/wiki/XMLHttpRequest>`_.
 
 Anonymity
 =========
-Users' anonymity is protected by means of `Tor <https://www.torproject.org>` technology.
+Users' anonymity is protected by means of `Tor <https://www.torproject.org>`_ technology.
 
 The application is designed to avoid logging sensitive metadata that could lead to the identification of whistleblowers.
 
 Authentication
 ==============
-The confidentiality of authentication is protected either by `Tor Onion Services v3 <https://www.torproject.org/docs/onion-services.html.en>` or `TLS version 1.2+ <https://en.wikipedia.org/wiki/Transport_Layer_Security>`.
+The confidentiality of authentication is protected either by `Tor Onion Services v3 <https://www.torproject.org/docs/onion-services.html.en>`_ or `TLS version 1.2+ <https://en.wikipedia.org/wiki/Transport_Layer_Security>`_.
 
 This section describes the authentication methods implemented by the system.
 
@@ -42,7 +42,7 @@ Passwords are never stored in plaintext; instead, the system maintains only a ha
 
 The platform stores users’ passwords hashed with a random 128-bit salt, unique for each user.
 
-Passwords are hashed using `Argon2 <https://en.wikipedia.org/wiki/Argon2>`, a key derivation function selected as the winner of the `Password Hashing Competition <https://en.wikipedia.org/wiki/Password_Hashing_Competition>` in July 2015.
+Passwords are hashed using `Argon2 <https://en.wikipedia.org/wiki/Argon2>`_, a key derivation function selected as the winner of the `Password Hashing Competition <https://en.wikipedia.org/wiki/Password_Hashing_Competition>`_ in July 2015.
 
 The hash involves a per-user salt for each user and a per-system salt for whistleblowers.
 
@@ -56,15 +56,15 @@ Passwords are scored at three levels: `Strong`, `Acceptable`, and `Insecure`.
 * Acceptable: An acceptable password should include at least 3 different types of characters from capital letters, lowercase letters, numbers, and symbols, be at least 10 characters long, and contain a variety of at least 7 different characters.
 * Insecure: Passwords ranked below the strong or acceptable levels are marked as insecure and are not accepted by the system.
 
-We encourage each end user to use `KeePassXC <https://keepassxc.org>` to generate and retain strong, unique passphrases.
+We encourage each end user to use `KeePassXC <https://keepassxc.org>`_ to generate and retain strong, unique passphrases.
 
 Two-Factor Authentication
 -------------------------
-The system implements Two-Factor Authentication (2FA) based on `TOTP` using the `RFC 6238 <https://tools.ietf.org/rfc/rfc6238.txt>` algorithm and 160-bit secrets.
+The system implements Two-Factor Authentication (2FA) based on `TOTP` using the `RFC 6238 <https://tools.ietf.org/rfc/rfc6238.txt>`_ algorithm and 160-bit secrets.
 
 Users can enroll in 2FA via their own preferences, and administrators can optionally enforce this requirement.
 
-We recommend using `FreeOTP <https://freeotp.github.io/>`, available `for Android <https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp>` and `for iOS <https://apps.apple.com/us/app/freeotp-authenticator/id872559395>`.
+We recommend using `FreeOTP <https://freeotp.github.io/>`_, available `for Android <https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp>`_ and `for iOS <https://apps.apple.com/us/app/freeotp-authenticator/id872559395>`_.
 
 Slowdown on Failed Login Attempts
 ---------------------------------
@@ -96,11 +96,11 @@ If encryption is enabled on the system, a user clicking on the reset link must f
 
 Web Application Security
 ========================
-This section describes the Web Application Security implemented by the software in adherence to the `OWASP Security Guidelines <https://www.owasp.org>`.
+This section describes the Web Application Security implemented by the software in adherence to the `OWASP Security Guidelines <https://www.owasp.org>`_.
 
 Session Management
 ------------------
-The session implementation follows the `OWASP Session Management Cheat Sheet <https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html>` security guidelines.
+The session implementation follows the `OWASP Session Management Cheat Sheet <https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html>`_ security guidelines.
 
 The system assigns a session to each authenticated user. The Session ID is a 256-bit long secret generated randomly by the backend. Each session expires according to a timeout of 60 minutes. Session IDs are exchanged between the client and the backend via a header (`X-Session`) and expire as soon as users close their browser or the tab running GlobaLeaks. Users can explicitly log out via a logout button or implicitly by closing the browser.
 
@@ -116,7 +116,7 @@ Cookies are not used intentionally to minimize XSRF attacks and any possible att
 
 HTTP Headers
 ------------
-The system implements a large set of HTTP headers specifically configured to improve software security and achieves a `score A+ <https://securityheaders.com/?q=https%3A%2F%2Ftry.globaleaks.org&followRedirects=on>` by `Security Headers <https://securityheaders.com/>` and a `score A+ <https://observatory.mozilla.org/analyze/try.globaleaks.org>` by `Mozilla Observatory <https://observatory.mozilla.org/>`.
+The system implements a large set of HTTP headers specifically configured to improve software security and achieves a `score A+ <https://securityheaders.com/?q=https%3A%2F%2Ftry.globaleaks.org&followRedirects=on>`_ by `Security Headers <https://securityheaders.com/>`_ and a `score A+ <https://observatory.mozilla.org/analyze/try.globaleaks.org>`_ by `Mozilla Observatory <https://observatory.mozilla.org/>`_.
 
 Strict-Transport-Security
 +++++++++++++++++++++++++
@@ -128,7 +128,7 @@ The default configuration of the application sees this feature disabled.
 
 Content-Security-Policy
 +++++++++++++++++++++++
-The backend implements a strict `Content Security Policy (CSP) <https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP>` preventing any interaction with third-party resources and restricting the execution of untrusted user input:
+The backend implements a strict `Content Security Policy (CSP) <https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP>`_ preventing any interaction with third-party resources and restricting the execution of untrusted user input:
 ::
   Content-Security-Policy: base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none'; sandbox;
 
@@ -142,19 +142,19 @@ For example:
 
 Cross-Origin-Embedder-Policy
 ++++++++++++++++++++++++++++
-The backend implements the following `Cross-Origin-Embedder-Policy (COEP) <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Embedder-Policy>`:
+The backend implements the following `Cross-Origin-Embedder-Policy (COEP) <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Embedder-Policy>`_:
 ::
   Cross-Origin-Embedder-Policy: require-corp
 
 Cross-Origin-Opener-Policy
 ++++++++++++++++++++++++++
-The backend implements the following `Cross-Origin-Opener-Policy (COOP) <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Opener-Policy>`:
+The backend implements the following `Cross-Origin-Opener-Policy (COOP) <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Opener-Policy>`_:
 ::
   Cross-Origin-Opener-Policy: same-origin
 
 Cross-Origin-Resource-Policy
 ++++++++++++++++++++++++++++
-The backend implements the following `Cross-Origin-Resource-Policy (CORP) <https://developer.mozilla.org/en-US/docs/Web/HTTP/Cross-Origin_Resource_Policy>`:
+The backend implements the following `Cross-Origin-Resource-Policy (CORP) <https://developer.mozilla.org/en-US/docs/Web/HTTP/Cross-Origin_Resource_Policy>`_:
 ::
   Cross-Origin-Resource-Policy: same-origin
 
@@ -184,7 +184,7 @@ To avoid automatic MIME type detection by the browser when setting the Content-T
 
 Cache-Control
 +++++++++++++
-To prevent or limit forensic traces left on devices used by whistleblowers and in devices involved in communication with the platform, as specified in section ``3. Storing Responses in Caches`` of `RFC 7234 <https://tools.ietf.org/html/rfc7234>`_, the platform uses the ``Cache-Control`` HTTP header with the configuration ``no-store`` to instruct clients and possible network proxies to disable any form of data caching.
+To prevent or limit forensic traces left on devices used by whistleblowers and in devices involved in communication with the platform, as specified in section ``3. Storing Responses in Caches`` of `RFC 7234 <https://tools.ietf.org/html/rfc7234>`__, the platform uses the ``Cache-Control`` HTTP header with the configuration ``no-store`` to instruct clients and possible network proxies to disable any form of data caching.
 ::
   Cache-Control: no-store
 
@@ -226,31 +226,31 @@ Additionally, a set of rules is applied to each request type to limit potential 
 
 On the Client
 +++++++++++++
-Each server output is strictly validated by the client at rendering time using the Angular component `ngSanitize.$sanitize <http://docs.angularjs.org/api/ngSanitize.$sanitize>`_.
+Each server output is strictly validated by the client at rendering time using the Angular component `ngSanitize.$sanitize <http://docs.angularjs.org/api/ngSanitize.$sanitize>`__.
 
 Form Autocomplete OFF
 ---------------------
 Forms implemented by the platform use the HTML5 form attribute to instruct the browser not to cache user data for form prediction and autocomplete on subsequent submissions.
 
-This is achieved by setting `autocomplete="off" <https://www.w3.org/TR/html5/forms.html=autofilling-form-controls:-the-autocomplete-attribute>`_ on the relevant forms or attributes.
+This is achieved by setting `autocomplete="off" <https://www.w3.org/TR/html5/forms.html=autofilling-form-controls:-the-autocomplete-attribute>`__ on the relevant forms or attributes.
 
 Network Security
 ================
 Connection Anonymity
 --------------------
-User anonymity is provided through the implementation of `Tor <https://www.torproject.org/>`_ technology. The application implements an ``Onion Service v3`` and advises users to use the Tor Browser when accessing it.
+User anonymity is provided through the implementation of `Tor <https://www.torproject.org/>`__ technology. The application implements an ``Onion Service v3`` and advises users to use the Tor Browser when accessing it.
 
 Connection Encryption
 ---------------------
-User connections are always encrypted, either through the `Tor Protocol <https://www.torproject.org>`_ when using the Tor Browser or via `TLS <https://en.wikipedia.org/wiki/Transport_Layer_Security>`_ when accessed through a common browser.
+User connections are always encrypted, either through the `Tor Protocol <https://www.torproject.org>`__ when using the Tor Browser or via `TLS <https://en.wikipedia.org/wiki/Transport_Layer_Security>`__ when accessed through a common browser.
 
 Using ``Tor`` is recommended over HTTPS due to its advanced resistance to selective interception and censorship, making it difficult for a third party to capture or block access to the site for specific whistleblowers or departments.
 
-The software also facilitates easy setup of ``HTTPS``, offering both automatic setup via `Let's Encrypt <https://letsencrypt.org/>`_ and manual configuration.
+The software also facilitates easy setup of ``HTTPS``, offering both automatic setup via `Let's Encrypt <https://letsencrypt.org/>`__ and manual configuration.
 
-TLS certificates are generated using `NIST Curve P-384 <https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf>`_.
+TLS certificates are generated using `NIST Curve P-384 <https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf>`__.
 
-The configuration enables only ``TLS1.2+`` and is fine-tuned and hardened to achieve `SSLLabs grade A+ <https://www.ssllabs.com/ssltest/analyze.html?d=try.globaleaks.org>`_.
+The configuration enables only ``TLS1.2+`` and is fine-tuned and hardened to achieve `SSLLabs grade A+ <https://www.ssllabs.com/ssltest/analyze.html?d=try.globaleaks.org>`__.
 
 In particular, only the following ciphers are enabled:
 ::
@@ -266,7 +266,7 @@ In particular, only the following ciphers are enabled:
 
 Network Sandboxing
 -------------------
-The GlobaLeaks backend integrates `iptables <https://www.netfilter.org/>`_ by default and implements strict firewall rules that restrict incoming network connections to HTTP and HTTPS on ports 80 and 443.
+The GlobaLeaks backend integrates `iptables <https://www.netfilter.org/>`__ by default and implements strict firewall rules that restrict incoming network connections to HTTP and HTTPS on ports 80 and 443.
 
 Additionally, the application allows anonymizing outgoing connections, which can be configured to route through Tor.
 
@@ -276,20 +276,20 @@ Submission data, file attachments, messages, and metadata exchanged between whis
 
 GlobaLeaks also incorporates various other encryption components. The main libraries and their uses are:
 
-* `Python-NaCL <https://github.com/pyca/pynacl>`_: used for implementing data encryption
-* `PyOpenSSL <https://github.com/pyca/pyopenssl>`_: used for implementing HTTPS
-* `Python-Cryptography <https://cryptography.io>`_: used for implementing authentication
-* `Python-GnuPG <http://pythonhosted.org/python-gnupg/index.html>`_: used for encrypting email notifications and file downloads via ```PGP```
+* `Python-NaCL <https://github.com/pyca/pynacl>`__: used for implementing data encryption
+* `PyOpenSSL <https://github.com/pyca/pyopenssl>`__: used for implementing HTTPS
+* `Python-Cryptography <https://cryptography.io>`__: used for implementing authentication
+* `Python-GnuPG <http://pythonhosted.org/python-gnupg/index.html>`__: used for encrypting email notifications and file downloads via ```PGP```
 
 Application Sandboxing
 ======================
-The GlobaLeaks backend integrates `AppArmor <https://apparmor.net/>`_ by default and implements a strict sandboxing profile, allowing the application to access only the strictly required files. Additionally, the application runs under a dedicated user and group "globaleaks" with reduced privileges.
+The GlobaLeaks backend integrates `AppArmor <https://apparmor.net/>`__ by default and implements a strict sandboxing profile, allowing the application to access only the strictly required files. Additionally, the application runs under a dedicated user and group "globaleaks" with reduced privileges.
 
 Database Security
 =================
 The GlobaLeaks backend uses a hardened local SQLite database accessed via SQLAlchemy ORM.
 
-This design choice ensures the application can fully control its configuration while implementing extensive security measures in adherence to the `security recommendations by SQLite <https://sqlite.org/security.html>`_.
+This design choice ensures the application can fully control its configuration while implementing extensive security measures in adherence to the `security recommendations by SQLite <https://sqlite.org/security.html>`__.
 
 Secure Deletion
 ---------------
@@ -305,7 +305,7 @@ The platform enables SQLite’s auto vacuum capability for automatic cleanup of 
 
 Limited Database Trust
 ----------------------
-The GlobaLeaks backend uses the SQLite `trusted_schema <https://www.sqlite.org/src/doc/latest/doc/trusted-schema.md>`_ pragma to limit trust in the database, mitigating risks of malicious corruption.
+The GlobaLeaks backend uses the SQLite `trusted_schema <https://www.sqlite.org/src/doc/latest/doc/trusted-schema.md>`__ pragma to limit trust in the database, mitigating risks of malicious corruption.
 ::
   PRAGMA trusted_schema = OFF
 
@@ -333,7 +333,7 @@ To mitigate denial of service attacks, GlobaLeaks applies the following measures
 
 Proof of Work on Users' Sessions
 --------------------------------
-The system implements an automatic `Proof of Work <https://en.wikipedia.org/wiki/Proof_of_work>`_ based on the hashcash algorithm for every user session, requiring clients to request a token and continuously solve a computational problem to acquire and renew the session.
+The system implements an automatic `Proof of Work <https://en.wikipedia.org/wiki/Proof_of_work>`__ based on the hashcash algorithm for every user session, requiring clients to request a token and continuously solve a computational problem to acquire and renew the session.
 
 Rate Limit on Users' Sessions
 ------------------------------
