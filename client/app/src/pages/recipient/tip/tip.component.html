@@ -71,13 +71,13 @@
           <i class="fa-solid fa-eraser"></i>
         </span>
       }
-      @if (tip?.status !== 'closed') {
+      @if (tip.status !== 'closed') {
         <span id="tip-action-change-status" (click)="openModalChangeState()" data-toggle="tooltip"
           title="{{'Change status' | translate}}" class="btn btn-outline-secondary">
           <i class="fa-solid fa-dot-circle"></i>
         </span>
       }
-      @if (preferencesService.dataModel.can_reopen_reports && tip?.status === 'closed') {
+      @if (preferencesService.dataModel.can_reopen_reports && tip.status === 'closed') {
         <span id="tip-action-reopen-status" (click)="openModalReopen()" data-toggle="tooltip"
           title="{{'Reopen' | translate}}" class="btn btn-outline-secondary">
           <i class="fa-solid fa-dot-circle"></i>

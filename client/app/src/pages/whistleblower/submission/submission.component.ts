@@ -1,4 +1,4 @@
-import {Component, OnInit, SimpleChanges, QueryList, ViewChild, ViewChildren} from "@angular/core";
+import {Component, OnInit, QueryList, ViewChild, ViewChildren} from "@angular/core";
 import { ActivatedRoute } from '@angular/router';
 import {AppDataService} from "@app/app-data.service";
 import {WhistleblowerLoginResolver} from "@app/shared/resolvers/whistleblower-login.resolver";
@@ -234,11 +234,9 @@ export class SubmissionComponent implements OnInit {
 
     this.updateStatusVariables();
 
-    if (!(this.hasPreviousStepValue || !this.hasNextStepValue) && !this.areReceiversSelectedValue) {
-      return true;
-    }
+    return !(this.hasPreviousStepValue || !this.hasNextStepValue) && !this.areReceiversSelectedValue;
 
-    return false
+
   }
 
   displayErrors() {

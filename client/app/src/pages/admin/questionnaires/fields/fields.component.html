@@ -258,7 +258,7 @@
                     </select>
                   </div>
                 }
-                @if (field.attrs.input_validation?.value === custom) {
+                @if (field.attrs.input_validation.value === custom) {
                   <div class="form-group">
                     <label>{{ 'Regular expression' | translate }}</label>
                     <input [(ngModel)]="field.attrs.regexp.value" type="text" class="form-control" [disabled]="!field.editable" />
