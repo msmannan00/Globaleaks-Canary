@@ -24,6 +24,7 @@ export class TippageComponent implements OnInit {
   questionnaire: any;
   questionnaires: Questionnaire[];
   identity_provided = false;
+  showAdditionalQuestionnaire: boolean;
 
   private submission: { _submission: WbTipData[] } = {_submission: []};
   protected tip: WbTipData;
@@ -58,6 +59,7 @@ export class TippageComponent implements OnInit {
     } else {
       this.utilsService.reloadCurrentRoute();
     }
+    this.checkQuestionnaireCondition();
   }
 
   filterNotTriggeredField(parent: any, field: any, answers: Answers | WhistleblowerIdentity) {
@@ -181,5 +183,13 @@ export class TippageComponent implements OnInit {
 
   onFormChange() {
     this.fieldUtilitiesService.onAnswersUpdate(this);
+  }
+
+  checkQuestionnaireCondition(): void {
+    const tip = this.wbTipService.tip;
+    this.showAdditionalQuestionnaire =
+      tip.status !== 'closed' &&
+      !!tip.context?.additional_questionnaire_id &&
+      tip.questionnaires.length === 1;
   }
 }
