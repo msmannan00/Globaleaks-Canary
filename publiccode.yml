@@ -1,11 +1,11 @@
 name: GlobaLeaks
-releaseDate: '2024-09-01'
+releaseDate: '2024-09-19'
 publiccodeYmlVersion: '0.4.0'
-url: 'https://github.com/globaleaks/GlobaLeaks'
+url: 'https://github.com/globaleaks/whistleblowing-software'
 landingURL: 'https://www.globaleaks.org/'
 roadmap: "https://docs.globaleaks.org/en/main/roadmap/"
 logo: brand/assets/globaleaks-icon-color.svg
-softwareVersion: 5.0.3
+softwareVersion: 5.0.8
 softwareType: standalone/web
 developmentStatus: stable
 platforms:
@@ -139,12 +139,11 @@ it:
 description:
   en:
     shortDescription: >-
-      GlobaLeaks is free, open-source software enabling anyone to easily set
-      up and maintain a secure whistleblowing platform
+      GlobaLeaks is free, open-source whistleblowing software enabling anyone to easily set
+      up and maintain a secure reporting platform
     longDescription: >-
-      [GlobaLeaks](https://www.globaleaks.org/) is free, open-souce software
-      enabling anyone to easily set up and maintain a secure whistleblowing
-      platform.
+      [GlobaLeaks](https://www.globaleaks.org/) is free, open-souce whistleblowing software
+      enabling anyone to easily set up and maintain a secure reporting platform.
       Thanks to GlobaLeaks even non-technical people are be able to setup their
       own anonymous whistleblowing project. Designed to be user-friendly the
       software is customizable up to own needs and protects the whistleblower's
@@ -155,6 +154,9 @@ description:
       GlobaLeaks is nowadays adopted worldwide by more than 10000 projects.
       The vast range of adopters includes independent media, activists, public
       agencies, corporations and more.
+      the software is recognized by the
+      [Digital Public Good Alliance](https://digitalpublicgoods.net) as a
+      [Digital Public Good](https://app.digitalpublicgoods.net/a/11113).
     documentation: 'https://docs.globaleaks.org/'
     features:
       - PNRR
@@ -239,11 +241,11 @@ description:
   it:
     genericName: Whistleblowing Software
     shortDescription: >-
-      GlobaLeaks è software libero e open-source che permette a tutti di creare
-      e mantenere una piattaforma di whistleblowing sicura
+      GlobaLeaks è software di whistleblowing libero e open-source che permette a tutti di creare
+      e mantenere una piattaforma di segnalazione sicura
     longDescription: >-
-      [GlobaLeaks](https://www.globaleaks.org/) è software libero e open-source
-      che permette a tutti di creare e mantenere una piattaforma di whistleblowing sicura.
+      [GlobaLeaks](https://www.globaleaks.org/) è software di whistleblowing libero e open-source
+      che permette a tutti di creare e mantenere una piattaforma di segnalazione sicura.
       Grazie a GlobaLeaks anche le persone non tecniche sono in grado di avviare il proprio
       progetto di whistleblowing anonimo. Progettato per essere intuitivo, il software è
       personalizzabile in base alle proprie esigenze e protegge la privacy e le comunicazioni
@@ -253,6 +255,9 @@ description:
       [oltre 90 lingue](https://www.transifex.com/otf/globaleaks), GlobaLeaks è oggi adottato
       in tutto il mondo da oltre 10000 progetti. La variegata gamma di utenti comprende media
       indipendenti, attivisti,  agenzie pubbliche, imprese private e altro.
+      Il software è riconosciuto dalla
+      [Digital Public Good Alliance](https://digitalpublicgoods.net/) come un
+      [Digital Public Good](https://app.digitalpublicgoods.net/a/11113).
     documentation: 'https://docs.globaleaks.org/'
     features:
       - PNRR
@@ -336,13 +341,14 @@ description:
       - documentation/images/recipient/report.png
 usedBy:
   - Agenzia per l'Italia Digitale (AgID)
-  - ANAC - Autorità Nazionale Anticorruzione
-  - Autorità Garante nelle Comunicazioni (AgCOM)
+  - Agenzia per la cybersicurezza nazionale (ACN)
+  - Autorità Nazionale Anticorruzione (ANAC)
   - Avvocatura dello Stato
   - Corte dei Conti
-  - Ministero della Difesa
-  - Ministero della Giustizia
-  - Presidenza del Consiglio dei Ministri
+  - Ministero dell'Interno (MI)
+  - Ministero della Difesa (MD)
+  - Ministero della Giustizia (MiG)
+  - Presidenza del Consiglio dei Ministri (PCM)
   - 5T SRL
   - Abbanoa SPA
   - ABC Latina
@@ -433,6 +439,7 @@ usedBy:
   - ANCI Friuli Venezia Giulia
   - ANCI Liguria
   - ANCI Toscana
+  - ANSFISA Agenzia Nazionale per la Sicurezza delle Ferrovie e delle Infrastrutture stradali e autostradali
   - ANSV Agenzia Nazionale per la Sicurezza del Volo
   - Anthea Rimini
   - Antica Scuola dei Battuti

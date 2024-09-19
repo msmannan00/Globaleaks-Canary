@@ -1,3 +1,43 @@
+Changes in version 5.0.8
+    Fix multilang export of questionnaires (#4190)
+    Bump client dependencies to latest version
+    Update translations
+
+Changes in version 5.0.7
+    Revise implementation of form validation
+    Implement language changes on ng-bootstrap datepicker
+    Revise internationalization issues
+    Revise admin sidebar menu fixing "Channels" link
+    Bump client dependencies to latest version
+    Update translations
+
+Changes in version 5.0.6
+    Change text "Postpone the expiration date" to "Edit the expiration date" (#4175)
+    Revise reports' statuses configuration (#4177)
+    Fix regression on reports search introduced in release 5.0.0 (#4184)
+    Correct missing translation for "Privacy" and "Whistleblowing" policies link
+    Update list of italian ministries and authorities using the software
+    Revise description of the software adding reference to DPG recognition
+    Update client dependencies to latest versions
+    Update translations
+
+Changes in version 5.0.5
+    Fix regression #4181
+    Apply accessibility fixes as for ticket #3998
+    Update client dependencies to latest version
+    Update translations
+
+Changes in version 5.0.4
+    Apply accessibility fixes as for ticket #3998
+    Preserve newlines during markdown rendering (#4179)
+    Fix internationalization issue on report page
+    Disable caching of Tor descriptors
+    Preserve newlines during markdown rendering (#4179)
+    Fix internationalization issue on report page
+    Revise session implementation fixing file downloads bug introduced in 5.0.3
+    Update client dependencies to latest version
+    Update translations
+
 Changes in version 5.0.3
     Implement encrypted sessions minimizing exposure of users keys
     Revise implementation of questionnaires' step navigation
