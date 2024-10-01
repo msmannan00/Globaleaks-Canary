@@ -30,7 +30,7 @@ from globaleaks.utils.crypto import GCE
 from globaleaks.utils.fs import directory_traversal_check
 from globaleaks.utils.log import log
 from globaleaks.utils.templating import Templating
-from globaleaks.utils.utility import datetime_now, datetime_null, datetime_never
+from globaleaks.utils.utility import datetime_now, datetime_null, datetime_never, get_expiration
 from globaleaks.utils.json import JSONEncoder
 
 
@@ -195,18 +195,21 @@ def recalculate_data_retention(session, itip, report_reopen_request):
     :param itip: The internaltip ORM object
     :param report_reopen_request: boolean value, true if the report is being reopend
     """
-    new_retention = None
+    prev_expiration_date = itip.expiration_date
     if report_reopen_request:
         # use the context-defined data retention
         ttl = get_ttl(session, models.Context, itip.context_id)
         if ttl > 0:
-            itip.expiration_date = datetime_now() + timedelta(ttl)
+            itip.expiration_date = get_expiration(ttl)
         else:
             itip.expiration_date = datetime_never()
     elif itip.status == "closed" and itip.substatus is not None:
         ttl = get_ttl(session, models.SubmissionSubStatus, itip.substatus)
         if ttl > 0:
-            itip.expiration_date = datetime_now() + timedelta(ttl)
+            itip.expiration_date = get_expiration(ttl)
+
+    return prev_expiration_date, itip.expiration_date
+
 
 def db_update_submission_status(session, tid, user_id, itip, status_id, substatus_id, motivation=None):
     """
@@ -237,7 +240,7 @@ def db_update_submission_status(session, tid, user_id, itip, status_id, substatu
     itip.status = status_id
     itip.substatus = substatus_id or None
 
-    recalculate_data_retention(session, itip, report_reopen_request)
+    prev_expiration_date, curr_expiration_date = recalculate_data_retention(session, itip, report_reopen_request)
 
     log_data = {
       'status': itip.status,
@@ -246,6 +249,14 @@ def db_update_submission_status(session, tid, user_id, itip, status_id, substatu
     }
 
     db_log(session, tid=tid, type='update_report_status', user_id=user_id, object_id=itip.id, data=log_data)
+
+    if prev_expiration_date != curr_expiration_date:
+        log_data = {
+            'prev_expiration_date': int(datetime.timestamp(prev_expiration_date)),
+            'curr_expiration_date': int(datetime.timestamp(curr_expiration_date))
+        }
+
+        db_log(session, tid=tid, type='update_report_expiration', user_id=user_id, object_id=itip.id, data=log_data)
 
 
 def db_update_temporary_redaction(session, tid, user_id, redaction, redaction_data):
@@ -646,7 +657,7 @@ def db_get_rtip(session, tid, user_id, itip_id, language):
         rtip.access_date = rtip.last_access
 
     if itip.reminder_date < rtip.last_access:
-        itip.reminder_date = datetime_null()
+        itip.reminder_date = datetime_never()
 
     if itip.status == 'new':
         itip.update_date = rtip.last_access
@@ -735,19 +746,23 @@ def db_postpone_expiration(session, itip, expiration_date):
     :param itip: A submission model to be postponed
     :param expiration_date: The date timestamp to be set in milliseconds
     """
+    prev_expiration_date = itip.expiration_date
+
     max_date = 32503676400
     expiration_date = expiration_date / 1000
     expiration_date = expiration_date if expiration_date < max_date else max_date
-    expiration_date = datetime.utcfromtimestamp(expiration_date)
+    expiration_date = datetime.fromtimestamp(expiration_date)
 
     min_date = time.time() + 91 * 86400
     min_date = min_date - min_date % 86400
-    min_date = datetime.utcfromtimestamp(min_date)
+    min_date = datetime.fromtimestamp(min_date)
     if itip.expiration_date <= min_date:
         min_date = itip.expiration_date
 
     if expiration_date >= min_date:
         itip.expiration_date = expiration_date
+
+    return prev_expiration_date, expiration_date
 
 
 def db_set_reminder(session, itip, reminder_date):
@@ -760,7 +775,7 @@ def db_set_reminder(session, itip, reminder_date):
     """
     reminder_date = reminder_date / 1000
     reminder_date = min(reminder_date, 32503680000)
-    reminder_date = datetime.utcfromtimestamp(reminder_date)
+    reminder_date = datetime.fromtimestamp(reminder_date)
 
     itip.reminder_date = reminder_date
 
@@ -824,7 +839,15 @@ def postpone_expiration(session, tid, user_id, itip_id, expiration_date):
     if not user.can_postpone_expiration:
         raise errors.ForbiddenOperation
 
-    db_postpone_expiration(session, itip, expiration_date)
+    prev_expiration_date, curr_expiration_date = db_postpone_expiration(session, itip, expiration_date)
+
+    log_data = {
+      'prev_expiration_date': int(datetime.timestamp(prev_expiration_date)),
+      'curr_expiration_date': int(datetime.timestamp(curr_expiration_date))
+    }
+
+    db_log(session, tid=tid, type='update_report_expiration', user_id=user_id, object_id=itip.id, data=log_data)
+
 
 
 @transact
@@ -1122,6 +1145,8 @@ class RTipInstance(OperationHandler):
     @inlineCallbacks
     def get(self, tip_id):
         tip, crypto_tip_prv_key = yield get_rtip(self.request.tid, self.session.user_id, tip_id, self.request.language)
+
+        tip = yield serializers.process_logs(tip, tip['id'])
 
         if State.tenants[self.request.tid].cache.encryption and crypto_tip_prv_key:
             tip = yield deferToThread(decrypt_tip, self.session.cc, crypto_tip_prv_key, tip)

@@ -18,7 +18,7 @@ class ViewerHandler(StaticFileHandler):
             self.request.setHeader(b'Content-Security-Policy',
                                    b"base-uri 'none';"
                                    b"default-src 'none';"
-                                   b"connect-src 'self' https://payment.whistleaks.com blob:;"
+                                   b"connect-src blob:;"
                                    b"form-action 'none';"
                                    b"frame-ancestors 'self';"
                                    b"img-src blob:;"

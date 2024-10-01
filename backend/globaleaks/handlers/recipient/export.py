@@ -2,7 +2,6 @@
 #
 # API handling export of submissions
 import os
-import re
 from io import BytesIO
 from twisted.internet.defer import inlineCallbacks
 from twisted.internet.threads import deferToThread
@@ -38,7 +37,6 @@ try:
         report_direction = 'ltr'
         report_line_height = 3
         report_margin = 10
-        fonts_characters = {}
 
         def __init__(self, *args, **kwargs):
             super(REPORTPDF, self).__init__(*args, **kwargs)
@@ -46,10 +44,6 @@ try:
             fontspath = os.path.join(Settings.client_path, "fonts")
             self.add_font(family="Inter-Regular.ttf", style='', fname=os.path.join(fontspath, "Inter-Regular.ttf"))
             self.add_font(family="GoNotoKurrent-Regular.ttf", style='', fname=os.path.join(fontspath, "GoNotoKurrent-Regular.ttf"))
-
-            for font in list(self.fonts.keys()):
-                if font != self.report_default_font and isinstance(self.fonts[font], fpdf.fonts.TTFFont):
-                    self.fonts_characters[font] = len(self.fonts[font].subset)
 
             self.set_font(self.report_default_font, "", 11)
             self.set_fallback_fonts(self.report_fallback_fonts)
@@ -82,15 +76,8 @@ try:
             self.set_text_shaping(use_shaping_engine=True, direction=self.report_direction)
             self.set_font(self.report_default_font, "", 11)
 
-        def output(self, *args, **kwargs):
-            for font in list(self.fonts.keys()):
-                if font != self.report_default_font and isinstance(self.fonts[font], fpdf.fonts.TTFFont) and \
-                  self.fonts_characters[font] == len(self.fonts[font].subset):
-                    self.fonts.pop(font)
-
-            return super(REPORTPDF, self).output(*args, **kwargs)
-
 except ImportError:
+    REPORTPDF = None
     pass
 
 

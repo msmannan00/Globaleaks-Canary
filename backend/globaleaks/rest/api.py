@@ -29,7 +29,6 @@ from globaleaks.handlers import admin, \
                                 security, \
                                 signup, \
                                 sitemap, \
-                                support, \
                                 staticfile, \
                                 support, \
                                 user, \
@@ -137,6 +136,7 @@ api_spec = [
     (r'/api/admin/statuses', admin.submission_statuses.SubmissionStatusCollection),
     (r'/api/admin/statuses/' + r'(closed)' + r'/substatuses', admin.submission_statuses.SubmissionSubStatusCollection),
     (r'/api/admin/statuses/' + uuid_regexp, admin.submission_statuses.SubmissionStatusInstance),
+    (r'/api/admin/statuses/' + r'(closed)', admin.submission_statuses.SubmissionStatusInstance),
     (r'/api/admin/statuses/' + uuid_regexp + r'/substatuses', admin.submission_statuses.SubmissionSubStatusCollection),
     (r'/api/admin/statuses/' + r'(closed)' + r'/substatuses/' + uuid_regexp, admin.submission_statuses.SubmissionSubStatusInstance),
     (r'/api/admin/statuses/' + uuid_regexp + r'/substatuses/' + uuid_regexp, admin.submission_statuses.SubmissionSubStatusInstance),
@@ -427,7 +427,12 @@ class APIResourceWrapper(Resource):
             return b''
 
         if self.handler.upload_handler and method == 'post':
-            self.handler.process_file_upload()
+            try:
+                self.handler.process_file_upload()
+            except Exception as e:
+                self.handle_exception(e, request)
+                return b''
+
             if self.handler.uploaded_file is None:
                 return b''
 
@@ -486,7 +491,6 @@ class APIResourceWrapper(Resource):
                 request.setHeader(b'Onion-Location', b'http://' + State.tenants[request.tid].cache.onionservice.encode() + request.path)
 
         request.setHeader(b'Content-Security-Policy',
-                          b"connect-src 'self' https://payment.whistleaks.com blob:;"
                           b"base-uri 'none';"
                           b"default-src 'none';"
                           b"form-action 'none';"
