@@ -1,4 +1,4 @@
-import {HostListener, NgModule, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
+import {HostListener, NgModule, CUSTOM_ELEMENTS_SCHEMA, OnDestroy} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {AppRoutingModule} from "@app/app-routing.module";
 import {AppComponent} from "@app/pages/app/app.component";
@@ -24,7 +24,7 @@ import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
 import {ActionModule} from "@app/pages/action/action.module";
 import {WhistleblowerModule} from "@app/pages/whistleblower/whistleblower.module";
-import {MarkdownModule} from "ngx-markdown";
+import {MarkdownModule, MarkedOptions, MARKED_OPTIONS} from "ngx-markdown";
 import {ReceiptValidatorDirective} from "@app/shared/directive/receipt-validator.directive";
 import {NgxFlowModule, FlowInjectionToken} from "@flowjs/ngx-flow";
 import * as Flow from "@flowjs/flow.js";
@@ -36,7 +36,17 @@ import {AdminModule} from "@app/pages/admin/admin.module";
 import {CustodianModule} from "@app/pages/custodian/custodian.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AnalystModule} from "@app/pages/analyst/analyst.module";
-import { mockEngine } from './services/helper/mocks';
+import {mockEngine} from './services/helper/mocks';
+import {HttpService} from "./shared/services/http.service";
+import {CryptoService} from "@app/shared/services/crypto.service";
+import {TranslationService} from "@app/services/helper/translation.service";
+import {NgbDatepickerI18n} from '@ng-bootstrap/ng-bootstrap';
+import {CustomDatepickerI18n} from '@app/shared/services/custom-datepicker-i18n';
+import {registerLocales} from '@app/services/helper/locale-provider';
+
+// Register all the locales
+registerLocales();
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "l10n/", "");
 }
@@ -86,7 +96,14 @@ const translationModule = TranslateModule.forRoot({
     AnalystModule,
     SharedModule,
     NgIdleKeepaliveModule.forRoot(),
-    MarkdownModule.forRoot(),
+    MarkdownModule.forRoot({
+      markedOptions: {
+        provide: MARKED_OPTIONS,
+        useValue: {
+          breaks: true
+        }
+      }
+    }),
     NgxFlowModule,
     NgOptimizedImage
   ],
@@ -100,17 +117,18 @@ const translationModule = TranslateModule.forRoot({
     {provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: CompletedInterceptor, multi: true},
     {provide: FlowInjectionToken, useValue: Flow},
-    {provide: LocationStrategy, useClass: HashLocationStrategy}
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    {provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n}
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule {
+export class AppModule implements OnDestroy {
 
   timedOut = false;
   title = "angular-idle-timeout";
 
-  constructor(private authenticationService: AuthenticationService, private idle: Idle, private keepalive: Keepalive) {
+  constructor(private cryptoService:CryptoService, private authenticationService: AuthenticationService, private idle: Idle, private keepalive: Keepalive, private httpService: HttpService) {
     this.initIdleState();
   }
 
@@ -121,9 +139,21 @@ export class AppModule {
 
   initIdleState() {
     this.idle.setIdle(300);
-    this.idle.setTimeout(1800);
-    this.keepalive.interval(600);
+    this.idle.setTimeout(300);
+    this.keepalive.interval(30);
     this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+
+    this.keepalive.onPing.subscribe(() => {
+      if (this.authenticationService && this.authenticationService.session) {
+        const token = this.authenticationService.session.token;
+        this.cryptoService.proofOfWork(token.id).subscribe((result) => {
+	  const param = {'token': token.id + ":" + result};
+          this.httpService.requestRefreshUserSession(param).subscribe((result => {
+            this.authenticationService.session.token = result.token;
+	  }));
+	});
+      }
+    });
 
     this.idle.onTimeout.subscribe(() => {
       if (this.authenticationService && this.authenticationService.session) {

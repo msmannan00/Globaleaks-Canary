@@ -2,23 +2,13 @@ module.exports = function(grunt) {
   let fs = require("fs"),
       path = require("path"),
       superagent = require("superagent"),
-      gettextParser = require("gettext-parser"),
       Gettext = require("node-gettext");
 
-  grunt.initConfig({
-    eslint: {
-      options: {
-        configFile: "../.eslintrc.json"
-      },
-      src: [
-        "Gruntfile.js",
-        "app/js/**/*.js",
-        "!app/lib/js/*.js",
-        "!app/lib/js/locale/*.js",
-        "tests/*.js"
-      ]
-    },
+  async function loadGettextParser() {
+    return await import('gettext-parser');
+  }
 
+  grunt.initConfig({
     clean: {
       all: ["build", "tmp", "dist"],
       tmp: ["tmp", "dist", "instrument"],
@@ -395,7 +385,7 @@ module.exports = function(grunt) {
               pattern: 'data/favicon.ico',
               replacement: 'data/whistleaks/images/favicon.ico'
             }
-            ]
+          ]
         }
       }
     },

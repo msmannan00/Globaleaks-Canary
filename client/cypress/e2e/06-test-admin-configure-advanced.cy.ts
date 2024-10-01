@@ -3,7 +3,7 @@ describe("admin configure advanced settings", () => {
     cy.login_admin();
     cy.visit("/#/admin/settings");
     cy.get('[data-cy="advanced"]').click().should("be.visible", { timeout: 10000 }).click();
-    cy.get('input[name="enable_custom_privacy_badge"]').click();
+    cy.get('input[name="node.dataModel.allow_indexing"]').click();
     cy.get("#save").click();
   });
 });
@@ -12,7 +12,7 @@ describe("admin disable submissions", () => {
   it("should disable submission", () => {
     cy.login_admin();
     cy.visit("/#/admin/settings");
-    cy.get('[data-cy="advanced"]').click().should("be.visible", { timeout: 10000 }).click();;
+    cy.get('[data-cy="advanced"]').click().should("be.visible", { timeout: 10000 }).click();
 
     cy.get('input[name="disable_submissions"]').click();
     cy.get("#save").click();
@@ -33,7 +33,7 @@ describe("admin enable submissions", () => {
     cy.login_admin();
     cy.waitForUrl("/#/admin/home")
     cy.visit("/#/admin/settings")
-    cy.get('[data-cy="advanced"]').click().should("be.visible", { timeout: 10000 }).click();;
+    cy.get('[data-cy="advanced"]').click().should("be.visible", { timeout: 10000 }).click();
 
     cy.get('input[name="disable_submissions"]').click();
     cy.get("#save").click();
@@ -111,6 +111,7 @@ describe("admin enable scoring system", () => {
     cy.logout();
   });
 });
+
 describe("admin add and remove disclaimer", function () {
   it("should add disclaimer", function () {
     cy.login_admin();
@@ -127,6 +128,7 @@ describe("admin add and remove disclaimer", function () {
     cy.logout();
   });
 });
+
 describe("admin add and remove user privacy policy", function () {
   it("should add and remove user privacy policy", function () {
     cy.login_admin();
@@ -146,4 +148,3 @@ describe("admin add and remove user privacy policy", function () {
     cy.logout();
   });
 });
-
