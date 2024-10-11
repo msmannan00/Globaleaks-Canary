@@ -37,7 +37,6 @@ describe("admin enable submissions", () => {
 
     cy.get('input[name="disable_submissions"]').click();
     cy.get("#save").click();
-    cy.waitForLoader()
     cy.get('[data-cy="advanced"]').click().should('be.visible', { timeout: 10000 }).click();
 
     cy.get('input[name="disable_submissions"]').should("be.visible").should("not.be.checked");
@@ -91,7 +90,6 @@ describe("Validating custom support url", () => {
     );
 
     cy.get("#save").click();
-    cy.waitForLoader();
     cy.get('[data-cy="advanced"]').click().should('be.visible', { timeout: 10000 }).click();
 
     cy.get('input[name="customSupportURL"]')

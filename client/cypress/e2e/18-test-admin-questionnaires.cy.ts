@@ -13,9 +13,10 @@ describe("admin add, configure and delete questionnaires", () => {
     cy.get("#add-field-btn").first().click();
 
     if (["Checkbox", "Selection box"].indexOf(question_type) === 0) {
-      cy.waitForLoader();
-      cy.get('.fieldBox').should('be.visible', { timeout: 10000 }).contains('span', question_type).click();
-
+      cy.get('.fieldBox').should('be.visible', { timeout: 10000 });
+      cy.contains('span', question_type).as('questionType').should('be.visible');
+      cy.get('@questionType').click();
+    
       for (let i = 0; i < 3; i++) {
         cy.get('button[name="addOption"]').click();
         cy.get("input[name='option.label']").eq(i).type("option");
@@ -69,7 +70,6 @@ describe("admin add, configure and delete questionnaires", () => {
     cy.contains("Step 2").should('be.visible', { timeout: 10000 }).click();
 
     fieldTypes.forEach((questionType: string, index: number) => {
-      cy.waitForLoader();
       add_question(questionType, index);
     });
 

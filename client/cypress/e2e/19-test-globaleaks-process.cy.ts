@@ -49,7 +49,6 @@ describe("globaleaks process", function () {
       const comment = "comment";
       cy.get("[name='newCommentContent']").type(comment);
       cy.get("#comment-action-send").click();
-      cy.waitForLoader();
       cy.get('#comment-0').should('contain', comment);
       cy.visit("/#/recipient/reports");
       cy.takeScreenshot("recipient/reports");
@@ -100,7 +99,6 @@ describe("globaleaks process", function () {
       cy.get(".TipInfoID").first().invoke("text").then(t => {
         expect(t.trim()).to.be.a("string");
       });
-      cy.waitForLoader();
       cy.get('[id="tip-action-silence"]').should('be.visible').click();
       cy.get('#tip-action-notify').should('be.visible').click();
       cy.get('#tip-action-silence').should('be.visible').should('be.visible');
@@ -213,7 +211,6 @@ describe("globaleaks process", function () {
       const val = textarea.val();
       cy.get('textarea[name="controlElement"]').should('be.visible').clear().type(val);
       cy.get("#select_content").click();
-      cy.wait(1000);
     });
     cy.get("#save_masking").click();
     cy.get('[id="tip-action-mask"]').should('be.visible').click();
@@ -222,7 +219,6 @@ describe("globaleaks process", function () {
       const val = textarea.val();
       cy.get('textarea[name="controlElement"]').should('be.visible').clear().type(val);
       cy.get("#unselect_content").click();
-      cy.wait(1000);
     });
     cy.get("#save_masking").click();
     cy.logout();
