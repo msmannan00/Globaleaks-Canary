@@ -1,3 +1,53 @@
+Changes in version 5.0.15
+    Fix correct redirection after login
+
+Changes in version 5.0.14
+    Reiplement 'public' on each whistlebler's page
+
+Changes in version 5.0.13
+    Fix issue #4228
+    Ensure to set html lang attribute when varying language (#4198)
+    Ensure to set html dir attribute depending on the language used
+    Correct logo and favicon removing incorrectly added black border
+    Revise wrong positioning of checkboxes on wizard interface
+    Revise gl-admin tool fixing configuration of intergers variables
+    Revise gl-admin tool making configuration of boolean values case insensitive
+    Bump client dependencies to latest versions
+    Update client dependencies shrinkwrap
+    [doc] Revise documentation informing users that a 64-bit system is required to run GlobaLeaks (#4202)
+
+Changes in version 5.0.12
+    Add ConnectionRefusedError to list of silenced exceptions
+    Revise implementation of periodic jobs and implement minutely exception notifications limits
+    Revise functionality and UI for date range questions
+    Ensure reports could be exported even if one single answer fails to be processed
+    Fix pdf export (available for the moment only on Ubuntu Noble)
+    Implement full case insensitive search on admin's sites interface
+    Order audit log entries with descending order
+    Extend client session idling time from 5 to 20 minutes
+    Fix issues #4209, #4218, #4217, #4207, #4211
+    Revise Language configuration UI improving usability
+    Apply CSS fixes to improve adherence to GlobaLeaks brand color
+    Uniform layout of checkboxes and radios using boostrap classes (#4216)
+    Include Ubuntu Noble in current recommended LTS distributions along with Debian Bookworm
+    Bump client dependencies to latest version
+    Update client dependencies shrinkwrap
+    Update translations
+    [ci] Update tests in relation to latest changes
+    [doc] Update documentation images
+
+Changes in version 5.0.11
+    Correct decryption of change status motivations for whistleblowers
+
+Changes in version 5.0.10
+    Revert "Update codebase to new angular control flow-directive" causing instabilities on 5.0.9
+
+Changes in version 5.0.9
+    Fix failure in the loading of translations at first load of the application introduced in 5.0.7 (#4194)
+    Reimplement override of localStorage with sessionStorage (#3277)
+    Replace usages of localStorage with sessionStorage
+    Bump client dependencies to latest versions
+
 Changes in version 5.0.8
     Fix multilang export of questionnaires (#4190)
     Bump client dependencies to latest version

@@ -86,6 +86,11 @@ body {
   min-height: 20rem;
 }
 
+.block-user-input {
+  pointer-events: none;
+  user-select: none;
+}
+
 th .fa-solid,
 .fa-chevron-up,
 .fa-chevron-down {
@@ -1080,11 +1085,6 @@ i.fa-solid.fa-chevron-right {
 
 .blink {
   animation: blink 1s infinite;
-}
-
-.form-check{
-  margin-left:0;
-  padding-left:0;
 }
 
 .was-validated .form-check-input:valid ~ .form-check-label, .form-check-input.is-valid ~ .form-check-label {
