@@ -10,6 +10,11 @@ export class TranslatorPipe implements PipeTransform {
   }
 
   transform(key: string): string {
+    
+    if (!key) {
+      return key;
+    }
+
     let translation = this.translate.instant(key);
 
     this.translate.onLangChange.subscribe(() => {
