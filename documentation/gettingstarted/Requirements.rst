@@ -6,7 +6,7 @@ Hardware Requirements
 ---------------------
 **Requirements**:
 
-- CPU: Dual-core 2.0GHz
+- CPU: Dual-core 2.0GHz (64-bit)
 - RAM: 1GB
 - Storage: 20GB
 - I/O: 10Mbit/s (shared)
@@ -19,7 +19,7 @@ Software Requirements
 ---------------------
 GlobaLeaks is designed to run on GNU/Linux and is developed and tested specifically for Debian-based systems.
 
-The currently recommended distribution is: Debian 12 (Bookworm).
+The currently recommended distributions are: Debian 12 (Bookworm) and Ubuntu 24.04 (Noble)
 
 The software lifecycle of the platform includes full support for all Debian and Ubuntu LTS versions starting from `Debian 10 <https://www.debian.org/releases/buster/>`_ and `Ubuntu 20.04 <https://releases.ubuntu.com/20.04/>`_.
 
