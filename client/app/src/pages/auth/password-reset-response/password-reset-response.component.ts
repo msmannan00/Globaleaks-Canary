@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import {PasswordRecoveryModel} from "@app/models/authentication/password-recovery-model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpService} from "@app/shared/services/http.service";
@@ -16,11 +16,14 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgIf, FormsModule, TranslateModule, TranslatorPipe]
 })
 export class PasswordResetResponseComponent implements OnInit {
+  protected appDataService = inject(AppDataService);
+  private route = inject(ActivatedRoute);
+  private httpService = inject(HttpService);
+  private router = inject(Router);
+  protected utilsService = inject(UtilsService);
+
   state = "start";
   request = new PasswordRecoveryModel();
-
-  constructor(protected appDataService: AppDataService, private route: ActivatedRoute, private httpService: HttpService, private router: Router, protected utilsService: UtilsService) {
-  }
 
   submit() {
     const requestObservable = this.httpService.requestChangePassword(JSON.stringify({

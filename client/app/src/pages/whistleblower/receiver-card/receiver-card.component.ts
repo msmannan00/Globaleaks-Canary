@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 import {Receiver} from "@app/models/app/public-model";
 import {SubmissionService} from "@app/services/helper/submission.service";
 import {TranslateService} from "@ngx-translate/core";
@@ -12,10 +12,10 @@ import { FormsModule } from "@angular/forms";
     imports: [NgClass, NgIf, FormsModule, NgOptimizedImage]
 })
 export class ReceiverCardComponent {
+  protected translate = inject(TranslateService);
+
   @Input() submission: SubmissionService;
   @Input() receiverModel: Receiver;
-
-  constructor(protected translate: TranslateService) {}
 
   selectable(): boolean {
     if (this.submission.context.maximum_selectable_receivers === 0) {

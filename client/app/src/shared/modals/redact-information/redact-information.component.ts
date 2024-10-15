@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, inject } from '@angular/core';
 import {ReceiverTipService} from '@app/services/helper/receiver-tip.service';
 import {PreferenceResolver} from '@app/shared/resolvers/preference.resolver';
 import {MaskService} from '@app/shared/services/mask.service';
@@ -21,6 +21,11 @@ import { TranslatorPipe } from '@app/shared/pipes/translate';
     ],
 })
 export class RedactInformationComponent implements OnInit{
+  private maskService = inject(MaskService);
+  protected preferenceResolver = inject(PreferenceResolver);
+  private modalService = inject(NgbModal);
+  private receiverTipService = inject(ReceiverTipService);
+
   @ViewChild('redact', { static: false }) redactTextArea: ElementRef;
   @Input() arg:any;
   redaction: any = null;
@@ -34,7 +39,6 @@ export class RedactInformationComponent implements OnInit{
   unmaskedContent: string = "";
   content: string = "";
   originalContent: string = "";
-  constructor(private maskService:MaskService,protected preferenceResolver:PreferenceResolver,private modalService: NgbModal,private receiverTipService:ReceiverTipService){}
 
   cancel() {
     this.modalService.dismissAll();

@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {HttpService} from "@app/shared/services/http.service";
 import { FormsModule } from "@angular/forms";
@@ -12,12 +12,12 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [FormsModule, TranslateModule, TranslatorPipe]
 })
 export class TipOperationFileIdentityAccessReplyComponent {
+  private httpService = inject(HttpService);
+  private modalService = inject(NgbModal);
+
 
   reply_motivation = "";
   @Input() iar_id = "";
-
-  constructor(private httpService: HttpService, private modalService: NgbModal) {
-  }
 
   cancel() {
     this.modalService.dismissAll();

@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from "@angular/core";
+import { Component, HostListener, OnInit, inject } from "@angular/core";
 import {AppConfigService} from "@app/services/root/app-config.service";
 import { NgbDate, NgbModal, NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast } from "@ng-bootstrap/ng-bootstrap";
 import {AppDataService} from "@app/app-data.service";
@@ -31,6 +31,19 @@ import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
     imports: [NgIf, RouterLink, FormsModule, NgClass, NgMultiSelectDropDownModule, DateRangeSelectorComponent, NgFor, NgSwitch, NgSwitchCase, NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast, SlicePipe, DatePipe, TranslateModule, TranslatorPipe, OrderByPipe]
 })
 export class TipsComponent implements OnInit {
+  private http = inject(HttpClient);
+  protected authenticationService = inject(AuthenticationService);
+  protected httpService = inject(HttpService);
+  private appConfigServices = inject(AppConfigService);
+  private router = inject(Router);
+  protected RTips = inject(RTipsResolver);
+  protected preference = inject(PreferenceResolver);
+  private modalService = inject(NgbModal);
+  protected utils = inject(UtilsService);
+  protected appDataService = inject(AppDataService);
+  private translateService = inject(TranslateService);
+  private tokenResourceService = inject(TokenResource);
+
   search: string | undefined;
   selectedTips: string[] = [];
   filteredTips: rtipResolverModel[];
@@ -67,10 +80,6 @@ export class TipsComponent implements OnInit {
     unSelectAllText: this.translateService.instant("Deselect all"),
     searchPlaceholderText: this.translateService.instant("Search")
   };
-
-  constructor(private http: HttpClient,protected authenticationService: AuthenticationService, protected httpService: HttpService, private appConfigServices: AppConfigService, private router: Router, protected RTips: RTipsResolver, protected preference: PreferenceResolver, private modalService: NgbModal, protected utils: UtilsService, protected appDataService: AppDataService, private translateService: TranslateService, private tokenResourceService: TokenResource) {
-
-  }
 
   ngOnInit() {
     if (!this.RTips.dataModel) {

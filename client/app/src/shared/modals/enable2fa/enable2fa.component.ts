@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
@@ -14,9 +14,11 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [Enable2fa, TranslateModule, TranslatorPipe]
 })
 export class Enable2faComponent {
+  private preferenceResolver = inject(PreferenceResolver);
+  private activeModal = inject(NgbActiveModal);
+  private utilsService = inject(UtilsService);
+  protected twoFactorAuthData = inject(TwoFactorAuthData);
 
-  constructor(private preferenceResolver: PreferenceResolver, private activeModal: NgbActiveModal, private utilsService: UtilsService, protected twoFactorAuthData: TwoFactorAuthData) {
-  }
 
   dismiss() {
     this.activeModal.dismiss();

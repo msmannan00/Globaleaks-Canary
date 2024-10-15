@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, inject } from "@angular/core";
 import * as Flow from "@flowjs/flow.js";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {SubmissionService} from "@app/services/helper/submission.service";
@@ -16,6 +16,12 @@ import { FormsModule } from "@angular/forms";
     imports: [NgIf, NgClass, FormsModule]
 })
 export class VoiceRecorderComponent implements OnInit {
+  private cd = inject(ChangeDetectorRef);
+  private utilsService = inject(UtilsService);
+  private sanitizer = inject(DomSanitizer);
+  protected authenticationService = inject(AuthenticationService);
+  private submissionService = inject(SubmissionService);
+
   @Input() uploads: any;
   @Input() field: Field;
   @Input() fileUploadUrl: string;
@@ -41,9 +47,6 @@ export class VoiceRecorderComponent implements OnInit {
   entry: any;
   iframeUrl: SafeResourceUrl;
   @ViewChild("viewer") viewerFrame: ElementRef;
-
-  constructor(private cd: ChangeDetectorRef,private utilsService: UtilsService,private sanitizer: DomSanitizer, protected authenticationService: AuthenticationService, private submissionService: SubmissionService) {
-  }
 
   ngOnInit(): void {
     this.iframeUrl = this.sanitizer.bypassSecurityTrustResourceUrl("viewer/index.html");

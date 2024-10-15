@@ -1,5 +1,5 @@
 import {BehaviorSubject} from 'rxjs';
-import {Inject, Injectable, Renderer2} from "@angular/core";
+import { Injectable, Renderer2, inject } from "@angular/core";
 import {LangChangeEvent, TranslateService} from "@ngx-translate/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {DOCUMENT} from "@angular/common";
@@ -8,6 +8,10 @@ import {DOCUMENT} from "@angular/common";
   providedIn: "root",
 })
 export class TranslationService {
+  private utilsService = inject(UtilsService);
+  protected translate = inject(TranslateService);
+  private document = inject<Document>(DOCUMENT);
+
   language = "";
 
   private currentLocale = new BehaviorSubject<string>("");
@@ -19,7 +23,7 @@ export class TranslationService {
 
   public currentDirection: string;
 
-  constructor(private utilsService: UtilsService, protected translate: TranslateService, @Inject(DOCUMENT) private document: Document) {
+  constructor() {
     this.currentDirection = this.utilsService.getDirection(this.translate.currentLang);
   }
 

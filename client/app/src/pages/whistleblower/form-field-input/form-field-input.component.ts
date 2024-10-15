@@ -1,4 +1,4 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from "@angular/core";
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output, inject } from "@angular/core";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import { ControlContainer, NgForm, FormsModule } from "@angular/forms";
 import {SubmissionService} from "@app/services/helper/submission.service";
@@ -26,6 +26,8 @@ import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
     imports: [FormsModule, NgSwitch, NgSwitchCase,forwardRef(() => WhistleblowerIdentityFieldComponent) , NgSwitchDefault, NgIf, NgFor, NgClass, NgSelectComponent, NgOptionComponent, NgbInputDatepicker, MarkdownComponent, VoiceRecorderComponent, RFileUploadButtonComponent,forwardRef(() => FormComponent), TranslateModule, TranslatorPipe, StripHtmlPipe, OrderByPipe]
 })
 export class FormFieldInputComponent implements OnInit {
+  private fieldUtilitiesService = inject(FieldUtilitiesService);
+
 
   @Input() field: any;
   @Input() index: number;
@@ -54,9 +56,6 @@ export class FormFieldInputComponent implements OnInit {
   dateOptions1: NgbDateStruct;
   dateOptions2: NgbDateStruct;
   dateOptions: {min_date:NgbDateStruct,max_date:NgbDateStruct}={min_date:{year:0,month:0,day:0},max_date:{year:0,month:0,day:0}}
-
-  constructor(private fieldUtilitiesService: FieldUtilitiesService) {
-  }
 
   clearDateRange() {
     this.input_start_date = "";

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, TemplateRef, ViewChild, ChangeDetectorRef} from "@angular/core";
+import { AfterViewInit, Component, TemplateRef, ViewChild, ChangeDetectorRef, inject } from "@angular/core";
 import {Tab} from "@app/models/component-model/tab";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {UsersTab1Component} from "@app/pages/admin/users/users-tab1/users-tab1.component";
@@ -14,14 +14,14 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, UsersTab1Component, UsersTab2Component, TranslatorPipe]
 })
 export class UsersComponent implements AfterViewInit {
+  node = inject(NodeResolver);
+  private cdr = inject(ChangeDetectorRef);
+
   @ViewChild("tab1") tab1!: TemplateRef<UsersTab1Component>;
   @ViewChild("tab2") tab2!: TemplateRef<UsersTab2Component>;
   tabs: Tab[];
   nodeData: NodeResolver;
   active: string;
-
-  constructor(public node: NodeResolver, private cdr: ChangeDetectorRef) {
-  }
 
   ngAfterViewInit(): void {
     setTimeout(() => {

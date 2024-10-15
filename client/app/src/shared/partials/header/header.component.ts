@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {AppConfigService} from "@app/services/root/app-config.service";
 import {AppDataService} from "@app/app-data.service";
 import { NgIf } from "@angular/common";
@@ -13,6 +13,6 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgIf, UserComponent, TranslateModule, TranslatorPipe]
 })
 export class HeaderComponent {
-  constructor(public appConfig: AppConfigService, public appDataService: AppDataService) {
-  }
+  appConfig = inject(AppConfigService);
+  appDataService = inject(AppDataService);
 }

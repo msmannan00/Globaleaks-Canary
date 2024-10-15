@@ -1,4 +1,4 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from "@angular/core";
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output, inject } from "@angular/core";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {ControlContainer, NgForm} from "@angular/forms";
 import {SubmissionService} from "@app/services/helper/submission.service";
@@ -22,6 +22,8 @@ import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
     ],
 })
 export class FormComponent implements OnInit {
+  protected fieldUtilitiesService = inject(FieldUtilitiesService);
+
   @Input() step: Step;
   @Input() index: number;
   @Input() answers: Answers;
@@ -38,9 +40,6 @@ export class FormComponent implements OnInit {
   stepId: string;
   rows: any;
   status: { opened: boolean };
-
-  constructor(protected fieldUtilitiesService: FieldUtilitiesService) {
-  }
 
   ngOnInit(): void {
     this.initialize();

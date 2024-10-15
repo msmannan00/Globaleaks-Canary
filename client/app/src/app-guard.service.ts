@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import {Router, UrlTree} from "@angular/router";
 import {Observable} from "rxjs";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
@@ -8,8 +8,9 @@ import {AppDataService} from "@app/app-data.service";
   providedIn: "root"
 })
 export class SessionGuard {
-  constructor(private router: Router, private appDataService: AppDataService, public authenticationService: AuthenticationService) {
-  }
+  private router = inject(Router);
+  private appDataService = inject(AppDataService);
+  authenticationService = inject(AuthenticationService);
 
   canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (!this.authenticationService.session) {

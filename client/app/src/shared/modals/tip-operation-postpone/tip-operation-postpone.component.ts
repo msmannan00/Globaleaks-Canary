@@ -1,5 +1,5 @@
 import {HttpClient} from "@angular/common/http";
-import {Component, Input, OnInit} from "@angular/core";
+import { Component, Input, OnInit, inject } from "@angular/core";
 import { NgbDateStruct, NgbModal, NgbInputDatepicker } from "@ng-bootstrap/ng-bootstrap";
 import {UtilsService} from "@app/shared/services/utils.service";
 import { FormsModule } from "@angular/forms";
@@ -13,15 +13,16 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgbInputDatepicker, FormsModule, TranslateModule, TranslatorPipe]
 })
 export class TipOperationPostponeComponent implements OnInit {
+  private modalService = inject(NgbModal);
+  private http = inject(HttpClient);
+  private utils = inject(UtilsService);
+
   @Input() args: any;
 
   request_motivation: string;
   model: NgbDateStruct;
   minDate: NgbDateStruct;
   maxDate: NgbDateStruct;
-
-  constructor(private modalService: NgbModal, private http: HttpClient, private utils: UtilsService) {
-  }
 
   confirm() {
     this.cancel();

@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {TwoFactorAuthData} from "@app/services/helper/2fa.data.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
@@ -15,7 +15,13 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [Enable2fa, TranslateModule, TranslatorPipe]
 })
 export class ForcedTwoFactorComponent {
-  constructor(protected twoFactorAuthData: TwoFactorAuthData, private httpService: HttpService, private preferenceResolver: PreferenceResolver, private authenticationService: AuthenticationService, private router: Router) {
+  protected twoFactorAuthData = inject(TwoFactorAuthData);
+  private httpService = inject(HttpService);
+  private preferenceResolver = inject(PreferenceResolver);
+  private authenticationService = inject(AuthenticationService);
+  private router = inject(Router);
+
+  constructor() {
     this.twoFactorAuthData.totp.secret = ""
     this.twoFactorAuthData.totp.token = ""
   }

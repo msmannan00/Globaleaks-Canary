@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {AppDataService} from "@app/app-data.service";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -15,10 +15,11 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [FormsModule, ReceiptValidatorDirective, NgIf, TranslateModule, TranslatorPipe]
 })
 export class ReceiptComponent{
-  formattedReceipt = "";
+  protected utilsService = inject(UtilsService);
+  protected authenticationService = inject(AuthenticationService);
+  protected appDataService = inject(AppDataService);
 
-  constructor(protected utilsService: UtilsService, protected authenticationService: AuthenticationService, protected appDataService: AppDataService) {
-  }
+  formattedReceipt = "";
 
   viewReport() {
     this.authenticationService.login(0, 'whistleblower', this.formattedReceipt);

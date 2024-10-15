@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import {LoginDataRef} from "@app/pages/auth/login/model/login-model";
 import {HttpService} from "@app/shared/services/http.service";
 import {Observable} from "rxjs";
@@ -15,13 +15,21 @@ import {OtkcAccessComponent} from "@app/shared/modals/otkc-access/otkc-access.co
   providedIn: "root"
 })
 export class AuthenticationService {
+  private http = inject(HttpClient);
+  private modalService = inject(NgbModal);
+  private titleService = inject(TitleService);
+  private activatedRoute = inject(ActivatedRoute);
+  private httpService = inject(HttpService);
+  private appDataService = inject(AppDataService);
+  private router = inject(Router);
+
   public session: any = undefined;
   permissions: { can_upload_files: boolean }
   loginInProgress: boolean = false;
   requireAuthCode: boolean = false;
   loginData: LoginDataRef = new LoginDataRef();
 
-  constructor(private http: HttpClient, private modalService: NgbModal,private titleService: TitleService, private activatedRoute: ActivatedRoute, private httpService: HttpService, private appDataService: AppDataService, private router: Router) {
+  constructor() {
     this.init();
   }
 

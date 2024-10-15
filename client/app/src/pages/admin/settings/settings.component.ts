@@ -1,4 +1,4 @@
-import {Component, TemplateRef, ViewChild, AfterViewInit, ChangeDetectorRef} from "@angular/core";
+import { Component, TemplateRef, ViewChild, AfterViewInit, ChangeDetectorRef, inject } from "@angular/core";
 import {NodeResolver} from "app/src/shared/resolvers/node.resolver";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {Tab} from "@app/models/component-model/tab";
@@ -20,6 +20,10 @@ import { TranslateModule } from "@ngx-translate/core";
     imports: [FormsModule, NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, Tab1Component, Tab2Component, Tab3Component, Tab4Component, Tab5Component, TranslatorPipe, TranslateModule]
 })
 export class SettingsComponent implements AfterViewInit {
+  protected node = inject(NodeResolver);
+  protected authenticationService = inject(AuthenticationService);
+  private cdr = inject(ChangeDetectorRef);
+
   @ViewChild("tab1") tab1!: TemplateRef<Tab1Component>;
   @ViewChild("tab2") tab2!: TemplateRef<Tab2Component>;
   @ViewChild("tab3") tab3!: TemplateRef<Tab3Component>;
@@ -28,10 +32,6 @@ export class SettingsComponent implements AfterViewInit {
   tabs: Tab[];
   nodeData: NodeResolver;
   active: string;
-
-  constructor(protected node: NodeResolver, protected authenticationService: AuthenticationService, private cdr: ChangeDetectorRef) {
-
-  }
 
   ngAfterViewInit(): void {
     setTimeout(() => {

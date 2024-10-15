@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {IarResolver} from "@app/shared/resolvers/iar-resolver.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {HttpService} from "@app/shared/services/http.service";
@@ -17,9 +17,11 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgFor, NgSwitch, NgSwitchCase, DatePipe, TranslateModule, TranslatorPipe]
 })
 export class IdentityAccessRequestsComponent {
+  private modalService = inject(NgbModal);
+  private httpService = inject(HttpService);
+  protected iarResolver = inject(IarResolver);
+  protected utilsService = inject(UtilsService);
 
-  constructor(private modalService: NgbModal, private httpService: HttpService, protected iarResolver: IarResolver, protected utilsService: UtilsService) {
-  }
 
   authorizeIdentityAccessRequest(iar_id: string) {
     this.httpService.authorizeIdentity("api/custodian/iars/" + iar_id, {

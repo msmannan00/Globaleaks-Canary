@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
+import { Component, Input, OnInit, inject } from "@angular/core";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {LoginDataRef} from "@app/pages/auth/login/model/login-model";
 import { NgForm, FormsModule } from "@angular/forms";
@@ -23,12 +23,12 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     ],
 })
 export class SimpleLoginComponent implements OnInit {
+  protected authentication = inject(AuthenticationService);
+  protected appDataService = inject(AppDataService);
+
 
   @Input() loginData: LoginDataRef;
   @Input() loginValidator: NgForm;
-
-  constructor(protected authentication: AuthenticationService, protected appDataService: AppDataService) {
-  }
 
   public ngOnInit(): void {
 

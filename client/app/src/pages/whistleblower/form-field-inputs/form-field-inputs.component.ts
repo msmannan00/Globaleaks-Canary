@@ -1,4 +1,4 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from "@angular/core";
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output, inject } from "@angular/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {ControlContainer, NgForm} from "@angular/forms";
 import {SubmissionService} from "@app/services/helper/submission.service";
@@ -30,6 +30,8 @@ import { StripHtmlPipe } from "@app/shared/pipes/strip-html.pipe";
     ],
 })
 export class FormFieldInputsComponent implements OnInit {
+  protected utilsService = inject(UtilsService);
+
   @Input() field: Field;
   @Input() fieldRow: number;
   @Input() fieldCol: number;
@@ -49,9 +51,6 @@ export class FormFieldInputsComponent implements OnInit {
 
   fieldId: string;
   entries: { [key: string]: Field }[] = [];
-
-  constructor(protected utilsService: UtilsService) {
-  }
 
   ngOnInit(): void {
     if(!this.fieldEntry){

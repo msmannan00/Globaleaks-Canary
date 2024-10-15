@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from "@angular/core";
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, inject } from "@angular/core";
 import {AppConfigService} from "@app/services/root/app-config.service";
 import {Constants} from "@app/shared/constants/constants";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
@@ -29,6 +29,18 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgIf, FormsModule, NgClass, NgFor, DatePipe, TranslateModule, TranslatorPipe]
 })
 export class PreferenceTab1Component implements OnInit {
+  private translationService = inject(TranslationService);
+  protected appConfigService = inject(AppConfigService);
+  private cdr = inject(ChangeDetectorRef);
+  private translateService = inject(TranslateService);
+  private httpService = inject(HttpService);
+  private twoFactorAuthData = inject(TwoFactorAuthData);
+  private modalService = inject(NgbModal);
+  appDataService = inject(AppDataService);
+  protected preferenceResolver = inject(PreferenceResolver);
+  private utilsService = inject(UtilsService);
+  protected authenticationService = inject(AuthenticationService);
+
 
   protected readonly Constants = Constants;
 
@@ -39,7 +51,7 @@ export class PreferenceTab1Component implements OnInit {
   role = "";
   @ViewChild('uploader') uploaderInput: ElementRef<HTMLInputElement>;
 
-  constructor(private translationService: TranslationService, protected appConfigService: AppConfigService, private cdr: ChangeDetectorRef, private translateService: TranslateService, private httpService: HttpService, private twoFactorAuthData: TwoFactorAuthData, private modalService: NgbModal, public appDataService: AppDataService, protected preferenceResolver: PreferenceResolver, private utilsService: UtilsService, protected authenticationService: AuthenticationService) {
+  constructor() {
     this.languageModel = this.preferenceResolver.dataModel.language;
   }
 

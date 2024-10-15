@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import {WbTipResolver} from "@app/shared/resolvers/wb-tip-resolver.service";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {ActivatedRoute} from "@angular/router";
@@ -28,6 +28,15 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgIf, TipAdditionalQuestionnaireInviteComponent, TipInfoComponent, TipReceiverListComponent, NgClass, TipQuestionnaireAnswersComponent, WhistleblowerIdentityComponent, TipFilesWhistleblowerComponent, WidgetWbFilesComponent, TipCommentsComponent, TranslateModule, TranslatorPipe]
 })
 export class TippageComponent implements OnInit {
+  private fieldUtilities = inject(FieldUtilitiesService);
+  private wbTipResolver = inject(WbTipResolver);
+  private fieldUtilitiesService = inject(FieldUtilitiesService);
+  protected utilsService = inject(UtilsService);
+  protected appDataService = inject(AppDataService);
+  private activatedRoute = inject(ActivatedRoute);
+  private httpService = inject(HttpService);
+  protected wbTipService = inject(WbtipService);
+
   fileUploadUrl: string;
   answers = {};
   uploads: { [key: string]: any } = {};
@@ -40,9 +49,6 @@ export class TippageComponent implements OnInit {
 
   private submission: { _submission: WbTipData[] } = {_submission: []};
   protected tip: WbTipData;
-
-  constructor(private fieldUtilities: FieldUtilitiesService, private wbTipResolver: WbTipResolver, private fieldUtilitiesService: FieldUtilitiesService, protected utilsService: UtilsService, protected appDataService: AppDataService, private activatedRoute: ActivatedRoute, private httpService: HttpService, protected wbTipService: WbtipService) {
-  }
 
   ngOnInit() {
     const wpTip = this.wbTipResolver.dataModel;

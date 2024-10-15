@@ -1,4 +1,4 @@
-import {EventEmitter, Injectable, Renderer2} from "@angular/core";
+import { EventEmitter, Injectable, Renderer2, inject } from "@angular/core";
 import * as Flow from "@flowjs/flow.js";
 import {TranslateService} from "@ngx-translate/core";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -36,10 +36,20 @@ import {CryptoService} from "@app/shared/services/crypto.service";
   providedIn: "root"
 })
 export class UtilsService {
-  supportedViewTypes = ["application/pdf", "audio/mpeg", "image/gif", "image/jpeg", "image/png", "text/csv", "text/plain", "video/mp4"];
+  private authenticationService = inject(AuthenticationService);
+  private activatedRoute = inject(ActivatedRoute);
+  protected appDataService = inject(AppDataService);
+  private cryptoService = inject(CryptoService);
+  private tokenResource = inject(TokenResource);
+  private translateService = inject(TranslateService);
+  private clipboardService = inject(ClipboardService);
+  private http = inject(HttpClient);
+  private httpService = inject(HttpService);
+  private modalService = inject(NgbModal);
+  private preferenceResolver = inject(PreferenceResolver);
+  private router = inject(Router);
 
-  constructor(private authenticationService: AuthenticationService,private activatedRoute: ActivatedRoute,protected appDataService: AppDataService,private cryptoService: CryptoService, private tokenResource: TokenResource,private translateService: TranslateService, private clipboardService: ClipboardService, private http: HttpClient, private httpService: HttpService, private modalService: NgbModal, private preferenceResolver: PreferenceResolver, private router: Router) {
-  }
+  supportedViewTypes = ["application/pdf", "audio/mpeg", "image/gif", "image/jpeg", "image/png", "text/csv", "text/plain", "video/mp4"];
 
   updateNode(nodeResolverModel:nodeResolverModel) {
     this.httpService.updateNodeResource(nodeResolverModel).subscribe();

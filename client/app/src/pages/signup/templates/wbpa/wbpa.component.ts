@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
+import { Component, EventEmitter, Input, Output, inject } from "@angular/core";
 import * as Constants from "@app/shared/constants/constants";
 import {AppDataService} from "@app/app-data.service";
 import {Signup} from "@app/models/component-model/signup";
@@ -17,6 +17,8 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [FormsModule, NgClass, NgIf, DisableCcpDirective, SubdomainValidatorDirective, TosComponent, TranslateModule, TranslatorPipe]
 })
 export class WbpaComponent {
+  protected appDataService = inject(AppDataService);
+
   @Input() signup: Signup;
   @Output() complete: EventEmitter<any> = new EventEmitter<any>();
   @Output() updateSubdomain: EventEmitter<any> = new EventEmitter<any>();
@@ -24,6 +26,4 @@ export class WbpaComponent {
   protected readonly Constants = Constants;
   validated = false;
   confirmation_email: string;
-  constructor(protected appDataService: AppDataService) {
-  }
 }

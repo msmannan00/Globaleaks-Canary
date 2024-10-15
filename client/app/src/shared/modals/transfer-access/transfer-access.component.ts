@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 import {Receiver} from "@app/models/app/public-model";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import { NgSelectComponent, NgLabelTemplateDirective } from "@ng-select/ng-select";
@@ -19,12 +19,11 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     ],
 })
 export class TransferAccessComponent {
+  private activeModal = inject(NgbActiveModal);
+
   @Input() usersNames: Record<string, string> | undefined;
   @Input() selectableRecipients: Receiver[];
   receiverId: { id: number };
-
-  constructor(private activeModal: NgbActiveModal) {
-  }
 
   confirm(receiverId: { id: number }) {
     this.activeModal.close(receiverId.id);

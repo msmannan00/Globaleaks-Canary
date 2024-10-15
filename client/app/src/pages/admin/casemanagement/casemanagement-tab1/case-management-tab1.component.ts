@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -14,11 +14,13 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgIf, FormsModule, NgClass, NgFor, SubStatusManagerComponent, TranslatorPipe]
 })
 export class CaseManagementTab1Component {
+  private utilsService = inject(UtilsService);
+  protected appDataServices = inject(AppDataService);
+  private appDataService = inject(AppDataService);
+  private httpService = inject(HttpService);
+
   showAddStatus = false;
   newSubmissionsStatus: { label: string; } = {label: ""};
-
-  constructor(private utilsService: UtilsService, protected appDataServices: AppDataService, private appDataService: AppDataService, private httpService: HttpService) {
-  }
 
   toggleAddStatus() {
     this.showAddStatus = !this.showAddStatus;

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
+import { Component, Input, OnInit, inject } from "@angular/core";
 import { NgForm, FormsModule } from "@angular/forms";
 import {LanguageUtils} from "@app/pages/admin/settings/helper-methods/language-utils";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
@@ -20,15 +20,18 @@ import { TranslateModule } from "@ngx-translate/core";
     imports: [FormsModule, NgIf, NgSelectComponent, NgOptionTemplateDirective, NgFor, TranslatorPipe, FilterPipe, TranslateModule]
 })
 export class Tab3Component implements OnInit {
+  private appDataService = inject(AppDataService);
+  private translationService = inject(TranslationService);
+  private appConfigService = inject(AppConfigService);
+  private utilsService = inject(UtilsService);
+  protected nodeResolver = inject(NodeResolver);
+
   @Input() contentForm: NgForm;
 
   showLangSelect = false;
   selected = {value: []};
   languageUtils: LanguageUtils
   languagesNotEnabled: LanguagesSupported[];
-
-  constructor(private appDataService: AppDataService, private translationService: TranslationService, private appConfigService: AppConfigService, private utilsService: UtilsService, protected nodeResolver: NodeResolver) {
-  }
 
   ngOnInit(): void {
     this.updateLanguages();

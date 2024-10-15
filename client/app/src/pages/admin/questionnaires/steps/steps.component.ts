@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
+import { Component, Input, OnInit, inject } from "@angular/core";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -18,14 +18,16 @@ import { TranslateModule } from "@ngx-translate/core";
     imports: [NgIf, FormsModule, NgFor, StepsListComponent, TranslatorPipe, TranslateModule]
 })
 export class StepsComponent implements OnInit {
+  private questionnaireService = inject(QuestionnaireService);
+  protected node = inject(NodeResolver);
+  protected utilsService = inject(UtilsService);
+  private httpService = inject(HttpService);
+
   @Input() questionnaire: questionnaireResolverModel;
   showAddStep: boolean = false;
   step: Step;
   editing: boolean = false;
   new_step: { label: string } = {label: ""};
-
-  constructor(private questionnaireService: QuestionnaireService, protected node: NodeResolver, protected utilsService: UtilsService, private httpService: HttpService) {
-  }
 
   ngOnInit(): void {
     this.step = this.questionnaire.steps[0];

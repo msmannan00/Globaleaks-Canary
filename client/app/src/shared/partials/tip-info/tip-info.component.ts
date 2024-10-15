@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {WbtipService} from "@app/services/helper/wbtip.service";
 import {AppDataService} from "@app/app-data.service";
@@ -17,11 +17,14 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgIf, FormsModule, NgSwitch, NgSwitchCase, DatePipe, TranslateModule, TranslatorPipe]
 })
 export class TipInfoComponent {
+  protected authenticationService = inject(AuthenticationService);
+  protected appDataService = inject(AppDataService);
+  protected utilsService = inject(UtilsService);
+  private rTipService = inject(ReceiverTipService);
+  private httpService = inject(HttpService);
+
   @Input() tipService: ReceiverTipService | WbtipService;
   @Input() loading: boolean;
-
-  constructor(protected authenticationService: AuthenticationService, protected appDataService: AppDataService, protected utilsService: UtilsService, private rTipService: ReceiverTipService, private httpService: HttpService,) {
-  }
 
   markReportStatus(date: string) {
     const report_date = new Date(date);

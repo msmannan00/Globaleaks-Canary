@@ -1,4 +1,4 @@
-import {Component, TemplateRef, ViewChild, AfterViewInit, ChangeDetectorRef} from "@angular/core";
+import { Component, TemplateRef, ViewChild, AfterViewInit, ChangeDetectorRef, inject } from "@angular/core";
 import {Tab} from "@app/models/component-model/tab";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {NotificationTab1Component} from "@app/pages/admin/notifications/notification-tab1/notification-tab1.component";
@@ -15,15 +15,15 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [FormsModule, NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, NotificationTab1Component, NotificationTab2Component, TranslatorPipe]
 })
 export class NotificationsComponent implements AfterViewInit {
+  protected node = inject(NodeResolver);
+  private cdr = inject(ChangeDetectorRef);
+
   @ViewChild("tab1") tab1!: TemplateRef<NotificationTab1Component>;
   @ViewChild("tab2") tab2!: TemplateRef<NotificationTab2Component>;
 
   tabs: Tab[];
   nodeData: NodeResolver;
   active: string;
-
-  constructor(protected node: NodeResolver, private cdr: ChangeDetectorRef) {
-  }
 
   ngAfterViewInit(): void {
     setTimeout(() => {

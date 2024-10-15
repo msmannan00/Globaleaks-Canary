@@ -1,5 +1,5 @@
 import {HttpClient} from "@angular/common/http";
-import {Component, ElementRef, forwardRef, Input, OnInit, ViewChild} from "@angular/core";
+import { Component, ElementRef, forwardRef, Input, OnInit, ViewChild, inject } from "@angular/core";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {AppDataService} from "@app/app-data.service";
 import {WbFile} from "@app/models/app/shared-public-model";
@@ -25,6 +25,18 @@ import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
     imports: [NgSwitch, NgSwitchCase, NgIf, NgFor,forwardRef(() => TipFieldComponent), NgSwitchDefault, DatePipe, TranslateModule, TranslatorPipe, SplitPipe, OrderByPipe]
 })
 export class TipFieldAnswerEntryComponent implements OnInit {
+  protected httpService = inject(HttpService);
+  protected appDataService = inject(AppDataService);
+  protected modalService = inject(NgbModal);
+  protected utilsService = inject(UtilsService);
+  private maskService = inject(MaskService);
+  protected preferenceResolver = inject(PreferenceResolver);
+  private http = inject(HttpClient);
+  private sanitizer = inject(DomSanitizer);
+  protected authenticationService = inject(AuthenticationService);
+  private wbTipService = inject(WbtipService);
+  private rTipService = inject(ReceiverTipService);
+
   @Input() entry: any;
   @Input() field: any;
   @Input() fieldAnswers: any;
@@ -39,8 +51,6 @@ export class TipFieldAnswerEntryComponent implements OnInit {
   tipService:WbtipService|ReceiverTipService;
   filteredWbFiles: WbFile[];
   wbfile:WbFile;
-  constructor(protected httpService: HttpService, protected appDataService: AppDataService,protected modalService: NgbModal,protected utilsService: UtilsService,private maskService:MaskService,protected preferenceResolver:PreferenceResolver,private http: HttpClient, private sanitizer: DomSanitizer, protected authenticationService: AuthenticationService, private wbTipService: WbtipService,private rTipService: ReceiverTipService) {
-  }
 
   ngOnInit(): void {
     if (this.authenticationService.session.role === "whistleblower") {

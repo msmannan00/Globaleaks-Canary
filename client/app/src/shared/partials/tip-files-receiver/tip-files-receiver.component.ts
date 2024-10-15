@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
+import { Component, Input, OnInit, inject } from "@angular/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppDataService} from "@app/app-data.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
@@ -21,13 +21,19 @@ import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
     imports: [NgIf, NgFor, NgClass, DatePipe, TranslateModule, TranslatorPipe, ByteFmtPipe, OrderByPipe]
 })
 export class TipFilesReceiverComponent implements OnInit {
+  protected maskService = inject(MaskService);
+  protected preferenceResolver = inject(PreferenceResolver);
+  protected modalService = inject(NgbModal);
+  protected httpService = inject(HttpService);
+  protected authenticationService = inject(AuthenticationService);
+  protected utilsService = inject(UtilsService);
+  protected tipService = inject(ReceiverTipService);
+  protected appDataService = inject(AppDataService);
+
   @Input() fileUploadUrl: string;
   @Input() redactMode: boolean;
 
   collapsed = false;
-
-  constructor(protected maskService:MaskService,protected preferenceResolver:PreferenceResolver,protected modalService: NgbModal,protected httpService: HttpService, protected authenticationService: AuthenticationService, protected utilsService: UtilsService, protected tipService: ReceiverTipService, protected appDataService: AppDataService) {
-  }
 
   ngOnInit(): void {
   }

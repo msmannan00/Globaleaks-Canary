@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 import {ReceiversById} from "@app/models/reciever/reciever-tip-data";
 import {WbtipService} from "@app/services/helper/wbtip.service";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -15,6 +15,9 @@ import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
     imports: [NgIf, NgFor, WbFilesComponent, TranslateModule, TranslatorPipe, OrderByPipe]
 })
 export class WidgetWbFilesComponent {
+  protected wbTipService = inject(WbtipService);
+  protected utilsService = inject(UtilsService);
+
 
   @Input() index: number;
   @Input() ctx: string;
@@ -22,9 +25,6 @@ export class WidgetWbFilesComponent {
 
   collapsed = false;
   submission = {};
-
-  constructor(protected wbTipService: WbtipService, protected utilsService: UtilsService) {
-  }
 
   public toggleCollapse() {
     this.collapsed = !this.collapsed;

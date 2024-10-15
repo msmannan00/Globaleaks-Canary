@@ -1,4 +1,4 @@
-import {Component, OnInit, SimpleChanges, QueryList, ViewChild, ViewChildren} from "@angular/core";
+import { Component, OnInit, SimpleChanges, QueryList, ViewChild, ViewChildren, inject } from "@angular/core";
 import { ActivatedRoute } from '@angular/router';
 import {AppDataService} from "@app/app-data.service";
 import {WhistleblowerLoginResolver} from "@app/shared/resolvers/whistleblower-login.resolver";
@@ -36,6 +36,18 @@ import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
     imports: [NgIf, ContextSelectionComponent, FormsModule, NgClass, NgFor, ReceiverSelectionComponent, NgFormChangeDirective, StepErrorComponent, MarkdownComponent, FormComponent, RFilesUploadStatusComponent, TranslateModule, TranslatorPipe, StripHtmlPipe, OrderByPipe]
 })
 export class SubmissionComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  protected whistleblowerSubmissionService = inject(WhistleblowerSubmissionService);
+  private titleService = inject(TitleService);
+  private router = inject(Router);
+  private appConfigService = inject(AppConfigService);
+  private whistleblowerLoginResolver = inject(WhistleblowerLoginResolver);
+  protected authenticationService = inject(AuthenticationService);
+  private appDataService = inject(AppDataService);
+  private utilsService = inject(UtilsService);
+  private fieldUtilitiesService = inject(FieldUtilitiesService);
+  submissionService = inject(SubmissionService);
+
   @ViewChild("submissionForm") public submissionForm: NgForm;
   @ViewChildren("stepForm") stepForms: QueryList<NgForm>;
 
@@ -59,7 +71,7 @@ export class SubmissionComponent implements OnInit {
   hasPreviousStepValue: boolean;
   areReceiversSelectedValue: boolean;
 
-  constructor(private route:ActivatedRoute, protected whistleblowerSubmissionService:WhistleblowerSubmissionService,private titleService: TitleService, private router: Router, private appConfigService: AppConfigService, private whistleblowerLoginResolver: WhistleblowerLoginResolver, protected authenticationService: AuthenticationService, private appDataService: AppDataService, private utilsService: UtilsService, private fieldUtilitiesService: FieldUtilitiesService, public submissionService: SubmissionService) {
+  constructor() {
     this.selectable_contexts = [];
     this.receivedData = this.submissionService.getSharedData();
 

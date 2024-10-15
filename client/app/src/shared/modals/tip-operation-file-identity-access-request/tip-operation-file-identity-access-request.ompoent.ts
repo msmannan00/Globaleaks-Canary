@@ -1,5 +1,5 @@
 import {HttpClient} from "@angular/common/http";
-import {Component} from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -15,11 +15,13 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [FormsModule, TranslateModule, TranslatorPipe]
 })
 export class TipOperationFileIdentityAccessRequestComponent {
+  private modalService = inject(NgbModal);
+  private tipsService = inject(ReceiverTipService);
+  private http = inject(HttpClient);
+  private utils = inject(UtilsService);
+
   request_motivation: string;
   modal: NgbModalRef;
-
-  constructor(private modalService: NgbModal, private tipsService: ReceiverTipService, private http: HttpClient, private utils: UtilsService) {
-  }
 
   confirm() {
     this.modalService.dismissAll();

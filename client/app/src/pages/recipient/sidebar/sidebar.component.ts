@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import { NgClass, NgIf } from "@angular/common";
@@ -12,10 +12,10 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [RouterLink, RouterLinkActive, NgClass, NgIf, TranslateModule, TranslatorPipe]
 })
 export class ReceiptSidebarComponent {
-  message: string;
+  private router = inject(Router);
+  protected preferenceResolver = inject(PreferenceResolver);
 
-  constructor(private router: Router, protected preferenceResolver: PreferenceResolver) {
-  }
+  message: string;
 
   isActive(route: string): boolean {
     return this.router.isActive(route, {

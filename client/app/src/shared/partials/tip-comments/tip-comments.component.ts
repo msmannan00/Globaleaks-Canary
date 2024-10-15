@@ -1,5 +1,5 @@
 import {AppDataService} from "@app/app-data.service";
-import {ChangeDetectorRef, Component, Input, OnInit} from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnInit, inject } from "@angular/core";
 import {WbtipService} from "@app/services/helper/wbtip.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -22,6 +22,14 @@ import { FilterPipe } from "@app/shared/pipes/filter.pipe";
     imports: [NgIf, FormsModule, NgFor, NgbPagination, NgbPaginationFirst, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationLast, SlicePipe, DatePipe, TranslateModule, TranslatorPipe, OrderByPipe, FilterPipe]
 })
 export class TipCommentsComponent implements OnInit {
+  private maskService = inject(MaskService);
+  protected preferenceResolver = inject(PreferenceResolver);
+  private rTipService = inject(ReceiverTipService);
+  protected authenticationService = inject(AuthenticationService);
+  protected utilsService = inject(UtilsService);
+  private cdr = inject(ChangeDetectorRef);
+  appDataService = inject(AppDataService);
+
   @Input() tipService: ReceiverTipService | WbtipService;
   @Input() key: string;
   @Input() redactMode: boolean;
@@ -33,10 +41,6 @@ export class TipCommentsComponent implements OnInit {
   itemsPerPage = 5;
   comments: Comment[] = [];
   newComments: Comment;
-
-  constructor(private maskService:MaskService,protected preferenceResolver:PreferenceResolver,private rTipService: ReceiverTipService, protected authenticationService: AuthenticationService, protected utilsService: UtilsService, private cdr: ChangeDetectorRef, public appDataService: AppDataService) {
-
-  }
 
   ngOnInit() {
     this.comments = this.tipService.tip.comments;

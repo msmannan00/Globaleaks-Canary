@@ -1,4 +1,4 @@
-import {AfterViewChecked, Component} from "@angular/core";
+import { AfterViewChecked, Component, inject } from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {ErrorCodes} from "@app/models/app/error-code";
 import { NgIf, NgSwitch, NgSwitchCase } from "@angular/common";
@@ -12,11 +12,10 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgIf, NgSwitch, NgSwitchCase, TranslateModule, TranslatorPipe]
 })
 export class MessageConsoleComponent implements AfterViewChecked {
+  appDataService = inject(AppDataService);
+
   private timeoutId: any;
   private timeoutRunning: boolean = false;
-
-  constructor(public appDataService: AppDataService) {
-  }
 
   dismissError() {
     clearTimeout(this.timeoutId);

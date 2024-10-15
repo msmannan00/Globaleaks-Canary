@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {TipsResolver} from "@app/shared/resolvers/tips.resolver";
 import {tipsResolverModel} from "@app/models/resolvers/tips-resolver-model";
@@ -15,12 +15,13 @@ import { TranslateModule } from "@ngx-translate/core";
     imports: [NgIf, NgFor, NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast, DatePipe, TranslatorPipe, TranslateModule]
 })
 export class AuditLogTab3Component implements OnInit {
+  private tipsResolver = inject(TipsResolver);
+  protected utilsService = inject(UtilsService);
+  protected appDataService = inject(AppDataService);
+
   currentPage = 1;
   pageSize = 20;
   tips: tipsResolverModel[] = [];
-
-  constructor(private tipsResolver: TipsResolver, protected utilsService: UtilsService, protected appDataService: AppDataService) {
-  }
 
   ngOnInit() {
     this.loadAuditLogData();

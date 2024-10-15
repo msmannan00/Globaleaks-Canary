@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, inject } from "@angular/core";
 import { NgForm, FormsModule } from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AppDataService} from "@app/app-data.service";
@@ -25,6 +25,13 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgSwitch, NgSwitchCase, NgIf, ImageUploadDirective, FormsModule, PasswordStrengthValidatorDirective, NgClass, PasswordMeterComponent, NgFor, DatePipe, TranslatorPipe]
 })
 export class UserEditorComponent implements OnInit {
+  private modalService = inject(NgbModal);
+  private appDataService = inject(AppDataService);
+  private preference = inject(PreferenceResolver);
+  private authenticationService = inject(AuthenticationService);
+  private nodeResolver = inject(NodeResolver);
+  private utilsService = inject(UtilsService);
+
   @Input() user: userResolverModel;
   @Input() users: userResolverModel[];
   @Input() index: number;
@@ -40,9 +47,6 @@ export class UserEditorComponent implements OnInit {
   authenticationData: AuthenticationService;
   appServiceData: AppDataService;
   protected readonly Constants = Constants;
-
-  constructor(private modalService: NgbModal, private appDataService: AppDataService, private preference: PreferenceResolver, private authenticationService: AuthenticationService, private nodeResolver: NodeResolver, private utilsService: UtilsService) {
-  }
 
   ngOnInit(): void {
     if (this.nodeResolver.dataModel) {

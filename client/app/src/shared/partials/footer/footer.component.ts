@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import { NgIf } from "@angular/common";
 import { MarkdownComponent } from "ngx-markdown";
@@ -13,6 +13,5 @@ import { StripHtmlPipe } from "@app/shared/pipes/strip-html.pipe";
     imports: [NgIf, MarkdownComponent, TranslateModule, TranslatorPipe, StripHtmlPipe]
 })
 export class FooterComponent {
-  constructor(protected appDataService: AppDataService) {
-  }
+  protected appDataService = inject(AppDataService);
 }

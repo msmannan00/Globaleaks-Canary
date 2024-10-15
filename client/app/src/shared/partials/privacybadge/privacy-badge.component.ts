@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import { NgIf } from "@angular/common";
@@ -14,9 +14,14 @@ import { StripHtmlPipe } from "@app/shared/pipes/strip-html.pipe";
     imports: [NgIf, MarkdownComponent, TranslateModule, TranslatorPipe, StripHtmlPipe]
 })
 export class PrivacyBadgeComponent {
+  protected appDataService = inject(AppDataService);
+  protected utilsService = inject(UtilsService);
+
   public markdown: string;
 
-  constructor(protected appDataService: AppDataService, protected utilsService: UtilsService) {
+  constructor() {
+    const appDataService = this.appDataService;
+
     this.markdown = appDataService.public.node.custom_privacy_badge_text;
   }
 

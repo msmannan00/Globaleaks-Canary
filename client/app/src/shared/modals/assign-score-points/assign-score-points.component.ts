@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import { FormsModule } from "@angular/forms";
 import { NgIf } from "@angular/common";
@@ -12,13 +12,13 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [FormsModule, NgIf, TranslateModule, TranslatorPipe]
 })
 export class AssignScorePointsComponent {
+  private activeModal = inject(NgbActiveModal);
+  private modalService = inject(NgbModal);
+
   @Input() arg = {
     score_points: 0,
     score_type: 'addition'
   };
-
-  constructor(private activeModal: NgbActiveModal, private modalService: NgbModal) {
-  }
 
   confirmFunction: (data: { score_points: number, score_type: string }) => void;
 

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
+import { Component, Input, OnInit, inject } from "@angular/core";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {UsersResolver} from "@app/shared/resolvers/users.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -18,6 +18,11 @@ import { FilterPipe } from "@app/shared/pipes/filter.pipe";
     imports: [NgSelectComponent, FormsModule, NgLabelTemplateDirective, NgOptionTemplateDirective, NgIf, NgFor, TranslateModule, TranslatorPipe, FilterPipe]
 })
 export class TriggerReceiverComponent implements OnInit {
+  private utilsService = inject(UtilsService);
+  private users = inject(UsersResolver);
+  private activeModal = inject(NgbActiveModal);
+  private modalService = inject(NgbModal);
+
 
   @Input() arg: Option;
   confirmFunction: (data: Option) => void;
@@ -25,9 +30,6 @@ export class TriggerReceiverComponent implements OnInit {
   selected: { value: []; name: string };
   admin_receivers_by_id: { [userId: string]: userResolverModel } = {};
   userData: userResolverModel[] = [];
-
-  constructor(private utilsService: UtilsService, private users: UsersResolver, private activeModal: NgbActiveModal, private modalService: NgbModal) {
-  }
 
   ngOnInit(): void {
     this.selected = {value: [], name: ""};

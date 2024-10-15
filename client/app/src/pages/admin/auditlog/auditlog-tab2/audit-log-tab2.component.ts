@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import {UsersResolver} from "@app/shared/resolvers/users.resolver";
 import {userResolverModel} from "@app/models/resolvers/user-resolver-model";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -14,12 +14,12 @@ import { TranslateModule } from "@ngx-translate/core";
     imports: [NgIf, NgFor, NgClass, NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast, DatePipe, TranslatorPipe, TranslateModule]
 })
 export class AuditLogTab2Component implements OnInit{
+  private utilsService = inject(UtilsService);
+  protected usersResolver = inject(UsersResolver);
+
   currentPage = 1;
   pageSize = 20;
   users: userResolverModel[] = [];
-
-  constructor(private utilsService: UtilsService, protected usersResolver: UsersResolver) {
-  }
 
   ngOnInit() {
     this.loadAuditLogData();

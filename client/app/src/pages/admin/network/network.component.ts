@@ -1,4 +1,4 @@
-import {Component, TemplateRef, ViewChild, AfterViewInit, ChangeDetectorRef} from "@angular/core";
+import { Component, TemplateRef, ViewChild, AfterViewInit, ChangeDetectorRef, inject } from "@angular/core";
 import {Tab} from "@app/models/component-model/tab";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {HttpsComponent} from "@app/pages/admin/network/https/https.component";
@@ -16,6 +16,9 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, HttpsComponent, TorComponent, AccessControlComponent, UrlRedirectsComponent, TranslatorPipe]
 })
 export class NetworkComponent implements AfterViewInit {
+  node = inject(NodeResolver);
+  private cdr = inject(ChangeDetectorRef);
+
   @ViewChild("tab1") tab1!: TemplateRef<HttpsComponent>;
   @ViewChild("tab2") tab2!: TemplateRef<TorComponent>;
   @ViewChild("tab3") tab3!: TemplateRef<AccessControlComponent>;
@@ -24,12 +27,6 @@ export class NetworkComponent implements AfterViewInit {
   tabs: Tab[];
   nodeData: NodeResolver;
   active: string;
-
-  constructor(
-    public node: NodeResolver,
-    private cdr: ChangeDetectorRef
-  ) {
-  }
 
   ngAfterViewInit(): void {
     setTimeout(() => {

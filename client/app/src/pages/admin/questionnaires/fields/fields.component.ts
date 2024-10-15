@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, inject } from "@angular/core";
 import { NgForm, FormsModule } from "@angular/forms";
 import { NgbModal, NgbInputDatepicker } from "@ng-bootstrap/ng-bootstrap";
 import {AddOptionHintComponent} from "@app/shared/modals/add-option-hint/add-option-hint.component";
@@ -31,6 +31,15 @@ import { TranslateModule } from "@ngx-translate/core";
     imports: [NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, FormsModule, NgbInputDatepicker, NgFor, NgClass, AddFieldComponent, AddFieldFromTemplateComponent, DatePipe, TranslatorPipe, OrderByPipe, TranslateModule]
 })
 export class FieldsComponent implements OnInit {
+  private authenticationService = inject(AuthenticationService);
+  private questionnaireService = inject(QuestionnaireService);
+  private modalService = inject(NgbModal);
+  nodeResolver = inject(NodeResolver);
+  private httpService = inject(HttpService);
+  private utilsService = inject(UtilsService);
+  private fieldTemplates = inject(FieldTemplatesResolver);
+  private fieldUtilities = inject(FieldUtilitiesService);
+
   @Input() editField: NgForm;
   @Input() field: Children | Step | Field;
   @Input() fields: Children[] | Field[] | Step[];
@@ -55,9 +64,6 @@ export class FieldsComponent implements OnInit {
     sufficient: false,
   };
   instance: string;
-
-  constructor(private authenticationService: AuthenticationService,private questionnaireService: QuestionnaireService, private modalService: NgbModal, public nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService, private fieldTemplates: FieldTemplatesResolver, private fieldUtilities: FieldUtilitiesService,) {
-  }
 
   ngOnInit(): void {
     if (Array.isArray(this.fieldTemplates.dataModel)) {

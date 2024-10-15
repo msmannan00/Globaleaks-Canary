@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnInit, inject } from "@angular/core";
 import {ParsedFields} from "@app/models/component-model/parsedFields";
 import {fieldtemplatesResolverModel} from "@app/models/resolvers/field-template-model";
 import {Step, questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
@@ -20,14 +20,15 @@ import { TranslateModule } from "@ngx-translate/core";
     imports: [NgIf, AddFieldComponent, AddFieldFromTemplateComponent, NgFor, FormsModule, FieldsComponent, TranslatorPipe, OrderByPipe, TranslateModule]
 })
 export class StepComponent implements OnInit {
+  private cdr = inject(ChangeDetectorRef);
+  private httpService = inject(HttpService);
+  protected fieldTemplates = inject(FieldTemplatesResolver);
+
   @Input() step: Step;
   @Input() parsedFields: ParsedFields;
   showAddQuestion: boolean = false;
   showAddQuestionFromTemplate: boolean = false;
   fieldTemplatesData: fieldtemplatesResolverModel[] = [];
-
-  constructor(private cdr: ChangeDetectorRef, private httpService: HttpService, protected fieldTemplates: FieldTemplatesResolver) {
-  }
 
   ngOnInit(): void {
     if (Array.isArray(this.fieldTemplates.dataModel)) {

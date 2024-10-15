@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DisclaimerComponent} from "@app/shared/modals/disclaimer/disclaimer.component";
@@ -18,9 +18,10 @@ import { StripHtmlPipe } from "@app/shared/pipes/strip-html.pipe";
     imports: [NgIf, MarkdownComponent, ReceiptComponent, TranslateModule, TranslatorPipe, StripHtmlPipe]
 })
 export class HomepageComponent {
+  protected appConfigService = inject(AppConfigService);
+  protected appDataService = inject(AppDataService);
+  private modalService = inject(NgbModal);
 
-  constructor(protected appConfigService: AppConfigService, protected appDataService: AppDataService, private modalService: NgbModal) {
-  }
 
   openSubmission() {
     if (this.appDataService.public.node.disclaimer_text) {

@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
@@ -10,8 +10,8 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [TranslateModule, TranslatorPipe]
 })
 export class EnableEncryptionComponent {
-  constructor(protected activeModal: NgbActiveModal) {
-  }
+  protected activeModal = inject(NgbActiveModal);
+
 
   confirm() {
     this.activeModal.close();

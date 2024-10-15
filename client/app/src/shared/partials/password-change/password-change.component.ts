@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -20,6 +20,15 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [FormsModule, NgIf, NgClass, PasswordStrengthValidatorDirective, PasswordMeterComponent, TranslateModule, TranslatorPipe]
 })
 export class PasswordChangeComponent implements OnInit {
+  rootDataService = inject(AppDataService);
+  private authenticationService = inject(AuthenticationService);
+  private router = inject(Router);
+  httpService = inject(HttpService);
+  appDataService = inject(AppDataService);
+  authentication = inject(AuthenticationService);
+  preferencesService = inject(PreferenceResolver);
+  utilsService = inject(UtilsService);
+
   passwordStrengthScore: number = 0;
 
   changePasswordArgs = {
@@ -55,10 +64,6 @@ export class PasswordChangeComponent implements OnInit {
 
   onPasswordStrengthChange(score: number) {
     this.passwordStrengthScore = score;
-  }
-
-  public constructor(public rootDataService: AppDataService, private authenticationService: AuthenticationService, private router: Router, public httpService: HttpService, public appDataService: AppDataService, public authentication: AuthenticationService, public preferencesService: PreferenceResolver, public utilsService: UtilsService) {
-
   }
 
 }

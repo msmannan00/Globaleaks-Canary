@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import {JobResolver} from "@app/shared/resolvers/job.resolver";
 import {jobResolverModel} from "@app/models/resolvers/job-resolver-model";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -13,12 +13,12 @@ import { TranslateModule } from "@ngx-translate/core";
     imports: [NgIf, NgFor, DatePipe, TranslatorPipe, TranslateModule]
 })
 export class AuditLogTab4Component implements OnInit{
+  private utilsService = inject(UtilsService);
+  private jobResolver = inject(JobResolver);
+
   currentPage = 1;
   pageSize = 20;
   jobs: jobResolverModel[] = [];
-
-  constructor(private utilsService: UtilsService, private jobResolver: JobResolver) {
-  }
 
   ngOnInit() {
     this.loadAuditLogData();

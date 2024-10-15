@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
@@ -10,8 +10,8 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [RouterLink, RouterLinkActive, TranslateModule, TranslatorPipe]
 })
 export class AnalystSidebarComponent {
-  constructor(private router: Router) {
-  }
+  private router = inject(Router);
+
 
   isActive(route: string): boolean {
     return this.router.isActive(route, {

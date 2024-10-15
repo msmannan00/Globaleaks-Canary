@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {WbtipService} from "@app/services/helper/wbtip.service";
 import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
@@ -13,11 +13,10 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgIf, NgFor, TranslateModule, TranslatorPipe]
 })
 export class TipReceiverListComponent {
+  protected utilsService = inject(UtilsService);
+
   collapsed = false;
   @Input() tipService: ReceiverTipService | WbtipService;
-
-  constructor(protected utilsService: UtilsService) {
-  }
 
   public toggleCollapse() {
     this.collapsed = !this.collapsed;

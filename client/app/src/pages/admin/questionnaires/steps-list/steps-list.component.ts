@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
+import { Component, Input, OnInit, inject } from "@angular/core";
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -23,6 +23,13 @@ import { TranslateModule } from "@ngx-translate/core";
     imports: [NgIf, FormsModule, NgFor, StepComponent, TranslatorPipe, TranslateModule]
 })
 export class StepsListComponent implements OnInit {
+  private utilsService = inject(UtilsService);
+  private questionnaireService = inject(QuestionnaireService);
+  private modalService = inject(NgbModal);
+  private fieldUtilities = inject(FieldUtilitiesService);
+  protected nodeResolver = inject(NodeResolver);
+  private httpService = inject(HttpService);
+
   @Input() step: Step;
   @Input() steps: Step[];
   @Input() questionnaire: questionnaireResolverModel;
@@ -35,9 +42,6 @@ export class StepsListComponent implements OnInit {
     option: "",
     sufficient: true,
   };
-
-  constructor(private utilsService: UtilsService, private questionnaireService: QuestionnaireService, private modalService: NgbModal, private fieldUtilities: FieldUtilitiesService, protected nodeResolver: NodeResolver, private httpService: HttpService) {
-  }
 
   ngOnInit(): void {
     this.parsedFields = this.fieldUtilities.parseQuestionnaire(this.questionnaire, {

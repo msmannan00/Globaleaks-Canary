@@ -1,5 +1,5 @@
 import {HttpClient} from "@angular/common/http";
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, inject } from "@angular/core";
 import { NgForm, FormsModule } from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
@@ -25,6 +25,13 @@ import { FilterPipe } from "@app/shared/pipes/filter.pipe";
     imports: [NgIf, ImageUploadDirective, FormsModule, NgFor, NgSelectComponent, NgOptionTemplateDirective, NgClass, TranslatorPipe, FilterPipe]
 })
 export class ContextEditorComponent implements OnInit {
+  private http = inject(HttpClient);
+  private modalService = inject(NgbModal);
+  protected nodeResolver = inject(NodeResolver);
+  private usersResolver = inject(UsersResolver);
+  private questionnairesResolver = inject(QuestionnairesResolver);
+  private utilsService = inject(UtilsService);
+
   @Input() contextsData: contextResolverModel[];
   @Input() contextResolver: contextResolverModel;
   @Input() index: number;
@@ -38,9 +45,6 @@ export class ContextEditorComponent implements OnInit {
   nodeData: nodeResolverModel;
   selected = {value: []};
   adminReceiversById: { [userId: string]: userResolverModel } = {};
-
-  constructor(private http: HttpClient, private modalService: NgbModal, protected nodeResolver: NodeResolver, private usersResolver: UsersResolver, private questionnairesResolver: QuestionnairesResolver, private utilsService: UtilsService) {
-  }
 
   ngOnInit(): void {
     this.questionnairesData = this.questionnairesResolver.dataModel;

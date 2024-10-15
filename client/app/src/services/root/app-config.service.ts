@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppDataService} from "@app/app-data.service";
@@ -14,10 +14,21 @@ import {CustomFileLoaderServiceService} from "@app/services/helper/custom-file-l
   providedIn: "root"
 })
 export class AppConfigService {
+  private customFileLoaderServiceService = inject(CustomFileLoaderServiceService);
+  private titleService = inject(TitleService);
+  authenticationService = inject(AuthenticationService);
+  private translationService = inject(TranslationService);
+  private utilsService = inject(UtilsService);
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+  private httpService = inject(HttpService);
+  private appDataService = inject(AppDataService);
+  private fieldUtilitiesService = inject(FieldUtilitiesService);
+
   public sidebar: string = "";
   private firstLoad = true;
 
-  constructor(private customFileLoaderServiceService: CustomFileLoaderServiceService, private titleService: TitleService, public authenticationService: AuthenticationService, private translationService: TranslationService, private utilsService: UtilsService, private router: Router, private activatedRoute: ActivatedRoute, private httpService: HttpService, private appDataService: AppDataService, private fieldUtilitiesService: FieldUtilitiesService) {
+  constructor() {
     this.init();
   }
 

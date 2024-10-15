@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
+import { Component, EventEmitter, Input, Output, inject } from "@angular/core";
 import {SubmissionService} from "@app/services/helper/submission.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import { NgIf, NgFor, NgClass } from "@angular/common";
@@ -15,10 +15,10 @@ import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
     imports: [NgIf, NgFor, NgClass, ReceiverCardComponent, TranslateModule, TranslatorPipe, FilterPipe, OrderByPipe]
 })
 export class ReceiverSelectionComponent {
+  protected utilsService = inject(UtilsService);
+
   @Input() show_steps_navigation_bar: boolean;
   @Input() submission: SubmissionService;
   @Input() receiversOrderPredicate: string;
   @Output() switchSelection: EventEmitter<any> = new EventEmitter();
-
-  constructor(protected utilsService: UtilsService) {}
 }

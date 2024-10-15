@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
+import { Component, EventEmitter, Input, Output, inject } from "@angular/core";
 import {Answers} from "@app/models/reciever/reciever-tip-data";
 import {WbtipService} from "@app/services/helper/wbtip.service";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -18,6 +18,9 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgIf, NgFor, TipFieldComponent, FormsModule, NgFormChangeDirective, WhistleblowerIdentityFieldComponent, RFilesUploadStatusComponent, TranslateModule, TranslatorPipe]
 })
 export class WhistleblowerIdentityComponent {
+  protected wbTipService = inject(WbtipService);
+  protected utilsService = inject(UtilsService);
+
   @Input() field: any;
   @Input() step: any;
   @Input() answers: Answers;
@@ -33,7 +36,7 @@ export class WhistleblowerIdentityComponent {
   protected readonly JSON = JSON;
   identity_provided: boolean = true;
 
-  constructor(protected wbTipService: WbtipService, protected utilsService: UtilsService) {
+  constructor() {
     this.collapsed = this.wbTipService.tip.data.whistleblower_identity_provided;
   }
 

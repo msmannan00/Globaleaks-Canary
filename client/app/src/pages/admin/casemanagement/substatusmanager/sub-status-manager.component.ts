@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -18,16 +18,17 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [FormsModule, NgIf, SubStatusComponent, TranslatorPipe]
 })
 export class SubStatusManagerComponent {
+  private appDataServices = inject(AppDataService);
+  private httpService = inject(HttpService);
+  private modalService = inject(NgbModal);
+  private utilsService = inject(UtilsService);
+
   editing = false;
   @Input() submissionsStatus: Status;
   @Input() submissionStatuses: Status[];
   @Input() index: number;
   @Input() first: boolean;
   @Input() last: boolean;
-
-  constructor(private appDataServices: AppDataService, private httpService: HttpService, private modalService: NgbModal, private utilsService: UtilsService) {
-
-  }
 
   isSystemDefined(state: Status): boolean {
     return ["new", "opened", "closed"].indexOf(state.id) !== -1;

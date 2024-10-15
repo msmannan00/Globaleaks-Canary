@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {TlsConfig} from "@app/models/component-model/tls-confiq";
 import {Constants} from "@app/shared/constants/constants";
@@ -19,14 +19,16 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [FormsModule, NgClass, NgIf, NgSwitch, HttpsStatusComponent, NgSwitchCase, HttpsSetupComponent, NgSwitchDefault, HttpsFilesComponent, TranslatorPipe]
 })
 export class HttpsComponent implements OnInit {
+  protected nodeResolver = inject(NodeResolver);
+  private httpService = inject(HttpService);
+  private utilsService = inject(UtilsService);
+  protected appDataService = inject(AppDataService);
+
   protected readonly Constants = Constants;
   state = 0;
   menuState = "setup";
   tlsConfig: TlsConfig;
   hostName: string="";
-
-  constructor(protected nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService,protected appDataService:AppDataService) {
-  }
 
   ngOnInit() {
     this.initFunction();

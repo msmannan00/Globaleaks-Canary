@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import {NewUser} from "@app/models/admin/new-user";
 import {tenantResolverModel} from "@app/models/resolvers/tenant-resolver-model";
 import {userResolverModel} from "@app/models/resolvers/user-resolver-model";
@@ -21,6 +21,12 @@ import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
     imports: [NgIf, FormsModule, NgClass, NgFor, UserEditorComponent, TranslatorPipe, OrderByPipe]
 })
 export class UsersTab1Component implements OnInit {
+  private httpService = inject(HttpService);
+  protected nodeResolver = inject(NodeResolver);
+  private usersResolver = inject(UsersResolver);
+  private tenantsResolver = inject(TenantsResolver);
+  private utilsService = inject(UtilsService);
+
   showAddUser = false;
   tenantData: tenantResolverModel;
   usersData: userResolverModel[];
@@ -32,9 +38,6 @@ export class UsersTab1Component implements OnInit {
   };
   editing = false;
   protected readonly Constants = Constants;
-
-  constructor(private httpService: HttpService, protected nodeResolver: NodeResolver, private usersResolver: UsersResolver, private tenantsResolver: TenantsResolver, private utilsService: UtilsService) {
-  }
 
   ngOnInit(): void {
     if (this.usersResolver.dataModel) {

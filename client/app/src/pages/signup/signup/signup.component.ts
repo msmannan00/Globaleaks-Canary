@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {AppConfigService} from "@app/services/root/app-config.service";
@@ -16,6 +16,10 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgIf, NgSwitch, NgSwitchCase, SignupdefaultComponent, WbpaComponent, TranslateModule, TranslatorPipe]
 })
 export class SignupComponent implements OnInit {
+  protected appDataService = inject(AppDataService);
+  private httpService = inject(HttpService);
+  private appConfig = inject(AppConfigService);
+
   hostname = "";
   completed = false;
   step = 1;
@@ -34,9 +38,6 @@ export class SignupComponent implements OnInit {
     "tos1": false,
     "tos2": false
   };
-
-  constructor(protected appDataService: AppDataService, private httpService: HttpService, private appConfig: AppConfigService) {
-  }
 
   ngOnInit() {
     this.appConfig.routeChangeListener();

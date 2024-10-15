@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, inject } from "@angular/core";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {NewField} from "@app/models/admin/new-field";
@@ -17,6 +17,10 @@ import { TranslateModule } from "@ngx-translate/core";
     imports: [FormsModule, NgFor, NgIf, TranslatorPipe, TranslateModule]
 })
 export class AddFieldFromTemplateComponent implements OnInit {
+  private questionnaireService = inject(QuestionnaireService);
+  private httpService = inject(HttpService);
+  private utilsService = inject(UtilsService);
+
   @Input() fieldTemplatesData: fieldtemplatesResolverModel[];
   @Input() step: Step;
   @Input() type: string;
@@ -24,9 +28,6 @@ export class AddFieldFromTemplateComponent implements OnInit {
 
   fields: Step[] | Field[];
   new_field: { template_id: string } = {template_id: ""};
-
-  constructor(private questionnaireService: QuestionnaireService, private httpService: HttpService, private utilsService: UtilsService) {
-  }
 
   ngOnInit(): void {
     if (this.step) {

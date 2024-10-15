@@ -1,5 +1,5 @@
 import {HttpClient} from "@angular/common/http";
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from "@angular/core";
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, inject } from "@angular/core";
 import {FieldTemplatesResolver} from "@app/shared/resolvers/field-templates-resolver.service";
 import {QuestionnairesResolver} from "@app/shared/resolvers/questionnaires.resolver";
 import {HttpService} from "@app/shared/services/http.service";
@@ -23,6 +23,13 @@ import { TranslateModule } from "@ngx-translate/core";
     imports: [NgIf, AddFieldComponent, NgFor, FormsModule, FieldsComponent, TranslatorPipe, OrderByPipe, TranslateModule]
 })
 export class QuestionsComponent implements OnInit, OnDestroy {
+  private questionnaireService = inject(QuestionnaireService);
+  private httpClient = inject(HttpClient);
+  private httpService = inject(HttpService);
+  private utilsService = inject(UtilsService);
+  private fieldTemplates = inject(FieldTemplatesResolver);
+  private questionnairesResolver = inject(QuestionnairesResolver);
+
   showAddQuestion: boolean = false;
   fields: fieldtemplatesResolverModel[];
   questionnairesData: questionnaireResolverModel[] = [];
@@ -30,9 +37,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   @ViewChild('uploadInput') uploadInput: ElementRef<HTMLInputElement>;
 
   private destroy$ = new Subject<void>();
-
-  constructor(private questionnaireService: QuestionnaireService, private httpClient: HttpClient, private httpService: HttpService, private utilsService: UtilsService, private fieldTemplates: FieldTemplatesResolver, private questionnairesResolver: QuestionnairesResolver) {
-  }
 
   ngOnInit(): void {
     this.questionnaireService.sharedData = "template";

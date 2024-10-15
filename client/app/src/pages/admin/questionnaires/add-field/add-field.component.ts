@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, inject } from "@angular/core";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {NewField} from "@app/models/admin/new-field";
@@ -18,14 +18,15 @@ import { TranslateModule } from "@ngx-translate/core";
     imports: [FormsModule, NgIf, TranslatorPipe, TranslateModule]
 })
 export class AddFieldComponent implements OnInit {
+  private questionnaireService = inject(QuestionnaireService);
+  private httpService = inject(HttpService);
+  private utilsService = inject(UtilsService);
+
   @Output() dataToParent = new EventEmitter<string>();
   @Input() step: Step;
   @Input() type: string;
   new_field: { label: string, type: string } = {label: "", type: ""};
   fields: Step[] | Field[];
-
-  constructor(private questionnaireService: QuestionnaireService, private httpService: HttpService, private utilsService: UtilsService) {
-  }
 
   ngOnInit(): void {
     if (this.step) {

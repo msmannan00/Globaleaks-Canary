@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {LoginDataRef} from "@app/pages/auth/login/model/login-model";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -18,12 +18,14 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [FormsModule, NgIf, SimpleLoginComponent, DefaultLoginComponent, TranslateModule, TranslatorPipe]
 })
 export class LoginComponent implements OnInit {
+  private authentication = inject(AuthenticationService);
+  router = inject(Router);
+  private route = inject(ActivatedRoute);
+  protected appDataService = inject(AppDataService);
+
 
   protected readonly location = location;
   loginData = new LoginDataRef();
-
-  constructor(private authentication: AuthenticationService, public router: Router, private route: ActivatedRoute, protected appDataService: AppDataService) {
-  }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {

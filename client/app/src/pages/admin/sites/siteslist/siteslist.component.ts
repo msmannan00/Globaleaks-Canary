@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -19,14 +19,17 @@ import { TranslateModule } from "@ngx-translate/core";
     imports: [NgIf, FormsModule, DatePipe, TranslatorPipe, TranslateModule]
 })
 export class SiteslistComponent {
+  protected nodeResolver = inject(NodeResolver);
+  protected appDataService = inject(AppDataService);
+  private modalService = inject(NgbModal);
+  private httpService = inject(HttpService);
+  private utilsService = inject(UtilsService);
+
   @Input() editTenant: NgForm;
   @Input() tenant: tenantResolverModel;
   @Input() tenants: tenantResolverModel[];
   @Input() index: number;
   editing = false;
-
-  constructor(protected nodeResolver: NodeResolver, protected appDataService: AppDataService, private modalService: NgbModal, private httpService: HttpService, private utilsService: UtilsService) {
-  }
 
   toggleActivation(event: Event): void {
     event.stopPropagation();

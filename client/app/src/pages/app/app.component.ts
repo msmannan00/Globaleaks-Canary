@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Inject, OnInit, Renderer2} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, Renderer2, inject } from "@angular/core";
 import {AppConfigService} from "@app/services/root/app-config.service";
 import {AppDataService} from "@app/app-data.service";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -37,13 +37,25 @@ import { ReceiptSidebarComponent } from "../recipient/sidebar/sidebar.component"
     imports: [NgIf, NgClass, HeaderComponent,PrivacyBadgeComponent,AdminSidebarComponent,AnalystSidebarComponent,MessageConsoleComponent,DemoComponent,OperationComponent,CustodianSidebarComponent,ReceiptSidebarComponent, FooterComponent, NgbCollapse, RouterOutlet, TranslateModule, TranslatorPipe]
 })
 export class AppComponent implements AfterViewInit, OnInit {
+  private document = inject<Document>(DOCUMENT);
+  private renderer = inject(Renderer2);
+  protected browserCheckService = inject(BrowserCheckService);
+  private changeDetectorRef = inject(ChangeDetectorRef);
+  private router = inject(Router);
+  protected translationService = inject(TranslationService);
+  protected translate = inject(TranslateService);
+  protected appConfig = inject(AppConfigService);
+  protected appDataService = inject(AppDataService);
+  protected utilsService = inject(UtilsService);
+  protected authenticationService = inject(AuthenticationService);
+
   showSidebar: boolean = true;
   isNavCollapsed: boolean = true;
   showLoadingPanel = false;
   supportedBrowser = true;
   loading = false;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private renderer: Renderer2, protected browserCheckService: BrowserCheckService, private changeDetectorRef: ChangeDetectorRef, private router: Router, protected translationService: TranslationService, protected translate: TranslateService, protected appConfig: AppConfigService, protected appDataService: AppDataService, protected utilsService: UtilsService, protected authenticationService: AuthenticationService) {
+  constructor() {
     this.watchLanguage();
   }
 

@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import {networkResolverModel} from "@app/models/resolvers/network-resolver-model";
 import {NetworkResolver} from "@app/shared/resolvers/network.resolver";
 import {HttpService} from "@app/shared/services/http.service";
@@ -14,10 +14,11 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [FormsModule, NgIf, TranslatorPipe]
 })
 export class AccessControlComponent implements OnInit {
-  networkData: networkResolverModel;
+  private networkResolver = inject(NetworkResolver);
+  private httpService = inject(HttpService);
+  private utilsService = inject(UtilsService);
 
-  constructor(private networkResolver: NetworkResolver, private httpService: HttpService, private utilsService: UtilsService) {
-  }
+  networkData: networkResolverModel;
 
   ngOnInit(): void {
     this.networkData = this.networkResolver.dataModel;

@@ -1,4 +1,4 @@
-import {Component, TemplateRef, ViewChild, OnInit, AfterViewInit, ChangeDetectorRef} from "@angular/core";
+import { Component, TemplateRef, ViewChild, OnInit, AfterViewInit, ChangeDetectorRef, inject } from "@angular/core";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {Tab} from "@app/models/component-model/tab";
@@ -17,15 +17,16 @@ import { TranslateModule } from "@ngx-translate/core";
     imports: [FormsModule, NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, SitesTab1Component, SitesTab2Component, TranslatorPipe, TranslateModule]
 })
 export class SitesComponent implements OnInit, AfterViewInit {
+  node = inject(NodeResolver);
+  authenticationService = inject(AuthenticationService);
+  private cdr = inject(ChangeDetectorRef);
+
   @ViewChild("tab1") tab1!: TemplateRef<SitesTab1Component>;
   @ViewChild("tab2") tab2!: TemplateRef<SitesTab2Component>;
 
   tabs: Tab[];
   nodeData: NodeResolver;
   active: string;
-
-  constructor(public node: NodeResolver, public authenticationService: AuthenticationService, private cdr: ChangeDetectorRef) {
-  }
 
   ngOnInit() {
   }

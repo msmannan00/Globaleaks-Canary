@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import { ControlContainer, NgForm, FormsModule } from "@angular/forms";
 import {Signup} from "@app/models/component-model/signup";
@@ -14,9 +14,8 @@ import { StripHtmlPipe } from "@app/shared/pipes/strip-html.pipe";
     imports: [NgIf, FormsModule, MarkdownComponent, StripHtmlPipe]
 })
 export class TosComponent {
+  protected appDataService = inject(AppDataService);
+
   @Input() signup: Signup;
   @Input() signupform: NgForm;
-
-  constructor(protected appDataService: AppDataService) {
-  }
 }

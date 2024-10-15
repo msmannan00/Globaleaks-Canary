@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {WbtipService} from "@app/services/helper/wbtip.service";
 import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
@@ -15,13 +15,12 @@ import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
     imports: [NgIf, NgFor, TipFieldComponent, TranslateModule, TranslatorPipe, OrderByPipe]
 })
 export class TipQuestionnaireAnswersComponent {
+  protected utilsService = inject(UtilsService);
+
   @Input() tipService: ReceiverTipService | WbtipService;
   @Input() redactOperationTitle: string;
   @Input() redactMode: boolean;
   collapsed = false;
-
-  constructor(protected utilsService: UtilsService) {
-  }
 
   public toggleCollapse() {
     this.collapsed = !this.collapsed;

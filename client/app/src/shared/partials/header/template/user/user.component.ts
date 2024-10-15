@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component} from "@angular/core";
+import { ChangeDetectorRef, Component, inject } from "@angular/core";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {AppConfigService} from "@app/services/root/app-config.service";
@@ -22,9 +22,20 @@ import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
     imports: [NgIf, NgClass, NgSelectComponent, FormsModule, NgFor, NgOptionComponent, ReceiptComponent, TranslateModule, TranslatorPipe, OrderByPipe]
 })
 export class UserComponent {
+  protected activatedRoute = inject(ActivatedRoute);
+  protected httpService = inject(HttpService);
+  protected appConfigService = inject(AppConfigService);
+  private cdr = inject(ChangeDetectorRef);
+  protected authentication = inject(AuthenticationService);
+  protected preferences = inject(PreferenceResolver);
+  protected utils = inject(UtilsService);
+  protected appDataService = inject(AppDataService);
+  protected translationService = inject(TranslationService);
+  private router = inject(Router);
+
   private lastLang: string | null = null;
 
-  constructor(protected activatedRoute: ActivatedRoute, protected httpService: HttpService, protected appConfigService: AppConfigService, private cdr: ChangeDetectorRef, protected authentication: AuthenticationService, protected preferences: PreferenceResolver, protected utils: UtilsService, protected appDataService: AppDataService, protected translationService: TranslationService, private router: Router) {
+  constructor() {
     this.onQueryParameterChangeListener();
   }
 

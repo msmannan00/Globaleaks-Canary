@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from "@angular/core";
+import { Component, ElementRef, Input, OnInit, ViewChild, inject } from "@angular/core";
 import {NgForm} from "@angular/forms";
 import * as Flow from "@flowjs/flow.js";
 import type {FlowFile} from "@flowjs/flow.js";
@@ -24,6 +24,12 @@ import { TranslateModule } from "@ngx-translate/core";
     imports: [NgIf, NgClass, NgFor, AdminFileComponent, SwitchComponent, TranslatorPipe, OrderByPipe, TranslateModule]
 })
 export class Tab2Component implements OnInit {
+  private appConfigService = inject(AppConfigService);
+  private preferenceResolver = inject(PreferenceResolver);
+  private utilsService = inject(UtilsService);
+  private nodeResolver = inject(NodeResolver);
+  private authenticationService = inject(AuthenticationService);
+
   @Input() contentForm: NgForm;
   @ViewChild("flowAdvanced", {static: true}) flowAdvanced: FlowDirective;
   @ViewChild("uploader") uploaderInput: ElementRef;
@@ -54,9 +60,6 @@ export class Tab2Component implements OnInit {
       "size": "10000000"
     }
   ];
-
-  constructor(private appConfigService: AppConfigService, private preferenceResolver: PreferenceResolver, private utilsService: UtilsService, private nodeResolver: NodeResolver, private authenticationService: AuthenticationService) {
-  }
 
   ngOnInit(): void {
     this.preferenceData = this.preferenceResolver.dataModel;

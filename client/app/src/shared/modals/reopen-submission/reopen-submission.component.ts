@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import { FormsModule } from "@angular/forms";
 import { NgClass, NgIf } from "@angular/common";
@@ -18,9 +18,10 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     ],
 })
 export class ReopenSubmissionComponent {
+  private modalService = inject(NgbModal);
+  private activeModal = inject(NgbActiveModal);
+
   arg:{ motivation: string}={motivation: ""};
-  constructor(private modalService: NgbModal, private activeModal: NgbActiveModal) {
-  }
  
   confirmFunction: (motivation: string) => void;
   

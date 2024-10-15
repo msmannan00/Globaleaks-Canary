@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild, ElementRef, ChangeDetectorRef, EventEmitter, Output} from "@angular/core";
+import { Component, Input, ViewChild, ElementRef, ChangeDetectorRef, EventEmitter, Output, inject } from "@angular/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppDataService} from "@app/app-data.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
@@ -21,6 +21,11 @@ import { FilterPipe } from "@app/shared/pipes/filter.pipe";
     imports: [NgIf, NgFor, WbFilesComponent, FormsModule, NgClass, NgxFlowModule, TranslateModule, TranslatorPipe, OrderByPipe, FilterPipe]
 })
 export class TipUploadWbFileComponent {
+  private cdr = inject(ChangeDetectorRef);
+  private authenticationService = inject(AuthenticationService);
+  protected utilsService = inject(UtilsService);
+  protected appDataService = inject(AppDataService);
+
   @ViewChild('uploader') uploaderInput: ElementRef<HTMLInputElement>;
   @Input() tip: RecieverTipData;
   @Input() key: string;
@@ -30,10 +35,6 @@ export class TipUploadWbFileComponent {
   fileInput: string = "fileinput";
   showError: boolean = false;
   errorFile: FlowFile | null;
-
-  constructor(private cdr: ChangeDetectorRef, private authenticationService: AuthenticationService, protected utilsService: UtilsService, protected appDataService: AppDataService) {
-
-  }
 
   onFileSelected(files: FileList | null) {
     if (files && files.length > 0) {

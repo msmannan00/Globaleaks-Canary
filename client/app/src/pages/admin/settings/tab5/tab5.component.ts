@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
+import { Component, Input, OnInit, inject } from "@angular/core";
 import { NgForm, FormsModule } from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Constants} from "@app/shared/constants/constants";
@@ -23,14 +23,19 @@ import { TranslateModule } from "@ngx-translate/core";
     imports: [FormsModule, NgIf, NgFor, NgClass, TranslatorPipe, TranslateModule]
 })
 export class Tab5Component implements OnInit {
+  private authenticationService = inject(AuthenticationService);
+  private modalService = inject(NgbModal);
+  private appConfigService = inject(AppConfigService);
+  private utilsService = inject(UtilsService);
+  protected nodeResolver = inject(NodeResolver);
+  protected preferenceResolver = inject(PreferenceResolver);
+  private usersResolver = inject(UsersResolver);
+  private questionnairesResolver = inject(QuestionnairesResolver);
+
   @Input() contentForm: NgForm;
   userData: userResolverModel[];
   questionnaireData: questionnaireResolverModel[];
   routeReload = false;
-
-  constructor(private authenticationService: AuthenticationService, private modalService: NgbModal, private appConfigService: AppConfigService, private utilsService: UtilsService, protected nodeResolver: NodeResolver, protected preferenceResolver: PreferenceResolver, private usersResolver: UsersResolver, private questionnairesResolver: QuestionnairesResolver) {
-
-  }
 
   protected readonly Constants = Constants;
 

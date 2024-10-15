@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 import { NgForm, FormsModule } from "@angular/forms";
 import {notificationResolverModel} from "@app/models/resolvers/notification-resolver-model";
 import {Constants} from "@app/shared/constants/constants";
@@ -16,11 +16,12 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgIf, FormsModule, TranslatorPipe]
 })
 export class NotificationTab1Component {
+  protected nodeResolver = inject(NodeResolver);
+  protected notificationResolver = inject(NotificationsResolver);
+  private utilsService = inject(UtilsService);
+
   @Input() notificationForm: NgForm;
   protected readonly Constants = Constants;
-
-  constructor(protected nodeResolver: NodeResolver, protected notificationResolver: NotificationsResolver, private utilsService: UtilsService) {
-  }
 
   updateNotification(notification: notificationResolverModel) {
     this.utilsService.updateAdminNotification(notification).subscribe(_ => {

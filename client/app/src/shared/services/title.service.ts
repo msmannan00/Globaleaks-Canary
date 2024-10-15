@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {AppDataService} from "@app/app-data.service";
 import {TranslateService} from "@ngx-translate/core";
 import {Router} from "@angular/router";
@@ -7,9 +7,10 @@ import {Router} from "@angular/router";
   providedIn: 'root'
 })
 export class TitleService {
+  private appDataService = inject(AppDataService);
+  private translateService = inject(TranslateService);
+  private router = inject(Router);
 
-  constructor(private appDataService: AppDataService, private translateService: TranslateService, private router: Router) {
-  }
 
   public setPage(page: string) {
     this.appDataService.page = page;

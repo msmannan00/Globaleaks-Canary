@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, inject } from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {HttpService} from "@app/shared/services/http.service";
@@ -17,13 +17,15 @@ import { ByteFmtPipe } from "@app/shared/pipes/byte-fmt.pipe";
     imports: [NgIf, DatePipe, TranslateModule, TranslatorPipe, ByteFmtPipe]
 })
 export class WbFilesComponent implements OnInit {
+  private appDataService = inject(AppDataService);
+  private cryptoService = inject(CryptoService);
+  private httpService = inject(HttpService);
+  protected authenticationService = inject(AuthenticationService);
+
   @Input() wbFile: RFile;
   @Input() ctx: string;
   @Input() receivers_by_id: ReceiversById;
   @Output() dataToParent = new EventEmitter<any>();
-
-  constructor(private appDataService: AppDataService, private cryptoService: CryptoService, private httpService: HttpService, protected authenticationService: AuthenticationService) {
-  }
 
   ngOnInit(): void {
   }

@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 import {FileResources} from "@app/models/component-model/file-resources";
 import {Constants} from "@app/shared/constants/constants";
 import {HttpService} from "@app/shared/services/http.service";
@@ -15,6 +15,10 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [FormsModule, NgClass, NgIf, TranslatorPipe]
 })
 export class HttpsCsrGenComponent {
+  private authenticationService = inject(AuthenticationService);
+  private httpService = inject(HttpService);
+  private utilsService = inject(UtilsService);
+
   @Input() fileResources: FileResources;
   protected readonly Constants = Constants;
   csr_cfg: {
@@ -32,9 +36,6 @@ export class HttpsCsrGenComponent {
     department: "",
     email: ""
   };
-
-  constructor(private authenticationService: AuthenticationService, private httpService: HttpService, private utilsService: UtilsService) {
-  }
 
   submitCSR() {
     this.httpService.requestCSRDirectContentResource(this.csr_cfg).subscribe({

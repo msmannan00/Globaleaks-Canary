@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, inject } from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {Signup} from "@app/models/component-model/signup";
 import * as Constants from "@app/shared/constants/constants";
@@ -17,6 +17,8 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [FormsModule, NgClass, SubdomainValidatorDirective, NgIf, DisableCcpDirective, TosComponent, TranslateModule, TranslatorPipe]
 })
 export class SignupdefaultComponent implements OnInit {
+  protected appDataService = inject(AppDataService);
+
 
   @Input() signup: Signup;
   @Output() complete: EventEmitter<any> = new EventEmitter<any>();
@@ -25,9 +27,6 @@ export class SignupdefaultComponent implements OnInit {
   confirmation_email: string;
   validated = false;
   mail: string;
-
-  constructor(protected appDataService: AppDataService) {
-  }
 
   ngOnInit(): void {
     this.emailRegex = Constants.Constants.emailRegexp;

@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, inject } from "@angular/core";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ConfirmationComponent} from "@app/shared/modals/confirmation/confirmation.component";
@@ -19,6 +19,12 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgIf, HttpsCsrGenComponent, DatePipe, TranslatorPipe]
 })
 export class HttpsFilesComponent implements OnInit {
+  private authenticationService = inject(AuthenticationService);
+  private nodeResolver = inject(NodeResolver);
+  private httpService = inject(HttpService);
+  private modalService = inject(NgbModal);
+  private utilsService = inject(UtilsService);
+
   @Output() dataToParent = new EventEmitter<string>();
   @Input() tlsConfig: TlsConfig;
   @Input() state: number = 0;
@@ -36,9 +42,6 @@ export class HttpsFilesComponent implements OnInit {
   csr_state = {
     open: false
   };
-
-  constructor(private authenticationService: AuthenticationService, private nodeResolver: NodeResolver, private httpService: HttpService, private modalService: NgbModal, private utilsService: UtilsService) {
-  }
 
   ngOnInit(): void {
     this.nodeData = this.nodeResolver.dataModel;

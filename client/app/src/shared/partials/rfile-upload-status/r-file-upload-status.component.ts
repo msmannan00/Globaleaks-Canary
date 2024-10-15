@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppDataService} from "@app/app-data.service";
 import {Transfer} from "@flowjs/ngx-flow";
@@ -14,9 +14,9 @@ import { ByteFmtPipe } from "@app/shared/pipes/byte-fmt.pipe";
     imports: [NgIf, NgClass, NgStyle, TranslateModule, TranslatorPipe, ByteFmtPipe]
 })
 export class RFileUploadStatusComponent {
+  protected utilsService = inject(UtilsService);
+  protected appDataService = inject(AppDataService);
+
   @Input() file: Transfer;
   @Input() formUploader: boolean;
-
-  constructor(protected utilsService: UtilsService, protected appDataService: AppDataService) {
-  }
 }

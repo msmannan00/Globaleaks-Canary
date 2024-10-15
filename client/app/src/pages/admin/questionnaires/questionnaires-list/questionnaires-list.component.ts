@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 import { NgForm, FormsModule } from "@angular/forms";
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -23,13 +23,16 @@ import { TranslateModule } from "@ngx-translate/core";
     imports: [NgIf, FormsModule, StepsComponent, TranslatorPipe, TranslateModule]
 })
 export class QuestionnairesListComponent {
+  private authenticationService = inject(AuthenticationService);
+  private questionnaireService = inject(QuestionnaireService);
+  private modalService = inject(NgbModal);
+  private httpService = inject(HttpService);
+  private utilsService = inject(UtilsService);
+
   @Input() questionnaire: questionnaireResolverModel;
   @Input() questionnaires: questionnaireResolverModel[];
   @Input() editQuestionnaire: NgForm;
   editing: boolean = false;
-
-  constructor(private authenticationService: AuthenticationService, private questionnaireService: QuestionnaireService, private modalService: NgbModal, private httpService: HttpService, private utilsService: UtilsService) {
-  }
 
   toggleEditing(questionnaire: questionnaireResolverModel) {
     this.editing = questionnaire.editable && !this.editing;

@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {Receiver} from "@app/models/app/public-model";
@@ -16,6 +16,9 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgSelectComponent, FormsModule, NgLabelTemplateDirective, TranslateModule, TranslatorPipe]
 })
 export class RevokeAccessComponent {
+  private modalService = inject(NgbModal);
+  private utils = inject(UtilsService);
+
 
 
   @Input() usersNames: Record<string, string> | undefined;
@@ -23,9 +26,6 @@ export class RevokeAccessComponent {
   @Input() confirmFun: ConfirmFunFunction;
   @Input() cancelFun: cancelFun;
   receiver_id: { id: number };
-
-  constructor(private modalService: NgbModal, private utils: UtilsService) {
-  }
 
   confirm() {
     this.cancel();

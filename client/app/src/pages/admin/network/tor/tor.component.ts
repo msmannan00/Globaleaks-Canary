@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import {networkResolverModel} from "@app/models/resolvers/network-resolver-model";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {HttpService} from "@app/shared/services/http.service";
@@ -14,11 +14,12 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgIf, FormsModule, TranslatorPipe]
 })
 export class TorComponent implements OnInit {
+  protected nodeResolver = inject(NodeResolver);
+  private httpService = inject(HttpService);
+  private utilsService = inject(UtilsService);
+
   torOnionResetInProgress: boolean = false;
   networkData: networkResolverModel;
-
-  constructor(protected nodeResolver: NodeResolver, private httpService: HttpService, private utilsService: UtilsService) {
-  }
 
   ngOnInit(): void {
     this.getNetortResolver();

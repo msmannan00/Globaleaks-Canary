@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {preferenceResolverModel} from "@app/models/resolvers/preference-resolver-model";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
@@ -12,9 +12,11 @@ import { UserHomeComponent } from "../../../shared/partials/user-home/user-home.
     imports: [UserHomeComponent]
 })
 export class HomeComponent implements OnInit {
+  private appDataService = inject(AppDataService);
+  private utilsService = inject(UtilsService);
+  private preference = inject(PreferenceResolver);
+
   preferenceData: preferenceResolverModel;
-  constructor(private appDataService: AppDataService,private utilsService: UtilsService, private preference: PreferenceResolver) {
-  }
 
  ngOnInit(): void {
     if (this.preference.dataModel) {

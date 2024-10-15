@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {
@@ -15,13 +15,13 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgIf, TranslateModule, TranslatorPipe]
 })
 export class TipAdditionalQuestionnaireInviteComponent {
+  protected utilsService = inject(UtilsService);
+  private modalService = inject(NgbModal);
+
   collapsed = false;
 
   public toggleColLapse() {
     this.collapsed = !this.collapsed;
-  }
-
-  constructor(protected utilsService: UtilsService, private modalService: NgbModal) {
   }
 
   tipOpenAdditionalQuestionnaire() {

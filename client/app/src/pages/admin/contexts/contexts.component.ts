@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import {NewContext} from "@app/models/admin/new-context";
 import {contextResolverModel} from "@app/models/resolvers/context-resolver-model";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
@@ -20,13 +20,17 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [NgIf, FormsModule, NgClass, NgFor, ContextEditorComponent, TranslatorPipe]
 })
 export class ContextsComponent implements OnInit {
+  protected preference = inject(PreferenceResolver);
+  protected httpService = inject(HttpService);
+  protected authenticationService = inject(AuthenticationService);
+  protected node = inject(NodeResolver);
+  protected users = inject(UsersResolver);
+  protected contexts = inject(ContextsResolver);
+  protected utilsService = inject(UtilsService);
+
   showAddContext: boolean = false;
   new_context: { name: string; } = {name: ""};
   contextsData: contextResolverModel[] = [];
-
-
-  constructor(protected preference: PreferenceResolver, protected httpService: HttpService, protected authenticationService: AuthenticationService, protected node: NodeResolver, protected users: UsersResolver, protected contexts: ContextsResolver, protected utilsService: UtilsService) {
-  }
 
   toggleAddContext() {
     this.showAddContext = !this.showAddContext;

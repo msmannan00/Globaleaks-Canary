@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -15,12 +15,17 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [QRCodeModule, FormsModule, ReactiveFormsModule, NgClass, NgIf, TranslateModule, TranslatorPipe]
 })
 export class Enable2fa implements OnInit{
+  protected utils = inject(UtilsService);
+  protected preferenceResolver = inject(PreferenceResolver);
+  private builder = inject(FormBuilder);
+  protected twoFactorAuthData = inject(TwoFactorAuthData);
+
 
   symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
   array = new Uint32Array(32);
   OTPSecretForm: FormGroup;
 
-  constructor(protected utils: UtilsService, protected preferenceResolver: PreferenceResolver, private builder: FormBuilder, protected twoFactorAuthData: TwoFactorAuthData) {
+  constructor() {
     this.initialization();
   }
 

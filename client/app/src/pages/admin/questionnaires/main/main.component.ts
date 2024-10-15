@@ -1,5 +1,5 @@
 import {HttpClient} from "@angular/common/http";
-import {ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from "@angular/core";
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild, inject } from "@angular/core";
 import {questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
 import {QuestionnairesResolver} from "@app/shared/resolvers/questionnaires.resolver";
 import {HttpService} from "@app/shared/services/http.service";
@@ -21,15 +21,19 @@ import { TranslateModule } from "@ngx-translate/core";
     imports: [NgIf, FormsModule, NgClass, NgFor, QuestionnairesListComponent, TranslatorPipe, OrderByPipe, TranslateModule]
 })
 export class MainComponent implements OnInit, OnDestroy {
+  private http = inject(HttpClient);
+  private questionnaireService = inject(QuestionnaireService);
+  private httpService = inject(HttpService);
+  private utilsService = inject(UtilsService);
+  private cdr = inject(ChangeDetectorRef);
+  protected questionnairesResolver = inject(QuestionnairesResolver);
+
 
   private destroy$ = new Subject<void>();
   questionnairesData: questionnaireResolverModel[] = [];
   new_questionnaire: { name: string } = {name: ""};
   showAddQuestionnaire: boolean = false;
   @ViewChild('keyUploadInput') keyUploadInput: ElementRef<HTMLInputElement>;
-
-  constructor(private http: HttpClient, private questionnaireService: QuestionnaireService, private httpService: HttpService, private utilsService: UtilsService, private cdr: ChangeDetectorRef, protected questionnairesResolver: QuestionnairesResolver) {
-  }
 
   ngOnInit(): void {
     this.questionnaireService.sharedData = "step";

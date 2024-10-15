@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import {tenantResolverModel} from "@app/models/resolvers/tenant-resolver-model";
 import {HttpService} from "@app/shared/services/http.service";
 import { FormsModule } from "@angular/forms";
@@ -18,6 +18,8 @@ import { TranslateModule } from "@ngx-translate/core";
     imports: [FormsModule, NgIf, NgFor, SiteslistComponent, NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast, SlicePipe, TranslatorPipe, FilterPipe, FilterSearchPipe, OrderByPipe, TranslateModule]
 })
 export class SitesTab1Component implements OnInit {
+  private httpService = inject(HttpService);
+
   search: string;
   newTenant: { name: string, active: boolean, mode: string, subdomain: string } = {
     name: "",
@@ -40,9 +42,6 @@ export class SitesTab1Component implements OnInit {
 
   toggleAddTenant() {
     this.showAddTenant = !this.showAddTenant;
-  }
-
-  constructor(private httpService: HttpService) {
   }
 
   addTenant() {

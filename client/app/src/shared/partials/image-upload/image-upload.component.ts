@@ -1,5 +1,5 @@
 import {HttpClient} from "@angular/common/http";
-import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from "@angular/core";
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, inject } from "@angular/core";
 import { FlowDirective, NgxFlowModule } from "@flowjs/ngx-flow";
 import {Subscription} from "rxjs";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
@@ -17,6 +17,10 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [FormsModule, NgxFlowModule, NgIf, NgOptimizedImage, TranslateModule, TranslatorPipe]
 })
 export class ImageUploadComponent implements AfterViewInit, OnDestroy, OnInit {
+  private http = inject(HttpClient);
+  protected authenticationService = inject(AuthenticationService);
+  private utilsService = inject(UtilsService);
+
   @ViewChild("flowAdvanced")
   flow: FlowDirective;
   @ViewChild("uploader") uploaderElementRef!: ElementRef<HTMLInputElement>;
@@ -30,9 +34,6 @@ export class ImageUploadComponent implements AfterViewInit, OnDestroy, OnInit {
   currentTImestamp = new Date().getTime();
   flowConfig: FlowOptions;
   @ViewChild('uploader') uploaderInput: ElementRef<HTMLInputElement>;
-
-  constructor(private http: HttpClient, protected authenticationService: AuthenticationService,private utilsService: UtilsService) {
-  }
 
   ngOnInit() {
     this.filemodel = this.imageUploadModel[this.imageUploadModelAttr];

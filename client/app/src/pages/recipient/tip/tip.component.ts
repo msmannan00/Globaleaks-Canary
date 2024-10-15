@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild} from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild, inject } from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AppConfigService} from "@app/services/root/app-config.service";
 import {TipService} from "@app/shared/services/tip-service";
@@ -69,6 +69,22 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     ],
 })
 export class TipComponent implements OnInit {
+  private translateService = inject(TranslateService);
+  private tipService = inject(TipService);
+  private appConfigServices = inject(AppConfigService);
+  private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
+  private cryptoService = inject(CryptoService);
+  protected utils = inject(UtilsService);
+  protected preferencesService = inject(PreferenceResolver);
+  protected modalService = inject(NgbModal);
+  private activatedRoute = inject(ActivatedRoute);
+  protected httpService = inject(HttpService);
+  protected http = inject(HttpClient);
+  protected appDataService = inject(AppDataService);
+  protected RTipService = inject(ReceiverTipService);
+  protected authenticationService = inject(AuthenticationService);
+
   @ViewChild("tab1") tab1!: TemplateRef<TipUploadWbFileComponent | TipCommentsComponent>;
   @ViewChild("tab2") tab2!: TemplateRef<TipUploadWbFileComponent | TipCommentsComponent>;
   @ViewChild("tab3") tab3!: TemplateRef<TipUploadWbFileComponent | TipCommentsComponent>;
@@ -83,9 +99,6 @@ export class TipComponent implements OnInit {
   redactMode:boolean = false;
   redactOperationTitle: string;
   tabs: Tab[];
-
-  constructor(private translateService: TranslateService,private tipService: TipService, private appConfigServices: AppConfigService, private router: Router, private cdr: ChangeDetectorRef, private cryptoService: CryptoService, protected utils: UtilsService, protected preferencesService: PreferenceResolver, protected modalService: NgbModal, private activatedRoute: ActivatedRoute, protected httpService: HttpService, protected http: HttpClient, protected appDataService: AppDataService, protected RTipService: ReceiverTipService, protected authenticationService: AuthenticationService) {
-  }
 
   ngOnInit() {
     this.loadTipDate();

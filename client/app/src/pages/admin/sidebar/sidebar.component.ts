@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
@@ -13,9 +13,10 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     imports: [RouterLink, RouterLinkActive, NgIf, TranslatorPipe]
 })
 export class AdminSidebarComponent {
+  private router = inject(Router);
+  protected nodeResolver = inject(NodeResolver);
+  protected authenticationService = inject(AuthenticationService);
 
-  constructor(private router: Router, protected nodeResolver: NodeResolver, protected authenticationService: AuthenticationService) {
-  }
 
   isActive(route: string): boolean {
     return this.router.isActive(route, {

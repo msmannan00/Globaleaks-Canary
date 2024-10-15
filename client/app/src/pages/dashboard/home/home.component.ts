@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import { NgSwitch, NgSwitchCase, NgSwitchDefault } from "@angular/common";
 import { TippageComponent } from "../../whistleblower/tippage/tippage.component";
@@ -13,6 +13,5 @@ import { HomepageComponent } from "../../whistleblower/homepage/homepage.compone
     imports: [NgSwitch, NgSwitchCase, TippageComponent, SubmissionComponent, ReceiptComponent, NgSwitchDefault, HomepageComponent]
 })
 export class HomeComponent {
-  constructor(protected appDataService: AppDataService) {
-  }
+  protected appDataService = inject(AppDataService);
 }
