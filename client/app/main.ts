@@ -31,8 +31,6 @@ const translationModule = TranslateModule.forRoot({
   });
 })();
 
-import {platformBrowserDynamic} from "@angular/platform-browser-dynamic";
-import {AppModule} from "@app/app.module";
 import { ReceiptValidatorDirective } from "@app/shared/directive/receipt-validator.directive";
 import { mockEngine } from "./src/services/helper/mocks";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
@@ -46,13 +44,9 @@ import { CustomDatepickerI18n } from "@app/shared/services/custom-datepicker-i18
 import { AppRoutingModule } from "@app/app-routing.module";
 import { BrowserModule, bootstrapApplication } from "@angular/platform-browser";
 import { provideAnimations } from "@angular/platform-browser/animations";
-import { RecipientModule } from "@app/pages/recipient/recipient.module";
 import { createTranslateLoader } from "./src/app.module";
-import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { FormsModule } from "@angular/forms";
-import { CustodianModule } from "@app/pages/custodian/custodian.module";
-import { AnalystModule } from "@app/pages/analyst/analyst.module";
 import { NgIdleKeepaliveModule } from "@ng-idle/keepalive";
 import { MarkdownModule, MARKED_OPTIONS } from "ngx-markdown";
 import { AppComponent } from "./src/pages/app/app.component";
@@ -61,7 +55,7 @@ import * as Flow from "@flowjs/flow.js";
 
 bootstrapApplication(AppComponent, {
     providers: [
-        importProvidersFrom(AppRoutingModule, NgbModule, BrowserModule, RecipientModule, translationModule, NgSelectModule, FormsModule, CustodianModule, AnalystModule, NgIdleKeepaliveModule.forRoot(), MarkdownModule.forRoot({
+        importProvidersFrom(AppRoutingModule, NgbModule, BrowserModule, translationModule, NgSelectModule, FormsModule, NgIdleKeepaliveModule.forRoot(), MarkdownModule.forRoot({
             markedOptions: {
                 provide: MARKED_OPTIONS,
                 useValue: {
