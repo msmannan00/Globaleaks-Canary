@@ -4,7 +4,6 @@ declare global {
   namespace Cypress {
     interface Chainable {
       // @ts-ignore
-      waitForLoader: () => void;
       waitForPageIdle: () => void;
       logout: () => void;
       takeScreenshot: (filename: string, locator?: string) => void;
@@ -25,7 +24,6 @@ declare global {
 Cypress.Commands.add("waitForPageIdle", () => {
   const pageIdleDetector = new PageIdleDetector();
   pageIdleDetector.waitForPageToBeIdle();
-  cy.wait(0);
 });
 
 Cypress.Commands.add("login_receiver", (username, password, url, firstlogin) => {
@@ -109,7 +107,6 @@ Cypress.Commands.add("simple_login_admin", (username, password, url, firstlogin)
         finalURL = hashPart === "login" ? "/admin/home" : hashPart;
       });
     });
-    cy.waitForLoader()
   }
 });
 
@@ -189,8 +186,6 @@ Cypress.Commands.add("takeScreenshot", (filename: string, locator?: string) => {
 
     cy.waitForPageIdle();
 
-    cy.wait(500);
-
     if (locator && locator !== ".modal") {
       return cy.get(locator).screenshot("../" + filename, {overwrite: true, scale: true});
     }
@@ -207,32 +202,6 @@ Cypress.Commands.add("waitUntilClickable", (locator: string, timeout?: number) =
   const t = timeout === undefined ? Cypress.config().defaultCommandTimeout : timeout;
   cy.get(locator).click({timeout: t});
 });
-
-Cypress.Commands.add("waitForLoader", () => {
-  cy.intercept("**").as("httpRequests");
-
-  cy.get('[data-cy="page-loader-overlay"]', {timeout: 500, log: false})
-    .should(($overlay) => {
-      return new Cypress.Promise((resolve, _) => {
-        const startTime = Date.now();
-
-        const checkVisibility = () => {
-          if (Cypress.$($overlay).is(":visible")) {
-            cy.get('[data-cy="page-loader-overlay"]', { log: false }).should("not.be.visible").then(() => {
-              resolve();
-            });
-          } else if (Date.now() - startTime > 100) {
-            resolve();
-          } else {
-            setTimeout(checkVisibility, 100);
-          }
-        };
-
-        checkVisibility();
-      });
-    })
-});
-
 
 Cypress.Commands.add("waitForUrl", (url: string, timeout?: number) => {
   const t = timeout === undefined ? Cypress.config().defaultCommandTimeout : timeout;
@@ -257,13 +226,11 @@ Cypress.Commands.add("waitForTipImageUpload", (attempts = 0) => {
             cy.log('Condition met: 2 rows found');
           } else if (attempts < maxAttempts) {
             cy.get('#link-reload').click();
-            cy.wait(1000);
             cy.waitForTipImageUpload(attempts + 1);
           }
         });
     } else if (attempts < maxAttempts) {
       cy.get('#link-reload').click();
-      cy.wait(1000);
       cy.waitForTipImageUpload(attempts + 1);
     }
   });
@@ -295,7 +262,6 @@ Cypress.Commands.add("login_admin", (username, password, url, firstlogin) => {
         cy.waitForUrl(finalURL);
       });
     });
-    cy.waitForLoader()
   }
 });
 
