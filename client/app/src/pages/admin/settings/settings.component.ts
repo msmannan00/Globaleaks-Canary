@@ -10,11 +10,6 @@ import {Tab5Component} from "@app/pages/admin/settings/tab5/tab5.component";
 import { FormsModule } from "@angular/forms";
 import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgbNavOutlet } from "@ng-bootstrap/ng-bootstrap";
 import { NgFor, NgTemplateOutlet } from "@angular/common";
-import { Tab1Component as Tab1Component_1 } from "./tab1/tab1.component";
-import { Tab2Component as Tab2Component_1 } from "./tab2/tab2.component";
-import { Tab3Component as Tab3Component_1 } from "./tab3/tab3.component";
-import { Tab4Component as Tab4Component_1 } from "./tab4/tab4.component";
-import { Tab5Component as Tab5Component_1 } from "./tab5/tab5.component";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -22,7 +17,7 @@ import { TranslateModule } from "@ngx-translate/core";
     selector: "src-admin-settings",
     templateUrl: "./settings.component.html",
     standalone: true,
-    imports: [FormsModule, NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, Tab1Component_1, Tab2Component_1, Tab3Component_1, Tab4Component_1, Tab5Component_1, TranslatorPipe, TranslateModule]
+    imports: [FormsModule, NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, Tab1Component, Tab2Component, Tab3Component, Tab4Component, Tab5Component, TranslatorPipe, TranslateModule]
 })
 export class SettingsComponent implements AfterViewInit {
   @ViewChild("tab1") tab1!: TemplateRef<Tab1Component>;

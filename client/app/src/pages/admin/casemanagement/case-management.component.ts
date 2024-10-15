@@ -1,20 +1,17 @@
 import {Component, TemplateRef, ViewChild, AfterViewInit, ChangeDetectorRef} from "@angular/core";
 import {Tab} from "@app/models/component-model/tab";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
-import {
-  CaseManagementTab1Component
-} from "@app/pages/admin/casemanagement/casemanagement-tab1/case-management-tab1.component";
+import {CaseManagementTab1Component} from "@app/pages/admin/casemanagement/casemanagement-tab1/case-management-tab1.component";
 import { FormsModule } from "@angular/forms";
 import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgbNavOutlet } from "@ng-bootstrap/ng-bootstrap";
 import { NgFor, NgTemplateOutlet } from "@angular/common";
-import { CaseManagementTab1Component as CaseManagementTab1Component_1 } from "./casemanagement-tab1/case-management-tab1.component";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
     selector: "src-casemanagement",
     templateUrl: "./case-management.component.html",
     standalone: true,
-    imports: [FormsModule, NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, CaseManagementTab1Component_1, TranslatorPipe]
+    imports: [FormsModule, NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, CaseManagementTab1Component, TranslatorPipe]
 })
 export class CaseManagementComponent implements AfterViewInit {
   @ViewChild("tab1") tab1!: TemplateRef<CaseManagementTab1Component>;

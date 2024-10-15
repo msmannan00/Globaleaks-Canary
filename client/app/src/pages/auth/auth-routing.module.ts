@@ -1,25 +1,22 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
-import {LoginComponent} from "@app/pages/auth/login/login.component";
-import {PasswordResetComponent} from "@app/pages/auth/password-reset/password-reset.component";
-import {PasswordRequestedComponent} from "@app/pages/auth/passwordreqested/password-requested.component";
 
 const routes: Routes = [
   {
     path: "",
-    component: LoginComponent,
+    loadComponent: () => import('@app/pages/auth/login/login.component').then(m => m.LoginComponent),
     pathMatch: "full",
     data: {pageTitle: "Log in"},
   },
   {
     path: "passwordreset",
-    component: PasswordResetComponent,
+    loadComponent: () => import('@app/pages/auth/password-reset/password-reset.component').then(m => m.PasswordResetComponent),
     pathMatch: "full",
     data: {pageTitle: "Password reset"},
   },
   {
     path: "passwordreset/requested",
-    component: PasswordRequestedComponent,
+    loadComponent: () => import('@app/pages/auth/passwordreqested/password-requested.component').then(m => m.PasswordRequestedComponent),
     pathMatch: "full",
     data: {pageTitle: "Password reset"},
   }

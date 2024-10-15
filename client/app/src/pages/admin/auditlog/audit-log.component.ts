@@ -8,10 +8,6 @@ import {AuditLogTab3Component} from "@app/pages/admin/auditlog/auditlog-tab3/aud
 import {AuditLogTab4Component} from "@app/pages/admin/auditlog/auditlog-tab4/audit-log-tab4.component";
 import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgbNavOutlet } from "@ng-bootstrap/ng-bootstrap";
 import { NgFor, NgTemplateOutlet } from "@angular/common";
-import { AuditLogTab1Component as AuditLogTab1Component_1 } from "./auditlog-tab1/audit-log-tab1.component";
-import { AuditLogTab2Component as AuditLogTab2Component_1 } from "./auditlog-tab2/audit-log-tab2.component";
-import { AuditLogTab3Component as AuditLogTab3Component_1 } from "./auditlog-tab3/audit-log-tab3.component";
-import { AuditLogTab4Component as AuditLogTab4Component_1 } from "./auditlog-tab4/audit-log-tab4.component";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -19,7 +15,7 @@ import { TranslateModule } from "@ngx-translate/core";
     selector: "src-auditlog",
     templateUrl: "./audit-log.component.html",
     standalone: true,
-    imports: [NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, AuditLogTab1Component_1, AuditLogTab2Component_1, AuditLogTab3Component_1, AuditLogTab4Component_1, TranslatorPipe, TranslateModule]
+    imports: [NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, AuditLogTab1Component, AuditLogTab2Component, AuditLogTab3Component, AuditLogTab4Component, TranslatorPipe, TranslateModule]
 })
 export class AuditLogComponent implements AfterViewInit {
   @ViewChild("tab1") tab1!: TemplateRef<AuditLogTab1Component>;

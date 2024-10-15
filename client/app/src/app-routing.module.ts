@@ -1,26 +1,18 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
 import {SessionGuard} from "@app/app-guard.service";
-import {HomeComponent} from "@app/pages/dashboard/home/home.component";
-import {
-  PasswordResetResponseComponent
-} from "@app/pages/auth/password-reset-response/password-reset-response.component";
 import {AdminGuard} from "@app/shared/guards/admin.guard";
 import {CustodianGuard} from "@app/shared/guards/custodian.guard";
 import {ReceiverGuard} from "@app/shared/guards/receiver.guard";
 import {AnalystGuard} from "@app/shared/guards/analyst.guard";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {Pageguard} from "@app/shared/guards/pageguard.service";
-import {ActivationComponent} from "@app/pages/signup/templates/activation/activation.component";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {RTipsResolver} from "@app/shared/resolvers/r-tips-resolver.service";
-import {TipComponent} from "@app/pages/recipient/tip/tip.component";
 import {TitleResolver} from "@app/shared/resolvers/title-resolver.resolver";
 import {IarResolver} from "@app/shared/resolvers/iar-resolver.service";
-import {BlankComponent} from "@app/shared/blank/blank.component";
 import {WbTipResolver} from "@app/shared/resolvers/wb-tip-resolver.service";
 import {WhistleblowerLoginResolver} from "@app/shared/resolvers/whistleblower-login.resolver";
-import {SubmissionComponent} from "@app/pages/whistleblower/submission/submission.component";
 import {AuthRoutingModule} from "@app/pages/auth/auth-routing.module";
 
 
@@ -28,12 +20,12 @@ const routes: Routes = [
   {
     path: "blank",
     pathMatch: "full",
-    component: BlankComponent
+    loadComponent: () => import('@app/shared/blank/blank.component').then(m => m.BlankComponent)
   },
   {
     path: "",
     canActivate: [Pageguard],
-    component: HomeComponent,
+    loadComponent: () => import('@app/pages/dashboard/home/home.component').then(m => m.HomeComponent),
     data: {pageTitle: ""},
     pathMatch: "full",
     resolve: {
@@ -43,7 +35,7 @@ const routes: Routes = [
   {
     path: "submission",
     canActivate: [Pageguard],
-    component: SubmissionComponent,
+    loadComponent: () => import('@app/pages/whistleblower/submission/submission.component').then(m => m.SubmissionComponent),
     data: {pageTitle: ""},
     pathMatch: "full",
     resolve: {
@@ -110,12 +102,12 @@ const routes: Routes = [
   {
     path: "password/reset",
     data: {pageTitle: "Password reset"},
-    component: PasswordResetResponseComponent,
+    loadComponent: () => import('@app/pages/auth/password-reset-response/password-reset-response.component').then(m => m.PasswordResetResponseComponent),
   },
   {
     path: "activation",
     data: {pageTitle: "Sign up"},
-    component: ActivationComponent,
+    loadComponent: () => import('@app/pages/signup/templates/activation/activation.component').then(m => m.ActivationComponent),
   },
   {
     path: "wizard",
@@ -132,7 +124,7 @@ const routes: Routes = [
     resolve: {
       PreferenceResolver,
     },
-    component: TipComponent,
+    loadComponent: () => import('@app/pages/recipient/tip/tip.component').then(m => m.TipComponent),
     canActivate: [SessionGuard],
     pathMatch: "full",
   },

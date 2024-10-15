@@ -7,8 +7,6 @@ import {SitesTab2Component} from "@app/pages/admin/sites/sites-tab2/sites-tab2.c
 import { FormsModule } from "@angular/forms";
 import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgbNavOutlet } from "@ng-bootstrap/ng-bootstrap";
 import { NgFor, NgTemplateOutlet } from "@angular/common";
-import { SitesTab1Component as SitesTab1Component_1 } from "./sites-tab1/sites-tab1.component";
-import { SitesTab2Component as SitesTab2Component_1 } from "./sites-tab2/sites-tab2.component";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -16,7 +14,7 @@ import { TranslateModule } from "@ngx-translate/core";
     selector: "src-sites",
     templateUrl: "./sites.component.html",
     standalone: true,
-    imports: [FormsModule, NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, SitesTab1Component_1, SitesTab2Component_1, TranslatorPipe, TranslateModule]
+    imports: [FormsModule, NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, SitesTab1Component, SitesTab2Component, TranslatorPipe, TranslateModule]
 })
 export class SitesComponent implements OnInit, AfterViewInit {
   @ViewChild("tab1") tab1!: TemplateRef<SitesTab1Component>;

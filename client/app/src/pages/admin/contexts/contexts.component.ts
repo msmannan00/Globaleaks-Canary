@@ -10,7 +10,7 @@ import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import { NgIf, NgClass, NgFor } from "@angular/common";
 import { FormsModule } from "@angular/forms";
-import { ContextEditorComponent } from "./context-editor/context-editor.component";
+import { ContextEditorComponent } from "@app/pages/admin/contexts/context-editor/context-editor.component";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({

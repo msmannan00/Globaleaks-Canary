@@ -12,14 +12,13 @@ import {CustodianSidebarComponent} from "@app/pages/custodian/sidebar/sidebar.co
 import {
   IdentityAccessRequestsComponent
 } from "@app/pages/custodian/identity-access-requests/identity-access-requests.component";
-import {SettingsModule} from "@app/pages/admin/settings/settings.module";
 
 
 @NgModule({
     imports: [
     CommonModule, RouterModule, TranslateModule, FormsModule,
     NgbModule, NgbNavModule,
-    NgbDatepickerModule, NgbDropdownModule, NgMultiSelectDropDownModule.forRoot(), SettingsModule,
+    NgbDatepickerModule, NgbDropdownModule, NgMultiSelectDropDownModule.forRoot(),
     HomeComponent,
     SettingsComponent,
     CustodianSidebarComponent,

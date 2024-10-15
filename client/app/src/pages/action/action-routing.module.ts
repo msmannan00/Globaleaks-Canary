@@ -1,17 +1,15 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
-import {ForcedTwoFactorComponent} from "@app/pages/action/forced-two-factor/forced-two-factor.component";
-import {ForcePasswordChangeComponent} from "@app/pages/action/force-password-change/force-password-change.component";
 
 const routes: Routes = [
   {
     path: "forcedtwofactor",
-    component: ForcedTwoFactorComponent,
+    loadComponent: () => import('@app/pages/action/forced-two-factor/forced-two-factor.component').then(m => m.ForcedTwoFactorComponent),
     pathMatch: "full",
     data: {pageTitle: "Password reset"},
   }, {
     path: "forcedpasswordchange",
-    component: ForcePasswordChangeComponent,
+    loadComponent: () => import('@app/pages/action/force-password-change/force-password-change.component').then(m => m.ForcePasswordChangeComponent),
     pathMatch: "full",
     data: {pageTitle: "Password reset"},
   }

@@ -1,47 +1,13 @@
-import {HostListener, NgModule, CUSTOM_ELEMENTS_SCHEMA, OnDestroy} from "@angular/core";
-import {BrowserModule} from "@angular/platform-browser";
-import {AppRoutingModule} from "@app/app-routing.module";
-import {AppComponent} from "@app/pages/app/app.component";
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
-
-import {APP_BASE_HREF, HashLocationStrategy, LocationStrategy, NgOptimizedImage,} from "@angular/common";
-
-import {HeaderComponent} from "@app/shared/partials/header/header.component";
-import {UserComponent} from "@app/shared/partials/header/template/user/user.component";
-import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
+import {HostListener, NgModule, OnDestroy} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import {
-  CompletedInterceptor,
-  ErrorCatchingInterceptor,
-  appInterceptor
-} from "@app/services/root/app-interceptor.service";
-import {Keepalive, NgIdleKeepaliveModule} from "@ng-idle/keepalive";
+import {Keepalive} from "@ng-idle/keepalive";
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
-import {HomeComponent} from "@app/pages/dashboard/home/home.component";
-import {TranslatorPipe} from "@app/shared/pipes/translate";
-import {NgSelectModule} from "@ng-select/ng-select";
-import {FormsModule} from "@angular/forms";
-
-
-import {MarkdownModule, MarkedOptions, MARKED_OPTIONS} from "ngx-markdown";
-import {ReceiptValidatorDirective} from "@app/shared/directive/receipt-validator.directive";
-import {NgxFlowModule, FlowInjectionToken} from "@flowjs/ngx-flow";
-import * as Flow from "@flowjs/flow.js";
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-
-
-import {RecipientModule} from "@app/pages/recipient/recipient.module";
-
-import {CustodianModule} from "@app/pages/custodian/custodian.module";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {AnalystModule} from "@app/pages/analyst/analyst.module";
 import {mockEngine} from './services/helper/mocks';
 import {HttpService} from "./shared/services/http.service";
 import {CryptoService} from "@app/shared/services/crypto.service";
-import {TranslationService} from "@app/services/helper/translation.service";
-import {NgbDatepickerI18n} from '@ng-bootstrap/ng-bootstrap';
-import {CustomDatepickerI18n} from '@app/shared/services/custom-datepicker-i18n';
 import {registerLocales} from '@app/services/helper/locale-provider';
 
 // Register all the locales
@@ -74,50 +40,7 @@ const translationModule = TranslateModule.forRoot({
   })
 ;
 
-@NgModule(/* TODO(standalone-migration): clean up removed NgModule class manually. 
-{
-    declarations: [AppComponent],
-    imports: [
-    AppRoutingModule,
-    NgbModule,
-    HttpClientModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    RecipientModule,
-    translationModule,
-    NgSelectModule,
-    FormsModule,
-    CustodianModule,
-    AnalystModule,
-    NgIdleKeepaliveModule.forRoot(),
-    MarkdownModule.forRoot({
-        markedOptions: {
-            provide: MARKED_OPTIONS,
-            useValue: {
-                breaks: true
-            }
-        }
-    }),
-    NgxFlowModule,
-    NgOptimizedImage,
-    HomeComponent, HeaderComponent, UserComponent
-],
-    providers: [
-        ReceiptValidatorDirective,
-        { provide: 'MockEngine', useValue: mockEngine },
-        TranslatorPipe, TranslateService,
-        { provide: HTTP_INTERCEPTORS, useClass: appInterceptor, multi: true },
-        { provide: APP_BASE_HREF, useValue: "/" },
-        { provide: LocationStrategy, useClass: HashLocationStrategy },
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: CompletedInterceptor, multi: true },
-        { provide: FlowInjectionToken, useValue: Flow },
-        { provide: LocationStrategy, useClass: HashLocationStrategy },
-        { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }
-    ],
-    bootstrap: [AppComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-} */)
+@NgModule()
 export class AppModule implements OnDestroy {
 
   constructor(private cryptoService:CryptoService, private authenticationService: AuthenticationService, private idle: Idle, private keepalive: Keepalive, private httpService: HttpService) {
