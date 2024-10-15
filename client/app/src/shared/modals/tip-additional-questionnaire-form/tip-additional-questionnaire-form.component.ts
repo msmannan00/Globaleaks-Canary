@@ -1,7 +1,7 @@
 import {Component, OnInit, QueryList, ViewChild, ViewChildren} from "@angular/core";
 import {WbTipResolver} from "@app/shared/resolvers/wb-tip-resolver.service";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {NgForm} from "@angular/forms";
+import { NgForm, FormsModule } from "@angular/forms";
 import {WbtipService} from "@app/services/helper/wbtip.service";
 import {FieldUtilitiesService} from "@app/shared/services/field-utilities.service";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -9,10 +9,20 @@ import {HttpService} from "@app/shared/services/http.service";
 import {Answers, Questionnaire3} from "@app/models/reciever/reciever-tip-data";
 import {Field} from "@app/models/resolvers/field-template-model";
 import {WhistleblowerSubmissionService} from "@app/pages/whistleblower/whistleblower-submission.service";
+import { NgIf, NgFor, NgClass } from "@angular/common";
+import { NgFormChangeDirective } from "../../directive/ng-form-change.directive";
+import { StepErrorComponent } from "../../../pages/whistleblower/step-error/step-error.component";
+import { FormComponent } from "../../../pages/whistleblower/form/form.component";
+import { RFilesUploadStatusComponent } from "../../partials/rfiles-upload-status/r-files-upload-status.component";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
+import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
 
 @Component({
-  selector: "src-tip-additional-questionnaire-form",
-  templateUrl: "./tip-additional-questionnaire-form.component.html"
+    selector: "src-tip-additional-questionnaire-form",
+    templateUrl: "./tip-additional-questionnaire-form.component.html",
+    standalone: true,
+    imports: [FormsModule, NgIf, NgFor, NgClass, NgFormChangeDirective, StepErrorComponent, FormComponent, RFilesUploadStatusComponent, TranslateModule, TranslatorPipe, OrderByPipe]
 })
 export class TipAdditionalQuestionnaireFormComponent implements OnInit {
   @ViewChild("submissionForm") public submissionForm: NgForm;

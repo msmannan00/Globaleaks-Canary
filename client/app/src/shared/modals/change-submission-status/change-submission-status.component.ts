@@ -2,9 +2,20 @@ import {Component, Input} from "@angular/core";
 import {SubmissionStatus} from "@app/models/app/shared-public-model";
 import {RecieverTipData} from "@app/models/reciever/reciever-tip-data";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { FormsModule } from "@angular/forms";
+import { NgFor } from "@angular/common";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 @Component({
-  selector: 'src-change-submission-status',
-  templateUrl: './change-submission-status.component.html',
+    selector: 'src-change-submission-status',
+    templateUrl: './change-submission-status.component.html',
+    standalone: true,
+    imports: [
+        FormsModule,
+        NgFor,
+        TranslateModule,
+        TranslatorPipe,
+    ],
 })
 export class ChangeSubmissionStatusComponent {
   @Input() arg: {tip:RecieverTipData, motivation:string,submission_statuses:SubmissionStatus[],status:any};

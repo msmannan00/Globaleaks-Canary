@@ -5,10 +5,16 @@ import {NewField} from "@app/models/admin/new-field";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 import {Step} from "@app/models/resolvers/questionnaire-model";
 import {Field, fieldtemplatesResolverModel} from "@app/models/resolvers/field-template-model";
+import { FormsModule } from "@angular/forms";
+import { NgFor, NgIf } from "@angular/common";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: "src-add-field-from-template",
-  templateUrl: "./add-field-from-template.component.html"
+    selector: "src-add-field-from-template",
+    templateUrl: "./add-field-from-template.component.html",
+    standalone: true,
+    imports: [FormsModule, NgFor, NgIf, TranslatorPipe, TranslateModule]
 })
 export class AddFieldFromTemplateComponent implements OnInit {
   @Input() fieldTemplatesData: fieldtemplatesResolverModel[];

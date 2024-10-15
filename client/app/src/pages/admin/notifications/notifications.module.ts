@@ -6,21 +6,19 @@ import {FormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import {NgbNavModule, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {NgSelectModule} from "@ng-select/ng-select";
-import {SharedModule} from "@app/shared.module";
+
 import {NotificationTab1Component} from "@app/pages/admin/notifications/notification-tab1/notification-tab1.component";
 import {NotificationTab2Component} from "@app/pages/admin/notifications/notification-tab2/notification-tab2.component";
 
 
 @NgModule({
-  declarations: [
+    imports: [
+    CommonModule,
+    NotificationsRoutingModule, NgbNavModule, NgbModule, RouterModule, FormsModule, NgSelectModule,
     NotificationsComponent,
     NotificationTab1Component,
-    NotificationTab2Component
-  ],
-  imports: [
-    CommonModule,
-    NotificationsRoutingModule, SharedModule, NgbNavModule, NgbModule, RouterModule, FormsModule, NgSelectModule,
-  ]
+    NotificationTab2Component,
+]
 })
 export class NotificationsModule {
 }

@@ -5,7 +5,8 @@ import {userResolverModel} from "@app/models/resolvers/user-resolver-model";
 import {ImageUploadComponent} from "@app/shared/partials/image-upload/image-upload.component";
 
 @Directive({
-  selector: "[appImageUpload]",
+    selector: "[appImageUpload]",
+    standalone: true,
 })
 export class ImageUploadDirective implements OnInit {
   @Input() imageUploadModel: contextResolverModel | nodeResolverModel | userResolverModel;

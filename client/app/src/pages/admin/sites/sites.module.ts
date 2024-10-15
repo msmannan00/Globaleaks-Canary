@@ -3,7 +3,7 @@ import {CommonModule} from "@angular/common";
 import {SitesComponent} from "@app/pages/admin/sites/sites.component";
 import {SitesTab1Component} from "@app/pages/admin/sites/sites-tab1/sites-tab1.component";
 import {SitesTab2Component} from "@app/pages/admin/sites/sites-tab2/sites-tab2.component";
-import {SharedModule} from "@app/shared.module";
+
 import {NgbModule, NgbNavModule} from "@ng-bootstrap/ng-bootstrap";
 import {RouterModule} from "@angular/router";
 import {FormsModule} from "@angular/forms";
@@ -14,16 +14,14 @@ import {SiteslistComponent} from "@app/pages/admin/sites/siteslist/siteslist.com
 
 
 @NgModule({
-  declarations: [
+    imports: [
+    CommonModule,
+    SitesRoutingModule, NgbNavModule, NgbModule, RouterModule, FormsModule, NgSelectModule, TranslateModule,
     SitesComponent,
     SitesTab1Component,
     SitesTab2Component,
     SiteslistComponent
-  ],
-  imports: [
-    CommonModule,
-    SitesRoutingModule, SharedModule, NgbNavModule, NgbModule, RouterModule, FormsModule, NgSelectModule, TranslateModule
-  ]
+]
 })
 export class SitesModule {
 }

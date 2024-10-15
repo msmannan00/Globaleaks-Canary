@@ -3,10 +3,16 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {AppDataService} from "@app/app-data.service";
 import {AppConfigService} from "@app/services/root/app-config.service";
+import { NgIf } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-receipt-whistleblower",
-  templateUrl: "./receipt.component.html"
+    selector: "src-receipt-whistleblower",
+    templateUrl: "./receipt.component.html",
+    standalone: true,
+    imports: [NgIf, FormsModule, TranslateModule, TranslatorPipe]
 })
 export class ReceiptComponent implements OnInit {
   receipt: string;

@@ -3,10 +3,15 @@ import {networkResolverModel} from "@app/models/resolvers/network-resolver-model
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
+import { NgIf } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-tor",
-  templateUrl: "./tor.component.html"
+    selector: "src-tor",
+    templateUrl: "./tor.component.html",
+    standalone: true,
+    imports: [NgIf, FormsModule, TranslatorPipe]
 })
 export class TorComponent implements OnInit {
   torOnionResetInProgress: boolean = false;

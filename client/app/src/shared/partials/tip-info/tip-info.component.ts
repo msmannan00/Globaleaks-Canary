@@ -5,10 +5,16 @@ import {AppDataService} from "@app/app-data.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
 import {HttpService} from "@app/shared/services/http.service";
+import { NgIf, NgSwitch, NgSwitchCase, DatePipe } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-tip-info",
-  templateUrl: "./tip-info.component.html"
+    selector: "src-tip-info",
+    templateUrl: "./tip-info.component.html",
+    standalone: true,
+    imports: [NgIf, FormsModule, NgSwitch, NgSwitchCase, DatePipe, TranslateModule, TranslatorPipe]
 })
 export class TipInfoComponent {
   @Input() tipService: ReceiverTipService | WbtipService;

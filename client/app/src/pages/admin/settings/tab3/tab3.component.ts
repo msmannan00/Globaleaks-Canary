@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from "@angular/core";
-import {NgForm} from "@angular/forms";
+import { NgForm, FormsModule } from "@angular/forms";
 import {LanguageUtils} from "@app/pages/admin/settings/helper-methods/language-utils";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
@@ -7,10 +7,17 @@ import {AppConfigService} from "@app/services/root/app-config.service";
 import {TranslationService} from "@app/services/helper/translation.service";
 import {AppDataService} from "@app/app-data.service";
 import {LanguagesSupported} from "@app/models/app/public-model";
+import { NgIf, NgFor } from "@angular/common";
+import { NgSelectComponent, NgOptionTemplateDirective } from "@ng-select/ng-select";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
+import { FilterPipe } from "@app/shared/pipes/filter.pipe";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: "src-tab3",
-  templateUrl: "./tab3.component.html"
+    selector: "src-tab3",
+    templateUrl: "./tab3.component.html",
+    standalone: true,
+    imports: [FormsModule, NgIf, NgSelectComponent, NgOptionTemplateDirective, NgFor, TranslatorPipe, FilterPipe, TranslateModule]
 })
 export class Tab3Component implements OnInit {
   @Input() contentForm: NgForm;

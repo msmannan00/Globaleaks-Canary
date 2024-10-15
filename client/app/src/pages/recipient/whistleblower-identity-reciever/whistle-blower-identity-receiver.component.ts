@@ -6,11 +6,17 @@ import {
 } from "@app/shared/modals/tip-operation-file-identity-access-request/tip-operation-file-identity-access-request.ompoent";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
+import { NgIf, NgSwitch, NgSwitchCase, NgFor, NgClass, DatePipe } from "@angular/common";
+import { TipFieldComponent } from "../../../shared/partials/tip-field/tip-field.component";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 
 @Component({
-  selector: "src-whistleblower-identity-reciever",
-  templateUrl: "./whistle-blower-identity-receiver.component.html"
+    selector: "src-whistleblower-identity-reciever",
+    templateUrl: "./whistle-blower-identity-receiver.component.html",
+    standalone: true,
+    imports: [NgIf, NgSwitch, NgSwitchCase, NgFor, TipFieldComponent, NgClass, DatePipe, TranslateModule, TranslatorPipe]
 })
 export class WhistleBlowerIdentityReceiverComponent {
   @Input() redactOperationTitle: string;

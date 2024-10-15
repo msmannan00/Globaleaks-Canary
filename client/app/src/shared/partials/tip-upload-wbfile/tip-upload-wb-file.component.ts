@@ -5,10 +5,20 @@ import {AuthenticationService} from "@app/services/helper/authentication.service
 import * as Flow from "@flowjs/flow.js";
 import {RecieverTipData} from "@app/models/reciever/reciever-tip-data";
 import {FlowFile} from "@flowjs/flow.js";
+import { NgIf, NgFor, NgClass } from "@angular/common";
+import { WbFilesComponent } from "../wbfiles/wb-files.component";
+import { FormsModule } from "@angular/forms";
+import { NgxFlowModule } from "@flowjs/ngx-flow";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
+import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
+import { FilterPipe } from "@app/shared/pipes/filter.pipe";
 
 @Component({
-  selector: "src-tip-upload-wbfile",
-  templateUrl: "./tip-upload-wb-file.component.html"
+    selector: "src-tip-upload-wbfile",
+    templateUrl: "./tip-upload-wb-file.component.html",
+    standalone: true,
+    imports: [NgIf, NgFor, WbFilesComponent, FormsModule, NgClass, NgxFlowModule, TranslateModule, TranslatorPipe, OrderByPipe, FilterPipe]
 })
 export class TipUploadWbFileComponent {
   @ViewChild('uploader') uploaderInput: ElementRef<HTMLInputElement>;

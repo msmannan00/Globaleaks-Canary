@@ -9,10 +9,19 @@ import {TranslationService} from "@app/services/helper/translation.service";
 import {AppConfigService} from "@app/services/root/app-config.service";
 import {TitleService} from "@app/shared/services/title.service";
 import {UtilsService} from "@app/shared/services/utils.service";
+import { FormsModule } from "@angular/forms";
+import { NgIf, NgClass } from "@angular/common";
+import { ProfileComponent } from "./template/profile/profile.component";
+import { PasswordStrengthValidatorDirective } from "../../../shared/directive/password-strength-validator.directive";
+import { PasswordMeterComponent } from "../../../shared/components/password-meter/password-meter.component";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-wizard",
-  templateUrl: "./wizard.component.html"
+    selector: "src-wizard",
+    templateUrl: "./wizard.component.html",
+    standalone: true,
+    imports: [FormsModule, NgIf, NgClass, ProfileComponent, PasswordStrengthValidatorDirective, PasswordMeterComponent, TranslateModule, TranslatorPipe]
 })
 export class WizardComponent implements OnInit {
   step: number = 1;

@@ -1,12 +1,17 @@
 import {Component, Input, OnInit} from "@angular/core";
-import {NgForm} from "@angular/forms";
+import { NgForm, FormsModule } from "@angular/forms";
 import {LanguageUtils} from "@app/pages/admin/settings/helper-methods/language-utils";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
+import { NgFor, NgIf, NgClass } from "@angular/common";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: "src-tab4",
-  templateUrl: "./tab4.component.html"
+    selector: "src-tab4",
+    templateUrl: "./tab4.component.html",
+    standalone: true,
+    imports: [FormsModule, NgFor, NgIf, NgClass, TranslatorPipe, TranslateModule]
 })
 export class Tab4Component implements OnInit {
   @Input() contentForm: NgForm;

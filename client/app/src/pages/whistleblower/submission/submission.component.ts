@@ -6,7 +6,7 @@ import {FieldUtilitiesService} from "@app/shared/services/field-utilities.servic
 import {SubmissionService} from "@app/services/helper/submission.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
-import {NgForm} from "@angular/forms";
+import { NgForm, FormsModule } from "@angular/forms";
 import {AppConfigService} from "@app/services/root/app-config.service";
 import {Context, Questionnaire, Receiver} from "@app/models/app/public-model";
 import {Answers} from "@app/models/reciever/reciever-tip-data";
@@ -15,11 +15,25 @@ import * as Flow from "@flowjs/flow.js";
 import {TitleService} from "@app/shared/services/title.service";
 import {Router} from "@angular/router";
 import {WhistleblowerSubmissionService} from "@app/pages/whistleblower/whistleblower-submission.service";
+import { NgIf, NgClass, NgFor } from "@angular/common";
+import { ContextSelectionComponent } from "../context-selection/context-selection.component";
+import { ReceiverSelectionComponent } from "../receiver-selection/receiver-selection.component";
+import { NgFormChangeDirective } from "../../../shared/directive/ng-form-change.directive";
+import { StepErrorComponent } from "../step-error/step-error.component";
+import { MarkdownComponent } from "ngx-markdown";
+import { FormComponent } from "../form/form.component";
+import { RFilesUploadStatusComponent } from "../../../shared/partials/rfiles-upload-status/r-files-upload-status.component";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
+import { StripHtmlPipe } from "@app/shared/pipes/strip-html.pipe";
+import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
 
 @Component({
-  selector: "src-submission",
-  templateUrl: "./submission.component.html",
-  providers: [SubmissionService]
+    selector: "src-submission",
+    templateUrl: "./submission.component.html",
+    providers: [SubmissionService],
+    standalone: true,
+    imports: [NgIf, ContextSelectionComponent, FormsModule, NgClass, NgFor, ReceiverSelectionComponent, NgFormChangeDirective, StepErrorComponent, MarkdownComponent, FormComponent, RFilesUploadStatusComponent, TranslateModule, TranslatorPipe, StripHtmlPipe, OrderByPipe]
 })
 export class SubmissionComponent implements OnInit {
   @ViewChild("submissionForm") public submissionForm: NgForm;

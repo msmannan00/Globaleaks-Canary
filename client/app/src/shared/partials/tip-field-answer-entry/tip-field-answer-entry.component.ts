@@ -1,5 +1,5 @@
 import {HttpClient} from "@angular/common/http";
-import {Component, ElementRef, Input, OnInit, ViewChild} from "@angular/core";
+import {Component, ElementRef, forwardRef, Input, OnInit, ViewChild} from "@angular/core";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {AppDataService} from "@app/app-data.service";
 import {WbFile} from "@app/models/app/shared-public-model";
@@ -11,10 +11,18 @@ import {HttpService} from "@app/shared/services/http.service";
 import {MaskService} from "@app/shared/services/mask.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { NgSwitch, NgSwitchCase, NgIf, NgFor, NgSwitchDefault, DatePipe } from "@angular/common";
+import { TipFieldComponent } from "../tip-field/tip-field.component";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
+import { SplitPipe } from "@app/shared/pipes/split.pipe";
+import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
 
 @Component({
-  selector: "src-tip-field-answer-entry",
-  templateUrl: "./tip-field-answer-entry.component.html"
+    selector: "src-tip-field-answer-entry",
+    templateUrl: "./tip-field-answer-entry.component.html",
+    standalone: true,
+    imports: [NgSwitch, NgSwitchCase, NgIf, NgFor,forwardRef(() => TipFieldComponent), NgSwitchDefault, DatePipe, TranslateModule, TranslatorPipe, SplitPipe, OrderByPipe]
 })
 export class TipFieldAnswerEntryComponent implements OnInit {
   @Input() entry: any;

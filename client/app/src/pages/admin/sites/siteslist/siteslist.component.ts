@@ -4,14 +4,19 @@ import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmatio
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {NgForm} from "@angular/forms";
+import { NgForm, FormsModule } from "@angular/forms";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {tenantResolverModel} from "@app/models/resolvers/tenant-resolver-model";
 import {Observable} from "rxjs";
+import { NgIf, DatePipe } from "@angular/common";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: "src-siteslist",
-  templateUrl: "./siteslist.component.html"
+    selector: "src-siteslist",
+    templateUrl: "./siteslist.component.html",
+    standalone: true,
+    imports: [NgIf, FormsModule, DatePipe, TranslatorPipe, TranslateModule]
 })
 export class SiteslistComponent {
   @Input() editTenant: NgForm;

@@ -22,7 +22,7 @@ import {
   NgbDatepicker
 } from "@ng-bootstrap/ng-bootstrap";
 import {NgSelectModule} from "@ng-select/ng-select";
-import {SharedModule} from "@app/shared.module";
+
 import {StepsListComponent} from "@app/pages/admin/questionnaires/steps-list/steps-list.component";
 import {
   QuestionnairesListComponent
@@ -32,7 +32,13 @@ import {MarkdownModule} from "ngx-markdown";
 
 
 @NgModule({
-  declarations: [
+    imports: [
+    CommonModule,
+    QuestionnairesRoutingModule, NgbNavModule, NgbModule, RouterModule, FormsModule, NgSelectModule,
+    NgbDropdownModule,
+    TranslateModule,
+    MarkdownModule,
+    ReactiveFormsModule, NgbDatepickerModule, NgbDatepicker,
     QuestionnairesComponent,
     AddFieldFromTemplateComponent,
     AddFieldComponent,
@@ -43,16 +49,7 @@ import {MarkdownModule} from "ngx-markdown";
     StepsComponent,
     StepsListComponent,
     QuestionnairesListComponent
-  ],
-  imports: [
-    CommonModule,
-    QuestionnairesRoutingModule, SharedModule, NgbNavModule, NgbModule, RouterModule, FormsModule, NgSelectModule,
-    NgbDropdownModule,
-    TranslateModule,
-    MarkdownModule,
-    ReactiveFormsModule, NgbDatepickerModule, NgbDatepicker
-
-  ]
+]
 })
 export class QuestionnairesModule {
 }

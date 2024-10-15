@@ -3,11 +3,16 @@ import {Component} from "@angular/core";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
 import {UtilsService} from "@app/shared/services/utils.service";
+import { FormsModule } from "@angular/forms";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 
 @Component({
-  selector: "src-tip-operation-file-identity-access-request",
-  templateUrl: "./tip-operation-file-identity-access-request.component.html"
+    selector: "src-tip-operation-file-identity-access-request",
+    templateUrl: "./tip-operation-file-identity-access-request.component.html",
+    standalone: true,
+    imports: [FormsModule, TranslateModule, TranslatorPipe]
 })
 export class TipOperationFileIdentityAccessRequestComponent {
   request_motivation: string;

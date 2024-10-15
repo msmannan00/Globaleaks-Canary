@@ -1,10 +1,21 @@
 import {Component, OnInit} from "@angular/core";
 import {tenantResolverModel} from "@app/models/resolvers/tenant-resolver-model";
 import {HttpService} from "@app/shared/services/http.service";
+import { FormsModule } from "@angular/forms";
+import { NgIf, NgFor, SlicePipe } from "@angular/common";
+import { SiteslistComponent } from "../siteslist/siteslist.component";
+import { NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast } from "@ng-bootstrap/ng-bootstrap";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
+import { FilterPipe } from "@app/shared/pipes/filter.pipe";
+import { FilterSearchPipe } from "@app/shared/pipes/filter-search.pipe";
+import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: "src-sites-tab1",
-  templateUrl: "./sites-tab1.component.html"
+    selector: "src-sites-tab1",
+    templateUrl: "./sites-tab1.component.html",
+    standalone: true,
+    imports: [FormsModule, NgIf, NgFor, SiteslistComponent, NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast, SlicePipe, TranslatorPipe, FilterPipe, FilterSearchPipe, OrderByPipe, TranslateModule]
 })
 export class SitesTab1Component implements OnInit {
   search: string;

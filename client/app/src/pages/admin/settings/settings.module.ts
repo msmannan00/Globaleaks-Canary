@@ -4,7 +4,7 @@ import {SettingsRoutingModule} from "@app/pages/admin/settings/settings-routing.
 import {SettingsComponent} from "@app/pages/admin/settings/settings.component";
 import {RouterModule} from "@angular/router";
 import {NgbNavModule, NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {SharedModule} from "@app/shared.module";
+
 import {Tab2Component} from "@app/pages/admin/settings/tab2/tab2.component";
 import {Tab3Component} from "@app/pages/admin/settings/tab3/tab3.component";
 import {Tab4Component} from "@app/pages/admin/settings/tab4/tab4.component";
@@ -14,17 +14,15 @@ import {NgSelectModule} from "@ng-select/ng-select";
 import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
-  declarations: [
+    imports: [
+    CommonModule,
+    SettingsRoutingModule, NgbNavModule, NgbModule, RouterModule, FormsModule, NgSelectModule, TranslateModule,
     SettingsComponent,
     Tab2Component,
     Tab3Component,
     Tab4Component,
     Tab5Component
-  ],
-  imports: [
-    CommonModule,
-    SettingsRoutingModule, SharedModule, NgbNavModule, NgbModule, RouterModule, FormsModule, NgSelectModule, TranslateModule
-  ]
+]
 })
 export class SettingsModule {
 }

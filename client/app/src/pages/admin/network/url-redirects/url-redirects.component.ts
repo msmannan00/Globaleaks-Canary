@@ -1,10 +1,16 @@
 import {Component, OnInit} from "@angular/core";
 import {redirectResolverModel} from "@app/models/resolvers/redirect-resolver-model";
 import {HttpService} from "@app/shared/services/http.service";
+import { FormsModule } from "@angular/forms";
+import { NgFor } from "@angular/common";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
+import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
 
 @Component({
-  selector: "src-url-redirects",
-  templateUrl: "./url-redirects.component.html"
+    selector: "src-url-redirects",
+    templateUrl: "./url-redirects.component.html",
+    standalone: true,
+    imports: [FormsModule, NgFor, TranslatorPipe, OrderByPipe]
 })
 export class UrlRedirectsComponent implements OnInit {
   redirectData: redirectResolverModel[];

@@ -1,12 +1,17 @@
 import {HttpClient} from "@angular/common/http";
 import {Component, Input, OnInit} from "@angular/core";
-import {NgbDateStruct, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { NgbDateStruct, NgbModal, NgbInputDatepicker } from "@ng-bootstrap/ng-bootstrap";
 import {UtilsService} from "@app/shared/services/utils.service";
+import { FormsModule } from "@angular/forms";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 
 @Component({
-  selector: "src-tip-operation-set-reminder",
-  templateUrl: "./tip-operation-set-reminder.component.html"
+    selector: "src-tip-operation-set-reminder",
+    templateUrl: "./tip-operation-set-reminder.component.html",
+    standalone: true,
+    imports: [NgbInputDatepicker, FormsModule, TranslateModule, TranslatorPipe]
 })
 export class TipOperationSetReminderComponent implements OnInit {
   @Input() args: any;

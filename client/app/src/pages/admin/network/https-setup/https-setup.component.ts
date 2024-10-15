@@ -2,10 +2,13 @@ import {Component, EventEmitter, Output} from "@angular/core";
 import {FileResources} from "@app/models/component-model/file-resources";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {HttpService} from "@app/shared/services/http.service";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-https-setup",
-  templateUrl: "./https-setup.component.html"
+    selector: "src-https-setup",
+    templateUrl: "./https-setup.component.html",
+    standalone: true,
+    imports: [TranslatorPipe]
 })
 export class HttpsSetupComponent {
   @Output() dataToParent = new EventEmitter<string>();

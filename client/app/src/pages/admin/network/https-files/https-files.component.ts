@@ -8,10 +8,15 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {nodeResolverModel} from "@app/models/resolvers/node-resolver-model";
 import {TlsConfig} from "@app/models/component-model/tls-confiq";
 import {FileResource, FileResources} from "@app/models/component-model/file-resources";
+import { NgIf, DatePipe } from "@angular/common";
+import { HttpsCsrGenComponent } from "../https-csr-gen/https-csr-gen.component";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-https-files",
-  templateUrl: "./https-files.component.html"
+    selector: "src-https-files",
+    templateUrl: "./https-files.component.html",
+    standalone: true,
+    imports: [NgIf, HttpsCsrGenComponent, DatePipe, TranslatorPipe]
 })
 export class HttpsFilesComponent implements OnInit {
   @Output() dataToParent = new EventEmitter<string>();

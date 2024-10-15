@@ -3,10 +3,18 @@ import {Router} from "@angular/router";
 import {Tab} from "@app/models/component-model/tab";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {Tab1Component} from "@app/pages/admin/settings/tab1/tab1.component";
+import { FormsModule } from "@angular/forms";
+import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgbNavOutlet } from "@ng-bootstrap/ng-bootstrap";
+import { NgFor, NgTemplateOutlet } from "@angular/common";
+import { Tab1Component as Tab1Component_1 } from "../../admin/settings/tab1/tab1.component";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-recipient-settings",
-  templateUrl: "./settings.component.html"
+    selector: "src-recipient-settings",
+    templateUrl: "./settings.component.html",
+    standalone: true,
+    imports: [FormsModule, NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, Tab1Component_1, TranslateModule, TranslatorPipe]
 })
 export class SettingsComponent implements AfterViewInit {
   @ViewChild("tab1") tab1!: TemplateRef<Tab1Component>;

@@ -3,10 +3,16 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {Receiver} from "@app/models/app/public-model";
 import {cancelFun, ConfirmFunFunction} from "@app/shared/constants/types";
+import { NgSelectComponent, NgLabelTemplateDirective } from "@ng-select/ng-select";
+import { FormsModule } from "@angular/forms";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-grant-access",
-  templateUrl: "./grant-access.component.html"
+    selector: "src-grant-access",
+    templateUrl: "./grant-access.component.html",
+    standalone: true,
+    imports: [NgSelectComponent, FormsModule, NgLabelTemplateDirective, TranslateModule, TranslatorPipe]
 })
 export class GrantAccessComponent {
 

@@ -5,7 +5,7 @@ import {AuditLogTab2Component} from "@app/pages/admin/auditlog/auditlog-tab2/aud
 import {AuditLogTab3Component} from "@app/pages/admin/auditlog/auditlog-tab3/audit-log-tab3.component";
 import {AuditLogTab4Component} from "@app/pages/admin/auditlog/auditlog-tab4/audit-log-tab4.component";
 import {AuditLogComponent} from "@app/pages/admin/auditlog/audit-log.component";
-import {SharedModule} from "@app/shared.module";
+
 import {NgbModule, NgbNavModule} from "@ng-bootstrap/ng-bootstrap";
 import {RouterModule} from "@angular/router";
 import {FormsModule} from "@angular/forms";
@@ -14,17 +14,15 @@ import {AuditLogRoutingModule} from "@app/pages/admin/auditlog/auditlog-routing.
 import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
-  declarations: [
+    imports: [
+    CommonModule,
+    AuditLogRoutingModule, NgbNavModule, NgbModule, RouterModule, FormsModule, NgSelectModule, TranslateModule,
     AuditLogTab1Component,
     AuditLogTab2Component,
     AuditLogTab3Component,
     AuditLogTab4Component,
     AuditLogComponent
-  ],
-  imports: [
-    CommonModule,
-    AuditLogRoutingModule, SharedModule, NgbNavModule, NgbModule, RouterModule, FormsModule, NgSelectModule, TranslateModule
-  ]
+]
 })
 export class AuditLogModule {
 }

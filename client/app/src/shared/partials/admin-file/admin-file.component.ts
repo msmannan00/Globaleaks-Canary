@@ -6,10 +6,16 @@ import * as Flow from "@flowjs/flow.js";
 import {AppConfigService} from "@app/services/root/app-config.service";
 import {AppDataService} from "@app/app-data.service";
 import {AdminFile} from "@app/models/component-model/admin-file";
+import { NgClass, NgIf } from "@angular/common";
+import { NgxFlowModule } from "@flowjs/ngx-flow";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-admin-file",
-  templateUrl: "./admin-file.component.html"
+    selector: "src-admin-file",
+    templateUrl: "./admin-file.component.html",
+    standalone: true,
+    imports: [NgClass, NgIf, NgxFlowModule, TranslateModule, TranslatorPipe]
 })
 export class AdminFileComponent implements OnInit {
   @Input() adminFile: AdminFile;

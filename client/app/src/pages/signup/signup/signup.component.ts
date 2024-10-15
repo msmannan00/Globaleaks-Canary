@@ -3,10 +3,17 @@ import {AppDataService} from "@app/app-data.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {AppConfigService} from "@app/services/root/app-config.service";
 import {Signup} from "@app/models/component-model/signup";
+import { NgIf, NgSwitch, NgSwitchCase } from "@angular/common";
+import { SignupdefaultComponent } from "../templates/signupdefault/signupdefault.component";
+import { WbpaComponent } from "../templates/wbpa/wbpa.component";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-signup",
-  templateUrl: "./signup.component.html"
+    selector: "src-signup",
+    templateUrl: "./signup.component.html",
+    standalone: true,
+    imports: [NgIf, NgSwitch, NgSwitchCase, SignupdefaultComponent, WbpaComponent, TranslateModule, TranslatorPipe]
 })
 export class SignupComponent implements OnInit {
   hostname = "";

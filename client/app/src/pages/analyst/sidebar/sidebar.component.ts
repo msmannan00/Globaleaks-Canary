@@ -1,11 +1,15 @@
 import {Component} from "@angular/core";
-import {Router} from "@angular/router";
+import { Router, RouterLink, RouterLinkActive } from "@angular/router";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-analyst-sidebar",
-  templateUrl: "./sidebar.component.html"
+    selector: "src-analyst-sidebar",
+    templateUrl: "./sidebar.component.html",
+    standalone: true,
+    imports: [RouterLink, RouterLinkActive, TranslateModule, TranslatorPipe]
 })
-export class SidebarComponent {
+export class AnalystSidebarComponent {
   constructor(private router: Router) {
   }
 

@@ -1,28 +1,34 @@
 import {Component, HostListener, OnInit} from "@angular/core";
 import {AppConfigService} from "@app/services/root/app-config.service";
-import {NgbDate, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { NgbDate, NgbModal, NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast } from "@ng-bootstrap/ng-bootstrap";
 import {AppDataService} from "@app/app-data.service";
 import {GrantAccessComponent} from "@app/shared/modals/grant-access/grant-access.component";
 import {RevokeAccessComponent} from "@app/shared/modals/revoke-access/revoke-access.component";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {RTipsResolver} from "@app/shared/resolvers/r-tips-resolver.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import {TranslateService} from "@ngx-translate/core";
-import {IDropdownSettings} from "ng-multiselect-dropdown";
+import { TranslateService, TranslateModule } from "@ngx-translate/core";
+import { IDropdownSettings, NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import {filter, orderBy} from "lodash-es";
 import {TokenResource} from "@app/shared/services/token-resource.service";
-import {Router} from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import {rtipResolverModel} from "@app/models/resolvers/rtips-resolver-model";
 import {Receiver} from "@app/models/reciever/reciever-tip-data";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {Observable, from, switchMap} from "rxjs";
 import {HttpClient, HttpResponse} from "@angular/common/http";
-import {formatDate} from "@angular/common";
+import { formatDate, NgIf, NgClass, NgFor, NgSwitch, NgSwitchCase, SlicePipe, DatePipe } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { DateRangeSelectorComponent } from "../../../shared/components/date-selector/date-selector.component";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
+import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
 
 @Component({
-  selector: "src-tips",
-  templateUrl: "./tips.component.html"
+    selector: "src-tips",
+    templateUrl: "./tips.component.html",
+    standalone: true,
+    imports: [NgIf, RouterLink, FormsModule, NgClass, NgMultiSelectDropDownModule, DateRangeSelectorComponent, NgFor, NgSwitch, NgSwitchCase, NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast, SlicePipe, DatePipe, TranslateModule, TranslatorPipe, OrderByPipe]
 })
 export class TipsComponent implements OnInit {
   search: string | undefined;

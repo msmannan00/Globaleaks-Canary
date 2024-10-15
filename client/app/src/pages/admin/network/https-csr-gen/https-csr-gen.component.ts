@@ -4,10 +4,15 @@ import {Constants} from "@app/shared/constants/constants";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
+import { FormsModule } from "@angular/forms";
+import { NgClass, NgIf } from "@angular/common";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-https-csr-gen",
-  templateUrl: "./https-csr-gen.component.html"
+    selector: "src-https-csr-gen",
+    templateUrl: "./https-csr-gen.component.html",
+    standalone: true,
+    imports: [FormsModule, NgClass, NgIf, TranslatorPipe]
 })
 export class HttpsCsrGenComponent {
   @Input() fileResources: FileResources;

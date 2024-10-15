@@ -3,10 +3,15 @@ import {networkResolverModel} from "@app/models/resolvers/network-resolver-model
 import {NetworkResolver} from "@app/shared/resolvers/network.resolver";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
+import { FormsModule } from "@angular/forms";
+import { NgIf } from "@angular/common";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-access-control",
-  templateUrl: "./access-control.component.html"
+    selector: "src-access-control",
+    templateUrl: "./access-control.component.html",
+    standalone: true,
+    imports: [FormsModule, NgIf, TranslatorPipe]
 })
 export class AccessControlComponent implements OnInit {
   networkData: networkResolverModel;

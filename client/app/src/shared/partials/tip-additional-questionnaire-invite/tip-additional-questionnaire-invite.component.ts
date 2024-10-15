@@ -4,10 +4,15 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {
   TipAdditionalQuestionnaireFormComponent
 } from "@app/shared/modals/tip-additional-questionnaire-form/tip-additional-questionnaire-form.component";
+import { NgIf } from "@angular/common";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-tip-additional-questionnaire-invite",
-  templateUrl: "./tip-additional-questionnaire-invite.component.html"
+    selector: "src-tip-additional-questionnaire-invite",
+    templateUrl: "./tip-additional-questionnaire-invite.component.html",
+    standalone: true,
+    imports: [NgIf, TranslateModule, TranslatorPipe]
 })
 export class TipAdditionalQuestionnaireInviteComponent {
   collapsed = false;

@@ -8,10 +8,16 @@ import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {UsersResolver} from "@app/shared/resolvers/users.resolver";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
+import { NgIf, NgClass, NgFor } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { ContextEditorComponent } from "./context-editor/context-editor.component";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-contexts",
-  templateUrl: "./contexts.component.html"
+    selector: "src-contexts",
+    templateUrl: "./contexts.component.html",
+    standalone: true,
+    imports: [NgIf, FormsModule, NgClass, NgFor, ContextEditorComponent, TranslatorPipe]
 })
 export class ContextsComponent implements OnInit {
   showAddContext: boolean = false;

@@ -1,5 +1,5 @@
 import {Component, Input} from "@angular/core";
-import {NgForm} from "@angular/forms";
+import { NgForm, FormsModule } from "@angular/forms";
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {
@@ -11,10 +11,16 @@ import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnair
 import {Observable} from "rxjs";
 import {questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
+import { NgIf } from "@angular/common";
+import { StepsComponent } from "../steps/steps.component";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: "src-questionnaires-list",
-  templateUrl: "./questionnaires-list.component.html"
+    selector: "src-questionnaires-list",
+    templateUrl: "./questionnaires-list.component.html",
+    standalone: true,
+    imports: [NgIf, FormsModule, StepsComponent, TranslatorPipe, TranslateModule]
 })
 export class QuestionnairesListComponent {
   @Input() questionnaire: questionnaireResolverModel;

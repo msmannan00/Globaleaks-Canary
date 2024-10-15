@@ -7,10 +7,19 @@ import {AppDataService} from "@app/app-data.service";
 import {TranslationService} from "@app/services/helper/translation.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import { NgIf, NgClass, NgFor } from "@angular/common";
+import { NgSelectComponent, NgOptionComponent } from "@ng-select/ng-select";
+import { FormsModule } from "@angular/forms";
+import { ReceiptComponent } from "../../../receipt/receipt.component";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
+import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
 
 @Component({
-  selector: "views-user",
-  templateUrl: "./user.component.html"
+    selector: "views-user",
+    templateUrl: "./user.component.html",
+    standalone: true,
+    imports: [NgIf, NgClass, NgSelectComponent, FormsModule, NgFor, NgOptionComponent, ReceiptComponent, TranslateModule, TranslatorPipe, OrderByPipe]
 })
 export class UserComponent {
   private lastLang: string | null = null;

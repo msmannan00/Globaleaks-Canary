@@ -2,10 +2,16 @@ import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {Context} from "@app/models/app/public-model";
 import {UtilsService} from "@app/shared/services/utils.service";
+import { NgIf, NgFor, NgOptimizedImage } from "@angular/common";
+import { MarkdownComponent } from "ngx-markdown";
+import { StripHtmlPipe } from "@app/shared/pipes/strip-html.pipe";
+import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
 
 @Component({
-  selector: "src-context-selection",
-  templateUrl: "./context-selection.component.html"
+    selector: "src-context-selection",
+    templateUrl: "./context-selection.component.html",
+    standalone: true,
+    imports: [NgIf, MarkdownComponent, NgFor, NgOptimizedImage, StripHtmlPipe, OrderByPipe]
 })
 export class ContextSelectionComponent {
 

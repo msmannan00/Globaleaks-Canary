@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from "@angular/core";
-import {NgForm} from "@angular/forms";
+import { NgForm, FormsModule } from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Constants} from "@app/shared/constants/constants";
 import {EnableEncryptionComponent} from "@app/shared/modals/enable-encryption/enable-encryption.component";
@@ -12,10 +12,15 @@ import {AppConfigService} from "@app/services/root/app-config.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {userResolverModel} from "@app/models/resolvers/user-resolver-model";
 import {questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
+import { NgIf, NgFor, NgClass } from "@angular/common";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: "src-tab5",
-  templateUrl: "./tab5.component.html"
+    selector: "src-tab5",
+    templateUrl: "./tab5.component.html",
+    standalone: true,
+    imports: [FormsModule, NgIf, NgFor, NgClass, TranslatorPipe, TranslateModule]
 })
 export class Tab5Component implements OnInit {
   @Input() contentForm: NgForm;

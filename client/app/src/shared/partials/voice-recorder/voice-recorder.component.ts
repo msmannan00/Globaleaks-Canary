@@ -6,10 +6,14 @@ import {Observable} from "rxjs";
 import {Field} from "@app/models/resolvers/field-template-model";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { UtilsService } from "@app/shared/services/utils.service";
+import { NgIf, NgClass } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 
 @Component({
-  selector: "src-voice-recorder",
-  templateUrl: "./voice-recorder.component.html"
+    selector: "src-voice-recorder",
+    templateUrl: "./voice-recorder.component.html",
+    standalone: true,
+    imports: [NgIf, NgClass, FormsModule]
 })
 export class VoiceRecorderComponent implements OnInit {
   @Input() uploads: any;

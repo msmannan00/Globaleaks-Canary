@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {NgForm} from "@angular/forms";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { NgForm, FormsModule } from "@angular/forms";
+import { NgbModal, NgbInputDatepicker } from "@ng-bootstrap/ng-bootstrap";
 import {AddOptionHintComponent} from "@app/shared/modals/add-option-hint/add-option-hint.component";
 import {AssignScorePointsComponent} from "@app/shared/modals/assign-score-points/assign-score-points.component";
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
@@ -17,10 +17,18 @@ import {ParsedFields} from "@app/models/component-model/parsedFields";
 import {Field, fieldtemplatesResolverModel} from "@app/models/resolvers/field-template-model";
 import {Children, Option, TriggeredByOption} from "@app/models/app/shared-public-model";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
+import { NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgFor, NgClass, DatePipe } from "@angular/common";
+import { AddFieldComponent } from "../add-field/add-field.component";
+import { AddFieldFromTemplateComponent } from "../add-field-from-template/add-field-from-template.component";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
+import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: "src-fields",
-  templateUrl: "./fields.component.html"
+    selector: "src-fields",
+    templateUrl: "./fields.component.html",
+    standalone: true,
+    imports: [NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, FormsModule, NgbInputDatepicker, NgFor, NgClass, AddFieldComponent, AddFieldFromTemplateComponent, DatePipe, TranslatorPipe, OrderByPipe, TranslateModule]
 })
 export class FieldsComponent implements OnInit {
   @Input() editField: NgForm;

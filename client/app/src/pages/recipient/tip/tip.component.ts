@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild} from "@ang
 import {ActivatedRoute, Router} from "@angular/router";
 import {AppConfigService} from "@app/services/root/app-config.service";
 import {TipService} from "@app/shared/services/tip-service";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal, NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgbNavOutlet } from "@ng-bootstrap/ng-bootstrap";
 import {AppDataService} from "@app/app-data.service";
 import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
 import {GrantAccessComponent} from "@app/shared/modals/grant-access/grant-access.component";
@@ -29,12 +29,44 @@ import {TipUploadWbFileComponent} from "@app/shared/partials/tip-upload-wbfile/t
 import {TipCommentsComponent} from "@app/shared/partials/tip-comments/tip-comments.component";
 import {ReopenSubmissionComponent} from "@app/shared/modals/reopen-submission/reopen-submission.component";
 import {ChangeSubmissionStatusComponent} from "@app/shared/modals/change-submission-status/change-submission-status.component";
-import {TranslateService} from "@ngx-translate/core";
+import { TranslateService, TranslateModule } from "@ngx-translate/core";
+import { NgIf, NgClass, NgFor, NgTemplateOutlet } from "@angular/common";
+import { TipInfoComponent } from "../../../shared/partials/tip-info/tip-info.component";
+import { TipReceiverListComponent } from "../../../shared/partials/tip-receiver-list/tip-receiver-list.component";
+import { TipQuestionnaireAnswersComponent } from "../../../shared/partials/tip-questionnaire-answers/tip-questionnaire-answers.component";
+import { WhistleBlowerIdentityReceiverComponent } from "../whistleblower-identity-reciever/whistle-blower-identity-receiver.component";
+import { TipFilesReceiverComponent } from "../../../shared/partials/tip-files-receiver/tip-files-receiver.component";
+import { TipUploadWbFileComponent as TipUploadWbFileComponent_1 } from "../../../shared/partials/tip-upload-wbfile/tip-upload-wb-file.component";
+import { TipCommentsComponent as TipCommentsComponent_1 } from "../../../shared/partials/tip-comments/tip-comments.component";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 
 @Component({
-  selector: "src-tip",
-  templateUrl: "./tip.component.html",
+    selector: "src-tip",
+    templateUrl: "./tip.component.html",
+    standalone: true,
+    imports: [
+        NgIf,
+        NgClass,
+        TipInfoComponent,
+        TipReceiverListComponent,
+        TipQuestionnaireAnswersComponent,
+        WhistleBlowerIdentityReceiverComponent,
+        TipFilesReceiverComponent,
+        NgbNav,
+        NgFor,
+        NgbNavItem,
+        NgbNavItemRole,
+        NgbNavLinkButton,
+        NgbNavLinkBase,
+        NgbNavContent,
+        NgTemplateOutlet,
+        NgbNavOutlet,
+        TipUploadWbFileComponent_1,
+        TipCommentsComponent_1,
+        TranslateModule,
+        TranslatorPipe,
+    ],
 })
 export class TipComponent implements OnInit {
   @ViewChild("tab1") tab1!: TemplateRef<TipUploadWbFileComponent | TipCommentsComponent>;

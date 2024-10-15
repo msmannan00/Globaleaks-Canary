@@ -3,7 +3,8 @@ import {debounceTime, Subscription} from "rxjs";
 import {NgForm} from "@angular/forms";
 
 @Directive({
-  selector: "[ngFormChanges]"
+    selector: "[ngFormChanges]",
+    standalone: true
 })
 export class NgFormChangeDirective implements OnInit, OnDestroy {
 

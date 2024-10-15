@@ -6,10 +6,16 @@ import {FieldTemplate} from "@app/models/admin/field-Template";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 import {Step} from "@app/models/resolvers/questionnaire-model";
 import {Field} from "@app/models/resolvers/field-template-model";
+import { FormsModule } from "@angular/forms";
+import { NgIf } from "@angular/common";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: "src-add-field",
-  templateUrl: "./add-field.component.html"
+    selector: "src-add-field",
+    templateUrl: "./add-field.component.html",
+    standalone: true,
+    imports: [FormsModule, NgIf, TranslatorPipe, TranslateModule]
 })
 export class AddFieldComponent implements OnInit {
   @Output() dataToParent = new EventEmitter<string>();

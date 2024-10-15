@@ -2,10 +2,19 @@ import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {Signup} from "@app/models/component-model/signup";
 import * as Constants from "@app/shared/constants/constants";
+import { FormsModule } from "@angular/forms";
+import { NgClass, NgIf } from "@angular/common";
+import { SubdomainValidatorDirective } from "../../../../shared/directive/subdomain-validator.directive";
+import { DisableCcpDirective } from "../../../../shared/directive/disable-ccp.directive";
+import { TosComponent } from "../tos/tos.component";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-signupdefault",
-  templateUrl: "./signupdefault.component.html"
+    selector: "src-signupdefault",
+    templateUrl: "./signupdefault.component.html",
+    standalone: true,
+    imports: [FormsModule, NgClass, SubdomainValidatorDirective, NgIf, DisableCcpDirective, TosComponent, TranslateModule, TranslatorPipe]
 })
 export class SignupdefaultComponent implements OnInit {
 

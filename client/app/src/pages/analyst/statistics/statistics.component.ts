@@ -1,10 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { StatisticsResolver } from '@app/shared/resolvers/statistics.resolver';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { NgFor } from '@angular/common';
+import { BaseChartDirective } from 'ng2-charts';
+import { TranslatorPipe } from '@app/shared/pipes/translate';
 
 @Component({
-  selector: 'src-statistics',
-  templateUrl: './statistics.component.html',
+    selector: 'src-statistics',
+    templateUrl: './statistics.component.html',
+    standalone: true,
+    imports: [
+        NgFor,
+        BaseChartDirective,
+        TranslateModule,
+        TranslatorPipe,
+    ],
 })
 export class StatisticsComponent implements OnInit {
   charts: any[] = [];

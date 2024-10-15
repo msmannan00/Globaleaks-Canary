@@ -3,10 +3,18 @@ import {Tab} from "@app/models/component-model/tab";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {NotificationTab1Component} from "@app/pages/admin/notifications/notification-tab1/notification-tab1.component";
 import {NotificationTab2Component} from "@app/pages/admin/notifications/notification-tab2/notification-tab2.component";
+import { FormsModule } from "@angular/forms";
+import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgbNavOutlet } from "@ng-bootstrap/ng-bootstrap";
+import { NgFor, NgTemplateOutlet } from "@angular/common";
+import { NotificationTab1Component as NotificationTab1Component_1 } from "./notification-tab1/notification-tab1.component";
+import { NotificationTab2Component as NotificationTab2Component_1 } from "./notification-tab2/notification-tab2.component";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-notifications",
-  templateUrl: "./notifications.component.html"
+    selector: "src-notifications",
+    templateUrl: "./notifications.component.html",
+    standalone: true,
+    imports: [FormsModule, NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, NotificationTab1Component_1, NotificationTab2Component_1, TranslatorPipe]
 })
 export class NotificationsComponent implements AfterViewInit {
   @ViewChild("tab1") tab1!: TemplateRef<NotificationTab1Component>;

@@ -1,9 +1,15 @@
 import {Component, Input} from "@angular/core";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { FormsModule } from "@angular/forms";
+import { NgIf } from "@angular/common";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-assign-score-points",
-  templateUrl: "./assign-score-points.component.html"
+    selector: "src-assign-score-points",
+    templateUrl: "./assign-score-points.component.html",
+    standalone: true,
+    imports: [FormsModule, NgIf, TranslateModule, TranslatorPipe]
 })
 export class AssignScorePointsComponent {
   @Input() arg = {

@@ -3,10 +3,16 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {TipsResolver} from "@app/shared/resolvers/tips.resolver";
 import {tipsResolverModel} from "@app/models/resolvers/tips-resolver-model";
 import {AppDataService} from "@app/app-data.service";
+import { NgIf, NgFor, DatePipe } from "@angular/common";
+import { NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast } from "@ng-bootstrap/ng-bootstrap";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: "src-auditlog-tab3",
-  templateUrl: "./audit-log-tab3.component.html"
+    selector: "src-auditlog-tab3",
+    templateUrl: "./audit-log-tab3.component.html",
+    standalone: true,
+    imports: [NgIf, NgFor, NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast, DatePipe, TranslatorPipe, TranslateModule]
 })
 export class AuditLogTab3Component implements OnInit {
   currentPage = 1;

@@ -4,10 +4,16 @@ import {AuditLogResolver} from "@app/shared/resolvers/audit-log-resolver.service
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
+import { NgIf, NgFor, DatePipe } from "@angular/common";
+import { NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast } from "@ng-bootstrap/ng-bootstrap";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: "src-auditlog-tab1",
-  templateUrl: "./audit-log-tab1.component.html"
+    selector: "src-auditlog-tab1",
+    templateUrl: "./audit-log-tab1.component.html",
+    standalone: true,
+    imports: [NgIf, NgFor, NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast, DatePipe, TranslatorPipe, TranslateModule]
 })
 export class AuditLogTab1Component implements OnInit {
   currentPage = 1;

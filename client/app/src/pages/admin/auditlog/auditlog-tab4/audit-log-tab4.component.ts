@@ -2,10 +2,15 @@ import {Component, OnInit} from "@angular/core";
 import {JobResolver} from "@app/shared/resolvers/job.resolver";
 import {jobResolverModel} from "@app/models/resolvers/job-resolver-model";
 import {UtilsService} from "@app/shared/services/utils.service";
+import { NgIf, NgFor, DatePipe } from "@angular/common";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: "src-auditlog-tab4",
-  templateUrl: "./audit-log-tab4.component.html"
+    selector: "src-auditlog-tab4",
+    templateUrl: "./audit-log-tab4.component.html",
+    standalone: true,
+    imports: [NgIf, NgFor, DatePipe, TranslatorPipe, TranslateModule]
 })
 export class AuditLogTab4Component implements OnInit{
   currentPage = 1;

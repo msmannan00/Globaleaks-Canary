@@ -1,14 +1,18 @@
 import {ChangeDetectionStrategy, Component} from "@angular/core";
-import {Router} from "@angular/router";
+import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
+import { NgIf } from "@angular/common";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-admin-sidebar",
-  templateUrl: "./sidebar.component.html",
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: "src-admin-sidebar",
+    templateUrl: "./sidebar.component.html",
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [RouterLink, RouterLinkActive, NgIf, TranslatorPipe]
 })
-export class SidebarComponent {
+export class AdminSidebarComponent {
 
   constructor(private router: Router, protected nodeResolver: NodeResolver, protected authenticationService: AuthenticationService) {
   }

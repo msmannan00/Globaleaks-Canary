@@ -5,10 +5,19 @@ import {HttpsComponent} from "@app/pages/admin/network/https/https.component";
 import {TorComponent} from "@app/pages/admin/network/tor/tor.component";
 import {AccessControlComponent} from "@app/pages/admin/network/access-control/access-control.component";
 import {UrlRedirectsComponent} from "@app/pages/admin/network/url-redirects/url-redirects.component";
+import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgbNavOutlet } from "@ng-bootstrap/ng-bootstrap";
+import { NgFor, NgTemplateOutlet } from "@angular/common";
+import { HttpsComponent as HttpsComponent_1 } from "./https/https.component";
+import { TorComponent as TorComponent_1 } from "./tor/tor.component";
+import { AccessControlComponent as AccessControlComponent_1 } from "./access-control/access-control.component";
+import { UrlRedirectsComponent as UrlRedirectsComponent_1 } from "./url-redirects/url-redirects.component";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-network",
-  templateUrl: "./network.component.html"
+    selector: "src-network",
+    templateUrl: "./network.component.html",
+    standalone: true,
+    imports: [NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, HttpsComponent_1, TorComponent_1, AccessControlComponent_1, UrlRedirectsComponent_1, TranslatorPipe]
 })
 export class NetworkComponent implements AfterViewInit {
   @ViewChild("tab1") tab1!: TemplateRef<HttpsComponent>;

@@ -4,10 +4,16 @@ import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {nodeResolverModel} from "@app/models/resolvers/node-resolver-model";
 import {preferenceResolverModel} from "@app/models/resolvers/preference-resolver-model";
 import { UtilsService } from "@app/shared/services/utils.service";
+import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgbNavOutlet } from "@ng-bootstrap/ng-bootstrap";
+import { UserHomeComponent } from "../../../shared/partials/user-home/user-home.component";
+import { NgIf } from "@angular/common";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-admin-home",
-  templateUrl: "./admin-home.component.html"
+    selector: "src-admin-home",
+    templateUrl: "./admin-home.component.html",
+    standalone: true,
+    imports: [NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, UserHomeComponent, NgIf, NgbNavOutlet, TranslatorPipe]
 })
 export class adminHomeComponent implements OnInit {
   active: number = 0;

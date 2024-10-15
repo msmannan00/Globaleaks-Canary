@@ -2,10 +2,16 @@ import {Component, EventEmitter, Input, Output, QueryList} from "@angular/core";
 import {FormArray, FormGroup, NgForm} from "@angular/forms";
 import {Field} from "@app/models/resolvers/field-template-model";
 import {DisplayStepErrorsFunction, StepFormFunction} from "@app/shared/constants/types";
+import { NgIf, NgFor } from "@angular/common";
+import { StepErrorEntryComponent } from "./template/step-error-entry/step-error-entry.component";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-step-error",
-  templateUrl: "./step-error.component.html"
+    selector: "src-step-error",
+    templateUrl: "./step-error.component.html",
+    standalone: true,
+    imports: [NgIf, NgFor, StepErrorEntryComponent, TranslateModule, TranslatorPipe]
 })
 export class StepErrorComponent {
   @Input() navigation: number;

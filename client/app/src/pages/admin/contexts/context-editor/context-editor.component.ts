@@ -1,6 +1,6 @@
 import {HttpClient} from "@angular/common/http";
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {NgForm} from "@angular/forms";
+import { NgForm, FormsModule } from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
@@ -12,10 +12,17 @@ import {contextResolverModel} from "@app/models/resolvers/context-resolver-model
 import {questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
 import {userResolverModel} from "@app/models/resolvers/user-resolver-model";
 import {nodeResolverModel} from "@app/models/resolvers/node-resolver-model";
+import { NgIf, NgFor, NgClass } from "@angular/common";
+import { ImageUploadDirective } from "../../../../shared/directive/image-upload.directive";
+import { NgSelectComponent, NgOptionTemplateDirective } from "@ng-select/ng-select";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
+import { FilterPipe } from "@app/shared/pipes/filter.pipe";
 
 @Component({
-  selector: "src-context-editor",
-  templateUrl: "./context-editor.component.html"
+    selector: "src-context-editor",
+    templateUrl: "./context-editor.component.html",
+    standalone: true,
+    imports: [NgIf, ImageUploadDirective, FormsModule, NgFor, NgSelectComponent, NgOptionTemplateDirective, NgClass, TranslatorPipe, FilterPipe]
 })
 export class ContextEditorComponent implements OnInit {
   @Input() contextsData: contextResolverModel[];

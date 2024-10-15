@@ -5,10 +5,18 @@ import {Constants} from "@app/shared/constants/constants";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
+import { FormsModule } from "@angular/forms";
+import { NgClass, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from "@angular/common";
+import { HttpsStatusComponent } from "../https-status/https-status.component";
+import { HttpsSetupComponent } from "../https-setup/https-setup.component";
+import { HttpsFilesComponent } from "../https-files/https-files.component";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-https",
-  templateUrl: "./https.component.html"
+    selector: "src-https",
+    templateUrl: "./https.component.html",
+    standalone: true,
+    imports: [FormsModule, NgClass, NgIf, NgSwitch, HttpsStatusComponent, NgSwitchCase, HttpsSetupComponent, NgSwitchDefault, HttpsFilesComponent, TranslatorPipe]
 })
 export class HttpsComponent implements OnInit {
   protected readonly Constants = Constants;

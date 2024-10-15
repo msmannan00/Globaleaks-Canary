@@ -6,10 +6,18 @@ import {AppDataService} from "@app/app-data.service";
 import {HttpService} from "@app/shared/services/http.service";
 import {Router} from "@angular/router";
 import {ErrorCodes} from "@app/models/app/error-code";
+import { FormsModule } from "@angular/forms";
+import { NgIf, NgClass } from "@angular/common";
+import { PasswordStrengthValidatorDirective } from "../../directive/password-strength-validator.directive";
+import { PasswordMeterComponent } from "../../components/password-meter/password-meter.component";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
-  selector: "src-password-change",
-  templateUrl: "./password-change.component.html"
+    selector: "src-password-change",
+    templateUrl: "./password-change.component.html",
+    standalone: true,
+    imports: [FormsModule, NgIf, NgClass, PasswordStrengthValidatorDirective, PasswordMeterComponent, TranslateModule, TranslatorPipe]
 })
 export class PasswordChangeComponent implements OnInit {
   passwordStrengthScore: number = 0;
