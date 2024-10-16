@@ -1,10 +1,9 @@
-import {NgModule} from "@angular/core";
-import {RouterModule, Routes} from "@angular/router";
+import {Routes} from "@angular/router";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {RTipsResolver} from "@app/shared/resolvers/r-tips-resolver.service";
 
-const routes: Routes = [
+export const recipientRoutes: Routes = [
   {
     path: "",
     loadComponent: () => import('@app/pages/recipient/home/home.component').then(m => m.HomeComponent),
@@ -34,7 +33,7 @@ const routes: Routes = [
   },
   {
     path: "settings",
-    loadComponent: () => import('@app/pages/recipient/settings/settings.component').then(m => m.SettingsComponent),
+    loadComponent: () => import('@app/pages/recipient/settings/settings.component').then(m => m.RecipientSettingsComponent),
     resolve: {
       NodeResolver
     },
@@ -51,10 +50,3 @@ const routes: Routes = [
     data: {pageTitle: "Preferences"},
   }
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class RecipientRoutingModule {
-}

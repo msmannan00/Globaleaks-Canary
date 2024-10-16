@@ -1,11 +1,10 @@
-import {NgModule} from "@angular/core";
-import {RouterModule, Routes} from "@angular/router";
+import {Routes} from "@angular/router";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {RTipsResolver} from "@app/shared/resolvers/r-tips-resolver.service";
 import {IarResolver} from "@app/shared/resolvers/iar-resolver.service";
 
-const routes: Routes = [
+export const custodianRoutes: Routes = [
   {
     path: "preferences",
     loadComponent: () => import('@app/shared/partials/preferences/preferences.component').then(m => m.PreferencesComponent),
@@ -26,9 +25,9 @@ const routes: Routes = [
   },
   {
     path: "settings",
-    loadComponent: () => import('@app/pages/custodian/settings/settings.component').then(m => m.SettingsComponent),
+    loadComponent: () => import('@app/pages/custodian/settings/settings.component').then(m => m.CustodianSettingsComponent),
     pathMatch: "full",
-    data: {pageTitle: "Sites"},
+    data: {pageTitle: "Settings"},
   },
   {
     path: "requests",
@@ -40,10 +39,3 @@ const routes: Routes = [
     },
   }
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class CustodianRoutingModule {
-}

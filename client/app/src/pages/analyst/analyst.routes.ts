@@ -1,9 +1,8 @@
-import {NgModule} from "@angular/core";
-import {RouterModule, Routes} from "@angular/router";
+import {Routes} from "@angular/router";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {RTipsResolver} from "@app/shared/resolvers/r-tips-resolver.service";
 import {StatisticsResolver} from "@app/shared/resolvers/statistics.resolver";
-const routes: Routes = [
+export const analystRoutes: Routes = [
   {
     path: "",
     loadComponent: () => import('@app/pages/analyst/home/home.component').then(m => m.HomeComponent),
@@ -38,9 +37,3 @@ const routes: Routes = [
     data: {pageTitle: "Preferences"},
   }
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
-})
-export class AnalystRoutingModule { }

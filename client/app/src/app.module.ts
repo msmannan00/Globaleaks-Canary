@@ -1,6 +1,5 @@
 import {HostListener, NgModule, OnDestroy} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {Keepalive} from "@ng-idle/keepalive";
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
@@ -30,15 +29,6 @@ window.GL = {
   language: 'en', // Assuming a default language
   mockEngine: mockEngine
 };
-
-const translationModule = TranslateModule.forRoot({
-    loader: {
-      provide: TranslateLoader,
-      useFactory: createTranslateLoader,
-      deps: [HttpClient],
-    },
-  })
-;
 
 @NgModule()
 export class AppModule implements OnDestroy {

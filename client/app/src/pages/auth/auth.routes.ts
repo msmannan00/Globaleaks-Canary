@@ -1,7 +1,6 @@
-import {NgModule} from "@angular/core";
-import {RouterModule, Routes} from "@angular/router";
+import {Routes} from "@angular/router";
 
-const routes: Routes = [
+export const authRoutes: Routes = [
   {
     path: "",
     loadComponent: () => import('@app/pages/auth/login/login.component').then(m => m.LoginComponent),
@@ -20,12 +19,4 @@ const routes: Routes = [
     pathMatch: "full",
     data: {pageTitle: "Password reset"},
   }
-
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class AuthRoutingModule {
-}

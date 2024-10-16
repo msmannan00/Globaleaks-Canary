@@ -1,5 +1,4 @@
-import {NgModule} from "@angular/core";
-import {RouterModule, Routes} from "@angular/router";
+import {Routes} from "@angular/router";
 import {SessionGuard} from "@app/app-guard.service";
 import {AdminGuard} from "@app/shared/guards/admin.guard";
 import {CustodianGuard} from "@app/shared/guards/custodian.guard";
@@ -13,10 +12,8 @@ import {TitleResolver} from "@app/shared/resolvers/title-resolver.resolver";
 import {IarResolver} from "@app/shared/resolvers/iar-resolver.service";
 import {WbTipResolver} from "@app/shared/resolvers/wb-tip-resolver.service";
 import {WhistleblowerLoginResolver} from "@app/shared/resolvers/whistleblower-login.resolver";
-import {AuthRoutingModule} from "@app/pages/auth/auth-routing.module";
 
-
-const routes: Routes = [
+export const appRoutes: Routes = [
   {
     path: "blank",
     pathMatch: "full",
@@ -46,7 +43,7 @@ const routes: Routes = [
     path: "login",
     canActivate: [Pageguard],
     data: {pageTitle: "Log in"},
-    loadChildren: () => AuthRoutingModule,
+    loadChildren: () => import("./pages/auth/auth.routes").then(m => m.authRoutes),
   },
   {
     path: "signup",
@@ -54,17 +51,16 @@ const routes: Routes = [
     resolve: {
       PreferenceResolver
     },
-    loadChildren: () => import("./pages/signup/signup-routing.module").then(m => m.SignupRoutingModule)
-
+    loadChildren: () => import("./pages/signup/signup.routes").then(m => m.signupRoutes)
   },
   {
     path: "action",
-    loadChildren: () => import("./pages/action/action-routing.module").then(m => m.ActionRoutingModule)
+    loadChildren: () => import("./pages/action/action.routes").then(m => m.actionRoutes)
   },
   {
     path: "recipient",
     canActivate: [ReceiverGuard],
-    loadChildren: () => import("./pages/recipient/recipient-routing.module").then(m => m.RecipientRoutingModule),
+    loadChildren: () => import("./pages/recipient/recipient.routes").then(m => m.recipientRoutes),
     data: {
       sidebar: "recipient-sidebar"
     }
@@ -75,7 +71,7 @@ const routes: Routes = [
     resolve: {
       PreferenceResolver, NodeResolver, RtipsResolver: RTipsResolver, IarsResolver: IarResolver
     },
-    loadChildren: () => import("./pages/custodian/custodian-routing.module").then(m => m.CustodianRoutingModule),
+    loadChildren: () => import("./pages/custodian/custodian.routes").then(m => m.custodianRoutes),
     data: {
       sidebar: "custodian-sidebar",
       pageTitle: "Home",
@@ -84,7 +80,7 @@ const routes: Routes = [
   {
     path: "analyst",
     canActivate: [AnalystGuard],
-    loadChildren: () => import("./pages/analyst/analyst-routing.module").then(m => m.AnalystRoutingModule),
+    loadChildren: () => import("./pages/analyst/analyst.routes").then(m => m.analystRoutes),
     data: {
       sidebar: "analyst-sidebar",
       pageTitle: "Home",
@@ -93,10 +89,10 @@ const routes: Routes = [
   {
     path: "admin",
     canActivate: [AdminGuard],
-    loadChildren: () => import("./pages/admin/admin-routing.module").then(m => m.AdminRoutingModule),
+    loadChildren: () => import("./pages/admin/admin.routes").then(m => m.adminRoutes),
     data: {
       sidebar: "admin-sidebar",
-      pageTitle: "Log in",
+      pageTitle: "Home",
     },
   },
   {
@@ -116,7 +112,7 @@ const routes: Routes = [
       PreferenceResolver,
       title: TitleResolver
     },
-    loadChildren: () => import("./pages/wizard/wizard-routing.module").then(m => m.WizardRoutingModule)
+    loadChildren: () => import("./pages/wizard/wizard.routes").then(m => m.wizardRoutes)
   },
   {
     path: "reports/:tip_id",
@@ -130,11 +126,3 @@ const routes: Routes = [
   },
   {path: "**", redirectTo: ""}
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-})
-export class AppRoutingModule {
-
-}

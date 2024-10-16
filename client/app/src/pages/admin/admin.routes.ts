@@ -1,5 +1,4 @@
-import {NgModule} from "@angular/core";
-import {RouterModule, Routes} from "@angular/router";
+import {Routes} from "@angular/router";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {UsersResolver} from "@app/shared/resolvers/users.resolver";
@@ -14,7 +13,7 @@ import {RedirectsResolver} from "@app/shared/resolvers/redirects.resolver";
 import {FieldTemplatesResolver} from "@app/shared/resolvers/field-templates-resolver.service";
 import {StatusResolver} from "@app/shared/resolvers/statuses.resolver";
 
-const routes: Routes = [
+export const adminRoutes: Routes = [
   {
     path: "",
     loadComponent: () => import('@app/pages/admin/home/admin-home.component').then(m => m.adminHomeComponent),
@@ -44,7 +43,7 @@ const routes: Routes = [
   },
   {
     path: "settings",
-    loadComponent: () => import('@app/pages/admin/settings/settings.component').then(m => m.SettingsComponent),
+    loadComponent: () => import('@app/pages/admin/settings/settings.component').then(m => m.AdminSettingsComponent),
     resolve: {
       NodeResolver, PreferenceResolver, UsersResolver, QuestionnairesResolver
     },
@@ -124,10 +123,3 @@ const routes: Routes = [
     data: {sidebar: "admin-sidebar", pageTitle: "Network"},
   }
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class AdminRoutingModule {
-}

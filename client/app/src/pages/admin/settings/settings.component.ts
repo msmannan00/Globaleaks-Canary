@@ -19,7 +19,7 @@ import { TranslateModule } from "@ngx-translate/core";
     standalone: true,
     imports: [FormsModule, NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, Tab1Component, Tab2Component, Tab3Component, Tab4Component, Tab5Component, TranslatorPipe, TranslateModule]
 })
-export class SettingsComponent implements AfterViewInit {
+export class AdminSettingsComponent implements AfterViewInit {
   protected node = inject(NodeResolver);
   protected authenticationService = inject(AuthenticationService);
   private cdr = inject(ChangeDetectorRef);
