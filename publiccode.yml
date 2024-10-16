@@ -1,11 +1,11 @@
 name: GlobaLeaks
-releaseDate: '2024-09-19'
+releaseDate: '2024-10-15'
 publiccodeYmlVersion: '0.4.0'
-url: 'https://github.com/globaleaks/whistleblowing-software'
+url: 'https://github.com/globaleaks/globaleaks-whistleblowing-software'
 landingURL: 'https://www.globaleaks.org/'
 roadmap: "https://docs.globaleaks.org/en/main/roadmap/"
 logo: brand/assets/globaleaks-icon-color.svg
-softwareVersion: 5.0.8
+softwareVersion: 5.0.17
 softwareType: standalone/web
 developmentStatus: stable
 platforms:
@@ -150,7 +150,7 @@ description:
       privacy and submissions. GlobaLeaks targets
       [many use cases](https://www.globaleaks.org/usecases/) and therefore
       it has been designed as a framework. Designed with flexibility in mind and
-      translated in [more than 90 languages](https://www.transifex.com/otf/globaleaks)
+      translated in [more than 50 languages](https://www.transifex.com/otf/globaleaks)
       GlobaLeaks is nowadays adopted worldwide by more than 10000 projects.
       The vast range of adopters includes independent media, activists, public
       agencies, corporations and more.
@@ -174,7 +174,7 @@ description:
       - PNRR/Misura/1.6
       - "Multi-user system with customizable user roles (whistleblower, recipient, administrator)"
       - "Entirely manageable from a web administration interface"
-      - "Support for more than 90 languages with Right-to-Left (RTL)"
+      - "Support for more than 50 languages with Right-to-Left (RTL)"
       - "Receive reports from whistleblower through structured multi-step questionnaire"
       - "Let whistleblowers decide if and when to confidentially declare their identity"
       - "Exchange multimedia files with whistleblower"
@@ -231,13 +231,13 @@ description:
       - "Easy integration of the platform with existing websites and intranets"
       - "REST API"
     screenshots:
-      - documentation/images/whistleblower/home.png
-      - documentation/images/whistleblower/submission.png
-      - documentation/images/whistleblower/receipt.png
-      - documentation/images/whistleblower/report.png
-      - documentation/images/user/login.png
-      - documentation/images/recipient/reports.png
-      - documentation/images/recipient/report.png
+      - documentation/images/whistleblower/home.en.png
+      - documentation/images/whistleblower/submission.en.png
+      - documentation/images/whistleblower/receipt.en.png
+      - documentation/images/whistleblower/report.en.png
+      - documentation/images/user/login.en.png
+      - documentation/images/recipient/reports.en.png
+      - documentation/images/recipient/report.en.png
   it:
     genericName: Whistleblowing Software
     shortDescription: >-
@@ -332,13 +332,13 @@ description:
       - "Facile integrazione della piattaforma con siti web e intranet esistenti"
       - "REST API"
     screenshots:
-      - documentation/images/whistleblower/home.png
-      - documentation/images/whistleblower/submission.png
-      - documentation/images/whistleblower/receipt.png
-      - documentation/images/whistleblower/report.png
-      - documentation/images/user/login.png
-      - documentation/images/recipient/reports.png
-      - documentation/images/recipient/report.png
+      - documentation/images/whistleblower/home.it.png
+      - documentation/images/whistleblower/submission.it.png
+      - documentation/images/whistleblower/receipt.it.png
+      - documentation/images/whistleblower/report.it.png
+      - documentation/images/user/login.it.png
+      - documentation/images/recipient/reports.it.png
+      - documentation/images/recipient/report.it.png
 usedBy:
   - Agenzia per l'Italia Digitale (AgID)
   - Agenzia per la cybersicurezza nazionale (ACN)

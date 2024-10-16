@@ -35,18 +35,23 @@ a:hover,
 a:active,
 a:visited,
 a:focus,
-.wy-side-nav-search a,
-.wy-side-nav-search a:hover,
-.wy-side-nav-search a:active,
-.wy-side-nav-search a:visited,
-.wy-side-nav-search a:focus,
-.wy-side-nav-search > a,
-.wy-side-nav-search > div.version {
   color: #204f82;
 }
 
-.wy-side-nav-search {
-  background-color: #fff !important;
+.wy-side-nav-search>div.switch-menus>div.language-switch select,
+.wy-side-nav-search>div.switch-menus>div.version-switch select {
+  font-family: Inter,
+  color: #FFF;
+}
+
+.wy-side-nav-search>div.switch-menus>div.language-switch select:active,
+.wy-side-nav-search>div.switch-menus>div.language-switch select:focus,
+.wy-side-nav-search>div.switch-menus>div.language-switch select:hover,
+.wy-side-nav-search>div.switch-menus>div.version-switch select:active,
+.wy-side-nav-search>div.switch-menus>div.version-switch select:focus,
+.wy-side-nav-search>div.switch-menus>div.version-switch select:hover {
+  background: none; 
+  color: #FFF;
 }
 
 .highlight {
@@ -71,10 +76,6 @@ a:focus,
   color: #5794d5;
 }
 
-.wy-menu-vertical a {
-  color: #fff;
-}
-
 vertical li.current > a {
   color: #1d1f2a;
 }
@@ -82,6 +83,25 @@ vertical li.current > a {
 .document ul,
 .document li {
   list-style: disc;
+}
+
+.donation-banner {
+  background-color: #fff;
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+  z-index: 1000;
+}
+
+.donation-banner a {
+  font-weight: bold;
+}
+
+.donation-icon {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  margin-right: 10px;
 }
 
 @media screen and (min-width: 767px) {

@@ -28,7 +28,7 @@ import {MarkdownModule, MarkedOptions, MARKED_OPTIONS} from "ngx-markdown";
 import {ReceiptValidatorDirective} from "@app/shared/directive/receipt-validator.directive";
 import {NgxFlowModule, FlowInjectionToken} from "@flowjs/ngx-flow";
 import * as Flow from "@flowjs/flow.js";
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModule, NgbPaginationConfig} from '@ng-bootstrap/ng-bootstrap';
 import {SignupModule} from "@app/pages/signup/signup.module";
 import {WizardModule} from "@app/pages/wizard/wizard.module";
 import {RecipientModule} from "@app/pages/recipient/recipient.module";
@@ -43,6 +43,7 @@ import {TranslationService} from "@app/services/helper/translation.service";
 import {NgbDatepickerI18n} from '@ng-bootstrap/ng-bootstrap';
 import {CustomDatepickerI18n} from '@app/shared/services/custom-datepicker-i18n';
 import {registerLocales} from '@app/services/helper/locale-provider';
+import {AppDataService} from "@app/app-data.service";
 
 // Register all the locales
 registerLocales();
@@ -118,6 +119,20 @@ const translationModule = TranslateModule.forRoot({
     {provide: HTTP_INTERCEPTORS, useClass: CompletedInterceptor, multi: true},
     {provide: FlowInjectionToken, useValue: Flow},
     {provide: LocationStrategy, useClass: HashLocationStrategy},
+    {
+      provide: NgbPaginationConfig,
+      useFactory: () => {
+        const config = new NgbPaginationConfig();
+        config.size = 'sm';           // Set pagination size (sm for small, lg for large)
+        config.boundaryLinks = true;  // Display boundary links (first/last)
+        config.directionLinks = true; // Display previous/next buttons
+        config.maxSize = 20;          // Maximum number of pages displayed
+        config.rotate = true;         // Whether to rotate pages when maxSize > number of pages.
+        config.ellipses = true;       // If true, the ellipsis symbols and first/last page numbers
+                                      // will be shown when maxSize > number of pages.
+        return config;
+      }
+    },
     {provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n}
   ],
   bootstrap: [AppComponent],
@@ -125,11 +140,9 @@ const translationModule = TranslateModule.forRoot({
 })
 export class AppModule implements OnDestroy {
 
-  timedOut = false;
-  title = "angular-idle-timeout";
-
-  constructor(private cryptoService:CryptoService, private authenticationService: AuthenticationService, private idle: Idle, private keepalive: Keepalive, private httpService: HttpService) {
+  constructor(private appDataService:AppDataService, private cryptoService:CryptoService, private authenticationService: AuthenticationService, private idle: Idle, private keepalive: Keepalive, private httpService: HttpService) {
     this.initIdleState();
+    (window as any).scope = this.appDataService;
   }
 
   @HostListener("window:beforeunload")
@@ -138,7 +151,7 @@ export class AppModule implements OnDestroy {
   }
 
   initIdleState() {
-    this.idle.setIdle(300);
+    this.idle.setIdle(1500);
     this.idle.setTimeout(300);
     this.keepalive.interval(30);
     this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
@@ -171,7 +184,6 @@ export class AppModule implements OnDestroy {
 
   reset() {
     this.idle.watch();
-    this.timedOut = false;
     this.authenticationService.reset();
   }
 }

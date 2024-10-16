@@ -8,9 +8,9 @@ import {DOCUMENT} from "@angular/common";
   providedIn: "root",
 })
 export class TranslationService {
-  language = "en";
+  language = "";
 
-  private currentLocale = new BehaviorSubject<string>('en');
+  private currentLocale = new BehaviorSubject<string>("");
   currentLocale$ = this.currentLocale.asObservable();
 
   changeLocale(newLocale: string) {
@@ -23,7 +23,7 @@ export class TranslationService {
     this.currentDirection = this.utilsService.getDirection(this.translate.currentLang);
   }
 
-  loadBootstrapStyles(event: LangChangeEvent, renderer: Renderer2) {
+  handleLTRandRTLStyling(event: LangChangeEvent, renderer: Renderer2) {
     let waitForLoader = false;
     const newDirection = this.utilsService.getDirection(event.lang);
     if (newDirection !== this.currentDirection) {
