@@ -201,4 +201,11 @@ export class TippageComponent implements OnInit {
   onFormChange() {
     this.fieldUtilitiesService.onAnswersUpdate(this);
   }
+  
+  shouldShowAdditionalQuestionnaire(): boolean {
+    const tip = this.wbTipService.tip;
+    return tip?.status !== 'closed' && 
+           !!tip?.context?.additional_questionnaire_id && 
+           tip?.questionnaires?.length === 1;
+  }
 }

@@ -354,4 +354,8 @@ export class FieldsComponent implements OnInit {
   listenToAddFieldFormTemplate() {
     this.showAddQuestionFromTemplate = false;
   }
+
+  isCustomValidation(field: Step | Field): boolean {
+    return field?.attrs?.input_validation?.value === 'custom';
+  }
 }
