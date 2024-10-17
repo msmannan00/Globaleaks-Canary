@@ -7,7 +7,7 @@ import {ReceiverTipService} from "@app/services/helper/receiver-tip.service";
 import {Comment} from "@app/models/app/shared-public-model";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {MaskService} from "@app/shared/services/mask.service";
-import { NgIf, NgFor, SlicePipe, DatePipe } from "@angular/common";
+import { SlicePipe, DatePipe } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { NgbPagination, NgbPaginationFirst, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationLast } from "@ng-bootstrap/ng-bootstrap";
 import { TranslateModule } from "@ngx-translate/core";
@@ -19,7 +19,7 @@ import { FilterPipe } from "@app/shared/pipes/filter.pipe";
     selector: "src-tip-comments",
     templateUrl: "./tip-comments.component.html",
     standalone: true,
-    imports: [NgIf, FormsModule, NgFor, NgbPagination, NgbPaginationFirst, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationLast, SlicePipe, DatePipe, TranslateModule, TranslatorPipe, OrderByPipe, FilterPipe]
+    imports: [FormsModule, NgbPagination, NgbPaginationFirst, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationLast, SlicePipe, DatePipe, TranslateModule, TranslatorPipe, OrderByPipe, FilterPipe]
 })
 export class TipCommentsComponent implements OnInit {
   private maskService = inject(MaskService);

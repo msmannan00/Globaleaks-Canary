@@ -6,7 +6,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {
   TipOperationFileIdentityAccessReplyComponent
 } from "@app/shared/modals/tip-operation-file-identity-access-reply/tip-operation-file-identity-access-reply.component";
-import { NgFor, NgSwitch, NgSwitchCase, DatePipe } from "@angular/common";
+import { DatePipe } from "@angular/common";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 
@@ -14,7 +14,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     selector: "src-identity-access-requests",
     templateUrl: "./identity-access-requests.component.html",
     standalone: true,
-    imports: [NgFor, NgSwitch, NgSwitchCase, DatePipe, TranslateModule, TranslatorPipe]
+    imports: [DatePipe, TranslateModule, TranslatorPipe]
 })
 export class IdentityAccessRequestsComponent {
   private modalService = inject(NgbModal);

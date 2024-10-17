@@ -6,7 +6,7 @@ import {
 } from "@app/shared/modals/tip-operation-file-identity-access-request/tip-operation-file-identity-access-request.ompoent";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import { NgIf, NgSwitch, NgSwitchCase, NgFor, NgClass, DatePipe } from "@angular/common";
+import { NgClass, DatePipe } from "@angular/common";
 import { TipFieldComponent } from "../../../shared/partials/tip-field/tip-field.component";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
@@ -16,7 +16,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     selector: "src-whistleblower-identity-reciever",
     templateUrl: "./whistle-blower-identity-receiver.component.html",
     standalone: true,
-    imports: [NgIf, NgSwitch, NgSwitchCase, NgFor, TipFieldComponent, NgClass, DatePipe, TranslateModule, TranslatorPipe]
+    imports: [TipFieldComponent, NgClass, DatePipe, TranslateModule, TranslatorPipe]
 })
 export class WhistleBlowerIdentityReceiverComponent {
   protected tipService = inject(ReceiverTipService);

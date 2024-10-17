@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from "@angular/core";
 import {redirectResolverModel} from "@app/models/resolvers/redirect-resolver-model";
 import {HttpService} from "@app/shared/services/http.service";
 import { FormsModule } from "@angular/forms";
-import { NgFor } from "@angular/common";
+
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
 
@@ -10,7 +10,7 @@ import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
     selector: "src-url-redirects",
     templateUrl: "./url-redirects.component.html",
     standalone: true,
-    imports: [FormsModule, NgFor, TranslatorPipe, OrderByPipe]
+    imports: [FormsModule, TranslatorPipe, OrderByPipe]
 })
 export class UrlRedirectsComponent implements OnInit {
   private httpService = inject(HttpService);

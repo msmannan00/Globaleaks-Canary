@@ -15,7 +15,7 @@ import * as Flow from "@flowjs/flow.js";
 import {TitleService} from "@app/shared/services/title.service";
 import {Router} from "@angular/router";
 import {WhistleblowerSubmissionService} from "@app/pages/whistleblower/whistleblower-submission.service";
-import { NgIf, NgClass, NgFor } from "@angular/common";
+import { NgClass } from "@angular/common";
 import { ContextSelectionComponent } from "../context-selection/context-selection.component";
 import { ReceiverSelectionComponent } from "../receiver-selection/receiver-selection.component";
 import { NgFormChangeDirective } from "../../../shared/directive/ng-form-change.directive";
@@ -33,7 +33,7 @@ import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
     templateUrl: "./submission.component.html",
     providers: [SubmissionService],
     standalone: true,
-    imports: [NgIf, ContextSelectionComponent, FormsModule, NgClass, NgFor, ReceiverSelectionComponent, NgFormChangeDirective, StepErrorComponent, MarkdownComponent, FormComponent, RFilesUploadStatusComponent, TranslateModule, TranslatorPipe, StripHtmlPipe, OrderByPipe]
+    imports: [ContextSelectionComponent, FormsModule, NgClass, ReceiverSelectionComponent, NgFormChangeDirective, StepErrorComponent, MarkdownComponent, FormComponent, RFilesUploadStatusComponent, TranslateModule, TranslatorPipe, StripHtmlPipe, OrderByPipe]
 })
 export class SubmissionComponent implements OnInit {
   private route = inject(ActivatedRoute);

@@ -6,14 +6,14 @@ import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {NotificationsResolver} from "@app/shared/resolvers/notifications.resolver";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {switchMap} from "rxjs";
-import { NgIf } from "@angular/common";
+
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
     selector: "src-notification-tab1",
     templateUrl: "./notification-tab1.component.html",
     standalone: true,
-    imports: [NgIf, FormsModule, TranslatorPipe]
+    imports: [FormsModule, TranslatorPipe]
 })
 export class NotificationTab1Component {
   protected nodeResolver = inject(NodeResolver);

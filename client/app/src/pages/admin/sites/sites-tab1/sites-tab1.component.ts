@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from "@angular/core";
 import {tenantResolverModel} from "@app/models/resolvers/tenant-resolver-model";
 import {HttpService} from "@app/shared/services/http.service";
 import { FormsModule } from "@angular/forms";
-import { NgIf, NgFor, SlicePipe } from "@angular/common";
+import { SlicePipe } from "@angular/common";
 import { SiteslistComponent } from "../siteslist/siteslist.component";
 import { NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast } from "@ng-bootstrap/ng-bootstrap";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
@@ -15,7 +15,7 @@ import { TranslateModule } from "@ngx-translate/core";
     selector: "src-sites-tab1",
     templateUrl: "./sites-tab1.component.html",
     standalone: true,
-    imports: [FormsModule, NgIf, NgFor, SiteslistComponent, NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast, SlicePipe, TranslatorPipe, FilterPipe, FilterSearchPipe, OrderByPipe, TranslateModule]
+    imports: [FormsModule, SiteslistComponent, NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast, SlicePipe, TranslatorPipe, FilterPipe, FilterSearchPipe, OrderByPipe, TranslateModule]
 })
 export class SitesTab1Component implements OnInit {
   private httpService = inject(HttpService);

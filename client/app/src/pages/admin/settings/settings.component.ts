@@ -9,7 +9,7 @@ import {Tab4Component} from "@app/pages/admin/settings/tab4/tab4.component";
 import {Tab5Component} from "@app/pages/admin/settings/tab5/tab5.component";
 import { FormsModule } from "@angular/forms";
 import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgbNavOutlet } from "@ng-bootstrap/ng-bootstrap";
-import { NgFor, NgTemplateOutlet } from "@angular/common";
+import { NgTemplateOutlet } from "@angular/common";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -17,7 +17,7 @@ import { TranslateModule } from "@ngx-translate/core";
     selector: "src-admin-settings",
     templateUrl: "./settings.component.html",
     standalone: true,
-    imports: [FormsModule, NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, Tab1Component, Tab2Component, Tab3Component, Tab4Component, Tab5Component, TranslatorPipe, TranslateModule]
+    imports: [FormsModule, NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, Tab1Component, Tab2Component, Tab3Component, Tab4Component, Tab5Component, TranslatorPipe, TranslateModule]
 })
 export class AdminSettingsComponent implements AfterViewInit {
   protected node = inject(NodeResolver);

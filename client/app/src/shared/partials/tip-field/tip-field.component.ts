@@ -1,5 +1,5 @@
 import {Component, forwardRef, Input} from "@angular/core";
-import { NgIf, NgFor } from "@angular/common";
+
 import { TipFieldAnswerEntryComponent } from "../tip-field-answer-entry/tip-field-answer-entry.component";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
@@ -9,7 +9,7 @@ import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
     selector: "src-tip-field",
     templateUrl: "./tip-field.component.html",
     standalone: true,
-    imports: [NgIf, forwardRef(() => TipFieldAnswerEntryComponent), NgFor, TranslateModule, TranslatorPipe, OrderByPipe]
+    imports: [forwardRef(() => TipFieldAnswerEntryComponent), TranslateModule, TranslatorPipe, OrderByPipe]
 })
 export class TipFieldComponent {
   @Input() fields: any;

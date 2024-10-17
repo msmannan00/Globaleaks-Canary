@@ -10,7 +10,7 @@ import {Observable} from "rxjs";
 import {Step, questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
 import {ParsedFields} from "@app/models/component-model/parsedFields";
 import {TriggeredByOption} from "@app/models/app/shared-public-model";
-import { NgIf, NgFor } from "@angular/common";
+
 import { FormsModule } from "@angular/forms";
 import { StepComponent } from "../step/step.component";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
@@ -20,7 +20,7 @@ import { TranslateModule } from "@ngx-translate/core";
     selector: "src-steps-list",
     templateUrl: "./steps-list.component.html",
     standalone: true,
-    imports: [NgIf, FormsModule, NgFor, StepComponent, TranslatorPipe, TranslateModule]
+    imports: [FormsModule, StepComponent, TranslatorPipe, TranslateModule]
 })
 export class StepsListComponent implements OnInit {
   private utilsService = inject(UtilsService);

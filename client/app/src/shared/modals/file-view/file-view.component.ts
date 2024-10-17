@@ -4,7 +4,7 @@ import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {WbFile} from "@app/models/app/shared-public-model";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
-import { NgIf } from "@angular/common";
+
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 
@@ -12,7 +12,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     selector: "src-file-view",
     templateUrl: "./file-view.component.html",
     standalone: true,
-    imports: [NgIf, TranslateModule, TranslatorPipe]
+    imports: [TranslateModule, TranslatorPipe]
 })
 export class FileViewComponent implements OnInit {
   private authenticationService = inject(AuthenticationService);

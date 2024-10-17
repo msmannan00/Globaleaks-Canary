@@ -7,7 +7,7 @@ import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmatio
 import {Observable} from "rxjs";
 import {Status} from "@app/models/app/public-model";
 import { FormsModule } from "@angular/forms";
-import { NgIf } from "@angular/common";
+
 import { SubStatusComponent } from "../substatuses/sub-status.component";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 
@@ -15,7 +15,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     selector: "src-substatusmanager",
     templateUrl: "./sub-status-manager.component.html",
     standalone: true,
-    imports: [FormsModule, NgIf, SubStatusComponent, TranslatorPipe]
+    imports: [FormsModule, SubStatusComponent, TranslatorPipe]
 })
 export class SubStatusManagerComponent {
   private appDataServices = inject(AppDataService);

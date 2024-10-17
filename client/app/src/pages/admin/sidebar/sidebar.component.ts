@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
-import { NgIf } from "@angular/common";
+
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
@@ -10,7 +10,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     templateUrl: "./sidebar.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [RouterLink, RouterLinkActive, NgIf, TranslatorPipe]
+    imports: [RouterLink, RouterLinkActive, TranslatorPipe]
 })
 export class AdminSidebarComponent {
   private router = inject(Router);

@@ -10,7 +10,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {AppConfigService} from "@app/services/root/app-config.service";
 import {preferenceResolverModel} from "@app/models/resolvers/preference-resolver-model";
 import {AdminFile} from "@app/models/component-model/admin-file";
-import { NgIf, NgClass, NgFor } from "@angular/common";
+import { NgClass } from "@angular/common";
 import { AdminFileComponent } from "../../../../shared/partials/admin-file/admin-file.component";
 import { SwitchComponent } from "../../../../shared/components/switch/switch.component";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
@@ -21,7 +21,7 @@ import { TranslateModule } from "@ngx-translate/core";
     selector: "src-tab2",
     templateUrl: "./tab2.component.html",
     standalone: true,
-    imports: [NgIf, NgClass, NgFor, AdminFileComponent, SwitchComponent, TranslatorPipe, OrderByPipe, TranslateModule]
+    imports: [NgClass, AdminFileComponent, SwitchComponent, TranslatorPipe, OrderByPipe, TranslateModule]
 })
 export class Tab2Component implements OnInit {
   private appConfigService = inject(AppConfigService);

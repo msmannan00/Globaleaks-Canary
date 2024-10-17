@@ -8,7 +8,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {nodeResolverModel} from "@app/models/resolvers/node-resolver-model";
 import {TlsConfig} from "@app/models/component-model/tls-confiq";
 import {FileResource, FileResources} from "@app/models/component-model/file-resources";
-import { NgIf, DatePipe } from "@angular/common";
+import { DatePipe } from "@angular/common";
 import { HttpsCsrGenComponent } from "../https-csr-gen/https-csr-gen.component";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 
@@ -16,7 +16,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     selector: "src-https-files",
     templateUrl: "./https-files.component.html",
     standalone: true,
-    imports: [NgIf, HttpsCsrGenComponent, DatePipe, TranslatorPipe]
+    imports: [HttpsCsrGenComponent, DatePipe, TranslatorPipe]
 })
 export class HttpsFilesComponent implements OnInit {
   private authenticationService = inject(AuthenticationService);

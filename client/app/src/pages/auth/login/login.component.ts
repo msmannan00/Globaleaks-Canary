@@ -4,7 +4,7 @@ import {LoginDataRef} from "@app/pages/auth/login/model/login-model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AppDataService} from "@app/app-data.service";
 import { FormsModule } from "@angular/forms";
-import { NgIf } from "@angular/common";
+
 import { SimpleLoginComponent } from "./templates/simple-login/simple-login.component";
 import { DefaultLoginComponent } from "./templates/default-login/default-login.component";
 import { TranslateModule } from "@ngx-translate/core";
@@ -15,7 +15,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     selector: "app-login",
     templateUrl: "./login.component.html",
     standalone: true,
-    imports: [FormsModule, NgIf, SimpleLoginComponent, DefaultLoginComponent, TranslateModule, TranslatorPipe]
+    imports: [FormsModule, SimpleLoginComponent, DefaultLoginComponent, TranslateModule, TranslatorPipe]
 })
 export class LoginComponent implements OnInit {
   private authentication = inject(AuthenticationService);

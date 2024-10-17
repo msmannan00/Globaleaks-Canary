@@ -18,7 +18,7 @@ import {ConfirmationWith2faComponent} from "@app/shared/modals/confirmation-with
 import {
   ConfirmationWithPasswordComponent
 } from "@app/shared/modals/confirmation-with-password/confirmation-with-password.component";
-import { NgIf, NgClass, NgFor, DatePipe } from "@angular/common";
+import { NgClass, DatePipe } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 
@@ -26,7 +26,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     selector: "src-preference-tab1",
     templateUrl: "./preference-tab1.component.html",
     standalone: true,
-    imports: [NgIf, FormsModule, NgClass, NgFor, DatePipe, TranslateModule, TranslatorPipe]
+    imports: [FormsModule, NgClass, DatePipe, TranslateModule, TranslatorPipe]
 })
 export class PreferenceTab1Component implements OnInit {
   private translationService = inject(TranslationService);

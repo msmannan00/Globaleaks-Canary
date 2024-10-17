@@ -4,7 +4,7 @@ import {LoginDataRef} from "@app/pages/auth/login/model/login-model";
 import {UtilsService} from "@app/shared/services/utils.service";
 import { ControlContainer, NgForm, FormsModule } from "@angular/forms";
 import {AppDataService} from "@app/app-data.service";
-import { NgIf } from "@angular/common";
+
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 
@@ -14,11 +14,10 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
     standalone: true,
     imports: [
-        NgIf,
-        FormsModule,
-        TranslateModule,
-        TranslatorPipe,
-    ],
+    FormsModule,
+    TranslateModule,
+    TranslatorPipe
+],
 })
 export class DefaultLoginComponent {
   protected utils = inject(UtilsService);

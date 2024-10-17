@@ -30,7 +30,7 @@ import {TipCommentsComponent} from "@app/shared/partials/tip-comments/tip-commen
 import {ReopenSubmissionComponent} from "@app/shared/modals/reopen-submission/reopen-submission.component";
 import {ChangeSubmissionStatusComponent} from "@app/shared/modals/change-submission-status/change-submission-status.component";
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
-import { NgIf, NgClass, NgFor, NgTemplateOutlet } from "@angular/common";
+import { NgClass, NgTemplateOutlet } from "@angular/common";
 import { TipInfoComponent } from "../../../shared/partials/tip-info/tip-info.component";
 import { TipReceiverListComponent } from "../../../shared/partials/tip-receiver-list/tip-receiver-list.component";
 import { TipQuestionnaireAnswersComponent } from "../../../shared/partials/tip-questionnaire-answers/tip-questionnaire-answers.component";
@@ -46,27 +46,25 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     templateUrl: "./tip.component.html",
     standalone: true,
     imports: [
-        NgIf,
-        NgClass,
-        TipInfoComponent,
-        TipReceiverListComponent,
-        TipQuestionnaireAnswersComponent,
-        WhistleBlowerIdentityReceiverComponent,
-        TipFilesReceiverComponent,
-        NgbNav,
-        NgFor,
-        NgbNavItem,
-        NgbNavItemRole,
-        NgbNavLinkButton,
-        NgbNavLinkBase,
-        NgbNavContent,
-        NgTemplateOutlet,
-        NgbNavOutlet,
-        TipUploadWbFileComponent_1,
-        TipCommentsComponent_1,
-        TranslateModule,
-        TranslatorPipe,
-    ],
+    NgClass,
+    TipInfoComponent,
+    TipReceiverListComponent,
+    TipQuestionnaireAnswersComponent,
+    WhistleBlowerIdentityReceiverComponent,
+    TipFilesReceiverComponent,
+    NgbNav,
+    NgbNavItem,
+    NgbNavItemRole,
+    NgbNavLinkButton,
+    NgbNavLinkBase,
+    NgbNavContent,
+    NgTemplateOutlet,
+    NgbNavOutlet,
+    TipUploadWbFileComponent_1,
+    TipCommentsComponent_1,
+    TranslateModule,
+    TranslatorPipe
+],
 })
 export class TipComponent implements OnInit {
   private translateService = inject(TranslateService);

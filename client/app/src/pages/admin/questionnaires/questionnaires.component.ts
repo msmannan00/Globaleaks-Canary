@@ -4,7 +4,7 @@ import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {MainComponent} from "@app/pages/admin/questionnaires/main/main.component";
 import {QuestionsComponent} from "@app/pages/admin/questionnaires/questions/questions.component";
 import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgbNavOutlet } from "@ng-bootstrap/ng-bootstrap";
-import { NgFor, NgTemplateOutlet } from "@angular/common";
+import { NgTemplateOutlet } from "@angular/common";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -12,7 +12,7 @@ import { TranslateModule } from "@ngx-translate/core";
     selector: "src-questionnaires",
     templateUrl: "./questionnaires.component.html",
     standalone: true,
-    imports: [NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, MainComponent, QuestionsComponent, TranslatorPipe, TranslateModule]
+    imports: [NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, MainComponent, QuestionsComponent, TranslatorPipe, TranslateModule]
 })
 export class QuestionnairesComponent implements AfterViewInit {
   protected node = inject(NodeResolver);

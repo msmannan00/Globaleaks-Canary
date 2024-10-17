@@ -1,13 +1,13 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {NgForm} from "@angular/forms";
 import {Field} from "@app/models/resolvers/field-template-model";
-import { NgIf } from "@angular/common";
+
 
 @Component({
     selector: "src-step-error-entry",
     templateUrl: "./step-error-entry.component.html",
     standalone: true,
-    imports: [NgIf]
+    imports: []
 })
 export class StepErrorEntryComponent implements OnInit {
   @Input() err: string;

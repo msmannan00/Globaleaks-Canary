@@ -12,7 +12,7 @@ import {Observable} from "rxjs";
 import {userResolverModel} from "@app/models/resolvers/user-resolver-model";
 import {nodeResolverModel} from "@app/models/resolvers/node-resolver-model";
 import {preferenceResolverModel} from "@app/models/resolvers/preference-resolver-model";
-import { NgSwitch, NgSwitchCase, NgIf, NgClass, NgFor, DatePipe } from "@angular/common";
+import { NgClass, DatePipe } from "@angular/common";
 import { ImageUploadDirective } from "../../../../shared/directive/image-upload.directive";
 import { PasswordStrengthValidatorDirective } from "../../../../shared/directive/password-strength-validator.directive";
 import { PasswordMeterComponent } from "../../../../shared/components/password-meter/password-meter.component";
@@ -22,7 +22,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     selector: "src-user-editor",
     templateUrl: "./user-editor.component.html",
     standalone: true,
-    imports: [NgSwitch, NgSwitchCase, NgIf, ImageUploadDirective, FormsModule, PasswordStrengthValidatorDirective, NgClass, PasswordMeterComponent, NgFor, DatePipe, TranslatorPipe]
+    imports: [ImageUploadDirective, FormsModule, PasswordStrengthValidatorDirective, NgClass, PasswordMeterComponent, DatePipe, TranslatorPipe]
 })
 export class UserEditorComponent implements OnInit {
   private modalService = inject(NgbModal);

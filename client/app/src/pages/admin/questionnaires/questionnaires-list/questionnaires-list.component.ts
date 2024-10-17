@@ -11,7 +11,7 @@ import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnair
 import {Observable} from "rxjs";
 import {questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
-import { NgIf } from "@angular/common";
+
 import { StepsComponent } from "../steps/steps.component";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 import { TranslateModule } from "@ngx-translate/core";
@@ -20,7 +20,7 @@ import { TranslateModule } from "@ngx-translate/core";
     selector: "src-questionnaires-list",
     templateUrl: "./questionnaires-list.component.html",
     standalone: true,
-    imports: [NgIf, FormsModule, StepsComponent, TranslatorPipe, TranslateModule]
+    imports: [FormsModule, StepsComponent, TranslatorPipe, TranslateModule]
 })
 export class QuestionnairesListComponent {
   private authenticationService = inject(AuthenticationService);

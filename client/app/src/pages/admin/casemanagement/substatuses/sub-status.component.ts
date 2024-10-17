@@ -6,7 +6,7 @@ import {HttpService} from "@app/shared/services/http.service";
 import {DeleteConfirmationComponent} from "@app/shared/modals/delete-confirmation/delete-confirmation.component";
 import {Observable} from "rxjs";
 import {Status, Substatus} from "@app/models/app/public-model";
-import { NgIf, NgFor } from "@angular/common";
+
 import { FormsModule } from "@angular/forms";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 
@@ -14,7 +14,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     selector: "src-substatuses",
     templateUrl: "./sub-status.component.html",
     standalone: true,
-    imports: [NgIf, FormsModule, NgFor, TranslatorPipe]
+    imports: [FormsModule, TranslatorPipe]
 })
 export class SubStatusComponent implements OnInit {
   private httpService = inject(HttpService);

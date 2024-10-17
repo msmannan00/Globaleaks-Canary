@@ -4,7 +4,7 @@ import {fieldtemplatesResolverModel} from "@app/models/resolvers/field-template-
 import {Step, questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
 import {FieldTemplatesResolver} from "@app/shared/resolvers/field-templates-resolver.service";
 import {HttpService} from "@app/shared/services/http.service";
-import { NgIf, NgFor } from "@angular/common";
+
 import { AddFieldComponent } from "../add-field/add-field.component";
 import { AddFieldFromTemplateComponent } from "../add-field-from-template/add-field-from-template.component";
 import { FormsModule } from "@angular/forms";
@@ -17,7 +17,7 @@ import { TranslateModule } from "@ngx-translate/core";
     selector: "src-step",
     templateUrl: "./step.component.html",
     standalone: true,
-    imports: [NgIf, AddFieldComponent, AddFieldFromTemplateComponent, NgFor, FormsModule, FieldsComponent, TranslatorPipe, OrderByPipe, TranslateModule]
+    imports: [AddFieldComponent, AddFieldFromTemplateComponent, FormsModule, FieldsComponent, TranslatorPipe, OrderByPipe, TranslateModule]
 })
 export class StepComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);

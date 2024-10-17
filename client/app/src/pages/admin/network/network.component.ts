@@ -6,14 +6,14 @@ import {TorComponent} from "@app/pages/admin/network/tor/tor.component";
 import {AccessControlComponent} from "@app/pages/admin/network/access-control/access-control.component";
 import {UrlRedirectsComponent} from "@app/pages/admin/network/url-redirects/url-redirects.component";
 import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgbNavOutlet } from "@ng-bootstrap/ng-bootstrap";
-import { NgFor, NgTemplateOutlet } from "@angular/common";
+import { NgTemplateOutlet } from "@angular/common";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
     selector: "src-network",
     templateUrl: "./network.component.html",
     standalone: true,
-    imports: [NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, HttpsComponent, TorComponent, AccessControlComponent, UrlRedirectsComponent, TranslatorPipe]
+    imports: [NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, HttpsComponent, TorComponent, AccessControlComponent, UrlRedirectsComponent, TranslatorPipe]
 })
 export class NetworkComponent implements AfterViewInit {
   node = inject(NodeResolver);

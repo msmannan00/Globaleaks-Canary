@@ -1,7 +1,7 @@
 import { Component, inject } from "@angular/core";
 import {AppConfigService} from "@app/services/root/app-config.service";
 import {AppDataService} from "@app/app-data.service";
-import { NgIf } from "@angular/common";
+
 import { UserComponent } from "./template/user/user.component";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
@@ -10,7 +10,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     selector: "views-header",
     templateUrl: "./header.component.html",
     standalone: true,
-    imports: [NgIf, UserComponent, TranslateModule, TranslatorPipe]
+    imports: [UserComponent, TranslateModule, TranslatorPipe]
 })
 export class HeaderComponent {
   appConfig = inject(AppConfigService);

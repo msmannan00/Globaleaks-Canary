@@ -7,7 +7,7 @@ import { NavigationEnd, Router, RouterOutlet } from "@angular/router";
 import {BrowserCheckService} from "@app/shared/services/browser-check.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {TranslationService} from "@app/services/helper/translation.service";
-import { DOCUMENT, NgIf, NgClass } from "@angular/common";
+import { DOCUMENT, NgClass } from "@angular/common";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import { HeaderComponent } from "../../shared/partials/header/header.component";
 import { NgbCollapse } from "@ng-bootstrap/ng-bootstrap";
@@ -34,7 +34,7 @@ import { ReceiptSidebarComponent } from "../recipient/sidebar/sidebar.component"
         ])
     ],
     standalone: true,
-    imports: [NgIf, NgClass, HeaderComponent,PrivacyBadgeComponent,AdminSidebarComponent,AnalystSidebarComponent,MessageConsoleComponent,DemoComponent,OperationComponent,CustodianSidebarComponent,ReceiptSidebarComponent, FooterComponent, NgbCollapse, RouterOutlet, TranslateModule, TranslatorPipe]
+    imports: [NgClass, HeaderComponent, PrivacyBadgeComponent, AdminSidebarComponent, AnalystSidebarComponent, MessageConsoleComponent, DemoComponent, OperationComponent, CustodianSidebarComponent, ReceiptSidebarComponent, FooterComponent, NgbCollapse, RouterOutlet, TranslateModule, TranslatorPipe]
 })
 export class AppComponent implements AfterViewInit, OnInit {
   private document = inject<Document>(DOCUMENT);

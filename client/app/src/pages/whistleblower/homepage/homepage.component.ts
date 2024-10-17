@@ -4,7 +4,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DisclaimerComponent} from "@app/shared/modals/disclaimer/disclaimer.component";
 import {Observable} from "rxjs";
 import {AppConfigService} from "@app/services/root/app-config.service";
-import { NgIf } from "@angular/common";
+
 import { MarkdownComponent } from "ngx-markdown";
 import { ReceiptComponent } from "../../../shared/partials/receipt/receipt.component";
 import { TranslateModule } from "@ngx-translate/core";
@@ -15,7 +15,7 @@ import { StripHtmlPipe } from "@app/shared/pipes/strip-html.pipe";
     selector: "src-homepage",
     templateUrl: "./homepage.component.html",
     standalone: true,
-    imports: [NgIf, MarkdownComponent, ReceiptComponent, TranslateModule, TranslatorPipe, StripHtmlPipe]
+    imports: [MarkdownComponent, ReceiptComponent, TranslateModule, TranslatorPipe, StripHtmlPipe]
 })
 export class HomepageComponent {
   protected appConfigService = inject(AppConfigService);

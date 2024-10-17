@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {HttpService} from "@app/shared/services/http.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {AppDataService} from "@app/app-data.service";
-import { NgIf } from "@angular/common";
+
 import { FormsModule } from "@angular/forms";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
@@ -13,7 +13,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     selector: "src-password-reset-response",
     templateUrl: "./password-reset-response.component.html",
     standalone: true,
-    imports: [NgIf, FormsModule, TranslateModule, TranslatorPipe]
+    imports: [FormsModule, TranslateModule, TranslatorPipe]
 })
 export class PasswordResetResponseComponent implements OnInit {
   protected appDataService = inject(AppDataService);

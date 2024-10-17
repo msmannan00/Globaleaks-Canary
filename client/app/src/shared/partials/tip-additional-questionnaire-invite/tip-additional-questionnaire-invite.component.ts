@@ -4,7 +4,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {
   TipAdditionalQuestionnaireFormComponent
 } from "@app/shared/modals/tip-additional-questionnaire-form/tip-additional-questionnaire-form.component";
-import { NgIf } from "@angular/common";
+
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 
@@ -12,7 +12,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     selector: "src-tip-additional-questionnaire-invite",
     templateUrl: "./tip-additional-questionnaire-invite.component.html",
     standalone: true,
-    imports: [NgIf, TranslateModule, TranslatorPipe]
+    imports: [TranslateModule, TranslatorPipe]
 })
 export class TipAdditionalQuestionnaireInviteComponent {
   protected utilsService = inject(UtilsService);

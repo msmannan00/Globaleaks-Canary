@@ -4,7 +4,7 @@ import {PreferenceResolver} from '@app/shared/resolvers/preference.resolver';
 import {MaskService} from '@app/shared/services/mask.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {RedactionData} from "@app/models/component-model/redaction";
-import { NgIf } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { TranslatorPipe } from '@app/shared/pipes/translate';
@@ -14,11 +14,10 @@ import { TranslatorPipe } from '@app/shared/pipes/translate';
     templateUrl: './redact-information.component.html',
     standalone: true,
     imports: [
-        NgIf,
-        FormsModule,
-        TranslateModule,
-        TranslatorPipe,
-    ],
+    FormsModule,
+    TranslateModule,
+    TranslatorPipe
+],
 })
 export class RedactInformationComponent implements OnInit{
   private maskService = inject(MaskService);

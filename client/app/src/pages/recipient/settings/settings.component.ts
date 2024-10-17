@@ -5,7 +5,7 @@ import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {Tab1Component} from "@app/pages/admin/settings/tab1/tab1.component";
 import { FormsModule } from "@angular/forms";
 import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgbNavOutlet } from "@ng-bootstrap/ng-bootstrap";
-import { NgFor, NgTemplateOutlet } from "@angular/common";
+import { NgTemplateOutlet } from "@angular/common";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 
@@ -13,7 +13,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     selector: "src-recipient-settings",
     templateUrl: "./settings.component.html",
     standalone: true,
-    imports: [FormsModule, NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, Tab1Component, TranslateModule, TranslatorPipe]
+    imports: [FormsModule, NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, Tab1Component, TranslateModule, TranslatorPipe]
 })
 export class RecipientSettingsComponent implements AfterViewInit {
   private cdr = inject(ChangeDetectorRef);

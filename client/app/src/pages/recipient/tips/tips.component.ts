@@ -18,7 +18,7 @@ import {AuthenticationService} from "@app/services/helper/authentication.service
 import {HttpService} from "@app/shared/services/http.service";
 import {Observable, from, switchMap} from "rxjs";
 import {HttpClient, HttpResponse} from "@angular/common/http";
-import { formatDate, NgIf, NgClass, NgFor, NgSwitch, NgSwitchCase, SlicePipe, DatePipe } from "@angular/common";
+import { formatDate, NgClass, SlicePipe, DatePipe } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { DateRangeSelectorComponent } from "../../../shared/components/date-selector/date-selector.component";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
@@ -28,7 +28,7 @@ import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
     selector: "src-tips",
     templateUrl: "./tips.component.html",
     standalone: true,
-    imports: [NgIf, RouterLink, FormsModule, NgClass, NgMultiSelectDropDownModule, DateRangeSelectorComponent, NgFor, NgSwitch, NgSwitchCase, NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast, SlicePipe, DatePipe, TranslateModule, TranslatorPipe, OrderByPipe]
+    imports: [RouterLink, FormsModule, NgClass, NgMultiSelectDropDownModule, DateRangeSelectorComponent, NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast, SlicePipe, DatePipe, TranslateModule, TranslatorPipe, OrderByPipe]
 })
 export class TipsComponent implements OnInit {
   private http = inject(HttpClient);

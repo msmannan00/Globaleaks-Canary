@@ -5,14 +5,14 @@ import {NotificationTab1Component} from "@app/pages/admin/notifications/notifica
 import {NotificationTab2Component} from "@app/pages/admin/notifications/notification-tab2/notification-tab2.component";
 import { FormsModule } from "@angular/forms";
 import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgbNavOutlet } from "@ng-bootstrap/ng-bootstrap";
-import { NgFor, NgTemplateOutlet } from "@angular/common";
+import { NgTemplateOutlet } from "@angular/common";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
     selector: "src-notifications",
     templateUrl: "./notifications.component.html",
     standalone: true,
-    imports: [FormsModule, NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, NotificationTab1Component, NotificationTab2Component, TranslatorPipe]
+    imports: [FormsModule, NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, NotificationTab1Component, NotificationTab2Component, TranslatorPipe]
 })
 export class NotificationsComponent implements AfterViewInit {
   protected node = inject(NodeResolver);

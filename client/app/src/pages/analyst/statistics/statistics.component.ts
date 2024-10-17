@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { StatisticsResolver } from '@app/shared/resolvers/statistics.resolver';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { NgFor } from '@angular/common';
+
 import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { TranslatorPipe } from '@app/shared/pipes/translate';
 
@@ -10,11 +10,10 @@ import { TranslatorPipe } from '@app/shared/pipes/translate';
     templateUrl: './statistics.component.html',
     standalone: true,
     imports: [
-        NgFor,
-        BaseChartDirective,
-        TranslateModule,
-        TranslatorPipe,
-    ],
+    BaseChartDirective,
+    TranslateModule,
+    TranslatorPipe
+],
     providers: [provideCharts(withDefaultRegisterables())],
 })
 export class StatisticsComponent implements OnInit {

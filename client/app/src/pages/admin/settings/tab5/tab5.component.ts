@@ -12,7 +12,7 @@ import {AppConfigService} from "@app/services/root/app-config.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {userResolverModel} from "@app/models/resolvers/user-resolver-model";
 import {questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
-import { NgIf, NgFor, NgClass } from "@angular/common";
+import { NgClass } from "@angular/common";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -20,7 +20,7 @@ import { TranslateModule } from "@ngx-translate/core";
     selector: "src-tab5",
     templateUrl: "./tab5.component.html",
     standalone: true,
-    imports: [FormsModule, NgIf, NgFor, NgClass, TranslatorPipe, TranslateModule]
+    imports: [FormsModule, NgClass, TranslatorPipe, TranslateModule]
 })
 export class Tab5Component implements OnInit {
   private authenticationService = inject(AuthenticationService);

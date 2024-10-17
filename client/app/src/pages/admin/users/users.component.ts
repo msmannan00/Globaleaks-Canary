@@ -4,14 +4,14 @@ import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {UsersTab1Component} from "@app/pages/admin/users/users-tab1/users-tab1.component";
 import {UsersTab2Component} from "@app/pages/admin/users/users-tab2/users-tab2.component";
 import { NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgbNavOutlet } from "@ng-bootstrap/ng-bootstrap";
-import { NgFor, NgTemplateOutlet } from "@angular/common";
+import { NgTemplateOutlet } from "@angular/common";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 
 @Component({
     selector: "src-users",
     templateUrl: "./users.component.html",
     standalone: true,
-    imports: [NgbNav, NgFor, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, UsersTab1Component, UsersTab2Component, TranslatorPipe]
+    imports: [NgbNav, NgbNavItem, NgbNavItemRole, NgbNavLinkButton, NgbNavLinkBase, NgbNavContent, NgTemplateOutlet, NgbNavOutlet, UsersTab1Component, UsersTab2Component, TranslatorPipe]
 })
 export class UsersComponent implements AfterViewInit {
   node = inject(NodeResolver);

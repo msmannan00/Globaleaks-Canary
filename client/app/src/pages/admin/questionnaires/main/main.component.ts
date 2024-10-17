@@ -7,7 +7,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {NewQuestionare} from "@app/models/admin/new-questionare";
 import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnaire.service";
 import {Subject, takeUntil} from "rxjs";
-import { NgIf, NgClass, NgFor } from "@angular/common";
+import { NgClass } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { QuestionnairesListComponent } from "../questionnaires-list/questionnaires-list.component";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
@@ -18,7 +18,7 @@ import { TranslateModule } from "@ngx-translate/core";
     selector: "src-main",
     templateUrl: "./main.component.html",
     standalone: true,
-    imports: [NgIf, FormsModule, NgClass, NgFor, QuestionnairesListComponent, TranslatorPipe, OrderByPipe, TranslateModule]
+    imports: [FormsModule, NgClass, QuestionnairesListComponent, TranslatorPipe, OrderByPipe, TranslateModule]
 })
 export class MainComponent implements OnInit, OnDestroy {
   private http = inject(HttpClient);

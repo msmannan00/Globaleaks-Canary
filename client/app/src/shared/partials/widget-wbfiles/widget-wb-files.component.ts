@@ -2,7 +2,7 @@ import { Component, Input, inject } from "@angular/core";
 import {ReceiversById} from "@app/models/reciever/reciever-tip-data";
 import {WbtipService} from "@app/services/helper/wbtip.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import { NgIf, NgFor } from "@angular/common";
+
 import { WbFilesComponent } from "../wbfiles/wb-files.component";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
@@ -12,7 +12,7 @@ import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
     selector: "src-widget-wbfiles",
     templateUrl: "./widget-wb-files.component.html",
     standalone: true,
-    imports: [NgIf, NgFor, WbFilesComponent, TranslateModule, TranslatorPipe, OrderByPipe]
+    imports: [WbFilesComponent, TranslateModule, TranslatorPipe, OrderByPipe]
 })
 export class WidgetWbFilesComponent {
   protected wbTipService = inject(WbtipService);

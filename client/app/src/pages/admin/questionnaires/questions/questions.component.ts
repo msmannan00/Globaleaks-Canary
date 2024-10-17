@@ -8,7 +8,7 @@ import {QuestionnaireService} from "@app/pages/admin/questionnaires/questionnair
 import {Subject, takeUntil} from "rxjs";
 import {fieldtemplatesResolverModel} from "@app/models/resolvers/field-template-model";
 import {Step, questionnaireResolverModel} from "@app/models/resolvers/questionnaire-model";
-import { NgIf, NgFor } from "@angular/common";
+
 import { AddFieldComponent } from "../add-field/add-field.component";
 import { FormsModule } from "@angular/forms";
 import { FieldsComponent } from "../fields/fields.component";
@@ -20,7 +20,7 @@ import { TranslateModule } from "@ngx-translate/core";
     selector: "src-questions",
     templateUrl: "./questions.component.html",
     standalone: true,
-    imports: [NgIf, AddFieldComponent, NgFor, FormsModule, FieldsComponent, TranslatorPipe, OrderByPipe, TranslateModule]
+    imports: [AddFieldComponent, FormsModule, FieldsComponent, TranslatorPipe, OrderByPipe, TranslateModule]
 })
 export class QuestionsComponent implements OnInit, OnDestroy {
   private questionnaireService = inject(QuestionnaireService);

@@ -3,7 +3,7 @@ import {SubmissionStatus} from "@app/models/app/shared-public-model";
 import {RecieverTipData} from "@app/models/reciever/reciever-tip-data";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import { FormsModule } from "@angular/forms";
-import { NgFor } from "@angular/common";
+
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 @Component({
@@ -11,11 +11,10 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     templateUrl: './change-submission-status.component.html',
     standalone: true,
     imports: [
-        FormsModule,
-        NgFor,
-        TranslateModule,
-        TranslatorPipe,
-    ],
+    FormsModule,
+    TranslateModule,
+    TranslatorPipe
+],
 })
 export class ChangeSubmissionStatusComponent {
   private modalService = inject(NgbModal);

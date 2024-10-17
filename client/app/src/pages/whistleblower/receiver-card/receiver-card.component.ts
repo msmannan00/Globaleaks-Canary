@@ -2,14 +2,14 @@ import { Component, Input, inject } from "@angular/core";
 import {Receiver} from "@app/models/app/public-model";
 import {SubmissionService} from "@app/services/helper/submission.service";
 import {TranslateService} from "@ngx-translate/core";
-import { NgClass, NgIf, NgOptimizedImage } from "@angular/common";
+import { NgClass, NgOptimizedImage } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 
 @Component({
     selector: "src-receiver-card",
     templateUrl: "./receiver-card.component.html",
     standalone: true,
-    imports: [NgClass, NgIf, FormsModule, NgOptimizedImage]
+    imports: [NgClass, FormsModule, NgOptimizedImage]
 })
 export class ReceiverCardComponent {
   protected translate = inject(TranslateService);

@@ -5,7 +5,7 @@ import {HttpService} from "@app/shared/services/http.service";
 import {CryptoService} from "@app/shared/services/crypto.service";
 import {RFile} from "@app/models/app/shared-public-model";
 import {ReceiversById} from "@app/models/reciever/reciever-tip-data";
-import { NgIf, DatePipe } from "@angular/common";
+import { DatePipe } from "@angular/common";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 import { ByteFmtPipe } from "@app/shared/pipes/byte-fmt.pipe";
@@ -14,7 +14,7 @@ import { ByteFmtPipe } from "@app/shared/pipes/byte-fmt.pipe";
     selector: "src-wbfiles",
     templateUrl: "./wb-files.component.html",
     standalone: true,
-    imports: [NgIf, DatePipe, TranslateModule, TranslatorPipe, ByteFmtPipe]
+    imports: [DatePipe, TranslateModule, TranslatorPipe, ByteFmtPipe]
 })
 export class WbFilesComponent implements OnInit {
   private appDataService = inject(AppDataService);

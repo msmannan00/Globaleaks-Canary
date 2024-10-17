@@ -6,7 +6,7 @@ import {AppDataService} from "@app/app-data.service";
 import {CryptoService} from "@app/shared/services/crypto.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {WbFile} from "@app/models/app/shared-public-model";
-import { NgIf, NgFor, DatePipe } from "@angular/common";
+import { DatePipe } from "@angular/common";
 import { RFileUploadButtonComponent } from "../rfile-upload-button/r-file-upload-button.component";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
@@ -18,7 +18,7 @@ import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
     selector: "src-tip-files-whistleblower",
     templateUrl: "./tip-files-whistleblower.component.html",
     standalone: true,
-    imports: [NgIf, NgFor, RFileUploadButtonComponent, DatePipe, TranslateModule, TranslatorPipe, ByteFmtPipe, OrderByPipe]
+    imports: [RFileUploadButtonComponent, DatePipe, TranslateModule, TranslatorPipe, ByteFmtPipe, OrderByPipe]
 })
 export class TipFilesWhistleblowerComponent {
   private appDataService = inject(AppDataService);

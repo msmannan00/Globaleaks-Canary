@@ -4,7 +4,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {Constants} from "@app/shared/constants/constants";
 import { FormsModule } from "@angular/forms";
-import { NgIf } from "@angular/common";
+
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 
@@ -12,7 +12,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     selector: "src-request-support",
     templateUrl: "./request-support.component.html",
     standalone: true,
-    imports: [FormsModule, NgIf, TranslateModule, TranslatorPipe]
+    imports: [FormsModule, TranslateModule, TranslatorPipe]
 })
 export class RequestSupportComponent implements OnInit {
   protected activeModal = inject(NgbActiveModal);

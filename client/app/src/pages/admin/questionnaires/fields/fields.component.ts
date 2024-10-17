@@ -17,7 +17,7 @@ import {ParsedFields} from "@app/models/component-model/parsedFields";
 import {Field, fieldtemplatesResolverModel} from "@app/models/resolvers/field-template-model";
 import {Children, Option, TriggeredByOption} from "@app/models/app/shared-public-model";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
-import { NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgFor, NgClass, DatePipe } from "@angular/common";
+import { NgClass, DatePipe } from "@angular/common";
 import { AddFieldComponent } from "../add-field/add-field.component";
 import { AddFieldFromTemplateComponent } from "../add-field-from-template/add-field-from-template.component";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
@@ -28,7 +28,7 @@ import { TranslateModule } from "@ngx-translate/core";
     selector: "src-fields",
     templateUrl: "./fields.component.html",
     standalone: true,
-    imports: [NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, FormsModule, NgbInputDatepicker, NgFor, NgClass, AddFieldComponent, AddFieldFromTemplateComponent, DatePipe, TranslatorPipe, OrderByPipe, TranslateModule]
+    imports: [FormsModule, NgbInputDatepicker, NgClass, AddFieldComponent, AddFieldFromTemplateComponent, DatePipe, TranslatorPipe, OrderByPipe, TranslateModule]
 })
 export class FieldsComponent implements OnInit {
   private authenticationService = inject(AuthenticationService);

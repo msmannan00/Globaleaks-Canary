@@ -9,7 +9,7 @@ import {WbFile} from "@app/models/app/shared-public-model";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {MaskService} from "@app/shared/services/mask.service";
 import {RedactionData} from "@app/models/component-model/redaction";
-import { NgIf, NgFor, NgClass, DatePipe } from "@angular/common";
+import { NgClass, DatePipe } from "@angular/common";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 import { ByteFmtPipe } from "@app/shared/pipes/byte-fmt.pipe";
@@ -18,7 +18,7 @@ import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
     selector: "src-tip-files-receiver",
     templateUrl: "./tip-files-receiver.component.html",
     standalone: true,
-    imports: [NgIf, NgFor, NgClass, DatePipe, TranslateModule, TranslatorPipe, ByteFmtPipe, OrderByPipe]
+    imports: [NgClass, DatePipe, TranslateModule, TranslatorPipe, ByteFmtPipe, OrderByPipe]
 })
 export class TipFilesReceiverComponent implements OnInit {
   protected maskService = inject(MaskService);

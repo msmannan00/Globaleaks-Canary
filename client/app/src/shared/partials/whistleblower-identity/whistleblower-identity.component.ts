@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, inject } from "@angular/core";
 import {Answers} from "@app/models/reciever/reciever-tip-data";
 import {WbtipService} from "@app/services/helper/wbtip.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import { NgIf, NgFor } from "@angular/common";
+
 import { TipFieldComponent } from "../tip-field/tip-field.component";
 import { FormsModule } from "@angular/forms";
 import { NgFormChangeDirective } from "../../directive/ng-form-change.directive";
@@ -15,7 +15,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     selector: "src-whistleblower-identity",
     templateUrl: "./whistleblower-identity.component.html",
     standalone: true,
-    imports: [NgIf, NgFor, TipFieldComponent, FormsModule, NgFormChangeDirective, WhistleblowerIdentityFieldComponent, RFilesUploadStatusComponent, TranslateModule, TranslatorPipe]
+    imports: [TipFieldComponent, FormsModule, NgFormChangeDirective, WhistleblowerIdentityFieldComponent, RFilesUploadStatusComponent, TranslateModule, TranslatorPipe]
 })
 export class WhistleblowerIdentityComponent {
   protected wbTipService = inject(WbtipService);

@@ -6,7 +6,7 @@ import {AuthenticationService} from "@app/services/helper/authentication.service
 import {FlowOptions} from "@flowjs/flow.js";
 import { UtilsService } from "@app/shared/services/utils.service";
 import { FormsModule } from "@angular/forms";
-import { NgIf, NgOptimizedImage } from "@angular/common";
+import { NgOptimizedImage } from "@angular/common";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 
@@ -14,7 +14,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     selector: "src-image-upload",
     templateUrl: "./image-upload.component.html",
     standalone: true,
-    imports: [FormsModule, NgxFlowModule, NgIf, NgOptimizedImage, TranslateModule, TranslatorPipe]
+    imports: [FormsModule, NgxFlowModule, NgOptimizedImage, TranslateModule, TranslatorPipe]
 })
 export class ImageUploadComponent implements AfterViewInit, OnDestroy, OnInit {
   private http = inject(HttpClient);

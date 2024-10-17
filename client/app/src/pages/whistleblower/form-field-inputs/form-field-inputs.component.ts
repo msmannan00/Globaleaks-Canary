@@ -6,7 +6,7 @@ import {Answers} from "@app/models/reciever/reciever-tip-data";
 import {Step} from "@app/models/whistleblower/wb-tip-data";
 import {Field} from "@app/models/resolvers/field-template-model";
 import {cloneDeep} from "lodash-es";
-import { NgIf, NgFor, NgClass } from "@angular/common";
+import { NgClass } from "@angular/common";
 import { MarkdownComponent } from "ngx-markdown";
 import { FormFieldInputComponent } from "../form-field-input/form-field-input.component";
 import { TranslateModule } from "@ngx-translate/core";
@@ -19,15 +19,13 @@ import { StripHtmlPipe } from "@app/shared/pipes/strip-html.pipe";
     viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
     standalone: true,
     imports: [
-        NgIf,
-        MarkdownComponent,
-        NgFor,
-        NgClass,
-        forwardRef(() => FormFieldInputComponent),
-        TranslateModule,
-        TranslatorPipe,
-        StripHtmlPipe,
-    ],
+    MarkdownComponent,
+    NgClass,
+    forwardRef(() => FormFieldInputComponent),
+    TranslateModule,
+    TranslatorPipe,
+    StripHtmlPipe
+],
 })
 export class FormFieldInputsComponent implements OnInit {
   protected utilsService = inject(UtilsService);

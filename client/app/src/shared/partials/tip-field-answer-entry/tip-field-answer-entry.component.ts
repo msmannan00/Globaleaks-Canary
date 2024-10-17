@@ -11,7 +11,7 @@ import {HttpService} from "@app/shared/services/http.service";
 import {MaskService} from "@app/shared/services/mask.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import { NgSwitch, NgSwitchCase, NgIf, NgFor, NgSwitchDefault, DatePipe } from "@angular/common";
+import { DatePipe } from "@angular/common";
 import { TipFieldComponent } from "../tip-field/tip-field.component";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
@@ -22,7 +22,7 @@ import { OrderByPipe } from "@app/shared/pipes/order-by.pipe";
     selector: "src-tip-field-answer-entry",
     templateUrl: "./tip-field-answer-entry.component.html",
     standalone: true,
-    imports: [NgSwitch, NgSwitchCase, NgIf, NgFor,forwardRef(() => TipFieldComponent), NgSwitchDefault, DatePipe, TranslateModule, TranslatorPipe, SplitPipe, OrderByPipe]
+    imports: [forwardRef(() => TipFieldComponent), DatePipe, TranslateModule, TranslatorPipe, SplitPipe, OrderByPipe]
 })
 export class TipFieldAnswerEntryComponent implements OnInit {
   protected httpService = inject(HttpService);

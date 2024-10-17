@@ -7,7 +7,7 @@ import {AppConfigService} from "@app/services/root/app-config.service";
 import {Constants} from "@app/shared/constants/constants";
 import {AppDataService} from "@app/app-data.service";
 import { ImageUploadDirective } from "../../../../shared/directive/image-upload.directive";
-import { NgIf, NgClass } from "@angular/common";
+import { NgClass } from "@angular/common";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 
@@ -17,13 +17,12 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
     standalone: true,
     imports: [
-        ImageUploadDirective,
-        FormsModule,
-        NgIf,
-        NgClass,
-        TranslateModule,
-        TranslatorPipe,
-    ],
+    ImageUploadDirective,
+    FormsModule,
+    NgClass,
+    TranslateModule,
+    TranslatorPipe
+],
 })
 export class Tab1Component {
   private appConfigService = inject(AppConfigService);

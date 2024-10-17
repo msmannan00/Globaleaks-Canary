@@ -4,7 +4,7 @@ import {Answers} from "@app/models/reciever/reciever-tip-data";
 import {Field} from "@app/models/resolvers/field-template-model";
 import {Step} from "@app/models/whistleblower/wb-tip-data";
 import {SubmissionService} from "@app/services/helper/submission.service";
-import { NgIf } from "@angular/common";
+
 import { FormComponent } from "../../form/form.component";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
@@ -14,7 +14,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     templateUrl: "./whistleblower-identity-field.component.html",
     viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
     standalone: true,
-    imports: [NgIf, forwardRef(() => FormComponent), TranslateModule, TranslatorPipe]
+    imports: [forwardRef(() => FormComponent), TranslateModule, TranslatorPipe]
 })
 export class WhistleblowerIdentityFieldComponent implements OnInit {
   @Input() submission: SubmissionService;

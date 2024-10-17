@@ -3,7 +3,7 @@ import {UtilsService} from "@app/shared/services/utils.service";
 import {TipsResolver} from "@app/shared/resolvers/tips.resolver";
 import {tipsResolverModel} from "@app/models/resolvers/tips-resolver-model";
 import {AppDataService} from "@app/app-data.service";
-import { NgIf, NgFor, DatePipe } from "@angular/common";
+import { DatePipe } from "@angular/common";
 import { NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast } from "@ng-bootstrap/ng-bootstrap";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 import { TranslateModule } from "@ngx-translate/core";
@@ -12,7 +12,7 @@ import { TranslateModule } from "@ngx-translate/core";
     selector: "src-auditlog-tab3",
     templateUrl: "./audit-log-tab3.component.html",
     standalone: true,
-    imports: [NgIf, NgFor, NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast, DatePipe, TranslatorPipe, TranslateModule]
+    imports: [NgbPagination, NgbPaginationPrevious, NgbPaginationNext, NgbPaginationFirst, NgbPaginationLast, DatePipe, TranslatorPipe, TranslateModule]
 })
 export class AuditLogTab3Component implements OnInit {
   private tipsResolver = inject(TipsResolver);

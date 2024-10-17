@@ -8,7 +8,7 @@ import { NgForm, FormsModule } from "@angular/forms";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
 import {tenantResolverModel} from "@app/models/resolvers/tenant-resolver-model";
 import {Observable} from "rxjs";
-import { NgIf, DatePipe } from "@angular/common";
+import { DatePipe } from "@angular/common";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -16,7 +16,7 @@ import { TranslateModule } from "@ngx-translate/core";
     selector: "src-siteslist",
     templateUrl: "./siteslist.component.html",
     standalone: true,
-    imports: [NgIf, FormsModule, DatePipe, TranslatorPipe, TranslateModule]
+    imports: [FormsModule, DatePipe, TranslatorPipe, TranslateModule]
 })
 export class SiteslistComponent {
   protected nodeResolver = inject(NodeResolver);

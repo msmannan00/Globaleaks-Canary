@@ -2,7 +2,7 @@ import { Component, inject } from "@angular/core";
 import {AppDataService} from "@app/app-data.service";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {UtilsService} from "@app/shared/services/utils.service";
-import { NgIf } from "@angular/common";
+
 import { FormsModule } from "@angular/forms";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
@@ -11,7 +11,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     selector: "src-password-reset",
     templateUrl: "./password-reset.component.html",
     standalone: true,
-    imports: [NgIf, FormsModule, TranslateModule, TranslatorPipe]
+    imports: [FormsModule, TranslateModule, TranslatorPipe]
 })
 export class PasswordResetComponent {
   private authenticationService = inject(AuthenticationService);

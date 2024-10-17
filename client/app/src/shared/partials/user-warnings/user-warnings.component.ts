@@ -2,7 +2,7 @@ import { Component, inject } from "@angular/core";
 import {AuthenticationService} from "@app/services/helper/authentication.service";
 import {PreferenceResolver} from "@app/shared/resolvers/preference.resolver";
 import {NodeResolver} from "@app/shared/resolvers/node.resolver";
-import { NgIf } from "@angular/common";
+
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslatorPipe } from "@app/shared/pipes/translate";
 
@@ -10,7 +10,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     selector: "src-user-warnings",
     templateUrl: "./user-warnings.component.html",
     standalone: true,
-    imports: [NgIf, TranslateModule, TranslatorPipe]
+    imports: [TranslateModule, TranslatorPipe]
 })
 export class UserWarningsComponent {
   protected authentication = inject(AuthenticationService);

@@ -7,7 +7,7 @@ import {FlowOptions} from "@flowjs/flow.js";
 import {Field} from "@app/models/resolvers/field-template-model";
 import { AuthenticationService } from "@app/services/helper/authentication.service";
 import { UtilsService } from "@app/shared/services/utils.service";
-import { NgIf, NgFor, NgClass, AsyncPipe } from "@angular/common";
+import { NgClass, AsyncPipe } from "@angular/common";
 import { RFileUploadStatusComponent } from "../rfile-upload-status/r-file-upload-status.component";
 import { RFilesUploadStatusComponent } from "../rfiles-upload-status/r-files-upload-status.component";
 import { TranslateModule } from "@ngx-translate/core";
@@ -18,7 +18,7 @@ import { TranslatorPipe } from "@app/shared/pipes/translate";
     templateUrl: "./r-file-upload-button.component.html",
     viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
     standalone: true,
-    imports: [NgxFlowModule, NgIf, NgFor, NgClass, RFileUploadStatusComponent, RFilesUploadStatusComponent, AsyncPipe, TranslateModule, TranslatorPipe]
+    imports: [NgxFlowModule, NgClass, RFileUploadStatusComponent, RFilesUploadStatusComponent, AsyncPipe, TranslateModule, TranslatorPipe]
 })
 export class RFileUploadButtonComponent implements AfterViewInit, OnInit, OnDestroy {
   private cdr = inject(ChangeDetectorRef);
