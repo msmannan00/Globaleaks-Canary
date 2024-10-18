@@ -117,16 +117,11 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy{
     this.checkToShowSidebar();
   }
 
-  isWhistleblowerPage() {
-    const temp = this.utilsService.isWhistleblowerPage(this.authenticationService, this.appDataService)
+  isWhistleblowerPage(): boolean {
     const currentHash = location.hash;
-    if ((currentHash === "#/" || currentHash === "#/submission") && this.loading) {
-      return true;
-    } else {
-      this.loading = temp;
-      return this.loading;
-    }
+    return currentHash === "#/" || currentHash === "#/submission";
   }
+  
 
   public ngAfterViewInit(): void {
     this.appDataService.showLoadingPanel$.subscribe((value:any) => {
