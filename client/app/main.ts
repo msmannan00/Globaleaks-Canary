@@ -73,7 +73,6 @@ bootstrapApplication(AppComponent, {
         { provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: CompletedInterceptor, multi: true },
         { provide: FlowInjectionToken, useValue: Flow },
-        { provide: LocationStrategy, useClass: HashLocationStrategy },
         { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n },
         provideHttpClient(withInterceptorsFromDi()),
         provideAnimations(),
