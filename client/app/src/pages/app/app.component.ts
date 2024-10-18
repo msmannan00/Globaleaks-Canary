@@ -119,7 +119,8 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy{
 
   isWhistleblowerPage() {
     const temp = this.utilsService.isWhistleblowerPage(this.authenticationService, this.appDataService)
-    if ((this.router.url === "/" || this.router.url === "/submission") && this.loading) {
+    const currentHash = location.hash;
+    if ((currentHash === "#/" || currentHash === "#/submission") && this.loading) {
       return true;
     } else {
       this.loading = temp;
