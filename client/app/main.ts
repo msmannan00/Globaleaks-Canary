@@ -44,12 +44,11 @@ import { CustomDatepickerI18n } from "@app/shared/services/custom-datepicker-i18
 import { appRoutes } from "@app/app.routes";
 import { BrowserModule, bootstrapApplication } from "@angular/platform-browser";
 import { provideAnimations } from "@angular/platform-browser/animations";
-import { AppModule, createTranslateLoader } from "./src/app.module";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { FormsModule } from "@angular/forms";
 import { NgIdleKeepaliveModule } from "@ng-idle/keepalive";
 import { MarkdownModule, MARKED_OPTIONS } from "ngx-markdown";
-import { AppComponent } from "./src/pages/app/app.component";
+import { AppComponent, createTranslateLoader } from "./src/pages/app/app.component";
 import { importProvidersFrom } from "@angular/core";
 import * as Flow from "@flowjs/flow.js";
 import {provideRouter} from "@angular/router";
@@ -57,7 +56,7 @@ import {provideRouter} from "@angular/router";
 bootstrapApplication(AppComponent, {
     providers: [
         provideRouter(appRoutes),
-        importProvidersFrom(AppModule, NgbModule, BrowserModule, translationModule, NgSelectModule, FormsModule, NgIdleKeepaliveModule.forRoot(), MarkdownModule.forRoot({
+        importProvidersFrom(NgbModule, BrowserModule, translationModule, NgSelectModule, FormsModule, NgIdleKeepaliveModule.forRoot(), MarkdownModule.forRoot({
             markedOptions: {
                 provide: MARKED_OPTIONS,
                 useValue: {
