@@ -29,7 +29,6 @@ import { DEFAULT_INTERRUPTSOURCES, Idle } from "@ng-idle/core";
 import { CryptoService } from "@app/shared/services/crypto.service";
 import { HttpService } from "@app/shared/services/http.service";
 import { Keepalive } from "@ng-idle/keepalive";
-// Register all the locales
 registerLocales();
 
 export function createTranslateLoader(http: HttpClient) {
@@ -86,6 +85,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy{
   showLoadingPanel = false;
   supportedBrowser = true;
   loading = false;
+
 
   constructor() {
     this.initIdleState();
