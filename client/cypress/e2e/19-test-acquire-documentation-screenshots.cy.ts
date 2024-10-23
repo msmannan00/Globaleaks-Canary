@@ -55,13 +55,10 @@ describe("acquire screenshots necessary for user documentation - Admin Section",
     cy.takeScreenshot("admin/notification_templates");
 
     cy.get("#admin_network").first().click();
-    cy.takeScreenshot("admin/tor");
-
-    cy.get('[data-cy="https"]').first().click();
     cy.takeScreenshot("admin/https");
 
     cy.get('[data-cy="tor"]').first().click();
-    cy.takeScreenshot("admin/https");
+    cy.takeScreenshot("admin/tor");
 
     cy.get('[data-cy="access_control"]').first().click();
     cy.takeScreenshot("admin/access_control");
@@ -113,7 +110,7 @@ describe("Acquire screenshots necessary for user documentation - Recipient Secti
     cy.takeScreenshot("recipient/settings");
     cy.visit("/#/recipient/reports");
     cy.get("#tip-0").first().click();
-    cy.get('[id="tip-action-mask"]').should('be.visible', { timeout: 10000 }).click();
+    cy.get('[id="tip-action-mask"]').should('be.visible').click();
     cy.get("#edit-question").should('be.visible').first().click();
     cy.takeScreenshot("recipient/masking-popup", ".modal");
     cy.get("#close-redact-modal").should('be.visible').first().click();

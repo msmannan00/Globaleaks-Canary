@@ -9,7 +9,7 @@ import {RTipsResolver} from "@app/shared/resolvers/r-tips-resolver.service";
 import {UtilsService} from "@app/shared/services/utils.service";
 import {TranslateService} from "@ngx-translate/core";
 import {IDropdownSettings} from "ng-multiselect-dropdown";
-import {filter, orderBy} from "lodash";
+import {filter, orderBy} from "lodash-es";
 import {TokenResource} from "@app/shared/services/token-resource.service";
 import {Router} from "@angular/router";
 import {rtipResolverModel} from "@app/models/resolvers/rtips-resolver-model";
@@ -57,6 +57,8 @@ export class TipsComponent implements OnInit {
     textField: "label",
     itemsShowLimit: 5,
     allowSearchFilter: true,
+    selectAllText: this.translateService.instant("Select all"),
+    unSelectAllText: this.translateService.instant("Deselect all"),
     searchPlaceholderText: this.translateService.instant("Search")
   };
 
@@ -216,7 +218,7 @@ export class TipsComponent implements OnInit {
     for (const tip of this.RTips.dataModel) {
       tip.context = this.appDataService.contexts_by_id[tip.context_id];
       tip.context_name = tip.context.name;
-      tip.submissionStatusStr = this.utils.getSubmissionStatusText(tip.status, tip.substatus, this.appDataService.submissionStatuses);
+      tip.submissionStatusStr = this.translateService.instant(this.utils.getSubmissionStatusText(tip.status, tip.substatus, this.appDataService.submissionStatuses));
       if (!uniqueKeys.includes(tip.submissionStatusStr)) {
         uniqueKeys.push(tip.submissionStatusStr);
         this.dropdownStatusData.push({id: this.dropdownStatusData.length + 1, label: tip.submissionStatusStr});
@@ -426,6 +428,6 @@ export class TipsComponent implements OnInit {
       'Number of Files',
       'Subscription',
       'Number of Recipients'
-    ].map(header => this.translateService.instant(header));
+    ].map(header => header ? this.translateService.instant(header) : '');
   }
 }

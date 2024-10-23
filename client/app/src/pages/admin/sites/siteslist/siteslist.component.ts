@@ -18,7 +18,6 @@ export class SiteslistComponent {
   @Input() tenant: tenantResolverModel;
   @Input() tenants: tenantResolverModel[];
   @Input() index: number;
-  @Input() indexNumber: number;
   editing = false;
 
   constructor(protected nodeResolver: NodeResolver, protected appDataService: AppDataService, private modalService: NgbModal, private httpService: HttpService, private utilsService: UtilsService) {
@@ -27,7 +26,7 @@ export class SiteslistComponent {
   toggleActivation(event: Event): void {
     event.stopPropagation();
     this.tenant.active = !this.tenant.active;
-    this.tenant.default_profile = "default";
+
     const url = "api/admin/tenants/" + this.tenant.id;
     this.httpService.requestUpdateTenant(url, this.tenant).subscribe(_ => {
     });

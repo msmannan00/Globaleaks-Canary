@@ -12,7 +12,7 @@
                 <br />
                 <div id="LanguageAdder" class="row" *ngIf="showLangSelect">
                     <div class="col-md-12">
-                        <ng-select [(ngModel)]="selected.value" [items]="nodeResolver.dataModel.languages_supported | filter:langNotEnabledFilter : false | filter:'name':selected.value" bindLabel="name" [searchable]="true" [placeholder]="'Search' | translate" (ngModelChange)="enableLanguage($event)">
+                        <ng-select [(ngModel)]="selected.value" [items]="languagesNotEnabled | filter:'name':selected.value" bindLabel="name" [searchable]="true" [placeholder]="'Search' | translate" (ngModelChange)="enableLanguage($event)">
                             <ng-template ng-option-tmp let-item="item">
                                 <span [innerHTML]="item.name"></span>
                                 <span>[{{ item.code }}]</span>
@@ -27,10 +27,10 @@
                             <span *ngIf="lang_code === nodeResolver.dataModel.default_language" class="default-language">
                                 <i class="fa-solid fa-check"></i>
                             </span>
-                            <span *ngIf="lang_code !== nodeResolver.dataModel.default_language" class="non-default-language" data-toggle="tooltip" title="{{'Use as default' | translate}}" (click)="nodeResolver.dataModel.default_language = lang_code">
+                            <span *ngIf="lang_code !== nodeResolver.dataModel.default_language" class="non-default-language" title="{{'Use as default' | translate}}" (click)="nodeResolver.dataModel.default_language = lang_code">
                                 <i class="fa-solid fa-check"></i>
                             </span>
-                            <span *ngIf="lang_code !== nodeResolver.dataModel.default_language" (click)="removeLang(index, lang_code)" data-toggle="tooltip" title="{{'Remove' | translate}}" class="remove-lang-btn">
+                            <span *ngIf="lang_code !== nodeResolver.dataModel.default_language" (click)="removeLang(index, lang_code)" title="{{'Remove' | translate}}" class="remove-lang-btn">
                                 <i class="fa-solid fa-times"></i>
                             </span>
                             <i *ngIf="lang_code === nodeResolver.dataModel.default_language" class="fa-solid fa-times disabled-icon"></i>

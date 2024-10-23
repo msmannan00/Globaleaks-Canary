@@ -231,7 +231,7 @@ export class UtilsService {
   }
 
   showWBLoginBox() {
-    return this.router.url === "/submission";
+    return this.router.url.startsWith("/submission");
   }
 
   showUserStatusBox(authenticationService: AuthenticationService, appDataService: AppDataService) {
@@ -292,13 +292,12 @@ export class UtilsService {
     let text;
     for (let i = 0; i < submission_statuses.length; i++) {
       if (submission_statuses[i].id === status) {
-        text = submission_statuses[i].label;
-
+        text = this.translateService.instant(submission_statuses[i].label ? submission_statuses[i].label : '');
 
         const subStatus = submission_statuses[i].substatuses;
         for (let j = 0; j < subStatus.length; j++) {
-          if (subStatus[j].id === substatus) {
-            text += ' \u2013 ' + this.translateService.instant(subStatus[j].label);
+          if (subStatus[j].id === substatus && subStatus[j].label) {
+            text += ' \u2013 ' + subStatus[j].label;
             break;
           }
         }
@@ -309,20 +308,19 @@ export class UtilsService {
   }
 
   searchInObject(obj: any, searchTerm: string) {
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        const value = obj[key];
+    try {
+        // Convert object to a string
+        const objString = JSON.stringify(obj);
 
-        if (typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())) {
-          return true;
-        } else if (typeof value === 'object') {
-          if (this.searchInObject(value, searchTerm)) {
-            return true;
-          }
-        }
-      }
+        // Create a regular expression for the search term with 'i' flag for case-insensitive search
+        const regex = new RegExp(searchTerm, 'i');
+
+        // Test if the search term is found in the object string
+        return regex.test(objString);
+    } catch (error) {
+        // Return false in case of any exception (e.g., cyclic reference or BigInt error)
+        return false;
     }
-    return false;
   }
 
   isDatePassed(time: string) {
@@ -426,19 +424,6 @@ export class UtilsService {
     window.print();
   }
 
-  saveAs(authenticationService: AuthenticationService, filename: any, url: string): void {
-
-    const headers = new HttpHeaders({
-      "X-Session": authenticationService.session.id
-    });
-
-    this.http.get(url, {responseType: "blob", headers: headers}).subscribe(
-      response => {
-        this.saveBlobAs(filename, response);
-      }
-    );
-  }
-
   saveBlobAs(filename:string,response:Blob){
     const blob = new Blob([response], {type: "text/plain;charset=utf-8"});
     const blobUrl = URL.createObjectURL(blob);
@@ -451,6 +436,18 @@ export class UtilsService {
     setTimeout(() => {
       URL.revokeObjectURL(blobUrl);
     }, 1000);
+  }
+
+  saveAs(authenticationService: AuthenticationService, filename: any, url: string): void {
+    const headers = new HttpHeaders({
+      "X-Session": authenticationService.session.id
+    });
+
+    this.http.get(url, {responseType: "blob", headers: headers}).subscribe(
+      response => {
+        this.saveBlobAs(filename, response);
+      }
+    );
   }
 
   getPostponeDate(ttl: number): Date {
@@ -712,12 +709,21 @@ export class UtilsService {
 
     const headers = Object.keys(data[0] || {});
     const newHeader = headerx.join(',');
-    const csvContent = `${newHeader ? `${newHeader}\n` : ""}${data.map(row => headers.map(header => row[header]).join(',')).join('\n')}`;
 
-    if (!csvContent.trim()) {
-      console.warn('No data to export');
-      return;
-    }
+    // Create CSV content with custom headers and stringified objects
+    const csvContent = [
+      headers.join(','), // First line: headers
+      ...data.map(row => headers.map(header => {
+        const value = row[header];
+
+        // Check if the value is an object or an array and stringify it
+        if (typeof value === 'object' && value !== null) {
+          return `"${JSON.stringify(value).replace(/"/g, '""')}"`; // Escape quotes and stringify
+        }
+
+        return `"${value !== undefined ? String(value).replace(/"/g, '""') : ''}"`; // Escape quotes for normal strings
+      }).join(','))
+    ].join('\n');
 
     const blob = new Blob([csvContent], { type: 'text/csv' });
     const link = document.createElement('a');

@@ -40,7 +40,7 @@ export class PreferenceTab1Component implements OnInit {
 
   ngOnInit(): void {
     this.role = this.utilsService.rolel10n(this.authenticationService.session.role);
-    this.role = this.translateService.instant(this.role);
+    this.role = this.role ? this.translateService.instant(this.role) : '';
     setTimeout(() => {
       this.languageModel = this.preferenceResolver.dataModel.language;
     }, 150);
@@ -174,7 +174,7 @@ export class PreferenceTab1Component implements OnInit {
         next: _ => {
           this.translationService.onChange(this.preferenceResolver.dataModel.language);
           this.cdr.detectChanges();
-          localStorage.removeItem("default_language");
+          sessionStorage.removeItem("default_language");
           this.translationService.onChange(this.languageModel);
           this.appConfigService.reinit(false);
           this.utilsService.reloadCurrentRouteFresh(true);
